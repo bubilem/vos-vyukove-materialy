@@ -68,3 +68,699 @@
   margin-bottom: 0.4rem;
   font-size: 1.05rem;
 }
+
+/* ==========================================================================
+   INTERAKTIVNÍ PRVKY PRO ZVUKOVOU TECHNIKU (MUL20-01)
+   ========================================================================== */
+
+/* Interaktivní taby */
+.tabs-header {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  background: rgba(15, 23, 42, 0.4);
+  padding: 0.3rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  width: fit-content;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  padding: 0.45rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: calc(var(--radius-sm) - 2px);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 2px 10px var(--accent-glow);
+}
+
+.tab-panel {
+  display: none;
+  animation: fadeInTab 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+@keyframes fadeInTab {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Interaktivní workbench měničů */
+.workbench-container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.transducer-diagram-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+}
+
+.transducer-svg-wrap {
+  width: 100%;
+  height: 230px;
+  background: radial-gradient(circle at center, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.interactive-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.sim-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(236, 72, 153, 0.15);
+  border: 1px solid rgba(236, 72, 153, 0.4);
+  color: #fbcfe8;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sim-btn:hover {
+  background: rgba(236, 72, 153, 0.3);
+  transform: translateY(-1px);
+}
+
+.sim-btn.active {
+  background: #ec4899;
+  color: #ffffff;
+  border-color: #ec4899;
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.5);
+}
+
+.sim-slider-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.sim-slider-group input[type="range"] {
+  accent-color: var(--accent);
+  cursor: pointer;
+  width: 110px;
+}
+
+/* Polární charakteristiky & směrovost */
+.polar-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.polar-chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.polar-svg-wrap {
+  width: 250px;
+  height: 250px;
+  position: relative;
+}
+
+.polar-controls-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.35rem;
+  width: 100%;
+  margin-top: 0.8rem;
+}
+
+.polar-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.4rem 0.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.polar-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.polar-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.polar-angle-bar {
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+}
+
+.polar-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.polar-stat-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.75rem;
+  text-align: center;
+}
+
+.polar-stat-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.polar-stat-val {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fbcfe8;
+  font-family: var(--font-mono);
+  margin-top: 0.2rem;
+}
+
+/* Vizuální Pipeline Signálového řetězce */
+.pipeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pipeline-flow {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+  align-items: center;
+  position: relative;
+}
+
+.pipeline-node {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+
+.pipeline-node:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+}
+
+.pipeline-node.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 16px var(--accent-glow);
+  background: rgba(236, 72, 153, 0.12);
+}
+
+.pipeline-node-num {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.35rem;
+}
+
+.pipeline-node.active .pipeline-node-num {
+  background: var(--accent);
+  color: #fff;
+}
+
+.pipeline-node-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.pipeline-node-level {
+  font-size: 0.68rem;
+  color: #a855f7;
+  font-family: var(--font-mono);
+  margin-top: 0.25rem;
+}
+
+.pipeline-details-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+/* Gain Staging žebříček */
+.gain-meter-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ladder-track {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0.5rem 0;
+}
+
+.ladder-tier {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-left: 3px solid transparent;
+}
+
+.ladder-tier.clip { border-left-color: #ef4444; }
+.ladder-tier.sweet { border-left-color: #10b981; background: rgba(16, 185, 129, 0.1); }
+.ladder-tier.line-pro { border-left-color: #3b82f6; }
+.ladder-tier.line-cons { border-left-color: #06b6d4; }
+.ladder-tier.mic { border-left-color: #f59e0b; }
+
+.ladder-value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  width: 90px;
+  color: var(--text-primary);
+}
+
+.ladder-desc {
+  color: var(--text-secondary);
+}
+
+/* Symetrické XLR & CMRR animace */
+.cmrr-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: #93c5fd;
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/* Reprodukce a akustika studia */
+.acoustic-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.room-plan-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.room-svg-wrap {
+  width: 100%;
+  height: 260px;
+  background: radial-gradient(circle at center, rgba(15, 23, 42, 0.9) 0%, rgba(2, 6, 23, 0.98) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.room-toggle-bar {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+.room-toggle-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.45rem 0.3rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.room-toggle-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Kvízové komponenty pro shrnutí */
+.quiz-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-top: 0.8rem;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.quiz-question-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.quiz-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.quiz-option-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.quiz-option-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border-color: rgba(236, 72, 153, 0.5);
+}
+
+.quiz-option-btn.correct {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+  color: #6ee7b7;
+  font-weight: 600;
+}
+
+.quiz-option-btn.wrong {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+.quiz-feedback-box {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  display: none;
+}
+
+.quiz-feedback-box.show {
+  display: block;
+}
+
+.quiz-feedback-box.correct {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #a7f3d0;
+}
+
+.quiz-feedback-box.wrong {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fecaca;
+}
+
+@media (max-width: 992px) {
+  .workbench-container,
+  .polar-layout,
+  .acoustic-layout,
+  .pipeline-details-grid {
+    grid-template-columns: 1fr;
+  }
+  .pipeline-flow {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .quiz-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   ADC VIZUALIZACE – FREKVENČNÍ SLOŽKY TOGGLE (MUL20-01)
+   ========================================================================== */
+
+.adc-comp-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  transition: var(--transition);
+  user-select: none;
+}
+
+.adc-comp-toggle input[type="checkbox"] {
+  display: none;
+}
+
+.adc-comp-toggle::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--comp-color, #94a3b8);
+  opacity: 0.4;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.adc-comp-toggle.active {
+  border-color: var(--comp-color, #94a3b8);
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--comp-color, #94a3b8) 15%, transparent);
+}
+
+.adc-comp-toggle.active::before {
+  opacity: 1;
+  box-shadow: 0 0 6px var(--comp-color, #94a3b8);
+}
+
+.adc-comp-toggle:hover {
+  border-color: var(--comp-color, #94a3b8);
+  color: var(--text-primary);
+}
+
+/* Filtrovací tlačítka kategorií */
+.glossary-cat-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.glossary-cat-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.glossary-cat-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* Karta jednotlivého pojmu ve slovníku */
+.glossary-entry {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.85rem;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.glossary-entry:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accent);
+}
+
+.glossary-entry-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.glossary-term {
+  font-weight: 800;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+
+.glossary-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.glossary-badge-abbreviation { background: rgba(96, 165, 250, 0.2); color: #93c5fd; }
+.glossary-badge-quantity      { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; }
+.glossary-badge-unit          { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+.glossary-badge-connector     { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+.glossary-badge-software      { background: rgba(236, 72, 153, 0.2); color: #fbcfe8; }
+
+.glossary-full-name {
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.glossary-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.glossary-entry.hidden {
+  display: none;
+}
+
+[data-theme="light"] .glossary-cat-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #475569;
+}
+
+[data-theme="light"] .glossary-cat-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+[data-theme="light"] .glossary-entry {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] #glossarySearch {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: rgba(0,0,0,0.15);
+}

@@ -50,199 +50,868 @@
         <div class="hero-badge">Modul MUL20 &bull; 1. přednáška (45 min)</div>
         <h1 class="hero-title">Technika zvuku, mikrofony a reprodukce</h1>
         <p class="hero-desc">
-          Záznamový a reprodukční řetězec v praxi: elektroakustické měniče, dynamické vs. kondenzátorové mikrofony, směrové polární charakteristiky, phantomové napájení +48V, předzesilovače a akustika poslechových prostor.
+          Kompletní záznamový a reprodukční řetězec v profesionální praxi: fyzika elektroakustických měničů, animované principy dynamických a kondenzátorových kapslí, polární směrové charakteristiky, symetrický přenos XLR, Gain Staging a studiová akustika.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
             <span class="hero-meta-label">Měniče</span>
-            <span class="hero-meta-val">Dynamické &bull; Kondenzátorové</span>
+            <span class="hero-meta-val">Dynamické (indukce) &bull; Kondenzátorové (kapacita)</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Směrovost</span>
-            <span class="hero-meta-val">Kardioida &bull; Osmička &bull; Shotgun</span>
+            <span class="hero-meta-val">Kardioida &bull; Omni &bull; Osmička &bull; Shotgun</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Řetězec &amp; Akustika</span>
+            <span class="hero-meta-val">XLR/CMRR &bull; Gain Staging &bull; Room Modes &bull; RT60</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Absolutorium</span>
-            <span class="hero-meta-val">Profilový okruh č. 9</span>
+            <span class="hero-meta-val">Profilový okruh č. 9 (VOŠ)</span>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 2: KONSTRUKCE MIKROFONŮ -->
+      <!-- SLIDE 2: ELEKTROAKUSTICKÉ MĚNIČE -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Elektroakustické měniče</div>
             <h2 class="slide-title">Dynamické vs. Kondenzátorové mikrofony</h2>
-            <p class="slide-subtitle">Fyzikální principy přeměny akustického vlnění na elektrický proud</p>
+            <p class="slide-subtitle">Fyzikální principy převodu mechanického akustického tlaku na elektrický signál</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Klíčová technologie</span>
+            <span class="tag tag-exam">Zkouškový základ</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4 style="color: #60a5fa;">Dynamický mikrofon (Elektromagnetický)</h4>
-              <ul class="styled-list">
-                <li><strong>Princip:</strong> Cívka spojená s pevnou membránou se pohybuje v magnetickém poli permanentního magnetu (Faradayův indukční zákon).</li>
-                <li><strong>Vlastnosti:</strong> Mechanicky extrémně odolný, zvládá masivní akustický tlak (vysoké SPL nad 150 dB).</li>
-                <li><strong>Výhoda:</strong> Nevyžaduje žádné napájení, nízký šum, menší citlivost na nežádoucí odrazy místnosti.</li>
-                <li><strong>Použití:</strong> Živé koncerty, bicí nástroje, kytarové aparáty, rozhlasové mluvené slovo (Shure SM58, SM7B).</li>
-              </ul>
+          <div class="tabs-header">
+            <button class="tab-btn active" data-target="tab-dyn">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+              Dynamický mikrofon
+            </button>
+            <button class="tab-btn" data-target="tab-cond">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10M8 12h8"></path></svg>
+              Kondenzátorový mikrofon
+            </button>
+            <button class="tab-btn" data-target="tab-compare">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="12" y1="3" x2="12" y2="21"></line></svg>
+              Srovnávací matice
+            </button>
+          </div>
+
+          <!-- TAB 1: DYNAMICKÝ MIKROFON -->
+          <div class="tab-panel active" id="tab-dyn">
+            <div class="workbench-container">
+              <div class="transducer-diagram-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <span style="font-weight: 700; font-size: 0.9rem; color: #60a5fa;">Elektromagnetická indukce (Moving Coil)</span>
+                  <span class="tag" style="background: rgba(96, 165, 250, 0.15); color: #93c5fd; border: 1px solid rgba(96, 165, 250, 0.3);">Faradayův zákon</span>
+                </div>
+                
+                <div class="transducer-svg-wrap">
+                  <svg id="svgDynamicMic" viewBox="0 0 520 230" width="100%" height="100%">
+                    <defs>
+                      <linearGradient id="dynMagnetGradN" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#ef4444" />
+                        <stop offset="100%" stop-color="#b91c1c" />
+                      </linearGradient>
+                      <linearGradient id="dynMagnetGradS" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#3b82f6" />
+                        <stop offset="100%" stop-color="#1d4ed8" />
+                      </linearGradient>
+                      <linearGradient id="copperCoilGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#f59e0b" />
+                        <stop offset="50%" stop-color="#fbbf24" />
+                        <stop offset="100%" stop-color="#d97706" />
+                      </linearGradient>
+                    </defs>
+
+                    <!-- Akustické vlny přicházející zleva -->
+                    <g id="dynSoundWaves" opacity="0.85">
+                      <path class="wave-ray" d="M 30,50 Q 55,115 30,180" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
+                      <path class="wave-ray" d="M 60,60 Q 85,115 60,170" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
+                      <path class="wave-ray" d="M 90,70 Q 115,115 90,160" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
+                    </g>
+                    <text x="35" y="35" fill="#38bdf8" font-size="11" font-weight="600">Akustický tlak (p)</text>
+
+                    <!-- Tělo mikrofonu a magnetický obvod -->
+                    <rect x="180" y="30" width="190" height="170" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2" />
+                    
+                    <!-- Permanentní magnet N & S -->
+                    <!-- Vnější pólové nástavce S -->
+                    <rect x="230" y="45" width="40" height="35" rx="3" fill="url(#dynMagnetGradS)" />
+                    <text x="245" y="68" fill="#fff" font-size="14" font-weight="bold">S</text>
+                    <rect x="230" y="150" width="40" height="35" rx="3" fill="url(#dynMagnetGradS)" />
+                    <text x="245" y="173" fill="#fff" font-size="14" font-weight="bold">S</text>
+                    
+                    <!-- Střední pólový nástavec N -->
+                    <rect x="230" y="95" width="80" height="40" rx="3" fill="url(#dynMagnetGradN)" />
+                    <text x="265" y="120" fill="#fff" font-size="14" font-weight="bold">N</text>
+
+                    <!-- Magnetické siločáry B -->
+                    <g stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.6">
+                      <line x1="250" y1="95" x2="250" y2="80" />
+                      <line x1="270" y1="95" x2="270" y2="80" />
+                      <line x1="250" y1="135" x2="250" y2="150" />
+                      <line x1="270" y1="135" x2="270" y2="150" />
+                    </g>
+                    <text x="320" y="120" fill="#f43f5e" font-size="10" font-family="monospace">Mag. pole B</text>
+
+                    <!-- Kmitající sestava: Membrána + Cívka -->
+                    <g id="dynVibratingSystem" transform="translate(0, 0)">
+                      <!-- Pružná membrána -->
+                      <path id="dynDiaphragm" d="M 170,40 Q 145,115 170,190" fill="none" stroke="#60a5fa" stroke-width="4" stroke-linecap="round" />
+                      <text x="110" y="215" fill="#60a5fa" font-size="11" font-weight="600">Pružná membrána</text>
+
+                      <!-- Nosič cívky připevněný k membráně -->
+                      <rect x="160" y="83" width="60" height="4" fill="#94a3b8" />
+                      <rect x="160" y="143" width="60" height="4" fill="#94a3b8" />
+
+                      <!-- Kmitací cívka (měděné vinutí ve štěrbině) -->
+                      <g id="dynCoil">
+                        <rect x="215" y="81" width="12" height="12" rx="2" fill="url(#copperCoilGrad)" stroke="#b45309" stroke-width="1" />
+                        <rect x="215" y="137" width="12" height="12" rx="2" fill="url(#copperCoilGrad)" stroke="#b45309" stroke-width="1" />
+                      </g>
+                      <text x="180" y="25" fill="#fbbf24" font-size="11" font-weight="600">Kmitací cívka</text>
+                    </g>
+
+                    <!-- Výstupní vodiče do osciloskopu -->
+                    <path d="M 227,87 L 400,87 L 400,105" fill="none" stroke="#fbbf24" stroke-width="2" />
+                    <path d="M 227,143 L 400,143 L 400,125" fill="none" stroke="#fbbf24" stroke-width="2" />
+
+                    <!-- Mini osciloskop / indikátor napětí -->
+                    <rect x="390" y="70" width="115" height="90" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />
+                    <text x="400" y="86" fill="#94a3b8" font-size="9" font-family="monospace">VÝSTUP &Delta;U(t)</text>
+                    <path id="dynOscWave" d="M 400,115 Q 412,95 425,115 T 450,115 T 475,115 T 495,115" fill="none" stroke="#10b981" stroke-width="2" />
+                    <text id="dynVoltageLabel" x="400" y="148" fill="#10b981" font-size="10" font-family="monospace">+1.85 mV AC</text>
+                  </svg>
+                </div>
+
+                <div class="interactive-controls-row">
+                  <div style="display:flex; gap: 0.5rem;">
+                    <button class="sim-btn active" id="btnDynSim">
+                      <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                      Simulace kmitu
+                    </button>
+                  </div>
+                  <div class="sim-slider-group">
+                    <span>SPL (Akustický tlak):</span>
+                    <input type="range" id="dynSplSlider" min="1" max="5" value="3">
+                  </div>
+                  <span class="formula" style="font-size: 0.78rem;">U = -N &middot; d&Phi; / dt</span>
+                </div>
+              </div>
+
+              <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <h4 style="color: #60a5fa; margin-bottom: 0.5rem;">Fyzika a praxe dynamického mikrofonu</h4>
+                  <ul class="styled-list" style="font-size: 0.88rem;">
+                    <li><strong>Princip měniče:</strong> Kmitací cívka pevně spojená s membránou se pohybuje v magnetickém poli permanentního magnetu. Podle Faradayova indukčního zákona se v cívce generuje střídavé napětí úměrné <em>rychlosti pohybu</em> membrány.</li>
+                    <li><strong>Mechanická odolnost:</strong> Robustní konstrukce odolá extrémnímu akustickému tlaku (SPL &gt; 150 dB) bez saturace či destrukce membrány.</li>
+                    <li><strong>Pasivní technologie:</strong> Nevyžaduje žádné baterie ani Phantomové napájení +48V. Funguje okamžitě po zapojení.</li>
+                    <li><strong>Tranzientní odezva:</strong> Větší setrvačná hmotnost systému (membrána + měděná cívka) vede k pomalejší odezvě na mikrosekundové náběhy (tranzienty) &rarr; příjemný, zakulacený zvuk.</li>
+                  </ul>
+                </div>
+                <div class="spec-box" style="margin-top: 0.5rem;">
+                  <div class="spec-param"><span class="spec-name">Standardní citlivost:</span><span class="spec-value">1.5 &ndash; 2.5 mV/Pa (&minus;56 dBV)</span></div>
+                  <div class="spec-param"><span class="spec-name">Typičtí zástupci:</span><span class="spec-value">Shure SM58, Shure SM7B, EV RE20</span></div>
+                  <div class="spec-param"><span class="spec-name">Využití:</span><span class="spec-value">Živé koncerty, bicí nástroje, kytarová komba, rozhlas</span></div>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <!-- TAB 2: KONDENZÁTOROVÝ MIKROFON -->
+          <div class="tab-panel" id="tab-cond">
+            <div class="workbench-container">
+              <div class="transducer-diagram-card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <span style="font-weight: 700; font-size: 0.9rem; color: #f472b6;">Elektrostatický měnič (Variable Capacitor)</span>
+                  <span class="tag" style="background: rgba(244, 114, 182, 0.15); color: #fbcfe8; border: 1px solid rgba(244, 114, 182, 0.3);">Phantom +48V nutný</span>
+                </div>
+
+                <div class="transducer-svg-wrap">
+                  <svg id="svgCondenserMic" viewBox="0 0 520 230" width="100%" height="100%">
+                    <!-- Akustické vlny -->
+                    <g id="condSoundWaves" opacity="0.85">
+                      <path d="M 30,50 Q 55,115 30,180" fill="none" stroke="#ec4899" stroke-width="2.5" stroke-linecap="round" />
+                      <path d="M 60,60 Q 85,115 60,170" fill="none" stroke="#ec4899" stroke-width="2.5" stroke-linecap="round" />
+                      <path d="M 90,70 Q 115,115 90,160" fill="none" stroke="#ec4899" stroke-width="2.5" stroke-linecap="round" />
+                    </g>
+                    <text x="35" y="35" fill="#ec4899" font-size="11" font-weight="600">Akustický tlak (p)</text>
+
+                    <!-- Kapsle kondenzátoru -->
+                    <rect x="150" y="35" width="120" height="160" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+
+                    <!-- Pohyblivá přední pozlacená membrána -->
+                    <g id="condDiaphragmGroup" transform="translate(0,0)">
+                      <line id="condDiaphragmLine" x1="175" y1="45" x2="175" y2="185" stroke="#fbbf24" stroke-width="3" stroke-linecap="round" />
+                      <text x="115" y="215" fill="#fbbf24" font-size="10" font-weight="600">Pozlacená membrána</text>
+                    </g>
+
+                    <!-- Vzduchová mezera d -->
+                    <text x="180" y="115" fill="#94a3b8" font-size="9" font-family="monospace">d</text>
+
+                    <!-- Pevná zadní elektroda (Backplate) s perforací -->
+                    <rect x="200" y="50" width="14" height="130" rx="2" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1" />
+                    <!-- Perforace v backplate -->
+                    <circle cx="207" cy="70" r="2.5" fill="#1e293b" />
+                    <circle cx="207" cy="95" r="2.5" fill="#1e293b" />
+                    <circle cx="207" cy="120" r="2.5" fill="#1e293b" />
+                    <circle cx="207" cy="145" r="2.5" fill="#1e293b" />
+                    <text x="220" y="65" fill="#cbd5e1" font-size="10">Pevná deska (Backplate)</text>
+
+                    <!-- Elektrický obvod: Phantom +48V + Rezistor 1 G-ohm + FET -->
+                    <!-- Vodič od membrány do země -->
+                    <path d="M 175,185 L 175,195 L 290,195" fill="none" stroke="#64748b" stroke-width="1.5" />
+                    <line x1="290" y1="190" x2="290" y2="200" stroke="#64748b" stroke-width="2" />
+                    <line x1="285" y1="195" x2="295" y2="195" stroke="#64748b" stroke-width="2" />
+
+                    <!-- Vodič z backplate přes 1 Gohm rezistor k +48V -->
+                    <path d="M 214,115 L 280,115 L 280,75" fill="none" stroke="#ec4899" stroke-width="1.5" />
+                    <!-- Rezistor Rg -->
+                    <rect x="272" y="50" width="16" height="25" fill="#334155" stroke="#f43f5e" stroke-width="1.5" />
+                    <text x="295" y="67" fill="#f43f5e" font-size="9" font-family="monospace">R (1 G&Omega;)</text>
+
+                    <!-- Zdroj +48V DC -->
+                    <circle id="phantomIndicatorCircle" cx="280" cy="30" r="10" fill="#ec4899" />
+                    <text x="270" y="34" fill="#fff" font-size="9" font-weight="bold">+48V</text>
+
+                    <!-- Signálová cesta do FET převodníku -->
+                    <path d="M 280,115 L 340,115" fill="none" stroke="#38bdf8" stroke-width="2" />
+                    <!-- FET blok -->
+                    <rect x="340" y="85" width="55" height="60" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />
+                    <text x="352" y="112" fill="#38bdf8" font-size="11" font-weight="bold">FET</text>
+                    <text x="345" y="130" fill="#94a3b8" font-size="8">High-Z &rarr; Low-Z</text>
+
+                    <!-- Výstup do osciloskopu -->
+                    <path d="M 395,115 L 420,115" fill="none" stroke="#10b981" stroke-width="2" />
+                    <rect x="420" y="70" width="90" height="90" rx="6" fill="#0f172a" stroke="#10b981" stroke-width="1.5" />
+                    <text x="426" y="86" fill="#94a3b8" font-size="8" font-family="monospace">VÝSTUPNÍ AUDIO</text>
+                    <path id="condOscWave" d="M 425,115 Q 435,90 445,115 T 465,115 T 485,115 T 505,115" fill="none" stroke="#10b981" stroke-width="2" />
+                    <text id="condLiveCapLabel" x="426" y="148" fill="#10b981" font-size="9" font-family="monospace">&Delta;C = &plusmn;0.8 pF</text>
+                  </svg>
+                </div>
+
+                <div class="interactive-controls-row">
+                  <div style="display:flex; gap: 0.5rem;">
+                    <button class="sim-btn active" id="btnCondPhantom">
+                      <svg class="icon" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                      Phantom +48V: ZAPNUTO
+                    </button>
+                    <button class="sim-btn active" id="btnCondSim">
+                      <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                      Simulace kmitu
+                    </button>
+                  </div>
+                  <span class="formula" style="font-size: 0.78rem;">C = &epsilon; &middot; S / d(t) &bull; Q = C &middot; U</span>
+                </div>
+              </div>
+
+              <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <h4 style="color: #f472b6; margin-bottom: 0.5rem;">Fyzika a vlastnosti kondenzátorové vložky</h4>
+                  <ul class="styled-list" style="font-size: 0.88rem;">
+                    <li><strong>Princip měniče:</strong> Dvě elektrody tvoří elektrický kondenzátor. Přední elektroda je ultratenká pozlacená membrána (tloušťka pouhých 3–6 mikrometrů), zadní je pevná deska (Backplate).</li>
+                    <li><strong>Změna kapacity &Delta;C:</strong> Akustický tlak vychyluje membránu a mění vzdálenost <i>d</i>. Při konstantním náboji <i>Q</i> se změna kapacity projevuje jako napěťový střídavý signál <span class="formula">u(t) = Q / C(t)</span>.</li>
+                    <li><strong>Proč je nutný Phantom +48V:</strong> 
+                      1) Polarizuje elektrody kondenzátoru (pokud nejde o elektret).<br>
+                      2) Napájí vnitřní impedanční převodník (FET tranzistor), který převádí gigaohmovou impedanci kapsle na standardních 150 &Omega; pro studio.</li>
+                    <li><strong>Blesková odezva (Tranzienty):</strong> Zanedbatelná hmotnost membrány umožňuje okamžitou reakci na náběhy perkusí, dechů a vysokých frekvencí (20 Hz &ndash; 20 kHz &plusmn;1 dB).</li>
+                  </ul>
+                </div>
+                <div class="spec-box" style="margin-top: 0.5rem;">
+                  <div class="spec-param"><span class="spec-name">Standardní citlivost:</span><span class="spec-value">15 &ndash; 30 mV/Pa (&minus;36 dBV) &bull; 10&times; vyšší než dyn.</span></div>
+                  <div class="spec-param"><span class="spec-name">Typičtí zástupci:</span><span class="spec-value">Neumann U87 Ai, AKG C414, R&oslash;de NT1-A</span></div>
+                  <div class="spec-param"><span class="spec-name">Využití:</span><span class="spec-value">Studiový zpěv, dabing, akustické nástroje, filmové postsynchrony</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: COMPARISON MATRIX -->
+          <div class="tab-panel" id="tab-compare">
             <div class="content-card">
-              <h4 style="color: #f472b6;">Kondenzátorový mikrofon (Elektrostatický)</h4>
-              <ul class="styled-list">
-                <li><strong>Princip:</strong> Ultralehká pozlacená membrána tvoří jednu elektrodu kondenzátoru, pevná deska druhou. Změna vzdálenosti mění kapacitu <span class="formula"><i>C</i> = &epsilon; &middot; <i>S</i> / <i>d</i></span>.</li>
-                <li><strong>Phantomové napájení +48V:</strong> Nutné pro polarizaci vložky a napájení vnitřního impedančního převodníku (FET tranzistor).</li>
-                <li><strong>Vlastnosti:</strong> Extrémně rychlá odezva na tranzienty (náběhy tónů), široký frekvenční rozsah (20 Hz &ndash; 20 kHz), křišťálová čistota detailů.</li>
-                <li><strong>Použití:</strong> Profesionální nahrávací studia, vokály, akustické nástroje, filmové postsynchrony (Neumann U87, Røde NT1).</li>
-              </ul>
+              <h4 style="margin-bottom: 0.75rem;">Systematické porovnání měničů pro zkoušku z multimédií</h4>
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--border-color); color: var(--text-muted);">
+                    <th style="padding: 0.5rem;">Vlastnost / Parametr</th>
+                    <th style="padding: 0.5rem; color: #60a5fa;">Dynamický mikrofon (Moving Coil)</th>
+                    <th style="padding: 0.5rem; color: #f472b6;">Kondenzátorový mikrofon (Elektrostatický)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.5rem; font-weight: 600;">Fyzikální princip</td>
+                    <td style="padding: 0.5rem;">Elektromagnetická indukce (pohyb cívky v magnetu)</td>
+                    <td style="padding: 0.5rem;">Změna kapacity dvou desek kondenzátoru (C = &epsilon;S/d)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.5rem; font-weight: 600;">Napájení (+48V Phantom)</td>
+                    <td style="padding: 0.5rem; color: #10b981;">NE (zcela pasivní, funguje bez proudu)</td>
+                    <td style="padding: 0.5rem; color: #ef4444; font-weight: 600;">ANO (nutné pro polarizaci a interní FET předzesilovač)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.5rem; font-weight: 600;">Výstupní citlivost</td>
+                    <td style="padding: 0.5rem;">Nízká (cca 1.5 &ndash; 2.5 mV/Pa, vyžaduje vysoký zisk preampu)</td>
+                    <td style="padding: 0.5rem;">Vysoká (cca 15 &ndash; 35 mV/Pa, 10&times; až 20&times; silnější signál)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.5rem; font-weight: 600;">Odezva na tranzienty</td>
+                    <td style="padding: 0.5rem;">Pomalejší (vyšší mechanická setrvačnost kmitací cívky)</td>
+                    <td style="padding: 0.5rem;">Extrémně rychlá a přesná (ultralehká pozlacená fólie 3 &mu;m)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.5rem; font-weight: 600;">Maximální SPL (akustický tlak)</td>
+                    <td style="padding: 0.5rem; color: #10b981; font-weight: 600;">Extrémní (&gt; 150 dB SPL, prakticky nelze přebudit)</td>
+                    <td style="padding: 0.5rem;">Střední až vysoký (130 &ndash; 140 dB SPL, hrozí limitace FETu)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.5rem; font-weight: 600;">Odolnost vůči vlhku a pádu</td>
+                    <td style="padding: 0.5rem; color: #10b981;">Vynikající (vydrží pády na pódiu, déšť i hrubé zacházení)</td>
+                    <td style="padding: 0.5rem; color: #f59e0b;">Křehký (prach, vlhkost a nárazy mohou poškodit kapsli)</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0.5rem; font-weight: 600;">Hlavní oblast nasazení</td>
+                    <td style="padding: 0.5rem;">Živé koncerty, bicí, kytarové aparáty, hlučné prostředí</td>
+                    <td style="padding: 0.5rem;">Studiový vokál, rozhlas, akustická kytara, filmové ruchy</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: SMĚROVÉ CHARAKTERISTIKY -->
+      <!-- SLIDE 3: PROSTOROVÁ SMĚROVOST & POLÁRNÍ GRAFY -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Prostorová směrovost</div>
-            <h2 class="slide-title">Polární směrové charakteristiky mikrofonů</h2>
-            <p class="slide-subtitle">Závislost citlivosti mikrofonu na úhlu dopadu zvukové vlny</p>
+            <div class="slide-category">Prostorová směrovost &bull; Polární charakteristiky</div>
+            <h2 class="slide-title">Polární diagramy a Proximity efekt</h2>
+            <p class="slide-subtitle">Závislost citlivosti mikrofonu na úhlu dopadu zvukové vlny a frekvenční chování v blízkém poli</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Zkouškový koncept</span>
+            <span class="tag tag-exam">Interaktivní diagram</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="media-compare-grid">
-            <div class="content-card">
-              <span class="format-pill lossless">Kardioida (Ledvina)</span>
-              <h4 style="margin: 0.5rem 0;">Přední citlivost 0&deg;</h4>
-              <p style="font-size: 0.85rem;">Maximální příjem zpředu, potlačení zvuku ze zadní strany (180&deg;). Zabraňuje zpětné vazbě (feedbacku) od pódiových odposlechů. Nejčastější studiová charakteristika.</p>
+          <div class="polar-layout">
+            <!-- LEVÝ SLOUPEC: INTERAKTIVNÍ POLÁRNÍ GRAF -->
+            <div class="polar-chart-card">
+              <div class="polar-svg-wrap">
+                <svg id="svgPolarChart" viewBox="-135 -135 270 270" width="100%" height="100%">
+                  <!-- Soustředné kružnice útlumu (dB) -->
+                  <circle cx="0" cy="0" r="120" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+                  <circle cx="0" cy="0" r="90" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+                  <circle cx="0" cy="0" r="60" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+                  <circle cx="0" cy="0" r="30" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+
+                  <!-- Texty decibelových hladin -->
+                  <text x="3" y="-122" fill="#94a3b8" font-size="8" font-family="monospace">0 dB</text>
+                  <text x="3" y="-92" fill="#64748b" font-size="8" font-family="monospace">-6 dB</text>
+                  <text x="3" y="-62" fill="#64748b" font-size="8" font-family="monospace">-12 dB</text>
+                  <text x="3" y="-32" fill="#64748b" font-size="8" font-family="monospace">-18 dB</text>
+
+                  <!-- Radiální úhlové osy -->
+                  <line x1="0" y1="-125" x2="0" y2="125" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+                  <line x1="-125" y1="0" x2="125" y2="0" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+                  <line x1="-88" y1="-88" x2="88" y2="88" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="2,2" />
+                  <line x1="-88" y1="88" x2="88" y2="-88" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="2,2" />
+
+                  <!-- Úhlové popisky -->
+                  <text x="0" y="-127" text-anchor="middle" fill="#38bdf8" font-size="9" font-weight="bold">0&deg; (Přední osa)</text>
+                  <text x="130" y="3" fill="#94a3b8" font-size="8">90&deg;</text>
+                  <text x="0" y="134" text-anchor="middle" fill="#94a3b8" font-size="8">180&deg; (Zadní)</text>
+                  <text x="-132" y="3" fill="#94a3b8" font-size="8">270&deg;</text>
+
+                  <!-- Symbol mikrofonu uprostřed -->
+                  <rect x="-6" y="-12" width="12" height="24" rx="3" fill="#334155" stroke="#94a3b8" stroke-width="1" />
+                  <line x1="0" y1="-12" x2="0" y2="-18" stroke="#38bdf8" stroke-width="2" />
+
+                  <!-- Vykreslená polární křivka (dynamicky přepisována JS) -->
+                  <path id="polarCurvePath" d="" fill="rgba(236, 72, 153, 0.2)" stroke="#ec4899" stroke-width="2.5" />
+
+                  <!-- Interaktivní indikátor úhlu a paprsek zdroje zvuku -->
+                  <line id="polarAngleRay" x1="0" y1="0" x2="0" y2="-120" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3,3" />
+                  <circle id="polarSoundSourceDot" cx="0" cy="-120" r="6" fill="#f59e0b" stroke="#fff" stroke-width="1.5" />
+                </svg>
+              </div>
+
+              <!-- Tlačítka pro volbu charakteristiky -->
+              <div class="polar-controls-grid">
+                <button class="polar-btn" data-pattern="omni">Kulová (Omni)</button>
+                <button class="polar-btn active" data-pattern="cardioid">Kardioida</button>
+                <button class="polar-btn" data-pattern="supercardioid">Superkardioida</button>
+                <button class="polar-btn" data-pattern="figure8">Osmička</button>
+                <button class="polar-btn" data-pattern="shotgun">Shotgun</button>
+              </div>
+
+              <!-- Posuvník úhlu zdroje zvuku -->
+              <div class="polar-angle-bar">
+                <span>Úhel zdroje zvuku (&theta;):</span>
+                <input type="range" id="polarAngleInput" min="0" max="360" value="0" style="width: 110px; accent-color: #f59e0b;">
+                <span id="polarAngleDisplay" style="font-family: monospace; font-weight: 700; color: #f59e0b;">0&deg;</span>
+              </div>
             </div>
-            <div class="content-card">
-              <span class="format-pill uncompressed">Kulová (Omni)</span>
-              <h4 style="margin: 0.5rem 0;">Všesměrová 360&deg;</h4>
-              <p style="font-size: 0.85rem;">Snímá rovnoměrně ze všech úhlů bez zabarvení. Netrpí proximity efektem. Ideální pro klopové mikrofony (Lavalier), měřicí akustické mikrofony a nahrávání atmosféry sálu.</p>
-            </div>
-            <div class="content-card">
-              <span class="format-pill lossy">Osmičková (Figure-8)</span>
-              <h4 style="margin: 0.5rem 0;">Přední a zadní příjem</h4>
-              <p style="font-size: 0.85rem;">Snímá osu 0&deg; a 180&deg;, zcela hluchá ze stran (90&deg; a 270&deg;). Přirozená vlastnost páskových mikrofonů. Využívá se pro stereo snímání technikou Blumlein nebo M/S (Mid-Side).</p>
-            </div>
-          </div>
-          <div class="callout callout-warning" style="margin-top: 0.6rem;">
-            <div class="callout-icon">
-              <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            </div>
-            <div class="callout-content">
-              <div class="callout-title">Proximity efekt (Efekt přiblížení)</div>
-              <p>Při přiblížení zdroje zvuku k tlakově-gradientnímu mikrofonu (kardioida, osmička) na vzdálenost pod 10 cm dochází k dramatickému nárůstu basových frekvencí (až o +15 dB na 100 Hz). Používá se pro dosažení "rozhlasového hlubokého hlasu", ale vyžaduje pop-filtr a High-Pass filtr pro potlačení retnic (P, B).</p>
+
+            <!-- PRAVÝ SLOUPEC: STRUKTUROVANÝ VÝKLAD A PROXIMITY EFEKT -->
+            <div style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="polar-stats-grid">
+                <div class="polar-stat-box">
+                  <div class="polar-stat-label">Citlivost na úhlu</div>
+                  <div class="polar-stat-val" id="polarStatDb">0.0 dB</div>
+                </div>
+                <div class="polar-stat-box">
+                  <div class="polar-stat-label">Útlum na 180&deg; (Zezadu)</div>
+                  <div class="polar-stat-val" id="polarStatRear">&minus;25 dB</div>
+                </div>
+                <div class="polar-stat-box">
+                  <div class="polar-stat-label">Hluché úhly (Nulls)</div>
+                  <div class="polar-stat-val" id="polarStatNulls">180&deg;</div>
+                </div>
+              </div>
+
+              <div class="content-card" style="margin-bottom: 0.6rem;">
+                <h4 id="polarTitle" style="color: #ec4899; margin-bottom: 0.35rem;">Kardioidní charakteristika (Ledvina)</h4>
+                <p id="polarDesc" style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45;">
+                  Přední snímání v ose 0&deg;, boční útlum &minus;6 dB na 90&deg; a maximální potlačení &minus;25 až &minus;30 dB ze zadní strany (180&deg;). Zabraňuje zpětné vazbě (feedbacku) od pódiových monitorů. Standard v 85 % nahrávání.
+                </p>
+                <div id="polarPhysicsNote" style="font-size: 0.78rem; color: #38bdf8; margin-top: 0.4rem; padding: 0.4rem 0.6rem; background: rgba(56, 189, 248, 0.08); border-radius: 4px;">
+                  <strong>Konstrukční princip:</strong> Tlakově-gradientní měnič s fázovým labyrintem (akustický odpor zpomalí zadní vlnu tak, že na zadní straně membrány dojde k fázovému odečtení).
+                </div>
+              </div>
+
+              <!-- PROXIMITY EFEKT -->
+              <div class="callout callout-warning" style="margin: 0; padding: 0.75rem 1rem;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title" style="font-size: 0.9rem;">Proximity efekt (Fyzika, důsledky a řešení)</div>
+                  <p style="font-size: 0.82rem; margin-top: 0.2rem;">
+                    <strong>Fyzikální příčina:</strong> U všech tlakově-gradientních mikrofonů (kardioida, superkardioida, osmička) dochází při přiblížení zdroje ke kapsli (&lt; 10 cm) k fázovému posunu sférické vlny, který způsobí nárůst basů <strong>až o +15 dB pod 100 Hz</strong>.<br>
+                    <strong>Pozor:</strong> Kulový mikrofon (tlakový) proximity efektem <em>vůbec netrpí</em>!<br>
+                    <strong>Řešení v praxi:</strong> Zapnutí <strong>High-Pass filtru (Low-Cut na 80 Hz)</strong> a použití pop-filtru proti explozivním souhláskám (P, B, T).
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4: PŘEDZESILOVAČE A GAIN STAGING -->
+      <!-- SLIDE 4: SIGNÁLOVÝ ŘETĚZEC & GAIN STAGING -->
       <section class="slide" data-slide="4">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Signálový řetězec</div>
-            <h2 class="slide-title">Předzesilovače, symetrický přenos &bull; Gain Staging</h2>
-            <p class="slide-subtitle">Cesta signálu od milivoltů z mikrofonu po linkovou úroveň v DAW</p>
+            <h2 class="slide-title">Studiový signálový řetězec a Gain Staging</h2>
+            <p class="slide-subtitle">Vizuální cesta signálu od milivoltů z kapsle po digitální reprezentaci a odposlech</p>
           </div>
           <div class="slide-tags">
             <span class="tag">Audio inženýring</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Signálové úrovně v praxi</h4>
-              <ul class="styled-list">
-                <li><strong>Mikrofonní úroveň (Mic Level):</strong> Slabý signál cca 1 až 10 mV (&minus;60 až &minus;40 dBu). Náchylný na elektromagnetické rušení.</li>
-                <li><strong>Linková úroveň (Line Level):</strong> Standardizovaná úroveň pro propojování zařízení: profesionální <strong>+4 dBu (1.23 V)</strong> a spotřebitelská <strong>&minus;10 dBV (0.316 V)</strong>.</li>
-                <li><strong>Předzesilovač (Preamp):</strong> Zajišťuje čisté zesílení o +40 až +70 dB s minimálním vlastním šumem (Equivalent Input Noise <span class="formula">EIN &lt; &minus;128 dBu</span>).</li>
-              </ul>
+          <div class="pipeline-container">
+            <!-- VIZUÁLNÍ PIPELINE BLOKY -->
+            <div class="pipeline-flow">
+              <div class="pipeline-node active" data-step="1">
+                <div class="pipeline-node-num">1</div>
+                <div class="pipeline-node-title">Mikrofon &bull; Kapsle</div>
+                <div class="pipeline-node-level">Mic Level (&minus;50 dBu)</div>
+              </div>
+              <div class="pipeline-node" data-step="2">
+                <div class="pipeline-node-num">2</div>
+                <div class="pipeline-node-title">Symetrické XLR</div>
+                <div class="pipeline-node-level">Hot / Cold / GND</div>
+              </div>
+              <div class="pipeline-node" data-step="3">
+                <div class="pipeline-node-num">3</div>
+                <div class="pipeline-node-title">Předzesilovač (Preamp)</div>
+                <div class="pipeline-node-level">+50 dB zisk &bull; +48V</div>
+              </div>
+              <div class="pipeline-node" data-step="4">
+                <div class="pipeline-node-num">4</div>
+                <div class="pipeline-node-title">A/D Převodník (ADC)</div>
+                <div class="pipeline-node-level">24-bit / 48&ndash;96 kHz</div>
+              </div>
+              <div class="pipeline-node" data-step="5">
+                <div class="pipeline-node-num">5</div>
+                <div class="pipeline-node-title">DAW &bull; DSP Mix</div>
+                <div class="pipeline-node-level">32-bit float interně</div>
+              </div>
+              <div class="pipeline-node" data-step="6">
+                <div class="pipeline-node-num">6</div>
+                <div class="pipeline-node-title">DAC &bull; Monitory</div>
+                <div class="pipeline-node-level">Line Level (+4 dBu)</div>
+              </div>
             </div>
-            <div class="content-card">
-              <h4>Symetrické vedení (Balanced Audio)</h4>
-              <ul class="styled-list">
-                <li>Využívá třívodičové vedení (konektor XLR nebo TRS Jack 6.3 mm): <em>Hot (+), Cold (&minus;) a Ground</em>.</li>
-                <li>Signál na vodiči Cold je fázově otočen o 180&deg;.</li>
-                <li><strong>CMRR (Common Mode Rejection Ratio):</strong> Na vstupu diferenciální zesilovač signály odečte: užitečný signál se zdvojnásobí, zatímco parazitní šum indukovaný do obou vodičů se zcela vyruší!</li>
-              </ul>
+
+            <!-- DETAIL VYBRANÉHO KROKU + GAIN STAGING LADDER -->
+            <div class="pipeline-details-grid">
+              <!-- LEVÝ BLOK: DETAIL KROKU + CMRR ANIMACE -->
+              <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                    <h4 id="pipeDetailTitle" style="color: var(--accent);">Krok 1: Mikrofonní kapsle a Mic Level</h4>
+                    <span class="tag" id="pipeDetailTag">Vstupní úroveň</span>
+                  </div>
+                  <p id="pipeDetailText" style="font-size: 0.88rem; line-height: 1.45; color: var(--text-secondary);">
+                    Kapsle generuje nepatrné napětí cca 1 až 10 mV (&minus;60 až &minus;40 dBu) s výstupní impedancí 150–200 &Omega;. Signál je vysoce zranitelný vůči elektromagnetickému smogu (brum 50 Hz, WiFi, spínané zdroje).
+                  </p>
+                </div>
+
+                <!-- ANIMOVANÝ CMRR BOX PRO KROK 2 A SYMETRII -->
+                <div id="cmrrContainer" style="margin-top: 0.6rem;">
+                  <div style="font-size: 0.82rem; font-weight: 700; color: #60a5fa; margin-bottom: 0.2rem;">
+                    Princip symetrického vedení (CMRR &ndash; Common Mode Rejection Ratio):
+                  </div>
+                  <div class="cmrr-box">
+                    <div>Vodič Hot (Pin 2):&nbsp; <span style="color: #38bdf8;">V<sub>+</sub> = +S + N</span> &nbsp;(Užitečný signál + naindukovaný šum)</div>
+                    <div>Vodič Cold (Pin 3): <span style="color: #ec4899;">V<sub>&minus;</sub> = &minus;S + N</span> &nbsp;(Otočený signál 180&deg; + stejný šum)</div>
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.3rem; color: #10b981; font-weight: bold;">
+                      Diferenciální vstup: V<sub>out</sub> = V<sub>+</sub> &minus; V<sub>&minus;</sub> = (+S + N) &minus; (&minus;S + N) = 2S
+                    </div>
+                  </div>
+                  <p style="font-size: 0.78rem; color: var(--text-muted);">
+                    Výsledek: Užitečný signál se zdvojnásobí (+6 dB), zatímco parazitní šum <i>N</i> se matematicky odečte a zanikne!
+                  </p>
+                </div>
+              </div>
+
+              <!-- PRAVÝ BLOK: GAIN STAGING ŽEBŘÍČEK -->
+              <div class="gain-meter-card">
+                <div>
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                    <h4 style="font-size: 0.95rem; color: #f59e0b;">Gain Staging &bull; Žebříček úrovní</h4>
+                    <span class="tag" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3);">Rezerva (Headroom)</span>
+                  </div>
+                  <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem;">
+                    Správné nastavení zisku zajišťuje maximální odstup signálu od šumu (SNR) bez hrozby digitálního clippingu.
+                  </p>
+                </div>
+
+                <div class="ladder-track">
+                  <div class="ladder-tier clip">
+                    <span class="ladder-value" style="color: #ef4444;">0 dBFS</span>
+                    <span class="ladder-desc"><strong>Digitální strop:</strong> Okamžitý tvrdý clipping a nevratné zkreslení!</span>
+                  </div>
+                  <div class="ladder-tier sweet">
+                    <span class="ladder-value" style="color: #10b981;">&minus;18 dBFS</span>
+                    <span class="ladder-desc"><strong>Studiový Sweet Spot:</strong> Cílová špička záznamu v DAW (odpovídá 0 VU / +4 dBu).</span>
+                  </div>
+                  <div class="ladder-tier line-pro">
+                    <span class="ladder-value" style="color: #60a5fa;">+4 dBu</span>
+                    <span class="ladder-desc"><strong>Profi linka (1.23 V):</strong> Mixpulty, zvukové karty, monitory (XLR/TRS).</span>
+                  </div>
+                  <div class="ladder-tier line-cons">
+                    <span class="ladder-value" style="color: #06b6d4;">&minus;10 dBV</span>
+                    <span class="ladder-desc"><strong>Konzumní linka (0.316 V):</strong> Běžná spotřební elektronika, RCA Cinch.</span>
+                  </div>
+                  <div class="ladder-tier mic">
+                    <span class="ladder-value" style="color: #f59e0b;">&minus;50 dBu</span>
+                    <span class="ladder-desc"><strong>Mic Level (1&ndash;10 mV):</strong> Slabý signál vyžadující předzesilovač (+40 až +60 dB).</span>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.76rem; color: var(--text-muted); background: rgba(0,0,0,0.25); padding: 0.4rem 0.6rem; border-radius: 4px;">
+                  💡 <strong>Pravidlo pro praxi:</strong> V digitálním věku nenahráváme těsně pod 0 dBFS! Cílíme na &minus;18 dBFS RMS (špičky max &minus;10 dBFS), abychom měli headroom pro ekvalizéry a kompresory.
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: STUDIA A POSLECHOVÁ AKUSTIKA -->
+      <!-- SLIDE 5: ADC VIZUALIZACE – SKLÁDÁNÍ SINUSOVEK A A/D PŘEVOD -->
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Reprodukce a akustika</div>
-            <h2 class="slide-title">Studiové monitory a akustika prostoru</h2>
-            <p class="slide-subtitle">Proč nejdražší reproduktory v neošetřené místnosti nehrají přesně</p>
+            <div class="slide-category">Digitalizace zvuku &bull; ADC</div>
+            <h2 class="slide-title">Skládání frekvencí a A/D převod</h2>
+            <p class="slide-subtitle">Jak vzniká složený signál z jednoduchých sinusovek a co se děje při jeho digitalizaci</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Akustika</span>
+            <span class="tag tag-exam">Nyquist &bull; Vzorkování &bull; Kvantování</span>
           </div>
         </div>
-        <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Studiový monitor vs. Hi-Fi reproduktor</h4>
-              <ul class="styled-list">
-                <li><strong>Studiový monitor:</strong> Cílem je lineární frekvenční charakteristika (Flat Response) bez přikrášlení. Zvukař musí slyšet každou chybu, šum a frekvenční konflikt v mixu.</li>
-                <li><strong>Aktivní bi-amp konstrukce:</strong> Oddělený zesilovač pro basový měnič (Woofer) a výškový měnič (Tweeter) s přesnou aktivní výhybkou (Crossover).</li>
-                <li><strong>Near-field monitoring:</strong> Poslech z blízkého pole (1–1.5 m) minimalizuje vliv odrazů místnosti na přímý zvuk.</li>
-              </ul>
+        <div class="slide-body" style="display: flex; flex-direction: column; gap: 0.75rem;">
+
+          <!-- HORNÍ LIŠTA OVLÁDÁNÍ -->
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.6rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.55rem 1rem;">
+            <div style="display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;">
+              <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);">Frekvenční složky:</span>
+              <label id="lblComp1" class="adc-comp-toggle active" style="--comp-color: #38bdf8;" title="Složka 1">
+                <input type="checkbox" id="chkComp1" checked> f₁ = <span id="freq1Val">1</span> Hz
+              </label>
+              <label id="lblComp2" class="adc-comp-toggle active" style="--comp-color: #a855f7;" title="Složka 2">
+                <input type="checkbox" id="chkComp2" checked> f₂ = <span id="freq2Val">3</span> Hz
+              </label>
+              <label id="lblComp3" class="adc-comp-toggle" style="--comp-color: #f59e0b;" title="Složka 3">
+                <input type="checkbox" id="chkComp3"> f₃ = <span id="freq3Val">5</span> Hz
+              </label>
+              <label id="lblComp4" class="adc-comp-toggle" style="--comp-color: #10b981;" title="Složka 4">
+                <input type="checkbox" id="chkComp4"> f₄ = <span id="freq4Val">7</span> Hz
+              </label>
             </div>
-            <div class="content-card">
-              <h4>Akustické úpravy režie</h4>
-              <ul class="styled-list">
-                <li><strong>Stojaté vlnění (Room Modes):</strong> Vzniká interferencí odrazů basů od protilehlých stěn. Způsobuje propady a rezonance až &plusmn;20 dB na nízkých frekvencích.</li>
-                <li><strong>Basové pasti (Bass Traps):</strong> Masivní absorpční prvky z minerální vaty v rozích místnosti tlumící nízké frekvence.</li>
-                <li><strong>Difuzory (Schroeder / QRD):</strong> Rozptylují odrazy středních a vysokých frekvencí do prostoru bez "mrtvého" přesycení absorpcí.</li>
-              </ul>
+            <div style="display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;">
+              <div class="sim-slider-group">
+                <span>Vzork. frekvence:</span>
+                <input type="range" id="adcSampleRateSlider" min="4" max="40" value="16" step="2">
+                <span id="adcSampleRateVal" style="font-family: monospace; font-weight: 700; color: #ec4899; min-width: 50px;">16 Hz</span>
+              </div>
+              <div class="sim-slider-group">
+                <span>Bitová hloubka:</span>
+                <input type="range" id="adcBitDepthSlider" min="2" max="8" value="4" step="1">
+                <span id="adcBitDepthVal" style="font-family: monospace; font-weight: 700; color: #10b981; min-width: 30px;">4 bit</span>
+              </div>
+              <button class="sim-btn active" id="adcPlayBtn">
+                <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Animace
+              </button>
+            </div>
+          </div>
+
+          <!-- TŘÍPATROVÝ CANVAS -->
+          <div style="display: grid; grid-template-rows: 120px 120px 120px; gap: 0; height: 360px; flex-shrink: 0; border: 1px solid var(--border-color); border-radius: var(--radius-sm); overflow: hidden; position: relative;">
+
+            <!-- ŘÁDEK 1: FREKVENČNÍ SLOŽKY -->
+            <div style="position: relative; height: 120px; overflow: hidden; border-bottom: 1px solid var(--border-subtle);">
+              <div style="position: absolute; top: 4px; left: 8px; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); z-index:2; pointer-events:none;">&#9312; Frekvenční složky (Fourierovy siny)</div>
+              <canvas id="adcCanvasComp" style="display: block; width: 100%; height: 120px;"></canvas>
+            </div>
+
+            <!-- ŘÁDEK 2: SLOŽENÝ ANALOGOVÝ SIGNÁL -->
+            <div style="position: relative; height: 120px; overflow: hidden; border-bottom: 1px solid var(--border-subtle); background: rgba(236,72,153,0.03);">
+              <div style="position: absolute; top: 4px; left: 8px; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); z-index:2; pointer-events:none;">&#9313; Složený analogový signál (superpozice)</div>
+              <canvas id="adcCanvasAnalog" style="display: block; width: 100%; height: 120px;"></canvas>
+            </div>
+
+            <!-- ŘÁDEK 3: DIGITALIZOVANÝ SIGNÁL -->
+            <div style="position: relative; height: 120px; overflow: hidden; background: rgba(16,185,129,0.03);">
+              <div style="position: absolute; top: 4px; left: 8px; font-size: 0.72rem; font-weight: 700; color: var(--text-muted); z-index:2; pointer-events:none;">&#9314; Digitální reprezentace (vzorkování + kvantování)</div>
+              <div id="adcNyquistWarning" style="display: none; position: absolute; top: 4px; right: 8px; font-size: 0.72rem; font-weight: 700; color: #ef4444; z-index: 2;">&#9888; Aliasing! f<sub>s</sub> &lt; 2f<sub>max</sub> (Nyquist)</div>
+              <canvas id="adcCanvasDigital" style="display: block; width: 100%; height: 120px;"></canvas>
+            </div>
+          </div>
+
+          <!-- DOLNÍ POPISKY -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;">
+            <div style="background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.25); border-radius: 6px; padding: 0.4rem 0.7rem; font-size: 0.78rem;">
+              <strong style="color: #38bdf8;">Superpozice</strong><br>
+              <span style="color: var(--text-secondary);">Složitý zvuk = součet jednoduchých sin/cos vln různých frekvencí a amplitud (Fourierova věta).</span>
+            </div>
+            <div style="background: rgba(236,72,153,0.08); border: 1px solid rgba(236,72,153,0.25); border-radius: 6px; padding: 0.4rem 0.7rem; font-size: 0.78rem;">
+              <strong style="color: #ec4899;">Vzorkování</strong><br>
+              <span style="color: var(--text-secondary);">ADC měří hodnotu analogového signálu <em>f<sub>s</sub></em>-krát za sekundu. Dle Nyquista: f<sub>s</sub> &gt; 2 · f<sub>max</sub>.</span>
+            </div>
+            <div style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.25); border-radius: 6px; padding: 0.4rem 0.7rem; font-size: 0.78rem;">
+              <strong style="color: #10b981;">Kvantování</strong><br>
+              <span style="color: var(--text-secondary);">Každý vzorek se zaokrouhlí na nejbližší ze 2<sup>n</sup> hladin. <span id="adcQuantLevels" style="font-weight:700;">16 hladin (4 bit)</span>.</span>
+            </div>
+            <div style="background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25); border-radius: 6px; padding: 0.4rem 0.7rem; font-size: 0.78rem;">
+              <strong style="color: #f59e0b;">Rekonstrukce</strong><br>
+              <span style="color: var(--text-secondary);">DAC + rekonstrukční LP filtr vrátí analogový signál. Přesnost závisí na f<sub>s</sub> a bitové hloubce.</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SUMMARY -->
+      <!-- SLIDE 6: REPRODUKCE A AKUSTIKA -->
       <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Závěrečná syntéza</div>
-            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
-            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu ze záznamu a reprodukce zvuku</p>
+            <div class="slide-category">Reprodukce a akustika studia</div>
+            <h2 class="slide-title">Studiový poslech a prostorová akustika</h2>
+            <p class="slide-subtitle">Proč ani nejdražší monitory v neošetřené místnosti nehrají pravdivě</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Okruh absolutoria 9</span>
+            <span class="tag tag-exam">Zkouškový koncept</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="summary-grid">
-            <div class="summary-card">
-              <h4>Dynamický vs Kondenzátor</h4>
-              <p>Dynamický mikrofon je odolný vůči tlaku a nevyžaduje napájení. Kondenzátorový je citlivější s rychlou odezvou, vyžaduje +48V phantom.</p>
+          <div class="acoustic-layout">
+            <!-- LEVÝ SLOUPEC: INTERAKTIVNÍ PŮDORYS REŽIE STUDIA -->
+            <div class="room-plan-card">
+              <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <span style="font-size: 0.85rem; font-weight: 700; color: #a855f7;">Akustický půdorys režie</span>
+                <span class="tag" id="roomStateTag">Ošetřená režie</span>
+              </div>
+
+              <div class="room-svg-wrap">
+                <svg id="svgRoomPlan" viewBox="0 0 280 230" width="100%" height="100%">
+                  <!-- Stěny místnosti -->
+                  <rect x="20" y="15" width="240" height="200" rx="4" fill="#0f172a" stroke="#475569" stroke-width="2" />
+
+                  <!-- Basové pasti v rozích (Bass Traps) -->
+                  <g id="roomBassTraps">
+                    <polygon points="20,15 50,15 20,45" fill="#f59e0b" opacity="0.85" />
+                    <polygon points="260,15 230,15 260,45" fill="#f59e0b" opacity="0.85" />
+                    <polygon points="20,215 50,215 20,185" fill="#f59e0b" opacity="0.85" />
+                    <polygon points="260,215 230,215 260,185" fill="#f59e0b" opacity="0.85" />
+                  </g>
+
+                  <!-- Absorbéry prvních odrazů na bočních stěnách -->
+                  <g id="roomAbsorbers">
+                    <rect x="18" y="90" width="6" height="50" rx="2" fill="#ec4899" />
+                    <rect x="256" y="90" width="6" height="50" rx="2" fill="#ec4899" />
+                  </g>
+
+                  <!-- Difuzory Schroeder/QRD na zadní stěně -->
+                  <g id="roomDiffusors">
+                    <rect x="90" y="212" width="100" height="6" rx="2" fill="#06b6d4" />
+                  </g>
+
+                  <!-- Studiové monitory L & R -->
+                  <rect x="65" y="30" width="22" height="14" rx="2" fill="#3b82f6" transform="rotate(15, 76, 37)" />
+                  <text x="60" y="26" fill="#93c5fd" font-size="8" font-weight="bold">L</text>
+                  <rect x="193" y="30" width="22" height="14" rx="2" fill="#3b82f6" transform="rotate(-15, 204, 37)" />
+                  <text x="210" y="26" fill="#93c5fd" font-size="8" font-weight="bold">R</text>
+
+                  <!-- Zvukař a Sweet Spot -->
+                  <circle cx="140" cy="125" r="9" fill="#10b981" />
+                  <text x="120" y="146" fill="#6ee7b7" font-size="8" font-weight="bold">Sweet Spot (60&deg;)</text>
+
+                  <!-- Paprsky přímého zvuku (Direct Sound) -->
+                  <line x1="76" y1="37" x2="136" y2="120" stroke="#38bdf8" stroke-width="2" />
+                  <line x1="204" y1="37" x2="144" y2="120" stroke="#38bdf8" stroke-width="2" />
+
+                  <!-- Paprsky odrazů (Early Reflections) -->
+                  <g id="roomReflectionRays">
+                    <!-- Odraz od levé stěny -->
+                    <line x1="76" y1="37" x2="20" y2="105" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6" />
+                    <line x1="20" y1="105" x2="135" y2="123" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6" />
+                    <!-- Odraz od pravé stěny -->
+                    <line x1="204" y1="37" x2="260" y2="105" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6" />
+                    <line x1="260" y1="105" x2="145" y2="123" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="2,2" opacity="0.6" />
+                  </g>
+
+                  <!-- Neupravené stojaté vlnění (zobrazí se při neupraveném stavu) -->
+                  <g id="roomStandingWaves" opacity="0" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3,3">
+                    <line x1="20" y1="70" x2="260" y2="70" />
+                    <text x="90" y="67" fill="#ef4444" font-size="8" stroke="none">Stojaté vlnění &plusmn;18 dB (1. mód)</text>
+                    <line x1="20" y1="160" x2="260" y2="160" />
+                    <text x="90" y="157" fill="#ef4444" font-size="8" stroke="none">Stojaté vlnění &plusmn;18 dB (2. mód)</text>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Přepínač stavu místnosti -->
+              <div class="room-toggle-bar">
+                <button class="room-toggle-btn active" id="btnTreatedRoom">✅ Ošetřené studio</button>
+                <button class="room-toggle-btn" id="btnUnTreatedRoom">⚠️ Neupravená místnost</button>
+              </div>
             </div>
-            <div class="summary-card">
-              <h4>Kardioida &amp; Proximity</h4>
-              <p>Kardioidní směrovost potlačuje hluk zezadu. Při blízkém snímání do 10 cm zesiluje basové frekvence vlivem proximity efektu.</p>
+
+            <!-- PRAVÝ SLOUPEC: 4 STRUKTUROVANÉ PILÍŘE AKUSTIKY -->
+            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 0.6rem;">
+              <div class="grid-2" style="gap: 0.6rem;">
+                <div class="content-card" style="padding: 0.8rem 1rem;">
+                  <h4 style="color: #60a5fa; font-size: 0.95rem; margin-bottom: 0.3rem;">1. Studiový monitor vs. Hi-Fi</h4>
+                  <ul class="styled-list" style="font-size: 0.82rem; line-height: 1.4;">
+                    <li><strong>Lineární frekvenční odezva (Flat):</strong> Monitor nesmí nic "zkrášlovat". Cílem je slyšet chyby, šum a kolize ve frekvencích.</li>
+                    <li><strong>Aktivní Bi-amping:</strong> Samostatný zesilovač pro Woofer (basy) a Tweeter (výšky) s přesným aktivním crossoverem.</li>
+                    <li><strong>Near-field (0.8–1.5 m):</strong> Poslech z blízkého pole minimalizuje podíl odrazů místnosti vůči přímému zvuku.</li>
+                  </ul>
+                </div>
+
+                <div class="content-card" style="padding: 0.8rem 1rem;">
+                  <h4 style="color: #ec4899; font-size: 0.95rem; margin-bottom: 0.3rem;">2. Časový průběh &bull; Odrazy</h4>
+                  <ul class="styled-list" style="font-size: 0.82rem; line-height: 1.4;">
+                    <li><strong>Přímý zvuk (0&ndash;5 ms):</strong> Klíčový nosič lokalizace stereo báze a frekvenčního témbru.</li>
+                    <li><strong>První odrazy (5&ndash;40 ms):</strong> Odrazy od stěn a stolu způsobují <em>hřebenový filtr (Comb Filtering)</em> a fázový chaos.</li>
+                    <li><strong>Doba dozvuku RT<sub>60</sub>:</strong> Čas, za který akustický tlak poklesne o 60 dB. Cíl pro režii: <strong>0.2 až 0.35 s</strong>.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- ZKOUŠKOVÝ ROZDÍL: IZOLACE VS ÚPRAVA -->
+              <div class="content-card" style="padding: 0.85rem 1.1rem; border-left: 3px solid #f59e0b;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem;">
+                  <h4 style="color: #f59e0b; font-size: 0.95rem;">3. Klíčový rozdíl: Zvuková izolace vs. Akustická úprava</h4>
+                  <span class="tag tag-exam" style="font-size: 0.72rem;">Častá zkušební chyba</span>
+                </div>
+                <div class="grid-2" style="gap: 0.75rem; font-size: 0.82rem;">
+                  <div style="background: rgba(0,0,0,0.2); padding: 0.5rem; border-radius: 4px;">
+                    <strong style="color: #f87171;">Zvuková izolace (Soundproofing):</strong>
+                    <p style="color: var(--text-secondary); margin-top: 0.2rem;">
+                      Zabraňuje průniku zvuku <em>ven a dovnitř</em>. Vyžaduje masivní hmotnost (betonové zdi, dvojité sádrokartony, plovoucí podlahy "room-in-a-room"). Molitan ani plata od vajec zvuk neizolují!
+                    </p>
+                  </div>
+                  <div style="background: rgba(0,0,0,0.2); padding: 0.5rem; border-radius: 4px;">
+                    <strong style="color: #34d399;">Akustická úprava (Treatment):</strong>
+                    <p style="color: var(--text-secondary); margin-top: 0.2rem;">
+                      Upravuje chování zvuku <em>uvnitř místnosti</em>. <strong>Basové pasti</strong> v rozích tlumí stojaté vlnění (&plusmn;20 dB), <strong>širokopásmové absorbéry</strong> tlumí první odrazy a <strong>difuzory</strong> rozptylují energii.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="summary-card">
-              <h4>Symetrické XLR</h4>
-              <p>Přenáší Hot a otočený Cold signál. Diferenciální vstup odečtením eliminuje indukované elektromagnetické rušení (CMRR).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: SUMMARY & INTERAKTIVNÍ ZKOUŠKOVÝ KVÍZ -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza &bull; Zkušební okruh 9</div>
+            <h2 class="slide-title">Shrnutí lekce &amp; Interaktivní zkušební test</h2>
+            <p class="slide-subtitle">Ověření znalostí z techniky zvuku, měničů, řetězce a akustiky před absolutoriem</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Profilová zkouška VOŠ</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2" style="align-items: stretch; gap: 1.25rem;">
+            <!-- LEVÝ SLOUPEC: CHECKLIST ZKUŠEBNÍCH POŽADAVKŮ -->
+            <div style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div class="content-card" style="height: 100%;">
+                <h4 style="color: #a855f7; margin-bottom: 0.6rem;">Zkušební checklist &bull; Okruh č. 9 (Zvuková technika)</h4>
+                <div class="styled-list" style="font-size: 0.84rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                  <div>
+                    <strong style="color: #60a5fa;">1. Dynamický vs. Kondenzátorový mikrofon:</strong><br>
+                    <span style="color: var(--text-secondary);">Znalost Faradayova indukčního zákona vs. proměnného kondenzátoru (C = &epsilon;S/d), napájení +48V Phantom, odolnost vůči SPL a tranzienty.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #ec4899;">2. Směrové charakteristiky &amp; Proximity efekt:</strong><br>
+                    <span style="color: var(--text-secondary);">Schopnost načrtnout kardioidu, osmičku a kouli. Vysvětlení nárůstu basů při přiblížení u tlakově-gradientních měničů.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #38bdf8;">3. Symetrické vedení XLR &amp; Gain Staging:</strong><br>
+                    <span style="color: var(--text-secondary);">Matematické odečtení šumu v diferenciálním vstupu (CMRR). Úrovně Mic Level vs Line (+4 dBu) vs digitální strop 0 dBFS.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #10b981;">4. Poslechová akustika a studiové úpravy:</strong><br>
+                    <span style="color: var(--text-secondary);">Zásadní rozdíl mezi zvukovou izolací (hmota zdiva) a akustickou úpravou (absorpce, basové pasti, difuzory, RT60).</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="summary-card">
-              <h4>Zkušební otázka</h4>
-              <p>Porovnejte konstrukci dynamického a kondenzátorového mikrofonu. Nakreslete směrovou kardioidní charakteristiku a vysvětlete princip symetrického zapojení.</p>
+
+            <!-- PRAVÝ SLOUPEC: INTERAKTIVNÍ MINI-KVÍZ -->
+            <div class="quiz-wrapper" style="margin-top: 0; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div class="quiz-header">
+                  <span style="font-weight: 700; font-size: 0.95rem; color: #fbcfe8;">Interaktivní ověření znalostí</span>
+                  <span class="tag" id="quizScoreTag" style="background: rgba(236,72,153,0.15); color: #fbcfe8;">Otázka 1 / 4</span>
+                </div>
+                <div class="quiz-question-text" id="quizQuestionText">Načítání otázky...</div>
+                <div class="quiz-options-grid" id="quizOptionsContainer"></div>
+                <div class="quiz-feedback-box" id="quizFeedbackBox"></div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px solid var(--border-subtle);">
+                <span id="quizScoreCount" style="font-size: 0.8rem; color: var(--text-muted);">Správně: 0 / 4</span>
+                <button class="sim-btn" id="btnNextQuestion" style="display: none;">
+                  Další otázka &rarr;
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -255,14 +924,16 @@
       <div class="controls-left">
         <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
         <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+        <button class="control-btn" id="glossaryBtn" title="Slovník zkratek a veličin (G)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="15" y2="7"></line><line x1="9" y1="11" x2="15" y2="11"></line></svg>
+        </button>
       </div>
       <div class="controls-center">
         <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <span class="slide-counter" id="slideCounter">1 / 7</span>
         <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
       </div>
       <div class="controls-right">
-        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
         <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
         <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
       </div>
@@ -307,8 +978,1163 @@
       </div>
     </div>
 
+    <!-- ================================================ -->
+    <!-- MODÁLNÍ SLOVNÍK ZKRATEK, VELIČIN A JEDNOTEK      -->
+    <!-- ================================================ -->
+    <div class="modal-overlay" id="glossaryModal">
+      <div class="modal-dialog" style="max-width: 820px; width: 95vw; max-height: 88vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="flex-shrink: 0;">
+          <h3 style="display: flex; align-items: center; gap: 0.6rem;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="15" y2="7"></line><line x1="9" y1="11" x2="15" y2="11"></line></svg>
+            Slovník pojmů &bull; Zkratky, veličiny a jednotky
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+
+        <!-- Vyhledávací pole a filtry kategorií -->
+        <div style="padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; display: flex; flex-direction: column; gap: 0.6rem;">
+          <div style="position: relative;">
+            <svg class="icon" viewBox="0 0 24 24" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 1rem; height: 1rem;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="glossarySearch" placeholder="Hledat zkratku nebo pojem..." style="width: 100%; padding: 0.5rem 0.75rem 0.5rem 2.25rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 0.9rem; outline: none;">
+          </div>
+          <div id="glossaryCategoryBtns" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <button class="glossary-cat-btn active" data-cat="all">Vše</button>
+            <button class="glossary-cat-btn" data-cat="abbreviation">Zkratky</button>
+            <button class="glossary-cat-btn" data-cat="quantity">Veličiny</button>
+            <button class="glossary-cat-btn" data-cat="unit">Jednotky</button>
+            <button class="glossary-cat-btn" data-cat="connector">Konektory &amp; Hardware</button>
+            <button class="glossary-cat-btn" data-cat="software">Software &amp; Formáty</button>
+          </div>
+        </div>
+
+        <!-- Tělo slovníku (scrollovatelné) -->
+        <div class="modal-body" id="glossaryBody" style="overflow-y: auto; flex: 1; padding: 0.75rem 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; align-content: start;">
+          <!-- Položky generovány JavaScriptem -->
+        </div>
+
+        <div style="padding: 0.5rem 1.25rem; border-top: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0;">
+          <span id="glossaryResultCount">Zobrazeno všech 40 pojmů</span> &bull; Klávesová zkratka: <span class="key-badge">G</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
+  
+  <!-- INTERAKTIVNÍ LOGIKA SPECIFICKÁ PRO LEKCI MUL20-01 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // ==========================================
+      // 1. PŘEPÍNÁNÍ TABŮ (SNÍMEK 2)
+      // ==========================================
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const tabPanels = document.querySelectorAll('.tab-panel');
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => b.classList.remove('active'));
+          tabPanels.forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const target = btn.getAttribute('data-target');
+          const panel = document.getElementById(target);
+          if (panel) panel.classList.add('active');
+        });
+      });
+
+      // ==========================================
+      // 2. ANIMACE DYNAMICKÉHO MIKROFONU (SNÍMEK 2)
+      // ==========================================
+      let dynAnimRunning = true;
+      let dynSpl = 3;
+      let dynPhase = 0;
+      const dynVibratingSystem = document.getElementById('dynVibratingSystem');
+      const dynDiaphragm = document.getElementById('dynDiaphragm');
+      const dynOscWave = document.getElementById('dynOscWave');
+      const dynVoltageLabel = document.getElementById('dynVoltageLabel');
+      const btnDynSim = document.getElementById('btnDynSim');
+      const dynSplSlider = document.getElementById('dynSplSlider');
+
+      if (dynSplSlider) {
+        dynSplSlider.addEventListener('input', (e) => {
+          dynSpl = parseFloat(e.target.value);
+        });
+      }
+
+      if (btnDynSim) {
+        btnDynSim.addEventListener('click', () => {
+          dynAnimRunning = !dynAnimRunning;
+          btnDynSim.classList.toggle('active', dynAnimRunning);
+          btnDynSim.innerHTML = dynAnimRunning 
+            ? '<svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Simulace kmitu'
+            : '<svg class="icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg> Pozastaveno';
+        });
+      }
+
+      function animateDynamic() {
+        if (dynAnimRunning && dynVibratingSystem) {
+          dynPhase += 0.08;
+          const shift = Math.sin(dynPhase) * (dynSpl * 2.2);
+          dynVibratingSystem.setAttribute('transform', `translate(${shift}, 0)`);
+          
+          // Flexe membrány
+          const curveX = 145 + shift * 1.5;
+          dynDiaphragm.setAttribute('d', `M 170,40 Q ${curveX},115 170,190`);
+          
+          // Osciloskop generování
+          const amp = dynSpl * 5;
+          const waveD = `M 400,115 Q 412,${115 - amp * Math.cos(dynPhase)} 425,115 T 450,115 T 475,115 T 495,115`;
+          if (dynOscWave) dynOscWave.setAttribute('d', waveD);
+          if (dynVoltageLabel) {
+            const v = (Math.sin(dynPhase) * dynSpl * 0.8).toFixed(2);
+            dynVoltageLabel.textContent = `${v >= 0 ? '+' : ''}${v} mV AC`;
+          }
+        }
+        requestAnimationFrame(animateDynamic);
+      }
+      animateDynamic();
+
+      // ==========================================
+      // 3. ANIMACE KONDENZÁTOROVÉHO MIKROFONU (SNÍMEK 2)
+      // ==========================================
+      let condPhantomOn = true;
+      let condAnimRunning = true;
+      let condPhase = 0;
+      const btnCondPhantom = document.getElementById('btnCondPhantom');
+      const btnCondSim = document.getElementById('btnCondSim');
+      const condDiaphragmGroup = document.getElementById('condDiaphragmGroup');
+      const condOscWave = document.getElementById('condOscWave');
+      const condLiveCapLabel = document.getElementById('condLiveCapLabel');
+      const phantomIndicatorCircle = document.getElementById('phantomIndicatorCircle');
+
+      if (btnCondPhantom) {
+        btnCondPhantom.addEventListener('click', () => {
+          condPhantomOn = !condPhantomOn;
+          btnCondPhantom.classList.toggle('active', condPhantomOn);
+          if (condPhantomOn) {
+            btnCondPhantom.innerHTML = '<svg class="icon" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg> Phantom +48V: ZAPNUTO';
+            if (phantomIndicatorCircle) phantomIndicatorCircle.setAttribute('fill', '#ec4899');
+          } else {
+            btnCondPhantom.innerHTML = '<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg> Phantom +48V: VYPNUTO (Ticho!)';
+            if (phantomIndicatorCircle) phantomIndicatorCircle.setAttribute('fill', '#475569');
+          }
+        });
+      }
+
+      if (btnCondSim) {
+        btnCondSim.addEventListener('click', () => {
+          condAnimRunning = !condAnimRunning;
+          btnCondSim.classList.toggle('active', condAnimRunning);
+        });
+      }
+
+      function animateCondenser() {
+        if (condAnimRunning && condDiaphragmGroup) {
+          condPhase += 0.1;
+          const shift = Math.sin(condPhase) * 6;
+          condDiaphragmGroup.setAttribute('transform', `translate(${shift}, 0)`);
+
+          if (condOscWave && condLiveCapLabel) {
+            if (condPhantomOn) {
+              const amp = 14;
+              const waveD = `M 425,115 Q 435,${115 - amp * Math.cos(condPhase)} 445,115 T 465,115 T 485,115 T 505,115`;
+              condOscWave.setAttribute('d', waveD);
+              condOscWave.setAttribute('stroke', '#10b981');
+              condLiveCapLabel.textContent = `ΔC = ±${(Math.abs(shift)*0.2).toFixed(1)} pF (Aktivní)`;
+              condLiveCapLabel.setAttribute('fill', '#10b981');
+            } else {
+              condOscWave.setAttribute('d', 'M 425,115 L 505,115');
+              condOscWave.setAttribute('stroke', '#ef4444');
+              condLiveCapLabel.textContent = 'BEZ NAPÁJENÍ: 0 V';
+              condLiveCapLabel.setAttribute('fill', '#ef4444');
+            }
+          }
+        }
+        requestAnimationFrame(animateCondenser);
+      }
+      animateCondenser();
+
+      // ==========================================
+      // 4. POLÁRNÍ CHARAKTERISTIKY & SMĚROVOST (SNÍMEK 3)
+      // ==========================================
+      const polarCurvePath = document.getElementById('polarCurvePath');
+      const polarAngleRay = document.getElementById('polarAngleRay');
+      const polarSoundSourceDot = document.getElementById('polarSoundSourceDot');
+      const polarAngleInput = document.getElementById('polarAngleInput');
+      const polarAngleDisplay = document.getElementById('polarAngleDisplay');
+      const polarStatDb = document.getElementById('polarStatDb');
+      const polarStatRear = document.getElementById('polarStatRear');
+      const polarStatNulls = document.getElementById('polarStatNulls');
+      const polarTitle = document.getElementById('polarTitle');
+      const polarDesc = document.getElementById('polarDesc');
+      const polarPhysicsNote = document.getElementById('polarPhysicsNote');
+      const polarBtns = document.querySelectorAll('.polar-btn');
+
+      let currentPattern = 'cardioid';
+
+      const patternData = {
+        omni: {
+          name: 'Kulová charakteristika (Omnidirectional)',
+          desc: 'Rovnoměrný příjem ze všech úhlů (360°). Žádné fázové zabarvení mimo osu. Vůbec netrpí proximity efektem! Používá se pro klopové mikrofony (Lavalier), měřicí mikrofony akustiky místností a záznam ambientního sálu.',
+          physics: 'Konstrukční princip: Čistý tlakový měnič. Membrána uzavírá hermetickou komůrku ze zadní strany a snímá pouze absolutní hodnotu tlaku vzduchu.',
+          rearDb: '0 dB',
+          nulls: 'Žádné (360°)',
+          calcRadius: (thetaRad) => 1.0
+        },
+        cardioid: {
+          name: 'Kardioidní charakteristika (Ledvina)',
+          desc: 'Maximální příjem zpředu (0°), boční útlum -6 dB na 90°/270° a maximální potlačení (-25 dB) ze zadní strany 180°. Ideální pro pódia a studia proti zpětné vazbě (feedbacku).',
+          physics: 'Konstrukční princip: Tlakově-gradientní měnič s fázovým akustickým labyrintem. Trpí proximity efektem při přiblížení pod 10 cm.',
+          rearDb: '-25 dB',
+          nulls: '180°',
+          calcRadius: (thetaRad) => 0.5 * (1 + Math.cos(thetaRad))
+        },
+        supercardioid: {
+          name: 'Superkardioidní charakteristika',
+          desc: 'Užší přední lalok než u kardioidy (-8.6 dB na 90°). Má však malý zadní lalok na 180° (-12 dB). Hluchá místa (nulové body) leží na úhlech 126° a 234°. Pódiové monitory musí stát šikmo!',
+          physics: 'Konstrukční princip: Tlakově-gradientní měnič s větším poměrem gradientu. Vysoká izolace přeslechů při zvučení bicích sad v těsné blízkosti.',
+          rearDb: '-12 dB',
+          nulls: '126° & 234°',
+          calcRadius: (thetaRad) => Math.abs(0.37 + 0.63 * Math.cos(thetaRad))
+        },
+        figure8: {
+          name: 'Osmičková charakteristika (Bidirectional)',
+          desc: 'Perfektně symetrický příjem zepředu (0°) i zezadu (180°). Dokonalé ticho a nulová citlivost ze stran (90° a 270°). Přirozená vlastnost páskových mikrofonů a základ pro stereo Blumlein a M/S.',
+          physics: 'Konstrukční princip: Čistý gradientní měnič. Obě strany membrány jsou zcela otevřené do akustického prostoru. Nejvyšší proximity efekt ze všech měničů.',
+          rearDb: '0 dB (180°)',
+          nulls: '90° & 270°',
+          calcRadius: (thetaRad) => Math.abs(Math.cos(thetaRad))
+        },
+        shotgun: {
+          name: 'Úzce směrová charakteristika (Shotgun / Lobar)',
+          desc: 'Extrémně úzký snímací úhel vpředu vytvořený interferenční trubicí s bočními fázovými štěrbinami. Zvuk z boku se vzájemně vyruší. Standard pro filmové natáčení na tyči (Boom Pole).',
+          physics: 'Konstrukční princip: Akustická interferenční trubice před kardioidní/superkardioidní vložkou. Mimo osu vznikají parazitní interferenční lalůčky.',
+          rearDb: '-18 dB',
+          nulls: '60°, 120°, 240°',
+          calcRadius: (thetaRad) => {
+            const cos = Math.cos(thetaRad);
+            if (cos > 0) return Math.pow(cos, 4);
+            return Math.abs(cos) * 0.25;
+          }
+        }
+      };
+
+      function drawPolarCurve() {
+        const p = patternData[currentPattern];
+        const points = [];
+        const maxR = 120; // 0 dB odpovídá poloměru 120 px
+        const steps = 180;
+
+        for (let i = 0; i <= steps; i++) {
+          const angleDeg = (i / steps) * 360;
+          // SVG souřadnice: 0 deg je nahoře (osa -Y)
+          const rad = (angleDeg - 90) * (Math.PI / 180);
+          const mathAngle = (angleDeg * Math.PI) / 180;
+          const factor = Math.max(0.05, p.calcRadius(mathAngle));
+          const r = factor * maxR;
+          const x = r * Math.cos(rad);
+          const y = r * Math.sin(rad);
+          points.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+        }
+
+        if (polarCurvePath) {
+          polarCurvePath.setAttribute('d', `M ${points.join(' L ')} Z`);
+        }
+
+        // Aktualizace informací
+        if (polarTitle) polarTitle.textContent = p.name;
+        if (polarDesc) polarDesc.textContent = p.desc;
+        if (polarPhysicsNote) polarPhysicsNote.innerHTML = `<strong>Fyzikální podstata:</strong> ${p.physics}`;
+        if (polarStatRear) polarStatRear.textContent = p.rearDb;
+        if (polarStatNulls) polarStatNulls.textContent = p.nulls;
+
+        updateAngleDisplay();
+      }
+
+      function updateAngleDisplay() {
+        if (!polarAngleInput) return;
+        const angle = parseInt(polarAngleInput.value, 10);
+        if (polarAngleDisplay) polarAngleDisplay.textContent = `${angle}°`;
+
+        const maxR = 120;
+        const rad = (angle - 90) * (Math.PI / 180);
+        const x = maxR * Math.cos(rad);
+        const y = maxR * Math.sin(rad);
+
+        if (polarAngleRay) {
+          polarAngleRay.setAttribute('x2', x.toFixed(1));
+          polarAngleRay.setAttribute('y2', y.toFixed(1));
+        }
+        if (polarSoundSourceDot) {
+          polarSoundSourceDot.setAttribute('cx', x.toFixed(1));
+          polarSoundSourceDot.setAttribute('cy', y.toFixed(1));
+        }
+
+        // Výpočet útlumu v dB
+        const p = patternData[currentPattern];
+        const mathAngle = (angle * Math.PI) / 180;
+        const factor = Math.max(0.001, p.calcRadius(mathAngle));
+        let db = 20 * Math.log10(factor);
+        if (db < -30) db = -30;
+
+        if (polarStatDb) {
+          polarStatDb.textContent = `${db >= 0 ? '0.0' : db.toFixed(1)} dB`;
+          polarStatDb.style.color = db > -3 ? '#10b981' : (db > -12 ? '#f59e0b' : '#ef4444');
+        }
+      }
+
+      polarBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          polarBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentPattern = btn.getAttribute('data-pattern');
+          drawPolarCurve();
+        });
+      });
+
+      if (polarAngleInput) {
+        polarAngleInput.addEventListener('input', updateAngleDisplay);
+      }
+
+      drawPolarCurve();
+
+      // ==========================================
+      // 5. SIGNÁLOVÁ PIPELINE (SNÍMEK 4)
+      // ==========================================
+      const pipeNodes = document.querySelectorAll('.pipeline-node');
+      const pipeDetailTitle = document.getElementById('pipeDetailTitle');
+      const pipeDetailTag = document.getElementById('pipeDetailTag');
+      const pipeDetailText = document.getElementById('pipeDetailText');
+
+      const pipeStepData = {
+        1: {
+          title: 'Krok 1: Mikrofonní kapsle a Mic Level',
+          tag: 'Mic Level (1–10 mV)',
+          text: 'Akustické vlnění je převedeno na slabé střídavé napětí v řádu milivoltů (-60 až -40 dBu). Výstupní impedance je 150–200 Ω. Tento signál je extrémně citlivý na jakékoliv elektromagnetické rušení.'
+        },
+        2: {
+          title: 'Krok 2: Symetrický kabel XLR a Phantom +48V',
+          tag: 'Balanced XLR (Hot/Cold/GND)',
+          text: 'Signál putuje třívodičovým kabelem: Pin 1 (zemní stínění), Pin 2 (Hot +), Pin 3 (Cold - s obrácenou fází 180°). Zároveň je do pinu 2 a 3 přiváděno stejnosměrné napětí +48V pro kondenzátorové mikrofony.'
+        },
+        3: {
+          title: 'Krok 3: Mikrofonní předzesilovač (Preamp & Gain)',
+          tag: 'Zisk +40 až +70 dB',
+          text: 'Klíčový prvek audio kvality: Zesiluje zranitelný Mic Level na standardní studiový Line Level (+4 dBu / 1.23 V). Musí mít ultra-nízký vlastní šum (EIN < -128 dBu) a vysoké potlačení souhlasného signálu (CMRR > 80 dB).'
+        },
+        4: {
+          title: 'Krok 4: A/D Převodník (ADC) a Anti-Aliasing',
+          tag: '24-bit / 48 kHz standard',
+          text: 'Analogový signál prochází analogovým filtrem proti zrcadlení (Anti-aliasing Low-Pass) a je vzorkován (nejčastěji 48 kHz pro video, 96 kHz pro náročný mastering) a kvantován s hloubkou 24 bitů (teoretický dynamický rozsah 144 dB).'
+        },
+        5: {
+          title: 'Krok 5: Digitální DAW a DSP zpracování',
+          tag: '32-bit float interní mix',
+          text: 'V nahrávacím programu (Pro Tools, Cubase, Reaper) probíhá výpočet v 32-bit plovoucí řádové čárce. To zaručuje prakticky nekonečný dynamický headroom (> 1500 dB) – při interním slučování stop a aplikaci EQ či kompresoru nedochází k ořezání.'
+        },
+        6: {
+          title: 'Krok 6: D/A Převodník, Crossover a Studiové Monitory',
+          tag: 'Line Level (+4 dBu) & Výkon',
+          text: 'Digitální audio je převedeno zpět na analogový linkový signál, rozděleno aktivní výhybkou (např. na 2.2 kHz) a posláno do samostatných koncových zesilovačů pro basový Woofer a výškový Tweeter.'
+        }
+      };
+
+      pipeNodes.forEach(node => {
+        node.addEventListener('click', () => {
+          pipeNodes.forEach(n => n.classList.remove('active'));
+          node.classList.add('active');
+          const step = node.getAttribute('data-step');
+          const d = pipeStepData[step];
+          if (d) {
+            if (pipeDetailTitle) pipeDetailTitle.textContent = d.title;
+            if (pipeDetailTag) pipeDetailTag.textContent = d.tag;
+            if (pipeDetailText) pipeDetailText.textContent = d.text;
+          }
+        });
+      });
+
+      // ==========================================
+      // 6. AKUSTICKÝ PŮDORYS REŽIE (SNÍMEK 5)
+      // ==========================================
+      const btnTreatedRoom = document.getElementById('btnTreatedRoom');
+      const btnUnTreatedRoom = document.getElementById('btnUnTreatedRoom');
+      const roomBassTraps = document.getElementById('roomBassTraps');
+      const roomAbsorbers = document.getElementById('roomAbsorbers');
+      const roomDiffusors = document.getElementById('roomDiffusors');
+      const roomReflectionRays = document.getElementById('roomReflectionRays');
+      const roomStandingWaves = document.getElementById('roomStandingWaves');
+      const roomStateTag = document.getElementById('roomStateTag');
+
+      if (btnTreatedRoom && btnUnTreatedRoom) {
+        btnTreatedRoom.addEventListener('click', () => {
+          btnTreatedRoom.classList.add('active');
+          btnUnTreatedRoom.classList.remove('active');
+          if (roomBassTraps) roomBassTraps.style.display = 'block';
+          if (roomAbsorbers) roomAbsorbers.style.display = 'block';
+          if (roomDiffusors) roomDiffusors.style.display = 'block';
+          if (roomStandingWaves) roomStandingWaves.style.opacity = '0';
+          if (roomReflectionRays) roomReflectionRays.style.opacity = '0.4';
+          if (roomStateTag) {
+            roomStateTag.textContent = 'Ošetřená režie (RT60 = 0.25 s)';
+            roomStateTag.className = 'tag';
+          }
+        });
+
+        btnUnTreatedRoom.addEventListener('click', () => {
+          btnUnTreatedRoom.classList.add('active');
+          btnTreatedRoom.classList.remove('active');
+          if (roomBassTraps) roomBassTraps.style.display = 'none';
+          if (roomAbsorbers) roomAbsorbers.style.display = 'none';
+          if (roomDiffusors) roomDiffusors.style.display = 'none';
+          if (roomStandingWaves) roomStandingWaves.style.opacity = '1';
+          if (roomReflectionRays) roomReflectionRays.style.opacity = '1';
+          if (roomStateTag) {
+            roomStateTag.textContent = 'Holá místnost (Hřebenový filtr!)';
+            roomStateTag.className = 'tag tag-exam';
+          }
+        });
+      }
+
+      // ==========================================
+      // 7. INTERAKTIVNÍ ZKOUŠKOVÝ KVÍZ (SNÍMEK 6)
+      // ==========================================
+      const quizQuestions = [
+        {
+          q: '1. Proč kondenzátorový mikrofon vyžaduje phantomové napájení +48V?',
+          options: [
+            'Pro napájení elektromagnetu kmitací cívky',
+            'Pro polarizaci desek kapsle a napájení vnitřního FET impedančního převodníku',
+            'Pouze pro rozsvícení LED kontrolky na těle mikrofonu',
+            'Pro zahřátí membrány na provozní teplotu 48 °C'
+          ],
+          correct: 1,
+          feedback: 'Správně! Kondenzátorový mikrofon potřebuje stejnosměrné napětí pro polarizaci elektrostatické kapsle (aby vznikl náboj Q) a pro napájení tranzistoru FET, který převádí gigaohmovou impedanci na studiovou úroveň.'
+        },
+        {
+          q: '2. Jak se projeví proximity efekt při přiblížení zpěváka ke kardioidnímu mikrofonu na vzdálenost 3 cm?',
+          options: [
+            'Dojde k dramatickému ořezání výšek nad 10 kHz',
+            'Dojde k výraznému nárůstu basových frekvencí (až o +15 dB na 100 Hz)',
+            'Mikrofon se okamžitě přepne na všesměrovou charakteristiku',
+            'Signál se vlivem interference fází zcela vyruší'
+          ],
+          correct: 1,
+          feedback: 'Přesně tak! Proximity efekt je vlastností všech tlakově-gradientních mikrofonů. V těsné blízkosti zdroje vzniká masivní zdvih basů, což vyžaduje zapnutí High-Pass filtru (Low-Cut 80 Hz).'
+        },
+        {
+          q: '3. Jakým matematickým způsobem potlačuje symetrické vedení XLR naindukovaný šum?',
+          options: [
+            'Šum je odfiltrován kondenzátorem v konektoru',
+            'Diferenciální vstup odečte signály: (Hot + N) - (Cold + N) = 2S, šum se vyruší',
+            'Signál v kabelu je digitalizován a šum je odstraněn softwarově',
+            'Šum je absorbován gumovou izolací kabelu'
+          ],
+          correct: 1,
+          feedback: 'Výborně! Vodič Cold přenáší signál s fází otočenou o 180°. Protože elektromagnetický šum se naindukuje do obou vodičů stejně, jejich vzájemným odečtením na diferenciálním vstupu se šum vyruší (CMRR).'
+        },
+        {
+          q: '4. Jaký je zásadní rozdíl mezi zvukovou izolací (soundproofing) a akustickou úpravou studia?',
+          options: [
+            'Žádný rozdíl není, obojí řeší molitan na stěně',
+            'Izolace zabraňuje úniku zvuku ven/dovnitř a vyžaduje hmotu zdiva; akustická úprava řeší odrazy a dozvuk uvnitř',
+            'Izolace řeší pouze vysoké frekvence, zatímco úprava řeší pouze basy',
+            'Akustická úprava vyžaduje stavební povolení, izolace nikoliv'
+          ],
+          correct: 1,
+          feedback: 'Přesně tak! Zvuková izolace vyžaduje těžkou hmotu (dvojité betonové/sádrokartonové stěny, vzduchové mezery). Akustická úprava ladí interiér režie (absorpce prvních odrazů, basové pasti, difuzory).'
+        }
+      ];
+
+      let currentQuizIndex = 0;
+      let quizScore = 0;
+      let questionAnswered = false;
+
+      const quizQuestionText = document.getElementById('quizQuestionText');
+      const quizOptionsContainer = document.getElementById('quizOptionsContainer');
+      const quizFeedbackBox = document.getElementById('quizFeedbackBox');
+      const btnNextQuestion = document.getElementById('btnNextQuestion');
+      const quizScoreTag = document.getElementById('quizScoreTag');
+      const quizScoreCount = document.getElementById('quizScoreCount');
+
+      function loadQuizQuestion(index) {
+        if (!quizQuestionText || !quizOptionsContainer) return;
+        questionAnswered = false;
+        const q = quizQuestions[index];
+
+        if (quizScoreTag) quizScoreTag.textContent = `Otázka ${index + 1} / ${quizQuestions.length}`;
+        quizQuestionText.textContent = q.q;
+        quizOptionsContainer.innerHTML = '';
+        if (quizFeedbackBox) {
+          quizFeedbackBox.className = 'quiz-feedback-box';
+          quizFeedbackBox.style.display = 'none';
+        }
+        if (btnNextQuestion) btnNextQuestion.style.display = 'none';
+
+        q.options.forEach((optText, optIdx) => {
+          const btn = document.createElement('button');
+          btn.className = 'quiz-option-btn';
+          btn.textContent = optText;
+          btn.addEventListener('click', () => selectQuizAnswer(optIdx, q.correct, q.feedback));
+          quizOptionsContainer.appendChild(btn);
+        });
+      }
+
+      function selectQuizAnswer(selectedIndex, correctIndex, feedbackText) {
+        if (questionAnswered) return;
+        questionAnswered = true;
+
+        const optionButtons = quizOptionsContainer.querySelectorAll('.quiz-option-btn');
+        optionButtons.forEach((btn, idx) => {
+          btn.disabled = true;
+          if (idx === correctIndex) {
+            btn.classList.add('correct');
+          } else if (idx === selectedIndex) {
+            btn.classList.add('wrong');
+          }
+        });
+
+        if (selectedIndex === correctIndex) {
+          quizScore++;
+          if (quizFeedbackBox) {
+            quizFeedbackBox.className = 'quiz-feedback-box show correct';
+            quizFeedbackBox.innerHTML = `<strong>Výborně!</strong> ${feedbackText}`;
+          }
+        } else {
+          if (quizFeedbackBox) {
+            quizFeedbackBox.className = 'quiz-feedback-box show wrong';
+            quizFeedbackBox.innerHTML = `<strong>Chybně!</strong> ${feedbackText}`;
+          }
+        }
+
+        if (quizScoreCount) quizScoreCount.textContent = `Správně: ${quizScore} / ${quizQuestions.length}`;
+
+        if (btnNextQuestion) {
+          btnNextQuestion.style.display = 'inline-flex';
+          if (currentQuizIndex === quizQuestions.length - 1) {
+            btnNextQuestion.textContent = 'Vyhodnotit kvíz 🏁';
+          } else {
+            btnNextQuestion.innerHTML = 'Další otázka &rarr;';
+          }
+        }
+      }
+
+      if (btnNextQuestion) {
+        btnNextQuestion.addEventListener('click', () => {
+          if (currentQuizIndex < quizQuestions.length - 1) {
+            currentQuizIndex++;
+            loadQuizQuestion(currentQuizIndex);
+          } else {
+            // Finální vyhodnocení
+            quizQuestionText.textContent = `🎉 Kvíz dokončen! Vaše skóre: ${quizScore} z ${quizQuestions.length}`;
+            quizOptionsContainer.innerHTML = '';
+            if (quizFeedbackBox) {
+              quizFeedbackBox.className = 'quiz-feedback-box show correct';
+              const percent = Math.round((quizScore / quizQuestions.length) * 100);
+              quizFeedbackBox.innerHTML = `Úspěšnost: <strong>${percent} %</strong>. ${percent >= 75 ? 'Výborně! Jste skvěle připraveni na profilový okruh č. 9 k absolutoriu.' : 'Doporučujeme projít si znovu snímky o měničích a akustice.'}`;
+            }
+            btnNextQuestion.style.display = 'none';
+          }
+        });
+      }
+
+      loadQuizQuestion(0);
+    });
+  </script>
+
+  <!-- ==========================================
+       ADC VIZUALIZACE – CANVAS ANIMACE
+       ========================================== -->
+  <script>
+    (function () {
+      // Počkáme na načtení stránky
+      window.addEventListener('load', initADC);
+
+      function initADC() {
+        const canvasComp    = document.getElementById('adcCanvasComp');
+        const canvasAnalog  = document.getElementById('adcCanvasAnalog');
+        const canvasDigital = document.getElementById('adcCanvasDigital');
+        if (!canvasComp || !canvasAnalog || !canvasDigital) return;
+
+        // Frekvenční složky: [frekvence (Hz), amplituda (0-1), barva, checkbox ID, toggle label ID]
+        const COMPONENTS = [
+          { f: 1, amp: 1.0,  color: '#38bdf8', chkId: 'chkComp1', lblId: 'lblComp1', freqId: 'freq1Val' },
+          { f: 3, amp: 0.55, color: '#a855f7', chkId: 'chkComp2', lblId: 'lblComp2', freqId: 'freq2Val' },
+          { f: 5, amp: 0.35, color: '#f59e0b', chkId: 'chkComp3', lblId: 'lblComp3', freqId: 'freq3Val' },
+          { f: 7, amp: 0.22, color: '#10b981', chkId: 'chkComp4', lblId: 'lblComp4', freqId: 'freq4Val' },
+        ];
+
+        const ctxComp    = canvasComp.getContext('2d');
+        const ctxAnalog  = canvasAnalog.getContext('2d');
+        const ctxDigital = canvasDigital.getContext('2d');
+
+        let animRunning = true;
+        let animPhase   = 0;  // Posun fáze pro animaci (rad)
+        let sampleRate  = 16; // Hz (simulovaná)
+        let bitDepth    = 4;  // bit
+
+        // --- UI REFERENCE ---
+        const chkBoxes    = COMPONENTS.map(c => document.getElementById(c.chkId));
+        const toggleLabels = COMPONENTS.map(c => document.getElementById(c.lblId));
+        const srSlider    = document.getElementById('adcSampleRateSlider');
+        const srVal       = document.getElementById('adcSampleRateVal');
+        const bdSlider    = document.getElementById('adcBitDepthSlider');
+        const bdVal       = document.getElementById('adcBitDepthVal');
+        const playBtn     = document.getElementById('adcPlayBtn');
+        const quantLevels = document.getElementById('adcQuantLevels');
+        const nyqWarn     = document.getElementById('adcNyquistWarning');
+
+        // Toggle frekvenčních složek
+        chkBoxes.forEach((chk, i) => {
+          if (!chk) return;
+          chk.addEventListener('change', () => {
+            if (toggleLabels[i]) toggleLabels[i].classList.toggle('active', chk.checked);
+          });
+          // Synchronizace kliknutí na label
+          if (toggleLabels[i]) {
+            toggleLabels[i].addEventListener('click', () => {
+              chk.checked = !chk.checked;
+              toggleLabels[i].classList.toggle('active', chk.checked);
+            });
+          }
+        });
+
+        // Vzorkovací frekvence
+        if (srSlider) {
+          srSlider.addEventListener('input', () => {
+            sampleRate = parseInt(srSlider.value);
+            if (srVal) srVal.textContent = sampleRate + ' Hz';
+            checkNyquist();
+          });
+        }
+
+        // Bitová hloubka
+        if (bdSlider) {
+          bdSlider.addEventListener('input', () => {
+            bitDepth = parseInt(bdSlider.value);
+            if (bdVal) bdVal.textContent = bitDepth + ' bit';
+            const levels = Math.pow(2, bitDepth);
+            if (quantLevels) quantLevels.textContent = levels + ' hladin (' + bitDepth + ' bit)';
+            checkNyquist();
+          });
+        }
+
+        // Play/Pause
+        if (playBtn) {
+          playBtn.addEventListener('click', () => {
+            animRunning = !animRunning;
+            playBtn.classList.toggle('active', animRunning);
+            playBtn.innerHTML = animRunning
+              ? '<svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg> Animace'
+              : '<svg class="icon" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg> Pozastaveno';
+          });
+        }
+
+        function checkNyquist() {
+          const enabledComps = COMPONENTS.filter((c, i) => chkBoxes[i] && chkBoxes[i].checked);
+          const fMax = enabledComps.length ? Math.max(...enabledComps.map(c => c.f)) : 0;
+          const nyquistOk = sampleRate > 2 * fMax;
+          if (nyqWarn) nyqWarn.style.display = nyquistOk ? 'none' : 'block';
+        }
+
+        // --- RESIZE (nečte parent, čte CSS-rendered rozměry canvas) ---
+        function resizeCanvas(canvas) {
+          const w = canvas.clientWidth  || 0;
+          const h = canvas.clientHeight || 0;
+          if (w > 0 && h > 0 && (canvas.width !== w || canvas.height !== h)) {
+            canvas.width  = w;
+            canvas.height = h;
+          }
+        }
+
+        // --- VÝPOČET KOMPOZITNÍHO SIGNÁLU ---
+        // Vrací pole hodnot pro x ∈ [0, width], normalizované na [-1, 1]
+        function buildCompositeValues(width, phase) {
+          const values = new Float32Array(width);
+          const enabled = COMPONENTS.filter((c, i) => chkBoxes[i] && chkBoxes[i].checked);
+          if (enabled.length === 0) return values;
+
+          // Celková normalizace: součet amplitud
+          const totalAmp = enabled.reduce((s, c) => s + c.amp, 0);
+
+          for (let x = 0; x < width; x++) {
+            const t = (x / width) * 2.0; // 2 sekundy zobrazení
+            let sum = 0;
+            enabled.forEach(c => {
+              sum += c.amp * Math.sin(2 * Math.PI * c.f * t + phase);
+            });
+            values[x] = sum / totalAmp;
+          }
+          return values;
+        }
+
+        // --- RENDER HORNÍ PANEL: FREKVENČNÍ SLOŽKY ---
+        function renderComponents(phase) {
+          resizeCanvas(canvasComp);
+          const W = canvasComp.width, H = canvasComp.height;
+          const ctx = ctxComp;
+          ctx.clearRect(0, 0, W, H);
+
+          // Pozadí
+          ctx.fillStyle = 'rgba(10, 15, 29, 0.9)';
+          ctx.fillRect(0, 0, W, H);
+
+          // Středová osa
+          ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+          ctx.lineWidth = 1;
+          COMPONENTS.forEach((c, i) => {
+            const yCenter = (i + 0.5) * (H / COMPONENTS.length);
+            ctx.beginPath();
+            ctx.moveTo(0, yCenter);
+            ctx.lineTo(W, yCenter);
+            ctx.stroke();
+          });
+
+          // Každá složka v samostatném pásu
+          const laneH = H / COMPONENTS.length;
+          COMPONENTS.forEach((c, i) => {
+            const isEnabled = chkBoxes[i] && chkBoxes[i].checked;
+            const yCenter = (i + 0.5) * laneH;
+            const amplitude = laneH * 0.42;
+
+            ctx.globalAlpha = isEnabled ? 1 : 0.2;
+            ctx.strokeStyle = c.color;
+            ctx.lineWidth = 1.5;
+            ctx.shadowBlur = isEnabled ? 6 : 0;
+            ctx.shadowColor = c.color;
+
+            ctx.beginPath();
+            for (let x = 0; x < W; x++) {
+              const t = (x / W) * 2.0;
+              const y = yCenter - amplitude * c.amp * Math.sin(2 * Math.PI * c.f * t + phase);
+              x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // Popisek
+            ctx.shadowBlur = 0;
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = isEnabled ? c.color : 'rgba(255,255,255,0.3)';
+            ctx.font = 'bold 10px ui-monospace, monospace';
+            ctx.fillText(`f${i+1}=${c.f}Hz  A=${c.amp.toFixed(2)}`, W - 90, yCenter - amplitude * 0.7);
+          });
+          ctx.globalAlpha = 1;
+          ctx.shadowBlur = 0;
+        }
+
+        // --- RENDER STŘEDNÍ PANEL: SLOŽENÝ ANALOGOVÝ SIGNÁL ---
+        function renderAnalog(composite) {
+          resizeCanvas(canvasAnalog);
+          const W = canvasAnalog.width, H = canvasAnalog.height;
+          const ctx = ctxAnalog;
+          ctx.clearRect(0, 0, W, H);
+
+          ctx.fillStyle = 'rgba(10, 15, 29, 0.92)';
+          ctx.fillRect(0, 0, W, H);
+
+          // Středová osa
+          ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+          ctx.lineWidth = 1;
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath(); ctx.moveTo(0, H/2); ctx.lineTo(W, H/2); ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Amplitudové mantinely ±
+          ctx.strokeStyle = 'rgba(236,72,153,0.15)';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(0, H*0.08); ctx.lineTo(W, H*0.08); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(0, H*0.92); ctx.lineTo(W, H*0.92); ctx.stroke();
+          ctx.fillStyle = 'rgba(236,72,153,0.5)';
+          ctx.font = '9px monospace';
+          ctx.fillText('+1.0', 4, H*0.08 + 9);
+          ctx.fillText('-1.0', 4, H*0.92 - 3);
+
+          if (composite.length === 0) return;
+
+          // Gradient kreslení signálu
+          const grad = ctx.createLinearGradient(0, 0, W, 0);
+          grad.addColorStop(0,   '#ec4899');
+          grad.addColorStop(0.5, '#f43f5e');
+          grad.addColorStop(1,   '#ec4899');
+
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 2.5;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = '#ec4899';
+
+          ctx.beginPath();
+          const ampH = H * 0.42;
+          for (let x = 0; x < W; x++) {
+            const y = H/2 - composite[x] * ampH;
+            x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+          ctx.shadowBlur = 0;
+        }
+
+        // --- RENDER DOLNÍ PANEL: DIGITÁLNÍ VZORKY ---
+        function renderDigital(composite) {
+          resizeCanvas(canvasDigital);
+          const W = canvasDigital.width, H = canvasDigital.height;
+          const ctx = ctxDigital;
+          ctx.clearRect(0, 0, W, H);
+
+          ctx.fillStyle = 'rgba(10, 15, 29, 0.95)';
+          ctx.fillRect(0, 0, W, H);
+
+          const levels    = Math.pow(2, bitDepth);
+          const ampH      = H * 0.42;
+          const samplesW  = sampleRate * 2; // 2 sekundy
+          const stepW     = W / samplesW;
+          const enabledAny = COMPONENTS.some((c, i) => chkBoxes[i] && chkBoxes[i].checked);
+
+          // Mrížka kvantizačních úrovní
+          ctx.strokeStyle = 'rgba(16,185,129,0.10)';
+          ctx.lineWidth   = 0.5;
+          for (let lv = 0; lv <= levels; lv++) {
+            const y = H/2 + ampH - (lv / levels) * (ampH * 2);
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+          }
+
+          if (!enabledAny) {
+            ctx.fillStyle = 'rgba(255,255,255,0.2)';
+            ctx.font = '13px system-ui';
+            ctx.textAlign = 'center';
+            ctx.fillText('Vyberte alespoň jednu frekvenční složku', W/2, H/2);
+            ctx.textAlign = 'left';
+            return;
+          }
+
+          const nyquistOk = sampleRate > 2 * Math.max(...COMPONENTS.filter((c,i) => chkBoxes[i]?.checked).map(c => c.f), 0);
+
+          // Analogová reference (tenká, přerušovaná)
+          ctx.strokeStyle = 'rgba(236,72,153,0.35)';
+          ctx.lineWidth = 1.5;
+          ctx.setLineDash([3, 3]);
+          ctx.beginPath();
+          for (let x = 0; x < W; x++) {
+            const y = H/2 - composite[x] * ampH;
+            x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+          ctx.setLineDash([]);
+
+          // Vzorky + schodovitý průběh (PCM hold)
+          let prevQy = H/2;
+          for (let s = 0; s < samplesW; s++) {
+            const xi = Math.min(Math.round((s / samplesW) * W), W - 1);
+            const rawVal = composite[xi]; // -1 .. +1
+
+            // Kvantování: zaokrouhlení na nejbližší úroveň
+            const quantized = Math.round((rawVal + 1) / 2 * (levels - 1)) / (levels - 1) * 2 - 1;
+            const qy = H/2 - quantized * ampH;
+            const nextX = Math.min(Math.round(((s + 1) / samplesW) * W), W);
+
+            // Barva vzorku závisí na Nyquistu
+            const sampleColor = nyquistOk ? '#10b981' : '#ef4444';
+
+            // PCM hold (schodovitý průběh)
+            ctx.fillStyle = nyquistOk
+              ? 'rgba(16,185,129,0.12)'
+              : 'rgba(239,68,68,0.10)';
+            if (qy < H/2) {
+              ctx.fillRect(s === 0 ? 0 : Math.round(s * stepW), qy, nextX - (s === 0 ? 0 : Math.round(s * stepW)), H/2 - qy);
+            } else {
+              ctx.fillRect(s === 0 ? 0 : Math.round(s * stepW), H/2, nextX - (s === 0 ? 0 : Math.round(s * stepW)), qy - H/2);
+            }
+
+            // Horizontální čára od min po max
+            ctx.strokeStyle = sampleColor;
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(s === 0 ? 0 : Math.round(s * stepW), prevQy);
+            ctx.lineTo(Math.round(s * stepW), prevQy);
+            ctx.lineTo(Math.round(s * stepW), qy);
+            ctx.lineTo(nextX, qy);
+            ctx.stroke();
+
+            // Vzorkovací svislá linka + tečka
+            const sx = Math.round(s * stepW);
+            ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+            ctx.lineWidth = 0.8;
+            ctx.setLineDash([2, 2]);
+            ctx.beginPath();
+            ctx.moveTo(sx, 0); ctx.lineTo(sx, H);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Tečka vzorku
+            ctx.beginPath();
+            ctx.arc(sx, qy, stepW > 8 ? 3 : 2, 0, Math.PI * 2);
+            ctx.fillStyle = sampleColor;
+            ctx.shadowBlur = nyquistOk ? 6 : 10;
+            ctx.shadowColor = sampleColor;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            prevQy = qy;
+          }
+
+          // Středová osa
+          ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(0, H/2); ctx.lineTo(W, H/2); ctx.stroke();
+        }
+
+        // --- HLAVNÍ ANIMAČNÍ SMYČKA ---
+        function drawFrame() {
+          if (animRunning) animPhase += 0.018;
+          checkNyquist();
+
+          const W = canvasComp.parentElement.getBoundingClientRect().width;
+          const composite = buildCompositeValues(Math.max(W || 400, 400), animPhase);
+
+          renderComponents(animPhase);
+          renderAnalog(composite);
+          renderDigital(composite);
+
+          requestAnimationFrame(drawFrame);
+        }
+
+        drawFrame();
+      }
+    })();
+  </script>
+
+  <!-- ==========================================
+       SLOVNÍK ZKRATEK – DATOVÁ DEFINICE A LOGIKA
+       ========================================== -->
+  <script>
+    (function () {
+      // -------------------------------------------------------
+      // DATA: Všechny pojmy, zkratky, veličiny a jednotky lekce
+      // -------------------------------------------------------
+      const GLOSSARY_DATA = [
+        // --- ZKRATKY ---
+        { term: 'FET', fullName: 'Field-Effect Transistor', cat: 'abbreviation',
+          desc: 'Tranzistor řízenný elektrickým polem. V kondenzátorovém mikrofonu slouží jako impedanční převodník: transformuje gigaohmovou impedanci kapsle na nízkoimpedanční výstup (150 Ω) kompatibilní se studiovým předzesilovačem.' },
+        { term: 'ADC', fullName: 'Analog-to-Digital Converter', cat: 'abbreviation',
+          desc: 'Analogově-digitální převodník. Vzorkuje spojitý analogový signál v pravidelných časových intervalech (např. 48 000× za sekundu) a každý vzorek kvantuje na binární číslo (24 bit = 16,7 mil. hladin).' },
+        { term: 'DAC', fullName: 'Digital-to-Analog Converter', cat: 'abbreviation',
+          desc: 'Digitálně-analogový převodník. Rekonstruuje spojitý analogový signál ze sekvence binárních vzorků. Výstup je schodovitý průběh vyhlazený rekonstrukčním dolnopropustným filtrem.' },
+        { term: 'DAW', fullName: 'Digital Audio Workstation', cat: 'software',
+          desc: 'Software pro nahrávání, editaci, mixáž a mastering zvuku. Nejrozšířenější: Pro Tools, Ableton Live, Logic Pro, Cubase, Reaper. Interní mix probíhá v 32-bit plovoucí řádové čárce pro minimalizaci zaokrouhlovacích chyb.' },
+        { term: 'DSP', fullName: 'Digital Signal Processing', cat: 'abbreviation',
+          desc: 'Digitální zpracování signálu – matematické operace (filtry, kompresor, reverb, delay) prováděné na digitálních vzorcích zvuku v reálném čase nebo offline v softwaru (DAW plug-iny, DSP karty).' },
+        { term: 'SPL', fullName: 'Sound Pressure Level', cat: 'quantity',
+          desc: 'Hladina akustického tlaku. Logaritmická míra vyjadřující intenzitu zvuku vztaženou k referenčnímu prahu slyšení 20 µPa. Jednotka: dB SPL. Konverzace: ~60 dB, živý koncert: ~110 dB, práh bolesti: ~130 dB.' },
+        { term: 'CMRR', fullName: 'Common Mode Rejection Ratio', cat: 'abbreviation',
+          desc: 'Poměr potlačení souhlasného rušení. Parametr diferenciálního vstupu preampu, vyjadřující schopnost potlačit šum naindukovaný souhlasně do obou vodičů symetrického kabelu. Dobrý preamp: CMRR > 80 dB.' },
+        { term: 'EIN', fullName: 'Equivalent Input Noise', cat: 'abbreviation',
+          desc: 'Ekvivalentní vstupní šum – vlastní šum předzesilovače přepočítaný na vstup. Čím nižší hodnota, tím kvalitnější preamp. Referenční hodnota pro profesionální studia: EIN < −128 dBu.' },
+        { term: 'SNR', fullName: 'Signal-to-Noise Ratio', cat: 'quantity',
+          desc: 'Poměr signálu k šumu. Rozdíl (v dB) mezi užitečným signálem a šumovým pozadím. Vyšší SNR = čistší zvuk. CD (16 bit): ~96 dB. Profesionální 24-bit: ~144 dB.' },
+        { term: 'GND', fullName: 'Ground (Zemní vodič)', cat: 'connector',
+          desc: 'Referenční potenciál nulového napětí – zemnění. V symetrickém kabelu XLR je GND = Pin 1 (stínění kabelu). Chrání před elektromagnetickým rušením přivedením parazitních proudů do země.' },
+        { term: 'Hot', fullName: 'Hot (Fázový vodič, Pin 2 XLR)', cat: 'connector',
+          desc: 'Vodič přenášející kladnou fázi signálu. V konektoru XLR: Pin 2. V TRS jacku: Tip (špička). Napětí na vodiči Hot nese původní fázi audio signálu +S.' },
+        { term: 'Cold', fullName: 'Cold (Invertovaný vodič, Pin 3 XLR)', cat: 'connector',
+          desc: 'Vodič přenášející signál otočený o 180°. V konektoru XLR: Pin 3. V TRS jacku: Ring (kroužek). Na diferenciálním vstupu preampu se odečítá od Hot → výsledek 2× signál, nulový šum.' },
+        { term: 'HPF', fullName: 'High-Pass Filter', cat: 'abbreviation',
+          desc: 'Hornopropustný filtr (česky také Low-Cut). Propouští frekvence nad nastavenou mezní hodnotou (typicky 80 Hz) a potlačuje nižší. Používá se k eliminaci proximity efektu, brumu a vibrací z podlahy.' },
+        { term: 'LPF', fullName: 'Low-Pass Filter', cat: 'abbreviation',
+          desc: 'Dolnopropustný filtr. Propouští frekvence pod mezním kmitočtem. Kriticky důležitý jako anti-aliasing filtr před ADC (odstraní složky nad fs/2 a zabrání aliasingovým artefaktům).' },
+        { term: 'XLR', fullName: 'XLR Connector (3-pin)', cat: 'connector',
+          desc: 'Profesionální studiový konektor pro symetrický přenos audia a přívod Phantom napájení +48V. Tři piny: Pin 1 = GND (stínění), Pin 2 = Hot (+fáze), Pin 3 = Cold (−fáze). Standard od výrobce Cannon (X-L-R = Latch Rubber).' },
+        { term: 'TRS', fullName: 'Tip-Ring-Sleeve Jack', cat: 'connector',
+          desc: 'Jack konektor (6.3 mm nebo 3.5 mm) pro symetrický přenos. Tip = Hot, Ring = Cold, Sleeve = GND. Symetrické připojení na rozdíl od TS (mono) jacku.' },
+        { term: 'TS', fullName: 'Tip-Sleeve Jack (Nesymetrický / Mono)', cat: 'connector',
+          desc: 'Standardní mono jack – Tip = signál, Sleeve = GND. Nesymetrický přenos náchylný k elektromagnetickému rušení. Vhodný jen pro krátké kabely (kytara → pedál → aparát).' },
+        { term: 'RCA', fullName: 'Radio Corporation of America Cinch', cat: 'connector',
+          desc: 'Nesymetrický konektor pro spotřební elektroniku (CD přehrávač, mixér pro DJ atd.). Nominální napětí: −10 dBV (0.316 V). Impedance 75 Ω.' },
+        { term: 'Phantom', fullName: 'Phantom Power +48V DC', cat: 'abbreviation',
+          desc: 'Stejnosměrné napájení +48V přiváděné přes oba signálové vodiče symetrického kabelu XLR (Pin 2 i Pin 3) vůči GND. Neovlivní dynamické ani páskové mikrofony, je nutné pro kondenzátorové mikrofony (polarizace kapsle + FET).' },
+        { term: 'RT60', fullName: 'Reverberation Time 60 dB', cat: 'quantity',
+          desc: 'Doba dozvuku – čas, za který akustický tlak v uzavřeném prostoru poklesne o 60 dB od okamžiku vypnutí zdroje zvuku. Cílová hodnota pro nahrávací režii: 0.2–0.35 s. Hudební sály: 1.5–2 s.' },
+        { term: 'M/S', fullName: 'Mid-Side Stereo Miking', cat: 'abbreviation',
+          desc: 'Technika stereo snímání: Mid = kardioidní mikrofon namířený přímo (mono střed), Side = osmičkový mikrofon natočený bokem (stereo šířka). Dekódováním (L = M+S, R = M−S) vzniká plnohodnotné stereo.' },
+        { term: 'QRD', fullName: 'Quadratic Residue Diffusor', cat: 'abbreviation',
+          desc: 'Typ akustického difuzoru navržený Manfredem Schroederem. Sestava příčků různé hloubky odvozené z kvadratických zbytků prvočísel. Rovnoměrně rozptyluje odrazy do všech směrů bez absorpce energie.' },
+
+        // --- VELIČINY ---
+        { term: 'f', fullName: 'Frekvence (Frequency)', cat: 'quantity',
+          desc: 'Počet kmitů za sekundu. Jednotka: Hz (hertz). Lidský sluch: 20 Hz – 20 kHz. Nízké frekvence (basy): 20–250 Hz. Středy: 250 Hz – 4 kHz. Výšky: 4–20 kHz.' },
+        { term: 'C', fullName: 'Kapacita kondenzátoru (Capacitance)', cat: 'quantity',
+          desc: 'Schopnost kondenzátoru uchovat elektrický náboj. C = ε · S / d. V kondenzátorovém mikrofonu se mění při kmitu membrány (vzdálenost d) → vzniká proměnné napětí ΔU = ΔQ / C.' },
+        { term: 'ε', fullName: 'Permitivita (Permittivity)', cat: 'quantity',
+          desc: 'Materiálová konstanta popisující schopnost prostředí uchovat elektrické pole. Ve vzorci kapacity kondenzátoru: C = ε · S / d. Pro vzduch: ε₀ = 8.854 × 10⁻¹² F/m.' },
+        { term: 'Φ', fullName: 'Magnetický tok (Magnetic Flux)', cat: 'quantity',
+          desc: 'Celkový magnetický tok procházející cívkou. Jednotka: Wb (weber). Změna magnetického toku indukuje napětí: U = −N · dΦ/dt. Základ Faradayova indukčního zákona.' },
+        { term: 'U', fullName: 'Napětí (Voltage)', cat: 'quantity',
+          desc: 'Elektrické napětí – potenciálový rozdíl. Jednotka: V (volt). Mikrofony generují velmi slabé napětí (1–30 mV). Předzesilovač zesiluje na linkovou úroveň (1.23 V = +4 dBu).' },
+        { term: 'Z', fullName: 'Impedance', cat: 'quantity',
+          desc: 'Celkový odpor obvodu vůči střídavému proudu (kombinace odporu R, kapacitance C a indukčnosti L). Jednotka: Ω. Mikrofonní výstup: 150–600 Ω. Vstup preampu: 1–10 kΩ (Low-Z).' },
+
+        // --- JEDNOTKY ---
+        { term: 'dBu', fullName: 'Decibel unloaded (ref. 0.775 V)', cat: 'unit',
+          desc: 'Logaritmická jednotka napěťové úrovně pro profesionální audio. Referenční hodnota: 0 dBu = 0.775 V (historický standard z telegrafie). Pro Link Level: +4 dBu = 1.228 V.' },
+        { term: 'dBV', fullName: 'Decibel Volt (ref. 1 V)', cat: 'unit',
+          desc: 'Logaritmická jednotka napěťové úrovně pro spotřební audio. Referenční hodnota: 0 dBV = 1.000 V. Spotřebitelská linková úroveň: −10 dBV = 0.316 V. dBV = dBu − 2.21 dB.' },
+        { term: 'dBFS', fullName: 'Decibel Full Scale', cat: 'unit',
+          desc: 'Logaritmická škála pro digitální audio. 0 dBFS = maximální digitální hodnota (tvrdý clipping). Vše ostatní je záporné. Doporučená nahrávací úroveň: −18 dBFS (špičky max. −10 dBFS).' },
+        { term: 'dB SPL', fullName: 'Sound Pressure Level (akustický tlak)', cat: 'unit',
+          desc: 'Hladina akustického tlaku. Referenční hodnota: 0 dB SPL = 20 µPa (práh slyšení). Každé zdvojnásobení tlaku = +6 dB. Každé 10× zvýšení vnímané hlasitosti ≈ +10 dB.' },
+        { term: 'Hz', fullName: 'Hertz (jednotka frekvence)', cat: 'unit',
+          desc: 'Jednotka frekvence pojmenovaná po Heinrichu Hertzovi. 1 Hz = 1 kmit za sekundu. Slyšitelné pásmo: 20 Hz – 20 000 Hz (20 kHz). Vzorkovací frekvence CD: 44,100 Hz (44.1 kHz).' },
+        { term: 'kHz', fullName: 'Kilohertz (1 000 Hz)', cat: 'unit',
+          desc: '1 kHz = 1 000 Hz. Vzorkovací frekvence: 44.1 kHz (CD), 48 kHz (video/film), 96 kHz (Hi-Res studio). Frekvenční rozsah kondenzátorového mikrofonu: 20 Hz – 20 kHz.' },
+        { term: 'pF', fullName: 'Picofarad (10⁻¹² F)', cat: 'unit',
+          desc: 'Jednotka elektrické kapacity. 1 pF = 0.000 000 000 001 F. Kapacita kondenzátorové vložky mikrofonu: typicky 5–50 pF. Kmit membrány mění kapacitu o zlomky pF → nutný 1 GΩ odpor pro dostatečné napětí.' },
+        { term: 'Ω', fullName: 'Ohm (jednotka elektrického odporu)', cat: 'unit',
+          desc: 'Jednotka impedance (elektrického odporu). Symbol: Ω. Mikrofon: 150–600 Ω. Sluchátka: 32–600 Ω. Reproduktory: 4–16 Ω. Vstup preampu (Mic Input): 1 500–3 000 Ω (Low-Z).' },
+        { term: 'bit', fullName: 'Bitová hloubka (Bit Depth)', cat: 'unit',
+          desc: 'Počet bitů na digitální vzorek. Určuje počet kvantizačních hladin (2^n) a dynamický rozsah (≈ 6 dB/bit). 16 bit (CD): 65 536 hladin / ~96 dB. 24 bit (studio): 16 777 216 hladin / ~144 dB.' },
+        { term: 'Pa', fullName: 'Pascal – jednotka akustického tlaku', cat: 'unit',
+          desc: 'Základní jednotka akustického tlaku (tlak 1 N/m²). Citlivost mikrofonů se standardně měří referenčním tónem 1 kHz o akustickém tlaku 1 Pa, což odpovídá 94 dB SPL – přibližně velmi hlasitý lidský hlas z bezprostřední blízkosti. Práh slyšení: 20 µPa (0 dB SPL). Citlivost kondenzátorového mikrofonu: ~15–30 mV/Pa.' },
+
+        // --- SOFTWARE & FORMÁTY ---
+        { term: 'WAV', fullName: 'Waveform Audio File Format', cat: 'software',
+          desc: 'Bezztrátový audio kontejner (Microsoft/IBM). Ukládá surová PCM data bez komprese. Standard pro profesionální výměnu a archiv (24-bit / 96 kHz). Velké soubory: 1 minuta stereo 24/48 = ~34 MB.' },
+        { term: 'FLAC', fullName: 'Free Lossless Audio Codec', cat: 'software',
+          desc: 'Bezztrátová komprese audia (ztráta: 0 %). Komprimuje WAV na cca 50–60 % velikosti. Otevřený formát, kompatibilní s přehrávači. Standard pro distribuci Hi-Res hudby.' },
+        { term: 'MP3', fullName: 'MPEG-1 Audio Layer III', cat: 'software',
+          desc: 'Ztrátový kodek využívající psychoakustický model (odstraňuje složky maskované jinými). Typicky 128–320 kbps. Výrazná artefakty při nízkém bitrate (pre-echo, smearing). Nevhodné pro mastering!' },
+        { term: 'PCM', fullName: 'Pulse-Code Modulation', cat: 'software',
+          desc: 'Základní metoda digitalizace zvuku – pulzně kódová modulace. Analogový signál je vzorkován a kvantován na diskrétní hodnoty. Základ formátů WAV a AIFF. Lineární PCM = bezeztrátová reprezentace.' },
+      ];
+
+      // -------------------------------------------------------
+      // VYKRESLENÍ MŘÍŽKY POJMŮ
+      // -------------------------------------------------------
+      const glossaryBody = document.getElementById('glossaryBody');
+      const glossarySearch = document.getElementById('glossarySearch');
+      const glossaryResultCount = document.getElementById('glossaryResultCount');
+      const catBtns = document.querySelectorAll('.glossary-cat-btn');
+      const glossaryModal = document.getElementById('glossaryModal');
+      const glossaryCloseBtn = document.getElementById('glossaryCloseBtn');
+      const glossaryBtn = document.getElementById('glossaryBtn');
+
+      let currentCat = 'all';
+      let currentSearch = '';
+
+      const catLabels = {
+        abbreviation: 'Zkratka',
+        quantity: 'Veličina',
+        unit: 'Jednotka',
+        connector: 'Konektor / HW',
+        software: 'Software / Formát'
+      };
+
+      function buildGlossary() {
+        if (!glossaryBody) return;
+        const q = currentSearch.toLowerCase();
+
+        const filtered = GLOSSARY_DATA.filter(item => {
+          const catMatch = currentCat === 'all' || item.cat === currentCat;
+          const searchMatch = !q
+            || item.term.toLowerCase().includes(q)
+            || item.fullName.toLowerCase().includes(q)
+            || item.desc.toLowerCase().includes(q);
+          return catMatch && searchMatch;
+        });
+
+        // Seřadit abecedně
+        filtered.sort((a, b) => a.term.localeCompare(b.term, 'cs'));
+
+        glossaryBody.innerHTML = '';
+
+        if (filtered.length === 0) {
+          glossaryBody.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-muted);">Žádný pojem nenalezen pro výraz "<strong>${q}</strong>".</div>`;
+        } else {
+          filtered.forEach(item => {
+            const entry = document.createElement('div');
+            entry.className = 'glossary-entry';
+            entry.innerHTML = `
+              <div class="glossary-entry-head">
+                <span class="glossary-term">${item.term}</span>
+                <span class="glossary-badge glossary-badge-${item.cat}">${catLabels[item.cat] || item.cat}</span>
+              </div>
+              <div class="glossary-full-name">${item.fullName}</div>
+              <div class="glossary-desc">${item.desc}</div>
+            `;
+            glossaryBody.appendChild(entry);
+          });
+        }
+
+        if (glossaryResultCount) {
+          glossaryResultCount.textContent = `Zobrazeno ${filtered.length} z ${GLOSSARY_DATA.length} pojmů`;
+        }
+      }
+
+      // Kategorie tlačítka
+      catBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          catBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCat = btn.getAttribute('data-cat');
+          buildGlossary();
+        });
+      });
+
+      // Vyhledávání
+      if (glossarySearch) {
+        glossarySearch.addEventListener('input', e => {
+          currentSearch = e.target.value;
+          buildGlossary();
+        });
+      }
+
+      // Otevřít / zavřít slovník
+      function openGlossary() {
+        if (!glossaryModal) return;
+        glossaryModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        if (glossarySearch) {
+          glossarySearch.value = '';
+          currentSearch = '';
+        }
+        currentCat = 'all';
+        catBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-cat') === 'all'));
+        buildGlossary();
+        setTimeout(() => { if (glossarySearch) glossarySearch.focus(); }, 100);
+      }
+
+      function closeGlossary() {
+        if (!glossaryModal) return;
+        glossaryModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (glossaryBtn) glossaryBtn.addEventListener('click', openGlossary);
+      if (glossaryCloseBtn) glossaryCloseBtn.addEventListener('click', closeGlossary);
+
+      // Klik mimo modal-dialog zavře
+      if (glossaryModal) {
+        glossaryModal.addEventListener('click', e => {
+          if (e.target === glossaryModal) closeGlossary();
+        });
+      }
+
+      // Klávesová zkratka G
+      document.addEventListener('keydown', e => {
+        if (e.key === 'g' || e.key === 'G') {
+          // Přeskočit pokud je fokus v inputu (vyhledávání)
+          if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+          if (glossaryModal && glossaryModal.classList.contains('active')) {
+            closeGlossary();
+          } else {
+            openGlossary();
+          }
+        }
+        if (e.key === 'Escape') {
+          closeGlossary();
+        }
+      });
+
+      // První sestavení (pro případ přímého otevření)
+      buildGlossary();
+    })();
+  </script>
 </body>
 </html>
