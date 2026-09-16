@@ -4,6 +4,8 @@ Komplexní otevřená platforma interaktivních výukových materiálů a webov�
 
 Všechny materiály jsou dimenzovány na 45minutové didaktické jednotky, jsou navrženy pro **100% offline provoz** bez nutnosti serveru a přímo navazují na schválené profilové maturitní a absolutorní zkušební okruhy.
 
+**Online výukový portál:** [https://bubilem.github.io/vos-vyukove-materialy/](https://bubilem.github.io/vos-vyukove-materialy/)
+
 ---
 
 ## Přehled předmětů a modulů
@@ -102,27 +104,17 @@ Během prohlížení libovolné prezentace jsou k dispozici následující kláv
 
 ## Nasazení na GitHub Pages
 
-Projekt je kompletně připraven pro okamžité hostování prostřednictvím služby **GitHub Pages**:
+Projekt je publikován a živě provozován na GitHub Pages:
 
-### Postup aktivace:
-1. Nahrajte repozitář na GitHub:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit - Výukové materiály VOŠ"
-   git branch -M main
-   git remote add origin https://github.com/UZIVATEL/REPOZITAR.git
-   git push -u origin main
-   ```
-2. V nastavení repozitáře na GitHubu přejděte do sekce **Settings &rarr; Pages**.
-3. V sekci **Build and deployment**:
-   - **Source:** vyberte `Deploy from a branch`.
-   - **Branch:** zvolte větev `main` a kořenovou složku `/ (root)`.
-   - Klikněte na tlačítko **Save**.
-4. Během 1–2 minut bude portál dostupný na adrese:
-   `https://UZIVATEL.github.io/REPOZITAR/`
+- **Živá produkční URL:** [https://bubilem.github.io/vos-vyukove-materialy/](https://bubilem.github.io/vos-vyukove-materialy/)
+- **Repozitář projektu:** [https://github.com/bubilem/vos-vyukove-materialy](https://github.com/bubilem/vos-vyukove-materialy)
 
-> **Poznámka:** Všechny cesty jsou striktně relativní, web bude proto korektně fungovat jak na doméně druhého řádu, tak v libovolném podsložkovém repozitáři GitHub Pages.
+### Nastavení GitHub Pages:
+V nastavení repozitáře na GitHubu (**Settings &rarr; Pages**):
+- **Source:** `Deploy from a branch`
+- **Branch:** `main` &bull; `/ (root)`
+
+> **Poznámka:** Všechny cesty jsou striktně relativní, web proto bezchybně funguje v podsložkovém repozitáři GitHub Pages i při přímém offline otevření z disku.
 
 ---
 
