@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 03: Režimy operačního systému a privilegia | OSY20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY20">
+          <span>&larr; OSY20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 03</span>
+          <span class="divider">&bull;</span>
+          <span>Režimy OS a privilegia procesoru</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Ring 0/3 &amp; Syscalls</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY20 &bull; 3. přednáška (45 min)</div>
+        <h1 class="hero-title">Režimy OS &amp; Privilegia procesoru</h1>
+        <p class="hero-desc">
+          Hardwarová ochrana procesoru a bezpečnostní hranice operačního systému: hierarchické kruhy oprávnění x86 (Ring 0 až Ring 3), úrovně výjimek ARM (EL0 až EL3), User Mode vs. Kernel Mode, rychlé přepnutí kontextu pomocí instrukcí syscall/sysret a ochrana registrů CPU.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Hardwarové kruhy</span>
+            <span class="hero-meta-val">x86 Ring 0 / Ring 3</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Přechodová instrukce</span>
+            <span class="hero-meta-val">syscall, sysret (x86_64)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Ochrana paměti</span>
+            <span class="hero-meta-val">U/S bit ve stránkovacích tabulkách</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: HARDWAROVÉ KRUHY OPRÁVNĚNÍ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Hardwarová architektura</div>
+            <h2 class="slide-title">Kruhy oprávnění (Privilege Rings)</h2>
+            <p class="slide-subtitle">Jak procesor hardwarově vynucuje autoritu operačního systému</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový koncept</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="ring-diagram">
+                <div class="ring-level ring-0">
+                  <span>Ring 0 &bull; Kernel Mode</span>
+                  <span class="sys-badge sys-badge-kernel">Plná práva (Jádro, Ovladače)</span>
+                </div>
+                <div class="ring-level" style="background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); color: #fde68a;">
+                  <span>Ring 1 &bull; Ovladače (Historické / Nepoužívá se)</span>
+                  <span class="sys-badge sys-badge-hw">Nevyužito</span>
+                </div>
+                <div class="ring-level" style="background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); color: #fde68a;">
+                  <span>Ring 2 &bull; OS Služby (Historické / Nepoužívá se)</span>
+                  <span class="sys-badge sys-badge-hw">Nevyužito</span>
+                </div>
+                <div class="ring-level ring-3">
+                  <span>Ring 3 &bull; User Mode</span>
+                  <span class="sys-badge sys-badge-user">Omezená práva (Aplikace)</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <h4>Privilegované instrukce CPU</h4>
+              <p>Pokud se aplikace v Ring 3 pokusí spustit kteroukoli z těchto instrukcí, procesor okamžitě vyvolá hardwarovou výjimku <strong>General Protection Fault (#GP)</strong> a jádro proces ukončí:</p>
+              <ul class="styled-list">
+                <li><code>HLT</code>: Zastavení procesoru do úsporného stavu.</li>
+                <li><code>CLI / STI</code>: Zákaz nebo povolení hardwarových přerušení.</li>
+                <li><code>LIDT / LGDT</code>: Změna tabulky přerušení (IDT) nebo deskriptorů.</li>
+                <li><code>MOV CR0, EAX</code>: Změna řídicích registrů (vypnutí stránkování či ochrany zápisu).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: MECHANISMUS PŘEPNUTÍ REŽIMU -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Běh instrukcí</div>
+            <h2 class="slide-title">Jak probíhá přechod z User do Kernel Mode</h2>
+            <p class="slide-subtitle">Evoluce od pomalého softwarového přerušení k rychlému instrukčnímu skoku</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Evoluce systémových volání na x86</h4>
+              <ul class="styled-list">
+                <li><strong>Historická metoda: <code>INT 0x80</code> (Linux) / <code>INT 0x2E</code> (Windows):</strong> Vyvolání softwarového přerušení přes tabulku IDT. Uložení mnoha registrů na zásobník – režie cca 1000 taktů procesoru.</li>
+                <li><strong>Moderní x86_64: Instrukce <code>SYSCALL</code> / <code>SYSRET</code>:</strong> Rychlý skok pomocí speciálních MSR registrů (Model-Specific Registers). Režie klesla na desítky taktů!</li>
+                <li>Procesor v jediném taktu načte novou hodnotu čítače instrukcí (RIP) a přepne hodnotu ukazatele zásobníku (RSP) na <strong>jádrový zásobník (Kernel Stack)</strong> daného vlákna.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Bezpečnostní bariéra: Oddělení zásobníků</h4>
+              <p>Každé vlákno v systému má <strong>dva zásobníky (Stacks)</strong>:</p>
+              <ul class="styled-list">
+                <li><strong>User Stack:</strong> V paměti procesu, plně pod kontrolou aplikace.</li>
+                <li><strong>Kernel Stack:</strong> V privilegované paměti jádra. Při přechodu do Ring 0 se okamžitě přepne zásobník. Aplikace nemůže podvrhnout návratovou adresu jádru přetečením svého zásobníku!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: ARM EXCEPTION LEVELS -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektura ARM64</div>
+            <h2 class="slide-title">Úrovně výjimek v procesorech ARM (AArch64)</h2>
+            <p class="slide-subtitle">Moderní hierarchie: od aplikací přes OS a hypervizor až po Secure World</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">ARM64 &bull; EL0-EL3</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Čtyři úrovně Exception Levels (EL)</h4>
+              <ul class="styled-list">
+                <li><strong>EL0 (User):</strong> Běžné aplikace (ekvivalent Ring 3 na x86).</li>
+                <li><strong>EL1 (Kernel):</strong> Operační systém (Linux jádro, Windows NT, macOS XNU).</li>
+                <li><strong>EL2 (Hypervisor):</strong> Virtualizace (KVM, Xen, Apple Hypervisor). Spravuje virtuální stroje.</li>
+                <li><strong>EL3 (Secure Monitor / Firmware):</strong> Zabezpečený svět (TrustZone), správa kryptografických klíčů a bezpečný start (Secure Boot).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Přechod mezi úrovněmi na ARM</h4>
+              <ul class="styled-list">
+                <li>Aplikace volá instrukci <code>SVC</code> (Supervisor Call) pro přechod z EL0 do EL1.</li>
+                <li>OS volá instrukci <code>HVC</code> (Hypervisor Call) pro přechod z EL1 do EL2.</li>
+                <li>Hypervizor volá instrukci <code>SMC</code> (Secure Monitor Call) pro přechod do EL3 (TrustZone).</li>
+                <li>Vyšší úroveň má vždy plnou kontrolu nad všemi nižšími úrovněmi.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ INSPEKCE PRIVILEGIÍ -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Diagnostika na úrovni instrukcí</div>
+            <h2 class="slide-title">Čtení modelově specifických registrů (MSR)</h2>
+            <p class="slide-subtitle">Inspekce registru IA32_LSTAR určujícího cíl instrukce SYSCALL</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">x86 Assembly &bull; CLI</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>nasm &bull; Ukázka nízkoúrovňového syscallu na x86_64</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment">; Volání zápisu na konzoli (sys_write) v čistém assembleru</span>
+<span class="term-cmd">mov</span> <span class="term-param">rax</span>, <span class="term-arg">1</span>          <span class="term-comment">; Číslo syscallu: sys_write v Linuxu</span>
+<span class="term-cmd">mov</span> <span class="term-param">rdi</span>, <span class="term-arg">1</span>          <span class="term-comment">; Deskriptor 1 = stdout</span>
+<span class="term-cmd">mov</span> <span class="term-param">rsi</span>, msg        <span class="term-comment">; Adresa textového řetězce</span>
+<span class="term-cmd">mov</span> <span class="term-param">rdx</span>, <span class="term-arg">14</span>         <span class="term-comment">; Délka řetězce</span>
+<span class="term-cmd">syscall</span>             <span class="term-comment">; Skok do Ring 0 (přepne CPU na adresu v IA32_LSTAR)</span>
+
+<span class="term-cmd">mov</span> <span class="term-param">rax</span>, <span class="term-arg">60</span>         <span class="term-comment">; Číslo syscallu: sys_exit</span>
+<span class="term-cmd">xor</span> <span class="term-param">rdi</span>, <span class="term-param">rdi</span>        <span class="term-comment">; Návratový kód 0</span>
+<span class="term-cmd">syscall</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Inspekce ochrany paměti a stránkování v Linuxu</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Zjištění, zda procesor podporuje hardwarovou ochranu stránek SMEP/SMAP</span>
+<span class="term-prompt">$ </span><span class="term-cmd">grep</span> <span class="term-param">-E</span> <span class="term-string">"smep|smap"</span> <span class="term-path">/proc/cpuinfo</span> <span class="term-pipe">|</span> <span class="term-cmd">head</span> <span class="term-param">-n</span> <span class="term-arg">1</span>
+<span class="term-out">flags : ... smep smap ...</span>
+
+<span class="term-comment"># SMEP (Supervisor Mode Execution Prevention):</span>
+<span class="term-comment"># Jádro v Ring 0 nesmí spustit instrukce ležící v paměti Ring 3!</span>
+<span class="term-comment"># Zabraňuje zneužití jádra útočníkem.</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Zkušební otázky z procesorových režimů a privilegií</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Ring 0 vs. Ring 3</h4>
+              <p>Schopnost přesně vysvětlit rozdíl v oprávněních procesoru (přístup k I/O portům, řídicím registrům CR0-CR4 a paměti označené příznakem Supervisor).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Instrukce SYSCALL</h4>
+              <p>Popis mechanismu skoku z User Mode do Kernel Mode, přepnutí na bezpečný Kernel Stack a návrat pomocí SYSRET.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. ARM Exception Levels</h4>
+              <p>Znalost vrstev EL0 (User), EL1 (OS Kernel), EL2 (Hypervisor) a EL3 (Secure Monitor / TrustZone).</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Co se stane na úrovni hardware a operačního systému, pokud se běžný program v C pokusí vykonat instrukci CLI (Clear Interrupts)?“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 03</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

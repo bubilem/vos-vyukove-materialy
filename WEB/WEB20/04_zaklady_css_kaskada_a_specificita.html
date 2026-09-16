@@ -1,0 +1,392 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 04: Základy CSS – kaskáda, dědičnost a specificita | WEB20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB20">
+          <span>&larr; WEB20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 04</span>
+          <span class="divider">&bull;</span>
+          <span>Základy CSS &bull; Kaskáda a specificita</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 8</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB20 &bull; 4. přednáška (45 min)</div>
+        <h1 class="hero-title">Základy CSS: Kaskáda, dědičnost &amp; specificita</h1>
+        <p class="hero-desc">
+          Způsoby začlenění stylopisů, mechanismus řešení konfliktů v kaskádě, přesný matematický výpočet váhy selektorů a architektonické standardy CSS Reset vs. Normalize.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Klíčový algoritmus</span>
+            <span class="hero-meta-val">Cascade &amp; Specificity (A:B:C:D)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční model</span>
+            <span class="hero-meta-val">Tématické styly edu_portal</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 8 (Kaskádové styly)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: ZAČLENĚNÍ A SYNTAXE -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Syntaxe a začlenění</div>
+            <h2 class="slide-title">Způsoby začlenění stylů a syntaxe pravidla</h2>
+            <p class="slide-subtitle">Srovnání externího souboru, interního bloku a inline stylu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. Externí stylopis (Doporučeno)</h4>
+              <p><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></p>
+              <p>Úplné oddělení obsahu a vzhledu, možnost cachování v prohlížeči pro celý portál, snadná údržba.</p>
+            </div>
+            <div class="content-card">
+              <h4>2. Interní blok &lt;style&gt;</h4>
+              <p><code>&lt;style&gt; body { margin: 0; } &lt;/style&gt;</code></p>
+              <p>Vhodné pouze pro specifické styly jediné stránky nebo pro rychlé vložení Critical CSS do hlavičky.</p>
+            </div>
+            <div class="content-card">
+              <h4>3. Inline atribut style</h4>
+              <p><code>&lt;div style="color: red;"&gt;...&lt;/div&gt;</code></p>
+              <p>Antipattern! Míchá data s prezentací, nelze cachovat, má extrémní specificitu a nelze v něm psát media queries.</p>
+            </div>
+          </div>
+          <div class="code-wrapper" style="margin-top: 1rem;">
+            <div class="code-header">
+              <span class="code-title">css &bull; anatomie pravidla</span>
+              <button class="btn-copy" title="Kopírovat kód">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Kopírovat</span>
+              </button>
+            </div>
+            <pre class="code-block"><code><span class="css-sel">.site-header .nav-link</span> {
+  <span class="css-prop">color</span>: <span class="css-val">#06b6d4</span>;         <span class="html-comment">/* Deklarace: vlastnost: hodnota; */</span>
+  <span class="css-prop">font-size</span>: <span class="css-num">1</span><span class="css-unit">rem</span>;
+  <span class="css-prop">text-decoration</span>: <span class="css-val">none</span>;
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: PRINCIP KASKÁDY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Jádro kaskádových stylů</div>
+            <h2 class="slide-title">Princip kaskády (The Cascade)</h2>
+            <p class="slide-subtitle">Jak prohlížeč řeší kolize protichůdných deklarací pro jeden element</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <p>
+            Když na stejný element cílí více pravidel definujících tutéž vlastnost (např. <code>color</code>), prohlížeč vyhodnocuje pravidla podle kaskádového algoritmu v tomto pořadí:
+          </p>
+          <div class="grid-4">
+            <div class="content-card">
+              <h4>1. Důležitost &amp; Původ</h4>
+              <p>Pravidla s <code>!important</code> &gt; autorský styl webu &gt; uživatelský styl &gt; výchozí styl prohlížeče (User Agent).</p>
+            </div>
+            <div class="content-card">
+              <h4>2. Inline styl</h4>
+              <p>Pravidlo zapsané přímo v HTML atributu <code>style="..."</code> přebíjí všechny selektory z externích CSS.</p>
+            </div>
+            <div class="content-card">
+              <h4>3. Specificita (Váha)</h4>
+              <p>Čím přesnější a specifičtější je selektor, tím vyšší váhu má. Pravidlo s vyšší specificitou zvítězí.</p>
+            </div>
+            <div class="content-card">
+              <h4>4. Pořadí ve zdroji</h4>
+              <p>Pokud mají dvě deklarace stejnou specificitu, <strong>vítězí ta, která je v CSS souboru níže</strong> (později).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: VÝPOČET SPECIFICITY -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Matematický model</div>
+            <h2 class="slide-title">Výpočet specificity selektorů: Vzorec (A, B, C, D)</h2>
+            <p class="slide-subtitle">Objektivní hodnocení váhy selektoru bez dohadů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Požadavek absolutoria</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th>Složka</th>
+                  <th>Co započítává</th>
+                  <th>Příklady</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>A (1,0,0,0)</strong></td>
+                  <td>Inline styl</td>
+                  <td><code>style="color: red;"</code></td>
+                </tr>
+                <tr>
+                  <td><strong>B (0,1,0,0)</strong></td>
+                  <td>Identifikátory (ID)</td>
+                  <td><code>#main-nav</code>, <code>#header</code></td>
+                </tr>
+                <tr>
+                  <td><strong>C (0,0,1,0)</strong></td>
+                  <td>Třídy, atributové selektory, pseudotřídy</td>
+                  <td><code>.btn</code>, <code>[type="text"]</code>, <code>:hover</code></td>
+                </tr>
+                <tr>
+                  <td><strong>D (0,0,0,1)</strong></td>
+                  <td>Typové prvky (tagy) a pseudoelementy</td>
+                  <td><code>p</code>, <code>h1</code>, <code>div</code>, <code>::before</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="grid-2" style="margin-top: 1rem;">
+            <div class="content-card">
+              <h4>Tréninkové příklady specificity:</h4>
+              <ul class="styled-list">
+                <li><code>nav a</code> &rarr; <strong>(0, 0, 0, 2)</strong></li>
+                <li><code>.nav-item .active</code> &rarr; <strong>(0, 0, 2, 0)</strong> (vyšší než tagy!)</li>
+                <li><code>#sidebar .widget h3</code> &rarr; <strong>(0, 1, 1, 1)</strong></li>
+                <li><code>#nav a:hover</code> &rarr; <strong>(0, 1, 1, 1)</strong></li>
+              </ul>
+            </div>
+            <div class="callout callout-warning">
+              <div class="callout-icon">
+                <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div class="callout-content">
+                <div class="callout-title">Proč nepoužívat !important?</div>
+                <p>Klíčové slovo <code>!important</code> rozbíjí přirozenou kaskádu. Jediný způsob, jak jej přebít, je napsat další <code>!important</code> s vyšší specificitou. To vede k nekontrolovatelné „válce specificit“.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: DĚDIČNOST A CSS RESET -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní chování</div>
+            <h2 class="slide-title">Dědičnost vlastností &amp; CSS Reset vs. Normalize</h2>
+            <p class="slide-subtitle">Jak se styly šíří od rodičů a jak sjednotit výchozí zobrazení v prohlížečích</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Děděné vs. Neděděné vlastnosti</h4>
+                <ul class="styled-list">
+                  <li><strong>Děděné (Inherited):</strong> Typografie a text (<code>color</code>, <code>font-family</code>, <code>font-size</code>, <code>line-height</code>, <code>text-align</code>). Nastavíte-li font na <code>&lt;body&gt;</code>, zdědí jej všechny odstavce i nadpisy.</li>
+                  <li><strong>Neděděné:</strong> Geometrie krabičky (<code>margin</code>, <code>padding</code>, <code>border</code>, <code>width</code>, <code>background</code>). Kdyby se dědil rámeček, každý odstavec by orámoval i všechny své potomky.</li>
+                  <li><strong>Klíčová slova:</strong> <code>inherit</code> (vynutí dědění), <code>initial</code> (výchozí stav z W3C specifikace), <code>unset</code>.</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>CSS Reset vs. Normalize.css</h4>
+                <ul class="styled-list">
+                  <li><strong>CSS Reset (Eric Meyer):</strong> Agresivně vynuluje veškeré okraje, paddingy a velikosti písem u všech tagů (všechny tagy začínají na čisté nule).</li>
+                  <li><strong>Normalize.css (Moderní standard):</strong> Zachovává užitečné výchozí styly prohlížečů, ale odstraňuje mezi-prohlížečové nekonzistence a opravuje běžné bugy.</li>
+                  <li><strong>Moderní CSS Reset (Dnes):</strong> Zaměřuje se na <code>box-sizing: border-box;</code>, odstranění výchozího marginu na <code>body</code> a plynulý rendering obrázků.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 8 (CSS kaskáda a specificita)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 8</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Kaskáda a pořadí</h4>
+              <p>Řešení konfliktů: Původ stylu &rarr; Inline &rarr; Specificita &rarr; Pořadí v souboru (poslední vyhrává).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Vzorec specificity</h4>
+              <p>Čtyři hodnoty <code>(Inline, ID, Třídy/Pseudotřídy, Tagy/Pseudoelementy)</code>. Deset tříd nikdy nepřeváží jedno ID.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Dědičnost vlastností</h4>
+              <p>Textové vlastnosti se dědí automaticky, box modelové se nedědí. Možnost vynucení přes <code>inherit</code>.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Sjednocení stylů</h4>
+              <p>Význam <code>Normalize.css</code> pro konzistentní renderování napříč různými prohlížeči a platformami.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická výpočetní úloha u zkoušky</div>
+              <p><em>„Které pravidlo obarví odkaz na stránce: <code>#main-menu a { color: blue; }</code> nebo <code>header.site-header nav.main-navigation ul.menu-list li.menu-item a.link { color: red; }</code>?“</em><br>
+              <strong>Správná odpověď:</strong> Odkaz bude <strong>modrý</strong>! První pravidlo obsahuje jedno ID &rarr; specificita <strong>(0, 1, 0, 1)</strong>. Druhé pravidlo má sice 4 třídy a 4 tagy, ale 0 ID &rarr; specificita <strong>(0, 0, 4, 4)</strong>. ID má v kaskádě vyšší řádovou váhu.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 04</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

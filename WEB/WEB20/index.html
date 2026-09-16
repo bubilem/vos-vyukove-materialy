@@ -1,0 +1,425 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEB20: Webové technologie | Výukový portál a prezentace</title>
+  <link rel="stylesheet" href="../../assets/css/dashboard-core.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    
+    <!-- Top Header / Brand -->
+    <header class="dashboard-header">
+      <div class="brand-box">
+        <div class="brand-icon">
+          <svg class="icon" viewBox="0 0 24 24">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>WEB20 &bull; Webové technologie</h1>
+          <p>Vyšší odborná škola &bull; 5. semestr &bull; Zimní období</p>
+        </div>
+      </div>
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Přepnout světlý/tmavý motiv">
+        <svg class="icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <div class="hero-tag">Výukové materiály &bull; Webové prezentace</div>
+      <h2 class="hero-title">Struktura webu, kaskádové styly &amp; moderní standardy</h2>
+      <p class="hero-desc">
+        Kompletní série 10 interaktivních výukových prezentací (45 minut / lekce) pro modul WEB20. Všechny praktické ukázky sémantiky, DOM struktury, kaskády, selektorů, layoutových systémů Flexbox/Grid, preprocesorů Sass/Less a XML/RSS/Atom syndikace jsou vystavěny nad jednotným referenčním portálem <code>edu_portal</code>.
+      </p>
+
+      <div class="metrics-row">
+        <div class="metric-item">
+          <span class="metric-num">10</span>
+          <span class="metric-label">Výukových lekcí</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">45 min</span>
+          <span class="metric-label">Na jednu hodinu</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">5 kreditů</span>
+          <span class="metric-label">Zakončeno zkouškou</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">Okruhy 7–13</span>
+          <span class="metric-label">Otázky k absolutoriu</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Context Banner -->
+    <section class="db-banner">
+      <div class="db-banner-content">
+        <h3>
+          <svg class="icon" style="color: #06b6d4;" viewBox="0 0 24 24">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          Referenční výukový model: <code>edu_portal</code>
+        </h3>
+        <p>Všechny lekce demonstrují látku na společném projektu moderního e-learningového magazínu a technologického portálu. Projdeme celou cestu od sémantické kostry přes precizní CSS layouty až po distribuci obsahu přes RSS a Atom.</p>
+        <div class="db-pills">
+          <span class="db-pill">html5_semantic</span>
+          <span class="db-pill">dom_tree</span>
+          <span class="db-pill">css_cascade</span>
+          <span class="db-pill">box_model</span>
+          <span class="db-pill">flexbox_nav</span>
+          <span class="db-pill">grid_portal</span>
+          <span class="db-pill">rwd_mobile_first</span>
+          <span class="db-pill">sass_modules</span>
+          <span class="db-pill">xml_rss2</span>
+          <span class="db-pill">atom_feed</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Bar -->
+    <div class="search-container">
+      <svg class="search-icon-svg" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="lessonSearch" class="search-input" placeholder="Hledat v lekcích (např. 'Grid', 'Flexbox', 'DOM', 'Sass', 'kaskáda', 'specificita', 'okruh 8')...">
+    </div>
+
+    <!-- Lessons Catalog Grid -->
+    <main class="lessons-grid" id="lessonsGrid">
+
+      <!-- LEKCE 01 -->
+      <article class="lesson-card" data-keywords="sémantika html5 doctype header nav main article section aside footer seo a11y w3c validace okruh 7 okruh 3">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 01</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 7, 3</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Sémantická struktura webu a moderní HTML5</h3>
+          <p class="lesson-desc">
+            Principy sémantického značkování, nahrazení nepřehledných bloků sémantickými tagy (header, nav, main, article, section, aside, footer), validace W3C, význam pro přístupnost a vyhledávače.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Sémantika</span>
+            <span class="lesson-tag">HTML5 kostra</span>
+            <span class="lesson-tag">article vs section</span>
+            <span class="lesson-tag">SEO &amp; A11y</span>
+          </div>
+          <a href="01_semanticka_struktura_a_html5.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 02 -->
+      <article class="lesson-card" data-keywords="formuláře input select datalist validace pattern picture video audio svg tabulky fieldset legend okruh 4 okruh 5">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 02</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 4, 5</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Pokročilé HTML elementy, formuláře a multimédia</h3>
+          <p class="lesson-desc">
+            Přístupné formuláře s nativní validací (typy vstupů, required, pattern), sémantické strukturování tabulek a responzivní vkládání multimédií (picture, video, inline SVG).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">HTML5 Formuláře</span>
+            <span class="lesson-tag">Nativní validace</span>
+            <span class="lesson-tag">&lt;picture&gt;</span>
+            <span class="lesson-tag">Inline SVG</span>
+          </div>
+          <a href="02_pokrocile_html_formulare_a_multimedia.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 03 -->
+      <article class="lesson-card" data-keywords="dom strom objektový model uzly nodetype nodename parent child sibling render tree critical rendering path okruh 7">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 03</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 7</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">DOM (Document Object Model) a strom dokumentu</h3>
+          <p class="lesson-desc">
+            Jak webový prohlížeč zpracovává HTML na strom uzlů (element, text, atribut), stromová hierarchie rodič-potomek-sourozenec a propojení DOM s CSSOM do Render Tree.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">DOM strom</span>
+            <span class="lesson-tag">Typy uzlů</span>
+            <span class="lesson-tag">CSSOM</span>
+            <span class="lesson-tag">Render Tree</span>
+          </div>
+          <a href="03_dom_struktura_a_objektovy_model.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 04 -->
+      <article class="lesson-card" data-keywords="css kaskáda dědičnost specificita výpočet váhy důležitost important reset normalize externí styl link style okruh 8">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 04</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 8</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Základy CSS – kaskáda, dědičnost a specificita</h3>
+          <p class="lesson-desc">
+            Způsoby začlenění stylů, syntaktická pravidla, princip kaskády, přesný matematický výpočet specificity selektorů, děděné vlastnosti a význam stylopisů CSS Reset a Normalize.css.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Kaskáda</span>
+            <span class="lesson-tag">Specificita</span>
+            <span class="lesson-tag">Dědičnost</span>
+            <span class="lesson-tag">CSS Reset / Normalize</span>
+          </div>
+          <a href="04_zaklady_css_kaskada_a_specificita.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 05 -->
+      <article class="lesson-card" data-keywords="selektory atributové kombinátory potomci sourozenci pseudotřídy hover focus nth-child pseudoelementy before after okruh 9">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 05</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 9</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">CSS selektory, kombinátory a pseudotřídy</h3>
+          <p class="lesson-desc">
+            Cílení na prvky bez nadbytečných tříd: atributové selektory, stromové kombinátory (&gt;, +, ~), stavové i strukturální pseudotřídy (:nth-child, :is, :has) a pseudoelementy ::before a ::after.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Kombinátory</span>
+            <span class="lesson-tag">Atributové selektory</span>
+            <span class="lesson-tag">:nth-child()</span>
+            <span class="lesson-tag">::before / ::after</span>
+          </div>
+          <a href="05_css_selektory_kombinatory_a_pseudotridy.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 06 -->
+      <article class="lesson-card" data-keywords="box model content padding border margin box-sizing border-box display inline block jednotky rem em pozicování static relative absolute fixed sticky z-index okruh 10 okruh 11">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 06</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 10, 11</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Box model, rozměry a CSS pozicování</h3>
+          <p class="lesson-desc">
+            Model krabičky a kolaps vnějších okrajů, praktický význam box-sizing: border-box, rozdíly mezi block a inline, moderní relativní jednotky (rem, em, clamp) a režimy pozicování.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Box Model</span>
+            <span class="lesson-tag">border-box</span>
+            <span class="lesson-tag">rem vs em</span>
+            <span class="lesson-tag">sticky &amp; z-index</span>
+          </div>
+          <a href="06_box_model_rozmery_a_pozicovani.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 07 -->
+      <article class="lesson-card" data-keywords="layout flexbox grid flex-direction justify-content align-items grid-template-columns fr repeat minmax grid-template-areas okruh 11">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 07</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 11</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Moderní tvorba layoutu – Flexbox a CSS Grid</h3>
+          <p class="lesson-desc">
+            Jednorozměrná rozvržení s Flexboxem (hlavní a příčná osa, zarovnání, pružnost) a dvourozměrná mřížka CSS Grid (frakční jednotky fr, oblasti grid-template-areas, minmax).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Flexbox (1D)</span>
+            <span class="lesson-tag">CSS Grid (2D)</span>
+            <span class="lesson-tag">fr &amp; minmax()</span>
+            <span class="lesson-tag">Kdy Flex vs Grid</span>
+          </div>
+          <a href="07_moderni_layout_flexbox_a_grid.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 08 -->
+      <article class="lesson-card" data-keywords="responzivní rwd viewport media queries breakpointy mobile-first custom properties css proměnné transitions animace okruh 16 okruh 8">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 08</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 16, 8</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Responzivní design (RWD) a Media Queries</h3>
+          <p class="lesson-desc">
+            Filozofie Mobile-First, meta tag viewport, zápis @media pravidel a volba breakpointů, moderní CSS proměnné (Custom Properties) s dynamickým přepínáním a plynulé CSS přechody.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Mobile-First</span>
+            <span class="lesson-tag">Media Queries</span>
+            <span class="lesson-tag">CSS Proměnné</span>
+            <span class="lesson-tag">Transitions</span>
+          </div>
+          <a href="08_responzivni_design_a_media_queries.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 09 -->
+      <article class="lesson-card" data-keywords="preprocesory sass scss less proměnné vnořování nesting mixiny parametry extend dědičnost partials modularizace okruh 12">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 09</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 12</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">CSS preprocesory – Sass (SCSS) a Less</h3>
+          <p class="lesson-desc">
+            Princip preprocesingu a kompilace, syntaxe SCSS vs Less, proměnné, vnořování a referenční selektor &, parametrické mixiny, dědičnost a modularizace stylů do dílčích souborů.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Sass / SCSS</span>
+            <span class="lesson-tag">Less</span>
+            <span class="lesson-tag">Nesting &amp; &amp;</span>
+            <span class="lesson-tag">Mixiny &amp; Partials</span>
+          </div>
+          <a href="09_css_preprocesory_sass_a_less.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 10 -->
+      <article class="lesson-card" data-keywords="syndikace xml rss atom channel item cdata feed entry dtd xsd čtečky kanálů syntéza zkouška absolutorium okruh 13">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 10</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 13</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Syndikace obsahu a výměna dat – XML, RSS a Atom</h3>
+          <p class="lesson-desc">
+            Syntaxe a pravidla jazyka XML, distribuce obsahu pomocí kanálů RSS 2.0 a moderního standardu Atom, struktura feedů a závěrečná komplexní syntéza celého modulu WEB20.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">XML Syntaxe</span>
+            <span class="lesson-tag">RSS 2.0</span>
+            <span class="lesson-tag">Atom (RFC 4287)</span>
+            <span class="lesson-tag">Závěrečná syntéza</span>
+          </div>
+          <a href="10_syndikace_obsahu_xml_rss_a_atom.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+      <p>Vyšší odborná škola &bull; Výukové materiály pro předmět Webové technologie (WEB20) &bull; 100% Offline podpora</p>
+      <div class="footer-pills">
+        <span class="footer-pill">HTML5</span>
+        <span class="footer-pill">DOM</span>
+        <span class="footer-pill">CSS3</span>
+        <span class="footer-pill">Flexbox &amp; Grid</span>
+        <span class="footer-pill">Sass &amp; Less</span>
+        <span class="footer-pill">XML / RSS / Atom</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Live Search in Lessons
+    const searchInput = document.getElementById('lessonSearch');
+    const lessonCards = document.querySelectorAll('.lesson-card');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      lessonCards.forEach(card => {
+        const text = (card.textContent + ' ' + (card.getAttribute('data-keywords') || '')).toLowerCase();
+        if (text.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const sunIcon = `<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    const moonIcon = `<svg class="icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+
+    const savedTheme = localStorage.getItem('web20_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeBtn.innerHTML = savedTheme === 'dark' ? sunIcon : moonIcon;
+
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('web20_theme', next);
+      themeBtn.innerHTML = next === 'dark' ? sunIcon : moonIcon;
+    });
+  </script>
+</body>
+</html>

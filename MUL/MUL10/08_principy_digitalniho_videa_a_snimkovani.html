@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 08: Principy digitálního videa a snímkování | MUL10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL10">
+          <span>&larr; MUL10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 08</span>
+          <span class="divider">&bull;</span>
+          <span>Principy digitálního videa a snímkování</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 7: Digitální video</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL10 &bull; 8. přednáška (45 min)</div>
+        <h1 class="hero-title">Principy digitálního videa a snímkování</h1>
+        <p class="hero-desc">
+          Základní fyzikální a technické parametry pohyblivého obrazu: snímková frekvence (fps), prokládané vs. progresivní řádkování, poměry stran (Aspect Ratio), rozlišení (FHD až 8K) a barevné podvzorkování (Chroma Subsampling).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Snímkování</span>
+            <span class="hero-meta-val">24 &bull; 25 &bull; 30 &bull; 60 fps</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Subsampling</span>
+            <span class="hero-meta-val">4:4:4 &bull; 4:2:2 &bull; 4:2:0</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 7</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: VNÍMÁNÍ POHYBU A SNÍMKOVÁ FREKVENCE -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Fyziologie vidění</div>
+            <h2 class="slide-title">Vnímání plynulého pohybu a standardy fps</h2>
+            <p class="slide-subtitle">Setrvačnost zrakového vjemu (Persistence of Vision) a frekvence blikání</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Základní norma</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Fyziologické limity oka a mozku</h4>
+              <ul class="styled-list">
+                <li><strong>Hranice iluze pohybu:</strong> Od cca <strong>12 až 16 fps</strong> začíná lidský mozek skládat jednotlivé statické obrázky do souvislého pohybu.</li>
+                <li><strong>Flicker Fusion Threshold:</strong> Zmizení pocitu blikání světla nastává až kolem <strong>50 až 60 Hz</strong> (historicky řešeno rotující clonou promítačky, která každý filmový snímek osvítila 2&times; či 3&times;).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Standardní snímkové frekvence</h4>
+              <ul class="styled-list">
+                <li><strong>24 fps:</strong> Filmový standard (historický kompromis mezi plynulostí a cenou filmového pásu ve 20. letech). Dnes nositel "filmového vzhledu" (cinematic look).</li>
+                <li><strong>25 fps (PAL / SECAM):</strong> Televizní standard v Evropě (odvozen od frekvence rozvodné sítě 50 Hz).</li>
+                <li><strong>29.97 / 30 fps (NTSC):</strong> Televizní norma v Severní Americe a Japonsku (odvozená od sítě 60 Hz).</li>
+                <li><strong>50 / 60 / 120 fps:</strong> Sportovní přenosy, videohry a akční scény s vysokou plynulostí bez rozmazání.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: PROKLÁDANÉ VS PROGRESIVNÍ ŘÁDKOVÁNÍ -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Metoda skenování</div>
+            <h2 class="slide-title">Prokládané (Interlaced) vs. Progresivní (Progressive)</h2>
+            <p class="slide-subtitle">Význam písmen 'i' a 'p' v označení video formátů (1080i vs. 1080p)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový koncept</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Prokládaný řádek &ndash; Interlaced ('i')</h4>
+              <ul class="styled-list">
+                <li>Snímek je rozdělen na dva půlsnímky (Fields): liché řádky (Upper field) a sudé řádky (Lower field).</li>
+                <li>Při 50i se za sekundu přenese 50 půlsnímků. Vzniklo v éře analogových CRT televizí pro úsporu šířky pásma vysílání o 50 %.</li>
+                <li><strong>Problém (Combing / Hřebenový efekt):</strong> Při rychlém horizontálním pohybu objektu v čase mezi lichým a sudým půlsnímkem vznikají na moderních LCD displejích rušivé zoubky.</li>
+                <li>Vyžaduje přepočet na celé snímky &ndash; <strong>Deinterlacing</strong> (např. Yadif algoritmus).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Neprokládaný řádek &ndash; Progressive ('p')</h4>
+              <ul class="styled-list">
+                <li>Každý snímek se vykresluje celý naráz od prvního do posledního řádku (shora dolů).</li>
+                <li>Nativní režim všech moderních obrazovek (LCD, OLED, projektory, počítačové monitory).</li>
+                <li>Absolutně ostrý obraz při pozastavení (Freezframe), ideální pro střih a webový streaming.</li>
+                <li>Standard dneška: 1080p, 4K (2160p), 8K (4320p).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: ROZLIŠENÍ A POMĚRY STRAN -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Geometrie obrazu</div>
+            <h2 class="slide-title">Rozlišení, poměry stran a pixelový poměr (PAR)</h2>
+            <p class="slide-subtitle">Evoluce od analogového SD rozlišení po obří 8K formáty</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Standardy rozlišení</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill uncompressed">SD &bull; Standard Def</span>
+              <h4 style="margin: 0.5rem 0;">PAL: $720 \times 576$ (4:3)</h4>
+              <p style="font-size: 0.85rem;">Staré DVD a CRT televize. Využíval nečtvercové obdélníkové pixely (Pixel Aspect Ratio $\text{PAR} \ne 1.0$), které se při zobrazení roztahovaly do poměru 4:3 nebo 16:9.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">Full HD &bull; 1080p</span>
+              <h4 style="margin: 0.5rem 0;">$1920 \times 1080$ (16:9)</h4>
+              <p style="font-size: 0.85rem;">Celkem 2.07 milionu čtvercových pixelů ($\text{PAR} = 1.0$). Zlatý standard televizního vysílání a Blu-ray disků poslední dekády.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">4K UHD &bull; 2160p</span>
+              <h4 style="margin: 0.5rem 0;">$3840 \times 2160$ (16:9)</h4>
+              <p style="font-size: 0.85rem;">Přesně $4\times$ více pixelů než Full HD (8.29 milionu pixelů). Filmový standard DCI 4K má rozlišení $4096 \times 2160$.</p>
+            </div>
+          </div>
+          <div class="callout callout-tip" style="margin-top: 0.6rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Filmové poměry stran (Aspect Ratio)</div>
+              <p>Televize a monitory: <strong>16:9</strong> (1.78:1). Širokoúhlé kino formáty: <strong>21:9</strong> (Cinemascope 2.39:1 &ndash; vytváří černé pruhy letterbox nahoře a dole). Sociální sítě: <strong>9:16</strong> (vertikální formát Reels/TikTok) a <strong>1:1</strong> (čtverec).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: CHROMA SUBSAMPLING -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Kompresní technologie</div>
+            <h2 class="slide-title">Barevné podvzorkování (Chroma Subsampling)</h2>
+            <p class="slide-subtitle">Jak redukovat barevnou složku o 50 % až 75 % bez viditelného poškození jasu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový princip</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Princip $J:a:b$ v matici $4 \times 2$ pixelů</h4>
+              <ul class="styled-list">
+                <li><strong>$J$ (Vzorkovací šířka):</strong> Vždy 4 pixely.</li>
+                <li><strong>$a$ (Vzorky chrominance v 1. řádku):</strong> Počet odebraných barevných vzorků v horním řádku.</li>
+                <li><strong>$b$ (Změny chrominance v 2. řádku):</strong> Počet barevných vzorků v dolním řádku.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Srovnání standardů podvzorkování</h4>
+              <ul class="styled-list">
+                <li><strong>4:4:4 (Plné vzorkování):</strong> Každý pixel má vlastní jas i barvu ($Cb, Cr$). Žádná redukce dat. Používá se pro počítačový rendering a filmový postprodukční klíčování (Green Screen).</li>
+                <li><strong>4:2:2 (Broadcast studio):</strong> Horizontální rozlišení barvy je zmenšeno na polovinu. Úspora 33 % celkového datového toku. Standard pro profesionální kamery (Apple ProRes 422).</li>
+                <li><strong>4:2:0 (Spotřebitelský standard):</strong> Barva je vzorkována jen $1\times$ pro čtveřici $2 \times 2$ pixelů. <strong>Úspora 50 % dat!</strong> Standard pro YouTube, Netflix, H.264, H.265 a Blu-ray.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z principů videa</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 7</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Snímková frekvence</h4>
+              <p>24 fps pro filmový dojem, 25/30 fps pro televizní vysílání, 50/60 fps pro plynulý sport a interaktivní hry bez rozmazání.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Interlaced vs Progressive</h4>
+              <p>Prokládaný řádek (i) přenáší půlsnímky s rizikem hřebenového efektu. Progresivní řádek (p) vykresluje celý snímek naráz.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Chroma 4:2:0</h4>
+              <p>Zachovává plný jasový detail ($Y$), ale barevné složky sdílí pro blok $2 \times 2$ pixelů, čímž ušetří 50 % datového toku.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Vysvětlete rozdíl mezi 1080i a 1080p včetně pojmu deinterlacing. Popište princip barevného podvzorkování 4:2:0 a zdůvodněte jeho nasazení.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 08</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

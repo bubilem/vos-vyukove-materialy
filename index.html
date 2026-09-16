@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Výukové materiály VOŠ &amp; SŠ | Informační technologie</title>
+  <style>
+    :root {
+      --bg: #0a0f1d;
+      --bg-card: rgba(17, 24, 39, 0.85);
+      --bg-card-hover: rgba(24, 33, 53, 0.95);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      --text: #f3f4f6;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --accent-dat: #06b6d4;
+      --accent-web: #38bdf8;
+      --accent-osy: #10b981;
+      --accent-mul: #a855f7;
+      --accent-mul2: #ec4899;
+
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: ui-monospace, "JetBrains Mono", Consolas, monospace;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-card-hover: #ffffff;
+      --border: rgba(0, 0, 0, 0.08);
+      --border-hover: rgba(0, 0, 0, 0.18);
+      --text: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+      line-height: 1.55;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Ambientní technologické pozadí */
+    .bg-grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    [data-theme="light"] .bg-grid-overlay {
+      background-image: 
+        linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    }
+
+    .bg-glow-1 {
+      position: fixed;
+      top: -10%;
+      left: 15%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(6, 182, 212, 0.02) 70%, transparent 100%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-glow-2 {
+      position: fixed;
+      bottom: -10%;
+      right: 15%;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(236, 72, 153, 0.02) 70%, transparent 100%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .main-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    /* Horní navigace */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(168, 85, 247, 0.15));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #38bdf8;
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .brand-text p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.85rem;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 9999px;
+      color: #10b981;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle-btn:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+    }
+
+    /* Hero sekce */
+    .hero {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-size: 3.1rem;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, var(--text) 20%, #38bdf8 65%, #a855f7 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.65;
+    }
+
+    /* Metriky */
+    .metrics-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 2rem;
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      backdrop-filter: blur(12px);
+    }
+
+    .metric-col {
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .metric-col:last-child {
+      border-right: none;
+    }
+
+    .metric-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--text);
+      display: block;
+      line-height: 1.2;
+    }
+
+    .metric-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 0.2rem;
+    }
+
+    /* Vyhledávání & Filtry */
+    .search-filter-box {
+      margin-bottom: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+    }
+
+    .search-input-wrapper svg {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.9rem 1rem 0.9rem 3rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .filter-tab {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-tab:hover,
+    .filter-tab.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .filter-tab.active {
+      font-weight: 600;
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    /* Mřížka předmětů */
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-bottom: 4.5rem;
+    }
+
+    .subject-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, box-shadow 0.25s;
+      backdrop-filter: blur(12px);
+    }
+
+    .subject-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--subject-accent, #38bdf8);
+      box-shadow: 0 16px 36px -8px var(--subject-glow, rgba(56, 189, 248, 0.15));
+    }
+
+    .subject-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--subject-accent, #38bdf8);
+    }
+
+    .subject-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .subject-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: var(--subject-bg, rgba(56, 189, 248, 0.1));
+      border: 1px solid var(--subject-accent);
+      color: var(--subject-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .subject-icon-box svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    .subject-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      background: var(--subject-bg, rgba(56, 189, 248, 0.1));
+      color: var(--subject-accent);
+      border: 1px solid var(--subject-accent);
+    }
+
+    .subject-code {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--subject-accent);
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .subject-name {
+      font-size: 1.65rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .subject-desc {
+      color: var(--text-muted);
+      font-size: 0.94rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .modules-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.75rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+
+    [data-theme="light"] .modules-list {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .module-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.84rem;
+    }
+
+    .module-item-title {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .module-item-status {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .module-item-status.active {
+      color: var(--subject-accent);
+      font-weight: 600;
+    }
+
+    .subject-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+      margin-top: auto;
+    }
+
+    .btn-portal {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--subject-accent);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .subject-card:hover .btn-portal {
+      gap: 0.75rem;
+    }
+
+    .lesson-counter {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Plovoucí prvky frameworku */
+    .features-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .features-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .features-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .features-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .feature-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: rgba(56, 189, 248, 0.1);
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .feature-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .feature-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #38bdf8;
+    }
+
+    /* Responzivita */
+    @media (max-width: 900px) {
+      .subjects-grid {
+        grid-template-columns: 1fr;
+      }
+      .metrics-bar {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem 1rem;
+      }
+      .metric-col:nth-child(2) {
+        border-right: none;
+      }
+      .hero-title {
+        font-size: 2.3rem;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .metrics-bar {
+        grid-template-columns: 1fr;
+      }
+      .metric-col {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 0.75rem;
+      }
+      .metric-col:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .hero-title {
+        font-size: 1.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-grid-overlay"></div>
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+
+  <div class="main-wrapper">
+    <!-- Top Navigation -->
+    <header class="top-nav">
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Výukové materiály VOŠ</h1>
+          <p>Informační technologie &bull; Vyšší odborná škola a Střední škola</p>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <span class="nav-pill">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          100% Offline Ready
+        </span>
+        <button class="theme-toggle-btn" id="themeToggleBtn" title="Přepnout motiv (Dark / Light)">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Header -->
+    <section class="hero">
+      <div class="hero-eyebrow">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        Centrální rozcestník výukových prezentací a materiálů
+      </div>
+      <h2 class="hero-title">Informační technologie pro vyšší odborné studium</h2>
+      <p class="hero-desc">
+        Komplexní interaktivní platforma moderních výukových materiálů. 4 nosné odborné pilíře, přes 60 modulárních lekcí dimenzovaných na 45minutové vyučovací jednotky s přímou vazbou na profilové a absolutorní zkoušky.
+      </p>
+
+      <!-- Metriky portálu -->
+      <div class="metrics-bar">
+        <div class="metric-col">
+          <span class="metric-value">4</span>
+          <span class="metric-label">Odborné předměty</span>
+        </div>
+        <div class="metric-col">
+          <span class="metric-value">8+</span>
+          <span class="metric-label">Studijních modulů</span>
+        </div>
+        <div class="metric-col">
+          <span class="metric-value">60+</span>
+          <span class="metric-label">Interaktivních lekcí</span>
+        </div>
+        <div class="metric-col">
+          <span class="metric-value">100%</span>
+          <span class="metric-label">Offline &amp; Zkoušky</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vyhledávání a filtry -->
+    <section class="search-filter-box">
+      <div class="search-input-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Hledat v tématech, předmětech nebo modulech (např. SQL, Docker, Flexbox, Nyquist)..." autocomplete="off">
+      </div>
+
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">Všechny předměty</button>
+        <button class="filter-tab" data-filter="dat">DAT (Databáze)</button>
+        <button class="filter-tab" data-filter="web">WEB (Webové technologie)</button>
+        <button class="filter-tab" data-filter="osy">OSY (Operační systémy)</button>
+        <button class="filter-tab" data-filter="mul">MUL (Multimédia)</button>
+      </div>
+    </section>
+
+    <!-- Mřížka 4 předmětů -->
+    <section class="subjects-grid" id="subjectsGrid">
+      
+      <!-- 1. DAT: Databázové systémy -->
+      <a href="DAT/index.html" class="subject-card" data-subject="dat" style="--subject-accent: var(--accent-dat); --subject-bg: rgba(6, 182, 212, 0.12); --subject-glow: rgba(6, 182, 212, 0.2);">
+        <div>
+          <div class="subject-header">
+            <div class="subject-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </svg>
+            </div>
+            <span class="subject-badge">3 moduly</span>
+          </div>
+
+          <div class="subject-code">Předmět DAT</div>
+          <h3 class="subject-name">Databázové systémy</h3>
+          <p class="subject-desc">
+            Relační modelování dat, funkční závislosti a normální formy (1NF–BCNF), jazyk SQL (DDL, DML, DQL), indexování, optimalizace výkonu a správa transakcí (ACID). Všechny dotazy jsou vystavěny nad reálným e-commerce modelem <code>edu_eshop</code>.
+          </p>
+
+          <div class="modules-list">
+            <div class="module-item">
+              <span class="module-item-title">DAT10: Úvod a modelování (E-R)</span>
+              <span class="module-item-status">3. semestr</span>
+            </div>
+            <div class="module-item">
+              <span class="module-item-title">DAT20: Relační databáze &amp; SQL</span>
+              <span class="module-item-status active">10 lekcí k dispozici</span>
+            </div>
+            <div class="module-item">
+              <span class="module-item-title">DAT30: Využití a správa SŘBD</span>
+              <span class="module-item-status">6. semestr</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="subject-footer">
+          <span class="lesson-counter">Kompletní model <code>edu_eshop</code></span>
+          <span class="btn-portal">
+            Vstoupit do DAT
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- 2. WEB: Webové technologie -->
+      <a href="WEB/index.html" class="subject-card" data-subject="web" style="--subject-accent: var(--accent-web); --subject-bg: rgba(56, 189, 248, 0.12); --subject-glow: rgba(56, 189, 248, 0.2);">
+        <div>
+          <div class="subject-header">
+            <div class="subject-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <span class="subject-badge">3 moduly</span>
+          </div>
+
+          <div class="subject-code">Předmět WEB</div>
+          <h3 class="subject-name">Webové technologie</h3>
+          <p class="subject-desc">
+            Architektura webových aplikací: Od sémantického HTML5 a protokolu HTTP přes pokročilý responzivní CSS layout (Flexbox, CSS Grid), metodiky BEM, CSS preprocesory (Sass) až po moderní JavaScript a webové animace.
+          </p>
+
+          <div class="modules-list">
+            <div class="module-item">
+              <span class="module-item-title">WEB10: Základy webu a sémantika</span>
+              <span class="module-item-status active">K dispozici</span>
+            </div>
+            <div class="module-item">
+              <span class="module-item-title">WEB20: Moderní CSS &amp; Layouty</span>
+              <span class="module-item-status active">10 lekcí k dispozici</span>
+            </div>
+            <div class="module-item">
+              <span class="module-item-title">WEB30: JavaScript a webové aplikace</span>
+              <span class="module-item-status">Plánováno</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="subject-footer">
+          <span class="lesson-counter">Flexbox &bull; Grid &bull; Sass &bull; BEM</span>
+          <span class="btn-portal">
+            Vstoupit do WEB
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- 3. OSY: Operační systémy -->
+      <a href="OSY/index.html" class="subject-card" data-subject="osy" style="--subject-accent: var(--accent-osy); --subject-bg: rgba(16, 185, 129, 0.12); --subject-glow: rgba(16, 185, 129, 0.2);">
+        <div>
+          <div class="subject-header">
+            <div class="subject-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                <rect x="9" y="9" width="6" height="6"></rect>
+                <line x1="9" y1="1" x2="9" y2="4"></line>
+                <line x1="15" y1="1" x2="15" y2="4"></line>
+                <line x1="9" y1="20" x2="9" y2="23"></line>
+                <line x1="15" y1="20" x2="15" y2="23"></line>
+                <line x1="20" y1="9" x2="23" y2="9"></line>
+                <line x1="20" y1="14" x2="23" y2="14"></line>
+                <line x1="1" y1="9" x2="4" y2="9"></line>
+                <line x1="1" y1="14" x2="4" y2="14"></line>
+              </svg>
+            </div>
+            <span class="subject-badge">2 moduly • 20 lekcí</span>
+          </div>
+
+          <div class="subject-code">Předmět OSY</div>
+          <h3 class="subject-name">Operační systémy</h3>
+          <p class="subject-desc">
+            Abstrakce hardwaru, architektura kernelu (monolit vs. mikrojádro), privilegované režimy CPU, správa procesů a vláken (CFS plánovač), virtuální paměť a paging, souborové systémy (ext4, NTFS), POSIX terminál a bezpečnostní modely.
+          </p>
+
+          <div class="modules-list">
+            <div class="module-item">
+              <span class="module-item-title">OSY10: Architektura a základy OS</span>
+              <span class="module-item-status active">10 lekcí k dispozici</span>
+            </div>
+            <div class="module-item">
+              <span class="module-item-title">OSY20: Pokročilá správa prostředků a kernel</span>
+              <span class="module-item-status active">10 lekcí k dispozici</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="subject-footer">
+          <span class="lesson-counter">Linux &bull; Windows &bull; RTOS &bull; Shell</span>
+          <span class="btn-portal">
+            Vstoupit do OSY
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- 4. MUL: Multimédia -->
+      <a href="MUL/index.html" class="subject-card" data-subject="mul" style="--subject-accent: var(--accent-mul); --subject-bg: rgba(168, 85, 247, 0.12); --subject-glow: rgba(168, 85, 247, 0.2);">
+        <div>
+          <div class="subject-header">
+            <div class="subject-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+            </div>
+            <span class="subject-badge">2 moduly • 20 lekcí</span>
+          </div>
+
+          <div class="subject-code">Předmět MUL</div>
+          <h3 class="subject-name">Multimédia</h3>
+          <p class="subject-desc">
+            Digitální reprezentace médií: psychoakustika a vzorkování zvuku (Nyquist), rastrové modely (RGB, CMYK, Lab), vektorové Bézierovy křivky, video kodeky (H.264, HEVC, AV1), mikrofony, expoziční trojúhelník fotografie, NLE střih a AV rozhraní.
+          </p>
+
+          <div class="modules-list">
+            <div class="module-item">
+              <span class="module-item-title">MUL10: Základy a digitální formáty médií</span>
+              <span class="module-item-status active">10 lekcí k dispozici</span>
+            </div>
+            <div class="module-item">
+              <span class="module-item-title">MUL20: Technika a tvorba multimédií</span>
+              <span class="module-item-status active">10 lekcí k dispozici</span>
+            </div>
+            <div class="module-item">
+              <span class="module-item-title">MUL30: 3D grafika, postprodukce a AI</span>
+              <span class="module-item-status">Výhled</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="subject-footer">
+          <span class="lesson-counter">Zvuk &bull; Foto &bull; Video &bull; Grafika</span>
+          <span class="btn-portal">
+            Vstoupit do MUL
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+    </section>
+
+    <!-- Vlastnosti a standardy platformy -->
+    <section class="features-section">
+      <div class="features-header">
+        <h3 class="features-title">Klíčové technologické a didaktické standardy</h3>
+        <p class="features-subtitle">Navrženo pro maximální komfort studentů i vyučujících v učebnách i při samostatném studiu</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14"></path>
+              <path d="M12 5l7 7-7 7"></path>
+            </svg>
+          </div>
+          <h4 class="feature-title">100% Offline funkčnost</h4>
+          <p class="feature-desc">Materiály běží čistě lokálně přímo ze souborového systému (protokol <code>file://</code>) nebo z USB bez nutnosti webserveru či připojení k internetu.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"></path>
+            </svg>
+          </div>
+          <h4 class="feature-title">Plné klávesové ovládání</h4>
+          <p class="feature-desc">Navigace šipkami a mezerníkem, režim celé obrazovky (<kbd>F</kbd>), interaktivní osnova (<kbd>M</kbd>/<kbd>O</kbd>), přepínání motivů (<kbd>T</kbd>) a nápověda (<kbd>?</kbd>).</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="4 7 4 4 20 4 20 7"></polyline>
+              <line x1="9" y1="20" x2="15" y2="20"></line>
+              <line x1="12" y1="4" x2="12" y2="20"></line>
+            </svg>
+          </div>
+          <h4 class="feature-title">Nativní matematický engine</h4>
+          <p class="feature-desc">Integrované renderování matematických a technických vzorců ($C = \varepsilon S / d$, Nyquist, SNR, zlomky, exponenty) bez nutnosti externích skriptů či fontů.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+          </div>
+          <h4 class="feature-title">Vazba na absolutorium</h4>
+          <p class="feature-desc">Každá lekce obsahuje shrnutí a zkušební checklist přímo navázaný na katalog profilových zkušebních okruhů VOŠ a maturitních témat.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="DAT/index.html">Předmět DAT</a>
+        <a href="WEB/index.html">Předmět WEB</a>
+        <a href="OSY/index.html">Předmět OSY</a>
+        <a href="MUL/index.html">Předmět MUL</a>
+        <a href="docs/presentation_framework_guide.md">Metodický průvodce frameworkem</a>
+      </div>
+      <p>Vyšší odborná škola a Střední škola &copy; 2026 &bull; Výukové materiály pro studijní obor Informační technologie</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript pro vyhledávání, filtry a téma -->
+  <script>
+    (function () {
+      'use strict';
+
+      // 1. Správa motivu (Dark / Light)
+      const THEME_KEY = 'vos_presentation_theme';
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+
+      if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme');
+          const next = current === 'light' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem(THEME_KEY, next);
+        });
+      }
+
+      // 2. Filtrování a vyhledávání předmětů
+      const searchInput = document.getElementById('searchInput');
+      const filterTabs = document.querySelectorAll('.filter-tab');
+      const subjectCards = document.querySelectorAll('.subject-card');
+
+      let currentFilter = 'all';
+      let currentQuery = '';
+
+      function updateGrid() {
+        subjectCards.forEach((card) => {
+          const subject = card.getAttribute('data-subject');
+          const text = card.textContent.toLowerCase();
+
+          const matchesFilter = (currentFilter === 'all' || currentFilter === subject);
+          const matchesQuery = !currentQuery || text.includes(currentQuery);
+
+          if (matchesFilter && matchesQuery) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      filterTabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          filterTabs.forEach((t) => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentFilter = tab.getAttribute('data-filter');
+          updateGrid();
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          currentQuery = e.target.value.trim().toLowerCase();
+          updateGrid();
+        });
+      }
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+/* ==========================================================================
+   DAT20 - Lokální modulové rozšíření (Databázové systémy)
+   Přebírá jádro z ../../assets/css/presentation-core.css
+   ========================================================================== */
+
+@import "../../../assets/css/presentation-core.css";
+@import "../../../assets/css/syntax/sql.css";
+
+:root {
+  --accent: #06b6d4;
+  --accent-glow: rgba(6, 182, 212, 0.25);
+}
+
+/* Modulová specifika DAT20 - Databázové tabulky */
+.db-table th {
+  background: rgba(6, 182, 212, 0.12);
+  color: var(--accent-cyan);
+}

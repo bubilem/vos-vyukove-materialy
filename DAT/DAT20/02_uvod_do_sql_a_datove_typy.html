@@ -1,0 +1,407 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 02: Úvod do SQL a datové typy | DAT20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník">
+          <span>← DAT20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 02</span>
+          <span class="divider">•</span>
+          <span>Úvod do SQL & Datové typy</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 7</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT20 • 2. přednáška (45 min)</div>
+        <h1 class="hero-title">Jazyk SQL a Datové typy</h1>
+        <p class="hero-desc">
+          Členění jazyka SQL (DDL, DML, DQL, DCL, TCL), standardy, kategorizace datových typů a pravidla pro návrh paměťově a výkonnostně efektivních schémat.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Dělení SQL</span>
+            <span class="hero-meta-val">5 základních sub-jazyků</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Typy v edu_eshop</span>
+            <span class="hero-meta-val">DECIMAL, ENUM, JSON, DATETIME</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Okruh zkoušky</span>
+            <span class="hero-meta-val">Otázka č. 7</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: SQL TAXONOMY -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základy SQL</div>
+            <h2 class="slide-title">Klasifikace jazyka SQL</h2>
+            <p class="slide-subtitle">SQL není jediný monolitický příkaz, ale dělí se do 5 specializovaných kategorií</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                DDL (Data Definition)
+              </h4>
+              <p>Definice a modifikace struktury databáze a tabulek.</p>
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.88rem;">
+                <li><code>CREATE TABLE</code> / <code>DATABASE</code></li>
+                <li><code>ALTER TABLE</code></li>
+                <li><code>DROP TABLE</code></li>
+                <li><code>TRUNCATE TABLE</code></li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                DML (Data Manipulation)
+              </h4>
+              <p>Manipulace se samotnými daty (řádky v tabulkách).</p>
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.88rem;">
+                <li><code>INSERT INTO</code> (vkládání)</li>
+                <li><code>UPDATE ... SET</code> (úprava)</li>
+                <li><code>DELETE FROM</code> (mazání)</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                DQL (Data Query)
+              </h4>
+              <p>Čtení a dotazování na uložená data.</p>
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.88rem;">
+                <li><code>SELECT ... FROM</code></li>
+                <li><code>WHERE</code>, <code>JOIN</code></li>
+                <li><code>GROUP BY</code>, <code>ORDER BY</code></li>
+                <li><em>(Někdy formálně řazeno pod DML)</em></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-top: 0.5rem;">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                DCL (Data Control Language)
+              </h4>
+              <p>Řízení přístupových práv, uživatelů a bezpečnostních rolí:</p>
+              <p><code>GRANT SELECT, INSERT ON eshop.* TO 'student'@'%';</code><br>
+              <code>REVOKE DROP ON eshop.* FROM 'student'@'%';</code></p>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                TCL (Transaction Control Language)
+              </h4>
+              <p>Správa transakcí a garance vlastností ACID:</p>
+              <p><code>START TRANSACTION;</code> → <code>COMMIT;</code> (potvrzení) nebo <code>ROLLBACK;</code> (vrácení zpět do původního stavu).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: NUMERIC DATA TYPES -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Datové typy</div>
+            <h2 class="slide-title">Číselné datové typy & Zásada pro peníze</h2>
+            <p class="slide-subtitle">Proč nikdy neukládat ceny a finance do FLOAT či DOUBLE</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Celá čísla (Integers)</h4>
+                <div class="table-container" style="margin-top: 0.5rem;">
+                  <table class="db-table">
+                    <tr><th>Typ</th><th>Velikost</th><th>Rozsah (SIGNED / UNSIGNED)</th></tr>
+                    <tr><td><code>TINYINT</code></td><td>1 byte</td><td>-128 až 127 / 0 až 255</td></tr>
+                    <tr><td><code>SMALLINT</code></td><td>2 byty</td><td>0 až 65 535 (UNSIGNED)</td></tr>
+                    <tr><td><code>INT</code></td><td>4 byty</td><td>0 až 4,29 miliardy (UNSIGNED)</td></tr>
+                    <tr><td><code>BIGINT</code></td><td>8 bytů</td><td>Až 18 trilionů</td></tr>
+                  </table>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.6rem;">
+                  V <code>edu_eshop</code>: <code>category.id</code> je <code>SMALLINT</code> (stačí pro desítky kategorií), <code>customer.id</code> je <code>INT UNSIGNED</code>.
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <div class="content-card">
+                <h4>Desetinná čísla: DECIMAL vs. FLOAT</h4>
+                <p>
+                  <strong>DECIMAL(M, D)</strong>: Přesný aritmetický typ s pevnou řádovou čárkou. Ukládá číslice exaktně jako řetězec decimálních hodnot.
+                </p>
+                <div class="callout callout-warning" style="margin-top: 0.8rem;">
+                  <div class="callout-icon">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                  </div>
+                  <div class="callout-content">
+                    <div class="callout-title">Kritická zkoušková otázka: Proč ne FLOAT?</div>
+                    Typy <code>FLOAT</code> a <code>DOUBLE</code> používají binární aproximaci IEEE 754. Například hodnota <code>0.1 + 0.2</code> může skončit jako <code>0.30000000000000004</code>! V účetnictví by vznikaly haléřové chyby.
+                    <strong>Ceny v edu_eshop:</strong> <code>DECIMAL(10,2)</code> (až 99 999 999,99 Kč).
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: STRING TYPES & COLLATION -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Datové typy</div>
+            <h2 class="slide-title">Textové typy, Kódování a Kolace</h2>
+            <p class="slide-subtitle">CHAR vs. VARCHAR a tajemství české diakritiky v utf8mb4</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>CHAR(N) vs. VARCHAR(N)</h4>
+              <ul class="styled-list">
+                <li>
+                  <strong>CHAR(N):</strong> Pevná délka. Pokud je řetězec kratší než N, doplní se mezerami.
+                  <br><em>Vhodné pro:</em> Kódy států (<code>CHAR(2)</code> jako 'CZ'), rodná čísla, hashe MD5/SHA256 (<code>CHAR(64)</code>).
+                </li>
+                <li>
+                  <strong>VARCHAR(N):</strong> Proměnná délka. Uloží pouze skutečné znaky + 1 až 2 byty pro délku.
+                  <br><em>Vhodné pro:</em> Jména (<code>VARCHAR(50)</code>), emaily (<code>VARCHAR(100)</code>).
+                </li>
+                <li>
+                  <strong>TEXT:</strong> Ukládá se mimo hlavní stránku řádku (overflow buffer). Vhodné pro popisy produktů a recenze.
+                </li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Znaková sada (Charset) & Kolace (Collation)</h4>
+              <p>
+                <strong>Charset:</strong> Jak se znaky převádí na byty.<br>
+                Zlatý standard: <code>utf8mb4</code> (plná podpora Unicode včetně 4bajtových znaků a všech jazyků).
+              </p>
+              <p style="margin-top: 0.5rem;">
+                <strong>Collation:</strong> Pravidla pro <em>porovnávání</em> a <em>řazení</em> textů.
+              </p>
+              <div class="callout callout-eshop" style="margin-top: 0.8rem;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">edu_eshop: utf8mb4_czech_ci</div>
+                  <code>_ci</code> = Case Insensitive (nerozlišuje velká/malá písmena při porovnání).<br>
+                  <code>czech</code> = Respektuje českou abecedu (písmeno <strong>„CH“</strong> se správně řadí až za „H“, nikoliv mezi „C“ a „D“!).
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: TEMPORAL & SPECIAL TYPES -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Datové typy</div>
+            <h2 class="slide-title">Datum, Čas a Moderní typy (JSON, ENUM)</h2>
+            <p class="slide-subtitle">Časová razítka, stavy objednávek a flexibilní atributy</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                DATETIME vs TIMESTAMP
+              </h4>
+              <p><strong>DATE:</strong> pouze datum <code>YYYY-MM-DD</code> (např. <code>birth_date</code>).</p>
+              <p><strong>DATETIME:</strong> 8 bytů, rozsah 1000 až 9999. Ukládá přesný čas bez konverze časových zón.</p>
+              <p><strong>TIMESTAMP:</strong> 4 byty, automaticky převádí čas do/z UTC. <em>Pozor:</em> Problém roku 2038 (limit 32bitového celého čísla)!</p>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line></svg>
+                Výčtový typ ENUM
+              </h4>
+              <p>Povoluje pouze předdefinované textové hodnoty uložené interně jako číselné indexy (1 byte):</p>
+              <pre class="code-block" style="padding: 0.4rem; font-size: 0.8rem;"><code>-- Tabulka orders v edu_eshop:
+`status` ENUM(
+  'new', 
+  'paid', 
+  'shipped', 
+  'cancelled'
+) NOT NULL DEFAULT 'new'</code></pre>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Typ JSON v MySQL 8
+              </h4>
+              <p>Umožňuje ukládat validní JSON dokument s binární optimalizací pro rychlé vyhledávání bez parsování celého textu:</p>
+              <pre class="code-block" style="padding: 0.4rem; font-size: 0.8rem;"><code>-- product.attributes
+SELECT name,
+  attributes->>'$.color' AS barva
+FROM product;</code></pre>
+            </div>
+          </div>
+
+          <div class="callout callout-tip" style="margin-top: 0.5rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">BOOLEAN v MySQL</div>
+              V MySQL a MariaDB je datový typ <code>BOOLEAN</code> (či <code>BOOL</code>) pouze aliasem pro <code>TINYINT(1)</code>, kde hodnota <code>0</code> reprezentuje FALSE a <code>1</code> reprezentuje TRUE.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY SLIDE -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Rekapitulace & Příprava</div>
+            <h2 class="slide-title">Shrnutí: Jak správně volit datové typy</h2>
+            <p class="slide-subtitle">Zásady pro profesionální a čistý databázový návrh</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-card-num">1</div>
+              <h4>Volte nejmenší dostačující typ</h4>
+              <p>Pokud stačí <code>TINYINT</code> (např. hodnocení 1–5), nepoužívejte <code>INT</code>. Šetří to RAM buffer pool a zvyšuje počet řádků na diskovou stránku.</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">2</div>
+              <h4>Na měny jedině DECIMAL</h4>
+              <p>Nikdy nepoužívejte plovoucí řádovou čárku pro účetní data. <code>DECIMAL(10,2)</code> je sázka na jistotu bez zaokrouhlovacích anomálií.</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">3</div>
+              <h4>U textů hlídejte délku</h4>
+              <p>Fixní délka = <code>CHAR</code>, proměnná s limitem = <code>VARCHAR</code>, dlouhé volné texty = <code>TEXT</code>. Vždy s kolací <code>utf8mb4_czech_ci</code>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 02</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><span class="key-badge">M</span></div>
+          <div class="shortcut-row"><span>Motiv (Tmavý/Světlý)</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

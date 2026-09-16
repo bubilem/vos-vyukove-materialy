@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 09: Souborové systémy a disková úložiště | OSY20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY20">
+          <span>&larr; OSY20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 09</span>
+          <span class="divider">&bull;</span>
+          <span>Souborové systémy a disková úložiště</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Souborové systémy</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY20 &bull; 9. přednáška (45 min)</div>
+        <h1 class="hero-title">Souborové systémy &amp; Disková úložiště</h1>
+        <p class="hero-desc">
+          Abstrakce a vnitřní struktury dat na trvalých médiích: Virtuální souborový systém (VFS), jednoduchost FAT32 a exFAT, enterprise struktura NTFS (Master File Table $MFT), linuxový standard ext4 (inody, blokové skupiny, rozsahy) a princip žurnálování pro garanci konzistence při havárii.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Jednotící vrstva</span>
+            <span class="hero-meta-val">VFS (Virtual File System)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Datové struktury</span>
+            <span class="hero-meta-val">Inody (ext4) vs. $MFT (NTFS)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Ochrana dat</span>
+            <span class="hero-meta-val">Žurnálování (Journaling)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: VIRTUÁLNÍ SOUBOROVÝ SYSTÉM (VFS) -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektonická abstrakce</div>
+            <h2 class="slide-title">Virtual File System (VFS)</h2>
+            <p class="slide-subtitle">Jak operační systém sjednocuje disky, flash paměti i síťová úložiště</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová vrstva</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Role vrstvy VFS</h4>
+              <p>Aplikace nevolá funkce specifické pro ext4 nebo NTFS. Volá univerzální funkce POSIX / Win32:</p>
+              <ul class="styled-list">
+                <li>VFS představuje <strong>objektově orientované rozhraní</strong> v jazyce C uvnitř jádra.</li>
+                <li>Definuje čtyři základní objekty:
+                  <ul class="styled-list">
+                    <li><strong>Superblock:</strong> Popisuje celý připojený souborový systém (velikost bloku, celková kapacita, volné bloky).</li>
+                    <li><strong>Inode:</strong> Reprezentuje konkrétní soubor a jeho metadata (velikost, práva, časová razítka, ukazatele na data).</li>
+                    <li><strong>Dentry (Directory Entry):</strong> Propojuje jméno souboru s číslem inodu (rychlá vyrovnávací paměť pro cesty).</li>
+                    <li><strong>File:</strong> Reprezentuje otevřený soubor v běžícím procesu (aktuální offset čtení <code>f_pos</code>).</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Jednotný strom vs. Písmena jednotek</h4>
+              <ul class="styled-list">
+                <li><strong>Unix / Linux:</strong> Jediný globální kořenový adresář <code>/</code>. Libovolný disk nebo síťový svazek se připojuje (Mount) do libovolného podadresáře (např. <code>/mnt/data</code>).</li>
+                <li><strong>Windows NT:</strong> Historické dědictví disketových písmen <code>C:\</code>, <code>D:\</code>. Interně však NT Object Manager používá také strom (<code>\Device\HarddiskVolume1</code>), který je písmenům přiřazen přes symbolické odkazy.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: STRUKTURA EXT4 A INODY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Linuxové úložiště</div>
+            <h2 class="slide-title">Souborový systém ext4: Inody a Bloky</h2>
+            <p class="slide-subtitle">Proč jméno souboru není uloženo v inodu souboru</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Co je to Inode (Index Node)?</h4>
+              <p>Datová struktura pevné velikosti (typicky 256 bajtů) na disku popisující soubor:</p>
+              <ul class="styled-list">
+                <li>Obsahuje: UID vlastníka, GID skupiny, přístupová práva (rwxr-xr-x), velikost souboru v bajtech, čas vytvoření/změny/přístupu (atime, mtime, ctime).</li>
+                <li>Obsahuje ukazatele na datové bloky (v ext4 pomocí <strong>rozsahů / Extents</strong> – souvislých bloků paměti pro bleskové čtení velkých souborů).</li>
+                <li><strong class="term-err">Důležité:</strong> Inode <strong>neobsahuje jméno souboru!</strong> Jméno je uloženo v datovém bloku nadřazeného adresáře jako pár <code>(jméno, číslo inodu)</code>.</li>
+                <li>Díky tomu mohou existovat <strong>pevné odkazy (Hard Links)</strong> – více různých jmen ukazujících na stejný inode.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Organizace v blokových skupinách (Block Groups)</h4>
+              <ul class="styled-list">
+                <li>Disk je rozdělen na blokové skupiny, aby se minimalizoval pohyb mechanické hlavičky HDD.</li>
+                <li>Každá skupina obsahuje: kopii superbloku, bitmapu bloků (volné bloky), bitmapu inodů a tabulku inodů.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: STRUKTURA NTFS A MASTER FILE TABLE -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Windows úložiště</div>
+            <h2 class="slide-title">NTFS a Master File Table ($MFT)</h2>
+            <p class="slide-subtitle">Všechno v NTFS je soubor – i samotný popis disku</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">NTFS &bull; MFT</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Master File Table ($MFT)</h4>
+              <p>Srdcem NTFS je lineární relační tabulka záznamů (každý záznam má 1024 bajtů):</p>
+              <ul class="styled-list">
+                <li>Každému souboru a adresáři odpovídá alespoň jeden záznam v $MFT.</li>
+                <li>Všechny vlastnosti souboru jsou uloženy jako <strong>atributy</strong>:
+                  <ul class="styled-list">
+                    <li><code>$STANDARD_INFORMATION</code>: Časová razítka, DOS atributy (skrytý, systémový).</li>
+                    <li><code>$FILE_NAME</code>: Jméno souboru (podpora Unicode a 8.3 zkrácených názvů).</li>
+                    <li><code>$SECURITY_DESCRIPTOR</code>: Kompletní Access Control List (ACL oprávnění).</li>
+                    <li><code>$DATA</code>: Samotný datový obsah souboru.</li>
+                  </ul>
+                </li>
+                <li><strong>Resident Data:</strong> Pokud je soubor velmi malý (pod cca 700 bajtů), uloží se přímo do záznamu v $MFT bez alokace diskových clusterů!</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Pokročilé vlastnosti NTFS</h4>
+              <ul class="styled-list">
+                <li><strong>Alternativní datové proudy (ADS):</strong> Soubor může mít více datových proudů (např. <code>soubor.txt:tajne_data</code>). Využívá se pro označení stažených souborů z internetu (Zone.Identifier).</li>
+                <li><strong>Řídké soubory (Sparse Files):</strong> Úspora místa pro soubory plné nul (nealokují se fyzické bloky).</li>
+                <li><strong>Komprese a šifrování:</strong> Průhledná LZNT1 komprese a EFS (Encrypting File System).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: ŽURNÁLOVÁNÍ SOUBOROVÝCH SYSTÉMŮ -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Integrita dat</div>
+            <h2 class="slide-title">Žurnálování: Ochrana před havárií při výpadku proudu</h2>
+            <p class="slide-subtitle">Jak princip Write-Ahead Logging eliminuje zdlouhavé kontroly disku</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Problém nekonzistence (Staré FAT a ext2)</h4>
+              <p>Zápis souboru vyžaduje několik samostatných zápisů na disk: alokovat blok v bitmapě, zapsat data, aktualizovat inode a zapsat jméno do adresáře:</p>
+              <ul class="styled-list">
+                <li>Pokud v polovině této sekvence dojde k <strong>výpadku napájení</strong>, disk zůstane v nekonzistentním stavu (ztracené clustery, křížově propojené soubory).</li>
+                <li>Při startu musel běžet program <code>fsck</code> nebo <code>chkdsk</code>, který hodiny skenoval celý disk.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Princip žurnálování (Write-Ahead Logging)</h4>
+              <ol class="styled-list">
+                <li><strong>Záznam záměru (Journal Write):</strong> Jádro nejdříve zapíše plánované změny metadat do vyhrazeného kruhového žurnálu na disku.</li>
+                <li><strong>Commit záznamu:</strong> Do žurnálu se zapíše potvrzení, že transakce je kompletní.</li>
+                <li><strong>Skutečný zápis:</strong> Metadata se zapíší na svá trvalá místa v souborovém systému.</li>
+                <li><strong>Zotavení po pádu (Crash Recovery):</strong> Při bootu jádro pouze projde žurnál. Dokončené transakce přehraje (Replay), nedokončené zahodí. <strong>Zotavení trvá zlomek sekundy i u terabajtových disků!</strong></li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Okruhy ze souborových systémů a diskových struktur</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Účel vrstvy VFS</h4>
+              <p>Pochopení role virtuálního souborového systému pro jednotný přístup k různorodým souborovým systémům přes společné datové struktury.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Inode a Hard Linky</h4>
+              <p>Schopnost vysvětlit strukturu inodu a zdůvodnit, proč pevný odkaz (Hard Link) sdílí stejný inode a proč jej nelze vytvořit přes hranice různých diskových oddílů.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Význam žurnálu</h4>
+              <p>Popis transakčního žurnálování (Write-Ahead Logging) a způsobu rychlého zotavení po nekorektním vypnutí počítače.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Porovnejte souborové systémy FAT32, NTFS a ext4 z hlediska maximální velikosti souboru, žurnálování a podpory přístupových práv (ACL).“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 09</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

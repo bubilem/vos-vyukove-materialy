@@ -1,0 +1,421 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 02: Pokročilé HTML elementy, formuláře a multimédia | WEB20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB20">
+          <span>&larr; WEB20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 02</span>
+          <span class="divider">&bull;</span>
+          <span>Pokročilé HTML elementy, formuláře a multimédia</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 4, 5</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB20 &bull; 2. přednáška (45 min)</div>
+        <h1 class="hero-title">Pokročilé HTML elementy, formuláře &amp; multimédia</h1>
+        <p class="hero-desc">
+          Architektura přístupných formulářů s nativní klientskou validací, strukturování tabulkových dat a moderní vkládání responzivních obrázků, audia, videa a inline SVG grafiky.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Klíčové prvky</span>
+            <span class="hero-meta-val">&lt;form&gt;, &lt;input&gt;, &lt;picture&gt;, &lt;table&gt;</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční model</span>
+            <span class="hero-meta-val">Objednávka &amp; Video edu_portal</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 4 &amp; č. 5</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PŘÍSTUPNÁ FORMULÁŘOVÁ STRUKTURA -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Interaktivní prvky</div>
+            <h2 class="slide-title">Architektura přístupného formuláře</h2>
+            <p class="slide-subtitle">Seskupování prvků, vazba popisků a logická hierarchie</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">html &bull; formulářová struktura</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="html-tag">&lt;form</span> <span class="html-attr">action</span>=<span class="html-val">"/api/order"</span> <span class="html-attr">method</span>=<span class="html-val">"post"</span> <span class="html-attr">novalidate</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;fieldset&gt;</span>
+    <span class="html-tag">&lt;legend&gt;</span>Osobní údaje studenta<span class="html-tag">&lt;/legend&gt;</span>
+    
+    <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"form-group"</span><span class="html-tag">&gt;</span>
+      <span class="html-tag">&lt;label</span> <span class="html-attr">for</span>=<span class="html-val">"fullName"</span><span class="html-tag">&gt;</span>Celé jméno:<span class="html-tag">&lt;/label&gt;</span>
+      <span class="html-tag">&lt;input</span> <span class="html-attr">type</span>=<span class="html-val">"text"</span> <span class="html-attr">id</span>=<span class="html-val">"fullName"</span> <span class="html-attr">name</span>=<span class="html-val">"name"</span> 
+             <span class="html-attr">required</span> <span class="html-attr">autocomplete</span>=<span class="html-val">"name"</span><span class="html-tag">&gt;</span>
+    <span class="html-tag">&lt;/div&gt;</span>
+
+    <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"form-group"</span><span class="html-tag">&gt;</span>
+      <span class="html-tag">&lt;label</span> <span class="html-attr">for</span>=<span class="html-val">"emailAddr"</span><span class="html-tag">&gt;</span>Školní e-mail:<span class="html-tag">&lt;/label&gt;</span>
+      <span class="html-tag">&lt;input</span> <span class="html-attr">type</span>=<span class="html-val">"email"</span> <span class="html-attr">id</span>=<span class="html-val">"emailAddr"</span> <span class="html-attr">name</span>=<span class="html-val">"email"</span> 
+             <span class="html-attr">required</span> <span class="html-attr">pattern</span>=<span class="html-val">".+@vos-sps\.cz"</span><span class="html-tag">&gt;</span>
+    <span class="html-tag">&lt;/div&gt;</span>
+  <span class="html-tag">&lt;/fieldset&gt;</span>
+
+  <span class="html-tag">&lt;button</span> <span class="html-attr">type</span>=<span class="html-val">"submit"</span><span class="html-tag">&gt;</span>Odeslat přihlášku<span class="html-tag">&lt;/button&gt;</span>
+<span class="html-tag">&lt;/form&gt;</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Pravidla přístupnosti formulářů</h4>
+                <ul class="styled-list">
+                  <li><strong>Vazba &lt;label&gt; s &lt;input&gt;:</strong> Atribut <code>for="..."</code> na návěstí MUSÍ přesně odpovídat unikátnímu <code>id="..."</code> na vstupním prvku. Kliknutím na popisek se aktivuje kurzor v poli.</li>
+                  <li><strong>&lt;fieldset&gt; a &lt;legend&gt;:</strong> Logické seskupení souvisejících polí (např. Fakturační adresa vs. Dodací adresa). Čtečka obrazovky přečte legendu při vstupu do každého prvku skupiny.</li>
+                  <li><strong>Atribut name:</strong> Pouze prvky s atributem <code>name="..."</code> se odešlou na server jako dvojice klíč-hodnota.</li>
+                  <li><strong>Autocomplete:</strong> Umožňuje prohlížeči automaticky a bezpečně předvyplnit kontaktní data (WCAG požadavek na kognitivní přístupnost).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: MODERNÍ TYPY VSTUPŮ A VALIDACE -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Nativní funkcionalita</div>
+            <h2 class="slide-title">Nativní HTML5 validace a typy vstupů</h2>
+            <p class="slide-subtitle">Ověřování dat v prohlížeči bez jediného řádku JavaScriptu</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-cyan);" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Specializované typy inputů
+              </h4>
+              <p><code>email</code>, <code>tel</code>, <code>url</code>, <code>date</code>, <code>time</code>, <code>number</code>, <code>range</code>, <code>color</code>. Na mobilních zařízeních automaticky aktivují odpovídající klávesnici (např. numerickou nebo se zavináčem).</p>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Validační atributy
+              </h4>
+              <p><code>required</code> (povinné pole), <code>min</code> / <code>max</code> (číselný nebo časový rozsah), <code>minlength</code> / <code>maxlength</code>, <code>step</code> a <code>pattern="regex"</code> pro regulární výrazy.</p>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-indigo);" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line></svg>
+                Element &lt;datalist&gt;
+              </h4>
+              <p>Poskytuje uživateli nabídku našeptávače možností (autocomplete), přičemž uživatel může vepsat i vlastní libovolnou hodnotu:</p>
+              <code>&lt;input list="courses"&gt;</code>
+            </div>
+          </div>
+          <div class="callout callout-warning">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Bezpečnostní pravidlo (Kritické pro zkoušku)</div>
+              <p>Klientská validace v HTML5 je určena <strong>pouze pro uživatelský komfort</strong> (UX), nikoli pro bezpečnost! Útočník může HTML validaci snadno obejít (např. pomocí cURL, Postmanu nebo vypnutím JS). Veškerá data se <strong>vždy musí znovu validovat na serveru</strong>!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: STRUKTUROVANÁ TABULKOVÁ DATA -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Tabulková data</div>
+            <h2 class="slide-title">Sémantická tabulka vs. Layoutová tabulka</h2>
+            <p class="slide-subtitle">Zásady přístupného značkování dvourozměrných dat</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">html &bull; sémantická tabulka</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="html-tag">&lt;table</span> <span class="html-attr">class</span>=<span class="html-val">"schedule-table"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;caption&gt;</span>Rozvrh výuky modulu WEB20 pro 5. semestr<span class="html-tag">&lt;/caption&gt;</span>
+  <span class="html-tag">&lt;thead&gt;</span>
+    <span class="html-tag">&lt;tr&gt;</span>
+      <span class="html-tag">&lt;th</span> <span class="html-attr">scope</span>=<span class="html-val">"col"</span><span class="html-tag">&gt;</span>Lekce<span class="html-tag">&lt;/th&gt;</span>
+      <span class="html-tag">&lt;th</span> <span class="html-attr">scope</span>=<span class="html-val">"col"</span><span class="html-tag">&gt;</span>Téma přednášky<span class="html-tag">&lt;/th&gt;</span>
+      <span class="html-tag">&lt;th</span> <span class="html-attr">scope</span>=<span class="html-val">"col"</span><span class="html-tag">&gt;</span>Kredity<span class="html-tag">&lt;/th&gt;</span>
+    <span class="html-tag">&lt;/tr&gt;</span>
+  <span class="html-tag">&lt;/thead&gt;</span>
+  <span class="html-tag">&lt;tbody&gt;</span>
+    <span class="html-tag">&lt;tr&gt;</span>
+      <span class="html-tag">&lt;th</span> <span class="html-attr">scope</span>=<span class="html-val">"row"</span><span class="html-tag">&gt;</span>01<span class="html-tag">&lt;/th&gt;</span>
+      <span class="html-tag">&lt;td&gt;</span>Sémantická struktura a HTML5<span class="html-tag">&lt;/td&gt;</span>
+      <span class="html-tag">&lt;td&gt;</span>5 ECTS<span class="html-tag">&lt;/td&gt;</span>
+    <span class="html-tag">&lt;/tr&gt;</span>
+  <span class="html-tag">&lt;/tbody&gt;</span>
+  <span class="html-tag">&lt;tfoot&gt;</span>
+    <span class="html-tag">&lt;tr&gt;</span>
+      <span class="html-tag">&lt;td</span> <span class="html-attr">colspan</span>=<span class="html-val">"3"</span><span class="html-tag">&gt;</span>Zakončeno ústní zkouškou<span class="html-tag">&lt;/td&gt;</span>
+    <span class="html-tag">&lt;/tr&gt;</span>
+  <span class="html-tag">&lt;/tfoot&gt;</span>
+<span class="html-tag">&lt;/table&gt;</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Pravidla správného tabulkového značkování</h4>
+                <ul class="styled-list">
+                  <li><strong>Zákaz tabulkového layoutu:</strong> Element <code>&lt;table&gt;</code> se smí používat VÝHRADNĚ pro skutečná tabulková data (matice, rozpisy, porovnání). Nikdy pro celostránkový layout!</li>
+                  <li><strong>&lt;caption&gt;:</strong> Povinný přístupný název tabulky, umisťuje se jako první potomkový prvek za <code>&lt;table&gt;</code>.</li>
+                  <li><strong>Rozdělení thead / tbody / tfoot:</strong> Umožňuje prohlížeči při tisku opakovat záhlaví na každé stránce papíru.</li>
+                  <li><strong>Atribut scope="col|row":</strong> Informuje odečítač obrazovky, zda je buňka <code>&lt;th&gt;</code> záhlavím pro sloupec nebo řádek.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: MULTIMÉDIA A RESPONZIVNÍ GRAFIKA -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Multimédia na webu</div>
+            <h2 class="slide-title">Element &lt;picture&gt;, video a vektorová grafika SVG</h2>
+            <p class="slide-subtitle">Optimalizace načítání assetů a responzivní formáty příští generace</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">html &bull; responzivní &lt;picture&gt; a svg</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="html-comment">&lt;!-- Responzivní obrázek s volbou formátu (AVIF &gt; WebP &gt; JPG) --&gt;</span>
+<span class="html-tag">&lt;picture&gt;</span>
+  <span class="html-tag">&lt;source</span> <span class="html-attr">srcset</span>=<span class="html-val">"hero.avif"</span> <span class="html-attr">type</span>=<span class="html-val">"image/avif"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;source</span> <span class="html-attr">srcset</span>=<span class="html-val">"hero.webp"</span> <span class="html-attr">type</span>=<span class="html-val">"image/webp"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;img</span> <span class="html-attr">src</span>=<span class="html-val">"hero.jpg"</span> <span class="html-attr">alt</span>=<span class="html-val">"Studenti u počítačů v učebně VOŠ"</span> 
+       <span class="html-attr">width</span>=<span class="html-val">"1200"</span> <span class="html-attr">height</span>=<span class="html-val">"600"</span> <span class="html-attr">loading</span>=<span class="html-val">"lazy"</span><span class="html-tag">&gt;</span>
+<span class="html-tag">&lt;/picture&gt;</span>
+
+<span class="html-comment">&lt;!-- Inline SVG grafika s děděním barvy přes currentColor --&gt;</span>
+<span class="html-tag">&lt;svg</span> <span class="html-attr">class</span>=<span class="html-val">"icon"</span> <span class="html-attr">viewBox</span>=<span class="html-val">"0 0 24 24"</span> 
+     <span class="html-attr">fill</span>=<span class="html-val">"none"</span> <span class="html-attr">stroke</span>=<span class="html-val">"currentColor"</span> <span class="html-attr">stroke-width</span>=<span class="html-val">"2"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;circle</span> <span class="html-attr">cx</span>=<span class="html-val">"12"</span> <span class="html-attr">cy</span>=<span class="html-val">"12"</span> <span class="html-attr">r</span>=<span class="html-val">"10"</span><span class="html-tag">&gt;&lt;/circle&gt;</span>
+<span class="html-tag">&lt;/svg&gt;</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Klíčové principy multimédií v HTML5</h4>
+                <ul class="styled-list">
+                  <li><strong>Element &lt;picture&gt;:</strong> Umožňuje servírovat moderní úsporné formáty (AVIF, WebP) s automatickým fallbackem na klasický JPEG pro starší prohlížeče.</li>
+                  <li><strong>Art Direction:</strong> Pomocí <code>&lt;source media="(max-width: 600px)"&gt;</code> lze nabídnout na mobilu oříznutý vertikální detail a na desktopu širokoúhlou scenérii.</li>
+                  <li><strong>Atribut loading="lazy":</strong> Nativní líné načítání – obrázky pod ohybem stránky (below the fold) se stáhnou až v okamžiku, kdy k nim uživatel doskroluje.</li>
+                  <li><strong>Vektory SVG:</strong> Nekonečná ostrost při jakémkoliv rozlišení a minimální datový objem.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhů č. 4 a č. 5</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 4, 5</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Formulářová sémantika</h4>
+              <p>Párování <code>&lt;label for="..."&gt;</code> s <code>&lt;input id="..."&gt;</code>, seskupování polí pomocí <code>&lt;fieldset&gt;</code> a <code>&lt;legend&gt;</code>.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Klientská validace</h4>
+              <p>Nativní atributy <code>required</code>, <code>pattern</code>, <code>min</code>, <code>max</code> a význam atributu <code>name</code> pro odeslání dat.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Přístupná data v tabulce</h4>
+              <p>Použití <code>&lt;caption&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code> a atributů <code>scope="col|row"</code> u buněk <code>&lt;th&gt;</code>.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Responzivní média</h4>
+              <p>Využití <code>&lt;picture&gt;</code> pro formáty AVIF/WebP, atributy <code>width</code> a <code>height</code> proti posunu layoutu (CLS) a výhody inline SVG.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická záludná otázka zkoušejícího</div>
+              <p><em>„Proč musíme u obrázku &lt;img&gt; vždy uvádět atributy width a height, když skutečné rozměry řídíme v CSS?“</em><br>
+              <strong>Správná odpověď:</strong> Uvedením přesných poměrů v HTML prohlížeč ještě před stažením souboru vyhradí správný prostor v layoutu. Zabrání se tak nepříjemnému poskakování stránky (tzv. Cumulative Layout Shift – CLS), což je klíčová metrika Core Web Vitals.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 02</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

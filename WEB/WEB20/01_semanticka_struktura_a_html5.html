@@ -1,0 +1,420 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 01: Sémantická struktura webu a moderní HTML5 | WEB20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB20">
+          <span>&larr; WEB20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 01</span>
+          <span class="divider">&bull;</span>
+          <span>Sémantická struktura webu a moderní HTML5</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 7, 3</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB20 &bull; 1. přednáška (45 min)</div>
+        <h1 class="hero-title">Sémantická struktura webu &amp; moderní HTML5</h1>
+        <p class="hero-desc">
+          Význam sémantického značkování pro přístupnost a roboty vyhledávačů, anatomie HTML5 dokumentu a rozvržení moderního portálu <code>edu_portal</code> pomocí sémantických sekčních elementů.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Standard &amp; Syntaxe</span>
+            <span class="hero-meta-val">HTML5 Living Standard (WHATWG)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční model</span>
+            <span class="hero-meta-val">Projekt edu_portal</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 7 (Struktura webu) &amp; č. 3</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PROČ SÉMANTIKA -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektura a filozofie webu</div>
+            <h2 class="slide-title">Proč sémantika? Konec éry „Div Soup“</h2>
+            <p class="slide-subtitle">Rozdíl mezi vizuálním vzhledem a sémantickým významem pro stroje a asistenční technologie</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <p>
+            V éře HTML 4 a XHTML se většina layoutů skládala z vnořených prvků <code>&lt;div id="header"&gt;</code>, <code>&lt;div class="nav"&gt;</code> a <code>&lt;div class="content"&gt;</code>. Tento přístup vytvářel tzv. <em>div soup</em> – pro prohlížeč i vyhledávače to byly anonymní obdélníky bez vnitřního významu.
+          </p>
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-cyan);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                Strojová srozumitelnost &amp; SEO
+              </h4>
+              <p>Vyhledávací roboti (Googlebot, Seznam) dokáží přesně odlišit primární obsah článku (<code>&lt;article&gt;</code>) od postranních reklam (<code>&lt;aside&gt;</code>) nebo záhlaví portálu.</p>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                Přístupnost (A11y &amp; WCAG)
+              </h4>
+              <p>Čtečky obrazovky pro zrakově hendikepované umožňují rychlou navigaci po tzv. <em>landmarks</em> (klávesová zkratka pro přeskočení přímo na <code>&lt;main&gt;</code> nebo <code>&lt;nav&gt;</code>).</p>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-indigo);" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Udržovatelnost kódu
+              </h4>
+              <p>Vývojář okamžitě chápe roli každého bloku v DOM stromu. Není nutné dešifrovat stovky arbitrárních CSS tříd pro elementární orientaci v šabloně.</p>
+            </div>
+          </div>
+          <div class="callout callout-tip">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Základní pravidlo sémantiky</div>
+              <p>Nikdy nevolte HTML element podle toho, jak výchozím způsobem v prohlížeči vypadá! Vzhled je výhradně úlohou CSS. HTML element vybírejte vždy podle jeho <strong>významu</strong> v obsahu dokumentu.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: ANATOMIE HTML5 DOKUMENTU -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Syntaxe a standardy</div>
+            <h2 class="slide-title">Anatomie moderního HTML5 dokumentu</h2>
+            <p class="slide-subtitle">Základní stavební kameny: deklarace DOCTYPE, metainformace a kódování</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">html &bull; kostra dokumentu</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="code-kw">&lt;!DOCTYPE html&gt;</span>
+<span class="html-tag">&lt;html</span> <span class="html-attr">lang</span>=<span class="html-val">"cs"</span><span class="html-tag">&gt;</span>
+<span class="html-tag">&lt;head&gt;</span>
+  <span class="html-tag">&lt;meta</span> <span class="html-attr">charset</span>=<span class="html-val">"UTF-8"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;meta</span> <span class="html-attr">name</span>=<span class="html-val">"viewport"</span> <span class="html-attr">content</span>=<span class="html-val">"width=device-width, initial-scale=1.0"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;meta</span> <span class="html-attr">name</span>=<span class="html-val">"description"</span> <span class="html-attr">content</span>=<span class="html-val">"Technologický portál a e-learningový magazín"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;title&gt;</span>EduPortal &bull; Výukové centrum<span class="html-tag">&lt;/title&gt;</span>
+  <span class="html-tag">&lt;link</span> <span class="html-attr">rel</span>=<span class="html-val">"stylesheet"</span> <span class="html-attr">href</span>=<span class="html-val">"assets/css/style.css"</span><span class="html-tag">&gt;</span>
+<span class="html-tag">&lt;/head&gt;</span>
+<span class="html-tag">&lt;body&gt;</span>
+  <span class="html-comment">&lt;!-- Uživatelský obsah stránky --&gt;</span>
+<span class="html-tag">&lt;/body&gt;</span>
+<span class="html-tag">&lt;/html&gt;</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Klíčové prvky hlavičky dokumentu</h4>
+                <ul class="styled-list">
+                  <li><strong>&lt;!DOCTYPE html&gt;:</strong> Přepíná vykreslovací jádro prohlížeče do standardního režimu (<em>Standards Mode</em>) a zabraňuje historickému chybovému režimu (<em>Quirks Mode</em>).</li>
+                  <li><strong>&lt;html lang="cs"&gt;:</strong> Zásadní atribut pro hlasové syntetizéry (správná výslovnost češtiny) a automatické překladače.</li>
+                  <li><strong>&lt;meta charset="UTF-8"&gt;:</strong> Definuje univerzální kódování znaků. Musí být umístěno v prvních 1024 bajtech dokumentu.</li>
+                  <li><strong>&lt;meta name="viewport" ...&gt;:</strong> Povoluje responzivní zobrazení a brání mobilním prohlížečům ve zmenšení stránky do 980px virtuálního okna.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SÉMANTICKÉ SEKČNÍ ELEMENTY -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Katalog HTML5 tagů</div>
+            <h2 class="slide-title">Sémantické sekční elementy &amp; Rozvržení</h2>
+            <p class="slide-subtitle">Přehled a přesný didaktický význam klíčových elementů rozvržení</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th style="width: 18%;">Element</th>
+                  <th style="width: 38%;">Sémantický význam</th>
+                  <th style="width: 44%;">Typické použití v edu_portal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>&lt;header&gt;</code></td>
+                  <td>Úvodní část stránky nebo konkrétní sekce. Obsahuje logo, název, vyhledávání či navigaci.</td>
+                  <td>Globální hlavička portálu s logem a přihlašovacím dialogem.</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;nav&gt;</code></td>
+                  <td>Sekce obsahující hlavní navigační odkazy (interní nebo externí).</td>
+                  <td>Hlavní menu kategorií (Databáze, Web, Síťové technologie).</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;main&gt;</code></td>
+                  <td>Unikátní hlavní obsah dokumentu. Na stránce smí být pouze <strong>jeden</strong> viditelný <code>&lt;main&gt;</code>.</td>
+                  <td>Katalog článků, výukový modul nebo detail lekce.</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;article&gt;</code></td>
+                  <td>Samostatně distribuovatelný a znovupoužitelný obsah (článek, blogpost, produkt, komentář).</td>
+                  <td>Karta kurzu nebo konkrétní výuková lekce syndikovatelná do RSS.</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;section&gt;</code></td>
+                  <td>Tematická skupina obsahu, typicky s vlastním nadpisem <code>&lt;h2&gt;–&lt;h6&gt;</code>.</td>
+                  <td>Kapitola uvnitř článku nebo sekce „Doporučené kurzy“.</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;aside&gt;</code></td>
+                  <td>Obsah nepřímo související s hlavním textem (postranní panel, citace, banner, doplňující odkazy).</td>
+                  <td>Panel s profily lektorů, související literatura, štítky (tag cloud).</td>
+                </tr>
+                <tr>
+                  <td><code>&lt;footer&gt;</code></td>
+                  <td>Zápatí dokumentu nebo sekce (autorská práva, kontakt, mapa webu, odkazy na podmínky).</td>
+                  <td>Patička portálu s copyrightem a licenčními podmínkami VOŠ.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ STRUKTURA EDU_PORTAL -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická aplikace</div>
+            <h2 class="slide-title">Referenční model: Kostra projektu edu_portal</h2>
+            <p class="slide-subtitle">Kompletní sémantické propojení v reálném vývojovém příkladu</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span class="code-title">html &bull; edu_portal layout</span>
+              <button class="btn-copy" title="Kopírovat kód">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Kopírovat</span>
+              </button>
+            </div>
+            <pre class="code-block"><code><span class="html-tag">&lt;header</span> <span class="html-attr">class</span>=<span class="html-val">"site-header"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"brand"</span><span class="html-tag">&gt;&lt;h1&gt;</span>EduPortal<span class="html-tag">&lt;/h1&gt;&lt;/div&gt;</span>
+  <span class="html-tag">&lt;nav</span> <span class="html-attr">aria-label</span>=<span class="html-val">"Hlavní navigace"</span><span class="html-tag">&gt;</span>
+    <span class="html-tag">&lt;ul&gt;</span>
+      <span class="html-tag">&lt;li&gt;&lt;a</span> <span class="html-attr">href</span>=<span class="html-val">"/kurzy"</span><span class="html-tag">&gt;</span>Kurzy<span class="html-tag">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="html-tag">&lt;li&gt;&lt;a</span> <span class="html-attr">href</span>=<span class="html-val">"/clanky"</span><span class="html-tag">&gt;</span>Články<span class="html-tag">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="html-tag">&lt;/ul&gt;</span>
+  <span class="html-tag">&lt;/nav&gt;</span>
+<span class="html-tag">&lt;/header&gt;</span>
+
+<span class="html-tag">&lt;main</span> <span class="html-attr">id</span>=<span class="html-val">"content"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;article</span> <span class="html-attr">class</span>=<span class="html-val">"post-card"</span><span class="html-tag">&gt;</span>
+    <span class="html-tag">&lt;header&gt;</span>
+      <span class="html-tag">&lt;h2&gt;</span>Normalizace databází v praxi<span class="html-tag">&lt;/h2&gt;</span>
+      <span class="html-tag">&lt;time</span> <span class="html-attr">datetime</span>=<span class="html-val">"2026-09-16"</span><span class="html-tag">&gt;</span>16. září 2026<span class="html-tag">&lt;/time&gt;</span>
+    <span class="html-tag">&lt;/header&gt;</span>
+    <span class="html-tag">&lt;p&gt;</span>Průvodce dekompozicí do 3NF a BCNF pro studenty VOŠ...<span class="html-tag">&lt;/p&gt;</span>
+    <span class="html-tag">&lt;footer&gt;&lt;span&gt;</span>Autor: Katedra informatiky<span class="html-tag">&lt;/span&gt;&lt;/footer&gt;</span>
+  <span class="html-tag">&lt;/article&gt;</span>
+<span class="html-tag">&lt;/main&gt;</span>
+
+<span class="html-tag">&lt;aside</span> <span class="html-attr">class</span>=<span class="html-val">"sidebar"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;h3&gt;</span>Doporučené zdroje<span class="html-tag">&lt;/h3&gt;</span>
+  <span class="html-tag">&lt;p&gt;</span>Odkaz na oficiální dokumentaci W3C a MDN Web Docs.<span class="html-tag">&lt;/p&gt;</span>
+<span class="html-tag">&lt;/aside&gt;</span>
+
+<span class="html-tag">&lt;footer</span> <span class="html-attr">class</span>=<span class="html-val">"site-footer"</span><span class="html-tag">&gt;</span>
+  <span class="html-tag">&lt;p&gt;</span>&amp;copy; 2026 Vyšší odborná škola. Všechna práva vyhrazena.<span class="html-tag">&lt;/p&gt;</span>
+<span class="html-tag">&lt;/footer&gt;</span></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 7 a č. 3</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 7, 3</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Význam sémantiky</h4>
+              <p>Sémantické značkování nese význam, nikoliv vzhled. Je klíčem k SEO indexaci vyhledávači a k bezbariérovosti webu (WCAG standard).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Rozdíl article vs section</h4>
+              <p><code>&lt;article&gt;</code> dává smysl i vytržený z kontextu (lze poslat do RSS feedu). <code>&lt;section&gt;</code> je tematická podkapitola dokumentu s vlastním nadpisem.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Pravidlo jediného main</h4>
+              <p>V dokumentu smí být pouze jeden viditelný element <code>&lt;main&gt;</code>. Nesmí být vnořen uvnitř headeru, footeru, nav ani aside.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Validace W3C</h4>
+              <p>Správné párování tagů, povinné atributy (např. <code>alt</code> u obrázků, <code>lang</code> u html) a dodržování specifikace WHATWG.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická záludná otázka zkoušejícího</div>
+              <p><em>„Může element &lt;article&gt; obsahovat vlastní &lt;header&gt; a &lt;footer&gt;?“</em><br>
+              <strong>Správná odpověď:</strong> Ano! Hlavička a patička nejsou vázány výhradně na celou stránku. Jakýkoliv <code>&lt;article&gt;</code> nebo <code>&lt;section&gt;</code> může mít vlastní úvodní hlavičku i závěrečnou patičku s metadaty.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 01</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 04: Objektivy, optika a vady zobrazení | MUL20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL20">
+          <span>&larr; MUL20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 04</span>
+          <span class="divider">&bull;</span>
+          <span>Objektivy, optika a vady zobrazení</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 11: Objektivy a optika</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL20 &bull; 4. přednáška (45 min)</div>
+        <h1 class="hero-title">Objektivy, optika a vady zobrazení</h1>
+        <p class="hero-desc">
+          Geometrická a fyzikální optika objektivů: ohnisková vzdálenost, úhel záběru, světelnost (f-stop vs. T-stop), optické vady (aberace, distorze, vinětace), stabilizační technologie (OIS/IBIS) a filtry.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Optika</span>
+            <span class="hero-meta-val">Ohnisko &bull; Úhel záběru</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Světelnost</span>
+            <span class="hero-meta-val">f-stop vs. cine T-stop</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 11</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: OHNISKOVÁ VZDÁLENOST A ÚHEL ZÁBĚRU -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Geometrická optika</div>
+            <h2 class="slide-title">Ohnisková vzdálenost a úhel záběru</h2>
+            <p class="slide-subtitle">Vzdálenost optického středu soustavy čoček od roviny snímače</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Základní klasifikace</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill uncompressed">Širokoúhlé (&lt; 35 mm)</span>
+              <h4 style="margin: 0.5rem 0;">14 mm &ndash; 35 mm</h4>
+              <p style="font-size: 0.85rem;">Široký úhel záběru (60&deg; až 114&deg;). Zdůrazňuje popředí a opticky vzdaluje pozadí. Vhodné pro architekturu, krajinu, reportáž ve stísněném interiéru.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">Základní (cca 50 mm)</span>
+              <h4 style="margin: 0.5rem 0;">45 mm &ndash; 55 mm</h4>
+              <p style="font-size: 0.85rem;">Úhel záběru cca 46&deg;. Odpovídá přirozené lidské perspektivě bez optického stlačení nebo protažení prostoru. Univerzální "padesátka" s vysokou světelností ($f/1.4$).</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">Teleobjektivy (&gt; 70 mm)</span>
+              <h4 style="margin: 0.5rem 0;">85 mm &ndash; 600 mm+</h4>
+              <p style="font-size: 0.85rem;">Úzký úhel záběru (28&deg; až 4&deg;). "Stlačuje" perspektivu &ndash; vzdálené objekty působí, jako by stály těsně za sebou. Ideální pro portréty (85/135 mm) a wildlife/sport (300/400 mm).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: SVĚTELNOST: F-STOP VS T-STOP -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Fotometrie</div>
+            <h2 class="slide-title">Světelnost: f-stop vs. T-stop</h2>
+            <p class="slide-subtitle">Rozdíl mezi teoretickou geometrií a skutečnou světelnou propustností</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový rozdíl</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: #60a5fa;">Geometrická clona &ndash; f-stop</h4>
+              <div class="code-box" style="margin: 0.5rem 0;">
+                <pre><code>N = f / D       (ohnisko / vstupní pupila)</code></pre>
+              </div>
+              <ul class="styled-list">
+                <li>Čistě matematický poměr ohniskové vzdálenosti k průměru vstupního otvoru.</li>
+                <li><strong>Ignoruje ztráty světla:</strong> Každý optický člen (čočka) uvnitř objektivu část světla pohltí a odrazí.</li>
+                <li>Objektiv složený z 18 čoček se světelností $f/2.8$ propustí ve skutečnosti méně světla než jednoduchý objektiv z 5 čoček při $f/2.8$.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4 style="color: #f472b6;">Transmisní clona &ndash; T-stop (Filmová)</h4>
+              <div class="code-box" style="margin: 0.5rem 0;">
+                <pre><code>T = f-stop / &radic;Transmise</code></pre>
+              </div>
+              <ul class="styled-list">
+                <li><strong>Skutečně naměřená propustnost:</strong> Reálné množství fotonů, které projde sklem na senzor.</li>
+                <li>Filmové cinema objektivy (ARRI, Cooke, Zeiss Cine) jsou cejchovány výhradně v <strong>T-stopech (např. T1.5, T2.1)</strong>.</li>
+                <li>Zaručuje, že při výměně objektivu ze širokoúhlého na teleobjektiv uprostřed scény zůstane expozice v kameře absolutně identická bez nutnosti korekce!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: OPTICKÉ VADY ZOBRAZENÍ -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Optické aberace</div>
+            <h2 class="slide-title">Optické vady čoček a jejich korekce</h2>
+            <p class="slide-subtitle">Nedokonalosti lomu světla ve skleněné optické soustavě</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový rozbor</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. Chromatická aberace (Barevná vada)</h4>
+              <p>Různé vlnové délky světla (červená, zelená, modrá) se lomí pod různým úhlem (disperze skla) a neprotnou se v jednom ohnisku. Projevuje se fialovými nebo zelenými lemy na kontrastních hranách. Korigují ji nízkorozptylová skla (ED / Fluorite).</p>
+            </div>
+            <div class="content-card">
+              <h4>2. Geometrické zkreslení (Distorze)</h4>
+              <p>Zvětšení se liší v závislosti na vzdálenosti od optické osy:
+                <br>&bull; <strong>Soudkovité (Barrel):</strong> Rovné linie se vyklenují ven (u širokoúhlých objektivů).
+                <br>&bull; <strong>Poduškovité (Pincushion):</strong> Linie se prohýbají dovnitř (u teleobjektivů).
+              </p>
+            </div>
+          </div>
+          <div class="grid-2" style="margin-top: 0.6rem;">
+            <div class="content-card">
+              <h4>3. Vinětace (Vignetting)</h4>
+              <p>Úbytek světla v rozích obrazu vůči středu vlivem mechanického tubusu a úhlu dopadu světla na krajní pixely. Zmírňuje se přivřením clony o 1–2 stupně.</p>
+            </div>
+            <div class="content-card">
+              <h4>4. Koma a Sférická vada</h4>
+              <p>Paprsky procházející okrajem sférické čočky mají jiné ohnisko než paprsky ze středu. Bodové světelné zdroje v rozích vypadají jako komety. Řeší se zařazením <strong>asférických členů</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: STABILIZACE A FILTRY -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Stabilizace a optické příslušenství</div>
+            <h2 class="slide-title">Stabilizace obrazu (OIS / IBIS) a filtry</h2>
+            <p class="slide-subtitle">Jak udržet ostrý snímek z ruky a jak ovlivnit světlo před objektivem</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Příslušenství</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Optická stabilizace (OIS vs. IBIS)</h4>
+              <ul class="styled-list">
+                <li><strong>OIS (Optical In-Lens Stabilization):</strong> Pohyblivý optický člen v objektivu řízený gyroskopy. Účinnější u dlouhých teleobjektivů (200 mm+).</li>
+                <li><strong>IBIS (In-Body Image Stabilization):</strong> Celý snímač v těle fotoaparátu je zavěšen na elektromagnetickém pólu v 5 osách (Yaw, Pitch, Roll, X, Y). Stabilizuje jakýkoli nasazený objektiv.</li>
+                <li>Umožňuje prodloužit bezpečný čas z ruky až o 5–8 EV stupňů!</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Klíčové fotografické filtry</h4>
+              <ul class="styled-list">
+                <li><strong>CPL (Cirkulární polarizační filtr):</strong> Propouští světlo kmitající pouze v jedné rovině. Odstraňuje odlesky z nekovových povrchů (voda, sklo) a ztmavuje a sytí modrou oblohu. Nelze nasimulovat v Photoshopu!</li>
+                <li><strong>ND (Neutral Density &ndash; neutrální šedý):</strong> Rovnoměrně tlumí přicházející světlo v celém spektru (např. ND8 = &minus;3 EV, ND1000 = &minus;10 EV). Umožňuje dlouhé expozice ve dne a dodržení 180° úhlu závěrky u videa.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z optiky a objektivů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 11</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Ohnisko a perspektiva</h4>
+              <p>Krátké ohnisko rozšiřuje zorný úhel a zdůrazňuje prostor. Teleobjektivy zužují úhel a stlačují vzdálenosti mezi objekty.</p>
+            </div>
+            <div class="summary-card">
+              <h4>f-stop vs T-stop</h4>
+              <p>f-stop je teoretický geometrický poměr. T-stop udává reálnou fotometrickou propustnost světla, klíčovou pro filmovou techniku.</p>
+            </div>
+            <div class="summary-card">
+              <h4>CPL a ND filtry</h4>
+              <p>CPL filtr fyzicky filtruje polarizované světlo (odrazy na vodě). ND filtr redukuje expozici pro zachování filmové clony a dlouhých časů.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Jaké jsou hlavní typy objektivů podle ohniska? Vysvětlete rozdíl mezi f-stop a T-stop a vyjmenujte hlavní optické vady včetně způsobů korekce.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 04</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

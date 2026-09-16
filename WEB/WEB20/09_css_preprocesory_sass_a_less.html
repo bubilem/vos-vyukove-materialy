@@ -1,0 +1,422 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 09: CSS preprocesory – Sass a Less | WEB20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB20">
+          <span>&larr; WEB20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 09</span>
+          <span class="divider">&bull;</span>
+          <span>CSS preprocesory &bull; Sass a Less</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 12</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB20 &bull; 9. přednáška (45 min)</div>
+        <h1 class="hero-title">CSS preprocesory: Sass (SCSS) &amp; Less</h1>
+        <p class="hero-desc">
+          Architektura rozsáhlých stylopisů: princip preprocesingu a kompilace, porovnání syntaxí SCSS vs. Less, vnořování selektorů, parametrické mixiny, modulární architektura a vztah k modernímu CSS.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Technologie</span>
+            <span class="hero-meta-val">Sass (SCSS), Less, Source Maps</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční model</span>
+            <span class="hero-meta-val">Modulární komponenty edu_portal</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 12 (CSS preprocesory)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PRINCIP PREPROCESINGU -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Koncept a build proces</div>
+            <h2 class="slide-title">Princip preprocesingu a vývojový řetězec</h2>
+            <p class="slide-subtitle">Proč píšeme kód v preprocesoru, když prohlížeč rozumí pouze čistému CSS?</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <p>
+            CSS vzniklo jako jednoduchý jazyk pro formátování dokumentů. U velkých projektů o desítkách tisíc řádků však naráželo na absenci logiky, nemožnost rozdělení do modulů bez zbytečných HTTP požadavků a neustálé opakování kódu (porušení principu DRY – <em>Don't Repeat Yourself</em>).
+          </p>
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. Zdrojové soubory</h4>
+              <p>Vývojář píše kód ve formátu <code>.scss</code> nebo <code>.less</code> rozdělený do přehledných komponent (<code>_buttons.scss</code>, <code>_header.scss</code>).</p>
+            </div>
+            <div class="content-card">
+              <h4>2. Kompilátor (Transpiler)</h4>
+              <p>Nástroj (např. Dart Sass, Vite, Webpack) přeloží zdrojový kód do standardního validního CSS, odstraní komentáře a minifikuje výstup.</p>
+            </div>
+            <div class="content-card">
+              <h4>3. Source Maps (.map)</h4>
+              <p>Generované mapovací soubory umožňují v DevTools prohlížeče vidět přesné číslo řádku v původním SCSS souboru i u zkompilovaného CSS.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: PROMĚNNÉ A VNOŘOVÁNÍ (SASS VS. LESS) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Srovnání syntaxí</div>
+            <h2 class="slide-title">Proměnné a vnořování (Nesting)</h2>
+            <p class="slide-subtitle">Srovnání Sass (SCSS) vs. Less a klíčový referenční operátor &amp;</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">scss &bull; syntaxe sass</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="scss-var">$primary-color</span>: <span class="css-val">#06b6d4</span>;  <span class="html-comment">/* Proměnná se znakem $ */</span>
+
+<span class="css-sel">.card</span> {
+  <span class="css-prop">padding</span>: <span class="css-num">1.5</span><span class="css-unit">rem</span>;
+
+  <span class="html-comment">/* Vnořený selektor potomka */</span>
+  <span class="css-sel">.card-title</span> {
+    <span class="css-prop">color</span>: <span class="scss-var">$primary-color</span>;
+  }
+
+  <span class="html-comment">/* &amp; reprezentuje rodičovský selektor .card */</span>
+  <span class="css-sel">&amp;:hover</span> {
+    <span class="css-prop">transform</span>: <span class="css-func">translateY</span>(<span class="css-num">-4</span><span class="css-unit">px</span>);
+  }
+
+  <span class="css-sel">&amp;--featured</span> {
+    <span class="css-prop">border</span>: <span class="css-num">2</span><span class="css-unit">px</span> <span class="css-val">solid $primary-color</span>;
+  }
+}</code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">less &bull; syntaxe less</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="less-var">@primary-color</span>: <span class="css-val">#06b6d4</span>;  <span class="html-comment">/* Proměnná se znakem @ */</span>
+
+<span class="css-sel">.card</span> {
+  <span class="css-prop">padding</span>: <span class="css-num">1.5</span><span class="css-unit">rem</span>;
+
+  <span class="css-sel">.card-title</span> {
+    <span class="css-prop">color</span>: <span class="less-var">@primary-color</span>;
+  }
+
+  <span class="css-sel">&amp;:hover</span> {
+    <span class="css-prop">transform</span>: <span class="css-func">translateY</span>(<span class="css-num">-4</span><span class="css-unit">px</span>);
+  }
+
+  <span class="css-sel">&amp;--featured</span> {
+    <span class="css-prop">border</span>: <span class="css-num">2</span><span class="css-unit">px</span> <span class="css-val">solid @primary-color</span>;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-tip" style="margin-top: 0.8rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Význam referenčního operátoru &amp;</div>
+              <p>Znak <code>&amp;</code> vkládá přesný název nadřazeného bloku. Umožňuje přirozeně vytvářet pseudotřídy (<code>&amp;:hover</code>, <code>&amp;:focus</code>) a metodiku BEM (<code>&amp;__element</code>, <code>&amp;--modifier</code>).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: MIXINY S PARAMETRY -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Znovupoužitelné bloky</div>
+            <h2 class="slide-title">Mixiny s parametry (Znovupoužitelnost)</h2>
+            <p class="slide-subtitle">Obdoba funkcí v programovacích jazycích aplikovaná na stylopis</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">scss &bull; parametrický mixin</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="html-comment">/* Definice mixinu s výchozí hodnotou parametru */</span>
+<span class="css-at">@mixin</span> <span class="css-func">glass-card</span>(<span class="scss-var">$blur</span>: <span class="css-num">12</span><span class="css-unit">px</span>, <span class="scss-var">$opacity</span>: <span class="css-num">0.05</span>) {
+  <span class="css-prop">background</span>: <span class="css-func">rgba</span>(<span class="css-num">255</span>, <span class="css-num">255</span>, <span class="css-num">255</span>, <span class="scss-var">$opacity</span>);
+  <span class="css-prop">backdrop-filter</span>: <span class="css-func">blur</span>(<span class="scss-var">$blur</span>);
+  <span class="css-prop">border</span>: <span class="css-num">1</span><span class="css-unit">px</span> <span class="css-val">solid rgba(255, 255, 255, 0.1)</span>;
+  <span class="css-prop">border-radius</span>: <span class="css-num">14</span><span class="css-unit">px</span>;
+}
+
+<span class="html-comment">/* Volání mixinu v konkrétních komponentách */</span>
+<span class="css-sel">.user-profile-card</span> {
+  <span class="css-at">@include</span> <span class="css-func">glass-card</span>(<span class="css-num">16</span><span class="css-unit">px</span>, <span class="css-num">0.08</span>);
+}
+
+<span class="css-sel">.site-navigation</span> {
+  <span class="css-at">@include</span> <span class="css-func">glass-card</span>(); <span class="html-comment">/* Použijí se výchozí hodnoty */</span>
+}</code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Jak fungují mixiny v Less?</h4>
+                <p>V preprocesoru Less se mixiny definují přímo jako CSS třídy:</p>
+                <div class="code-wrapper" style="margin-top: 0.5rem;">
+                  <pre class="code-block"><code><span class="css-sel">.glass-card</span>(<span class="less-var">@blur</span>: <span class="css-num">12</span><span class="css-unit">px</span>) {
+  <span class="css-prop">backdrop-filter</span>: <span class="css-func">blur</span>(<span class="less-var">@blur</span>);
+  <span class="css-prop">border-radius</span>: <span class="css-num">14</span><span class="css-unit">px</span>;
+}
+
+<span class="css-sel">.user-profile-card</span> {
+  <span class="css-sel">.glass-card</span>(<span class="css-num">20</span><span class="css-unit">px</span>);
+}</code></pre>
+                </div>
+                <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+                  Mixiny vloží celé deklarace přímo do cílového selektoru. Hodí se pro znovupoužitelné balíčky vlastností.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: DĚDIČNOST @EXTEND A PARTIALS -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Modularizace a architektura</div>
+            <h2 class="slide-title">Partials, modularizace a rozdíl @mixin vs. @extend</h2>
+            <p class="slide-subtitle">Jak organizovat projekt bez degradace výkonu výsledného CSS</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Partials a directiva @use (Sass 7-1 pattern)</h4>
+                <p>Soubory s podtržítkem na začátku (např. <code>_variables.scss</code>, <code>_cards.scss</code>) se nekompilují samostatně, ale vkládají se do hlavního souboru <code>main.scss</code>:</p>
+                <div class="code-wrapper" style="margin: 0.5rem 0;">
+                  <pre class="code-block"><code><span class="css-at">@use</span> <span class="code-str">"abstracts/variables"</span> <span class="code-kw">as</span> vars;
+<span class="css-at">@use</span> <span class="code-str">"components/cards"</span>;
+
+<span class="css-sel">body</span> {
+  <span class="css-prop">color</span>: vars.<span class="scss-var">$primary-color</span>;
+}</code></pre>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Klíčový rozdíl: @mixin vs. @extend</h4>
+                <ul class="styled-list">
+                  <li><strong>@mixin:</strong> Kopíruje celý kód deklarací do každého místa použití. Zvětšuje velikost CSS souboru, ale udržuje čistou specificitu.</li>
+                  <li><strong>@extend:</strong> Spojí selektory čárkou v CSS (<code>.btn, .btn-submit { ... }</code>). Nezvyšuje velikost kódu, ale může nechtěně nafouknout selektorový strom při nesprávném použití.</li>
+                  <li><strong>Moderní CSS dnes:</strong> Nativní CSS už umí proměnné i vnořování (CSS Nesting), preprocesor však stále dominuje v type-checkingu, smyčkách a velkých týmových projektech.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 12 (CSS preprocesory)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 12</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Co je preprocesor</h4>
+              <p>Nástroj rozšiřující CSS o programovací konstrukce (proměnné, funkce, vnořování), který se kompiluje do čistého CSS.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Sass vs. Less proměnné</h4>
+              <p>V Sassu začínají znakem <code>$</code> (např. <code>$color</code>), v Lessu znakem <code>@</code> (např. <code>@color</code>).</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Operátor &amp;</h4>
+              <p>Odkazuje na nadřazený selektor. Klíč k tvorbě stavů (<code>&amp;:hover</code>) a metodice BEM bez opakování kódu.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Mixiny vs. Partials</h4>
+              <p>Mixiny jsou znovupoužitelné parametrické bloky kódů, partials (<code>_nazev.scss</code>) slouží k logické modularizaci souborů.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická otázka u absolutoria</div>
+              <p><em>„Jaký je rozdíl mezi proměnnou v Sassu ($color) a nativní CSS proměnnou (--color)?“</em><br>
+              <strong>Správná odpověď:</strong> Proměnná v Sassu existuje <strong>pouze během kompilace</strong>. Kompilátor její hodnotu napevno vepíše do výsledného CSS a v prohlížeči již proměnná neexistuje (nelze ji za běhu změnit JavaScriptem). Nativní CSS proměnná (<code>--color</code>) žije přímo v <strong>DOM stromu prohlížeče</strong>, kaskáduje, dědí se a lze ji dynamicky manipulovat skripty i v Media Queries.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 09</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

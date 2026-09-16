@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 05: Rastrová grafika a barevné modely | MUL10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL10">
+          <span>&larr; MUL10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 05</span>
+          <span class="divider">&bull;</span>
+          <span>Rastrová grafika a barevné modely</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 5: Rastrová grafika</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL10 &bull; 5. přednáška (45 min)</div>
+        <h1 class="hero-title">Rastrová grafika a barevné modely</h1>
+        <p class="hero-desc">
+          Konstrukce digitálního obrazu na bázi pixelové matice. Rozlišení (PPI vs. DPI), barevná hloubka, kanály alfa a matematické barevné prostory: aditivní RGB, subtraktivní CMYK, percepční HSL a CIE Lab.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Barevné modely</span>
+            <span class="hero-meta-val">RGB &bull; CMYK &bull; HSL &bull; Lab</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Bitová hloubka</span>
+            <span class="hero-meta-val">8-bit &bull; 24-bit True Color</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 5</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PRINCIP RASTROVÉHO OBRAZU -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Rastrová mřížka</div>
+            <h2 class="slide-title">Pixel, prostorové rozlišení &bull; PPI vs. DPI</h2>
+            <p class="slide-subtitle">Proč je rastrový obraz závislý na měřítku zobrazení</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový rozdíl</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Pixelová matice</h4>
+              <ul class="styled-list">
+                <li><strong>Pixel (Picture Element):</strong> Nejmenší nedělitelný prvek digitálního rastru nesoucí informaci o barvě a jasu.</li>
+                <li><strong>Rozměry v pixelech:</strong> Např. $3840 \times 2160$ (4K UHD celkem 8.29 milionu pixelů).</li>
+                <li><strong>Měřítková závislost:</strong> Při zvětšení dochází k pixelizaci ("zubatosti") a nutnosti matematické interpolace (Bicubic, Bilinear, Nearest Neighbor).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>PPI vs. DPI vs. LPI</h4>
+              <ul class="styled-list">
+                <li><strong>PPI (Pixels Per Inch):</strong> Hustota pixelů na elektronickém displeji nebo v digitálním souboru (např. 326 PPI Retina displej).</li>
+                <li><strong>DPI (Dots Per Inch):</strong> Fyzická hustota inkoustových kapek vystřikovaných tiskovou hlavou na papír (např. 1200 DPI tiskárna).</li>
+                <li><strong>LPI (Lines Per Inch):</strong> Hustota tiskového rastru v ofsetovém tiskovém procesu (polotónové body).</li>
+              </ul>
+            </div>
+          </div>
+          <div class="callout callout-tip" style="margin-top: 0.6rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Pravidlo 300 PPI pro tisk</div>
+              <p>Zatímco obrazovkám stačí 72–150 PPI, profesionální ofsetový tisk pro pozorování z běžné čtecí vzdálenosti (30–40 cm) vyžaduje přesně 300 PPI pro eliminaci viditelného rastru.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: BITOVÁ HLOUBKA -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Kvantování barvy</div>
+            <h2 class="slide-title">Barevná hloubka a alfa kanál</h2>
+            <p class="slide-subtitle">Kolik bitů na pixel je potřeba pro realistické odstíny bez posterizace</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Barevná hloubka</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill uncompressed">1-bit / 8-bit Indexed</span>
+              <h4 style="margin: 0.5rem 0;">Indexovaná paleta</h4>
+              <p style="font-size: 0.85rem;">1-bit = černá/bílá. 8-bit = max. 256 barev vybraných v barevné tabulce (CLUT). Využíváno u formátu GIF pro drobnou grafiku a ikony s malým datovým objemem.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">24-bit True Color (8 bpc)</span>
+              <h4 style="margin: 0.5rem 0;">16.7 milionu barev</h4>
+              <p style="font-size: 0.85rem;">8 bitů na kanál (R: 256 &times; G: 256 &times; B: 256 = 16 777 216 odstínů). Vizuálně odpovídá rozlišovací schopnosti lidského zraku (standard webu a fotografií).</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">32-bit RGBA &bull; 10/12-bit HDR</span>
+              <h4 style="margin: 0.5rem 0;">Alfa kanál &amp; Široký gamut</h4>
+              <p style="font-size: 0.85rem;">32-bit přidává 8bitový kanál průhlednosti $\alpha$ (0 = zcela průhledný, 255 = neprůhledný). 10-bit HDR (Deep Color) poskytuje 1.07 miliardy barev a eliminuje tónové pruhy na obloze.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: ADITIVNÍ A SUBTRAKTIVNÍ MODELY -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Syntéza barev</div>
+            <h2 class="slide-title">Aditivní RGB vs. Subtraktivní CMYK</h2>
+            <p class="slide-subtitle">Fyzikální rozdíl mezi mícháním světelných paprsků a tiskových pigmentů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový koncept</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: #60a5fa;">Aditivní model RGB (Red, Green, Blue)</h4>
+              <p>Založen na vyzařování světla (monitory, projektory, displeje telefonů):</p>
+              <ul class="styled-list">
+                <li>Výchozí stav je tma (černá obrazovka).</li>
+                <li>Přidáváním světelných složek se barva zesvětluje.</li>
+                <li>$R + G = \text{Žlutá (Yellow)}$</li>
+                <li>$R + B = \text{Purpurová (Magenta)}$</li>
+                <li>$G + B = \text{Azurová (Cyan)}$</li>
+                <li>$R + G + B = \text{Bílá (White)}$ v plné intenzitě.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4 style="color: #f472b6;">Subtraktivní model CMYK (Cyan, Magenta, Yellow, blacK)</h4>
+              <p>Založen na pohlcování (odčítání) světla pigmenty vytištěnými na papíře:</p>
+              <ul class="styled-list">
+                <li>Výchozí stav je bílý papír odrážející veškeré světlo.</li>
+                <li>Tisková barva absorbuje určité vlnové délky a zbytek odrazí do oka.</li>
+                <li>$C + M + Y$ v praxi dává špinavě hnědou &rarr; proto se přidává klíčový černý pigment <strong>K (Key)</strong> pro hloubku a kontrast.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="callout callout-warning" style="margin-top: 0.6rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Problém barevného gamutu při převodu RGB do CMYK</div>
+              <p>Barevný prostor RGB (např. sRGB, DCI-P3) je podstatně širší než tiskový gamut CMYK (FOGRA39). Zářivé odstíny zelené a neonově modré nelze na běžný papír vytisknout a budou při konverzi nevratně ztlumeny (Gamut Clipping).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: HSL A CIE LAB -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Percepční prostory</div>
+            <h2 class="slide-title">Barevné modely HSL, HSV a CIE L*a*b*</h2>
+            <p class="slide-subtitle">Modely odpovídající lidskému způsobu popisu a vnímání barev</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Percepční modely</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Model HSL (Hue, Saturation, Lightness)</h4>
+              <ul class="styled-list">
+                <li><strong>H (Hue / Odstín):</strong> Úhel na barevném kruhu 0&deg; až 360&deg; (0&deg; červená, 120&deg; zelená, 240&deg; modrá).</li>
+                <li><strong>S (Saturation / Sytost):</strong> $0\,\%$ (šedá) až $100\,\%$ (čistý saturovaný pigment).</li>
+                <li><strong>L (Lightness / Světlost):</strong> $0\,\%$ (černá), $50\,\%$ (normální barva), $100\,\%$ (bílá).</li>
+                <li>Extrémně intuitivní pro webové CSS designéry a manipulaci v grafických editorech.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Model CIE L*a*b* (1976)</h4>
+              <ul class="styled-list">
+                <li><strong>Nezávislý na zařízení (Device-independent):</strong> Popisuje barvu matematicky podle lidského vnímání bez ohledu na konkrétní monitor nebo tiskárnu.</li>
+                <li><strong>L* (Lightness):</strong> Jasová složka oddělená od chrominance (0 až 100).</li>
+                <li><strong>a*:</strong> Osa zelená (&minus;) až červená (+).</li>
+                <li><strong>b*:</strong> Osa modrá (&minus;) až žlutá (+).</li>
+                <li>Slouží jako vnitřní převodní můstek (Profile Connection Space) ve správě barev (ICC Color Management).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z rastrové grafiky</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 5</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Rastr &amp; Rozlišení</h4>
+              <p>Mřížka pixelů citlivá na změnu měřítka. Rozlišení PPI pro displeje (72–300), DPI pro kapky tiskárny a 300 PPI jako norma pro tisk.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Aditivní RGB</h4>
+              <p>Založeno na skládání světla obrazovky ($R+G+B = \text{bílá}$). 24-bit True Color poskytuje 16.7 milionu barev (8 bpc).</p>
+            </div>
+            <div class="summary-card">
+              <h4>Subtraktivní CMYK</h4>
+              <p>Založeno na pohlcování světla pigmenty na papíře. Má užší barevný gamut než RGB, proto vyžaduje správu barev (ICC).</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Vysvětlete rozdíl mezi PPI a DPI. Porovnejte aditivní míchání RGB a subtraktivní CMYK a popište parametry barevného modelu HSL.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 05</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

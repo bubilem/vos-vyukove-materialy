@@ -1,0 +1,12 @@
+/* ==========================================================================
+   MUL10 - Dashboard modulu (Rozdělení multimédií a datové formáty)
+   Přebírá jádro z ../../../assets/css/dashboard-core.css
+   ========================================================================== */
+
+@import "../../../assets/css/dashboard-core.css";
+
+:root {
+  --accent: #a855f7;
+  --accent-glow: rgba(168, 85, 247, 0.25);
+  --accent-pink: #ec4899;
+}

@@ -1,0 +1,550 @@
+﻿<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 09: Text, odkazy, seznamy a tabulky | WEB10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+</head>
+<body>
+  <div class="presentation-container">
+
+    <!-- Slide 1: Titulní slide -->
+    <section class="slide slide--title active" id="slide-1">
+      <div class="slide-content">
+        <div class="meta-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; vertical-align: -2px;">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          <span>WEB10 &bull; Lekce 09</span>
+        </div>
+        <h1>Formátování textu, hypertextové odkazy a tabulky</h1>
+        <p class="subtitle">Hierarchie nadpisů, logická sémantika inline prvků, URL adresace odkazů, typologie seznamů a struktura přístupných datových tabulek</p>
+        <div class="title-footer">
+          <div class="module-pill">Modul WEB10: Základy webových technologií a HTML</div>
+          <div class="okruh-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; vertical-align: -2px;">
+              <path d="M9 11l3 3L22 4"/>
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+            </svg>
+            Vazba na Okruh 4 absolutoria
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2: Hierarchie nadpisů a formátování textu -->
+    <section class="slide" id="slide-2">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div class="slide-number">02 / 06</div>
+          <div class="slide-category">Typografie a sémantika textu</div>
+        </div>
+        <h2>Hierarchie nadpisů a logické formátování</h2>
+        <p class="lead">HTML není grafický editor. Každá značka definuje strukturální význam obsahu, nikoliv pouze jeho vizuální velikost či tučnost písma.</p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <path d="M4 12h8m-8 6h16M4 6h16"/>
+              </svg>
+              Hierarchie nadpisů (&lt;h1&gt; až &lt;h6&gt;)
+            </h3>
+            <ul style="font-size: 0.92rem; line-height: 1.55; color: var(--text-muted); margin: 0; padding-left: 1.2rem;">
+              <li><strong>Jedinečné &lt;h1&gt;:</strong> Každý dokument má obsahovat právě jedno hlavní &lt;h1&gt; vyjadřující téma stránky (stěžejní pro SEO a screen readery).</li>
+              <li><strong>Žádné přeskakování úrovní:</strong> Za &lt;h1&gt; následuje &lt;h2&gt;, vnořené podtémata jsou &lt;h3&gt;. Nikdy nepřeskakujte z &lt;h2&gt; přímo na &lt;h4&gt; jen kvůli tomu, že písmo v prohlížeči vypadá menší.</li>
+              <li><strong>Vizuální velikost řeší CSS:</strong> Pokud potřebujete menší text pro &lt;h1&gt;, použijte CSS pravidlo <code>font-size</code>, nikoliv záměnu za &lt;h4&gt;.</li>
+            </ul>
+            <div class="code-box" style="margin-top: 1rem;">
+              <div class="code-box-header"><span>Správná sémantická kostra nadpisů</span></div>
+              <pre><code>&lt;!-- Správná stromová hierarchie --&gt;
+&lt;h1&gt;Výuka webových technologií&lt;/h1&gt;
+  &lt;h2&gt;Architektura internetu&lt;/h2&gt;
+    &lt;h3&gt;Klient-server model&lt;/h3&gt;
+    &lt;h3&gt;Protokol HTTP/HTTPS&lt;/h3&gt;
+  &lt;h2&gt;Základy jazyka HTML&lt;/h2&gt;
+    &lt;h3&gt;Struktura dokumentu&lt;/h3&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <polyline points="4 7 4 4 20 4 20 7"/>
+                <line x1="9" y1="20" x2="15" y2="20"/>
+                <line x1="12" y1="4" x2="12" y2="20"/>
+              </svg>
+              Sémantické vs. prezentační inline značky
+            </h3>
+            <div class="comparison-table" style="font-size: 0.88rem; margin-top: 0.5rem;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Sémantický prvek</th>
+                    <th>Prezentační ekvivalent</th>
+                    <th>Význam a čtečky obrazovky</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>&lt;strong&gt;</code></td>
+                    <td><code>&lt;b&gt;</code> (bold)</td>
+                    <td>Vysoká důležitost / varování (hlasový důraz)</td>
+                  </tr>
+                  <tr>
+                    <td><code>&lt;em&gt;</code></td>
+                    <td><code>&lt;i&gt;</code> (italic)</td>
+                    <td>Slovní emfáze / důraz měnící význam věty</td>
+                  </tr>
+                  <tr>
+                    <td><code>&lt;mark&gt;</code></td>
+                    <td><code>&lt;span class="hl"&gt;</code></td>
+                    <td>Zvýrazněný text (např. výsledky vyhledávání)</td>
+                  </tr>
+                  <tr>
+                    <td><code>&lt;code&gt;, &lt;kbd&gt;</code></td>
+                    <td><code>&lt;tt&gt;</code> (zastaralé)</td>
+                    <td>Zdrojový kód programu, klávesová zkratka</td>
+                  </tr>
+                  <tr>
+                    <td><code>&lt;sub&gt;, &lt;sup&gt;</code></td>
+                    <td>CSS transform</td>
+                    <td>Dolní index (H<sub>2</sub>O), horní index (x<sup>2</sup>, m<sup>2</sup>)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.75rem;">
+              <strong>Pozor u absolutoria:</strong> Prvek <code>&lt;b&gt;</code> a <code>&lt;i&gt;</code> mají v HTML5 specifický okrajový význam (např. jména lodí, taxonomické názvy bez důrazu), ale pro důležitá sdělení se vždy používá <code>&lt;strong&gt;</code> a <code>&lt;em&gt;</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Hypertextové odkazy a URI adresace -->
+    <section class="slide" id="slide-3">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div class="slide-number">03 / 06</div>
+          <div class="slide-category">Hypertextová navigace</div>
+        </div>
+        <h2>Hypertextové odkazy (&lt;a&gt;) a URL adresace</h2>
+        <p class="lead">Značka <code>&lt;a&gt;</code> (anchor) propojuje světový web. Rozlišování absolutních, relativních a protokolových cest je základem webové navigace.</p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              Typy adresace (href)
+            </h3>
+            <ul style="font-size: 0.88rem; line-height: 1.5; color: var(--text-muted); margin: 0; padding-left: 1.2rem;">
+              <li><strong>Absolutní URL:</strong> Obsahuje schéma, doménu i cestu: <code>https://example.com/docs/</code>. Využívá se pro externí weby.</li>
+              <li><strong>Relativní k souboru:</strong> Vychází z aktuální složky: <code>detail.html</code>, <code>images/logo.png</code> nebo <code>../about.html</code>.</li>
+              <li><strong>Relativní ke kořeni (root-relative):</strong> Začíná lomítkem: <code>/assets/style.css</code> (vždy od kořene domény).</li>
+              <li><strong>Kotevní (fragment):</strong> Začíná <code>#</code> a odkazuje na element s <code>id</code> na stejné stránce: <code>#kapitola-2</code>.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              Bezpečnostní atributy
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+              Otevření odkazu v novém okně pomocí <code>target="_blank"</code> bez ochrany představuje bezpečnostní zranitelnost (Reverse Tabnabbing).
+            </p>
+            <div class="code-box">
+              <div class="code-box-header"><span>Bezpečný externí odkaz</span></div>
+              <pre><code>&lt;a href="https://externi-web.cz"
+   target="_blank"
+   rel="noopener noreferrer"&gt;
+  Dokumentace API
+&lt;/a&gt;</code></pre>
+            </div>
+            <ul style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.5rem; padding-left: 1.1rem;">
+              <li><code>noopener</code>: Brání novému oknu ovládat původní stránku přes <code>window.opener</code>.</li>
+              <li><code>noreferrer</code>: Zabraňuje odeslání HTTP hlavičky Referer.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              Speciální schémata odkazů
+            </h3>
+            <ul style="font-size: 0.88rem; line-height: 1.5; color: var(--text-muted); margin: 0; padding-left: 1.2rem;">
+              <li><strong>E-mail (mailto):</strong>
+                <code>&lt;a href="mailto:info@skola.cz"&gt;</code><br>
+                Otevře výchozího poštovního klienta klienta.
+              </li>
+              <li style="margin-top: 0.5rem;"><strong>Telefon (tel):</strong>
+                <code>&lt;a href="tel:+420123456789"&gt;</code><br>
+                Umožňuje na mobilních zařízeních okamžité vytočení čísla.
+              </li>
+              <li style="margin-top: 0.5rem;"><strong>Stažení souboru (download):</strong>
+                <code>&lt;a href="vyrocni-zprava.pdf" download&gt;</code><br>
+                Vynutí stažení souboru místo jeho zobrazení v prohlížeči.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Typy seznamů -->
+    <section class="slide" id="slide-4">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div class="slide-number">04 / 06</div>
+          <div class="slide-category">Struktura dat</div>
+        </div>
+        <h2>Typologie seznamů v HTML: &lt;ul&gt;, &lt;ol&gt; a &lt;dl&gt;</h2>
+        <p class="lead">Správná volba seznamu určuje, zda položky mají přísné pořadí, jsou rovnocenné, nebo tvoří slovníkové páry termín-definice.</p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <line x1="8" y1="6" x2="21" y2="6"/>
+                <line x1="8" y1="12" x2="21" y2="12"/>
+                <line x1="8" y1="18" x2="21" y2="18"/>
+                <line x1="3" y1="6" x2="3.01" y2="6"/>
+                <line x1="3" y1="12" x2="3.01" y2="12"/>
+                <line x1="3" y1="18" x2="3.01" y2="18"/>
+              </svg>
+              Neuspořádaný seznam (&lt;ul&gt;)
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">
+              Používá se, pokud na pořadí prvků nezáleží. Základ navigačních menu a seznamů vlastností.
+            </p>
+            <div class="code-box">
+              <div class="code-box-header"><span>Navigační menu v &lt;ul&gt;</span></div>
+              <pre><code>&lt;ul class="nav-links"&gt;
+  &lt;li&gt;&lt;a href="/"&gt;Úvod&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/kurzy"&gt;Kurzy&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/kontakt"&gt;Kontakt&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            </div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.5rem;">
+              Vizuální odrážky (kolečka, čtverečky) se mění výhradně přes CSS vlastnost <code>list-style-type</code>.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <line x1="10" y1="6" x2="21" y2="6"/>
+                <line x1="10" y1="12" x2="21" y2="12"/>
+                <line x1="10" y1="18" x2="21" y2="18"/>
+                <path d="M4 6h1v4m-1 0h2"/>
+              </svg>
+              Číslovaný seznam (&lt;ol&gt;)
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">
+              Značí sekvenci kroků, recepty, algoritmy a žebříčky, kde změna pořadí mění význam sdělení.
+            </p>
+            <div class="code-box">
+              <div class="code-box-header"><span>HTML5 atributy &lt;ol&gt;</span></div>
+              <pre><code>&lt;!-- Číslování od 5 pozpátku --&gt;
+&lt;ol start="5" reversed&gt;
+  &lt;li&gt;Závěrečné testování&lt;/li&gt;
+  &lt;li&gt;Sestavení buildu&lt;/li&gt;
+  &lt;li&gt;Psaní kódu&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- Typ číslování (a, A, i, I, 1) --&gt;
+&lt;ol type="A"&gt;
+  &lt;li&gt;Možnost první&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+              Definiční / popisek (&lt;dl&gt;)
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">
+              Struktura klíč-hodnota. Skládá se z termínu (<code>&lt;dt&gt;</code>) a jeho popisu/definice (<code>&lt;dd&gt;</code>).
+            </p>
+            <div class="code-box">
+              <div class="code-box-header"><span>Slovník či metadata v &lt;dl&gt;</span></div>
+              <pre><code>&lt;dl&gt;
+  &lt;dt&gt;HTML5&lt;/dt&gt;
+  &lt;dd&gt;Značkovací jazyk pro web.&lt;/dd&gt;
+  
+  &lt;dt&gt;DNS&lt;/dt&gt;
+  &lt;dd&gt;Systém překladu doménových
+      jmen na IP adresy.&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+            </div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.5rem;">
+              Skvělé pro produktové parametry (RAM, CPU), FAQ otázky a odpovědi či slovníky pojmů.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Datové tabulky a přístupnost -->
+    <section class="slide" id="slide-5">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div class="slide-number">05 / 06</div>
+          <div class="slide-category">Tabulková data a přístupnost</div>
+        </div>
+        <h2>Struktura tabulek (&lt;table&gt;) a přístupnost</h2>
+        <p class="lead">Tabulky slouží výhradně pro dvourozměrná strukturovaná data, nikdy pro layout stránky. Správná sémantika je klíčová pro zrakově postižené.</p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <line x1="3" y1="9" x2="21" y2="9"/>
+                <line x1="3" y1="15" x2="21" y2="15"/>
+                <line x1="9" y1="3" x2="9" y2="21"/>
+                <line x1="15" y1="3" x2="15" y2="21"/>
+              </svg>
+              Anatomie přístupné tabulky
+            </h3>
+            <ul style="font-size: 0.88rem; line-height: 1.5; color: var(--text-muted); margin: 0; padding-left: 1.2rem;">
+              <li><code>&lt;caption&gt;</code>: Titulek tabulky popisující její obsah. Čtečky obrazovky jej čtou jako první informaci.</li>
+              <li><code>&lt;thead&gt;, &lt;tbody&gt;, &lt;tfoot&gt;</code>: Logické rozdělení na hlavičku sloupců, tělo dat a patičku se souhrny.</li>
+              <li><code>&lt;th scope="col|row"&gt;</code>: Hlavičková buňka. Atribut <code>scope</code> explicitně říká, zda je buňka hlavičkou sloupce nebo řádku.</li>
+              <li><code>colspan</code> a <code>rowspan</code>: Atributy pro sloučení více buněk vodorovně nebo svisle.</li>
+            </ul>
+            <div class="alert-box alert-box--warning" style="margin-top: 1rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; flex-shrink: 0;">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <div>
+                <strong>Zákaz tabulkového layoutu:</strong> V 90. letech se tabulky používaly k řazení designu stránky do sloupců. Dnes je to hrubá chyba – layout patří výhradně do CSS (Flexbox, CSS Grid).
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+              Příklad plně sémantické tabulky
+            </h3>
+            <div class="code-box">
+              <div class="code-box-header"><span>Kód přístupné tabulky</span></div>
+              <pre><code>&lt;table&gt;
+  &lt;caption&gt;Přehled zkoušek modulu WEB10&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Předmět&lt;/th&gt;
+      &lt;th scope="col"&gt;Termín&lt;/th&gt;
+      &lt;th scope="col"&gt;Kredity&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Architektura&lt;/th&gt;
+      &lt;td&gt;15. ledna&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Protokol HTTP&lt;/th&gt;
+      &lt;td&gt;22. ledna&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;th scope="row" colspan="2"&gt;Celkem kreditů&lt;/th&gt;
+      &lt;td&gt;8&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Shrnutí lekce a zkušební otázky -->
+    <section class="slide" id="slide-6">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div class="slide-number">06 / 06</div>
+          <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+        </div>
+        <h2>Klíčové poznatky k absolutoriu (Okruh 4)</h2>
+        <p class="lead">Strukturovaný přehled pro rychlé zopakování a obhajobu u zkoušky z webových technologií.</p>
+
+        <div class="grid-4" style="margin-top: 1rem;">
+          <div class="card">
+            <h4>1. Nadpisy h1–h6</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              Hierarchický strom obsahu. Jedno &lt;h1&gt; na stránku. Nikdy nepřeskakovat úrovně kvůli designu – vizuální velikost řídí CSS.
+            </p>
+          </div>
+          <div class="card">
+            <h4>2. Odkazy a bezpečnost</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              U <code>target="_blank"</code> vždy doplňovat <code>rel="noopener noreferrer"</code>. Rozlišovat relativní a absolutní URL cesty.
+            </p>
+          </div>
+          <div class="card">
+            <h4>3. Výběr seznamu</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              <code>&lt;ul&gt;</code> pro volné položky, <code>&lt;ol&gt;</code> pro sekvence kroků a postupy, <code>&lt;dl&gt;</code> pro páry termín-definice a metadata.
+            </p>
+          </div>
+          <div class="card">
+            <h4>4. Přístupné tabulky</h4>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">
+              Pouze pro data, nikdy pro layout. Používat <code>caption</code>, <code>thead/tbody/tfoot</code> a u hlaviček <code>th scope="col|row"</code>.
+            </p>
+          </div>
+        </div>
+
+        <div class="exam-question-box" style="margin-top: 1.5rem;">
+          <div class="exam-question-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: var(--accent);">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <strong>Typická otázka u absolutoria / zkoušky:</strong>
+          </div>
+          <p class="exam-question-text">
+            „Proč je nepřípustné použít prvek &lt;b&gt; místo &lt;strong&gt;, jaký je mezi nimi sémantický rozdíl a proč by tabulky měly obsahovat atribut scope u tagů &lt;th&gt;?“
+          </p>
+          <div class="exam-answer-hint">
+            <strong>Stručná osnova odpovědi:</strong> Prvek &lt;b&gt; nese pouze vizuální informaci (tučné písmo) bez přidaného významu pro asistenční technologie. Oproti tomu &lt;strong&gt; nese sémantický význam vysoké důležitosti a nebezpečí, což hlasové čtečky interpretují změnou intonace. U tabulek atribut <code>scope="col"</code> či <code>scope="row"</code> přímo spojuje buňku se záhlavím, takže čtečka při procházení kterékoli buňky čte uživateli její příslušný sloupec či řádek.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Spodní ovládací lišta dle standardu -->
+  <nav class="controls-bar" aria-label="Ovládání prezentace">
+    <div class="controls-left">
+      <a href="index.html" class="control-btn" title="Zpět na katalog lekcí">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </a>
+      <button class="control-btn" id="tocBtn" title="Obsah prezentace (M / O)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="controls-center">
+      <button class="control-btn" id="prevBtn" title="Předchozí slide (šipka vlevo / PgUp)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <span class="slide-counter" id="slideCounter">1 / 6</span>
+      <button class="control-btn" id="nextBtn" title="Další slide (šipka vpravo / Mezerník / PgDn)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="controls-right">
+      <button class="control-btn" id="themeToggle" title="Přepnout motiv (T)">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <button class="control-btn" id="fsBtn" title="Celá obrazovka (F)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+        </svg>
+      </button>
+      <button class="control-btn" id="helpBtn" title="Klávesové zkratky (?)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Modální okno obsahu -->
+  <div class="modal" id="tocModal" aria-hidden="true">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Obsah prezentace</h3>
+        <button class="modal-close" id="tocClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ul class="toc-list" id="tocList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modální okno nápovědy -->
+  <div class="modal" id="helpModal" aria-hidden="true">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Klávesové zkratky</h3>
+        <button class="modal-close" id="helpClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcuts-grid">
+          <div class="shortcut-item"><kbd>&rarr;</kbd> / <kbd>Space</kbd><span>Další slide</span></div>
+          <div class="shortcut-item"><kbd>&larr;</kbd><span>Předchozí slide</span></div>
+          <div class="shortcut-item"><kbd>Home</kbd> / <kbd>End</kbd><span>První / poslední slide</span></div>
+          <div class="shortcut-item"><kbd>F</kbd><span>Celá obrazovka</span></div>
+          <div class="shortcut-item"><kbd>M</kbd> / <kbd>O</kbd><span>Obsah lekce</span></div>
+          <div class="shortcut-item"><kbd>T</kbd><span>Přepnout motiv</span></div>
+          <div class="shortcut-item"><kbd>?</kbd><span>Tato nápověda</span></div>
+          <div class="shortcut-item"><kbd>Esc</kbd><span>Zavřít okno</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

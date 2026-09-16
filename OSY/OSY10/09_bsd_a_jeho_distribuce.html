@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 09: BSD a jeho distribuce | OSY10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY10">
+          <span>&larr; OSY10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 09</span>
+          <span class="divider">&bull;</span>
+          <span>BSD a jeho distribuce</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: BSD větev</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY10 &bull; 9. přednáška (45 min)</div>
+        <h1 class="hero-title">BSD &amp; Jeho distribuce</h1>
+        <p class="hero-desc">
+          Významná větev Berkeley Software Distribution: implementace referenčního síťového zásobníku TCP/IP, právní spor s AT&amp;T a licence BSD vs. GPL. Srovnání moderních potomků: FreeBSD (Jails, ZFS), OpenBSD (bezpečnost a audit), NetBSD (přenositelnost) a DragonFly BSD.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Původ</span>
+            <span class="hero-meta-val">UC Berkeley (Bill Joy), CSRG</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Hlavní přínos</span>
+            <span class="hero-meta-val">BSD Socket API, TCP/IP stack</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Licenční model</span>
+            <span class="hero-meta-val">Permisivní BSD licence</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: HISTORIE A PŘÍNOS BSD -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Historie a síťová revoluce</div>
+            <h2 class="slide-title">Jak BSD dalo světu internet</h2>
+            <p class="slide-subtitle">Role University of California v Berkeley při vývoji internetového protokolu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Historie</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>DARPA a vznik BSD Sockets</h4>
+              <p>V roce 1980 agentura DARPA financovala začlenění síťových protokolů TCP/IP do systému 4.2BSD:</p>
+              <ul class="styled-list">
+                <li>Vývojáři v Berkeley (v čele s Billem Joyem) navrhli <strong>BSD Socket API</strong> (<code>socket()</code>, <code>bind()</code>, <code>listen()</code>, <code>accept()</code>).</li>
+                <li>Toto API a implementace síťového zásobníku se staly celosvětovým standardem pro veškerou síťovou komunikaci (převzaly jej i Windows a Linux).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Právní bitva USL vs. BSDi a odkaz</h4>
+              <ul class="styled-list">
+                <li>Skupina CSRG v Berkeley postupně nahradila všechny proprietární řádky kódu od AT&amp;T vlastním kódem (vznikl <strong>Networking Release 2</strong>).</li>
+                <li>Firma AT&amp;T zažalovala univerzitu. Spor se táhl do roku 1994, což zbrzdilo nástup BSD a otevřelo dveře pro rychlý růst Linuxu (Linuse Torvaldse).</li>
+                <li>Po mimosoudním vyrovnání byl veškerý kód uvolněn pod svobodnou BSD licencí jako základ pro FreeBSD a NetBSD.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: LICENCE BSD VS GPL -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Licenční modely</div>
+            <h2 class="slide-title">Permisivní BSD licence vs. Copyleft GPL</h2>
+            <p class="slide-subtitle">Zásadní rozdíl ve filozofii svobodného softwaru</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>BSD Licence (Permisivní model)</h4>
+              <p><em>„Dělejte si s kódem téměř cokoliv, jen zachovejte informaci o autorech.“</em></p>
+              <ul class="styled-list">
+                <li>Umožňuje komukoli vzít kód BSD, upravit jej, zkompilovat a <strong>uzavřít do komerčního proprietárního produktu bez zveřejnění změn</strong>.</li>
+                <li>Příklady komerčního využití:
+                  <ul class="styled-list">
+                    <li><strong>Apple macOS a iOS:</strong> Využívají velkou část BSD vrstvy a utilit v jádře Darwin.</li>
+                    <li><strong>Sony PlayStation (PS4/PS5):</strong> Běží na upraveném systému FreeBSD (systém Orbis OS).</li>
+                    <li><strong>Nintendo Switch:</strong> Využívá části kódu z FreeBSD.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>GNU GPL (Copyleft / Ochranný model)</h4>
+              <p><em>„Kód musí navždy zůstat svobodný i se všemi odvozenými díly.“</em></p>
+              <ul class="styled-list">
+                <li>Pokud upravíte kód pod licencí GPLv2/GPLv3 a distribuujete binárku, <strong>musíte zveřejnit i upravený zdrojový kód</strong>.</li>
+                <li>Zabraňuje komerčním korporacím vzít kód komunity a zprivatizovat jej.</li>
+                <li>Používáno jádrem Linux a GNU utilitami.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SROVNÁNÍ DISTRIBUCÍ BSD -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Moderní větve</div>
+            <h2 class="slide-title">FreeBSD vs. OpenBSD vs. NetBSD</h2>
+            <p class="slide-subtitle">Tři hlavní distribuce s odlišnou specializací</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčové srovnání</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>FreeBSD</h4>
+              <p>Zaměření na <strong>výkon, servery a síťovou infrastrukturu</strong>:</p>
+              <ul class="styled-list">
+                <li><strong>FreeBSD Jails:</strong> Průkopník kontejnerizace (od roku 2000!), plná izolace procesů a sítě.</li>
+                <li><strong>ZFS souborový systém:</strong> Prvotřídní integrovaná podpora pro ZFS (snapshots, scrubbing, RAID-Z).</li>
+                <li>Běží na něm servery Netflixu, WhatsAppu i páteřní síťové směrovače (pfSense, OPNsense).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>OpenBSD</h4>
+              <p>Zaměření na <strong>bezpečnost, čistotu kódu a audity</strong>:</p>
+              <ul class="styled-list">
+                <li>Tvůrce Theo de Raadt: heslo <em>„Pouze dvě vzdálené zranitelnosti ve výchozí instalaci za více než 25 let.“</em></li>
+                <li>Projekty darované světu: <strong>OpenSSH</strong>, packet filtr <strong>PF</strong>, knihovna LibreSSL.</li>
+                <li>Průkopník bezpečnostních mitigací (W^X paměťová ochrana, pledge, unveil).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>NetBSD</h4>
+              <p>Zaměření na <strong>extrémní přenositelnost a čistý návrh</strong>:</p>
+              <ul class="styled-list">
+                <li>Heslo: <em>„Of course it runs NetBSD.“</em></li>
+                <li>Běží na více než 50 hardwarových architekturách: od velkých serverů po mikrovlnky, tiskárny a staré stroje Commodore Amiga.</li>
+                <li>Výborný základ pro vestavěné (embedded) systémy.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÉ PŘÍKAZY VE FREEBSD -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická administrace</div>
+            <h2 class="slide-title">Správa FreeBSD: Jails a balíčky pkg</h2>
+            <p class="slide-subtitle">Vytvoření kontejneru Jail a správa softwaru ve FreeBSD</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">FreeBSD &bull; CLI</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>sh &bull; Spuštění a inspekce FreeBSD Jailu</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Výpis aktivních izolovaných kontejnerů Jails</span>
+<span class="term-root"># </span><span class="term-cmd">jls</span>
+<span class="term-out">   JID  IP Address      Hostname           Path</span>
+<span class="term-out">     1  192.168.1.50    webserver.local    /usr/jails/web</span>
+<span class="term-out">     2  192.168.1.51    db.local           /usr/jails/db</span>
+
+<span class="term-comment"># Vstup do konzole izolovaného jailu</span>
+<span class="term-root"># </span><span class="term-cmd">jexec</span> <span class="term-arg">1</span> <span class="term-path">/bin/sh</span>
+
+<span class="term-comment"># Kontrola stavu ZFS diskového fondu</span>
+<span class="term-root"># </span><span class="term-cmd">zpool</span> <span class="term-param">status</span> <span class="term-arg">zroot</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>sh &bull; Správa balíčků a firewallu PF</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Instalace balíčku přes binární správce pkg</span>
+<span class="term-root"># </span><span class="term-cmd">pkg</span> <span class="term-param">install</span> <span class="term-arg">nginx</span>
+
+<span class="term-comment"># Ověření pravidel packet filtru (PF)</span>
+<span class="term-root"># </span><span class="term-cmd">pfctl</span> <span class="term-param">-sr</span>
+
+<span class="term-comment"># Zjištění detailů jádra FreeBSD</span>
+<span class="term-root"># </span><span class="term-cmd">uname</span> <span class="term-param">-a</span>
+<span class="term-out">FreeBSD bsd-server 14.0-RELEASE FreeBSD 14.0-RELEASE amd64</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Okruhy týkající se ekosystému BSD</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Význam BSD pro sítě</h4>
+              <p>Pochopení role CSRG v Berkeley a zavedení BSD Socket API a referenční implementace protokolu TCP/IP.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. BSD vs. GPL</h4>
+              <p>Schopnost vysvětlit, proč komerční firmy (Apple, Sony) rády staví na kódu pod licencí BSD, zatímco Linux pod GPLv2 vyžaduje zachování svobody kódu.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Specializace distribucí</h4>
+              <p>Znalost profilu FreeBSD (servery, Jails, ZFS), OpenBSD (kódový audit, bezpečnost, OpenSSH) a NetBSD (přenositelnost).</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Popište technologii FreeBSD Jails a porovnejte ji s moderními linuxovými kontejnery (Docker / LXC).“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 09</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSY10: Typy operačních systémů | Výukový portál a prezentace</title>
+  <link rel="stylesheet" href="../../assets/css/dashboard-core.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    
+    <!-- Top Header / Brand -->
+    <header class="dashboard-header">
+      <div class="brand-box">
+        <a href="../index.html" class="brand-icon" title="Zpět na přehled předmětu OSY">
+          <svg class="icon" viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+            <rect x="9" y="9" width="6" height="6"></rect>
+            <line x1="9" y1="1" x2="9" y2="4"></line>
+            <line x1="15" y1="1" x2="15" y2="4"></line>
+            <line x1="9" y1="20" x2="9" y2="23"></line>
+            <line x1="15" y1="20" x2="15" y2="23"></line>
+            <line x1="20" y1="9" x2="23" y2="9"></line>
+            <line x1="20" y1="14" x2="23" y2="14"></line>
+            <line x1="1" y1="9" x2="4" y2="9"></line>
+            <line x1="1" y1="14" x2="4" y2="14"></line>
+          </svg>
+        </a>
+        <div class="brand-text">
+          <h1>OSY10 &bull; Typy operačních systémů</h1>
+          <p>Vyšší odborná škola &bull; 2. ročník &bull; 3. semestr (zimní období)</p>
+        </div>
+      </div>
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Přepnout světlý/tmavý motiv">
+        <svg class="icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <div class="hero-tag">Výukové materiály &bull; Webové prezentace</div>
+      <h2 class="hero-title">Typologie, architektury a ekosystémy operačních systémů</h2>
+      <p class="hero-desc">
+        Kompletní série 10 interaktivních výukových prezentací (45 minut / lekce) pro modul OSY10. Od hardwarové abstrakce a správy prostředků přes desktopové, serverové a mobilní systémy až po systémy reálného času (RTOS), filozofii Unixu, větve BSD a architekturu macOS.
+      </p>
+
+      <div class="metrics-row">
+        <div class="metric-item">
+          <span class="metric-num">10</span>
+          <span class="metric-label">Výukových lekcí</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">45 min</span>
+          <span class="metric-label">Na jednu hodinu</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">3 kredity</span>
+          <span class="metric-label">Klasifikovaný zápočet</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">Okruh OSY</span>
+          <span class="metric-label">Profilová zkouška VOŠ</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Context Banner -->
+    <section class="db-banner">
+      <div class="db-banner-content">
+        <h3>
+          <svg class="icon" style="color: #10b981;" viewBox="0 0 24 24">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+          Praktická orientace: systémová diagnostika a administrace
+        </h3>
+        <p>Prezentace kombinují architektonická schémata jader s praktickými terminálovými ukázkami (Bash, PowerShell, dmesg, sysctl, top/htop), diagnostikou a ukázkami konfigurace systémových služeb.</p>
+        <div class="db-pills">
+          <span class="db-pill">hal_layer</span>
+          <span class="db-pill">monolithic_vs_micro</span>
+          <span class="db-pill">cli_gui_syscalls</span>
+          <span class="db-pill">server_daemons</span>
+          <span class="db-pill">mobile_sandbox</span>
+          <span class="db-pill">rtos_determinism</span>
+          <span class="db-pill">dac_mac_security</span>
+          <span class="db-pill">unix_philosophy</span>
+          <span class="db-pill">bsd_jails</span>
+          <span class="db-pill">macos_darwin_xnu</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+      <svg class="search-icon-svg" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="lessonSearch" class="search-input" placeholder="Hledat v lekcích (např. 'HAL', 'Unix', 'jádro', 'RTOS', 'BSD', 'macOS', 'servery')...">
+    </div>
+
+    <!-- Lessons Catalog Grid -->
+    <main class="lessons-grid" id="lessonsGrid">
+
+      <!-- LEKCE 01 -->
+      <article class="lesson-card" data-keywords="abstrakce hardware hal jádro monolit mikrojádro správa prostředků cpu ram io ovladače">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 01</span>
+            <span class="lesson-exam-badge">Základní architektura</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Abstrakce hardware a správa prostředků</h3>
+          <p class="lesson-desc">
+            Role operačního systému jako správce prostředků a virtuálního stroje. Vrstva HAL, architektury jader (monolit, mikrojádro, hybrid) a řízení CPU, paměti a periferií.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">HAL vrstva</span>
+            <span class="lesson-tag">Monolit vs Mikrojádro</span>
+            <span class="lesson-tag">Správa CPU &amp; RAM</span>
+            <span class="lesson-tag">I/O abstrakce</span>
+          </div>
+          <a href="01_abstrakce_hardware_a_sprava_prostredku.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 02 -->
+      <article class="lesson-card" data-keywords="ovládání počítače rozhraní cli tui gui terminál shell syscall systémová volání posix win32">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 02</span>
+            <span class="lesson-exam-badge">Interakce člověk-stroj</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Ovládání počítače a uživatelská rozhraní</h3>
+          <p class="lesson-desc">
+            Evoluce rozhraní člověk-počítač: textový terminál (CLI), semigrafická rozhraní (TUI) a grafická okna (GUI). Programové rozhraní OS a princip systémových volání.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">CLI &bull; TUI &bull; GUI</span>
+            <span class="lesson-tag">Systémová volání</span>
+            <span class="lesson-tag">API vs ABI</span>
+            <span class="lesson-tag">Skriptování</span>
+          </div>
+          <a href="02_ovladani_pocitace_a_uzivatelska_rozhrani.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 03 -->
+      <article class="lesson-card" data-keywords="desktop klient windows linux desktop macos x11 wayland relace okenní správce dwm">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 03</span>
+            <span class="lesson-exam-badge">Klientské systémy</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Desktopové operační systémy</h3>
+          <p class="lesson-desc">
+            Charakteristika a požadavky na klientské OS. Grafický subsystém, compositing window managery (DWM, X11, Wayland), správa uživatelských relací a srovnání Windows vs Linux vs macOS.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Desktop OS</span>
+            <span class="lesson-tag">X11 &amp; Wayland</span>
+            <span class="lesson-tag">Window Managery</span>
+            <span class="lesson-tag">Uživatelské relace</span>
+          </div>
+          <a href="03_desktopove_operacni_systemy.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 04 -->
+      <article class="lesson-card" data-keywords="server servery headless systemd windows server služby démony virtualizace kvm hyper-v kontejnery docker">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 04</span>
+            <span class="lesson-exam-badge">Serverová infrastruktura</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Serverové operační systémy</h3>
+          <p class="lesson-desc">
+            Vysoká dostupnost (HA), škálovatelnost a bezhlavý (headless) provoz. Správa systémových démonů (systemd, Windows Services), virtualizace Type 1/2 a základy kontejnerizace.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Headless provoz</span>
+            <span class="lesson-tag">systemd &amp; Služby</span>
+            <span class="lesson-tag">Hypervizory</span>
+            <span class="lesson-tag">Kontejnerizace</span>
+          </div>
+          <a href="04_serverove_operacni_systemy.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 05 -->
+      <article class="lesson-card" data-keywords="mobilní zařízení android ios arm soc správa energie baterie sandbox senzory art dalvik">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 05</span>
+            <span class="lesson-exam-badge">Mobilní architektura</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Mobilní operační systémy</h3>
+          <p class="lesson-desc">
+            Architektura platforem Android a iOS. Hardwarová specifika čipsetů SoC/ARM, agresivní správa napájení a baterie, model sandboxingu aplikací a obsluha senzorů.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Android vs iOS</span>
+            <span class="lesson-tag">ARM SoC</span>
+            <span class="lesson-tag">Aplikační Sandbox</span>
+            <span class="lesson-tag">Power Management</span>
+          </div>
+          <a href="05_mobilni_operacni_systemy.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 06 -->
+      <article class="lesson-card" data-keywords="rtos reálný čas determinismus hard soft deadline plánování freertos qnx automotive embedded">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 06</span>
+            <span class="lesson-exam-badge">Průmyslové řízení</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Systémy řízení v reálném čase (RTOS)</h3>
+          <p class="lesson-desc">
+            Rozdíl mezi obecným OS a systémem reálného času. Tvrdý (Hard) vs. měkký (Soft) RTOS, determinismus a garantované odezvy, plánovací algoritmy RMS a EDF, nasazení v automotive a průmyslu.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Hard vs Soft RTOS</span>
+            <span class="lesson-tag">Determinismus</span>
+            <span class="lesson-tag">Prioritní inverze</span>
+            <span class="lesson-tag">FreeRTOS &amp; QNX</span>
+          </div>
+          <a href="06_systemy_rizeni_v_realnem_case_rtos.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 07 -->
+      <article class="lesson-card" data-keywords="bezpečnost os dac mac selinux apparmor autentizace autorizace audit privilegia uac sudo">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 07</span>
+            <span class="lesson-exam-badge">Bezpečnostní modely</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Bezpečnost operačních systémů</h3>
+          <p class="lesson-desc">
+            Bezpečnostní architektura OS: autentizace, autorizace, audit. Modely řízení přístupu DAC (diskreční) vs. MAC (povinné – SELinux), princip minimálních privilegií, UAC a sudo.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">DAC vs MAC</span>
+            <span class="lesson-tag">SELinux &amp; AppArmor</span>
+            <span class="lesson-tag">Minimální privilegia</span>
+            <span class="lesson-tag">UAC &amp; sudo</span>
+          </div>
+          <a href="07_bezpecnost_operacnich_systemu.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 08 -->
+      <article class="lesson-card" data-keywords="unix historie bell labs posix vše je soubor roury linux gnu distribuce kernel">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 08</span>
+            <span class="lesson-exam-badge">Základy moderních OS</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Historie a filozofie Unixu</h3>
+          <p class="lesson-desc">
+            Vznik Unixu v Bell Labs (Thompson, Ritchie). Unixová filozofie: modulární nástroje, roury, textové proudy a paradigma „všechno je soubor“. Standardizace POSIX a vznik GNU/Linuxu.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Bell Labs</span>
+            <span class="lesson-tag">Unix Filozofie</span>
+            <span class="lesson-tag">Vše je soubor</span>
+            <span class="lesson-tag">POSIX Standard</span>
+          </div>
+          <a href="08_historie_a_filozofie_unixu.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 09 -->
+      <article class="lesson-card" data-keywords="bsd freebsd openbsd netbsd distribuce zfs jails síťový zásobník licence bsd gpl">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 09</span>
+            <span class="lesson-exam-badge">BSD větev</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">BSD a jeho distribuce</h3>
+          <p class="lesson-desc">
+            Vývojová větev Berkeley Software Distribution. Právní aspekty a licence BSD vs. GPL. Srovnání FreeBSD (síťový stack, Jails, ZFS), OpenBSD (kódový audit, bezpečnost) a NetBSD (přenositelnost).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">FreeBSD &amp; Jails</span>
+            <span class="lesson-tag">OpenBSD Bezpečnost</span>
+            <span class="lesson-tag">NetBSD Přenositelnost</span>
+            <span class="lesson-tag">BSD Licence</span>
+          </div>
+          <a href="09_bsd_a_jeho_distribuce.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 10 -->
+      <article class="lesson-card" data-keywords="macos darwin xnu mach bsd cocoa quartz apfs apple silicon sip gatekeeper">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 10</span>
+            <span class="lesson-exam-badge">Apple ekosystém</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">macOS a architektura Darwin</h3>
+          <p class="lesson-desc">
+            Vnitřní stavba macOS: otevřený základ Darwin, hybridní jádro XNU (spojení Mach mikrojádra a BSD subsystému), grafická vrstva Quartz, souborový systém APFS a bezpečnost (SIP, Gatekeeper).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Darwin &amp; XNU</span>
+            <span class="lesson-tag">Mach + BSD</span>
+            <span class="lesson-tag">APFS &amp; I/O Kit</span>
+            <span class="lesson-tag">SIP &amp; TCC</span>
+          </div>
+          <a href="10_macos_a_architektura_darwin.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+      <p>Vyšší odborná škola &bull; Výukové materiály modulu OSY10 &bull; 100% Offline & Pure Vanilla CSS/JS</p>
+      <div class="footer-pills">
+        <span class="footer-pill">HAL vrstva</span>
+        <span class="footer-pill">Desktop &amp; Server</span>
+        <span class="footer-pill">Mobilní systémy</span>
+        <span class="footer-pill">RTOS</span>
+        <span class="footer-pill">Unix &amp; POSIX</span>
+        <span class="footer-pill">BSD &amp; macOS</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Live Search in Lessons
+    const searchInput = document.getElementById('lessonSearch');
+    const lessonCards = document.querySelectorAll('.lesson-card');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      lessonCards.forEach(card => {
+        const text = (card.textContent + ' ' + (card.getAttribute('data-keywords') || '')).toLowerCase();
+        if (text.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const sunIcon = `<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    const moonIcon = `<svg class="icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+
+    const savedTheme = localStorage.getItem('vos_presentation_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeBtn.innerHTML = savedTheme === 'dark' ? sunIcon : moonIcon;
+
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('vos_presentation_theme', next);
+      themeBtn.innerHTML = next === 'dark' ? sunIcon : moonIcon;
+    });
+  </script>
+</body>
+</html>

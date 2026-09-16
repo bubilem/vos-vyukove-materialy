@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 03: Principy digitálního zvuku a vzorkování | MUL10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL10">
+          <span>&larr; MUL10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 03</span>
+          <span class="divider">&bull;</span>
+          <span>Principy digitálního zvuku a vzorkování</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 3: Digitalizace zvuku</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL10 &bull; 3. přednáška (45 min)</div>
+        <h1 class="hero-title">Principy digitálního zvuku a vzorkování</h1>
+        <p class="hero-desc">
+          Fyzikální přeměna spojitého akustického signálu na digitální data (A/D převod). Vzorkovací teorém Nyquista a Shannona, eliminace aliasingu, kvantování, bitová hloubka a dynamický rozsah.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Vzorkování</span>
+            <span class="hero-meta-val">44.1 kHz &bull; 48 kHz &bull; 96 kHz</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Kvantování</span>
+            <span class="hero-meta-val">16 bit (96 dB) &bull; 24 bit (144 dB)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 3</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: SPOJITÝ VS DISKRÉTNÍ SIGNÁL -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Fyzikální základ</div>
+            <h2 class="slide-title">Zvukové vlnění a převodníky ADC/DAC</h2>
+            <p class="slide-subtitle">Jak membrána mikrofonu generuje napětí a jak z něj vzniká proud nul a jedniček</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Základní princip</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. Akustický a elektrický analogový signál</h4>
+              <ul class="styled-list">
+                <li><strong>Akustické vlnění:</strong> Periodické změny tlaku vzduchu v čase.</li>
+                <li><strong>Spojitost:</strong> Nekonečné množství hodnot v nekonečném počtu časových okamžiků.</li>
+                <li><strong>Senzor (Mikrofon):</strong> Převádí mechanický pohyb membrány na spojité elektrické napětí $U(t)$.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. Proces diskretizace (ADC převodník)</h4>
+              <ul class="styled-list">
+                <li><strong>Časová diskretizace (Vzorkování):</strong> Měření okamžitého napětí v pravidelných intervalech periody $T_s = 1/f_s$.</li>
+                <li><strong>Amplitudová diskretizace (Kvantování):</strong> Zaokrouhlení naměřeného napětí na nejbližší diskrétní digitální hladinu.</li>
+                <li><strong>Kódování:</strong> Zápis čísla hladiny do binárního slova o $n$ bitech (PCM &ndash; Pulse Code Modulation).</li>
+              </ul>
+            </div>
+          </div>
+          <div class="callout callout-tip">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Zpětný převod (D/A rekonstrukce)</div>
+              <p>DAC (Digital to Analog Converter) převádí binární vzorky zpět na schodovité napětí, které je vyhlazeno rekonstrukčním filtrem (Low-Pass) a posláno do zesilovače a reproduktoru.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: NYQUIST-SHANNONŮV TEORÉM -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vzorkovací teorém</div>
+            <h2 class="slide-title">Nyquist-Shannonův teorém &bull; Aliasing</h2>
+            <p class="slide-subtitle">Matematická podmínka bezchybné rekonstrukce původního spojitého signálu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový vzorec</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Formulace teorému</h4>
+              <p>Aby bylo možné spojitý signál s maximální frekvencí $f_{max}$ po digitalizaci přesně a bezeztrátově rekonstruovat, musí být vzorkovací frekvence $f_s$ přísně vyšší než dvojnásobek $f_{max}$:</p>
+              <div class="formula-box" style="margin: 0.8rem 0;">
+                <div class="formula-main"><i>f<sub>s</sub></i> &gt; 2 &times; <i>f</i><sub>max</sub></div>
+                <div class="formula-desc">Nyquistova kritická mezní frekvence: <i>f<sub>N</sub></i> = <i>f<sub>s</sub></i> / 2</div>
+              </div>
+              <ul class="styled-list">
+                <li>Lidské ucho slyší v rozsahu cca <strong>20 Hz až 20 kHz</strong> ($f_{max} = 20\text{ kHz}$).</li>
+                <li>Minimální teoretická vzorkovací frekvence: $2 \times 20\text{ kHz} = 40\text{ kHz}$.</li>
+                <li>Standard <strong>Audio CD: 44.1 kHz</strong> (rezerva pro strmost filtru).</li>
+                <li>Standard <strong>Video/Film: 48 kHz</strong> (synchronizace s filmovými snímky).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Jev zvaný Aliasing (Zrcadlení)</h4>
+              <p>Pokud signál obsahuje frekvenci $f > f_s / 2$, dojde k jejímu nesprávnému navzorkování a projeví se jako falešný "zrcadlený" parazitní tón v slyšitelném pásmu:</p>
+              <div class="formula-box" style="margin: 0.8rem 0;">
+                <div class="formula-main"><i>f</i><sub>alias</sub> = | <i>f</i> &minus; <i>f<sub>s</sub></i> |</div>
+                <div class="formula-desc">Parazitní frekvence po zpětné rekonstrukci</div>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                <strong>Ochrana před aliasingem:</strong> Hardwarový analogový dolnopropustný filtr (Anti-aliasing Low-Pass Filter) zařazený bezprostředně PŘED převodník ADC, který ořízne všechny složky nad $f_s / 2$.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: KVANTOVÁNÍ A BITOVÁ HLOUBKA -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Amplitudová přesnost</div>
+            <h2 class="slide-title">Kvantování, bitová hloubka a dynamický rozsah</h2>
+            <p class="slide-subtitle">Vztah mezi počtem bitů vzorku a poměrem signálu k šumu (SNR)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Kvantování</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossless">16 bit (Standard CD)</span>
+              <h4 style="margin: 0.5rem 0;">$2^{16} = 65\,536$ hladin</h4>
+              <p style="font-size: 0.88rem;">
+                Teoretický dynamický rozsah cca <strong>96 dB</strong>. Vynikající pro finální poslech a mastering. Pro velmi tiché pasáže může být slyšitelný jemný kvantizační šum.
+              </p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">24 bit (Studio / Hi-Res)</span>
+              <h4 style="margin: 0.5rem 0;">$2^{24} = 16\,777\,216$ hladin</h4>
+              <p style="font-size: 0.88rem;">
+                Teoretický dynamický rozsah cca <strong>144 dB</strong>. Studiový standard pro záznam a mix. Umožňuje obrovský headroom bez rizika digitálního ořezu (clipping).
+              </p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">32-bit Float (Moderní rekordéry)</span>
+              <h4 style="margin: 0.5rem 0;">Plovoucí řádová čárka</h4>
+              <p style="font-size: 0.88rem;">
+                Dynamický rozsah přes <strong>1500 dB</strong>. Prakticky nemožné přebudit nebo utopit signál v šumu. Záchrana pro reportážní a filmový záznam v terénu.
+              </p>
+            </div>
+          </div>
+          <div class="callout callout-tip" style="margin-top: 0.75rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Základní pravidlo 6 dB na bit</div>
+              <p>Každý přidaný bit kvantování zvětšuje dynamický rozsah systému přibližně o 6 dB: $\text{SNR} \approx 6.02 \times n + 1.76\text{ dB}$. 16 bit &rarr; ~98 dB, 24 bit &rarr; ~146 dB.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: VÝPOČET DATOVÉHO TOKU -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktický inženýring</div>
+            <h2 class="slide-title">Výpočet datového toku nekomprimovaného audia</h2>
+            <p class="slide-subtitle">Vzorec pro výpočet bitratu a spotřeby paměti pro PCM signál</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Početní příklad</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Všeobecný vzorec</h4>
+              <div class="formula-box" style="margin: 0.8rem 0;">
+                <div class="formula-main">Bitrate = <i>f<sub>s</sub></i> &times; <i>b</i> &times; <i>n</i><sub>kanálů</sub></div>
+                <div class="formula-desc">Datový tok v bit/s (vzorkovací kmitočet &times; bitová hloubka &times; počet stop)</div>
+                <div style="font-size: 0.95rem; margin-top: 0.5rem; color: var(--text-secondary);">Velikost [B] = (Bitrate &times; čas [s]) / 8</div>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                Kde $f_s$ je vzorkovací frekvence, $b$ je bitová hloubka vzorku a $n_{kanálů}$ je počet stop (1 = mono, 2 = stereo, 6 = 5.1 surround).
+              </p>
+            </div>
+            <div class="content-card">
+              <h4>Příklad: Audio CD (Stereo, 16-bit, 44.1 kHz)</h4>
+              <div class="formula-box" style="margin: 0.8rem 0; text-align: left; align-items: flex-start;">
+                <div style="font-size: 1.05rem; font-weight: 600; color: var(--accent);">44 100 Hz &times; 16 bit &times; 2 = 1 411 200 bit/s</div>
+                <div class="formula-desc">&bull; 1 411.2 kbps &approx; 176.4 kB/s</div>
+                <div class="formula-desc">&bull; 1 minuta audia: 176.4 kB/s &times; 60 s &approx; 10.33 MB / min</div>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem;">
+                80minutové CD pojme: $80 \times 10.33\text{ MB} \approx 826\text{ MB}$ raw dat (resp. 700 MB s korekčními kódy).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Klíčové teze k profilové zkoušce z digitalizace zvuku</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 3</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Nyquistův teorém</h4>
+              <p>$f_s > 2 \cdot f_{max}$. Pro zachycení 20 kHz lidského sluchu je nutné vzorkovat minimálně 40 kHz (CD volí 44.1 kHz, video 48 kHz).</p>
+            </div>
+            <div class="summary-card">
+              <h4>Aliasing &amp; Filtr</h4>
+              <p>Zrcadlení nadnyquistovských frekvencí do slyšitelného spektra. Ochrana se provádí analogovým filtrem dolní propusti před ADC.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Bitová hloubka</h4>
+              <p>Určuje počet diskrétních úrovní a dynamický rozsah (pravidlo 6 dB/bit). 16 bit dává ~96 dB, 24 bit profesionální studio dává ~144 dB.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Otázka k absolutoriu</h4>
+              <p>Vysvětlete proces digitalizace zvuku (vzorkování, kvantování), definujte teorém Nyquista-Shannona a spočítejte datový tok CD audia.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 03</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

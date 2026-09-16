@@ -1,0 +1,11 @@
+/* ==========================================================================
+   OSY20 - Dashboard modulu (Činnost operačních systémů)
+   Přebírá jádro z ../../../assets/css/dashboard-core.css
+   ========================================================================== */
+
+@import "../../../assets/css/dashboard-core.css";
+
+:root {
+  --accent: #06b6d4;
+  --accent-glow: rgba(6, 182, 212, 0.2);
+}

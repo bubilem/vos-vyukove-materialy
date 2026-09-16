@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 10: Bezpečnost souborových systémů a Shell | OSY20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY20">
+          <span>&larr; OSY20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 10</span>
+          <span class="divider">&bull;</span>
+          <span>Bezpečnost souborových systémů a Shell</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Soubory &amp; Shell</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY20 &bull; 10. přednáška (45 min)</div>
+        <h1 class="hero-title">Bezpečnost souborů &amp; Uživatelský Shell</h1>
+        <p class="hero-desc">
+          Zabezpečení dat a příkazové prostředí operačních systémů: oprávnění POSIX (rwx), speciální bity (SUID, SGID, Sticky bit), Access Control Lists (ACL ve Windows a Linuxu), vnitřní fungování příkazového interpretu (Shell), roury, přesměrování standardních proudů a automatizace.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Souborová práva</span>
+            <span class="hero-meta-val">POSIX rwx, SUID &amp; ACL</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Příkazový interpret</span>
+            <span class="hero-meta-val">Bash, Zsh, PowerShell</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">I/O Proudy</span>
+            <span class="hero-meta-val">stdin (0), stdout (1), stderr (2)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: POSIX OPRÁVNĚNÍ A SPECIÁLNÍ BITY -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Oprávnění souborů</div>
+            <h2 class="slide-title">POSIX oprávnění a speciální bity (SUID, SGID, Sticky)</h2>
+            <p class="slide-subtitle">Tradiční unixový bezpečnostní model v devíti bitech</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová látka</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Tři trojice bitů (User / Group / Others)</h4>
+              <ul class="styled-list">
+                <li><strong>Read (r = 4):</strong> Čtení obsahu souboru / čtení seznamu souborů v adresáři.</li>
+                <li><strong>Write (w = 2):</strong> Modifikace obsahu souboru / přidávání a mazání souborů v adresáři.</li>
+                <li><strong>Execute (x = 1):</strong> Spuštění souboru jako programu / vstup do adresáře (průchod cestou).</li>
+                <li>Příklad: <code>chmod 755 skript.sh</code> &rarr; <code>rwxr-xr-x</code> (vlastník plná práva, ostatní čtení a spuštění).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Tři speciální bity (Čtvrtá trojice)</h4>
+              <ul class="styled-list">
+                <li><strong>SUID (Set User ID, hodnota 4000):</strong> Program se spustí s oprávněními <strong>vlastníka souboru</strong>, nikoli uživatele, který jej spustil (např. <code>/usr/bin/passwd</code> běží jako root, aby mohl zapsat nové heslo do <code>/etc/shadow</code>).</li>
+                <li><strong>SGID (Set Group ID, hodnota 2000):</strong> Program běží s právy skupiny. U adresáře: nově vytvořené soubory automaticky dědí skupinu adresáře.</li>
+                <li><strong>Sticky Bit (hodnota 1000):</strong> U adresářů (typicky <code>/tmp</code> s právy <code>1777</code>): soubor v adresáři smí smazat <strong>pouze jeho skutečný vlastník</strong> nebo root.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: ACCESS CONTROL LISTS (ACL) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Jemnozrnné řízení</div>
+            <h2 class="slide-title">Access Control Lists (ACL)</h2>
+            <p class="slide-subtitle">Když tři kategorie (vlastník, skupina, svět) nestačí enterprise požadavkům</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Omezení základního POSIX modelu</h4>
+              <p>Představte si požadavek: <em>„Uživatel Alice smí číst, uživatel Bob smí zapisovat, skupina Účetní smí číst a nikdo jiný nemá přístup.“</em></p>
+              <ul class="styled-list">
+                <li>Základní model <code>rwxrwxrwx</code> toto <strong>neumí vyřešit</strong> (umožňuje definovat pouze jednu jedinou skupinu).</li>
+                <li>Řešení: <strong>Access Control Lists (ACL)</strong> – seznam záznamů (ACE), kde lze explicitně definovat práva pro neomezený počet jednotlivých uživatelů a skupin.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Srovnání ACL v Linuxu a Windows</h4>
+              <ul class="styled-list">
+                <li><strong>Linux POSIX ACL:</strong> Nástroje <code>getfacl</code> a <code>setfacl</code>. Přidává položky k inodu jako rozšířené atributy (xattr):<br>
+                  <code>setfacl -m u:alice:r,u:bob:rw projekt/</code>
+                </li>
+                <li><strong>Windows NTFS ACL:</strong> Srdce zabezpečení Windows. Každý soubor má Security Descriptor obsahující:
+                  <ul class="styled-list">
+                    <li><strong>DACL (Discretionary ACL):</strong> Seznam povolených (Allow) a odepřených (Deny) oprávnění. Explicitní Deny má vždy přednost před Allow!</li>
+                    <li><strong>SACL (System ACL):</strong> Pravidla pro auditování úspěšných a neúspěšných pokusů o přístup k souboru.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: ANATOMIE PŘÍKAZOVÉHO INTERPRETU (SHELL) -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vnitřní mechanismus</div>
+            <h2 class="slide-title">Jak funguje příkazový interpret (Shell)</h2>
+            <p class="slide-subtitle">Životní cyklus příkazu od stisku Enter po spuštění procesu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Shell Cyklus</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Kroky vykonání příkazu v Shellu (Bash)</h4>
+              <ol class="styled-list">
+                <li><strong>Čtení řádku (Read):</strong> Načtení řetězce ze standardního vstupu (klávesnice).</li>
+                <li><strong>Lexikální analýza a parsování:</strong> Rozdělení na slova, identifikace operátorů (<code>|</code>, <code>&gt;</code>, <code>&amp;&amp;</code>, <code>;</code>).</li>
+                <li><strong>Expanze (Expansions):</strong>
+                  <ul class="styled-list">
+                    <li>Proměnné: <code>$USER</code> se nahradí za jméno uživatele.</li>
+                    <li>Substituce příkazů: <code>$(date)</code> se nahradí výstupem příkazu.</li>
+                    <li>Wildcardy (Globbing): <code>*.txt</code> se nahradí seznamem souborů.</li>
+                  </ul>
+                </li>
+                <li><strong>Vyhodnocení vestavěných příkazů (Builtins):</strong> Příkazy jako <code>cd</code>, <code>exit</code>, <code>export</code> musí běžet v shellu samotném (nemohou být externí binárkou, protože musí změnit stav shellu).</li>
+                <li><strong>Vyhledání v PATH, fork() a execve():</strong> Spuštění externího programu.</li>
+              </ol>
+            </div>
+            <div class="content-card">
+              <h4>Standardní proudy a přesměrování</h4>
+              <ul class="styled-list">
+                <li>Každý nově vytvořený proces dostává tři otevřené souborové deskriptory:
+                  <ul class="styled-list">
+                    <li><code>0 (stdin)</code>: Standardní vstup (výchozí klávesnice).</li>
+                    <li><code>1 (stdout)</code>: Standardní výstup (výchozí obrazovka).</li>
+                    <li><code>2 (stderr)</code>: Chybový výstup (výchozí obrazovka, nezávislý na stdout).</li>
+                  </ul>
+                </li>
+                <li>Přesměrování operátory:
+                  <ul class="styled-list">
+                    <li><code>cmd &gt; soubor.txt</code> (přepíše stdout).</li>
+                    <li><code>cmd &gt;&gt; soubor.txt</code> (připojí na konec stdout).</li>
+                    <li><code>cmd 2&gt; err.log</code> (přesměruje pouze chyby).</li>
+                    <li><code>cmd &gt; all.log 2&gt;&amp;1</code> (spojí stdout i stderr do jednoho souboru).</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ UKÁZKA ACL A ROVR V SHELLU -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická administrace</div>
+            <h2 class="slide-title">Správa ACL a přesměrování v praxi</h2>
+            <p class="slide-subtitle">Příkazy setfacl, icacls a řetězení v PowerShellu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Terminál &bull; ACL &amp; Shell</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Nastavení a zobrazení Linux ACL</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Udělení práva čtení a zápisu pro uživatele 'student'</span>
+<span class="term-prompt">$ </span><span class="term-cmd">setfacl</span> <span class="term-param">-m</span> <span class="term-arg">u:student:rw</span> <span class="term-path">/shared/projekt/</span>
+
+<span class="term-comment"># Zobrazení detailního ACL seznamu</span>
+<span class="term-prompt">$ </span><span class="term-cmd">getfacl</span> <span class="term-path">/shared/projekt/</span>
+<span class="term-out"># file: shared/projekt/</span>
+<span class="term-out"># owner: root</span>
+<span class="term-out"># group: admin</span>
+<span class="term-out">user::rwx</span>
+<span class="term-out">user:student:rw-</span>
+<span class="term-out">group::r-x</span>
+<span class="term-out">mask::rwx</span>
+<span class="term-out">other::---</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>powershell &bull; Inspekce NTFS ACL oprávnění přes Get-Acl</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Zobrazení přístupových pravidel (Access Rules) složky</span>
+<span class="term-prompt">PS&gt; </span>(<span class="term-cmd">Get-Acl</span> <span class="term-path">"C:\Data"</span>).Access <span class="term-pipe">|</span>
+    <span class="term-cmd">Select-Object</span> <span class="term-arg">IdentityReference, FileSystemRights, AccessControlType</span>
+
+<span class="term-comment"># Výpis výstupu:</span>
+<span class="term-out">IdentityReference   FileSystemRights   AccessControlType</span>
+<span class="term-out">-----------------   ----------------   -----------------</span>
+<span class="term-out">NT AUTHORITY\SYSTEM FullControl        Allow</span>
+<span class="term-out">BUILTIN\Users       ReadAndExecute     Allow</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Otázky ze souborových práv a interpretu shellu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Význam SUID bitu</h4>
+              <p>Vysvětlení, jak SUID umožňuje běžnému uživateli dočasně vykonávat privilegované operace a jaká z toho plynou bezpečnostní rizika.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Výhody ACL</h4>
+              <p>Zdůvodnění potřeby ACL pro jemnozrnné řízení přístupu více nezávislých uživatelů a skupin k jednomu adresáři.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Práce se standardními proudy</h4>
+              <p>Pochopení deskriptorů 0, 1, 2 a schopnost správně přesměrovat chybové hlášky a výstupy pomocí operátorů shellu.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Proč příkaz 'cd' musí být zabudován přímo v shellu (shell builtin) a nemůže existovat jako samostatný program /bin/cd?“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 10</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

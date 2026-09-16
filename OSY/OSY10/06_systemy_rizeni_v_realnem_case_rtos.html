@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 06: Systémy řízení v reálném čase (RTOS) | OSY10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY10">
+          <span>&larr; OSY10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 06</span>
+          <span class="divider">&bull;</span>
+          <span>Systémy řízení v reálném čase (RTOS)</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Real-Time OS</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY10 &bull; 6. přednáška (45 min)</div>
+        <h1 class="hero-title">Systémy řízení v reálném čase (RTOS)</h1>
+        <p class="hero-desc">
+          Operační systémy s garantovanou dobou odezvy: pojem determinismu, Hard vs. Soft Real-Time systémy, plánování s ohledem na deadliny (RMS, EDF), problém prioritní inverze a nasazení v průmyslové automatizaci, avionice a automotive.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Klíčový parametr</span>
+            <span class="hero-meta-val">Časový determinismus</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Kategorie systémů</span>
+            <span class="hero-meta-val">Hard vs Soft RTOS</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Příklady RTOS</span>
+            <span class="hero-meta-val">FreeRTOS, QNX, VxWorks, Zephyr</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: POJEM REÁLNÉHO ČASU A DETERMINISMUS -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní principy</div>
+            <h2 class="slide-title">Co znamená „Real-Time“ v informatice</h2>
+            <p class="slide-subtitle">Rozdíl mezi rychlým systémem a deterministickým systémem</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová definice</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Mýtus: „RTOS znamená nejvyšší rychlost“</h4>
+              <p>RTOS nemusí běžet na gigahertzových procesorech. Běžný desktopový Linux nebo Windows může mít vyšší průměrnou propustnost, ale <strong>nemá garantovaný horní limit zpoždění</strong>:</p>
+              <ul class="styled-list">
+                <li>Běžný OS (GPOS): Optimalizuje <em>průměrný</em> čas odezvy a spravedlnost (Fairness) mezi procesy.</li>
+                <li>Systém reálného času (RTOS): Zaručuje, že událost bude zpracována <strong>vždy před uplynutím stanoveného limitu (Deadline)</strong>.</li>
+                <li>Klíčová vlastnost: <strong>Časový determinismus</strong> – odezva trvá vždy předvídatelný čas bez ohledu na zatížení jiných subsystémů.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Kritická kriteria RTOS</h4>
+              <ul class="styled-list">
+                <li><strong>Latence přerušení (Interrupt Latency):</strong> Doba od fyzického vyvolání přerušení periferií po spuštění první instrukce obslužné rutiny (ISR). U RTOS v řádu mikrosekund.</li>
+                <li><strong>Kontextové přepnutí (Context Switch):</strong> Čas nutný k uložení registrů jedné úlohy a obnovení jiné. Musí být konstantní v čase: $O(1)$.</li>
+                <li><strong>Minimální nemaskovatelné sekce:</strong> Jádro nesmí zakazovat přerušení na delší dobu než pár mikrosekund.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: HARD VS. SOFT REAL-TIME -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Klasifikace systémů</div>
+            <h2 class="slide-title">Hard RT vs. Soft RT vs. Firm RT</h2>
+            <p class="slide-subtitle">Důsledky nedodržení časového limitu (Deadline)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4 style="color: #f43f5e;">Hard Real-Time</h4>
+              <p>Nedodržení deadline znamená <strong>totální havárii systému, ohrožení lidských životů nebo obrovské materiální škody</strong>:</p>
+              <ul class="styled-list">
+                <li>Řídicí jednotka airbagu automobilu (musí vystřelit do 20 ms).</li>
+                <li>Systém řízení letadla (Fly-by-wire).</li>
+                <li>Řízení jaderného reaktoru a lékařské infuzní pumpy.</li>
+                <li>Pozdní výsledek má hodnotu <strong>0 a je nebezpečný</strong>.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4 style="color: #f59e0b;">Firm Real-Time</h4>
+              <p>Nedodržení deadline nezpůsobí katastrofu, ale opožděný výsledek je zcela bezcenný a zahodí se:</p>
+              <ul class="styled-list">
+                <li>Snímání obrazu v průmyslové inspekční lince (pokud snímek nestihne zpracování, součástka už odjela).</li>
+                <li>Finanční vysokofrekvenční obchodování (HFT).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4 style="color: #10b981;">Soft Real-Time</h4>
+              <p>Nedodržení deadline způsobí <strong>pouze snížení kvality služby (QoS)</strong>, ale systém funguje dál:</p>
+              <ul class="styled-list">
+                <li>Streamování videa a VoIP telefonie (zpožděný paket způsobí škytnutí zvuku).</li>
+                <li>Zobrazování na displeji chytrého telefonu (pokles FPS).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PLÁNOVÁNÍ A PRIORITNÍ INVERZE -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Algoritmy a rizika</div>
+            <h2 class="slide-title">Plánovací algoritmy a fenomén prioritní inverze</h2>
+            <p class="slide-subtitle">Jak zabránit uváznutí v systémech reálného času</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Slavná havárie na Marsu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Plánovací algoritmy pro RTOS</h4>
+              <ul class="styled-list">
+                <li><strong>RMS (Rate Monotonic Scheduling):</strong> Statické přidělování priorit podle periody úlohy. Čím častěji úloha běží (kratší perioda), tím vyšší prioritu dostává. Jednoduché a prověřené.</li>
+                <li><strong>EDF (Earliest Deadline First):</strong> Dynamické plánování. Úloha, jejíž deadline nastane nejdříve, získá okamžitě CPU. Dosahuje až 100% využití procesoru.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Problém prioritní inverze (Priority Inversion)</h4>
+              <p>Stav, kdy úloha s nízkou prioritou (L) drží mutex, úloha s vysokou prioritou (H) na něj čeká a střední úloha (M) bez mutexu předbíhá úlohu L, čímž blokuje H:</p>
+              <ul class="styled-list">
+                <li>Známý incident sondy <strong>Mars Pathfinder (1997)</strong> řízené systémem VxWorks.</li>
+                <li><strong>Řešení: Protokol dědičnosti priority (Priority Inheritance):</strong> Úloha L dočasně zdědí vysokou prioritu úlohy H po dobu držení sdíleného zámku.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ UKÁZKA KÓDU RTOS -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická aplikace</div>
+            <h2 class="slide-title">Struktura úlohy ve FreeRTOS a PREEMPT_RT</h2>
+            <p class="slide-subtitle">Definice periodické úlohy s přesným časováním v C</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">FreeRTOS &bull; Kód</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>c &bull; Periodická úloha ve FreeRTOS</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment">// Periodická úloha se striktním intervalem 10 ms</span>
+<span class="term-cmd">void</span> <span class="term-func">vSensorTask</span>(<span class="term-cmd">void</span> *pvParameters) {
+    TickType_t xLastWakeTime = <span class="term-cmd">xTaskGetTickCount</span>();
+    <span class="term-cmd">const</span> TickType_t xFrequency = <span class="term-cmd">pdMS_TO_TICKS</span>(<span class="term-arg">10</span>);
+
+    <span class="term-cmd">for</span>(;;) {
+        <span class="term-comment">// Přesné čekání na další periodu bez kumulativního driftu</span>
+        <span class="term-cmd">vTaskDelayUntil</span>(&amp;xLastWakeTime, xFrequency);
+
+        <span class="term-comment">// Zpracování dat ze senzoru (trvá max 1.5 ms)</span>
+        <span class="term-cmd">read_accelerometer_data</span>();
+    }
+}</code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Diagnostika RT latence na Linux PREEMPT_RT</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Měření nejhorší latence plánovače nástrojem cyclictest</span>
+<span class="term-prompt">$ </span><span class="term-cmd">sudo cyclictest</span> <span class="term-param">--smp</span> <span class="term-param">-p</span> <span class="term-arg">98</span> <span class="term-param">-m</span> <span class="term-param">-i</span> <span class="term-arg">1000</span> <span class="term-param">-l</span> <span class="term-arg">100000</span>
+
+<span class="term-comment"># Typický výstup RT jádra s garancí latence:</span>
+<span class="term-out">T: 0 ( 1824) P:98 I:1000 C: 100000 Min: 2 Act: 4 Avg: 5 Max: 14</span>
+<span class="term-comment"># Maximální naměřená odchylka je pouze 14 mikrosekund!</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Otázky a okruhy týkající se systémů reálného času</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Determinismus vs. Rychlost</h4>
+              <p>Jasná formulace, proč je pro RTOS klíčová předvídatelnost nejhoršího možného případu (WCET) spíše než průměrná propustnost.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Hard vs. Soft Real-Time</h4>
+              <p>Vymezení rozdílu v dopadech překročení deadline (katastrofické selhání u Hard RT vs. pouhá degradace kvality u Soft RT).</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Prioritní inverze a dědičnost</h4>
+              <p>Popis mechanismu prioritní inverze a vysvětlení způsobu její eliminace protokolem dědičnosti priority (Priority Inheritance).</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Proč standardní jádro Windows nebo Linuxu není vhodné pro řízení vystřelení airbagu a jaké úpravy (např. PREEMPT_RT) jsou pro reálný čas nutné?“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 06</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

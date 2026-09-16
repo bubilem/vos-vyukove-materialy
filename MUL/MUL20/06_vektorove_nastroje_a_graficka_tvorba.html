@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 06: Vektorové nástroje a grafická tvorba | MUL20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL20">
+          <span>&larr; MUL20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 06</span>
+          <span class="divider">&bull;</span>
+          <span>Vektorové nástroje a grafická tvorba</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 12: Vektorová tvorba</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL20 &bull; 6. přednáška (45 min)</div>
+        <h1 class="hero-title">Vektorové nástroje a grafická tvorba</h1>
+        <p class="hero-desc">
+          Konstrukce vizuální identity a vektorových ilustrací: nástroje Adobe Illustrator a Inkscape, technika kreslení perem (Pen Tool), booleovské operace (Pathfinder), vektorizace předloh a příprava tiskových podkladů.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Software</span>
+            <span class="hero-meta-val">Illustrator &bull; Inkscape</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Konstrukce</span>
+            <span class="hero-meta-val">Pen Tool &bull; Pathfinder</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 12</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: SOFTWARE A PRACOVNÍ PLOCHA -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vektorová studia</div>
+            <h2 class="slide-title">Prostředí vektorových editorů</h2>
+            <p class="slide-subtitle">Adobe Illustrator vs. Inkscape a princip vícenásobných pláten (Artboards)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Editor prostředí</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Adobe Illustrator (Oborový standard)</h4>
+              <ul class="styled-list">
+                <li>Nativní formát AI založený na specifikaci PDF.</li>
+                <li>Podpora více pláten (Artboards) v jednom dokumentu &ndash; ideální pro návrh celé firemní identity (vizitka, hlavičkový papír, obálka).</li>
+                <li>Pokročilé přechodové sítě (Gradient Mesh) pro fotorealistické vektorové stínování.</li>
+                <li>Plná integrace s tiskovými standardy PANTONE a PostScript ripovacími stroji.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Inkscape (Open-Source alternativa)</h4>
+              <ul class="styled-list">
+                <li>Využívá přímo standard <strong>W3C SVG jako svůj nativní formát</strong> souboru.</li>
+                <li>Bezplatný, multiplatformní nástroj se silným komunitním vývojem.</li>
+                <li>Kompletní sada nástrojů pro editaci uzlů, kaligrafii a booleovské operace.</li>
+                <li>Vynikající pro webové vývojáře a generování čistého SVG kódu bez zbytečného balastu.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: PEN TOOL A MANIPULACE S KŘIVKAMI -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní technika</div>
+            <h2 class="slide-title">Kreslení perem (Pen Tool) v praxi</h2>
+            <p class="slide-subtitle">Jak vytvořit dokonale čisté křivky s minimem kotevních bodů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkoušková dovednost</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Pravidla profesionální práce s perem</h4>
+              <ul class="styled-list">
+                <li><strong>Zlaté pravidlo minima bodů:</strong> Čím méně kotevních bodů křivka má, tím je hladší, estetičtější a snadněji modifikovatelná.</li>
+                <li><strong>Pozice bodů:</strong> Kotevní body umisťujte výhradně do <strong>extrémů křivky</strong> (nejvyšší, nejnižší, nejvíce levý a pravý bod tvaru).</li>
+                <li><strong>Táhla:</strong> Táhla by měla směřovat rovnoběžně s osami $X$ nebo $Y$ (pomocí klávesy Shift).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Klávesové modifikátory</h4>
+              <ul class="styled-list">
+                <li><strong>Shift:</strong> Zamyká sklon táhel a přímek pod úhly $0^\circ, 45^\circ, 90^\circ$.</li>
+                <li><strong>Alt / Option:</strong> Zlomí symetrii hladkého uzlu a umožní vytvořit ostrý roh ($C^0$ přechod) bez přerušení kreslení cesty.</li>
+                <li><strong>Ctrl / Cmd:</strong> Dočasně přepne pero na nástroj Přímý výběr (Bílá šipka) pro okamžitou korekci předchozího bodu.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: BOOLEOVSKÉ OPERACE A PATHFINDER -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Konstruktivní geometrie</div>
+            <h2 class="slide-title">Booleovské operace a Pathfinder</h2>
+            <p class="slide-subtitle">Skládání složitých logotypů ze základních geometrických primitiv</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový nástroj</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossless">Sjednocení (Unite / Union)</span>
+              <h4 style="margin: 0.5rem 0;">Sloučení tvarů</h4>
+              <p style="font-size: 0.85rem;">Spojí dva a více překrývajících se objektů do jediné spojité vnější obrysové cesty. Vnitřní překryvy zaniknou.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">Rozdíl (Minus Front / Difference)</span>
+              <h4 style="margin: 0.5rem 0;">Odečtení tvaru</h4>
+              <p style="font-size: 0.85rem;">Objekt ležící nahoře "vyrazí" svůj tvar z objektu ležícího pod ním (např. vytvoření půlměsíce překrytím dvou kruhů).</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">Průnik (Intersect)</span>
+              <h4 style="margin: 0.5rem 0;">Společná plocha</h4>
+              <p style="font-size: 0.85rem;">Zachová pouze plochu, kde se všechny vybrané tvary vzájemně překrývají. Zbytek geometrie je odstraněn.</p>
+            </div>
+          </div>
+          <div class="callout callout-tip" style="margin-top: 0.6rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Nástroj Shape Builder (Vytváření tvarů)</div>
+              <p>Moderní alternativa k panelu Pathfinder. Tažením myši přes segmenty přímo spojujete nebo s klávesou Alt odmazáváte plochy vzniklé překryvem čar, což dramaticky urychluje tvorbu ikon.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: VEKTORIZACE A LOGOMANUÁL -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Aplikovaná praxe</div>
+            <h2 class="slide-title">Vektorizace předloh a příprava logomanuálu</h2>
+            <p class="slide-subtitle">Převod skici z papíru na průmyslovou vektorovou identitu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Corporate Identity</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Metody vektorizace (Tracing)</h4>
+              <ul class="styled-list">
+                <li><strong>Automatické trasování (Image Trace):</strong> Algoritmus detekuje hrany kontrastu v rastru a generuje cesty. Rychlé pro skici, ale vytváří stovky nadbytečných uzlů.</li>
+                <li><strong>Ruční geometrická konstrukce:</strong> Přesné obkreslení pomocí kružnic, polygonů a booleovských operací. Jediná akceptovatelná metoda pro profesionální tvorbu loga.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Obsah a export logomanuálu</h4>
+              <ul class="styled-list">
+                <li><strong>Ochranná zóna:</strong> Minimální prostor kolem loga, do kterého nesmí zasahovat text ani jiné prvky.</li>
+                <li><strong>Barevné varianty:</strong> Plnobarevná (CMYK pro tisk, RGB/HEX pro web), jednobarevná černá a bílá inverzní verze.</li>
+                <li><strong>Přímé barvy PANTONE:</strong> Garantují přesný odstín na potištěných předmětech, dresech či automobilech bez soutisku CMYK.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z vektorových nástrojů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 12</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Pen Tool</h4>
+              <p>Základní nástroj pro Bézierovy křivky. Klíčem k hladkosti je minimální počet bodů umístěných v extrémech křivky.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Pathfinder</h4>
+              <p>Booleovské operace (sjednocení, rozdíl, průnik) umožňují sestavit jakýkoli složitý symbol z jednoduchých geometrických tvarů.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Logomanuál</h4>
+              <p>Definuje konstrukční mřížku loga, ochrannou zónu, barevné definice (CMYK, RGB, Pantone) a exporty do SVG, PDF a EPS.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Popište techniku práce s perem (Pen Tool) a zásady umisťování uzlů. Vysvětlete booleovské operace s tvary a náležitosti logomanuálu.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 06</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

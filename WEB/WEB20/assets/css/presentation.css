@@ -1,0 +1,21 @@
+/* ==========================================================================
+   WEB20 - Lokální modulové rozšíření (Stylování, rozvržení a CSS3)
+   Přebírá jádro z ../../assets/css/presentation-core.css
+   ========================================================================== */
+
+@import "../../../assets/css/presentation-core.css";
+@import "../../../assets/css/syntax/web.css";
+
+:root {
+  --accent: #38bdf8;
+  --accent-glow: rgba(56, 189, 248, 0.25);
+}
+
+/* Modulová specifika WEB20 - Interaktivní demonstrace */
+.layout-demo-box {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  margin: 0.75rem 0;
+}

@@ -1,0 +1,345 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 05: DML – Manipulace s daty | DAT20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník">
+          <span>← DAT20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 05</span>
+          <span class="divider">•</span>
+          <span>DML – Manipulace s daty</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 10</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT20 • 5. přednáška (45 min)</div>
+        <h1 class="hero-title">DML – Manipulace s daty</h1>
+        <p class="hero-desc">
+          Příkazy <code>INSERT</code>, <code>UPDATE</code> a <code>DELETE</code>. Hromadné vkládání, bezpečné aktualizace, prevence kritických chyb a interakce s integritními omezeními v <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Operace</span>
+            <span class="hero-meta-val">Vkládání, Změna, Mazání</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Rizika</span>
+            <span class="hero-meta-val">UPDATE bez WHERE, Safe Updates</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Okruh zkoušky</span>
+            <span class="hero-meta-val">Otázka č. 10</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: INSERT INTO -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vkládání dat</div>
+            <h2 class="slide-title">Příkaz <code>INSERT INTO</code></h2>
+            <p class="slide-subtitle">Jednoduché i hromadné vkládání záznamů (Bulk insert)</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Příklady vkládání do edu_eshop</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-comment">-- 1. Jednorázové vložení produktu</span>
+<span class="sql-keyword">INSERT INTO</span> `product` 
+  (`name`, `price`, `stock_quantity`, `description`)
+<span class="sql-keyword">VALUES</span> 
+  (<span class="sql-string">'USB-C Hub 7v1'</span>, 899.00, 45, <span class="sql-string">'Hliníkový adaptér'</span>);
+
+<span class="sql-comment">-- 2. Hromadný INSERT (Bulk insert - doporučeno!)</span>
+<span class="sql-keyword">INSERT INTO</span> `customer` 
+  (`id`, `email`, `password_hash`) 
+<span class="sql-keyword">VALUES</span>
+  (1, <span class="sql-string">'jan.novak@email.cz'</span>, <span class="sql-string">'$2y$10$hash1'</span>),
+  (2, <span class="sql-string">'petra.svobodova@seznam.cz'</span>, <span class="sql-string">'$2y$10$hash2'</span>),
+  (3, <span class="sql-string">'tomas.dvorak@gmail.com'</span>, <span class="sql-string">'$2y$10$hash3'</span>);</code></pre>
+            </div>
+
+            <div>
+              <div class="content-card">
+                <h4>Proč VŽDY explicitně vyjmenovávat sloupce?</h4>
+                <p>
+                  SQL povoluje zkrácený zápis: <code>INSERT INTO product VALUES (1, 'USB Hub', ...);</code>. Tento zápis je však v profesionální praxi <strong>přísně zakázán</strong>!
+                </p>
+                <ul class="styled-list" style="margin-top: 0.5rem;">
+                  <li>Pokud v budoucnu přes <code>ALTER TABLE</code> přidáte do tabulky nový sloupec, staré INSERT skripty bez výčtu sloupců <strong>okamžitě zhavarují</strong>.</li>
+                  <li>Neuvedené sloupce s <code>DEFAULT</code> nebo <code>AUTO_INCREMENT</code> se při explicitním výčtu automaticky bezpečně dopočítají.</li>
+                </ul>
+              </div>
+              <div class="callout callout-tip" style="margin-top: 0.8rem;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">Výkonnostní výhoda Bulk INSERTu</div>
+                  Vložení 1 000 řádků v jediném příkazu trvá zlomek sekundy, zatímco 1 000 samostatných INSERTů znamená 1 000 síťových round-tripů a disk synchronizací transakčního logu!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: UPDATE -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Aktualizace dat</div>
+            <h2 class="slide-title">Příkaz <code>UPDATE</code> a bezpečnost</h2>
+            <p class="slide-subtitle">Úprava existujících záznamů a hrozba chybějícího WHERE</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Syntaxe a výpočty v UPDATE</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-comment">-- 1. Změna stavu objednávky konkrétního zákazníka</span>
+<span class="sql-keyword">UPDATE</span> `orders`
+<span class="sql-keyword">SET</span> 
+  `status` = <span class="sql-string">'shipped'</span>,
+  `created_at` = <span class="sql-func">NOW</span>()
+<span class="sql-keyword">WHERE</span> `id` = 3;
+
+<span class="sql-comment">-- 2. Plošné zdražení produktů v kategorii o 10 %</span>
+<span class="sql-keyword">UPDATE</span> `product`
+<span class="sql-keyword">SET</span> `price` = <span class="sql-func">ROUND</span>(`price` * 1.10, 2)
+<span class="sql-keyword">WHERE</span> `active` = <span class="sql-keyword">TRUE</span>;
+
+<span class="sql-comment">-- 3. Naskladnění zásob (+ 20 kusů)</span>
+<span class="sql-keyword">UPDATE</span> `product`
+<span class="sql-keyword">SET</span> `stock_quantity` = `stock_quantity` + 20
+<span class="sql-keyword">WHERE</span> `id` = 1;</code></pre>
+            </div>
+
+            <div>
+              <div class="callout callout-warning">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">Noční můra databázisty: UPDATE bez WHERE</div>
+                  Pokud spustíte: <code>UPDATE customer SET active = FALSE;</code> bez klauzule WHERE, <strong>deaktivujete všechny zákazníky v celé databázi!</strong>
+                </div>
+              </div>
+              <div class="content-card" style="margin-top: 0.8rem;">
+                <h4>Ochranný mechanismus: Safe Updates</h4>
+                <p>
+                  MySQL Workbench a moderní klienti mají standardně aktivní volbu <code>sql_safe_updates = 1</code>. Ta zakáže spuštění UPDATE nebo DELETE, pokud v klauzuli WHERE nepoužijete primární klíč nebo indexovaný sloupec!
+                </p>
+                <p style="font-size: 0.85rem; font-family: var(--font-mono); color: var(--accent-cyan); margin-top: 0.4rem;">
+                  SET SQL_SAFE_UPDATES = 0; -- Dočasné vypnutí ochrany
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: DELETE -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Mazání dat</div>
+            <h2 class="slide-title">Příkaz <code>DELETE FROM</code></h2>
+            <p class="slide-subtitle">Cílené mazání záznamů vs. referenční integrita</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Příklady DELETE</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-comment">-- 1. Smazání neaktivních zákazníků bez nákupů</span>
+<span class="sql-keyword">DELETE FROM</span> `customer`
+<span class="sql-keyword">WHERE</span> `active` = <span class="sql-keyword">FALSE</span> 
+  <span class="sql-keyword">AND</span> `id` <span class="sql-keyword">NOT IN</span> (
+    <span class="sql-keyword">SELECT DISTINCT</span> `customer_id` <span class="sql-keyword">FROM</span> `orders`
+  );
+
+<span class="sql-comment">-- 2. Smazání položky z nákupního košíku</span>
+<span class="sql-keyword">DELETE FROM</span> `order_item`
+<span class="sql-keyword">WHERE</span> `order_id` = 1 <span class="sql-keyword">AND</span> `product_id` = 3;
+
+<span class="sql-comment">-- 3. Bezpečné promazání s limitem</span>
+<span class="sql-keyword">DELETE FROM</span> `system_logs`
+<span class="sql-keyword">WHERE</span> `created_at` < <span class="sql-string">'2024-01-01'</span>
+<span class="sql-keyword">ORDER BY</span> `created_at` <span class="sql-keyword">ASC</span>
+<span class="sql-keyword">LIMIT</span> 500;</code></pre>
+            </div>
+
+            <div class="content-card">
+              <h4>Chování DELETE vůči cizím klíčům</h4>
+              <ul class="styled-list">
+                <li>
+                  <strong>Smazání záznamu s vazbou CASCADE:</strong> Pokud smažeme řádek v <code>orders</code>, databáze sama automaticky smaže i odpovídající záznamy v <code>order_item</code>.
+                </li>
+                <li>
+                  <strong>Smazání s vazbou RESTRICT:</strong> Pokus o <code>DELETE FROM customer WHERE id = 1;</code> skončí chybou:
+                  <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-rose); background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 6px; margin-top: 0.4rem;">
+                    Error 1451: Cannot delete or update a parent row: a foreign key constraint fails (`orders`, CONSTRAINT `fk_orders_customer` FOREIGN KEY ...)
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: SUMMARY -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Rekapitulace</div>
+            <h2 class="slide-title">Shrnutí: Zásady spolehlivého DML</h2>
+            <p class="slide-subtitle">Zlatá pravidla bezpečného programování v databázích</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-card-num">1</div>
+              <h4>Vždy před UPDATE spusťte SELECT</h4>
+              <p>Otestujte si podmínku klauzule <code>WHERE</code> nejprve příkazem <code>SELECT * FROM tabulka WHERE ...</code>, abyste viděli, které řádky skutečně zasáhnete!</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">2</div>
+              <h4>Používejte transakce</h4>
+              <p>Při rizikových úpravách zahajte transakci: <code>START TRANSACTION;</code>, zkontrolujte změny, a teprve pak napište <code>COMMIT;</code> (při chybě <code>ROLLBACK;</code>).</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">3</div>
+              <h4>Nepodceňujte triggery</h4>
+              <p>V <code>edu_eshop</code> operace INSERT a DELETE nad tabulkou <code>order_item</code> automaticky přepočítávají celkovou cenu v <code>orders</code>!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter">01 / 05</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 05</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><span class="key-badge">M</span></div>
+          <div class="shortcut-row"><span>Motiv (Tmavý/Světlý)</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

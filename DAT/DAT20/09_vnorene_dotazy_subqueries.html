@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 09: Vnořené dotazy (Subqueries) | DAT20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník">
+          <span>← DAT20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 09</span>
+          <span class="divider">•</span>
+          <span>Vnořené dotazy (Subqueries)</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 14</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT20 • 9. přednáška (45 min)</div>
+        <h1 class="hero-title">Vnořené dotazy (Subqueries)</h1>
+        <p class="hero-desc">
+          Skalární a tabulkové poddotazy, operátory IN, ANY, ALL, korelované poddotazy a existenční predikáty EXISTS / NOT EXISTS na databázi <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Umístění poddotazu</span>
+            <span class="hero-meta-val">WHERE, SELECT, FROM, DML</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Typy závislosti</span>
+            <span class="hero-meta-val">Nekorelované vs. Korelované</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Okruh zkoušky</span>
+            <span class="hero-meta-val">Otázka č. 14</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: SCALAR SUBQUERIES -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Skalární poddotazy</div>
+            <h2 class="slide-title">Skalární poddotazy v klauzuli WHERE</h2>
+            <p class="slide-subtitle">Poddotaz vracející právě jednu hodnotu (1 řádek, 1 sloupec)</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Produkty s nadprůměrnou cenou</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-keyword">SELECT</span> 
+  `id`, `name`, `price`
+<span class="sql-keyword">FROM</span> `product`
+<span class="sql-keyword">WHERE</span> `price` > (
+  <span class="sql-comment">-- Vnitřní skalární dotaz vrátí průměr: 9 444,50 Kč</span>
+  <span class="sql-keyword">SELECT</span> <span class="sql-func">AVG</span>(`price`) 
+  <span class="sql-keyword">FROM</span> `product` 
+  <span class="sql-keyword">WHERE</span> `active` = <span class="sql-keyword">TRUE</span>
+)
+<span class="sql-keyword">ORDER BY</span> `price` <span class="sql-keyword">DESC</span>;</code></pre>
+            </div>
+
+            <div>
+              <div class="content-card">
+                <h4>Jak se dotaz zpracuje?</h4>
+                <ol class="styled-list" style="margin-top: 0.5rem;">
+                  <li>Databáze nejprve samostatně spočítá vnitřní dotaz v závorce: <code>SELECT AVG(price)...</code>.</li>
+                  <li>Tento vnitřní dotaz vrátí jediné skalární číslo (např. <code>9444.50</code>).</li>
+                  <li>Vnější dotaz se přetvoří na: <code>WHERE price > 9444.50</code>.</li>
+                </ol>
+              </div>
+              <div class="callout callout-warning" style="margin-top: 0.8rem;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">Chyba: Subquery returns more than 1 row</div>
+                  Pokud pro běžné porovnání (<code>=</code>, <code>&gt;</code>, <code>&lt;</code>) použijete poddotaz, který vrátí více než jeden řádek, dotaz okamžitě zhavaruje s chybou. Pro vícenásobné hodnoty musíte použít operátor <strong>IN</strong>, <strong>ANY</strong> nebo <strong>ALL</strong>!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: SET OPERATORS IN, ANY, ALL -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Množinové poddotazy</div>
+            <h2 class="slide-title">Operátory IN, ANY a ALL</h2>
+            <p class="slide-subtitle">Porovnání hodnoty se sadou vrácených výsledků</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Operátory v praxi nad edu_eshop</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-comment">-- 1. Operátor IN: Zákazníci, kteří již nakoupili</span>
+<span class="sql-keyword">SELECT</span> `id`, `email` <span class="sql-keyword">FROM</span> `customer`
+<span class="sql-keyword">WHERE</span> `id` <span class="sql-keyword">IN</span> (
+  <span class="sql-keyword">SELECT DISTINCT</span> `customer_id` <span class="sql-keyword">FROM</span> `orders`
+);
+
+<span class="sql-comment">-- 2. Operátor > ALL: Dražší než VŠECHNO příslušenství</span>
+<span class="sql-keyword">SELECT</span> `name`, `price` <span class="sql-keyword">FROM</span> `product`
+<span class="sql-keyword">WHERE</span> `price` > <span class="sql-keyword">ALL</span> (
+  <span class="sql-keyword">SELECT</span> p.`price`
+  <span class="sql-keyword">FROM</span> `product` p
+  <span class="sql-keyword">JOIN</span> `product_category` pc <span class="sql-keyword">ON</span> p.`id` = pc.`product_id`
+  <span class="sql-keyword">WHERE</span> pc.`category_id` = 4 <span class="sql-comment">-- ID kategorie Příslušenství</span>
+);</code></pre>
+            </div>
+
+            <div class="content-card">
+              <h4>Rozdíl mezi ANY a ALL</h4>
+              <ul class="styled-list">
+                <li>
+                  <strong><code>x > ANY (...)</code>:</strong> Hodnota <code>x</code> musí být větší než <em>alespoň jedna</em> hodnota z poddotazu (ekvivalentní k: <code>x > MIN(...)</code>).
+                </li>
+                <li>
+                  <strong><code>x > ALL (...)</code>:</strong> Hodnota <code>x</code> musí být větší než <em>úplně všechny</em> hodnoty ze sady (ekvivalentní k: <code>x > MAX(...)</code>).
+                </li>
+                <li>
+                  <strong><code>x = ANY (...)</code>:</strong> Přesné synonymum pro operátor <code>x IN (...)</code>.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: CORRELATED VS UNCORRELATED -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Typy poddotazů</div>
+            <h2 class="slide-title">Korelované vs. Nekorelované poddotazy</h2>
+            <p class="slide-subtitle">Závislost vnitřního dotazu na řádcích vnějšího dotazu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Výkonnostní rozdíl</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: var(--accent-cyan);">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Nekorelovaný poddotaz
+              </h4>
+              <p>
+                Je zcela nezávislý na vnějším dotazu. Lze jej vzít a spustit samostatně.
+              </p>
+              <ul class="styled-list" style="margin-top: 0.5rem;">
+                <li><strong>Provede se pouze 1×</strong> pro celý dotaz.</li>
+                <li>Výsledek se uloží do dočasné paměti a opakovaně používá.</li>
+                <li>Vysoký výpočetní výkon.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4 style="color: var(--accent-rose);">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                Korelovaný poddotaz
+              </h4>
+              <p>
+                Uvnitř poddotazu se odkazujeme na sloupec z vnějšího dotazu (např. <code>outer_p.id</code>).
+              </p>
+              <ul class="styled-list" style="margin-top: 0.5rem;">
+                <li><strong>Vyhodnocuje se pro KAŽDÝ řádek</strong> vnějšího dotazu znovu!</li>
+                <li>Má-li vnější tabulka 10 000 řádků, vnitřní dotaz se spustí 10 000×!</li>
+                <li>Může způsobit dramatické zpomalení (často lze lépe nahradit pomocí JOIN).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-wrapper" style="margin-top: 0.8rem;">
+            <div class="code-header"><span class="code-title">Příklad korelovaného dotazu: Poslední objednávka každého zákazníka</span></div>
+            <pre class="code-block"><code><span class="sql-keyword">SELECT</span> c.`email`, o1.`id`, o1.`created_at`, o1.`total_price`
+<span class="sql-keyword">FROM</span> `customer` c
+<span class="sql-keyword">JOIN</span> `orders` o1 <span class="sql-keyword">ON</span> c.`id` = o1.`customer_id`
+<span class="sql-keyword">WHERE</span> o1.`created_at` = (
+  <span class="sql-comment">-- Vnitřní dotaz závisí na c.id z vnějšího dotazu!</span>
+  <span class="sql-keyword">SELECT</span> <span class="sql-func">MAX</span>(o2.`created_at`)
+  <span class="sql-keyword">FROM</span> `orders` o2
+  <span class="sql-keyword">WHERE</span> o2.`customer_id` = c.`id`
+);</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: EXISTS & NOT EXISTS -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Existenční testy</div>
+            <h2 class="slide-title">Predikáty <code>EXISTS</code> a <code>NOT EXISTS</code></h2>
+            <p class="slide-subtitle">Bleskové ověření existence záznamu s optimalizací Short-Circuit</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Zákazníci, kteří nikdy nenakoupili (NOT EXISTS)</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-keyword">SELECT</span> c.`id`, c.`email`
+<span class="sql-keyword">FROM</span> `customer` c
+<span class="sql-keyword">WHERE</span> <span class="sql-keyword">NOT EXISTS</span> (
+  <span class="sql-keyword">SELECT</span> 1 
+  <span class="sql-keyword">FROM</span> `orders` o
+  <span class="sql-keyword">WHERE</span> o.`customer_id` = c.`id`
+);</code></pre>
+            </div>
+
+            <div class="content-card">
+              <h4>Proč je EXISTS tak rychlý?</h4>
+              <ul class="styled-list">
+                <li>
+                  <strong>Zastaví se při prvním nálezu:</strong> Na rozdíl od <code>COUNT()</code> neprochází celou tabulku. Jakmile narazí na první vyhovující záznam, vrátí TRUE a dál nehledá.
+                </li>
+                <li>
+                  <strong>Nezáleží na sloupcích v SELECTu:</strong> Konstrukce <code>SELECT 1</code> nebo <code>SELECT *</code> uvnitř EXISTS je rovnocenná – databázi zajímá pouze existence řádku, nikoliv přenos dat.
+                </li>
+                <li>
+                  <strong>Bezpečné s NULL:</strong> Na rozdíl od <code>NOT IN</code> (kde přítomnost jediné hodnoty NULL v sadě zneplatní celý dotaz) funguje <code>NOT EXISTS</code> naprosto spolehlivě!
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Rekapitulace</div>
+            <h2 class="slide-title">Shrnutí: Kdy použít poddotaz a kdy JOIN?</h2>
+            <p class="slide-subtitle">Rozhodování pro zkoušku i optimalizaci v praxi</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-card-num">1</div>
+              <h4>Na porovnání s agregátem: Skalární poddotaz</h4>
+              <p>Hledání entit větších než průměr nebo rovných maximu se bez skalárního poddotazu prakticky neobejde.</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">2</div>
+              <h4>Na existenci: Preferujte EXISTS</h4>
+              <p>Testování existence vazeb je s <code>EXISTS</code> bezpečnější vůči NULL a často rychlejší než <code>IN</code>.</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">3</div>
+              <h4>Když potřebujete sloupce z obou: Použijte JOIN</h4>
+              <p>Pokud potřebujete ve výstupu zobrazit atributy z obou tabulek současně, poddotaz ve WHERE vám nepomůže – musíte použít <code>JOIN</code>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 09</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><span class="key-badge">M</span></div>
+          <div class="shortcut-row"><span>Motiv (Tmavý/Světlý)</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

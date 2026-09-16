@@ -1,0 +1,410 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 03: DDL – Definice datových struktur | DAT20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník">
+          <span>← DAT20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 03</span>
+          <span class="divider">•</span>
+          <span>DDL – Definice datových struktur</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 8</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT20 • 3. přednáška (45 min)</div>
+        <h1 class="hero-title">DDL – Definice datových struktur</h1>
+        <p class="hero-desc">
+          Příkazy <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code> a <code>TRUNCATE</code>. Správa schémat, tvorba a úpravy tabulek na reálném scénáři <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Klíčové příkazy</span>
+            <span class="hero-meta-val">CREATE, ALTER, DROP, TRUNCATE</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Úložný engine</span>
+            <span class="hero-meta-val">InnoDB (ACID compliant)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Okruh zkoušky</span>
+            <span class="hero-meta-val">Otázka č. 8</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: DATABASE LEVEL DDL -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Správa schématu</div>
+            <h2 class="slide-title">Vytvoření a správa databáze</h2>
+            <p class="slide-subtitle">Inicializace databázového prostoru a výběr aktivního schématu</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">SQL: Založení databáze edu_eshop</span>
+                  <button class="btn-copy">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="sql-comment">-- Smazání staré verze (idempotentní skript)</span>
+<span class="sql-keyword">DROP DATABASE IF EXISTS</span> `edu_eshop`;
+
+<span class="sql-comment">-- Založení nové databáze s plnou Unicode podporou</span>
+<span class="sql-keyword">CREATE DATABASE</span> `edu_eshop`
+  <span class="sql-keyword">CHARACTER SET</span> utf8mb4
+  <span class="sql-keyword">COLLATE</span> utf8mb4_czech_ci;
+
+<span class="sql-comment">-- Nastavení jako aktivní pracovní databáze</span>
+<span class="sql-keyword">USE</span> `edu_eshop`;</code></pre>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h4>Důležité klauzule a best practices</h4>
+              <ul class="styled-list">
+                <li>
+                  <strong><code>IF NOT EXISTS</code> / <code>IF EXISTS</code>:</strong> Zabraňuje pádu skriptu s chybovou hláškou, pokud schéma již existuje nebo neexistuje.
+                </li>
+                <li>
+                  <strong><code>USE db_name;</code>:</strong> Kontextový příkaz klienta. Od tohoto okamžiku se tabulky volají přímo (např. <code>product</code> místo <code>edu_eshop.product</code>).
+                </li>
+                <li>
+                  <strong>Rozdíl SCHEMA vs. DATABASE:</strong> V MySQL a MariaDB jsou klíčová slova <code>SCHEMA</code> a <code>DATABASE</code> naprosto rovnocenná synonyma.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: CREATE TABLE -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Tvorba tabulek</div>
+            <h2 class="slide-title">Příkaz <code>CREATE TABLE</code> v praxi</h2>
+            <p class="slide-subtitle">Definice sloupců, výchozích hodnot a úložného engine</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-eshop">Reálné DDL z edu_eshop</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">CREATE TABLE customer</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-keyword">CREATE TABLE</span> `customer` (
+  `id` <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY AUTO_INCREMENT</span>,
+  `email` <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL UNIQUE</span>,
+  `password_hash` <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+  `created_at` <span class="sql-type">DATETIME</span> <span class="sql-keyword">NOT NULL DEFAULT CURRENT_TIMESTAMP</span>,
+  `active` <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">NOT NULL DEFAULT TRUE</span>
+) <span class="sql-keyword">ENGINE</span>=InnoDB;</code></pre>
+            </div>
+
+            <div class="content-card">
+              <h4>Rozbor klíčových komponent</h4>
+              <ul class="styled-list">
+                <li>
+                  <strong><code>PRIMARY KEY AUTO_INCREMENT</code>:</strong> Automaticky generovaný identifikátor. Každý nový řádek dostane číslo o 1 vyšší.
+                </li>
+                <li>
+                  <strong><code>UNIQUE</code>:</strong> Zabraňuje registraci dvou uživatelů se shodnou emailovou adresou.
+                </li>
+                <li>
+                  <strong><code>DEFAULT CURRENT_TIMESTAMP</code>:</strong> Databáze sama automaticky doplní aktuální systémové datum a čas při vložení řádku.
+                </li>
+                <li>
+                  <strong><code>ENGINE=InnoDB</code>:</strong> Standardní transakční engine MySQL podporující cizí klíče a zamykání na úrovni řádků (row-level locking).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: ALTER TABLE -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Změna struktury</div>
+            <h2 class="slide-title">Modifikace schématu: <code>ALTER TABLE</code></h2>
+            <p class="slide-subtitle">Jak bezpečně upravovat existující tabulky bez ztráty dat</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Příklady operací ALTER TABLE</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-comment">-- 1. Přidání nového sloupce pro věrnostní body</span>
+<span class="sql-keyword">ALTER TABLE</span> `customer`
+  <span class="sql-keyword">ADD COLUMN</span> `loyalty_points` <span class="sql-type">INT UNSIGNED</span> <span class="sql-keyword">NOT NULL DEFAULT</span> 0;
+
+<span class="sql-comment">-- 2. Změna definice existujícího sloupce (rozšíření)</span>
+<span class="sql-keyword">ALTER TABLE</span> `product`
+  <span class="sql-keyword">MODIFY COLUMN</span> `name` <span class="sql-type">VARCHAR(250)</span> <span class="sql-keyword">NOT NULL</span>;
+
+<span class="sql-comment">-- 3. Přejmenování sloupce (CHANGE)</span>
+<span class="sql-keyword">ALTER TABLE</span> `customer_profile`
+  <span class="sql-keyword">CHANGE COLUMN</span> `phone` `phone_number` <span class="sql-type">VARCHAR(25)</span> <span class="sql-keyword">NULL</span>;
+
+<span class="sql-comment">-- 4. Odstranění nepotřebného sloupce</span>
+<span class="sql-keyword">ALTER TABLE</span> `product`
+  <span class="sql-keyword">DROP COLUMN</span> `old_legacy_code`;</code></pre>
+            </div>
+
+            <div>
+              <div class="content-card">
+                <h4>Rozdíl: MODIFY vs. CHANGE vs. RENAME</h4>
+                <ul class="styled-list">
+                  <li><strong><code>MODIFY COLUMN</code>:</strong> Mění datový typ nebo integritní omezení sloupce, ale <em>nemění</em> jeho název.</li>
+                  <li><strong><code>CHANGE COLUMN</code>:</strong> Dokáže změnit <em>název</em> sloupce i jeho definici současně (vyžaduje zadat starý i nový název).</li>
+                  <li><strong><code>RENAME COLUMN</code>:</strong> (Od MySQL 8.0) Čisté přejmenování sloupce bez nutnosti opakovat celý datový typ: <code>RENAME COLUMN phone TO phone_number</code>.</li>
+                </ul>
+              </div>
+              <div class="callout callout-warning" style="margin-top: 1rem;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">Pozor na krácení datového typu!</div>
+                  Při zkracování sloupce (např. z <code>VARCHAR(100)</code> na <code>VARCHAR(20)</code>) může v přísném SQL módu dojít k chybě, pokud stávající data překračují novou délku.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: DROP vs TRUNCATE vs DELETE -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Klíčové srovnání</div>
+            <h2 class="slide-title">DROP vs. TRUNCATE vs. DELETE</h2>
+            <p class="slide-subtitle">Zásadní rozdíly ve fungování, rychlosti a transakčních dopadech</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Častá záludná otázka</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th>Vlastnost</th>
+                  <th><code>DELETE FROM tabulka</code></th>
+                  <th><code>TRUNCATE TABLE tabulka</code></th>
+                  <th><code>DROP TABLE tabulka</code></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Typ příkazu</strong></td>
+                  <td><strong>DML</strong> (Data Manipulation)</td>
+                  <td><strong>DDL</strong> (Data Definition)</td>
+                  <td><strong>DDL</strong> (Data Definition)</td>
+                </tr>
+                <tr>
+                  <td><strong>Co se stane?</strong></td>
+                  <td>Maže jednotlivé řádky (po jednom)</td>
+                  <td>Zahodí datovou tabulku a vytvoří prázdnou</td>
+                  <td>Úplně zruší tabulku, data i strukturu</td>
+                </tr>
+                <tr>
+                  <td><strong>Klauzule WHERE</strong></td>
+                  <td><span style="color: var(--accent-emerald);">ANO</span> (lze mazat vybrané řádky)</td>
+                  <td><span style="color: var(--accent-rose);">NE</span> (vždy vymaže vše)</td>
+                  <td><span style="color: var(--accent-rose);">NE</span></td>
+                </tr>
+                <tr>
+                  <td><strong>AUTO_INCREMENT</strong></td>
+                  <td>Hodnota počitadla <strong>zůstává zachována</strong></td>
+                  <td>Hodnota se <strong>resetuje na 1</strong></td>
+                  <td>Tabulka neexistuje</td>
+                </tr>
+                <tr>
+                  <td><strong>Rychlost</strong></td>
+                  <td>Pomalé (zapisuje každý řádek do transakčního logu)</td>
+                  <td>Extrémně rychlé (deallokuje datové stránky)</td>
+                  <td>Okamžité</td>
+                </tr>
+                <tr>
+                  <td><strong>Možnost ROLLBACK</strong></td>
+                  <td><span style="color: var(--accent-emerald);">ANO</span> (v rámci transakce lze vrátit)</td>
+                  <td><span style="color: var(--accent-rose);">NE</span> (způsobí implicitní COMMIT!)</td>
+                  <td><span style="color: var(--accent-rose);">NE</span> (implicitní COMMIT!)</td>
+                </tr>
+                <tr>
+                  <td><strong>Aktivace triggerů</strong></td>
+                  <td>Spustí triggery <code>BEFORE/AFTER DELETE</code></td>
+                  <td><span style="color: var(--accent-rose);">Nespustí</span> triggery DELETE!</td>
+                  <td>Nespustí</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout callout-exam" style="margin-top: 0.5rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Tip ke zkoušce u absolutoria</div>
+              Pokud se vás komise zeptá, proč nemůžete provést <code>TRUNCATE</code> na tabulce <code>customer</code>, správná odpověď zní: <strong>Pokud na tabulku odkazuje cizí klíč s integritním omezením z jiné tabulky (např. orders), SŘBD TRUNCATE nepovolí!</strong> Musí se použít <code>DELETE</code>.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Rekapitulace</div>
+            <h2 class="slide-title">Shrnutí: Zásady práce s DDL</h2>
+            <p class="slide-subtitle">Co si bezpečně zapamatovat do vývojářské praxe</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-card-num">1</div>
+              <h4>Pište idempotentní skripty</h4>
+              <p>Vždy používejte konstrukce <code>CREATE TABLE IF NOT EXISTS</code> a skripty verzujte v migračních nástrojích (např. Flyway, Liquibase).</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">2</div>
+              <h4>Pozor na DDL v produkci</h4>
+              <p>Všechny DDL příkazy v MySQL způsobují <strong>implicitní COMMIT</strong> probíhající transakce a mohou zamknout tabulku (metadata lock).</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">3</div>
+              <h4>TRUNCATE maže bleskově, ale nevratně</h4>
+              <p>Používejte pro promazání dočasných a logovacích tabulek při testování, kde chcete zároveň resetovat <code>AUTO_INCREMENT</code>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 03</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><span class="key-badge">M</span></div>
+          <div class="shortcut-row"><span>Motiv (Tmavý/Světlý)</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 07: Snímání videa a kamerová technika | MUL20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL20">
+          <span>&larr; MUL20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 07</span>
+          <span class="divider">&bull;</span>
+          <span>Snímání videa a kamerová technika</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 13: Záznam videa</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL20 &bull; 7. přednáška (45 min)</div>
+        <h1 class="hero-title">Snímání videa a kamerová technika</h1>
+        <p class="hero-desc">
+          Zásady kinematografického záznamu: pravidlo 180° úhlu závěrky (shutter angle), ploché logaritmické profily (Log) a RAW video, expoziční pomůcky (waveform, false color), tříbodové svícení a stabilizace pohybu.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Expozice videa</span>
+            <span class="hero-meta-val">Pravidlo 180° závěrky</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Profily</span>
+            <span class="hero-meta-val">Log křivky &bull; RAW video</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 13</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PRAVIDLO 180° ÚHLU ZÁVĚRKY -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Kinematografická expozice</div>
+            <h2 class="slide-title">Pravidlo 180° úhlu závěrky (Shutter Angle)</h2>
+            <p class="slide-subtitle">Proč se při videu čas závěrky nesmí libovolně zkracovat</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový vzorec</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Vzorec a princip rotujícího sektoru</h4>
+              <p>V klasických filmových kamerách rotoval půlkruhový kotouč (180&deg; otvor, 180&deg; plná clona). Během jedné otáčky byl film exponován přesně polovinu času:</p>
+              <div class="code-box" style="margin: 0.6rem 0;">
+                <pre><code>Čas závěrky [s] = 1 / (2 &times; snímková frekvence [fps])</code></pre>
+              </div>
+              <ul class="styled-list">
+                <li>Při <strong>24 fps &rarr; čas 1/48 s</strong> (resp. 1/50 s u bezzrcadlovek).</li>
+                <li>Při <strong>25 fps &rarr; čas 1/50 s</strong> (standardní televizní norma).</li>
+                <li>Při <strong>50 fps &rarr; čas 1/100 s</strong>.</li>
+                <li>Při <strong>60 fps &rarr; čas 1/120 s</strong>.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Vizuální dopad na pohyb (Motion Blur)</h4>
+              <ul class="styled-list">
+                <li><strong>Přesně 180°:</strong> Vytváří přirozené filmové rozmazání pohybu lidského oka. Pohyb působí organicky a plynule.</li>
+                <li><strong>Mnohem kratší čas (např. 1/1000 s):</strong> Extrémně ostré jednotlivé snímky bez rozmazání. Pohyb působí trhaně, nervózně a stroboskopicky (využito pro akční scény ve filmu <em>Zachraňte vojína Ryana</em>).</li>
+                <li><strong>Nutnost ND filtru:</strong> Za jasného slunce nelze zkrátit čas ani zavřít clonu na $f/22$ (kvůli difrakci). Jediným řešením je <strong>variabilní ND filtr</strong> před objektivem!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: CINEMA KAMERY, LOG A RAW -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Záznamová gama</div>
+            <h2 class="slide-title">Cinema kamery, profily Log a RAW video</h2>
+            <p class="slide-subtitle">Jak zachytit maximální dynamický rozsah scény (14 až 16 EV)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Filmová technologie</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Ploché logaritmické profily (Log)</h4>
+              <p>Místo standardní televizní gamy Rec.709 komprimuje Log křivka jas logaritmicky:</p>
+              <ul class="styled-list">
+                <li>Obraz z kamery vypadá před úpravou "šedivý, vybledlý a nekontrastní".</li>
+                <li>Stíny jsou prosvětleny a světla stažena dolů &ndash; do 10bitového prostoru se vejde až 15 EV stupňů bez ořezu.</li>
+                <li>Příklady: <em>Sony S-Log3</em>, <em>Canon C-Log2/3</em>, <em>Apple Log</em>, <em>ARRI LogC</em>.</li>
+                <li>Vyžaduje postprodukční aplikaci korekční <strong>LUT tabulky</strong> (Look-Up Table).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>RAW Video (ProRes RAW, BRAW, REDCODE)</h4>
+              <ul class="styled-list">
+                <li>Podobně jako foto RAW ukládá video před debayeringem přímo z pixelů.</li>
+                <li>Umožňuje v postprodukci změnit ISO citlivost, vyvážení bílé (Kelvin) a barevný prostor bez jakékoli degradace obrazu.</li>
+                <li>Obrovské datové toky (100–300 MB/s), vyžaduje rychlé CFexpress karty a NVMe SSD disky.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: EXPOZIČNÍ ASISTENČNÍ NÁSTROJE -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Měřicí přístroje</div>
+            <h2 class="slide-title">Asistenční nástroje v hledáčku kamery</h2>
+            <p class="slide-subtitle">Objektivní nástroje pro přesné zaostření a kontrolu expozice</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Měřicí pomůcky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossless">Waveform monitor</span>
+              <h4 style="margin: 0.5rem 0;">Průběh jasu v řádcích</h4>
+              <p style="font-size: 0.85rem;">Měří jas od 0 IRE (černá) do 100 IRE (čistá bílá). Horizontální osa grafu přesně odpovídá horizontální poloze scény na obrazovce &ndash; kameraman okamžitě vidí, kde v záběru hrozí přepal.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">False Color (Falešné barvy)</span>
+              <h4 style="margin: 0.5rem 0;">Teplotní mapa expozice</h4>
+              <p style="font-size: 0.85rem;">Přebarví obraz podle úrovně jasu: lidská pleť musí ležet přesně v růžové/zelené zóně (cca 40–55 IRE). Červená barva indikuje kritický přepal (nad 98 IRE).</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">Zebra &amp; Focus Peaking</span>
+              <h4 style="margin: 0.5rem 0;">Šrafování a ostrost</h4>
+              <p style="font-size: 0.85rem;"><strong>Zebra:</strong> Pohyblivé proužky na oblastech přesahujících zvolenou mez (např. 70 IRE na obličeji nebo 100 IRE na obloze).<br><strong>Focus Peaking:</strong> Zvýrazní zaostřené kontrastní hrany barevnou linkou.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: SVÍCENÍ A POHYB KAMERY -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Světlo a stabilizace</div>
+            <h2 class="slide-title">Tříbodové svícení a stabilizátory (Gimbaly)</h2>
+            <p class="slide-subtitle">Základní pravidla modelování tváře a plynulého kinematografického pohybu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškové schéma</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Klasické tříbodové svícení (Three-Point Lighting)</h4>
+              <ul class="styled-list">
+                <li><strong>1. Hlavní světlo (Key Light):</strong> Nejsilnější zdroj svítící z úhlu cca 45&deg; ze strany a shora. Definuje charakter a stíny tváře.</li>
+                <li><strong>2. Doplňkové světlo (Fill Light):</strong> Měkčí světlo z opačné strany (45&deg;), které zjemňuje stíny a reguluje kontrastní poměr scény.</li>
+                <li><strong>3. Zadní protisvětlo (Back / Rim Light):</strong> Umístěno za postavou shora. Vytváří světelnou linku na vlasech a ramenou a opticky odděluje herce od pozadí.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Pohyb a stabilizace kamery</h4>
+              <ul class="styled-list">
+                <li><strong>Motorizovaný gimbal (3-osý):</strong> Bezkartáčové motory v reálném čase korigují náklony v osách Pan (otáčení), Tilt (klopení) a Roll (kolébání).</li>
+                <li><strong>Jízda (Dolly / Slider):</strong> Plynulý horizontální posun kamery podél kolejnice pro prostorový paralaktický vjem.</li>
+                <li><strong>Barevná teplota světel (CCT):</strong> Udává se v Kelvinech (3200 K teplá žárovka vs. 5600 K denní světlo). Index <strong>CRI &gt; 95</strong> zaručuje věrné podání barevných tónů pleti.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu ze snímání videa</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 13</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Pravidlo 180°</h4>
+              <p>Čas závěrky musí být roven $1 / (2 \times fps)$ (např. 1/50 s při 25 fps). Zajišťuje přirozené rozmazání pohybu bez trhání.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Log křivky</h4>
+              <p>Ploché logaritmické kódování zachovávající maximální dynamický rozsah (14+ EV) pro postprodukční color grading.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Tříbodové svícení</h4>
+              <p>Soustava Key Light (hlavní), Fill Light (výplň stínů) a Back Light (oddělení od pozadí) tvoří základ studiové scény.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Vysvětlete pravidlo 180° úhlu závěrky a důvody použití ND filtrů. Popište princip Log záznamu a nakreslete schéma tříbodového svícení.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 07</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

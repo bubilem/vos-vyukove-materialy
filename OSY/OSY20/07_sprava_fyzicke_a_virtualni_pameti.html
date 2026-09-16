@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 07: Správa fyzické a virtuální paměti | OSY20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY20">
+          <span>&larr; OSY20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 07</span>
+          <span class="divider">&bull;</span>
+          <span>Správa fyzické a virtuální paměti</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Virtuální paměť &amp; MMU</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY20 &bull; 7. přednáška (45 min)</div>
+        <h1 class="hero-title">Správa fyzické &amp; Virtuální paměti</h1>
+        <p class="hero-desc">
+          Koncept virtuální paměti a hardwarová podpora stránkování: jednotka MMU, víceúrovňové stránkovací tabulky (PML4), akcelerace překladu adres pomocí TLB, obsluha výpadku stránky (Page Fault), algoritmy náhrady stránek (LRU, Clock) a odkládací prostor (Swap / Pagefile).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Hardwarový překlad</span>
+            <span class="hero-meta-val">MMU &amp; Translation Lookaside Buffer</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Základní jednotka</span>
+            <span class="hero-meta-val">Stránka paměti (4 KiB / 2 MiB Huge)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Klíčová výjimka</span>
+            <span class="hero-meta-val">#PF (Page Fault, vektor 14)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: MOTIVACE PRO VIRTUÁLNÍ PAMĚŤ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní koncept</div>
+            <h2 class="slide-title">Proč potřebujeme virtuální paměť</h2>
+            <p class="slide-subtitle">Tři klíčové výhody: izolace, zjednodušení adresace a překročení limitů RAM</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový fundament</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. Izolace a ochrana paměti</h4>
+              <p>Žádný proces nemůže číst ani přepsat paměť jiného procesu ani samotného jádra:</p>
+              <ul class="styled-list">
+                <li>Každý proces vidí svůj vlastní nezávislý adresní prostor od adresy <code>0x0</code> do <code>0x7FFFFFFFFFFF</code>.</li>
+                <li>Fyzická paměť v RAM je procesům skryta.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. Spojitý adresní prostor</h4>
+              <p>Programátor vidí obrovskou, souvislou lineární paměť:</p>
+              <ul class="styled-list">
+                <li>Ve fyzické RAM mohou být jednotlivé 4KiB bloky rozházeny kdekoliv na různých čipech.</li>
+                <li>Eliminace vnější fragmentace paměti.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>3. Překročení fyzické kapacity</h4>
+              <p>Systém může spustit aplikace vyžadující více paměti, než je fyzická RAM v desce:</p>
+              <ul class="styled-list">
+                <li>Nepoužívané stránky jsou odloženy na disk (Swap / Paging file).</li>
+                <li>Paměť je alokována až v momentě skutečného zápisu (Demand Paging).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: STRÁNKOVÁNÍ, MMU A TLB -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Hardwarová implementace</div>
+            <h2 class="slide-title">Jednotka MMU a Translation Lookaside Buffer</h2>
+            <p class="slide-subtitle">Jak procesor v každém taktu převádí virtuální adresu na fyzickou</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>MMU (Memory Management Unit)</h4>
+              <p>Hardwarová komponenta procesoru realizující překlad (Page Table Walk):</p>
+              <ul class="styled-list">
+                <li>Na x86_64 se používá <strong>čtyřúrovňové stránkování</strong> (PML4 &rarr; PDPT &rarr; PD &rarr; PT &rarr; Fyzický rámec).</li>
+                <li>Kořen tabulky aktuálního procesu je uložen v řídicím registru <strong>CR3</strong>.</li>
+                <li>Příznaky záznamu (PTE): <strong>P</strong> (Present – je v RAM), <strong>R/W</strong> (Zápis povolen), <strong>U/S</strong> (User vs Supervisor), <strong>NX</strong> (No-Execute – ochrana proti spuštění kódu v datech).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>TLB (Translation Lookaside Buffer)</h4>
+              <p>Asociativní cache uvnitř procesoru pro nedávno přeložené adresy stránek:</p>
+              <ul class="styled-list">
+                <li>Hit v TLB: Překlad trvá <strong>pouze 1 takt procesoru</strong>!</li>
+                <li>Miss v TLB: Nutnost projít 4 úrovně tabulek v RAM (stovky cyklů zpoždění).</li>
+                <li><strong>TLB Shootdown:</strong> Při změně mapování paměti na vícejádrovém procesoru musí jádro poslat mezijádrové přerušení (IPI) všem ostatním jádrům, aby vymazala své TLB záznamy.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: VÝPADEK STRÁNKY (PAGE FAULT) -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Mechanismus jádra</div>
+            <h2 class="slide-title">Anatomie výpadku stránky (Page Fault)</h2>
+            <p class="slide-subtitle">Jak výpadek stránky řídí virtuální paměť a alokaci na vyžádání</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový mechanismus</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Kdy nastává Page Fault (vektor 14)?</h4>
+              <ol class="styled-list">
+                <li>Procesor zjistí, že cílová virtuální stránka má v tabulce nulový bit <strong>Present (P = 0)</strong>, nebo došlo k porušení práv (zápis do Read-Only stránky).</li>
+                <li>Procesor vyvolá výjimku <code>#PF</code> a uloží chybnou virtuální adresu do registru <strong>CR2</strong>.</li>
+                <li>Jádro v obslužné rutině rozhodne:
+                  <ul class="styled-list">
+                    <li><strong>Platný výpadek (Major Page Fault):</strong> Stránka byla odložena do swapu nebo jde o mapovaný soubor. Jádro načte data z disku do volného rámce RAM, nastaví P = 1 a instrukci restartuje.</li>
+                    <li><strong>Alokace na vyžádání (Minor Page Fault):</strong> Stránka byla alokována, ale ještě nebyla fyzicky přiřazena. Jádro přidělí nulovaný rámec.</li>
+                    <li><strong>Neplatný přístup:</strong> Adresa je mimo přidělené segmenty &rarr; jádro pošle signál <code>SIGSEGV</code> (Segmentation Fault).</li>
+                  </ul>
+                </li>
+              </ol>
+            </div>
+            <div class="content-card">
+              <h4>Algoritmy náhrady stránek (Page Replacement)</h4>
+              <p>Pokud je fyzická RAM plná, koho odložit do swapu?</p>
+              <ul class="styled-list">
+                <li><strong>LRU (Least Recently Used):</strong> Odloží stránku, ke které se nejdéle nepřistupovalo. Teoreticky optimální, ale náročné na hardwarové sledování.</li>
+                <li><strong>Clock (Second Chance):</strong> Praktická aproximace LRU pomocí bitu přístupu (Accessed bit). Ručička hodin prochází stránky: pokud je bit 1, vynuluje jej a jde dál; pokud je 0, stránku vybere k odložení.</li>
+                <li><strong>Thrashing (Zmítání):</strong> Stav, kdy systém tráví více času neustálým stránkováním z/na disk než užitečnými výpočty (vyčerpání RAM).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ DIAGNOSTIKA PAMĚTI -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická diagnostika</div>
+            <h2 class="slide-title">Sledování Page Faultů a Swapu v CLI</h2>
+            <p class="slide-subtitle">Nástroje vmstat, sar a inspekce mapování paměti</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Terminál &bull; vmstat</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Sledování swapování a aktivity paměti nástrojem vmstat</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Výpis stavu paměti a swapování každé 2 sekundy</span>
+<span class="term-prompt">$ </span><span class="term-cmd">vmstat</span> <span class="term-arg">2</span> <span class="term-arg">5</span>
+
+<span class="term-out">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span>
+<span class="term-out"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span>
+<span class="term-out"> 1  0      0 342100 120400 241900    0    0     4    22  420  890  5  2 93  0  0</span>
+
+<span class="term-comment"># Sloupce si / so (swap-in / swap-out) ukazují tok dat do swapu!</span>
+<span class="term-comment"># Pokud si/so trvale roste, server trpí nedostatkem fyzické RAM.</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Inspekce paměťové mapy procesu přes /proc/PID/maps</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Zobrazení segmentů paměti (kód, halda, zásobník) procesu</span>
+<span class="term-prompt">$ </span><span class="term-cmd">head</span> <span class="term-param">-n</span> <span class="term-arg">6</span> <span class="term-path">/proc/self/maps</span>
+
+<span class="term-out">55e1a2000-55e1a3000 r--p 00000000 /usr/bin/head</span>
+<span class="term-out">55e1a3000-55e1a8000 r-xp 00001000 /usr/bin/head</span>
+<span class="term-out">55e2b9000-55e2da000 rw-p 00000000 [heap]</span>
+<span class="term-out">7ffd12000-7ffd33000 rw-p 00000000 [stack]</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Otázky ze správy paměti a stránkování</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Účel virtuální paměti</h4>
+              <p>Formulace tří hlavních výhod: hardwarová izolace procesů, spojitý lineární adresní prostor a možnost swapování.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Role MMU a TLB</h4>
+              <p>Popis překladu adres pomocí víceúrovňových tabulek (CR3) a význam vyrovnávací paměti TLB pro rychlost běhu instrukcí.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Průběh Page Faultu</h4>
+              <p>Detailní vysvětlení obsluhy výjimky #PF: rozdíl mezi platným výpadkem (načtení ze swapu / souboru) a neplatným Segmentation Faultem.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Co je to jev Thrashing (zmítání paměti), za jakých okolností k němu v operačním systému dochází a jak jej vyřešit?“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 07</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 01: Architektura Microsoft Windows a jádro NT | OSY20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY20">
+          <span>&larr; OSY20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 01</span>
+          <span class="divider">&bull;</span>
+          <span>Architektura Windows a jádro NT</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Windows NT</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY20 &bull; 1. přednáška (45 min)</div>
+        <h1 class="hero-title">Architektura Windows &amp; Jádro NT</h1>
+        <p class="hero-desc">
+          Vnitřní stavba rodiny Windows NT: historický odkaz Davea Cutlera, vrstva hardwarové abstrakce HAL, NT Kernel a NT Executive, subsystém Win32 (csrss.exe), bezpečnostní subsystém LSASS a koncepce systémového registru (Windows Registry).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Soubor jádra</span>
+            <span class="hero-meta-val">ntoskrnl.exe &amp; hal.dll</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Uživatelský subsystém</span>
+            <span class="hero-meta-val">Win32 (csrss, win32k.sys)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Konfigurační databáze</span>
+            <span class="hero-meta-val">Windows Registry Hives</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: HISTORIE A CÍLE NÁVRHU NT -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Historie a motivace</div>
+            <h2 class="slide-title">Zrození moderních Windows (Windows NT)</h2>
+            <p class="slide-subtitle">Jak tým Davea Cutlera nahradil zastaralou linii DOS/Windows 9x</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Historie NT</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Konec éry MS-DOS a Windows 9x</h4>
+              <p>Původní Windows 1.0 až 95/98/Me byly pouhou grafickou nadstavbou nad 16bitovým systémem MS-DOS:</p>
+              <ul class="styled-list">
+                <li>Žádná paměťová ochrana – pád jedné aplikace shodil celý počítač.</li>
+                <li>Kooperativní multitasking a absence skutečného oddělení práv uživatelů.</li>
+                <li>Neschopnost obsluhovat vícejádrové procesory (SMP) a enterprise servery.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Projekt Windows New Technology (NT)</h4>
+              <p>V roce 1988 najal Microsoft architekta Davea Cutlera (autora VMS systému z DEC):</p>
+              <ul class="styled-list">
+                <li><strong>Cíle návrhu:</strong> Přenositelnost (x86, MIPS, Alpha, dnes ARM64), stabilita, symetrický multiprocesing (SMP), podpora POSIXu a bezpečnost splňující standard C2 (oranžová kniha DoD).</li>
+                <li>Zavedení hybridního jádra s přísným oddělením <strong>User Mode (Ring 3)</strong> a <strong>Kernel Mode (Ring 0)</strong>.</li>
+                <li>Dnešní Windows 10 a 11 jsou přímými potomky tohoto jádra (NT verze 10.0).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: VRSTVENÁ ARCHITEKTURA NT -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vnitřní architektura</div>
+            <h2 class="slide-title">Vrstvená stavba jádra Windows NT</h2>
+            <p class="slide-subtitle">Vzájemný vztah HAL, mikro-jádra a Executive služeb</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="layer-stack">
+                <div class="layer-item">
+                  <span>Aplikace &amp; Služby (Word, Chrome, SCM, Explorer)</span>
+                  <span class="sys-badge sys-badge-user">Ring 3</span>
+                </div>
+                <div class="layer-item">
+                  <span>Subsystémy prostředí (Win32 API: kernel32, user32)</span>
+                  <span class="sys-badge sys-badge-user">csrss.exe</span>
+                </div>
+                <div class="layer-item kernel-layer">
+                  <span>NT Executive (Memory, Process, Security, I/O, Object Mgr)</span>
+                  <span class="sys-badge sys-badge-kernel">Ring 0</span>
+                </div>
+                <div class="layer-item kernel-layer" style="background: rgba(6, 182, 212, 0.2); border-color: #06b6d4;">
+                  <span>NT Kernel (Plánování vláken, synchronizace, obsluha přerušení)</span>
+                  <span class="sys-badge sys-badge-kernel">ntoskrnl</span>
+                </div>
+                <div class="layer-item" style="border-color: #10b981; background: rgba(16, 185, 129, 0.15);">
+                  <span>Hardware Abstraction Layer (HAL)</span>
+                  <span class="sys-badge sys-badge-rt">hal.dll</span>
+                </div>
+                <div class="layer-item hw-layer">
+                  <span>Fyzický procesor, sběrnice a řadiče paměti</span>
+                  <span class="sys-badge sys-badge-hw">Hardware</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <h4>Komponenty NT Executive</h4>
+              <ul class="styled-list">
+                <li><strong>Object Manager (Ob):</strong> Vše v NT je objekt (soubory, procesy, klíče registru). Poskytuje jednotné deskriptory, řízení přístupu a počítání referencí.</li>
+                <li><strong>Virtual Memory Manager (Mm):</strong> Řídí 64bitový virtuální adresní prostor, stránkování a mapované soubory.</li>
+                <li><strong>Process and Thread Manager (Ps):</strong> Vytváří a ukončuje procesy a vlákna.</li>
+                <li><strong>I/O Manager (Io):</strong> Zpracovává asynchronní požadavky na zařízení pomocí paketů <strong>IRP (I/O Request Packets)</strong>.</li>
+                <li><strong>Security Reference Monitor (SRM):</strong> Vynucuje bezpečnostní politiku a ACL přístupová práva v Kernel Mode.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SUBSYSTÉM WIN32 A REGISTRY -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Uživatelská vrstva &amp; Konfigurace</div>
+            <h2 class="slide-title">Klíčové procesy a systémový registr</h2>
+            <p class="slide-subtitle">Role csrss.exe, lsass.exe a centrální stromové databáze Registry</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Konfigurace</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Kritické systémové procesy Windows</h4>
+              <ul class="styled-list">
+                <li><strong>smss.exe (Session Manager):</strong> První uživatelský proces spuštěný jádrem. Startuje subsystém Win32 a spravuje stránkovací soubory.</li>
+                <li><strong>csrss.exe (Client/Server Runtime):</strong> Zajišťuje správu konzolových oken, vláken a procesů subsystému Win32.</li>
+                <li><strong>lsass.exe (Local Security Authority):</strong> Ověřuje přihlášení uživatelů, hesla, generuje bezpečnostní tokeny a spolupracuje s Active Directory.</li>
+                <li><strong>services.exe (Service Controller):</strong> Spravuje spouštění a běh služeb na pozadí.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Architektura Windows Registry</h4>
+              <p>Centrální hierarchická databáze konfiguračních údajů OS a aplikací:</p>
+              <ul class="styled-list">
+                <li><strong>Hlavní větve (Hives):</strong>
+                  <ul class="styled-list">
+                    <li><code>HKEY_LOCAL_MACHINE (HKLM)</code>: Nastavení platné pro celý počítač a hardware.</li>
+                    <li><code>HKEY_CURRENT_USER (HKCU)</code>: Profil a preference právě přihlášeného uživatele.</li>
+                    <li><code>HKEY_CLASSES_ROOT (HKCR)</code>: Asociace přípon souborů a COM objekty.</li>
+                  </ul>
+                </li>
+                <li>Fyzicky uloženo v binárních souborech v <code>C:\Windows\System32\config\</code>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ INSPEKCE JÁDRA WINDOWS -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická diagnostika</div>
+            <h2 class="slide-title">Inspekce jádra a registrů v PowerShellu</h2>
+            <p class="slide-subtitle">Zjišťování verzí NT jádra a manipulace s registry</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">PowerShell &bull; Registry</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>powershell &bull; Inspekce verze jádra a systémových procesů</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Zjištění přesné verze a sestavení jádra NT</span>
+<span class="term-prompt">PS&gt; </span>[System.Environment]::OSVersion.Version
+<span class="term-out">Major  Minor  Build  Revision</span>
+<span class="term-out">-----  -----  -----  --------</span>
+<span class="term-out">10     0      22631  0</span>
+
+<span class="term-comment"># Ověření běhu kritických procesů csrss a lsass</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Process</span> <span class="term-param">-Name</span> <span class="term-arg">csrss, lsass, smss</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Select-Object</span> <span class="term-arg">Id, ProcessName, SessionId, Path</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>powershell &bull; Práce s registrem jako s diskem</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># PowerShell přistupuje k registru přes PSDrive provider</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-ItemProperty</span> <span class="term-param">-Path</span> <span class="term-string">"HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Select-Object</span> <span class="term-arg">ProductName, DisplayVersion, CurrentBuild</span>
+
+<span class="term-comment"># Zjištění boot parametrů jádra v registru BCD</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">bcdedit</span> <span class="term-pipe">|</span> <span class="term-cmd">Select-String</span> <span class="term-string">"identifier|path|nx"</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Otázky z architektury Windows NT u zkoušky</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Proč hybridní jádro?</h4>
+              <p>Vysvětlení, proč Windows NT kombinují modulární strukturu Executive služeb s umístěním grafického subsystému (win32k.sys) do Kernel Mode.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Role HAL</h4>
+              <p>Pochopení významu knihovny hal.dll pro izolaci zbytku jádra od odlišností procesorových patic a čipsetů základních desek.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Význam lsass a csrss</h4>
+              <p>Znalost funkcí klíčových subsystémových procesů (autentizace uživatelů a generování bezpečnostních tokenů vs. řízení Win32 prostředí).</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Popište strukturu Windows Executive a vysvětlete, jakou roli hraje Object Manager při řízení přístupu k systémovým prostředkům.“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 01</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

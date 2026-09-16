@@ -1,0 +1,497 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 01: Normalizace relačních databází | DAT20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu DAT20">
+          <span>← DAT20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 01</span>
+          <span class="divider">•</span>
+          <span>Normalizace a normální formy</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 6</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT20 • 1. přednáška (45 min)</div>
+        <h1 class="hero-title">Normalizace relačních databází & Normální formy</h1>
+        <p class="hero-desc">
+          Odstraňování redundance, prevence anomálií při manipulaci s daty a systematická dekompozice schémat (1NF až BCNF) na reálném modelu <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Cílový standard</span>
+            <span class="hero-meta-val">1NF, 2NF, 3NF, BCNF</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Praktický kontext</span>
+            <span class="hero-meta-val">Model edu_eshop</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 6</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: MOTIVATION & DATA ANOMALIES -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Teorie relačního návrhu</div>
+            <h2 class="slide-title">Proč normalizovat? Problém anomálií</h2>
+            <p class="slide-subtitle">Co se stane, když navrhneme špatnou "univerzální" tabulku</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <p>
+            Pokud bychom všechny informace o objednávkách, zákaznících a položkách uložili do jediné tabulky (denormalizovaného „sešitu“), narazíme na fatální problémy integrity:
+          </p>
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-rose);" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Anomálie vkládání (Insert)
+              </h4>
+              <p>Nelze vložit nového zákazníka, dokud si nevytvoří první objednávku (nebo bychom museli uměle vyplňovat NULL hodnoty v polích objednávky).</p>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-amber);" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                Anomálie aktualizace (Update)
+              </h4>
+              <p>Pokud zákazník změní telefonní číslo, musíme jej přepsat ve <strong>všech</strong> jeho dosavadních objednávkách. Pokud na jeden řádek zapomeneme, vzniká nekonzistence dat.</p>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-rose);" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                Anomálie mazání (Delete)
+              </h4>
+              <p>Smazáním jediné historické objednávky zákazníka omylem smažeme i samotnou informaci o existenci tohoto zákazníka a jeho kontaktu.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Požadavek absolutoria</div>
+              Zkoušející po vás bude chtít přesně definovat a na příkladu demonstrovat tyto tři anomálie a vysvětlit, jak je dekompozice do 3NF eliminuje.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: FUNCTIONAL DEPENDENCIES -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Matematický základ</div>
+            <h2 class="slide-title">Funkční závislosti (Functional Dependency)</h2>
+            <p class="slide-subtitle">Formální základ pro definici všech normálních forem</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Definice $X \to Y$</h4>
+                <p>
+                  Říkáme, že množina atributů <strong>Y je funkčně závislá na X</strong> (zápis: <code>X → Y</code>), právě když platí: pro každé dva řádky tabulky se shodnou hodnotou atributů <code>X</code> musí být shodná i hodnota atributů <code>Y</code>.
+                </p>
+                <ul class="styled-list" style="margin-top: 1rem;">
+                  <li>Hodnota <code>X</code> jednoznačně determinuje hodnotu <code>Y</code>.</li>
+                  <li><strong>X</strong> nazýváme <em>determinant</em>.</li>
+                  <li>Pokud je <code>X</code> kandidátním klíčem, určuje všechny ostatní atributy v tabulce.</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Příklady v <code>edu_eshop</code></h4>
+                <ul class="styled-list">
+                  <li><code>customer.id → (email, created_at, active)</code></li>
+                  <li><code>customer.email → customer.id</code> (protože email je UNIQUE)</li>
+                  <li><code>(order_id, product_id) → (quantity, unit_price)</code> v tabulce <code>order_item</code></li>
+                </ul>
+              </div>
+              <div class="callout callout-warning" style="margin-top: 1rem;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">Triviální vs. Netriviální závislost</div>
+                  Závislost <code>(A, B) → A</code> je <strong>triviální</strong> (vždy pravdivá). Normalizace se zabývá výhradně netriviálními funkčními závislostmi.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: 1NF -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Normální formy</div>
+            <h2 class="slide-title">1. Normální forma (1NF) – Atomicita</h2>
+            <p class="slide-subtitle">Každá hodnota atributu musí být atomická (nedělitelná)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Základ relačního modelu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <p>
+            Relace je v <strong>1NF</strong>, pokud každý atribut obsahuje pouze <strong>jedinou (skalární) hodnotu</strong> a neobsahuje žádné opakující se skupiny, pole ani vnořené tabulky.
+          </p>
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: var(--accent-rose);">
+                <svg class="icon card-icon" style="color: var(--accent-rose);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                Porušení 1NF
+              </h4>
+              <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Zákazník má v jednom sloupci více hodnot oddělených čárkou:</p>
+              <div class="table-container">
+                <table class="db-table">
+                  <tr><th>id</th><th>jmeno</th><th>telefony</th></tr>
+                  <tr><td>1</td><td>Jan Novák</td><td>777111222, 608333444</td></tr>
+                  <tr><td>2</td><td>Petra Svobodová</td><td>721555666</td></tr>
+                </table>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                Důsledek: Nelze snadno indexovat, vyhledávat konkrétní telefon ani garantovat unikátnost.
+              </p>
+            </div>
+            <div class="content-card">
+              <h4 style="color: var(--accent-emerald);">
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="9 12 11 14 15 10"></polyline></svg>
+                Splnění 1NF v databázi
+              </h4>
+              <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Vytvoření samostatné tabulky pro telefonní čísla s vazbou 1:N:</p>
+              <div class="table-container">
+                <table class="db-table">
+                  <tr><th>customer_id</th><th>phone_number</th><th>typ</th></tr>
+                  <tr><td>1</td><td>+420 777 111 222</td><td>mobil</td></tr>
+                  <tr><td>1</td><td>+420 608 333 444</td><td>práce</td></tr>
+                  <tr><td>2</td><td>+420 721 555 666</td><td>mobil</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-eshop">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Jak je to s JSON atributy v moderním SQL? (tabulka product)</div>
+              Sloupec <code>product.attributes</code> obsahuje JSON. Z pohledu klasické relační teorie je to porušení striktní 1NF, avšak v moderních SŘBD (MySQL 8.0+) jde o záměrné pragmatické řešení pro nestrukturované dynamické parametry (např. <code>{"color": "Black", "ram_gb": 8}</code>).
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: 2NF -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Normální formy</div>
+            <h2 class="slide-title">2. Normální forma (2NF) – Plná závislost</h2>
+            <p class="slide-subtitle">Odstranění částečných funkčních závislostí na složeném klíči</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Pouze u složených klíčů</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="content-card">
+            <h4>Pravidlo 2NF</h4>
+            <p>
+              Relace je ve <strong>2NF</strong>, pokud:
+            </p>
+            <ol style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-secondary);">
+              <li>Je v <strong>1NF</strong>.</li>
+              <li>Každý <strong>neklíčový atribut je plně funkčně závislý</strong> na celém primárním klíči (nesmí záviset pouze na jeho části).</li>
+            </ol>
+          </div>
+
+          <div class="grid-2" style="margin-top: 0.5rem;">
+            <div class="content-card">
+              <h4 style="color: var(--accent-rose);">
+                <svg class="icon card-icon" style="color: var(--accent-rose);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                Porušení 2NF v položkách objednávky
+              </h4>
+              <p style="font-size: 0.88rem;">Složený klíč: <code>(order_id, product_id)</code></p>
+              <div class="table-container" style="margin: 0.5rem 0;">
+                <table class="db-table">
+                  <tr><th><u>order_id</u></th><th><u>product_id</u></th><th>quantity</th><th>product_name</th></tr>
+                  <tr><td>1</td><td>101</td><td>2</td><td>Mobil X</td></tr>
+                  <tr><td>2</td><td>101</td><td>1</td><td>Mobil X</td></tr>
+                </table>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--accent-rose);">
+                Chyba: <code>product_name</code> závisí pouze na <code>product_id</code>, nikoliv na celé dvojici!
+              </p>
+            </div>
+
+            <div class="content-card">
+              <h4 style="color: var(--accent-emerald);">
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="9 12 11 14 15 10"></polyline></svg>
+                Řešení dekompozicí v edu_eshop
+              </h4>
+              <p style="font-size: 0.88rem;">Atribut <code>name</code> patří do tabulky <code>product</code>:</p>
+              <pre class="code-block" style="padding: 0.5rem; font-size: 0.8rem;"><code>-- Tabulka order_item má pouze plně závislé atributy:
+CREATE TABLE order_item (
+  order_id INT NOT NULL,
+  product_id INT NOT NULL,
+  quantity SMALLINT NOT NULL,
+  unit_price DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (order_id, product_id)
+);</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: 3NF -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Normální formy</div>
+            <h2 class="slide-title">3. Normální forma (3NF) – Tranzitivita</h2>
+            <p class="slide-subtitle">Žádný neklíčový atribut nesmí být tranzitivně závislý na primárním klíči</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Průmyslový standard</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="content-card">
+            <h4>Pravidlo 3NF</h4>
+            <p>
+              Relace je ve <strong>3NF</strong>, pokud:
+            </p>
+            <ol style="margin-left: 1.5rem; margin-top: 0.4rem; color: var(--text-secondary);">
+              <li>Je ve <strong>2NF</strong>.</li>
+              <li>Neexistuje žádná <strong>tranzitivní funkční závislost</strong> mezi neklíčovými atributy: $PK \to X$ a současně $X \to Y$ (kde $Y$ není součástí klíče).</li>
+            </ol>
+          </div>
+
+          <div class="grid-2" style="margin-top: 0.5rem;">
+            <div class="content-card">
+              <h4 style="color: var(--accent-rose);">
+                <svg class="icon card-icon" style="color: var(--accent-rose);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                Příklad tranzitivní závislosti
+              </h4>
+              <p style="font-size: 0.88rem; margin-bottom: 0.5rem;">Mějme tabulku zákazníka s adresou:</p>
+              <div class="table-container">
+                <table class="db-table">
+                  <tr><th><u>customer_id</u></th><th>name</th><th>psc</th><th>mesto</th></tr>
+                  <tr><td>1</td><td>Jan Novák</td><td>110 00</td><td>Praha</td></tr>
+                  <tr><td>2</td><td>Petr Malý</td><td>602 00</td><td>Brno</td></tr>
+                </table>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+                Platí: <code>customer_id → psc</code> a současně <code>psc → mesto</code>.<br>
+                Město je tranzitivně závislé na klíči!
+              </p>
+            </div>
+
+            <div class="content-card">
+              <h4 style="color: var(--accent-emerald);">
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="9 12 11 14 15 10"></polyline></svg>
+                Dekompozice do 3NF
+              </h4>
+              <p style="font-size: 0.88rem; margin-bottom: 0.5rem;">Rozdělení na dvě relace bez redundance:</p>
+              <pre class="code-block" style="padding: 0.6rem; font-size: 0.82rem;"><code>-- 1. Tabulka měst s PSČ:
+psc_mesto (
+  psc CHAR(5) PRIMARY KEY,
+  mesto VARCHAR(50) NOT NULL
+);
+
+-- 2. Zákazník pouze s cizím klíčem:
+customer (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  psc CHAR(5) REFERENCES psc_mesto(psc)
+);</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: BCNF & SUMMARY -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Pokročilá teorie</div>
+            <h2 class="slide-title">Boyce-Coddova NF (BCNF) a Shrnutí</h2>
+            <p class="slide-subtitle">Přísnější varianta 3NF a zlaté pravidlo dekompozice</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Boyce-Coddova normální forma (BCNF)</h4>
+              <p>
+                Relace je v <strong>BCNF</strong>, pokud pro <em>každou</em> netriviální funkční závislost <code>X → Y</code> platí, že <strong>X je nadklíč</strong> (superkey).
+              </p>
+              <ul class="styled-list" style="margin-top: 0.8rem;">
+                <li>Většina relací ve 3NF je současně v BCNF.</li>
+                <li>Rozdíl nastává pouze v případech, kdy tabulka obsahuje <strong>více překrývajících se složených kandidátních klíčů</strong>.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Denormalizace v praxi</h4>
+              <p>
+                Kdy má smysl v praxi normalizaci vědomě porušit?
+              </p>
+              <ul class="styled-list" style="margin-top: 0.8rem;">
+                <li><strong>Výkon čtení:</strong> Vyhnout se drahým JOINům v datových skladech (OLAP).</li>
+                <li><strong>Ukázka v edu_eshop:</strong> Sloupec <code>category.product_count</code>. Jedná se o denormalizovaný údaj udržovaný <strong>triggerem</strong> pro bleskové zobrazení počtu položek v e-shopu!</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-tip" style="margin-top: 0.5rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Mnemotechnická pomůcka k absolutoriu (William Kent)</div>
+              <em>„Každý atribut musí záviset na <strong>klíči</strong> (1NF), na <strong>celém klíči</strong> (2NF) a <strong>na ničem jiném než na klíči</strong> (3NF), k tomu mi dopomáhej Codd.“</em>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 07</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 01</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

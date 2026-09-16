@@ -1,0 +1,352 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 04: Zabezpečení webu – HTTPS, TLS a certifikáty | WEB10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB10">
+          <span>&larr; WEB10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 04</span>
+          <span class="divider">&bull;</span>
+          <span>Zabezpečení webu &bull; HTTPS, TLS a certifikáty</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 2, 6</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB10 &bull; 4. přednáška (45 min)</div>
+        <h1 class="hero-title">Zabezpečení webu: HTTPS, TLS &amp; Certifikáty</h1>
+        <p class="hero-desc">
+          Ochrana proti odposlechu a manipulaci s daty (MITM), kryptografický základ symetrického a asymetrického šifrování, průběh TLS Handshake a infrastruktura certifikačních autorit (PKI).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Bezpečnostní protokol</span>
+            <span class="hero-meta-val">TLS 1.3 over TCP / Port 443</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Důvěra &amp; PKI</span>
+            <span class="hero-meta-val">X.509 certifikáty / Let's Encrypt</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 2 (Bezpečnost a SSL/TLS)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PROČ HTTPS -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Rizika nešifrovaného webu</div>
+            <h2 class="slide-title">Proč je prosté HTTP nebezpečné?</h2>
+            <p class="slide-subtitle">Tři základní bezpečnostní hrozby na síťové cestě mezi klientem a serverem</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-rose);" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                1. Odposlech (Eavesdropping)
+              </h4>
+              <p>Kdokoliv na trase (správce Wi-Fi v kavárně, ISP provider) vidí hesla, čísla karet i obsah zpráv v nešifrovaném čistém textu.</p>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-amber);" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                2. Podvržení (Man-in-the-Middle)
+              </h4>
+              <p>Útočník vstoupí doprostřed komunikace. Může pozměnit bankovní účet ve formuláři nebo podstrčit infikovaný skript.</p>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-indigo);" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                3. Maskování (Impersonation)
+              </h4>
+              <p>Bez digitálního certifikátu klient nemá jistotu, zda skutečně komunikuje se svou bankou, nebo s podvodným phishingovým serverem.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: SYMETRICKÉ VS ASYMETRICKÉ ŠIFROVÁNÍ -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Kryptografické základy</div>
+            <h2 class="slide-title">Symetrické vs. Asymetrické šifrování v TLS</h2>
+            <p class="slide-subtitle">Hybridní přístup: Asymetrická kryptografie pro výměnu klíče, symetrická pro přenos dat</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Asymetrické šifrování (RSA / ECC)</h4>
+                <ul class="styled-list">
+                  <li><strong>Dva různé klíče:</strong> Veřejný klíč (Public key) pro šifrování, soukromý klíč (Private key) pro dešifrování.</li>
+                  <li><strong>Účel v TLS:</strong> Autentizace serveru a bezpečné předání společného relačního klíče (Session Key).</li>
+                  <li><strong>Nevýhoda:</strong> Matematicky extrémně náročné na CPU, nevhodné pro gigabajty dat.</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Symetrické šifrování (AES / ChaCha20)</h4>
+                <ul class="styled-list">
+                  <li><strong>Jeden společný klíč:</strong> Stejný klíč šifruje i dešifruje data na obou stranách.</li>
+                  <li><strong>Účel v TLS:</strong> Bleskový šifrovaný přenos veškerého těla HTTP dotazů a odpovědí.</li>
+                  <li><strong>Výhoda:</strong> Hardwarově akcelerované moderními procesory (AES-NI), téměř nulová režie.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PRŮBĚH TLS HANDSHAKE -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Navázání spojení</div>
+            <h2 class="slide-title">Průběh TLS 1.3 Handshake</h2>
+            <p class="slide-subtitle">Jak si klient a server vyjednají bezpečný kanál za pouhý 1 síťový obrat (1-RTT)</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-4">
+            <div class="content-card">
+              <h4>1. Client Hello</h4>
+              <p>Klient pošle podporované verze TLS, seznam šifrovacích sad (Cipher Suites) a své parametry pro výměnu klíče.</p>
+            </div>
+            <div class="content-card">
+              <h4>2. Server Hello + Cert</h4>
+              <p>Server vybere šifru, pošle své klíčové parametry a předloží digitální certifikát podepsaný certifikační autoritou.</p>
+            </div>
+            <div class="content-card">
+              <h4>3. Ověření a Spočtení</h4>
+              <p>Klient ověří platnost certifikátu přes Root CA. Obě strany nezávisle spočítají identický symetrický klíč (Diffie-Hellman).</p>
+            </div>
+            <div class="content-card">
+              <h4>4. Šifrovaná data</h4>
+              <p>Od tohoto okamžiku proudí veškerá data (včetně URL cesty, hlaviček i cookies) výhradně symetricky zašifrována!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: CERTIFIKAČNÍ AUTORITY A PKI -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Infrastruktura veřejného klíče (PKI)</div>
+            <h2 class="slide-title">Certifikační autority (CA) &amp; Let's Encrypt</h2>
+            <p class="slide-subtitle">Řetězec důvěry od kořenové autority k doménovému certifikátu</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Řetězec důvěry (Certificate Chain)</h4>
+                <ul class="styled-list">
+                  <li><strong>Root CA:</strong> Kořenová autorita, jejíž certifikát je pevně zabudován v operačním systému a prohlížeči.</li>
+                  <li><strong>Intermediate CA:</strong> Mezilehlá autorita podepsaná Root CA (izoluje kořenovou autoritu v offline trezoru).</li>
+                  <li><strong>Server Certificate:</strong> Certifikát domény (např. <code>edu-portal.cz</code>) podepsaný mezilehlou autoritou.</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Revoluce Let's Encrypt (ACME protokol)</h4>
+                <p>Nezisková certifikační autorita poskytující bezplatné doménové certifikáty (DV – Domain Validated). Pomocí protokolu <strong>ACME</strong> se obnova certifikátů na serveru provádí plně automaticky každých 60–90 dní (žádné ruční nákupy a instalace).</p>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-warning" style="margin-top: 1rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Hlavička HSTS (HTTP Strict Transport Security)</div>
+              <p>Zabraňuje útokům typu SSL Strip. Hlavička <code>Strict-Transport-Security: max-age=31536000; includeSubDomains</code> nařizuje prohlížeči, aby se na danou doménu po dobu jednoho roku připojoval <strong>VÝHRADNĚ přes HTTPS</strong>, i kdyby uživatel do adresního řádku napsal <code>http://</code>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 2 (HTTPS a bezpečnost)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 2, 6</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Význam HTTPS</h4>
+              <p>Šifrování chrání proti odposlechu (Eavesdropping), podvržení dat (MITM) a zajišťuje identitu serveru.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Hybridní šifrování</h4>
+              <p>Asymetrické pro autentizaci a výměnu symetrického klíče v handshake, symetrické pro bleskový přenos dat.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Řetězec důvěry PKI</h4>
+              <p>Root CA &rarr; Intermediate CA &rarr; Server certifikát. Prohlížeč věří serveru, protože věří podpisové autoritě.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Hlavička HSTS</h4>
+              <p>Vynucuje striktní HTTPS spojení bez možnosti uživatelského obejití varování při neplatném certifikátu.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Klasická otázka zkoušejícího</div>
+              <p><em>„Vidí útočník na Wi-Fi síti konkrétní navštívenou URL adresu, když komunikujete přes HTTPS?“</em><br>
+              <strong>Správná odpověď:</strong> Vidí pouze <strong>doménu serveru</strong> (z IP adresy a z hlavičky SNI v TLS handshake, např. <code>edu-portal.cz</code>). Samotnou URL cestu (např. <code>/student/vysledky-zkousek</code>), parametry dotazu (query string), hlavičky i data formuláře <strong>nevidí</strong>, protože celá HTTP zpráva je již zašifrována!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 04</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 02: Protokol HTTP a síťová komunikace na webu | WEB10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB10">
+          <span>&larr; WEB10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 02</span>
+          <span class="divider">&bull;</span>
+          <span>Protokol HTTP a síťová komunikace na webu</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 2</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB10 &bull; 2. přednáška (45 min)</div>
+        <h1 class="hero-title">Protokol HTTP &amp; Síťová komunikace na webu</h1>
+        <p class="hero-desc">
+          Místo protokolu HTTP v modelu TCP/IP, princip bezstavové komunikace, formát HTTP zprávy a technická evoluce od HTTP/1.1 přes binární HTTP/2 až po UDP transport v HTTP/3 (QUIC).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Komunikační standard</span>
+            <span class="hero-meta-val">HTTP/1.1, HTTP/2, HTTP/3 (QUIC)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční síť</span>
+            <span class="hero-meta-val">Pakety v síti edu_network</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 2 (Protokol HTTP)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: HTTP V SÍŤOVÉM MODELU -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Síťové vrstvy</div>
+            <h2 class="slide-title">Protokol HTTP v modelu TCP/IP</h2>
+            <p class="slide-subtitle">Jak aplikační vrstva komunikuje s transportní a síťovou infrastrukturou</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th style="width: 20%;">Vrstva TCP/IP</th>
+                  <th style="width: 25%;">Protokoly</th>
+                  <th style="width: 55%;">Funkce v kontextu webu</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Aplikační</strong></td>
+                  <td><code>HTTP / HTTPS</code>, DNS</td>
+                  <td>Definuje formát požadavků (GET, POST), hlavičky, kódování a sémantiku webových dat.</td>
+                </tr>
+                <tr>
+                  <td><strong>Transportní</strong></td>
+                  <td><code>TCP</code> (HTTP/1 a 2), <code>UDP / QUIC</code> (HTTP/3)</td>
+                  <td>Zajišťuje spolehlivý přenos proudu bajtů mezi porty (port 80/443), řazení paketů a kontrolu doručení.</td>
+                </tr>
+                <tr>
+                  <td><strong>Síťová (Internetová)</strong></td>
+                  <td><code>IPv4 / IPv6</code>, ICMP</td>
+                  <td>Směrování (routing) paketů mezi uzly sítě od odesílatele k cílové IP adrese serveru.</td>
+                </tr>
+                <tr>
+                  <td><strong>Síťové rozhraní</strong></td>
+                  <td>Ethernet, Wi-Fi, optika</td>
+                  <td>Fyzický a linkový přenos elektrických nebo optických rámců po médiu.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: BEZSTAVOVOST A ANATOMIE ZPRÁVY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Princip protokolu</div>
+            <h2 class="slide-title">Bezstavovost (Stateless) &amp; Struktura zprávy</h2>
+            <p class="slide-subtitle">Proč si server nepamatuje předchozí dotazy a jak se udržuje stav přihlášení</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">http &bull; surový požadavek a odpověď</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="html-comment">/* 1. HTTP REQUEST (Klient &rarr; Server) */</span>
+<span class="code-kw">GET</span> /api/student-profile <span class="css-val">HTTP/1.1</span>
+<span class="html-attr">Host</span>: edu-portal.cz
+<span class="html-attr">User-Agent</span>: Mozilla/5.0 (Windows NT 10.0)
+<span class="html-attr">Cookie</span>: session_id=a9f8e7c6b5
+<span class="html-attr">Accept</span>: application/json
+
+<span class="html-comment">/* 2. HTTP RESPONSE (Server &rarr; Klient) */</span>
+<span class="css-val">HTTP/1.1</span> <span class="code-num">200 OK</span>
+<span class="html-attr">Content-Type</span>: application/json; charset=utf-8
+<span class="html-attr">Content-Length</span>: 42
+
+{"student": "Jan Novák", "ročník": 3}</code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Proč je HTTP bezstavové (Stateless)?</h4>
+                <p>Každý HTTP dotaz je pro server zcela izolovanou transakcí. Server si mezi požadavky neudržuje žádné kontextové spojení v paměti, což umožňuje obrovské horizontální škálování na miliony uživatelů.</p>
+                <h4 style="margin-top: 0.8rem;">Jak se řeší stav (Přihlášení, Košík)?</h4>
+                <ul class="styled-list">
+                  <li><strong>HTTP Cookies:</strong> Server pošle hlavičku <code>Set-Cookie: sid=xyz; HttpOnly; Secure</code>. Prohlížeč tuto hodnotu automaticky přikládá do každého dalšího požadavku.</li>
+                  <li><strong>Tokeny (JWT / Bearer):</strong> Předávání v hlavičce <code>Authorization: Bearer [token]</code>.</li>
+                  <li><strong>Session na serveru:</strong> Data relace jsou uložena v Redis/databázi serveru pod ID z cookie.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: HTTP/1.1 VS HTTP/2 -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Evoluce standardu</div>
+            <h2 class="slide-title">HTTP/1.1 vs. HTTP/2: Konec zpoždění</h2>
+            <p class="slide-subtitle">Přechod od textového protokolu k binárnímu multiplexování</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Problémy HTTP/1.1 (1999)</h4>
+                <ul class="styled-list">
+                  <li><strong>Head-of-line Blocking:</strong> V jednom TCP spojení musely požadavky čekat ve frontě (FIFO). Pokud se první obrázek stahoval pomalu, zablokoval všechny ostatní.</li>
+                  <li><strong>Omezení prohlížečů:</strong> Prohlížeč mohl na jednu doménu otevřít max. 6 paralelních TCP spojení naráz.</li>
+                  <li><strong>Nezbytné obezličky (Antipatterns):</strong> Spojování ikon do sprite obrázků, spojování CSS do jednoho obřího souboru, doménový sharding (rozsekání na subdomény).</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Revoluce HTTP/2 (2015)</h4>
+                <ul class="styled-list">
+                  <li><strong>Binární protokol:</strong> Místo čistého textu jsou data dělena na přesné binární rámce (Frames).</li>
+                  <li><strong>Multiplexing:</strong> Stovky nezávislých požadavků a odpovědí probíhají současně uvnitř <strong>jediného TCP spojení</strong>. Žádné zdržování fronty.</li>
+                  <li><strong>Komprese hlaviček (HPACK):</strong> Eliminace redundance – hlavičky jako User-Agent a Cookie se neposílají pokaždé znovu v plné délce.</li>
+                  <li><strong>Prioritizace proudů:</strong> Prohlížeč může určit, že CSS a písma mají přednost před obrázky.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: HTTP/3 A PROTOKOL QUIC -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Současnost a budoucnost</div>
+            <h2 class="slide-title">HTTP/3: Proč opustit TCP a přejít na QUIC?</h2>
+            <p class="slide-subtitle">Řešení ztráty paketů v mobilních sítích a zrychlení navazování spojení (0-RTT)</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. Limitace TCP</h4>
+              <p>Protože HTTP/2 běží nad jediným TCP spojením, ztráta jediného síťového paketu způsobí, že operační systém pozastaví <strong>všechny multiplexované streamy</strong>, dokud ztracený paket znovu nedorazí.</p>
+            </div>
+            <div class="content-card">
+              <h4>2. Protokol QUIC nad UDP</h4>
+              <p>HTTP/3 opouští pomalé TCP jádro v OS a přechází na protokol QUIC (vyvinutý Googlem), který běží nad rychlým protokolem <strong>UDP</strong>. Ztráta paketu v jednom streamu neovlivní žádný jiný proud!</p>
+            </div>
+            <div class="content-card">
+              <h4>3. Bleskový start (0-RTT)</h4>
+              <p>V HTTP/3 jsou transportní spojení a šifrování TLS 1.3 sloučeny do jednoho kroku. Opakované návštěvy webu mohou posílat data okamžitě s nulovou latencí (0-RTT Handshake).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 2 (Protokol HTTP)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 2</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Bezstavovost protokolu</h4>
+              <p>Každý dotaz je nezávislý. Stav uživatele je udržován na aplikační úrovni pomocí HTTP cookies a relací (sessions).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Formát HTTP zprávy</h4>
+              <p>Řádek požadavku/odpovědi (Metoda/Kód), hlavičky klíč-hodnota, prázdný řádek CRLF a volitelné tělo (Body).</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Rozdíl HTTP/1.1 vs HTTP/2</h4>
+              <p>HTTP/1.1 posílá text po jednom požadavku v TCP. HTTP/2 je binární a multiplexuje stovky proudů v jednom TCP spojení.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Význam HTTP/3 (QUIC)</h4>
+              <p>Běží nad protokolem UDP. Eliminuje zdržení při ztrátě paketů v mobilních sítích a integruje TLS 1.3.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická otázka u absolutoria</div>
+              <p><em>„Proč u protokolu HTTP/2 již nemá smysl spojovat malé ikonky do CSS spritů nebo slučovat všechny JS skripty do jednoho obřího souboru?“</em><br>
+              <strong>Správná odpověď:</strong> CSS sprity a slučování souborů byly obezličkou pro HTTP/1.1, aby se obešel limit 6 TCP spojení na doménu. V HTTP/2 probíhá stahování stovek malých souborů paralelně v jediném spojení s nulovým zpožděním. Oddělené menší soubory se navíc mnohem lépe cachují v prohlížeči při drobných aktualizacích webu.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 02</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

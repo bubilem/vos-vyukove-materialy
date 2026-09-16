@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEB – Webové technologie | Výukové moduly VOŠ</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --card-hover: #1c2128;
+      --border: #30363d;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 9999px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .module-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .module-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 30px var(--accent-glow);
+      background: var(--card-hover);
+    }
+
+    .module-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .module-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #fff;
+    }
+
+    .module-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      margin-bottom: 1.5rem;
+    }
+
+    .module-stats {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+
+    .module-stats span {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-arrow {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+
+    .module-card:hover .btn-arrow {
+      transform: translateX(4px);
+      background: var(--accent);
+      color: #000;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <header class="header">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="2" y1="12" x2="22" y2="12" />
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        </svg>
+        <span>VOŠ &bull; Výukové materiály</span>
+      </div>
+      <h1>WEB – Webové technologie</h1>
+      <p class="subtitle">Kompletní interaktivní výukové prezentace a podklady k absolutoriu pro studenty vyššího
+        odborného studia.</p>
+    </header>
+
+    <div class="modules-grid">
+      <!-- Modul WEB10 -->
+      <a href="WEB10/index.html" class="module-card">
+        <div>
+          <div class="module-tag">2. ročník &bull; 3. semestr (zimní období) &bull; 4 kredity</div>
+          <h2>WEB10: Architektura, sítě a HTML5</h2>
+          <p>
+            Architektura klient-server, protokoly HTTP/HTTPS, TLS zabezpečení, domény, DNS a webhosting, cloud a CDN,
+            standardy W3C/WHATWG, sémantická kostra HTML, tabulky a multimédia.
+          </p>
+        </div>
+        <div class="module-stats">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width: 14px; height: 14px;">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            10 lekcí (60 slidů)
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width: 14px; height: 14px;">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+            </svg>
+            Okruhy 1–6, 20
+          </span>
+          <div class="btn-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width: 16px; height: 16px;">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Modul WEB20 -->
+      <a href="WEB20/index.html" class="module-card">
+        <div>
+          <div class="module-tag">3. ročník &bull; 5. semestr (zimní období) &bull; 5 kreditů</div>
+          <h2>WEB20: Stylování, layouty a CSS3</h2>
+          <p>
+            Sémantická struktura, box model, kaskáda a specificita, moderní rozvržení pomocí Flexbox a CSS Grid,
+            responzivní webdesign, mobilní optimalizace, CSS proměnné, animace a SCSS preprocesory.
+          </p>
+        </div>
+        <div class="module-stats">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width: 14px; height: 14px;">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            10 lekcí (60 slidů)
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width: 14px; height: 14px;">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+            </svg>
+            Okruhy 4, 7–12
+          </span>
+          <div class="btn-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width: 16px; height: 16px;">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Modul WEB30 -->
+      <div class="module-card" style="opacity: 0.8; border-style: dashed;">
+        <div>
+          <div class="module-tag" style="color: var(--text-muted);">3. ročník &bull; 6. semestr (letní období) &bull; 5
+            kreditů &bull; Připravuje se</div>
+          <h2>WEB30: Příklady a pokročilá řešení</h2>
+          <p>
+            Praktické aplikace webových technologií, integrace webových služeb, asynchronní komunikace, JavaScriptové
+            API, moderní frontendové architektury a komplexní příprava k absolutoriu.
+          </p>
+        </div>
+        <div class="module-stats">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width: 14px; height: 14px;">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            10 lekcí (plánováno)
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="width: 14px; height: 14px;">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+            </svg>
+            Okruhy 13–20
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      100% offline prezentace &bull; Vanilla HTML5 / CSS3 / JavaScript &bull; Vyšší odborná škola
+    </footer>
+  </div>
+
+</body>
+
+</html>

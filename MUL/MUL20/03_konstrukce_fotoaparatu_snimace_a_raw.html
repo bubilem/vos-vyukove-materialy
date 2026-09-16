@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 03: Konstrukce fotoaparátů, snímače a RAW | MUL20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL20">
+          <span>&larr; MUL20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 03</span>
+          <span class="divider">&bull;</span>
+          <span>Konstrukce fotoaparátů, snímače a RAW</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 10: Technika fotoaparátů</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL20 &bull; 3. přednáška (45 min)</div>
+        <h1 class="hero-title">Konstrukce fotoaparátů, snímače a RAW</h1>
+        <p class="hero-desc">
+          Technologická evoluce těl fotoaparátů: zrcadlovky DSLR vs. bezzrcadlovky CSC. Polovodičové čipy (CCD vs. CMOS BSI), velikosti snímačů a Crop faktor, Bayerova mozaika a proces debayeringu.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Konstrukce</span>
+            <span class="hero-meta-val">DSLR zrcadlovka vs. CSC</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Snímače</span>
+            <span class="hero-meta-val">Full Frame &bull; APS-C &bull; Crop</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 10</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: DSLR VS CSC BEZZRCADLOVKY -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektura těl</div>
+            <h2 class="slide-title">Zrcadlovky (DSLR) vs. Bezzrcadlovky (CSC / Mirrorless)</h2>
+            <p class="slide-subtitle">Zásadní posun v optické a elektronické konstrukci těl</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčové srovnání</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: #60a5fa;">DSLR (Digital Single-Lens Reflex)</h4>
+              <ul class="styled-list">
+                <li><strong>Optický hledáček (OVF):</strong> Světlo z objektivu se odráží od sklopného zrcátka nahoru do skleněného pětibokého hranolu (Pentaprism).</li>
+                <li>Při expozici se zrcátko sklopí nahoru &rarr; hledáček na okamžik zčerná (Blackout).</li>
+                <li>Oddělený fázový senzor automatického ostření (AF modul) na dně šachty (může trpět nepřesnostmi Front/Back focus).</li>
+                <li>Vysoká výdrž baterie (1000+ snímků), mechanická robustnost, ale větší rozměry a hmotnost.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4 style="color: #f472b6;">CSC (Compact System Camera / Mirrorless)</h4>
+              <ul class="styled-list">
+                <li><strong>Elektronický hledáček (EVF):</strong> Světlo dopadá přímo na snímač, který v reálném čase posílá obraz do miniaturního OLED displeje v hledáčku.</li>
+                <li><strong>WYSIWYG:</strong> V hledáčku fotograf vidí přesnou expozici, vyvážení bílé i hloubku ostrosti ještě před stiskem spouště.</li>
+                <li>Fázové ostření přímo na buňkách snímače (pokrytí 95–100 % plochy, detekce očí a AI rozpoznávání objektů).</li>
+                <li>Kratší vzdálenost bajonetu od čipu (Flange distance) umožňuje kompaktnější a opticky ostřejší objektivy.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: ARCHITEKTURA SNÍMAČŮ (CCD VS CMOS) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Polovodičové technologie</div>
+            <h2 class="slide-title">Technologie snímačů &bull; CCD, CMOS a BSI</h2>
+            <p class="slide-subtitle">Jak fotodiody akumulují fotony a převádějí je na elektrický náboj</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Polovodiče</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>CCD vs. CMOS architektura</h4>
+              <ul class="styled-list">
+                <li><strong>CCD (Charge-Coupled Device):</strong> Historická technologie. Náboje z fotodiod se posouvají po řádcích do jednoho společného zesilovače. Špičkový analogový obraz, ale vysoká spotřeba energie a pomalé čtení.</li>
+                <li><strong>CMOS (Active Pixel Sensor):</strong> Každý pixel má svůj vlastní integrovaný zesilovač a tranzistory. Umožňuje extrémně rychlé paralelní vyčítání, nízkou spotřebu energie a nativní video 4K/8K.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Moderní inovace: BSI a Stacked CMOS</h4>
+              <ul class="styled-list">
+                <li><strong>FSI (Front-Side Illuminated):</strong> Kovové vodiče a sběrnice leží NAD fotodiodami a stíní část přicházejícího světla.</li>
+                <li><strong>BSI (Back-Side Illuminated):</strong> Výrobním procesem je čip otočen &ndash; fotodiody jsou na samotném povrchu. Zachytí o 30–40 % více světla, což drasticky snižuje šum při vysokém ISO.</li>
+                <li><strong>Stacked CMOS:</strong> Snímač je složen ze sendviče vrstev (fotodiody + logika + dedikovaná DRAM paměť). Bleskurychlé vyčítání snímku za 1/250 s bez rolling shutter zkreslení.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: VELIKOSTI SNÍMAČŮ A CROP FAKTOR -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Fyzické rozměry čipu</div>
+            <h2 class="slide-title">Formáty snímačů a Crop faktor</h2>
+            <p class="slide-subtitle">Vliv velikosti senzoru na zorný úhel, šum a ekvivalentní ohnisko</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový výpočet</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossless">Full Frame (Kinofilm 35mm)</span>
+              <h4 style="margin: 0.5rem 0;">Rozměr $36 \times 24\text{ mm}$</h4>
+              <p style="font-size: 0.85rem;"><strong>Crop faktor = 1.0&times;</strong> (referenční etalon). Velká plocha pixelů zaručuje obrovský dynamický rozsah, čistý obraz i při vysokém ISO a malé hloubky ostrosti pro filmový bokeh.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">APS-C (Super 35)</span>
+              <h4 style="margin: 0.5rem 0;">Rozměr cca $23.6 \times 15.6\text{ mm}$</h4>
+              <p style="font-size: 0.85rem;"><strong>Crop faktor = 1.5&times;</strong> (Sony/Nikon/Fuji) nebo <strong>1.6&times;</strong> (Canon). Zorné pole odpovídá násobku ohniska: 50mm objektiv se chová jako 75mm teleobjektiv.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">Micro Four Thirds (MFT)</span>
+              <h4 style="margin: 0.5rem 0;">Rozměr $17.3 \times 13.0\text{ mm}$</h4>
+              <p style="font-size: 0.85rem;"><strong>Crop faktor = 2.0&times;</strong> (Panasonic, OM System). Poloviční úhlopříčka oproti Full Frame. Kompaktní lehké teleobjektivy, ale vyšší šum v šeru a větší hloubka ostrosti.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: BAYEROVA MASKA A RAW -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Barevná rekonstrukce</div>
+            <h2 class="slide-title">Bayerova maska (CFA) a proces Debayeringu</h2>
+            <p class="slide-subtitle">Proč je digitální senzor barvoslepý a jak vzniká barevný RAW obraz</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Algoritmus</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Bayerova barevná mozaika (RGGB)</h4>
+              <ul class="styled-list">
+                <li>Fotodiody křemíku měří pouze intenzitu světla (počet fotonů), ne jeho barvu!</li>
+                <li>Před každým pixelem je umístěn miniaturní optický filtr jedné barvy:
+                  <br><strong>50 % Zelených (Green)</strong> &ndash; lidské oko je na zelenou nejcitlivější.
+                  <br><strong>25 % Červených (Red)</strong>
+                  <br><strong>25 % Modrých (Blue)</strong>
+                </li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Proces Debayeringu (Demosaicing)</h4>
+              <ul class="styled-list">
+                <li>Každý pixel senzoru zná pouze jednu barevnou složku (buď R, G, nebo B).</li>
+                <li>Zbývající dvě barvy pro každý bod musí obrazový procesor (nebo RAW konvertor v PC) <strong>matematicky interpolovat</strong> z hodnot okolních sousedních pixelů.</li>
+                <li><strong>RAW data:</strong> Soubor obsahuje pouze surová 14bitová čísla z Bayerovy mozaiky. K interpolaci barev, doostření a redukci šumu dochází až nedestruktivně v počítači.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z techniky fotoaparátů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 10</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>DSLR vs CSC</h4>
+              <p>DSLR používá sklopné zrcátko a optický hledáček. CSC bezzrcadlovky snímají přímo na čip a nabízejí elektronický hledáček s živým náhledem.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Crop faktor</h4>
+              <p>Poměr úhlopříčky Full Frame (35mm) k danému snímači. Zužuje zorné pole objektivu (např. 1.5x u APS-C a 2.0x u MFT).</p>
+            </div>
+            <div class="summary-card">
+              <h4>Bayerova maska</h4>
+              <p>Šachovnice filtrů RGGB (50% zelená). Výpočet plného RGB obrazu probíhá matematickou interpolací (Debayering).</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Porovnejte konstrukci zrcadlovky a bezzrcadlovky. Definujte pojem crop faktor a popište, jak funguje Bayerova maska na snímači CMOS.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 03</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 07: Spojování tabulek (JOIN) | DAT20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník">
+          <span>← DAT20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 07</span>
+          <span class="divider">•</span>
+          <span>Spojování tabulek (JOIN)</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 12</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT20 • 7. přednáška (45 min)</div>
+        <h1 class="hero-title">Spojování tabulek: Příkazy JOIN</h1>
+        <p class="hero-desc">
+          Vnitřní (INNER JOIN), vnější (LEFT, RIGHT JOIN), sebereferenční spojení (Self JOIN) a vícenásobná dekompozice M:N vazeb na reálné databázi <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Typy spojení</span>
+            <span class="hero-meta-val">INNER, LEFT, RIGHT, SELF, CROSS</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Hierarchie kategorií</span>
+            <span class="hero-meta-val">Self-JOIN nad edu_eshop</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Okruh zkoušky</span>
+            <span class="hero-meta-val">Otázka č. 12</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: CARTESIAN PRODUCT VS INNER JOIN -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Princip spojení</div>
+            <h2 class="slide-title">Od Kartézského součinu k INNER JOIN</h2>
+            <p class="slide-subtitle">Proč je klauzule ON absolutní nutností každého relačního spojení</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: var(--accent-rose);">
+                <svg class="icon card-icon" style="color: var(--accent-rose);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                Kartézský součin (CROSS JOIN)
+              </h4>
+              <p>
+                Pokud spojíte dvě tabulky <em>bez</em> omezující podmínky, výsledkem je kombinace <strong>každého řádku s každým</strong> ($M \times N$).
+              </p>
+              <pre class="code-block" style="margin: 0.5rem 0; font-size: 0.8rem;"><code>-- 100 zákazníků × 1 000 produktů = 100 000 řádků!
+SELECT * FROM customer, product;</code></pre>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">
+                Výsledek obsahuje 99,9 % naprosto nesmyslných kombinací bez vzájemného vztahu.
+              </p>
+            </div>
+
+            <div class="content-card">
+              <h4 style="color: var(--accent-emerald);">
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="9 12 11 14 15 10"></polyline></svg>
+                Vnitřní spojení: INNER JOIN ... ON
+              </h4>
+              <p>
+                Vrátí pouze ty dvojice řádků, které <strong>splňují spojovací predikát</strong> v klauzuli <code>ON</code> (shodu primárního a cizího klíče).
+              </p>
+              <pre class="code-block" style="margin: 0.5rem 0; font-size: 0.8rem;"><code>SELECT 
+  c.id, c.email, o.id AS order_id, o.total_price
+FROM customer c
+INNER JOIN orders o ON c.id = o.customer_id;</code></pre>
+              <p style="font-size: 0.85rem; color: var(--accent-cyan);">
+                Zákazníci, kteří dosud nic neobjednali, se ve výsledku <strong>nezobrazí</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: LEFT JOIN -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vnější spojení</div>
+            <h2 class="slide-title">Vnější spojení: <code>LEFT [OUTER] JOIN</code></h2>
+            <p class="slide-subtitle">Jak nepřijít o řádky z hlavní tabulky i při absenci shody</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Zákazníci a jejich profily v edu_eshop</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-keyword">SELECT</span> 
+  c.`id`,
+  c.`email`,
+  cp.`first_name`,
+  cp.`last_name`,
+  cp.`phone`
+<span class="sql-keyword">FROM</span> `customer` c
+<span class="sql-keyword">LEFT JOIN</span> `customer_profile` cp 
+  <span class="sql-keyword">ON</span> c.`id` = cp.`customer_id`
+<span class="sql-keyword">ORDER BY</span> c.`id` <span class="sql-keyword">ASC</span>;</code></pre>
+            </div>
+
+            <div>
+              <div class="table-container">
+                <table class="db-table">
+                  <thead>
+                    <tr><th>id</th><th>email</th><th>first_name</th><th>last_name</th><th>phone</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>1</td><td>jan.novak@email.cz</td><td>Jan</td><td>Novák</td><td>+420 777...</td></tr>
+                    <tr><td>2</td><td>petra.svobodova...</td><td>Petra</td><td>Svobodová</td><td>+420 608...</td></tr>
+                    <tr><td>3</td><td>tomas.dvorak...</td><td>Tomáš</td><td>Dvořák</td><td>+420 721...</td></tr>
+                    <tr style="background: rgba(244, 63, 94, 0.1);">
+                      <td>4</td><td>lucie.cerna@post.cz</td>
+                      <td class="null-val">NULL</td><td class="null-val">NULL</td><td class="null-val">NULL</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="callout callout-eshop" style="margin-top: 0.8rem;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">Krása LEFT JOINu na zákazníkovi č. 4</div>
+                  Zákaznice Lucie Černá (ID 4) si v e-shopu založila účet, ale profil zatím nevyplnila. Kdybychom použili <code>INNER JOIN</code>, z výpisu by úplně zmizela! Díky <code>LEFT JOIN</code> se zobrazí a chybějící data jsou nahrazena <code>NULL</code>.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SELF JOIN -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Speciální spojení</div>
+            <h2 class="slide-title">Sebereferenční spojení (Self JOIN)</h2>
+            <p class="slide-subtitle">Spojení tabulky se sebou samou pro zobrazení stromové hierarchie</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-eshop">Hierarchie kategorií</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Strom kategorií z edu_eshop</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-keyword">SELECT</span> 
+  sub.`name` <span class="sql-keyword">AS</span> podkategorie,
+  <span class="sql-func">COALESCE</span>(parent.`name`, <span class="sql-string">'[Hlavní kategorie]'</span>) <span class="sql-keyword">AS</span> nadrazena_kategorie
+<span class="sql-keyword">FROM</span> `category` sub
+<span class="sql-keyword">LEFT JOIN</span> `category` parent 
+  <span class="sql-keyword">ON</span> sub.`parent_id` = parent.`id`
+<span class="sql-keyword">ORDER BY</span> nadrazena_kategorie, podkategorie;</code></pre>
+            </div>
+
+            <div>
+              <div class="content-card">
+                <h4>Jak funguje Self JOIN?</h4>
+                <p>
+                  V databázi máme jedinou tabulku <code>category</code>. V dotazu ji však otevřeme dvakrát pod dvěma různými <strong>aliasy</strong>:
+                </p>
+                <ul class="styled-list" style="margin-top: 0.5rem;">
+                  <li><code>sub</code>: reprezentuje podkategorii (např. „Příslušenství“).</li>
+                  <li><code>parent</code>: reprezentuje rodičovskou kategorii (např. „Počítače a notebooky“).</li>
+                  <li>Spojovací podmínka: <code>sub.parent_id = parent.id</code>.</li>
+                  <li>Hlavní kategorie nemají žádného rodiče (<code>parent_id IS NULL</code>), proto musíme použít <strong>LEFT JOIN</strong>, jinak by se nezobrazily!</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: MULTI-TABLE JOIN (M:N) -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Komplexní dotaz</div>
+            <h2 class="slide-title">Vícenásobné spojení přes vazební tabulku (M:N)</h2>
+            <p class="slide-subtitle">Jak získat produkty a jejich zařazení do kategorií</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span class="code-title">Propojení tří tabulek (product ↔ product_category ↔ category)</span>
+              <button class="btn-copy">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Kopírovat</span>
+              </button>
+            </div>
+            <pre class="code-block"><code><span class="sql-keyword">SELECT</span> 
+  p.`name` <span class="sql-keyword">AS</span> produkt,
+  p.`price` <span class="sql-keyword">AS</span> cena,
+  c.`name` <span class="sql-keyword">AS</span> kategorie
+<span class="sql-keyword">FROM</span> `product` p
+<span class="sql-keyword">INNER JOIN</span> `product_category` pc <span class="sql-keyword">ON</span> p.`id` = pc.`product_id`
+<span class="sql-keyword">INNER JOIN</span> `category` c         <span class="sql-keyword">ON</span> pc.`category_id` = c.`id`
+<span class="sql-keyword">ORDER BY</span> p.`name`, c.`name`;</code></pre>
+          </div>
+
+          <div class="callout callout-exam" style="margin-top: 0.5rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Zlaté pravidlo počtu spojení k absolutoriu</div>
+              K propojení $N$ tabulek potřebujete v dotazu vždy minimálně <strong>$N - 1$ klauzulí JOIN s podmínkami ON</strong>. Pokud propojujete produkty s kategoriemi (2 entity + 1 vazební tabulka = 3 tabulky), potřebujete přesně 2x JOIN!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Rekapitulace</div>
+            <h2 class="slide-title">Shrnutí: Který JOIN kdy použít?</h2>
+            <p class="slide-subtitle">Rozhodovací strom pro volbu správného typu spojení</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-card-num">1</div>
+              <h4>Použijte INNER JOIN</h4>
+              <p>Když vás zajímají pouze záznamy s garantovanou existencí vazby na obou stranách (např. realizované položky v objednávce).</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">2</div>
+              <h4>Použijte LEFT JOIN</h4>
+              <p>Když chcete zachovat všechny záznamy z primární tabulky bez ohledu na to, zda k nim v druhé tabulce existují data (např. zákazníci bez nákupu, kategorie bez rodiče).</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">3</div>
+              <h4>Vždy používejte aliasy tabulek</h4>
+              <p>Aliasy (<code>p</code>, <code>c</code>, <code>o</code>) zpřehledňují kód, zkracují dotazy a zabraňují chybě <em>„Column in field list is ambiguous“</em>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 07</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><span class="key-badge">M</span></div>
+          <div class="shortcut-row"><span>Motiv (Tmavý/Světlý)</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

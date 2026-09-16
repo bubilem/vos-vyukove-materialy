@@ -1,0 +1,60 @@
+/* ==========================================================================
+   OSY10 - Lokální modulové rozšíření (Typy operačních systémů)
+   Přebírá jádro z ../../../assets/css/presentation-core.css
+   ========================================================================== */
+
+@import "../../../assets/css/presentation-core.css";
+@import "../../../assets/css/syntax/terminal.css";
+
+:root {
+  --accent: #10b981;
+  --accent-glow: rgba(16, 185, 129, 0.25);
+  --accent-cyan: #06b6d4;
+}
+
+/* Modulová specifika OSY10 */
+.os-arch-box {
+  border-left: 3px solid var(--accent);
+  padding-left: 0.85rem;
+  margin: 0.6rem 0;
+  background: rgba(16, 185, 129, 0.05);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.layer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.75rem 0;
+}
+
+.layer-item {
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.layer-item.kernel-layer {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.12);
+  color: #a7f3d0;
+  font-weight: 700;
+}
+
+.layer-item.hw-layer {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.1);
+  color: #fde68a;
+}
+
+.badge-rt {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 02: Text, typografie a kódování znaků | MUL10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL10">
+          <span>&larr; MUL10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 02</span>
+          <span class="divider">&bull;</span>
+          <span>Text, typografie a kódování znaků</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 2: Text a typografie</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL10 &bull; 2. přednáška (45 min)</div>
+        <h1 class="hero-title">Text, typografie a kódování znaků</h1>
+        <p class="hero-desc">
+          Základní nositel sémantické informace v digitálních médiích. Evoluce kódování znaků od ASCII po UTF-8, anatomie písma, pravidla digitální sazby a textové datové formáty (TXT, RTF, PDF).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Kódování</span>
+            <span class="hero-meta-val">ASCII &bull; Unicode UTF-8</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Typografie</span>
+            <span class="hero-meta-val">Patkové vs Bezpatkové</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 2</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: VÝVOJ KÓDOVÁNÍ ZNAKŮ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Znakové sady</div>
+            <h2 class="slide-title">Od 7bitového ASCII k univerzálnímu UTF-8</h2>
+            <p class="slide-subtitle">Jak počítače převádějí binární čísla na písmena a symboly</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová teorie</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. 7bitový standard ASCII (1963)</h4>
+              <ul class="styled-list">
+                <li>Rozsah 0–127 (128 znaků).</li>
+                <li>Základní anglická abeceda (A-Z, a-z), číslice (0-9), interpunkce a řídicí znaky (CR, LF, TAB).</li>
+                <li>Absence jakýchkoliv národních znaků s diakritikou.</li>
+              </ul>
+              <h4 style="margin-top: 0.8rem;">2. 8bitové kódové stránky (Chaos 90. let)</h4>
+              <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                Využití 8. bitu (pozice 128–255). Různé nekompatibilní tabulky pro češtinu: <strong>ISO 8859-2</strong> (Unix), <strong>Windows-1250</strong> (Win) a <strong>CP852</strong> (DOS). Způsobovalo nesprávné zobrazení znaků (tzv. mojibake).
+              </p>
+            </div>
+            <div class="content-card">
+              <h4>3. Standard Unicode a kódování UTF-8</h4>
+              <p>Jednotný prostor pro všechny existující světové jazyky, historická písma i emotikony:</p>
+              <ul class="styled-list">
+                <li><strong>Unicode:</strong> Abstraktní tabulka mapující znak na kódový bod (např. <code>U+010D</code> = 'č').</li>
+                <li><strong>UTF-8 (Ken Thompson &amp; Rob Pike):</strong> Zpětně kompatibilní s ASCII (prvních 128 znaků zabírá přesně 1 bajt).</li>
+                <li><strong>Proměnná délka:</strong> Znak zabírá 1 až 4 bajty podle potřeby. Dnes standard pro 98 % webu.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-box" style="margin-top: 0.5rem;">
+            <div class="code-box-header">
+              <span>utf-8 &bull; binární struktura proměnné délky</span>
+              <button class="btn-copy" title="Kopírovat">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Kopírovat</span>
+              </button>
+            </div>
+            <pre><code>1 bajt (ASCII):     0xxxxxxx  (0x00 - 0x7F)
+2 bajty (např. č, ř): 110xxxxx 10xxxxxx (0xC0 - 0xDF)
+3 bajty (např. asijská písma): 1110xxxx 10xxxxxx 10xxxxxx
+4 bajty (symboly a emoji):    11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: ANATOMIE PÍSMA -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Typografie</div>
+            <h2 class="slide-title">Anatomie písma a typografická pravidla</h2>
+            <p class="slide-subtitle">Základní parametry tvaru znaků a vztahy mezi literami</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Písma</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Dotažnice písma</h4>
+              <ul class="styled-list">
+                <li><strong>Základní dotažnice (Baseline):</strong> Pomyslná linka, na které písmo "sedí".</li>
+                <li><strong>Střední výška (x-height):</strong> Výška malých liter bez dotahů (např. 'x', 'o').</li>
+                <li><strong>Horní dotah (Ascender):</strong> Část přesahující střední výšku nahoru ('b', 'd', 'h').</li>
+                <li><strong>Dolní dotah (Descender):</strong> Část sahající pod základní linku ('g', 'p', 'y').</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Meziznakové vztahy</h4>
+              <ul class="styled-list">
+                <li><strong>Kerning:</strong> Optická korekce mezer mezi konkrétními dvojicemi liter (např. 'AV', 'Te').</li>
+                <li><strong>Tracking:</strong> Rovnoměrné rozvolnění nebo zahuštění mezer v celém textovém bloku.</li>
+                <li><strong>Leading (Řádkový proklad):</strong> Vzdálenost mezi účařími dvou sousedních řádků textu.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="grid-2" style="margin-top: 0.6rem;">
+            <div class="content-card">
+              <h4>Patková písma (Serif)</h4>
+              <p>Zakončení tahů patkami (např. Times New Roman, Georgia). Vhodná pro dlouhý tištěný text, kde patky vedou oko podél řádku.</p>
+            </div>
+            <div class="content-card">
+              <h4>Bezpatková písma (Sans-Serif)</h4>
+              <p>Čistá lineární geometrie (např. Inter, Helvetica, Roboto). Optimální pro digitální obrazovky a uživatelská rozhraní i při nízkém rozlišení.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: ČITELNOST A HIERARCHIE NA DISPLEJI -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Digitální design</div>
+            <h2 class="slide-title">Čitelnost a hierarchie na obrazovkách</h2>
+            <p class="slide-subtitle">Zásady digitální sazby v multimediálních prezentacích a webech</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">UX / UI</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Délka řádku a skenování</h4>
+              <ul class="styled-list">
+                <li><strong>Optimální šířka:</strong> 45 až 75 znaků na řádek (včetně mezer). Delší řádky unavují zrak při návratu oka na další řádek.</li>
+                <li><strong>Řádkování (Line-height):</strong> Pro digitální text 140 % až 160 % (<code>1.4 - 1.6</code>).</li>
+                <li><strong>Zarovnání:</strong> Pro obrazovky vždy vlevo (flush left). Zarovnání do bloku (justify) vytváří na displeji rušivé "řeky" bílého místa.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Kontrast podle WCAG standardů</h4>
+              <ul class="styled-list">
+                <li><strong>Úroveň AA:</strong> Kontrastní poměr minimálně 4.5:1 pro běžný text a 3:1 pro velký text.</li>
+                <li><strong>Úroveň AAA:</strong> Přísnější poměr 7:1 pro citlivá čtení a přístupnost.</li>
+                <li><strong>Vizuální váhy:</strong> Jasná diferenciace mezi H1, H2, H3 a tělovým textem nejen velikostí, ale i tučností (font-weight).</li>
+              </ul>
+            </div>
+          </div>
+          <div class="callout callout-tip">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typografický zákon v multimédiích</div>
+              <p>V multimediální prezentaci nepoužívejte více než 2 rodiny písma současně (např. jedno bezpatkové pro UI a nadpisy a jedno monospaced pro kód a technické údaje).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: DATOVÉ FORMÁTY PRO TEXT -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Formáty souborů</div>
+            <h2 class="slide-title">Textové formáty v multimédiích</h2>
+            <p class="slide-subtitle">Srovnání TXT, RTF a přenositelného formátu PDF</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový rozbor</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill uncompressed">TXT (Plain Text)</span>
+              <h4 style="margin: 0.5rem 0;">Čistý text bez formátování</h4>
+              <p style="font-size: 0.88rem;">Obsahuje pouze bajty znaků a řídicí kódy konců řádků. Žádné informace o barvě, řezu ani velikosti. 100% přenositelný mezi všemi OS.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">RTF (Rich Text Format)</span>
+              <h4 style="margin: 0.5rem 0;">Text s formátovacími tagy</h4>
+              <p style="font-size: 0.88rem;">Specifikace Microsoftu. Ukládá formátování jako čitelné řídicí příkazy (např. <code>\b tučné \b0</code>). Nezávislý na platformě, ale bez přesné fixní sazby.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">PDF (Portable Document)</span>
+              <h4 style="margin: 0.5rem 0;">Fixní layout a PostScript model</h4>
+              <p style="font-size: 0.88rem;">Vyvinuto Adobe (standard ISO 32000). Zaručuje 100% identické zobrazení a tisk na jakémkoli hardware. Umožňuje zalití fontů, vektorů i interaktivních formulářů.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z multimédií</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 2</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Kódování UTF-8</h4>
+              <p>Zpětně kompatibilní s ASCII, 1–4 bajty na znak, pokrývá celý repertoár Unicode bez nutnosti přepínat kódové stránky.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Patky vs Bezpatky</h4>
+              <p>Serifová písma vedou zrak v tištěných knihách, sans-serifová zajišťují maximální ostrost a čitelnost na displejích.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Formát PDF</h4>
+              <p>PostScriptový vektorový model zaručující absolutní shodu vzhledu dokumentu napříč platformami včetně zalitých písem.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Vysvětlete rozdíl mezi ASCII a UTF-8. Popište anatomii písma a porovnejte formáty TXT, RTF a PDF z hlediska přenositelnosti.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 02</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

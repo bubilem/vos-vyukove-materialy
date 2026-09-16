@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 02: Ovládání počítače a uživatelská rozhraní | OSY10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY10">
+          <span>&larr; OSY10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 02</span>
+          <span class="divider">&bull;</span>
+          <span>Ovládání počítače a uživatelská rozhraní</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Rozhraní OS</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY10 &bull; 2. přednáška (45 min)</div>
+        <h1 class="hero-title">Ovládání počítače &amp; Uživatelská rozhraní</h1>
+        <p class="hero-desc">
+          Způsoby interakce mezi člověkem a operačním systémem: od dálnopisů a příkazové řádky (CLI) přes textová semigrafická menu (TUI) až po moderní grafické cloudy a kompozitní správce oken (GUI). Programové rozhraní systémových volání (Syscalls).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Uživatelská vrstva</span>
+            <span class="hero-meta-val">CLI vs TUI vs GUI</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Programové rozhraní</span>
+            <span class="hero-meta-val">Syscalls, API a ABI</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Automatizace</span>
+            <span class="hero-meta-val">Shell skripty &amp; Roury</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: EVOLUCE ROZHRANÍ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Typologie rozhraní</div>
+            <h2 class="slide-title">CLI vs. TUI vs. GUI</h2>
+            <p class="slide-subtitle">Tři generace interakce člověka s operačním systémem</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Evoluce</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. CLI (Command Line)</h4>
+              <p>Příkazový řádek v textovém terminálu (Bash, PowerShell, zsh):</p>
+              <ul class="styled-list">
+                <li>Minimální spotřeba RAM a CPU, funguje přes úzké pásmo (SSH).</li>
+                <li>Snadná automatizace a řetězení příkazů přes roury (<code>|</code>).</li>
+                <li>Vyžaduje znalost syntaxe a parametrů příkazů.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. TUI (Text User Interface)</h4>
+              <p>Pseudografické rozhraní v terminálu využívající ANSI/VT100 kódy a knihovnu <code>ncurses</code>:</p>
+              <ul class="styled-list">
+                <li>Ovládání šipkami, tabulátorem a klávesovými zkratkami.</li>
+                <li>Typické pro správu BIOS/UEFI, <code>mc</code> (Midnight Commander), <code>htop</code>.</li>
+                <li>Funguje spolehlivě i v nouzovém režimu a přes SSH bez X serveru.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>3. GUI (Graphical UI)</h4>
+              <p>Grafické okenní prostředí ovládané myší a dotykem (WIMP – Windows, Icons, Menus, Pointer):</p>
+              <ul class="styled-list">
+                <li>Intuitivní pro běžné uživatele, okamžitá vizuální zpětná vazba.</li>
+                <li>Vysoká spotřeba paměti, nutnost grafických ovladačů a compositing engine.</li>
+                <li>Těžší na vzdálenou automatizaci oproti CLI.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: SYSTÉMOVÁ VOLÁNÍ (SYSCALLS) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Programové rozhraní</div>
+            <h2 class="slide-title">Systémová volání (System Calls)</h2>
+            <p class="slide-subtitle">Jediná oficiální brána ze světa aplikace do jádra operačního systému</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový koncept</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Jak probíhá systémové volání</h4>
+              <p>Aplikace v uživatelském režimu (User Mode) nemůže přímo číst disk ani poslat TCP paket:</p>
+              <ol class="styled-list">
+                <li>Aplikace zavolá standardní C funkci (např. <code>read()</code>, <code>write()</code>).</li>
+                <li>Knihovna uloží číslo syscallu a argumenty do procesorových registrů (<code>rax</code>, <code>rdi</code> na x86_64).</li>
+                <li>Procesor vykoná privilegovanou instrukci (<code>syscall</code> na x86_64 / <code>svc</code> na ARM).</li>
+                <li>CPU hardwarově přepne do Kernel Mode a skočí na tabulku obsluhy jádra.</li>
+                <li>Jádro ověří práva a parametry, vykoná operaci a vrátí výsledek zpět do User Space.</li>
+              </ol>
+            </div>
+            <div class="content-card">
+              <h4>API vs. ABI (Application Binary Interface)</h4>
+              <ul class="styled-list">
+                <li><strong>API (Application Programming Interface):</strong> Zdrojová úroveň (hlavičkové soubory <code>.h</code>, funkce jako <code>printf()</code>). Zajišťuje přenositelnost zdrojového kódu (kompatibilita při rekompilaci).</li>
+                <li><strong>ABI (Application Binary Interface):</strong> Binární úroveň (volací konvence, velikost struktur v bajtech, zarovnání, čísla syscallů). Zajišťuje, že zkompilovaná binárka poběží bez rekompilace.</li>
+                <li><strong>POSIX standard:</strong> Definuje jednotné API pro Unixové systémy (Linux, macOS, BSD).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: DÉMONY A UŽIVATELSKÉ RELACE -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektura služeb</div>
+            <h2 class="slide-title">Procesy na pozadí a správa relací</h2>
+            <p class="slide-subtitle">Oddělení uživatelské interakce od nepřetržitého běhu systémových úloh</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Systémové služby</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Démoni (Unix) &amp; Windows Services</h4>
+              <p>Procesy bez připojeného řídicího terminálu a bez grafického rozhraní běžící na pozadí:</p>
+              <ul class="styled-list">
+                <li>Startují typicky během bootu systému před přihlášením uživatele.</li>
+                <li>Zajišťují síťové služby (SSH server <code>sshd</code>, webserver <code>nginx</code>, časovou synchronizaci <code>chrony</code>).</li>
+                <li>Jejich výstup je přesměrován do systémového logu (<code>journald</code>, Syslog, Windows Event Log).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Uživatelská relace (Session Management)</h4>
+              <p>Při přihlášení uživatele OS vytvoří izolovanou relaci:</p>
+              <ul class="styled-list">
+                <li><strong>Bezpečnostní kontext:</strong> Uživatelský token / UID, GID, seznam přístupových skupin.</li>
+                <li><strong>Proměnné prostředí:</strong> <code>PATH</code>, <code>HOME</code>, <code>USER</code>, <code>LANG</code>.</li>
+                <li><strong>Víceuživatelský přístup:</strong> Jeden systém může současně obsluhovat desítky uživatelů přes SSH a lokálního uživatele na GUI displeji.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ UKÁZKA SYSCALLS A CLI -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická diagnostika</div>
+            <h2 class="slide-title">Trasování systémových volání v reálném čase</h2>
+            <p class="slide-subtitle">Sledování komunikace mezi aplikací a jádrem nástrojem strace</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Terminál &bull; strace</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Trasování volání jádra pomocí strace</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Spuštění příkazu 'cat' s odchytáváním souborových a paměťových syscallů</span>
+<span class="term-prompt">$ </span><span class="term-cmd">strace</span> <span class="term-param">-e</span> <span class="term-arg">trace=openat,read,write,close</span> <span class="term-cmd">cat</span> <span class="term-path">/etc/hostname</span>
+
+<span class="term-comment"># Výstup zachycený strace z přepnutí do Kernel Mode:</span>
+<span class="term-out">openat(AT_FDCWD, "/etc/hostname", O_RDONLY) = 3</span>
+<span class="term-out">read(3, "vos-server\n", 131072)          = 11</span>
+<span class="term-out">write(1, "vos-server\n", 11)             = 11</span>
+<span class="term-out">close(3)                                = 0</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>powershell &bull; Analýza procesů a relací</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Zobrazení procesů rozdělených podle SessionId (0 = služby, 1+ = uživatelé)</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Process</span> <span class="term-pipe">|</span> <span class="term-cmd">Select-Object</span> <span class="term-arg">Id, ProcessName, SessionId, CPU</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Sort-Object</span> <span class="term-arg">SessionId</span> <span class="term-param">-Descending</span> <span class="term-pipe">|</span> <span class="term-cmd">Select-Object</span> <span class="term-param">-First</span> <span class="term-arg">8</span>
+
+<span class="term-comment"># Zjištění stavu systémových služeb (Windows Services)</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Service</span> <span class="term-pipe">|</span> <span class="term-cmd">Where-Object</span> <span class="term-arg">Status</span> <span class="term-param">-eq</span> <span class="term-string">"Running"</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Select-Object</span> <span class="term-arg">Name, DisplayName, StartType</span> <span class="term-pipe">|</span> <span class="term-cmd">Select-Object</span> <span class="term-param">-First</span> <span class="term-arg">6</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Shrnutí témat a zkušební otázky z ovládání a rozhraní OS</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Výhody CLI v enterprise</h4>
+              <p>Schopnost zdůvodnit, proč jsou serverové systémy spravovány přes CLI (skriptovatelnost, determinismus, nízká režie, bezpečnost a auditovatelnost příkazů).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Mechanismus Syscall</h4>
+              <p>Detailní popis přechodu z User Mode do Kernel Mode: hardwarová instrukce, registry CPU, tabulka obsluhy jádra a návrat hodnoty.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Rozdíl API vs. ABI</h4>
+              <p>Vysvětlení rozdílu mezi kompatibilitou na úrovni zdrojového kódu (API / POSIX) a kompatibilitou na úrovni binárních spustitelných souborů (ABI).</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Popište, jaký je rozdíl mezi uživatelskou relací a systémovou službou (démonem) z hlediska životního cyklu a oprávnění.“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí">
+          <svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        </a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+        <button class="control-btn" id="helpBtn" title="Nápověda">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        </button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 02</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

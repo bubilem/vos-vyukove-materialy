@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 01: Abstrakce hardware a správa prostředků | OSY10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY10">
+          <span>&larr; OSY10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 01</span>
+          <span class="divider">&bull;</span>
+          <span>Abstrakce hardware a správa prostředků</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Architektura OS</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY10 &bull; 1. přednáška (45 min)</div>
+        <h1 class="hero-title">Abstrakce hardware &amp; Správa prostředků</h1>
+        <p class="hero-desc">
+          Základní definice a dvě klíčové role operačního systému: OS jako správce sdílených fyzických prostředků a OS jako abstraktní (rozšířený) stroj poskytující jednotné API aplikacím.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Klíčová abstrakce</span>
+            <span class="hero-meta-val">HAL &amp; Virtuální stroj</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Správa prostředků</span>
+            <span class="hero-meta-val">CPU, RAM, Disky, I/O</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Klasifikace jader</span>
+            <span class="hero-meta-val">Monolit vs Mikrojádro</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: DVOJÍ ROLE OPERAČNÍHO SYSTÉMU -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Fundamentální teorie</div>
+            <h2 class="slide-title">Dvě tváře operačního systému</h2>
+            <p class="slide-subtitle">Proč hardware nemůže být řízen aplikacemi přímo</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový pojem</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. OS jako správce prostředků (Resource Manager)</h4>
+              <p>Moderní počítač sdílí omezené fyzické komponenty mezi stovkami běžících procesů a uživatelů:</p>
+              <ul class="styled-list">
+                <li><strong>Časové sdílení (Time multiplexing):</strong> Procesor (CPU) je střídavě přidělován jednotlivým vláknům po kvantech času.</li>
+                <li><strong>Prostorové sdílení (Space multiplexing):</strong> Operační paměť (RAM) a diskový prostor jsou rozděleny na izolované úseky.</li>
+                <li><strong>Rozhodování sporů:</strong> Řešení souběžných požadavků, předcházení konfliktům a starvation (hladovění).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. OS jako abstraktní stroj (Extended Machine)</h4>
+              <p>Hardware je příliš složitý a nízkoúrovňový na to, aby s ním pracoval každý běžný vývojář:</p>
+              <ul class="styled-list">
+                <li>Místo přímého posílání bajtů na řadič disku nabízí OS koncept <strong>souboru a adresáře</strong>.</li>
+                <li>Místo přímého nastavování registrů síťové karty nabízí koncept <strong>síťového soketu (TCP socket)</strong>.</li>
+                <li>Místo fyzických adres čipů RAM nabízí <strong>lineární virtuální adresní prostor</strong>.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="callout callout-tip">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Základní axiom bezpečnosti OS</div>
+              <p>Žádná uživatelská aplikace nesmí mít přímý neřízený přístup k fyzickému hardware. Každá operace musí projít přes ověřené abstrakční rozhraní jádra.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: HAL A VRSTVENÁ ARCHITEKTURA -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Hardwarová integrace</div>
+            <h2 class="slide-title">Hardware Abstraction Layer (HAL)</h2>
+            <p class="slide-subtitle">Jak operační systém dosahuje nezávislosti na konkrétních čipsetech a procesorech</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Architektura</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="layer-stack">
+                <div class="layer-item">
+                  <span>Uživatelské aplikace (Web, IDE, Hry)</span>
+                  <span class="sys-badge sys-badge-user">User Space</span>
+                </div>
+                <div class="layer-item">
+                  <span>Systémové knihovny &amp; API (glibc, Win32 API)</span>
+                  <span class="sys-badge sys-badge-user">User API</span>
+                </div>
+                <div class="layer-item kernel-layer">
+                  <span>Jádro OS (Plánovač CPU, Virtuální paměť, VFS)</span>
+                  <span class="sys-badge sys-badge-kernel">Kernel Space</span>
+                </div>
+                <div class="layer-item" style="border-color: #10b981; background: rgba(16, 185, 129, 0.2);">
+                  <span>Hardware Abstraction Layer (HAL)</span>
+                  <span class="sys-badge sys-badge-rt">HAL</span>
+                </div>
+                <div class="layer-item hw-layer">
+                  <span>Fyzický hardware (x86_64, ARM64, Čipset, APIC, PCI)</span>
+                  <span class="sys-badge sys-badge-hw">Fyzický HW</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <h4>Role vrstvy HAL v praxi</h4>
+              <p>HAL skrývá hardwarové odlišnosti čipsetů základních desek, časovačů a řadičů přerušení za jednotné programové rozhraní:</p>
+              <ul class="styled-list">
+                <li><strong>Přenositelnost:</strong> Vyšší vrstvy jádra (plánovač procesů, souborový systém) jsou z 98 % shodné pro x86_64 i ARM64.</li>
+                <li><strong>Ovladače zařízení:</strong> Ovladač komunikuje s HAL rozhraním namísto přímého zápisu do proprietárních adres sběrnice.</li>
+                <li><strong>Příklad:</strong> Ve Windows je HAL implementován jako dynamická knihovna (např. <code>hal.dll</code>).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: ARCHITEKTURY JADER -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Konstrukce OS</div>
+            <h2 class="slide-title">Monolitické jádro vs. Mikrojádro</h2>
+            <p class="slide-subtitle">Srovnání dvou hlavních architektonických filosofií</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Monolitické jádro (Linux, BSD)</h4>
+              <p>Celý operační systém (plánovač, správa paměti, síťový zásobník i veškeré ovladače disků a grafik) běží v jednom privilegovaném adresním prostoru jádra.</p>
+              <ul class="styled-list">
+                <li><strong class="term-success">Výhoda:</strong> Maximální rychlost, volání komponent je realizováno jako rychlé volání funkcí C.</li>
+                <li><strong class="term-err">Nevýhoda:</strong> Chyba v jediném ovladači třetí strany může způsobit pád celého systému (Kernel Panic / BSOD).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Mikrojádro (QNX, seL4, Minix)</h4>
+              <p>V privilegovaném režimu běží pouze absolutní minimum: meziprocesová komunikace (IPC), základní stránkování a primitivní plánovač. Ovladače i souborové systémy běží jako uživatelské procesy.</p>
+              <ul class="styled-list">
+                <li><strong class="term-success">Výhoda:</strong> Extrémní stabilita a bezpečnost – pád ovladače disku neshodí zbytek systému.</li>
+                <li><strong class="term-err">Nevýhoda:</strong> Režie IPC zpráv mezi procesy a časté přepínání kontextu snižuje výkon.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="callout callout-tip">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Moderní kompromis: Hybridní jádro</div>
+              <p>Systémy jako <strong>Windows NT</strong> nebo <strong>macOS (XNU)</strong> kombinují principy mikrojádra s monolitickými prvky (grafický subsystém a I/O běží z výkonnostních důvodů v prostoru jádra).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ INSPEKCE SPRÁVY PROSTŘEDKŮ -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Systémová diagnostika</div>
+            <h2 class="slide-title">Praktická inspekce prostředků v Linuxu a Windows</h2>
+            <p class="slide-subtitle">Zjišťování stavu hardwaru a abstrakce jádra přes CLI</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">CLI ukázky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Inspekce HAL a prostředků jádra</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Detekce procesoru a jeho schopností z virtuálního FS jádra</span>
+<span class="term-prompt">$ </span><span class="term-cmd">cat</span> <span class="term-path">/proc/cpuinfo</span> <span class="term-pipe">|</span> <span class="term-cmd">grep</span> <span class="term-param">-E</span> <span class="term-string">"model name|cores|cpu MHz"</span>
+
+<span class="term-comment"># Zobrazení přidělené a virtuální paměti jádra</span>
+<span class="term-prompt">$ </span><span class="term-cmd">free</span> <span class="term-param">-h</span>
+
+<span class="term-comment"># Inspekce hardwarových událostí v kruhovém bufferu jádra</span>
+<span class="term-prompt">$ </span><span class="term-cmd">dmesg</span> <span class="term-param">--level=err,warn</span> <span class="term-pipe">|</span> <span class="term-cmd">head</span> <span class="term-param">-n</span> <span class="term-arg">10</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>powershell &bull; Diagnostika hardware přes WMI/CIM</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Dotaz na HAL a fyzický procesor přes CIM</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-CimInstance</span> <span class="term-param">-ClassName</span> <span class="term-arg">Win32_Processor</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Select-Object</span> <span class="term-arg">Name, NumberOfCores, NumberOfLogicalProcessors</span>
+
+<span class="term-comment"># Zobrazení využití fyzické a stránkované paměti</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-CimInstance</span> <span class="term-param">-ClassName</span> <span class="term-arg">Win32_OperatingSystem</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Select-Object</span> <span class="term-arg">TotalVisibleMemorySize, FreePhysicalMemory</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Co musí student umět vysvětlit a obhájit</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Definice a role OS</h4>
+              <p>Schopnost formulovat dvě základní role OS: správce prostředků (Resource Manager) a rozšiřující abstraktní stroj (Extended Machine).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. HAL vrstva</h4>
+              <p>Vysvětlení významu Hardware Abstraction Layer pro přenositelnost kódu operačního systému mezi různými architekturami procesorů a čipsetů.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Modely jader</h4>
+              <p>Porovnání monolitického jádra a mikrojádra: princip oddělení adresních prostorů, dopad na bezpečnost, stabilitu a výkonnostní režii.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Vysvětlete, proč aplikace nemohou přímo zapisovat na diskový řadič a jakou roli v tom hraje systémové volání a abstrakce souborového systému.“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Navigation / Controls Bar -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí">
+          <svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        </a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek (Šipka vlevo)">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek (Šipka vpravo)">
+          <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv (T)">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka (F)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+        <button class="control-btn" id="helpBtn" title="Nápověda (Otazník)">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 01</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

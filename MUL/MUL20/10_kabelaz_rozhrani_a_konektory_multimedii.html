@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 10: Kabeláž, rozhraní a konektory pro multimédia | MUL20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL20">
+          <span>&larr; MUL20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 10</span>
+          <span class="divider">&bull;</span>
+          <span>Kabeláž, rozhraní a konektory pro multimédia</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 17: Kabeláž a rozhraní</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL20 &bull; 10. přednáška (45 min)</div>
+        <h1 class="hero-title">Kabeláž, rozhraní a konektory pro multimédia</h1>
+        <p class="hero-desc">
+          Přenos multimediálních signálů v praxi: digitální video sběrnice (HDMI 2.1, DisplayPort 2.1, Thunderbolt), analogové standardy (VGA, DVI), symetrické a nesymetrické audio (XLR, TRS, RCA, TOSLINK) a řešení zemních smyček.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Video</span>
+            <span class="hero-meta-val">HDMI 2.1 &bull; DisplayPort 2.1</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Audio</span>
+            <span class="hero-meta-val">XLR &bull; TRS &bull; TOSLINK</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 17</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: DIGITÁLNÍ VIDEO ROZHRANÍ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vysokorychlostní video</div>
+            <h2 class="slide-title">Moderní digitální rozhraní: HDMI vs. DisplayPort</h2>
+            <p class="slide-subtitle">Propustnost sběrnic, FRL protokol a univerzální rozhraní USB-C</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčové standardy</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>HDMI (High-Definition Multimedia Interface)</h4>
+              <ul class="styled-list">
+                <li>Spotřební elektronika (TV, herní konzole, Blu-ray, AV receivery).</li>
+                <li><strong>HDMI 2.0 (18 Gbps):</strong> Maximum 4K při 60 Hz 8-bit.</li>
+                <li><strong>HDMI 2.1 (48 Gbps &ndash; FRL):</strong> Až 4K při 120 Hz, 8K při 60 Hz, podpora variabilní obnovovací frekvence VRR, ALLM a zpětného zvukového kanálu <strong>eARC</strong> (nekomprimovaný Dolby Atmos).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>DisplayPort &amp; Thunderbolt / USB-C</h4>
+              <ul class="styled-list">
+                <li><strong>DisplayPort 1.4a / 2.1:</strong> Standard počítačového světa. Propustnost až <strong>80 Gbps (UHBR 20)</strong>. Podpora řetězení monitorů (MST &ndash; Daisy Chaining) z jednoho kabelu.</li>
+                <li><strong>USB-C (DP Alt Mode):</strong> Fyzický konektor USB-C přepne vnitřní linky přímo na signál DisplayPort. Přenáší naráz video 4K 144Hz, data USB 3.2 i napájení Power Delivery (až 100–240 W) do notebooku.</li>
+                <li><strong>Thunderbolt 4 / 5:</strong> PCIe tunelování s garantovanou šířkou pásma 40 až 120 Gbps pro profesionální video střižny.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: ANALOGOVÁ A PŘECHODOVÁ ROZHRANÍ -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Historie a kompatibilita</div>
+            <h2 class="slide-title">Analogová video rozhraní: VGA, DVI a převodníky</h2>
+            <p class="slide-subtitle">Rozdíl mezi pasivní redukcí zapojení pinů a aktivním D/A převodníkem</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Analogové signály</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossy">VGA (D-Sub 15 pin)</span>
+              <h4 style="margin: 0.5rem 0;">Čistě analogový RGBHV</h4>
+              <p style="font-size: 0.85rem;">Přenáší analogové složky RGB a synchronizaci H/V. Citlivý na délku kabelu a stínění &ndash; projevuje se duchy a rozostřením. Nelze pasivně zredukovat z HDMI!</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">DVI (Digital Visual Interface)</span>
+              <h4 style="margin: 0.5rem 0;">Přechodový standard</h4>
+              <p style="font-size: 0.85rem;"><strong>DVI-D:</strong> Pouze digitální signál (kompatibilní s HDMI pasivní redukcí).<br><strong>DVI-I:</strong> Integrované digitální i analogové piny (lze pasivně redukovat na VGA).<br><strong>Dual-Link:</strong> Zdvojená propustnost pro rozlišení $2560 \times 1600$.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">Aktivní vs. Pasivní redukce</span>
+              <h4 style="margin: 0.5rem 0;">Integrovaný čip DAC</h4>
+              <p style="font-size: 0.85rem;">Pokud převádíme digitální signál (HDMI / DP) na analogový vstup (starý VGA projektor), je nezbytný <strong>aktivní adaptér s napájeným převodníkem DAC</strong>, který vzorky v reálném čase moduluje na napětí.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: AUDIO KONEKTORY V MULTIMÉDIÍCH -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zvuková rozhraní</div>
+            <h2 class="slide-title">Profesionální a spotřebitelské audio konektory</h2>
+            <p class="slide-subtitle">Symetrické XLR, Jacky různých konfigurací a optický TOSLINK</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový přehled</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Elektrické audio konektory</h4>
+              <ul class="styled-list">
+                <li><strong>XLR (Canon 3-pin):</strong> Robustní zámkový konektor pro symetrické vedení mikrofonů a studiových monitorů. Odolný proti vytržení.</li>
+                <li><strong>Jack 6.3 mm / 3.5 mm:</strong>
+                  <br>&bull; <em>TS (Tip-Sleeve):</em> Nesymetrický mono (elektrické kytary).
+                  <br>&bull; <em>TRS (Tip-Ring-Sleeve):</em> Stereo sluchátka nebo symetrické mono.
+                  <br>&bull; <em>TRRS:</em> Headsety s mikrofonem (telefonní standard CTIA/OMTP).
+                </li>
+                <li><strong>RCA (Cinch):</strong> Nesymetrické spotřebitelské linkové audio (bílý = levý kanál, červený = pravý kanál).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Optické audio &ndash; S/PDIF TOSLINK</h4>
+              <ul class="styled-list">
+                <li>Přenos digitálního audia pomocí <strong>světelných pulzů v plastovém optickém vlákně</strong> (LED dioda).</li>
+                <li>Přenáší nekomprimované stereo PCM nebo komprimovaný vícekanálový zvuk Dolby Digital 5.1 / DTS.</li>
+                <li><strong>Imunita vůči rušení:</strong> Jelikož optické vlákno nevede elektrický proud, je <strong>100% imunní vůči elektromagnetickému rušení (EMI) a vzniku zemních smyček</strong>!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: RUŠENÍ, ÚTLUM A ZEMNÍ SMYČKY -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Fyzika přenosu</div>
+            <h2 class="slide-title">Útlum signálu, limity délek a zemní smyčky</h2>
+            <p class="slide-subtitle">Problémy v instalacích a jak odstranit 50Hz síťový brum</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Diagnostika</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Limity délek kabelů a útlum</h4>
+              <ul class="styled-list">
+                <li><strong>Pasivní HDMI:</strong> Spolehlivé do 5 metrů. Nad 10 metrů při 4K dochází k výpadkům synchronizace a pixelovému šumu (tzv. jiskření / sparkles).</li>
+                <li><strong>Aktivní optické kabely (AOC):</strong> V konektorech je integrován elektro-optický převodník &ndash; signál běží po skle bez útlumu na vzdálenost <strong>30 až 100 metrů</strong>.</li>
+                <li><strong>SDI (Serial Digital Interface):</strong> Koaxiální BNC kabel s bajonetem pro televizní přenosy (12G-SDI pro 4K na vzdálenost 70+ m).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Zemní smyčky (Ground Loop) a 50Hz brum</h4>
+              <ul class="styled-list">
+                <li>Vzniká, když jsou dvě audio/video zařízení zapojena do různých zásuvek s rozdílným potenciálem ochranného vodiče PE.</li>
+                <li>Vyrovnávací proud teče po stínění audio kabelu a indukuje slyšitelný <strong>brum 50 Hz</strong> v reproduktorech nebo vodorovné pruhy v obraze.</li>
+                <li><strong>Řešení:</strong> Použití <strong>oddělovacího transformátoru (DI-Box s funkcí Ground Lift)</strong> nebo optického oddělení signálu.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza modulu</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist MUL20</h2>
+            <p class="slide-subtitle">Základní fundament znalostí modulu Práce s multimédii a technika</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Kompletní okruhy 9&ndash;17</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>HDMI 2.1 &amp; DP 2.1</h4>
+              <p>48 Gbps resp. 80 Gbps pro 4K 120Hz a 8K. USB-C DP Alt Mode integruje obraz, data i 100W napájení do jednoho tenkého kabelu.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Symetrické audio</h4>
+              <p>XLR a TRS potlačují elektromagnetické rušení fázovým odečtem (CMRR). TOSLINK poskytuje optickou galvanickou izolaci.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zemní smyčky</h4>
+              <p>Způsobují 50Hz brum při rozdílných potenciálech uzemnění. Řeší se galvanickým oddělením (DI-Box, Ground Lift, optika).</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Porovnejte možnosti rozhraní HDMI 2.1 a DisplayPort 2.1. Popište rozdíl mezi konektory TS, TRS a XLR a vysvětlete příčinu a řešení zemní smyčky.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 10</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

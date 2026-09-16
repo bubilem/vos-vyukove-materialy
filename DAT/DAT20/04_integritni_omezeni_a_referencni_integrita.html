@@ -1,0 +1,407 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 04: Integritní omezení a referenční integrita | DAT20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník">
+          <span>← DAT20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 04</span>
+          <span class="divider">•</span>
+          <span>Integritní omezení a referenční integrita</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 9</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT20 • 4. přednáška (45 min)</div>
+        <h1 class="hero-title">Integritní omezení & Referenční integrita</h1>
+        <p class="hero-desc">
+          Zajištění konzistence a validity dat. Primární klíče, unikátnost, podmínky CHECK a cizí klíče s referenčními akcemi CASCADE, SET NULL a RESTRICT na schématu <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Typy integrity</span>
+            <span class="hero-meta-val">Entitní, Doménová, Referenční</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční akce</span>
+            <span class="hero-meta-val">CASCADE, SET NULL, RESTRICT</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Okruh zkoušky</span>
+            <span class="hero-meta-val">Otázka č. 9</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: TYPES OF INTEGRITY -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektura integrity</div>
+            <h2 class="slide-title">Tři pilíře databázové integrity</h2>
+            <p class="slide-subtitle">Databáze musí aktivně odmítnout nesmyslná a nekonzistentní data</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                1. Entitní integrita
+              </h4>
+              <p>Každý řádek v relaci musí být jednoznačně identifikovatelný.</p>
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.88rem;">
+                <li>Zajištěno pomocí <strong>PRIMARY KEY</strong>.</li>
+                <li>Hodnota klíče nesmí být <code>NULL</code> ani duplicitní.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                2. Doménová integrita
+              </h4>
+              <p>Hodnota atributu musí odpovídat povolenému typu a rozsahu.</p>
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.88rem;">
+                <li>Správný <strong>datový typ</strong> a délka.</li>
+                <li>Klauzule <strong>NOT NULL</strong> a <strong>DEFAULT</strong>.</li>
+                <li>Kontrolní výraz <strong>CHECK</strong>.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                3. Referenční integrita
+              </h4>
+              <p>Vztahy mezi tabulkami musí být vždy platné.</p>
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.88rem;">
+                <li>Zajištěno pomocí <strong>FOREIGN KEY</strong>.</li>
+                <li>Cizí klíč nesmí odkazovat na neexistující záznam.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-tip" style="margin-top: 0.8rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Proč svěřit integritu databázi a ne aplikačnímu kódu?</div>
+              Do databáze často přistupuje více aplikací (web, mobilní aplikace, API, integrační skripty, analytika). Pokud integritu hlídá přímo SŘBD na úrovni engine InnoDB, neexistuje způsob, jak systém obejít a zapsat poškozená data.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: DOMAIN CONSTRAINTS & CHECK -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Doménová integrita</div>
+            <h2 class="slide-title">CHECK, UNIQUE a NOT NULL v <code>edu_eshop</code></h2>
+            <p class="slide-subtitle">Zajištění věcné správnosti uložených hodnot</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Ukázky z edu_eshop.sql</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-comment">-- 1. Kontrola nezápornosti ceny a skladu</span>
+<span class="sql-keyword">CREATE TABLE</span> `product` (
+  `id` <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY AUTO_INCREMENT</span>,
+  `price` <span class="sql-type">DECIMAL(10,2)</span> <span class="sql-keyword">NOT NULL</span>,
+  `stock_quantity` <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL DEFAULT</span> 0,
+  <span class="sql-keyword">CONSTRAINT</span> `chk_product_price` <span class="sql-keyword">CHECK</span> (`price` >= 0),
+  <span class="sql-keyword">CONSTRAINT</span> `chk_product_stock` <span class="sql-keyword">CHECK</span> (`stock_quantity` >= 0)
+);
+
+<span class="sql-comment">-- 2. Hodnocení pouze 1 až 5 hvězd + unikátní recenze</span>
+<span class="sql-keyword">CREATE TABLE</span> `rating` (
+  `id` <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY AUTO_INCREMENT</span>,
+  `product_id` <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+  `customer_id` <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+  `score` <span class="sql-type">TINYINT</span> <span class="sql-keyword">NOT NULL</span>,
+  <span class="sql-keyword">CONSTRAINT</span> `chk_rating_score` 
+    <span class="sql-keyword">CHECK</span> (`score` <span class="sql-keyword">BETWEEN</span> 1 <span class="sql-keyword">AND</span> 5),
+  <span class="sql-keyword">CONSTRAINT</span> `uq_customer_product_rating` 
+    <span class="sql-keyword">UNIQUE</span> (`customer_id`, `product_id`)
+);</code></pre>
+            </div>
+
+            <div>
+              <div class="content-card">
+                <h4>Rozbor pravidel</h4>
+                <ul class="styled-list">
+                  <li>
+                    <strong><code>CHECK (score BETWEEN 1 AND 5)</code>:</strong> Pokus o vložení skóre 0 nebo 6 skončí chybou: <code>Check constraint 'chk_rating_score' is violated</code>.
+                  </li>
+                  <li>
+                    <strong>Složený unikátní klíč:</strong> <code>UNIQUE (customer_id, product_id)</code> garantuje, že tentýž zákazník může ohodnotit stejný produkt maximálně <strong>jednou</strong>!
+                  </li>
+                  <li>
+                    <strong>Pojmenovávání omezení:</strong> Vždy dávejte omezením explicitní název (např. <code>chk_product_price</code>), aby vývojář v chybové hlášce ihned věděl, co porušil.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: FOREIGN KEYS -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Referenční integrita</div>
+            <h2 class="slide-title">Definice cizích klíčů (FOREIGN KEY)</h2>
+            <p class="slide-subtitle">Jak propojit tabulky a chránit integritu vazeb 1:1, 1:N a M:N</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="code-wrapper">
+              <div class="code-header">
+                <span class="code-title">Syntaxe ALTER TABLE ADD CONSTRAINT</span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-comment">-- Vztah 1:1 mezi profilem a zákazníkem</span>
+<span class="sql-keyword">ALTER TABLE</span> `customer_profile`
+  <span class="sql-keyword">ADD CONSTRAINT</span> `fk_customer_profile_customer`
+  <span class="sql-keyword">FOREIGN KEY</span> (`customer_id`) 
+  <span class="sql-keyword">REFERENCES</span> `customer` (`id`)
+  <span class="sql-keyword">ON DELETE CASCADE</span> 
+  <span class="sql-keyword">ON UPDATE CASCADE</span>;
+
+<span class="sql-comment">-- Sebereferenční stromová hierarchie kategorií</span>
+<span class="sql-keyword">ALTER TABLE</span> `category`
+  <span class="sql-keyword">ADD CONSTRAINT</span> `fk_category_parent`
+  <span class="sql-keyword">FOREIGN KEY</span> (`parent_id`) 
+  <span class="sql-keyword">REFERENCES</span> `category` (`id`)
+  <span class="sql-keyword">ON DELETE SET NULL</span> 
+  <span class="sql-keyword">ON UPDATE CASCADE</span>;</code></pre>
+            </div>
+
+            <div class="content-card">
+              <h4>Podmínky pro vytvoření cizího klíče</h4>
+              <ul class="styled-list">
+                <li>
+                  <strong>Shodný datový typ:</strong> Sloupec cizího klíče musí mít <em>naprosto identický typ a znaménko</em> jako primární klíč (např. oba <code>INT UNSIGNED</code>).
+                </li>
+                <li>
+                  <strong>Index na rodičovské tabulce:</strong> Cílový sloupec musí být <code>PRIMARY KEY</code> nebo mít <code>UNIQUE</code> index.
+                </li>
+                <li>
+                  <strong>Existující data:</strong> V tabulce potomka nesmí před vytvořením vazby ležet žádná hodnota, která neexistuje v rodičovské tabulce.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: REFERENTIAL ACTIONS (CASCADE, SET NULL, RESTRICT) -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Referenční akce</div>
+            <h2 class="slide-title">Referenční akce: Co se stane při smazání rodiče?</h2>
+            <p class="slide-subtitle">Rozdíl mezi CASCADE, SET NULL a RESTRICT / NO ACTION</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová zkoušková otázka</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4 style="color: var(--accent-cyan);">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+                CASCADE
+              </h4>
+              <p><strong>Automaticky provede stejnou akci</strong> na všech závislých řádcích.</p>
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.85rem;">
+                <li><em>Smazáním zákazníka</em> zaniká i jeho osobní profil a hodnocení.</li>
+                <li><em>Smazáním objednávky</em> se automaticky smažou všechny její řádky v <code>order_item</code>.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4 style="color: var(--accent-amber);">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-dasharray="3 3"></circle></svg>
+                SET NULL
+              </h4>
+              <p>Závislé řádky <strong>zůstanou zachovány</strong>, ale hodnota cizího klíče se přepíše na <code>NULL</code>.</p>
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.85rem;">
+                <li><em>Podmínka:</em> Sloupec cizího klíče musí povolovat NULL (nesmí být NOT NULL).</li>
+                <li><em>Ukázka v edu_eshop:</em> Smazáním nadřazené kategorie „Počítače“ se podkategorie „Příslušenství“ nestratí, jen se z ní stane kořenová kategorie (<code>parent_id = NULL</code>).</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4 style="color: var(--accent-rose);">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                RESTRICT / NO ACTION
+              </h4>
+              <p><strong>Zákaz operace.</strong> SŘBD operaci DELETE/UPDATE okamžitě odmítne s chybou.</p>
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.85rem;">
+                <li><em>Účetní a právní ochrana:</em> Zákazníka, který má realizované nákupy v tabulce <code>orders</code>, <strong>nelze smazat</strong>.</li>
+                <li>Nejprve by musel administrátor vyřešit závislé záznamy.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-exam" style="margin-top: 0.5rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Kdy zvolit jakou akci v praxi?</div>
+              Při obhajobě schématu u absolutoria musíte u každé vazby umět zdůvodnit, proč jste nezvolili výchozí RESTRICT, ale např. CASCADE nebo SET NULL, s ohledem na doménovou logiku aplikace!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Rekapitulace</div>
+            <h2 class="slide-title">Shrnutí: Integrita v kostce</h2>
+            <p class="slide-subtitle">Kontrolní seznam pro ověření návrhu tabulky</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-card-num">1</div>
+              <h4>Každá tabulka musí mít PRIMARY KEY</h4>
+              <p>Jednoznačná identifikace řádku je základním předpokladem relačního modelu dat a InnoDB úložiště.</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">2</div>
+              <h4>Používejte CHECK pro byznys limity</h4>
+              <p>Ceny, množství na skladě i hodnocení vždy omezte pomocí <code>CHECK</code> (nezápornost, povolené rozsahy).</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">3</div>
+              <h4>Vždy explicitně definujte ON DELETE</h4>
+              <p>Nenechávejte cizí klíče bez definice referenční akce. Zvolte vědomě <code>RESTRICT</code>, <code>CASCADE</code> nebo <code>SET NULL</code>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 04</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><span class="key-badge">M</span></div>
+          <div class="shortcut-row"><span>Motiv (Tmavý/Světlý)</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 03: Desktopové operační systémy | OSY10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY10">
+          <span>&larr; OSY10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 03</span>
+          <span class="divider">&bull;</span>
+          <span>Desktopové operační systémy</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Klientské OS</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY10 &bull; 3. přednáška (45 min)</div>
+        <h1 class="hero-title">Desktopové operační systémy</h1>
+        <p class="hero-desc">
+          Specifika klientských pracovních stanic a osobních počítačů: ergonomie, hardwarová akcelerace GUI, compositing window managery (DWM, X11, Wayland), správa uživatelských periferií a srovnání systémů Windows, Linux Desktop a macOS.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Grafický stack</span>
+            <span class="hero-meta-val">Compositor, GPU akcelerace</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Display servery</span>
+            <span class="hero-meta-val">X11 vs Wayland vs DWM</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Klíčový požadavek</span>
+            <span class="hero-meta-val">Nízká latence vstupu</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: POŽADAVKY NA DESKTOP OS -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Požadavky a architektura</div>
+            <h2 class="slide-title">Co odlišuje desktop od serveru</h2>
+            <p class="slide-subtitle">Prioritizace interaktivity a uživatelského komfortu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Principy návrhu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Priorita interaktivity (Interactive Latency)</h4>
+              <p>Zatímco server optimalizuje celkovou propustnost (Throughput), desktop musí minimalizovat latenci:</p>
+              <ul class="styled-list">
+                <li>Odezva na pohyb myši a stisk klávesy musí být pod 16 ms (60–120 FPS).</li>
+                <li>Plánovač procesoru dává přednost interaktivním procesům v popředí před výpočetními úlohami na pozadí.</li>
+                <li>Plynulost vykreslování pomocí V-Sync a eliminace trhání obrazu (Tearing).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Podpora Plug and Play &amp; Periferií</h4>
+              <p>Desktop pracuje v dynamickém hardwarovém prostředí:</p>
+              <ul class="styled-list">
+                <li>Připojování a odpojování USB zařízení za běhu (Hot-plugging).</li>
+                <li>Automatická detekce monitorů, rozlišení, škálování DPI a správa více monitorů.</li>
+                <li>Správa napájení: režimy spánku (Sleep S3, Modern Standby S0ix), hibernace na disk.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: GRAFICKÝ SUBSYSTÉM A SPRÁVA OKEN -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Grafická vrstva</div>
+            <h2 class="slide-title">Architektura zobrazovacího subsystému</h2>
+            <p class="slide-subtitle">Evoluce od síťového X11 k modernímu protokolu Wayland a Windows DWM</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Linux: X11 vs. Wayland</h4>
+              <ul class="styled-list">
+                <li><strong>X11 (X Window System):</strong> Návrh z 80. let. Klient-server model se síťovou transparentností. Server sám zajišťuje kreslení primitiv, což vede k bezpečnostním rizikům (jakákoli aplikace může odposlouchávat klávesy jiné aplikace).</li>
+                <li><strong>Wayland:</strong> Moderní minimalistický protokol. Každý snímek je dokonalý (Every frame is perfect). Samotný Compositor je display serverem. Aplikace si kreslí obsah do vlastního bufferu přes OpenGL/Vulkan a compositor jej složí na obrazovku. Bezpečná izolace oken.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Windows: Desktop Window Manager (DWM)</h4>
+              <p>Zaveden ve Windows Vista a vylepšen ve Windows 10/11:</p>
+              <ul class="styled-list">
+                <li>Každé okno kreslí do vlastního off-screen video bufferu v GPU paměti (DirectX).</li>
+                <li>DWM složí finální scénu pro monitor s využitím GPU shaderů (průhlednost, stíny, animace).</li>
+                <li>Pád jedné aplikace nezpůsobí rozbití kresby ostatních oken na obrazovce.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SROVNÁNÍ HLAVNÍCH DESKTOPOVÝCH PLATFOREM -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Platformní komparace</div>
+            <h2 class="slide-title">Windows vs. Linux Desktop vs. macOS</h2>
+            <p class="slide-subtitle">Strukturální srovnání architektur klientských OS</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Komparace</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Vlastnost</th>
+                  <th>Microsoft Windows</th>
+                  <th>Linux Desktop</th>
+                  <th>Apple macOS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Typ jádra</strong></td>
+                  <td>Hybridní NT jádro (ntoskrnl.exe)</td>
+                  <td>Monolitické jádro Linux</td>
+                  <td>Hybridní jádro XNU (Mach + BSD)</td>
+                </tr>
+                <tr>
+                  <td><strong>Grafické prostředí</strong></td>
+                  <td>DWM + Windows Shell (Explorer)</td>
+                  <td>Modulární (GNOME, KDE Plasma, XFCE)</td>
+                  <td>Quartz Compositor + Aqua UI</td>
+                </tr>
+                <tr>
+                  <td><strong>Instalace SW</strong></td>
+                  <td>MSI/EXE instalátory, winget, MS Store</td>
+                  <td>Balíčkovací systémy (APT, RPM, Flatpak)</td>
+                  <td>.app balíčky, DMG obrazy, Homebrew</td>
+                </tr>
+                <tr>
+                  <td><strong>Konfigurace</strong></td>
+                  <td>Registry (HKLM, HKCU), GPO</td>
+                  <td>Textové soubory v <code>/etc</code> a <code>~/.config</code></td>
+                  <td>Property Lists (<code>.plist</code>), defaults</td>
+                </tr>
+                <tr>
+                  <td><strong>Ovladače</strong></td>
+                  <td>Široká podpora od výrobců (WHQL)</td>
+                  <td>Většina přímo v jádře (in-tree), proprietární GPU</td>
+                  <td>Pouze pro certifikovaný hardware Apple</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ SPRÁVA DESKTOPU PŘES TERMINÁL -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická administrace</div>
+            <h2 class="slide-title">Diagnostika display serveru a grafiky</h2>
+            <p class="slide-subtitle">Zjišťování stavu relace, akcelerace GPU a správce oken</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Diagnostika</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Diagnostika Wayland / X11 a GPU v Linuxu</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Ověření typu běžící grafické relace (wayland vs x11)</span>
+<span class="term-prompt">$ </span><span class="term-cmd">echo</span> <span class="term-var">$XDG_SESSION_TYPE</span>
+
+<span class="term-comment"># Zjištění aktivního správce oken a desktopového prostředí</span>
+<span class="term-prompt">$ </span><span class="term-cmd">echo</span> <span class="term-var">$XDG_CURRENT_DESKTOP</span>
+
+<span class="term-comment"># Test přímé hardwarové akcelerace OpenGL / Mesa</span>
+<span class="term-prompt">$ </span><span class="term-cmd">glxinfo</span> <span class="term-pipe">|</span> <span class="term-cmd">grep</span> <span class="term-param">-E</span> <span class="term-string">"OpenGL renderer|direct rendering"</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>powershell &bull; Inspekce grafického adaptéru a rozlišení</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Zjištění GPU grafické karty a verze ovladače</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-CimInstance</span> <span class="term-param">-ClassName</span> <span class="term-arg">Win32_VideoController</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Select-Object</span> <span class="term-arg">Name, DriverVersion, CurrentHorizontalResolution, CurrentVerticalResolution, CurrentRefreshRate</span>
+
+<span class="term-comment"># Kontrola stavu procesu správce oken DWM</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Process</span> <span class="term-param">-Name</span> <span class="term-arg">dwm</span> <span class="term-pipe">|</span> <span class="term-cmd">Select-Object</span> <span class="term-arg">Id, WorkingSet64, CPU</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Otázky a okruhy týkající se klientských desktopových systémů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Compositing vs. Tradiční kreslení</h4>
+              <p>Schopnost vysvětlit, proč moderní GUI (Wayland, DWM) používají compositing v GPU paměti namísto přímého kreslení oken přes sebe.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. X11 vs. Wayland</h4>
+              <p>Znalost bezpečnostních a architektonických důvodů přechodu Linuxu na Wayland (izolace vstupů, odstranění zastaralých síťových vrstev).</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Správa konfigurace</h4>
+              <p>Srovnání centrálního binárního registru Windows a distribuovaných textových konfiguračních souborů Linuxu (výhody pro automatizaci vs. centrální politiky).</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Vysvětlete, jak se liší plánování úloh na desktopu a na serveru s ohledem na interaktivitu a odezvu aplikací v popředí.“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí">
+          <svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        </a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 03</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 05: Mobilní operační systémy | OSY10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY10">
+          <span>&larr; OSY10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 05</span>
+          <span class="divider">&bull;</span>
+          <span>Mobilní operační systémy</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Mobilní platformy</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY10 &bull; 5. přednáška (45 min)</div>
+        <h1 class="hero-title">Mobilní operační systémy</h1>
+        <p class="hero-desc">
+          Architektura mobilních platforem Android a iOS: specifika čipů System-on-Chip (ARM/SoC), agresivní správa napájení a baterie (Doze mode), sandboxový bezpečnostní model aplikací, správa senzorů a životní cyklus aplikací na mobilním zařízení.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Hardwarová báze</span>
+            <span class="hero-meta-val">ARM big.LITTLE / SoC</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Dominantní platformy</span>
+            <span class="hero-meta-val">Android (AOSP) &amp; Apple iOS</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Bezpečnost</span>
+            <span class="hero-meta-val">App Sandbox &amp; Permissions</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: SPECIFIKA MOBILNÍHO HARDWARE -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Hardwarová omezení</div>
+            <h2 class="slide-title">Mobilní výpočetní prostředí</h2>
+            <p class="slide-subtitle">Proč desktopový OS nelze jen tak nahrát do telefonu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">ARM &amp; Baterie</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. Agresivní Power Management</h4>
+              <p>Osobní počítač je trvale napájen ze sítě, mobilní zařízení žije z omezené baterie:</p>
+              <ul class="styled-list">
+                <li><strong>Asymetrická jádra (ARM big.LITTLE / DynamIQ):</strong> Výkonná jádra (Cortex-X / Performance) běží jen při zátěži; pro pozadí běží úsporná jádra (Efficiency).</li>
+                <li><strong>Uspávání procesoru (Deep Sleep / Suspend-to-RAM):</strong> Jakmile zhasne displej, OS agresivně uspí většinu subsystémů.</li>
+                <li><strong>Wakelocks:</strong> Aplikace musí žádat o speciální zámky probuzení, jinak je okamžitě zmrazena.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. Fyzická a paměťová omezení</h4>
+              <ul class="styled-list">
+                <li><strong>Žádný tradiční Swap:</strong> Častý zápis na flash úložiště by rychle zničil paměťové buňky (Write Endurance).</li>
+                <li><strong>ZRAM:</strong> Komprese málo používaných stránek přímo v RAM namísto swapování na disk.</li>
+                <li><strong>Low Memory Killer (LMK):</strong> Pokud dochází volná paměť, jádro bez varování ukončí aplikace v pozadí podle priority (OOM scoring).</li>
+                <li><strong>Bohatá senzorická výbava:</strong> Akcelerometr, gyroskop, GPS, NFC, biometrie (FaceID, čtečka otisků).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: ARCHITEKTURA ANDROID VS IOS -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Softwarový stack</div>
+            <h2 class="slide-title">Architektura Android vs. Apple iOS</h2>
+            <p class="slide-subtitle">Srovnání softwarových vrstev a runtime prostředí</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Android Stack (AOSP)</h4>
+              <ul class="styled-list">
+                <li><strong>Jádro:</strong> Upravené jádro Linux (LTS Linux Kernel s Binder IPC a wakelocks).</li>
+                <li><strong>HAL (Hardware Abstraction Layer):</strong> Standardní C/C++ moduly pro kameru, audio a senzory.</li>
+                <li><strong>Android Runtime (ART):</strong> Spouští DEX bytecode s AOT (Ahead-of-Time) i JIT kompilací. Každá aplikace má vlastní proces virtuálního stroje.</li>
+                <li><strong>Aplikační framework:</strong> ActivityManager, NotificationManager, ContentProviders v Javě/Kotlinu.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Apple iOS Stack</h4>
+              <ul class="styled-list">
+                <li><strong>Core OS:</strong> Jádro Darwin / XNU (Mach + BSD) s Metal grafickým subsystémem.</li>
+                <li><strong>Core Services:</strong> Síťová vrstva, správa souborů, SQLite, CoreLocation.</li>
+                <li><strong>Media Layer:</strong> CoreAudio, CoreVideo, AVFoundation.</li>
+                <li><strong>Cocoa Touch:</strong> UI framework (UIKit, SwiftUI) pro vývoj aplikací v jazyce Swift a Objective-C.</li>
+                <li>Nativní kompilace přímo do strojového kódu procesorů Apple Silicon (žádná mezilehlá VM jako ART).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SANDBOX MODEL A BEZPEČNOST -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Bezpečnostní architektura</div>
+            <h2 class="slide-title">Aplikační Sandbox a správa oprávnění</h2>
+            <p class="slide-subtitle">Jak mobilní systémy chrání soukromí uživatele před škodlivým kódem</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Bezpečnost</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Princip Sandboxu (Pískoviště)</h4>
+              <p>Zatímco na desktopu má běžící program často přístup ke všem souborům uživatele, na mobilu:</p>
+              <ul class="styled-list">
+                <li>Každá aplikace běží pod <strong>unikátním UID</strong> (v Androidu má každá app své vlastní Linux UID).</li>
+                <li>Soubory aplikace jsou nepřístupné pro jakoukoli jinou aplikaci (izolované adresáře).</li>
+                <li>Komunikace mezi aplikacemi je možná výhradně přes IPC brány (Android Intent / Binder, iOS App Groups).</li>
+                <li>SELinux v režimu Enforcing hlídá každé systémové volání na úrovni jádra.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Dynamická oprávnění (Runtime Permissions)</h4>
+              <ul class="styled-list">
+                <li>Aplikace nedostává plná práva při instalaci.</li>
+                <li>Oprávnění k citlivým senzorům (kamera, mikrofon, přesná poloha) jsou vyžádána až v momentě potřeby.</li>
+                <li>Možnost udělit oprávnění <strong>pouze jednou</strong> nebo <strong>pouze při používání aplikace</strong>.</li>
+                <li>Indikace na stavové liště (zelená/oranžová tečka) při aktivaci kamery či mikrofonu na úrovni jádra.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ INSPEKCE MOBILNÍHO OS -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická diagnostika</div>
+            <h2 class="slide-title">Inspekce mobilního subsystému přes ADB</h2>
+            <p class="slide-subtitle">Práce s Android Debug Bridge a zjišťování stavu baterie a paměti</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Terminál &bull; ADB</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; ADB příkazy pro inspekce správy baterie</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Výpis detailních informací o baterii a teplotě zařízení</span>
+<span class="term-prompt">$ </span><span class="term-cmd">adb shell</span> <span class="term-arg">dumpsys battery</span>
+<span class="term-out">  level: 85</span>
+<span class="term-out">  scale: 100</span>
+<span class="term-out">  temperature: 284 (28.4 C)</span>
+<span class="term-out">  technology: Li-poly</span>
+
+<span class="term-comment"># Kontrola stavu úsporného režimu Doze Mode</span>
+<span class="term-prompt">$ </span><span class="term-cmd">adb shell</span> <span class="term-arg">dumpsys deviceidle</span> <span class="term-pipe">|</span> <span class="term-cmd">grep</span> <span class="term-param">-i</span> <span class="term-string">"mState"</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Inspekce paměti a procesů přes ADB</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Zjištění alokace RAM procesů a stavu ZRAM komprese</span>
+<span class="term-prompt">$ </span><span class="term-cmd">adb shell</span> <span class="term-arg">dumpsys meminfo</span> <span class="term-pipe">|</span> <span class="term-cmd">head</span> <span class="term-param">-n</span> <span class="term-arg">15</span>
+
+<span class="term-comment"># Zobrazení UID aplikací v sandboxu a jejich procesů</span>
+<span class="term-prompt">$ </span><span class="term-cmd">adb shell</span> <span class="term-arg">ps -A -o USER,PID,NAME</span> <span class="term-pipe">|</span> <span class="term-cmd">grep</span> <span class="term-string">"u0_a"</span> <span class="term-pipe">|</span> <span class="term-cmd">head</span> <span class="term-param">-n</span> <span class="term-arg">6</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Zkušební otázky z architektury a bezpečnosti mobilních OS</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Baterie vs. Výkon</h4>
+              <p>Vysvětlení rozdílu mezi správou napájení na desktopu a mobilním zařízení (ARM big.LITTLE, Doze mode, hibernace aplikací).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Sandbox model</h4>
+              <p>Pochopení principu izolace aplikací přes unikátní UID uživatele a SELinux politiky, nemožnost přímého přístupu do cizích dat.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Správa paměti bez swapu</h4>
+              <p>Schopnost popsat ZRAM (komprimovaný blok v RAM) a funkci Low Memory Killeru (LMK) při uvolňování paměti.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Popište softwarový stack systému Android od jádra Linux přes HAL a ART až po aplikační vrstvu. Jak se liší od iOS?“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 05</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

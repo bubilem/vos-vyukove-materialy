@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 01: Technika zvuku, mikrofony a reprodukce | MUL20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL20">
+          <span>&larr; MUL20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 01</span>
+          <span class="divider">&bull;</span>
+          <span>Technika zvuku, mikrofony a reprodukce</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 9: Záznam a reprodukce zvuku</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL20 &bull; 1. přednáška (45 min)</div>
+        <h1 class="hero-title">Technika zvuku, mikrofony a reprodukce</h1>
+        <p class="hero-desc">
+          Záznamový a reprodukční řetězec v praxi: elektroakustické měniče, dynamické vs. kondenzátorové mikrofony, směrové polární charakteristiky, phantomové napájení +48V, předzesilovače a akustika poslechových prostor.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Měniče</span>
+            <span class="hero-meta-val">Dynamické &bull; Kondenzátorové</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Směrovost</span>
+            <span class="hero-meta-val">Kardioida &bull; Osmička &bull; Shotgun</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 9</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: KONSTRUKCE MIKROFONŮ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Elektroakustické měniče</div>
+            <h2 class="slide-title">Dynamické vs. Kondenzátorové mikrofony</h2>
+            <p class="slide-subtitle">Fyzikální principy přeměny akustického vlnění na elektrický proud</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová technologie</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: #60a5fa;">Dynamický mikrofon (Elektromagnetický)</h4>
+              <ul class="styled-list">
+                <li><strong>Princip:</strong> Cívka spojená s pevnou membránou se pohybuje v magnetickém poli permanentního magnetu (Faradayův indukční zákon).</li>
+                <li><strong>Vlastnosti:</strong> Mechanicky extrémně odolný, zvládá masivní akustický tlak (vysoké SPL nad 150 dB).</li>
+                <li><strong>Výhoda:</strong> Nevyžaduje žádné napájení, nízký šum, menší citlivost na nežádoucí odrazy místnosti.</li>
+                <li><strong>Použití:</strong> Živé koncerty, bicí nástroje, kytarové aparáty, rozhlasové mluvené slovo (Shure SM58, SM7B).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4 style="color: #f472b6;">Kondenzátorový mikrofon (Elektrostatický)</h4>
+              <ul class="styled-list">
+                <li><strong>Princip:</strong> Ultralehká pozlacená membrána tvoří jednu elektrodu kondenzátoru, pevná deska druhou. Změna vzdálenosti mění kapacitu <span class="formula"><i>C</i> = &epsilon; &middot; <i>S</i> / <i>d</i></span>.</li>
+                <li><strong>Phantomové napájení +48V:</strong> Nutné pro polarizaci vložky a napájení vnitřního impedančního převodníku (FET tranzistor).</li>
+                <li><strong>Vlastnosti:</strong> Extrémně rychlá odezva na tranzienty (náběhy tónů), široký frekvenční rozsah (20 Hz &ndash; 20 kHz), křišťálová čistota detailů.</li>
+                <li><strong>Použití:</strong> Profesionální nahrávací studia, vokály, akustické nástroje, filmové postsynchrony (Neumann U87, Røde NT1).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: SMĚROVÉ CHARAKTERISTIKY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Prostorová směrovost</div>
+            <h2 class="slide-title">Polární směrové charakteristiky mikrofonů</h2>
+            <p class="slide-subtitle">Závislost citlivosti mikrofonu na úhlu dopadu zvukové vlny</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový koncept</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossless">Kardioida (Ledvina)</span>
+              <h4 style="margin: 0.5rem 0;">Přední citlivost 0&deg;</h4>
+              <p style="font-size: 0.85rem;">Maximální příjem zpředu, potlačení zvuku ze zadní strany (180&deg;). Zabraňuje zpětné vazbě (feedbacku) od pódiových odposlechů. Nejčastější studiová charakteristika.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">Kulová (Omni)</span>
+              <h4 style="margin: 0.5rem 0;">Všesměrová 360&deg;</h4>
+              <p style="font-size: 0.85rem;">Snímá rovnoměrně ze všech úhlů bez zabarvení. Netrpí proximity efektem. Ideální pro klopové mikrofony (Lavalier), měřicí akustické mikrofony a nahrávání atmosféry sálu.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">Osmičková (Figure-8)</span>
+              <h4 style="margin: 0.5rem 0;">Přední a zadní příjem</h4>
+              <p style="font-size: 0.85rem;">Snímá osu 0&deg; a 180&deg;, zcela hluchá ze stran (90&deg; a 270&deg;). Přirozená vlastnost páskových mikrofonů. Využívá se pro stereo snímání technikou Blumlein nebo M/S (Mid-Side).</p>
+            </div>
+          </div>
+          <div class="callout callout-warning" style="margin-top: 0.6rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Proximity efekt (Efekt přiblížení)</div>
+              <p>Při přiblížení zdroje zvuku k tlakově-gradientnímu mikrofonu (kardioida, osmička) na vzdálenost pod 10 cm dochází k dramatickému nárůstu basových frekvencí (až o +15 dB na 100 Hz). Používá se pro dosažení "rozhlasového hlubokého hlasu", ale vyžaduje pop-filtr a High-Pass filtr pro potlačení retnic (P, B).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PŘEDZESILOVAČE A GAIN STAGING -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Signálový řetězec</div>
+            <h2 class="slide-title">Předzesilovače, symetrický přenos &bull; Gain Staging</h2>
+            <p class="slide-subtitle">Cesta signálu od milivoltů z mikrofonu po linkovou úroveň v DAW</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Audio inženýring</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Signálové úrovně v praxi</h4>
+              <ul class="styled-list">
+                <li><strong>Mikrofonní úroveň (Mic Level):</strong> Slabý signál cca 1 až 10 mV (&minus;60 až &minus;40 dBu). Náchylný na elektromagnetické rušení.</li>
+                <li><strong>Linková úroveň (Line Level):</strong> Standardizovaná úroveň pro propojování zařízení: profesionální <strong>+4 dBu (1.23 V)</strong> a spotřebitelská <strong>&minus;10 dBV (0.316 V)</strong>.</li>
+                <li><strong>Předzesilovač (Preamp):</strong> Zajišťuje čisté zesílení o +40 až +70 dB s minimálním vlastním šumem (Equivalent Input Noise <span class="formula">EIN &lt; &minus;128 dBu</span>).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Symetrické vedení (Balanced Audio)</h4>
+              <ul class="styled-list">
+                <li>Využívá třívodičové vedení (konektor XLR nebo TRS Jack 6.3 mm): <em>Hot (+), Cold (&minus;) a Ground</em>.</li>
+                <li>Signál na vodiči Cold je fázově otočen o 180&deg;.</li>
+                <li><strong>CMRR (Common Mode Rejection Ratio):</strong> Na vstupu diferenciální zesilovač signály odečte: užitečný signál se zdvojnásobí, zatímco parazitní šum indukovaný do obou vodičů se zcela vyruší!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: STUDIA A POSLECHOVÁ AKUSTIKA -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Reprodukce a akustika</div>
+            <h2 class="slide-title">Studiové monitory a akustika prostoru</h2>
+            <p class="slide-subtitle">Proč nejdražší reproduktory v neošetřené místnosti nehrají přesně</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Akustika</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Studiový monitor vs. Hi-Fi reproduktor</h4>
+              <ul class="styled-list">
+                <li><strong>Studiový monitor:</strong> Cílem je lineární frekvenční charakteristika (Flat Response) bez přikrášlení. Zvukař musí slyšet každou chybu, šum a frekvenční konflikt v mixu.</li>
+                <li><strong>Aktivní bi-amp konstrukce:</strong> Oddělený zesilovač pro basový měnič (Woofer) a výškový měnič (Tweeter) s přesnou aktivní výhybkou (Crossover).</li>
+                <li><strong>Near-field monitoring:</strong> Poslech z blízkého pole (1–1.5 m) minimalizuje vliv odrazů místnosti na přímý zvuk.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Akustické úpravy režie</h4>
+              <ul class="styled-list">
+                <li><strong>Stojaté vlnění (Room Modes):</strong> Vzniká interferencí odrazů basů od protilehlých stěn. Způsobuje propady a rezonance až &plusmn;20 dB na nízkých frekvencích.</li>
+                <li><strong>Basové pasti (Bass Traps):</strong> Masivní absorpční prvky z minerální vaty v rozích místnosti tlumící nízké frekvence.</li>
+                <li><strong>Difuzory (Schroeder / QRD):</strong> Rozptylují odrazy středních a vysokých frekvencí do prostoru bez "mrtvého" přesycení absorpcí.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu ze záznamu a reprodukce zvuku</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 9</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Dynamický vs Kondenzátor</h4>
+              <p>Dynamický mikrofon je odolný vůči tlaku a nevyžaduje napájení. Kondenzátorový je citlivější s rychlou odezvou, vyžaduje +48V phantom.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Kardioida &amp; Proximity</h4>
+              <p>Kardioidní směrovost potlačuje hluk zezadu. Při blízkém snímání do 10 cm zesiluje basové frekvence vlivem proximity efektu.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Symetrické XLR</h4>
+              <p>Přenáší Hot a otočený Cold signál. Diferenciální vstup odečtením eliminuje indukované elektromagnetické rušení (CMRR).</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Porovnejte konstrukci dynamického a kondenzátorového mikrofonu. Nakreslete směrovou kardioidní charakteristiku a vysvětlete princip symetrického zapojení.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 01</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

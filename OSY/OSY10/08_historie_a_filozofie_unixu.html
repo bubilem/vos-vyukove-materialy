@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 08: Historie a filozofie Unixu | OSY10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY10">
+          <span>&larr; OSY10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 08</span>
+          <span class="divider">&bull;</span>
+          <span>Historie a filozofie Unixu</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Unix &amp; POSIX</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY10 &bull; 8. přednáška (45 min)</div>
+        <h1 class="hero-title">Historie &amp; Filozofie Unixu</h1>
+        <p class="hero-desc">
+          Zrod moderní softwarové architektury v Bellových laboratořích: klíčové osobnosti (Ken Thompson, Dennis Ritchie, Doug McIlroy), pilíře unixové filozofie, paradigma „všechno je soubor“, potrubí a textové proudy, standardizace POSIX a geneze GNU/Linuxu.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Místo vzniku</span>
+            <span class="hero-meta-val">Bell Labs (1969), PDP-7/11</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Ústřední paradigma</span>
+            <span class="hero-meta-val">Everything is a file</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Standardizace</span>
+            <span class="hero-meta-val">POSIX.1 (IEEE 1003)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: HISTORICKÝ KONTEXT -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Historie informatiky</div>
+            <h2 class="slide-title">Od projektu MULTICS k Unixu</h2>
+            <p class="slide-subtitle">Jak zklamání z překomplikovaného systému vedlo k minimalistické eleganci</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Bell Labs &bull; 1969</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Projekt MULTICS a jeho krach</h4>
+              <p>V 60. letech se MIT, Bell Labs a General Electric pokusily vytvořit gigantický systém MULTICS (Multiplexed Information and Computing Service):</p>
+              <ul class="styled-list">
+                <li>Projekt byl příliš ambiciózní, pomalý a extrémně složitý.</li>
+                <li>Bell Labs v roce 1969 z projektu odstoupily pro neudržitelnost.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Zrod UNICS / UNIX</h4>
+              <p>Ken Thompson, Dennis Ritchie a další vytvořili na odloženém minipočítači PDP-7 odlehčenou alternativu s hříčkou ve jménu (Uniplexed Information and Computing Service):</p>
+              <ul class="styled-list">
+                <li><strong>Revoluce jazyka C (1972):</strong> Ritchie a Thompson přepsali Unix z assembleru do nového jazyka C. <strong>Unix se stal prvním snadno přenositelným OS na světě!</strong></li>
+                <li>Akademická distribuce: Bell Labs nesměly podle antimonopolního zákona prodávat software komerčně, a tak poskytovaly zdrojové kódy univerzitám za cenu pásky.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: PILÍŘE UNIXOVÉ FILOZOFIE -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Softwarový design</div>
+            <h2 class="slide-title">Unixová filozofie (The Unix Philosophy)</h2>
+            <p class="slide-subtitle">Pravidla formulovaná Dougem McIlroyem, která přetrvala přes 50 let</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. Jedna věc pořádně</h4>
+              <p><em>„Make each program do one thing well.“</em></p>
+              <ul class="styled-list">
+                <li>Místo monstrózního programu s tisíci funkcemi vytvořte malé, specializované utilitky.</li>
+                <li>Příklad: <code>grep</code> vyhledává text, <code>sort</code> řadí řádky, <code>uniq</code> odstraňuje duplicity, <code>wc</code> počítá slova.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. Spolupráce programů</h4>
+              <p><em>„Expect the output of every program to become the input to another.“</em></p>
+              <ul class="styled-list">
+                <li>Univerzálním rozhraním pro přenos dat je <strong>čistý textový proud (Stream of bytes)</strong>.</li>
+                <li>Roury (Pipes <code>|</code>) umožňují skládat komplexní zpracování dat bez dočasných souborů na disku.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>3. Všechno je soubor</h4>
+              <p><em>„Everything is a file.“</em></p>
+              <ul class="styled-list">
+                <li>Jednotné systémové API pro vše: <code>open()</code>, <code>read()</code>, <code>write()</code>, <code>close()</code>.</li>
+                <li>Pevný disk, sériová linka, klávesnice, síťová karta i stav procesů v paměti – ke všemu se přistupuje jako k souboru.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PARADIGMA VŠECHNO JE SOUBOR & POSIX -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektonický standard</div>
+            <h2 class="slide-title">Virtuální souborové systémy a POSIX standard</h2>
+            <p class="slide-subtitle">Jak Unix unifikoval hardware, data a procesy</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Standardizace</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Speciální souborové stromy v Unixu</h4>
+              <ul class="styled-list">
+                <li><code>/dev/</code>: Zařízení hardware (bloková a znaková). Zápis do <code>/dev/sda</code> zapisuje přímo na fyzické sektory disku. <code>/dev/null</code> zahazuje data, <code>/dev/urandom</code> generuje náhodná čísla.</li>
+                <li><code>/proc/</code>: Virtuální pohled do struktur jádra. Každý běžící proces má svůj adresář (<code>/proc/PID/</code>) s mapou paměti a deskriptory.</li>
+                <li><code>/sys/</code>: Hierarchický pohled na sběrnice, ovladače a energetické profily (sysfs).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Standard POSIX (Portable Operating System Interface)</h4>
+              <p>Sada norem IEEE a ISO definující jednotné API:</p>
+              <ul class="styled-list">
+                <li>Zabraňuje proprietárnímu uzamčení k jednomu dodavateli (Vendor Lock-in).</li>
+                <li>Definuje základní funkce C knihovny (<code>fork</code>, <code>exec</code>, <code>pthreads</code>) i povinné shellové nástroje.</li>
+                <li>Díky POSIXu může software napsaný v 80. letech běžet beze změn na moderním Linuxu, FreeBSD i macOS.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ SÍLA ROVRY A TEXTU -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická aplikace</div>
+            <h2 class="slide-title">Skládání unixových rour v praxi</h2>
+            <p class="slide-subtitle">Demonstrace síly malých nástrojů spojených textovým proudem</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Terminál &bull; Pipes</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Analýza webového přístupového logu v jediné rouře</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Nalezení 5 nejaktivnějších IP adres útočníků z logu webserveru:</span>
+<span class="term-prompt">$ </span><span class="term-cmd">cat</span> <span class="term-path">/var/log/nginx/access.log</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">awk</span> <span class="term-string">'{print $1}'</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">sort</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">uniq</span> <span class="term-param">-c</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">sort</span> <span class="term-param">-nr</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">head</span> <span class="term-param">-n</span> <span class="term-arg">5</span>
+
+<span class="term-out">  14520 192.168.1.105</span>
+<span class="term-out">   8930 10.0.4.12</span>
+<span class="term-out">   3410 172.16.0.44</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Práce s /dev a /proc</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Vytvoření souboru přesně 100 MB plného náhodných dat</span>
+<span class="term-prompt">$ </span><span class="term-cmd">dd</span> <span class="term-param">if=</span><span class="term-path">/dev/urandom</span> <span class="term-param">of=</span><span class="term-path">test.dat</span> <span class="term-param">bs=1M</span> <span class="term-param">count=100</span>
+
+<span class="term-comment"># Inspekce příkazového řádku procesu s PID 1</span>
+<span class="term-prompt">$ </span><span class="term-cmd">cat</span> <span class="term-path">/proc/1/cmdline</span> <span class="term-pipe">|</span> <span class="term-cmd">tr</span> <span class="term-string">'\0'</span> <span class="term-string">' '</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Principy unixové architektury vyžadované u zkoušky</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Základní principy Unixu</h4>
+              <p>Formulace tří pravidel unixové filozofie (jednoúčelové nástroje, textové proudy, unifikace zařízení na soubory).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Význam přepsání do C</h4>
+              <p>Vysvětlení, proč přepsání Unixu do jazyka C v roce 1972 způsobilo revoluci v přenositelnosti operačních systémů.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. POSIX standard</h4>
+              <p>Pochopení významu POSIX standardizace pro přenositelnost zdrojových kódů a interoperabilitu mezi distribucemi.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Co přesně znamená tvrzení 'v Unixu je všechno soubor'? Uveďte konkrétní příklady ze stromů /dev a /proc.“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 08</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,411 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 08: Responzivní design a Media Queries | WEB20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB20">
+          <span>&larr; WEB20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 08</span>
+          <span class="divider">&bull;</span>
+          <span>Responzivní design a Media Queries</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 16, 8</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB20 &bull; 8. přednáška (45 min)</div>
+        <h1 class="hero-title">Responzivní design (RWD) &amp; Media Queries</h1>
+        <p class="hero-desc">
+          Filozofie Mobile-First, konfigurace meta viewportu, tvorba fluidních rozvržení, breakpointy pomocí @media pravidel a moderní reaktivní stylování pomocí CSS proměnných.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Metodika návrhu</span>
+            <span class="hero-meta-val">Mobile-First, @media, Custom Properties</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční model</span>
+            <span class="hero-meta-val">Responzivní adaptace edu_portal</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 16 (RWD) &amp; č. 8</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: TŘI PILÍŘE RWD -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní principy</div>
+            <h2 class="slide-title">Tři pilíře responzivního webdesignu (Ethan Marcotte)</h2>
+            <p class="slide-subtitle">Jak vytvořit jeden web, který funguje optimálně na libovolném zařízení</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. Meta Viewport</h4>
+              <p>Instrukce pro mobilní prohlížeč, aby zobrazil web v poměru 1:1 k fyzickým CSS pixelům displeje a neoddaloval stránku na virtuálních 980 pixelů:</p>
+              <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>
+            </div>
+            <div class="content-card">
+              <h4>2. Fluidní rozvržení (Mřížka)</h4>
+              <p>Místo fixních šířek v pixelech (např. <code>width: 960px</code>) se používají poměrné jednotky (<code>%</code>, <code>fr</code>, <code>vw</code>, <code>max-width</code>), které se přizpůsobí šířce okna.</p>
+            </div>
+            <div class="content-card">
+              <h4>3. Flexibilní média</h4>
+              <p>Obrázky a videa nesmí nikdy přetéct svůj rodičovský kontejner:</p>
+              <code>img, video { max-width: 100%; height: auto; }</code>
+            </div>
+          </div>
+          <div class="callout callout-warning" style="margin-top: 1rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Nikdy nezakazujte zoom uživateli!</div>
+              <p>Atribut <code>user-scalable=no</code> nebo <code>maximum-scale=1.0</code> je hrubým porušením přístupnosti (WCAG). Zrakově hendikepovaný uživatel musí mít možnost si text na mobilu přiblížit gestem prstů.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: MOBILE-FIRST A MEDIA QUERIES -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Strategie kódování</div>
+            <h2 class="slide-title">Filozofie Mobile-First a pravidlo @media</h2>
+            <p class="slide-subtitle">Progresivní rozšiřování pomocí min-width vs. Desktop-First degradace</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">css &bull; mobile-first architektura</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="html-comment">/* 1. VÝCHOZÍ STYLY: Mobilní telefon (1 sloupec) */</span>
+<span class="css-sel">.container</span> {
+  <span class="css-prop">display</span>: <span class="css-val">flex</span>;
+  <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>;
+  <span class="css-prop">padding</span>: <span class="css-num">1</span><span class="css-unit">rem</span>;
+}
+
+<span class="html-comment">/* 2. TABLET: Od šířky 768px a více */</span>
+<span class="css-at">@media</span> <span class="css-val">screen</span> <span class="code-kw">and</span> (<span class="css-prop">min-width</span>: <span class="css-num">768</span><span class="css-unit">px</span>) {
+  <span class="css-sel">.container</span> {
+    <span class="css-prop">flex-direction</span>: <span class="css-val">row</span>;
+  }
+}
+
+<span class="html-comment">/* 3. DESKTOP: Od šířky 1024px a více */</span>
+<span class="css-at">@media</span> <span class="css-val">screen</span> <span class="code-kw">and</span> (<span class="css-prop">min-width</span>: <span class="css-num">1024</span><span class="css-unit">px</span>) {
+  <span class="css-sel">.container</span> {
+    <span class="css-prop">max-width</span>: <span class="css-num">1200</span><span class="css-unit">px</span>;
+    <span class="css-prop">margin</span>: <span class="css-num">0</span> <span class="css-val">auto</span>;
+  }
+}</code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Proč je Mobile-First průmyslovým standardem?</h4>
+                <ul class="styled-list">
+                  <li><strong>Progresivní rozšiřování:</strong> Začínáme s nejjednodušším čistým kódem bez zbytečných floatů a pozicování. Teprve pro větší obrazovky přidáváme sloupce.</li>
+                  <li><strong>Výkon na mobilních sítích:</strong> Mobilní telefon nemusí stahovat a přepisovat složitá desktopová pravidla s <code>max-width</code>.</li>
+                  <li><strong>SEO &amp; Google Mobile-First Indexing:</strong> Vyhledávače hodnotí a indexují prioritně mobilní verzi stránky.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: CSS PROMĚNNÉ (CUSTOM PROPERTIES) -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Moderní CSS</div>
+            <h2 class="slide-title">CSS Custom Properties: Nativní proměnné</h2>
+            <p class="slide-subtitle">Dynamická změna barevných témat (Dark/Light mode) za běhu aplikace</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">css &bull; dark / light mode téma</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="html-comment">/* Globální proměnné v kořeni dokumentu */</span>
+<span class="css-sel">:root</span> {
+  <span class="scss-var">--bg-body</span>: <span class="css-val">#0a0f1d</span>;
+  <span class="scss-var">--text-body</span>: <span class="css-val">#f3f4f6</span>;
+  <span class="scss-var">--accent-color</span>: <span class="css-val">#06b6d4</span>;
+}
+
+<span class="html-comment">/* Přepnutí do světlého režimu */</span>
+<span class="css-sel">[data-theme="light"]</span> {
+  <span class="scss-var">--bg-body</span>: <span class="css-val">#f8fafc</span>;
+  <span class="scss-var">--text-body</span>: <span class="css-val">#0f172a</span>;
+}
+
+<span class="css-sel">body</span> {
+  <span class="css-prop">background-color</span>: <span class="css-func">var</span>(<span class="scss-var">--bg-body</span>);
+  <span class="css-prop">color</span>: <span class="css-func">var</span>(<span class="scss-var">--text-body</span>);
+  <span class="css-prop">transition</span>: <span class="css-val">background 0.3s ease</span>;
+}</code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Výhody nativních CSS proměnných</h4>
+                <ul class="styled-list">
+                  <li><strong>Žijí v DOM stromu:</strong> Na rozdíl od proměnných v Sassu nebo Lessu (které zanikají při kompilaci) nativní proměnné existují v prohlížeči v reálném čase.</li>
+                  <li><strong>Kaskádují a dědí se:</strong> Můžete předefinovat proměnnou <code>--card-bg</code> lokálně pouze pro určitou sekci <code>.highlight-box</code>.</li>
+                  <li><strong>Manipulace přes JavaScript:</strong> Lze číst a měnit jedním příkazem:<br>
+                    <code>element.style.setProperty('--accent', '#ff0000');</code>
+                  </li>
+                  <li><strong>Reakce na systém:</strong> Snadná vazba na systémový dark mode: <code>@media (prefers-color-scheme: dark)</code>.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: CSS PŘECHODY A ANIMACE -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Micro-interactions &amp; Performance</div>
+            <h2 class="slide-title">Plynulé přechody (Transitions) a výkon</h2>
+            <p class="slide-subtitle">Animace akcelerované grafickou kartou (GPU) bez zasekávání stránky</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">css &bull; plynulý hover efekt na kartě</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="css-sel">.course-card</span> {
+  <span class="css-prop">background</span>: <span class="css-val">rgba(255, 255, 255, 0.05)</span>;
+  <span class="css-prop">border</span>: <span class="css-num">1</span><span class="css-unit">px</span> <span class="css-val">solid var(--border-color)</span>;
+  <span class="html-comment">/* Zápis: vlastnost | trvání | funkce | zpoždění */</span>
+  <span class="css-prop">transition</span>: <span class="css-val">transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.25s ease</span>;
+}
+
+<span class="css-sel">.course-card:hover</span> {
+  <span class="html-comment">/* Hardwarově akcelerovaný posun nahoru */</span>
+  <span class="css-prop">transform</span>: <span class="css-func">translateY</span>(<span class="css-num">-6</span><span class="css-unit">px</span>);
+  <span class="css-prop">box-shadow</span>: <span class="css-num">0 12</span><span class="css-unit">px</span> <span class="css-num">24</span><span class="css-unit">px</span> <span class="css-val">rgba(0, 0, 0, 0.3)</span>;
+}</code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Pravidla plynulých animací (60 FPS)</h4>
+                <ul class="styled-list">
+                  <li><strong>Animujte pouze transform a opacity:</strong> Tyto dvě vlastnosti se počítají přímo na GPU v samostatné kompoziční vrstvě (Compositor Thread). Nevyvolávají Reflow ani Repaint!</li>
+                  <li><strong>Nikdy neanimujte width, height, top nebo left:</strong> Animace geometrických rozměrů nutí prohlížeč přepočítávat polohu všech okolních prvků na stránce, což vede k zásekům (jank).</li>
+                  <li><strong>Respektujte preferenci uživatele:</strong> Pomocí <code>@media (prefers-reduced-motion: reduce)</code> vypněte animace uživatelům trpícím kinetózou.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 16 (RWD)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 16, 8</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Tři pilíře RWD</h4>
+              <p>Meta tag viewport, fluidní proporční mřížka (% / fr / rem) a flexibilní média (max-width: 100%).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Přístup Mobile-First</h4>
+              <p>Výchozí styl pro malý displej s postupným přidáváním sloupců přes <code>@media (min-width: ...)</code>.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. CSS Custom Properties</h4>
+              <p>Definice <code>--nazev</code> a volání <code>var()</code>. Žijí v DOMu a umožňují Dark mode bez duplikace stylů.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. 60 FPS přechody</h4>
+              <p>Animace přes <code>transform</code> a <code>opacity</code> akcelerované GPU vs. zákaz animování šířek a výšek.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická záludná otázka zkoušejícího</div>
+              <p><em>„Co se stane na iPhonu, pokud na stránku napíšete Media Queries pro mobil, ale zapomenete do HTML vložit značku &lt;meta name="viewport" ...&gt;?“</em><br>
+              <strong>Správná odpověď:</strong> Media Queries pro mobil <strong>vůbec nezaberou</strong>! Mobilní prohlížeč bude předpokládat, že web není responzivní, nastaví šířku virtuálního okna na 980px, aplikuje desktopová pravidla a celou stránku zmenší na miniaturní nečitelný náhled.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 08</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

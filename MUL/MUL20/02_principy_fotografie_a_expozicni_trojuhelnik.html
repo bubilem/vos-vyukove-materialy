@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 02: Principy fotografie a expoziční trojúhelník | MUL20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL20">
+          <span>&larr; MUL20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 02</span>
+          <span class="divider">&bull;</span>
+          <span>Principy fotografie a expoziční trojúhelník</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 10: Principy fotografie</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL20 &bull; 2. přednáška (45 min)</div>
+        <h1 class="hero-title">Principy fotografie a expoziční trojúhelník</h1>
+        <p class="hero-desc">
+          Základní pilíř optického záznamu světla: vzájemný vztah expozičního času, clony a citlivosti ISO. Řízení hloubky ostrosti, pohybové neostrosti, dynamického rozsahu a čtení tónového histogramu.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Expozice</span>
+            <span class="hero-meta-val">Čas &bull; Clona &bull; ISO</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Optika</span>
+            <span class="hero-meta-val">Hloubka ostrosti (DoF)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 10</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: EXPOZIČNÍ TROJÚHELNÍK -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní fyzika expozice</div>
+            <h2 class="slide-title">Expoziční trojúhelník &bull; Zákon reciprocity</h2>
+            <p class="slide-subtitle">Celkové množství světla dopadajícího na snímač a jeho tři proměnné</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Základní pravidlo</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="triangle-grid">
+            <div class="triangle-node">
+              <h4>1. Čas závěrky (Shutter)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">Doba, po kterou je snímač vystaven světlu (např. 1/1000 s až 30 s). Ovlivňuje <strong>pohybové rozmazání</strong>.</p>
+            </div>
+            <div class="triangle-node">
+              <h4>2. Clona objektivu (Aperture)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">Velikost otvoru v objektivu ($f/1.4$ až $f/22$). Ovlivňuje množství světla a <strong>hloubku ostrosti</strong>.</p>
+            </div>
+            <div class="triangle-node">
+              <h4>3. Citlivost snímače (ISO)</h4>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">Elektronické zesílení signálu (ISO 100 až 25600+). Vyšší hodnoty přinášejí <strong>digitální šum</strong>.</p>
+            </div>
+          </div>
+          <div class="callout callout-tip" style="margin-top: 0.75rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Zákon reciprocity (Výměnnost parametrů)</div>
+              <p>Zkrácení času na polovinu (např. z 1/125 s na 1/250 s = &minus;1 EV) lze přesně kompenzovat otevřením clony o jedno clonové číslo (např. z f/4 na f/2.8 = +1 EV) nebo zdvojnásobením ISO (ze 200 na 400 = +1 EV). Výsledný jas scény zůstane identický, ale změní se estetické vlastnosti obrazu!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: ČAS ZÁVĚRKY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Časová doména</div>
+            <h2 class="slide-title">Čas závěrky: Zmrazení akce vs. Motion Blur</h2>
+            <p class="slide-subtitle">Mechanická štěrbinová závěrka vs. elektronická závěrka snímače</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Čas závěrky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Kreativní využití expozičního času</h4>
+              <ul class="styled-list">
+                <li><strong>Krátké časy (1/1000 s &ndash; 1/8000 s):</strong> Zmrazení extrémně rychlého pohybu (kapky vody, let ptáka, sport). Vyžaduje silné světlo.</li>
+                <li><strong>Základní pravidlo z ruky:</strong> Bez stabilizace je bezpečný čas roven převrácené hodnotě ohniska: $t \le 1 / f_{ohnisko}$ (např. pro 200mm teleobjektiv min. 1/200 s).</li>
+                <li><strong>Dlouhé časy (1 s &ndash; 30 s+):</strong> Voda se změní v mlhu, světla aut vytvoří světelné čáry. Vyžaduje pevný stativ a ND filtr.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Mechanická vs. Elektronická závěrka</h4>
+              <ul class="styled-list">
+                <li><strong>Mechanická lamelová:</strong> Fyzické lamely se pohybují před snímačem. Synchronizační čas s bleskem (X-sync) cca 1/200–1/250 s.</li>
+                <li><strong>Elektronická (Rolling Shutter):</strong> Postupné vyčítání řádků pixelů čipu. Může způsobit <em>Jello efekt</em> a zkreslení rotujících vrtulí nebo rychlého švenku.</li>
+                <li><strong>Global Shutter:</strong> Expozice všech pixelů v přesně stejný okamžik &ndash; nulové zkreslení při jakékoli rychlosti pohybu.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: CLONA A HLOUBKA OSTROSTI -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Optická clona</div>
+            <h2 class="slide-title">Clona a řízení hloubky ostrosti (DoF)</h2>
+            <p class="slide-subtitle">Geometrický vztah mezi ohniskem, clonou a rozostřením pozadí</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový koncept</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Řada clonových čísel</h4>
+              <div class="code-box" style="margin: 0.5rem 0;">
+                <pre><code>f/1.0 &rarr; f/1.4 &rarr; f/2.0 &rarr; f/2.8 &rarr; f/4 &rarr; f/5.6 &rarr; f/8 &rarr; f/11 &rarr; f/16 &rarr; f/22</code></pre>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                Každý krok doprava zmenšuje propustnost světla na <strong>polovinu</strong> (plocha kruhového otvoru roste s druhou mocninou poloměru, proto krok násobí $\sqrt{2} \approx 1.414$).
+              </p>
+              <ul class="styled-list">
+                <li><strong>Malé číslo (f/1.4):</strong> Otevřená clona, maximum světla, extrémně malá hloubka ostrosti (portréty).</li>
+                <li><strong>Velké číslo (f/11):</strong> Přivřená clona, velká hloubka ostrosti od popředí k horizontu (krajiny).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Faktory ovlivňující hloubku ostrosti (DoF)</h4>
+              <ul class="styled-list">
+                <li><strong>1. Clonové číslo:</strong> Nižší $f$-číslo = menší hloubka ostrosti.</li>
+                <li><strong>2. Ohnisková vzdálenost:</strong> Delší teleobjektiv (200 mm) má opticky výrazně menší hloubku ostrosti než širokoúhlý objektiv (24 mm).</li>
+                <li><strong>3. Vzdálenost od objektu:</strong> Čím blíže je fotoaparát k předmětu, tím menší je hloubka ostrosti (extrémní u makrofotografie).</li>
+                <li><strong>Limit difrakce:</strong> Od clony $f/16$ a $f/22$ dochází k ohybu světla na hranách lamel a celoplošné ztrátě ostrosti snímku!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: ISO, HISTOGRAM A RAW -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Digitální expozice</div>
+            <h2 class="slide-title">Citlivost ISO, šum a tónový histogram</h2>
+            <p class="slide-subtitle">Jak objektivně zhodnotit expozici a proč fotografovat do formátu RAW</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Digitální workflow</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Čtení tónového histogramu</h4>
+              <ul class="styled-list">
+                <li>Graf četnosti pixelů od absolutní černé (vlevo, hodnota 0) po čistou bílou (vpravo, hodnota 255).</li>
+                <li><strong>Podexpozice (Crushed Shadows):</strong> Graf "naráží" do levé stěny. Tmavá místa ztrácejí kresbu a při zesvětlení se objeví silný šum.</li>
+                <li><strong>Přeexpozice (Blown Highlights):</strong> Graf naráží do pravé stěny. Přepaly v obloze nemají žádnou informaci (čistá bílá, nelze zachránit).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>RAW vs. 8bitový JPEG z fotoaparátu</h4>
+              <ul class="styled-list">
+                <li><strong>JPEG (8-bit):</strong> Fotoaparát aplikuje vyvážení bílé, kontrast a doostření, zahodí 80 % dat a zkomprimuje soubor. Možnost záchrany stínů je minimální.</li>
+                <li><strong>RAW (12–14 bit):</strong> Čistý surový odečet napětí z fotodiod senzoru (16 384 tónů na kanál). Umožňuje v postprodukci bezeztrátově změnit vyvážení bílé (Kelviny) a vytáhnout kresbu ze stínů o &plusmn;3 až 4 EV bez destrukce obrazu.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z principů fotografie</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 10</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Zákon reciprocity</h4>
+              <p>Expozice je dána kombinací času, clony a ISO. Změnu jednoho parametru o 1 EV lze kompenzovat úpravou druhého.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Hloubka ostrosti</h4>
+              <p>Ovlivněna clonou (nižší f-číslo = menší DoF), ohniskovou vzdáleností a vzdáleností fotoaparátu od fotografovaného objektu.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Výhoda RAW</h4>
+              <p>14bitový dynamický rozsah přímo ze snímače umožňuje dramatickou záchranu stínů a světel bez artefaktů JPEG komprese.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Vysvětlete expoziční trojúhelník a zákon reciprocity. Popište faktory ovlivňující hloubku ostrosti a vysvětlete, jak číst histogram scény.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 02</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+/* ==========================================================================
+   MUL10 - Lokální modulové rozšíření (Rozdělení multimédií a formáty)
+   Přebírá jádro z ../../../assets/css/presentation-core.css
+   ========================================================================== */
+
+@import "../../../assets/css/presentation-core.css";
+@import "../../../assets/css/syntax/web.css";
+
+:root {
+  --accent: #a855f7;
+  --accent-glow: rgba(168, 85, 247, 0.25);
+  --accent-purple: #a855f7;
+  --accent-pink: #ec4899;
+  --accent-amber: #f59e0b;
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+}
+
+/* Multimediální komponenty a odznaky formátů */
+.format-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(168, 85, 247, 0.15);
+  color: #d8b4fe;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.format-pill.lossless {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.format-pill.lossy {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+
+.format-pill.uncompressed {
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.media-compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin: 0.75rem 0;
+}
+
+.timeline-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  border-left: 2px solid var(--accent);
+  background: rgba(168, 85, 247, 0.05);
+  margin-bottom: 0.5rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}

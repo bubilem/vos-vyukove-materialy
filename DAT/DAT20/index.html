@@ -1,0 +1,421 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DAT20: Databázové systémy | Výukový portál a prezentace</title>
+  <link rel="stylesheet" href="../../assets/css/dashboard-core.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    
+    <!-- Top Header / Brand -->
+    <header class="dashboard-header">
+      <div class="brand-box">
+        <div class="brand-icon">
+          <svg class="icon" viewBox="0 0 24 24">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>DAT20 • Databázové systémy</h1>
+          <p>Vyšší odborná škola • 5. semestr • Zimní období</p>
+        </div>
+      </div>
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Přepnout světlý/tmavý motiv">
+        <svg class="icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <div class="hero-tag">Výukové materiály & Webové prezentace</div>
+      <h2 class="hero-title">Relační modelování, SQL & Pokročilé dotazování</h2>
+      <p class="hero-desc">
+        Kompletní série 10 interaktivních výukových prezentací (45 minut / lekce) pro modul DAT20. Všechny praktické příklady, DDL schémata a SQL dotazy jsou vystavěny nad jednotnou výukovou databází <code>edu_eshop</code>.
+      </p>
+
+      <div class="metrics-row">
+        <div class="metric-item">
+          <span class="metric-num">10</span>
+          <span class="metric-label">Výukových lekcí</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">45 min</span>
+          <span class="metric-label">Na jednu hodinu</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">5 kreditů</span>
+          <span class="metric-label">Zakončeno zkouškou</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">Okruhy 6–14</span>
+          <span class="metric-label">Otázky k absolutoriu</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Database Context Banner -->
+    <section class="db-banner">
+      <div class="db-banner-content">
+        <h3>
+          <svg class="icon" style="color: #34d399;" viewBox="0 0 24 24">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          Výuková databáze: <code>edu_eshop</code>
+        </h3>
+        <p>Všechny lekce pracují s jednotným relačním modelem elektronického obchodu (MySQL 8 / MariaDB). Model pokrývá vazby 1:1, 1:N, sebereferenci, dekompozici M:N i automatické triggery.</p>
+        <div class="db-pills">
+          <span class="db-pill">customer (1:1)</span>
+          <span class="db-pill">customer_profile</span>
+          <span class="db-pill">category (Self-JOIN)</span>
+          <span class="db-pill">product (JSON)</span>
+          <span class="db-pill">product_category (M:N)</span>
+          <span class="db-pill">rating (CHECK)</span>
+          <span class="db-pill">orders</span>
+          <span class="db-pill">order_item</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Bar -->
+    <div class="search-container">
+      <svg class="search-icon-svg" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="lessonSearch" class="search-input" placeholder="Hledat v lekcích (např. 'JOIN', 'HAVING', 'BCNF', 'DDL', 'CHECK', 'okruh 7')...">
+    </div>
+
+    <!-- Lessons Catalog Grid -->
+    <main class="lessons-grid" id="lessonsGrid">
+
+      <!-- LEKCE 01 -->
+      <article class="lesson-card" data-keywords="normalizace 1nf 2nf 3nf bcnf funkční závislosti anomálie dekompozice okruh 6">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 01</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 6</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Normalizace relačních databází a normální formy</h3>
+          <p class="lesson-desc">
+            Anomálie při manipulaci s daty (vkládání, aktualizace, mazání), funkční závislosti a postupná dekompozice od 1NF přes 2NF a 3NF až po Boyce-Coddovu normální formu (BCNF).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">1NF-3NF</span>
+            <span class="lesson-tag">BCNF</span>
+            <span class="lesson-tag">Anomálie</span>
+            <span class="lesson-tag">Funkční závislosti</span>
+          </div>
+          <a href="01_normalizace_a_normalni_formy.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 02 -->
+      <article class="lesson-card" data-keywords="sql historie standardy ddl dml dql dcl tcl datové typy decimal float char varchar json okruh 7">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 02</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 7</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Jazyk SQL a datové typy</h3>
+          <p class="lesson-desc">
+            Rozdělení SQL do 5 sub-jazyků (DDL, DML, DQL, DCL, TCL). Přehled datových typů (celočíselné, přesné DECIMAL vs FLOAT, CHAR vs VARCHAR, DATETIME, ENUM a JSON) a kolace <code>utf8mb4_czech_ci</code>.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">DDL/DML/DQL</span>
+            <span class="lesson-tag">DECIMAL vs FLOAT</span>
+            <span class="lesson-tag">utf8mb4</span>
+            <span class="lesson-tag">JSON</span>
+          </div>
+          <a href="02_uvod_do_sql_a_datove_typy.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 03 -->
+      <article class="lesson-card" data-keywords="ddl create alter drop truncate table database schéma definice struktur okruh 8">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 03</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 8</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">DDL – Definice datových struktur</h3>
+          <p class="lesson-desc">
+            Vytváření databází a tabulek (<code>CREATE TABLE</code>), modifikace existujících struktur (<code>ALTER TABLE</code> ADD, MODIFY, CHANGE, DROP) a podrobné srovnání <code>DROP</code> vs <code>TRUNCATE</code> vs <code>DELETE</code>.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">CREATE TABLE</span>
+            <span class="lesson-tag">ALTER TABLE</span>
+            <span class="lesson-tag">TRUNCATE</span>
+            <span class="lesson-tag">DROP TABLE</span>
+          </div>
+          <a href="03_ddl_definice_datovych_struktur.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 04 -->
+      <article class="lesson-card" data-keywords="integrita primární klíč cizí klíč foreign key unique not null check cascade set null restrict okruh 9">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 04</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 9</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Integritní omezení a referenční integrita</h3>
+          <p class="lesson-desc">
+            Entitní, doménová a referenční integrita. Primární klíče, kandidátní klíče (UNIQUE), podmínky CHECK a cizí klíče s referenčními akcemi <code>CASCADE</code>, <code>SET NULL</code> a <code>RESTRICT</code>.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">PRIMARY KEY</span>
+            <span class="lesson-tag">FOREIGN KEY</span>
+            <span class="lesson-tag">CHECK</span>
+            <span class="lesson-tag">CASCADE / RESTRICT</span>
+          </div>
+          <a href="04_integritni_omezeni_a_referencni_integrita.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 05 -->
+      <article class="lesson-card" data-keywords="dml insert update delete bulk insert manipulace safe updates okruh 10">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 05</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 10</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">DML – Manipulace s daty</h3>
+          <p class="lesson-desc">
+            Vkládání záznamů (<code>INSERT INTO</code>, hromadný bulk insert, INSERT INTO SELECT), bezpečné aktualizace (<code>UPDATE</code>), mazání (<code>DELETE FROM</code>) a prevence kritických chyb (safe updates).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">INSERT INTO</span>
+            <span class="lesson-tag">UPDATE SET</span>
+            <span class="lesson-tag">DELETE FROM</span>
+            <span class="lesson-tag">Safe Updates</span>
+          </div>
+          <a href="05_dml_manipulace_s_daty.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 06 -->
+      <article class="lesson-card" data-keywords="dql select where order by limit offset null 3vl like stránkování filtrování okruh 11">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 06</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 11</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">DQL – Základy dotazování (SELECT)</h3>
+          <p class="lesson-desc">
+            Logické pořadí vyhodnocování dotazu (FROM → WHERE → SELECT...), filtrace v klauzuli <code>WHERE</code>, operátor <code>LIKE</code>, tříhodnotová logika a testování hodnot <code>IS NULL</code>, řazení <code>ORDER BY</code> a stránkování <code>LIMIT</code> / <code>OFFSET</code>.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">SELECT</span>
+            <span class="lesson-tag">WHERE</span>
+            <span class="lesson-tag">IS NULL</span>
+            <span class="lesson-tag">ORDER BY / LIMIT</span>
+          </div>
+          <a href="06_dql_zaklady_dotazovani_select.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 07 -->
+      <article class="lesson-card" data-keywords="join inner join left join right join cross join self join spojování tabulek m:n vazba okruh 12">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 07</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 12</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Spojování tabulek (JOIN)</h3>
+          <p class="lesson-desc">
+            Kartézský součin (CROSS JOIN), vnitřní spojení (<code>INNER JOIN</code>), vnější spojení (<code>LEFT JOIN</code>), sebereferenční spojení tabulky se sebou samou (<code>Self JOIN</code> pro strom kategorií) a vícenásobná spojení pro vazbu M:N.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">INNER JOIN</span>
+            <span class="lesson-tag">LEFT JOIN</span>
+            <span class="lesson-tag">Self JOIN</span>
+            <span class="lesson-tag">M:N Spojení</span>
+          </div>
+          <a href="07_spojovani_tabulek_join.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 08 -->
+      <article class="lesson-card" data-keywords="agregace count sum avg min max group by having only_full_group_by seskupování okruh 13">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 08</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 13</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Agregační funkce a seskupování dat</h3>
+          <p class="lesson-desc">
+            Agregační funkce (<code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>), princip seskupování klauzulí <code>GROUP BY</code>, pravidlo ONLY_FULL_GROUP_BY a klíčový rozdíl mezi filtrováním řádků <code>WHERE</code> a filtrováním skupin <code>HAVING</code>.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">GROUP BY</span>
+            <span class="lesson-tag">HAVING</span>
+            <span class="lesson-tag">COUNT / AVG / SUM</span>
+            <span class="lesson-tag">WHERE vs HAVING</span>
+          </div>
+          <a href="08_agregacni_funkce_a_group_by.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 09 -->
+      <article class="lesson-card" data-keywords="vnořené dotazy poddotazy subqueries in any all exists not exists korelované nekorelované okruh 14">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 09</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 14</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Vnořené dotazy (Subqueries)</h3>
+          <p class="lesson-desc">
+            Skalární poddotazy, řádkové a množinové poddotazy (<code>IN</code>, <code>NOT IN</code>, <code>ANY</code>, <code>ALL</code>), výkonnostní rozdíl mezi nekorelovanými a korelovanými poddotazy a existenční predikáty <code>EXISTS</code> / <code>NOT EXISTS</code>.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Subqueries</span>
+            <span class="lesson-tag">IN / ANY / ALL</span>
+            <span class="lesson-tag">EXISTS</span>
+            <span class="lesson-tag">Korelované dotazy</span>
+          </div>
+          <a href="09_vnorene_dotazy_subqueries.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 10 -->
+      <article class="lesson-card" data-keywords="syntéza procvičování příprava zkouška absolutorium komplexní dotaz model edu_eshop">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 10</span>
+            <span class="lesson-exam-badge">Syntéza okruhů 6–14</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Komplexní syntéza & Příprava na absolutorium</h3>
+          <p class="lesson-desc">
+            Ucelená integrace všech znalostí na reálném modelu <code>edu_eshop</code>. Tvorba pokročilých manažerských reportů, revize nejčastějších chyb u zkoušky a souhrnný kontrolní checklist pro studenta.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Komplexní SQL</span>
+            <span class="lesson-tag">Manažerský report</span>
+            <span class="lesson-tag">Matice otázek</span>
+            <span class="lesson-tag">Zkušební checklist</span>
+          </div>
+          <a href="10_komplexni_synteza_a_absolutorium.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Dashboard Footer -->
+    <footer class="dashboard-footer">
+      <div>
+        <span>Výukový modul <strong>DAT20 (Databázové systémy)</strong> • VOŠ & SŠ</span>
+      </div>
+      <div>
+        <span>Ovládání prezentací: Šipky ◀ ▶ • Fullscreen <kbd>F</kbd> • Obsah <kbd>M</kbd> • Motiv <kbd>T</kbd></span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Live Search in Lessons
+    const searchInput = document.getElementById('lessonSearch');
+    const lessonCards = document.querySelectorAll('.lesson-card');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      lessonCards.forEach(card => {
+        const text = (card.textContent + ' ' + card.getAttribute('data-keywords')).toLowerCase();
+        if (text.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const sunIcon = `<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    const moonIcon = `<svg class="icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+
+    const savedTheme = localStorage.getItem('dat20_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeBtn.innerHTML = savedTheme === 'dark' ? sunIcon : moonIcon;
+
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('dat20_theme', next);
+      themeBtn.innerHTML = next === 'dark' ? sunIcon : moonIcon;
+    });
+  </script>
+</body>
+</html>

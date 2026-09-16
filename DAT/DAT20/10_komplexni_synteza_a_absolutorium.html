@@ -1,0 +1,328 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 10: Komplexní syntéza a příprava na zkoušku | DAT20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník">
+          <span>← DAT20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 10</span>
+          <span class="divider">•</span>
+          <span>Komplexní syntéza & Příprava na absolutorium</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruhy absolutoria 6 až 14</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT20 • 10. přednáška (45 min)</div>
+        <h1 class="hero-title">Komplexní syntéza & Příprava na zkoušku</h1>
+        <p class="hero-desc">
+          Propojení všech konceptů relačního návrhu, DDL, DML, integritních pravidel, pokročilého dotazování a příprava k absolutoriu na uceleném modelu <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Souhrn okruhů</span>
+            <span class="hero-meta-val">Otázky č. 6 až 14</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Praktická syntéza</span>
+            <span class="hero-meta-val">Komplexní analytický SQL report</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Úspěšnost</span>
+            <span class="hero-meta-val">Absolutorium VOŠ</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: EDU_ESHOP ARCHITECTURE OVERVIEW -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Relační architektura</div>
+            <h2 class="slide-title">Kompletní mapa schématu <code>edu_eshop</code></h2>
+            <p class="slide-subtitle">Jak všech 8 tabulek a vztahů reprezentuje probíranou látku</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Přehled tabulek a jejich výukový význam</h4>
+              <ul class="styled-list" style="font-size: 0.88rem;">
+                <li><code>customer</code> (1:1) <code>customer_profile</code>: Ukázka sdíleného primárního klíče a zacházení s NULL hodnotami u neúplných profilů.</li>
+                <li><code>category</code> (Sebereference M:1): Stromová hierarchie podkategorií s cizím klíčem na tutéž tabulku a akcí <code>SET NULL</code>.</li>
+                <li><code>product</code>: Flexibilní <code>JSON</code> atributy a kontrolní integrita <code>CHECK (price >= 0)</code>.</li>
+                <li><code>product_category</code> (M:N): Klasická dekompozice vazby M:N na dvě vazby 1:N se složeným primárním klíčem.</li>
+                <li><code>rating</code>: Vazba 1:N s unikátností <code>UNIQUE (customer_id, product_id)</code> a kontrolou <code>CHECK (score BETWEEN 1 AND 5)</code>.</li>
+                <li><code>orders</code> a <code>order_item</code>: Transakční jádro e-shopu s historickou cenou a vazbou <code>RESTRICT</code> na zákazníka.</li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="callout callout-eshop">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">Interaktivní schéma online</div>
+                  Kompletní schéma si můžete prohlédnout na dbdiagram.io v souboru <code>edu_eshop.dbml</code>.
+                </div>
+              </div>
+              <div class="content-card" style="margin-top: 0.8rem;">
+                <h4>Triggery a Pohledy</h4>
+                <p style="font-size: 0.9rem;">
+                  Databáze obsahuje automatické triggery pro přepočet celkové ceny v <code>orders</code> i počítadla <code>category.product_count</code> a předpřipravené pohledy <code>v_product_catalog</code> a <code>v_order_summary</code>.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: COMPLEX SYNTHESIS QUERY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Komplexní dotaz</div>
+            <h2 class="slide-title">Manažerský report prodeje podle kategorií</h2>
+            <p class="slide-subtitle">Dotaz propojující 5 tabulek, agregační funkce, seskupování a řazení</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Typická zkoušková úloha</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="code-wrapper">
+            <div class="code-header">
+              <span class="code-title">Manažerský SQL dotaz</span>
+              <button class="btn-copy">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Kopírovat</span>
+              </button>
+            </div>
+            <pre class="code-block"><code><span class="sql-keyword">SELECT</span> 
+  c.`name` <span class="sql-keyword">AS</span> kategorie,
+  <span class="sql-func">COUNT</span>(<span class="sql-keyword">DISTINCT</span> p.`id`)                         <span class="sql-keyword">AS</span> pocet_aktivnich_produktu,
+  <span class="sql-func">COALESCE</span>(<span class="sql-func">SUM</span>(oi.`quantity`), 0)                 <span class="sql-keyword">AS</span> prodano_kusu,
+  <span class="sql-func">COALESCE</span>(<span class="sql-func">SUM</span>(oi.`quantity` * oi.`unit_price`), 0) <span class="sql-keyword">AS</span> celkovy_obrat
+<span class="sql-keyword">FROM</span> `category` c
+<span class="sql-keyword">LEFT JOIN</span> `product_category` pc <span class="sql-keyword">ON</span> c.`id` = pc.`category_id`
+<span class="sql-keyword">LEFT JOIN</span> `product` p          <span class="sql-keyword">ON</span> pc.`product_id` = p.`id` <span class="sql-keyword">AND</span> p.`active` = <span class="sql-keyword">TRUE</span>
+<span class="sql-keyword">LEFT JOIN</span> `order_item` oi      <span class="sql-keyword">ON</span> p.`id` = oi.`product_id`
+<span class="sql-keyword">LEFT JOIN</span> `orders` o           <span class="sql-keyword">ON</span> oi.`order_id` = o.`id` <span class="sql-keyword">AND</span> o.`status` != <span class="sql-string">'cancelled'</span>
+<span class="sql-keyword">GROUP BY</span> c.`id`, c.`name`
+<span class="sql-keyword">ORDER BY</span> celkovy_obrat <span class="sql-keyword">DESC</span>;</code></pre>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.5rem;">
+            Díky řetězci <code>LEFT JOIN</code> se ve výpisu objeví i kategorie, které dosud nemají žádný prodej (obrat 0 Kč), místo aby z výsledků vypadly.
+          </p>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: ABSOLUTORIUM TOPICS MATRIX -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Absolutorium</div>
+            <h2 class="slide-title">Matice okruhů absolutoria pro modul DAT20</h2>
+            <p class="slide-subtitle">Rychlý přehled klíčových témat a co komise zkouší</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="db-table">
+              <thead>
+                <tr><th>Okruh</th><th>Téma</th><th>Zásadní pojmy k obhajobě</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>6</strong></td>
+                  <td>Normalizace databází</td>
+                  <td>Anomálie (I/U/D), funkční závislosti, 1NF, 2NF, 3NF, BCNF, dekompozice</td>
+                </tr>
+                <tr>
+                  <td><strong>7</strong></td>
+                  <td>Jazyk SQL a typy</td>
+                  <td>DDL/DML/DQL/DCL/TCL, INT vs DECIMAL vs FLOAT, CHAR vs VARCHAR, kolace</td>
+                </tr>
+                <tr>
+                  <td><strong>8</strong></td>
+                  <td>Definice struktur (DDL)</td>
+                  <td>CREATE TABLE, ALTER TABLE, DROP vs TRUNCATE vs DELETE, AUTO_INCREMENT</td>
+                </tr>
+                <tr>
+                  <td><strong>9</strong></td>
+                  <td>Integrita dat</td>
+                  <td>PK, UNIQUE, NOT NULL, CHECK, cizí klíče, CASCADE, SET NULL, RESTRICT</td>
+                </tr>
+                <tr>
+                  <td><strong>10</strong></td>
+                  <td>Manipulace s daty (DML)</td>
+                  <td>INSERT INTO, bulk insert, UPDATE, WHERE riziko, DELETE, safe updates</td>
+                </tr>
+                <tr>
+                  <td><strong>11</strong></td>
+                  <td>Dotazování (DQL)</td>
+                  <td>Struktura SELECT, pořadí vyhodnocení, 3VL (IS NULL), LIKE, ORDER BY, LIMIT</td>
+                </tr>
+                <tr>
+                  <td><strong>12</strong></td>
+                  <td>Spojování tabulek (JOIN)</td>
+                  <td>CROSS, INNER, LEFT, RIGHT, FULL OUTER, Self JOIN, aliasy, M:N spojení</td>
+                </tr>
+                <tr>
+                  <td><strong>13</strong></td>
+                  <td>Agregace a seskupování</td>
+                  <td>COUNT, SUM, AVG, MIN, MAX, GROUP BY, ONLY_FULL_GROUP_BY, WHERE vs HAVING</td>
+                </tr>
+                <tr>
+                  <td><strong>14</strong></td>
+                  <td>Vnořené dotazy</td>
+                  <td>Skalární poddotazy, IN, ANY, ALL, korelované dotazy, EXISTS / NOT EXISTS</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: CHECKLIST FOR SUCCESS -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná příprava</div>
+            <h2 class="slide-title">Zkouškový checklist: Jak uspět na 100 %</h2>
+            <p class="slide-subtitle">Zlatá pravidla vystupování a obhajoby u zkoušky</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-card-num">1</div>
+              <h4>Mluvte v souvislostech</h4>
+              <p>Nezůstávejte u suché definice. Vždy uveďte příklad: <em>„Například u e-shopu v tabulce objednávek...“</em></p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">2</div>
+              <h4>Znejte rozdíly</h4>
+              <p>Typické porovnávací otázky: WHERE vs HAVING, DROP vs TRUNCATE, INNER vs LEFT JOIN, FLOAT vs DECIMAL.</p>
+            </div>
+            <div class="summary-card">
+              <div class="summary-card-num">3</div>
+              <h4>Dbejte na integritu</h4>
+              <p>U každého cizího klíče mějte připravené zdůvodnění pro volbu <code>CASCADE</code>, <code>SET NULL</code> či <code>RESTRICT</code>.</p>
+            </div>
+          </div>
+
+          <div class="callout callout-exam" style="margin-top: 1rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Gratulujeme k dokončení modulu DAT20!</div>
+              Zvládli jste kompletní základy relačního návrhu a pokročilého dotazování SQL. Tyto znalosti jsou základem pro následující modul <strong>DAT30</strong> (funkce, triggery, transakce, bezpečnost a životní cyklus DBS).
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter">01 / 05</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 10</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><span class="key-badge">M</span></div>
+          <div class="shortcut-row"><span>Motiv (Tmavý/Světlý)</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

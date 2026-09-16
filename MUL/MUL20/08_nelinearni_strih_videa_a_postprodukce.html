@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 08: Nelineární střih videa a postprodukce | MUL20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL20">
+          <span>&larr; MUL20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 08</span>
+          <span class="divider">&bull;</span>
+          <span>Nelineární střih videa a postprodukce</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 14: Zpracování a střih videa</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL20 &bull; 8. přednáška (45 min)</div>
+        <h1 class="hero-title">Nelineární střih videa a postprodukce</h1>
+        <p class="hero-desc">
+          Architektura moderních NLE systémů (DaVinci Resolve, Adobe Premiere Pro). Střihové techniky (L-cut, J-cut, match cut), postprodukce zvuku, tónování barev (Color Correction vs. Grading, LUT) a exportní render pipeline.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Software</span>
+            <span class="hero-meta-val">DaVinci Resolve &bull; Premiere</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Metodika</span>
+            <span class="hero-meta-val">L-Cut / J-Cut &bull; LUT grading</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 14</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: NLE ARCHITEKTURA -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Koncept střižny</div>
+            <h2 class="slide-title">Principy nelineárního střihu (NLE)</h2>
+            <p class="slide-subtitle">Přechod od mechanického lepení filmu k nedestruktivní digitální časové ose</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Základní koncept</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. Nedestruktivní časová osa (Timeline)</h4>
+              <ul class="styled-list">
+                <li>Původní video soubory na disku zůstávají 100% netknuté.</li>
+                <li>Časová osa obsahuje pouze databázové ukazatele (In Point &ndash; Out Point, časové značky, aplikované efekty).</li>
+                <li>Kdykoli lze záběr prodloužit, zkrátit, přemístit nebo vyměnit bez ztráty kvality generací.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. Práce s Proxy soubory</h4>
+              <ul class="styled-list">
+                <li>Surový 4K/8K materiál (např. 100 GB soubor H.265 nebo RAW) je příliš náročný na plynulé přehrávání v reálném čase.</li>
+                <li><strong>Proxy workflow:</strong> Střižna vygeneruje odlehčené náhledy v nízkém rozlišení (např. 720p ProRes Proxy) s identickým časovým kódem (Timecode).</li>
+                <li>Střih probíhá plynule i na slabším notebooku. Před finálním exportem se střižna automaticky přepne zpět na plná 4K/8K zdrojová data.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: STŘIHOVÉ TECHNIKY (L-CUT & J-CUT) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Filmová řeč</div>
+            <h2 class="slide-title">Střihové techniky: L-Cut, J-Cut &bull; Osa akce</h2>
+            <p class="slide-subtitle">Jak propojit obraz a zvuk pro zachování plynulosti vyprávění</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová praxe</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>L-Cut (Split Edit obrazu a zvuku)</h4>
+              <p>Obraz se přepne na další záběr, ale zvuk z předchozího záběru ještě doznívá. Využívá se při reakcích posluchače na řeč postavy.</p>
+              <h4 style="margin-top: 0.8rem;">J-Cut (Předstih audia)</h4>
+              <p>Zvuk z následujícího záběru slyšíme o zlomek sekundy dříve, než se změní obraz. Připravuje diváka na příchod nového děje.</p>
+            </div>
+            <div class="content-card">
+              <h4>Pravidlo 180° osy akce (Axis of Action)</h4>
+              <ul class="styled-list">
+                <li>Mezi dvěma debatujícími postavami prochází pomyslná přímka (osa pohledu).</li>
+                <li>Kamera se smí pohybovat pouze v polokruhu na jedné straně této osy (180&deg;).</li>
+                <li>Při překročení osy (Crossing the line) si postavy opticky vymění strany pohledu (obě se dívají doprava), což diváka fatálně dezorientuje!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: BAREVNÉ KOREKCE A COLOR GRADING -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Koloristika</div>
+            <h2 class="slide-title">Color Correction vs. Color Grading &bull; LUT</h2>
+            <p class="slide-subtitle">DaVinci Resolve jako etalon barevných úprav ve filmovém průmyslu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový koncept</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. Fáze: Barevná korekce (Color Correction)</h4>
+              <ul class="styled-list">
+                <li>Technické vyčištění obrazu a sladění záběrů z různých kamer (Shot Matching).</li>
+                <li>Nastavení neutrální černé a bílé (vyvážení teploty chromatičnosti).</li>
+                <li>Normalizace tónů pleti na vektoroskopu (Skin Tone Line).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. Fáze: Kreativní grading (Color Grading)</h4>
+              <ul class="styled-list">
+                <li>Dodání umělecké atmosféry a nálady filmu (např. slavný "Teal &amp; Orange" hollywoodský kontrast teplé pleti a studeného pozadí).</li>
+                <li><strong>LUT (Look-Up Table):</strong> 3D matematická převodní matice ($33 \times 33 \times 33$ nebo $65 \times 65 \times 65$), která mapuje vstupní barvy na stylizované výstupní barvy.</li>
+                <li>Technické LUT převádějí Log profily na Rec.709. Kreativní LUT dodávají styl filmového pásu (Film Emulation).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: POSTPRODUKCE ZVUKU A EXPORT -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Finální mastering</div>
+            <h2 class="slide-title">Zvukový mastering (LUFS) a exportní pipeline</h2>
+            <p class="slide-subtitle">Standardy hlasitosti pro televizní vysílání a streamingové platformy</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Standard hlasitosti</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Hlasitostní normy (Loudness LUFS / LKFS)</h4>
+              <ul class="styled-list">
+                <li>Klasický špičkový měřič (Peak meter v dBFS) neměří vnímanou hlasitost lidským uchem.</li>
+                <li><strong>LUFS (Loudness Units Full Scale):</strong> Integrované měření hlasitosti v čase podle normy ITU-R BS.1770.</li>
+                <li><strong>YouTube, Spotify, Apple:</strong> Cílí na <strong>&minus;14 LUFS</strong> (True Peak &minus;1 dBTP). Hlasitější videa platforma automaticky ztlumí!</li>
+                <li><strong>Evropské televizní vysílání (EBU R128):</strong> Přísná norma <strong>&minus;23 LUFS (&plusmn;0.5 LUFS)</strong>.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Renderovací presety pro export</h4>
+              <ul class="styled-list">
+                <li><strong>Archivační Master:</strong> Apple ProRes 422 HQ nebo DNxHR HQX (vysoký bitrate 220+ Mbps, 10-bit barva bez kompresních artefaktů).</li>
+                <li><strong>Webová distribuce:</strong> MP4 kontejner, video kodek H.264/H.265 s 2-pass VBR, audio AAC 320 kbps, prokládání vypnuto (progresivní řádkování).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu ze střihu a postprodukce videa</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 14</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>NLE &amp; Proxy</h4>
+              <p>Nedestruktivní časová osa pracuje s odkazy. Proxy workflow umožňuje plynulý střih 4K/8K materiálu přes odlehčené náhledy.</p>
+            </div>
+            <div class="summary-card">
+              <h4>L-Cut a J-Cut</h4>
+              <p>Asynchronní střih obrazu a zvuku. U L-cutu zvuk předchozího záběru přetéká, u J-cutu zvuk nového záběru předbíhá obraz.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Hlasitost LUFS</h4>
+              <p>Měření vnímané hlasitosti v čase (&minus;14 LUFS pro web/YouTube a &minus;23 LUFS pro televizní vysílání podle normy EBU R128).</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Vysvětlete rozdíl mezi Color Correction a Color Grading. Popište techniku L-cut/J-cut a specifikujte normy hlasitosti LUFS pro web a vysílání.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 08</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 10: macOS a architektura Darwin | OSY10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY10">
+          <span>&larr; OSY10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 10</span>
+          <span class="divider">&bull;</span>
+          <span>macOS a architektura Darwin</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Apple &amp; XNU</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY10 &bull; 10. přednáška (45 min)</div>
+        <h1 class="hero-title">macOS &amp; Architektura Darwin</h1>
+        <p class="hero-desc">
+          Vnitřní stavba operačního systému Apple: open-source základ Darwin, hybridní jádro XNU (spojení Mach mikrojádra a BSD subsystému), objektový I/O Kit v C++, souborový systém APFS, grafické jádro Metal a bezpečnostní architektura SIP a Gatekeeper.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Jádro systému</span>
+            <span class="hero-meta-val">XNU (X is Not Unix)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Souborový systém</span>
+            <span class="hero-meta-val">Apple File System (APFS)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Bezpečnostní štít</span>
+            <span class="hero-meta-val">SIP &amp; Secure Boot</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: VRSTVY SYSTÉMU MACOS -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vrstvená architektura</div>
+            <h2 class="slide-title">Softwarové patro macOS</h2>
+            <p class="slide-subtitle">Od unixového jádra Darwin až po uživatelské rozhraní Aqua</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Architektura</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="layer-stack">
+                <div class="layer-item">
+                  <span>Uživatelské rozhraní Aqua &amp; Aplikace</span>
+                  <span class="sys-badge sys-badge-user">User Space</span>
+                </div>
+                <div class="layer-item">
+                  <span>Aplikační frameworky (SwiftUI, Cocoa, Metal)</span>
+                  <span class="sys-badge sys-badge-user">Frameworks</span>
+                </div>
+                <div class="layer-item">
+                  <span>Grafické a mediální subsystémy (Quartz, CoreAnimation)</span>
+                  <span class="sys-badge sys-badge-user">Graphics</span>
+                </div>
+                <div class="layer-item kernel-layer">
+                  <span>Darwin Core (XNU: Mach + BSD + I/O Kit)</span>
+                  <span class="sys-badge sys-badge-kernel">XNU Kernel</span>
+                </div>
+                <div class="layer-item hw-layer">
+                  <span>Hardware (Apple Silicon M1-M4 / x86_64 Mac)</span>
+                  <span class="sys-badge sys-badge-hw">Apple Silicon</span>
+                </div>
+              </div>
+            </div>
+            <div class="content-card">
+              <h4>Otevřený základ Darwin</h4>
+              <p>macOS není proprietární od samotného dna. Jeho jádro a základní unixové utility jsou publikovány pod open-source licencí jako projekt <strong>Darwin</strong>:</p>
+              <ul class="styled-list">
+                <li>Certifikován jako <strong>plnohodnotný UNIX 03</strong> konsorciem The Open Group.</li>
+                <li>Základ sdílený napříč celým ekosystémem: macOS, iOS, iPadOS, watchOS, tvOS a visionOS.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: HYBRIDNÍ JÁDRO XNU -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Konstrukce jádra</div>
+            <h2 class="slide-title">Hybridní jádro XNU pod lupou</h2>
+            <p class="slide-subtitle">Spojení silných stránek mikrojádra Mach a monolitického BSD</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. Mach mikrojádro</h4>
+              <p>Původně vyvinuto na Carnegie Mellon University (CMU):</p>
+              <ul class="styled-list">
+                <li>Správa vláken a plánování CPU úloh.</li>
+                <li>Správa virtuální paměti (Mach VM).</li>
+                <li>Rychlá meziprocesová komunikace přes <strong>Mach porty a zprávy (Mach IPC)</strong>.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. BSD vrstva</h4>
+              <p>Odvozená přímo z projektu FreeBSD:</p>
+              <ul class="styled-list">
+                <li>POSIX kompatibilita a standardní systémová volání.</li>
+                <li>Správa procesů (PID, signály, skupiny).</li>
+                <li>BSD Socket API a síťový zásobník.</li>
+                <li>Virtuální souborový systém (VFS) a přístupová práva.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>3. I/O Kit</h4>
+              <p>Objektově orientovaný rámec pro ovladače v C++:</p>
+              <ul class="styled-list">
+                <li>Omezená bezpečná podmnožina C++ (bez výjimek a vícenásobné dědičnosti).</li>
+                <li>Správa napájení a Plug and Play pro hardware Mac.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SOUBOROVÝ SYSTÉM APFS A BEZPEČNOST -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Úložiště &amp; Bezpečnost</div>
+            <h2 class="slide-title">Apple File System (APFS) &amp; SIP ochrana</h2>
+            <p class="slide-subtitle">Moderní technologie navržená pro flash disky a integritu systému</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">APFS &amp; SIP</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Vlastnosti souborového systému APFS</h4>
+              <ul class="styled-list">
+                <li><strong>Copy-on-Write klonování souborů:</strong> Duplikace gigabajtového souboru proběhne okamžitě bez zabrání nového místa (ukazuje na stejné bloky, dokud nedojde ke změně).</li>
+                <li><strong>Sdílení volného místa (Space Sharing):</strong> Více logických svazků sdílí jeden diskový pool bez nutnosti statického rozdělování oddílů.</li>
+                <li><strong>Atomické ukládání:</strong> Zápisy metadat probíhají atomicky (žádný stav „napůl uloženého souboru“ při výpadku napájení).</li>
+                <li>Nativní silné šifrování pro jednotlivé soubory i celý svazek.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>System Integrity Protection (SIP / „Rootless“)</h4>
+              <p>Revoluce v bezpečnosti zavedená v macOS El Capitan:</p>
+              <ul class="styled-list">
+                <li><strong>Ani uživatel root nesmí modifikovat systémové adresáře:</strong> <code>/System</code>, <code>/usr</code>, <code>/bin</code>, <code>/sbin</code> jsou uzamčeny na úrovni jádra.</li>
+                <li>Zabránění injektování kódu do systémových procesů a ochrana před nahráním nepodepsaných kextů (ovladačů jádra).</li>
+                <li><strong>Signed System Volume (SSV):</strong> Celý systémový disk je kryptograficky podepsán a připojen jako Read-Only snímek.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ INSPEKCE V MACOS TERMINÁLU -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Terminálová diagnostika</div>
+            <h2 class="slide-title">Práce s příkazy macOS přes terminál Zsh</h2>
+            <p class="slide-subtitle">Inspekce jádra XNU, stavu SIP a souborových svazků APFS</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">zsh &bull; Darwin</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>zsh &bull; Inspekce jádra Darwin a ochrany SIP</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Výpis verze jádra Darwin a architektury procesoru</span>
+<span class="term-prompt">% </span><span class="term-cmd">uname</span> <span class="term-param">-v</span>
+<span class="term-out">Darwin Kernel Version 23.4.0: root:xnu-10063.101.17~1/RELEASE_ARM64_T6030</span>
+
+<span class="term-comment"># Ověření aktivního stavu System Integrity Protection (SIP)</span>
+<span class="term-prompt">% </span><span class="term-cmd">csrutil</span> <span class="term-arg">status</span>
+<span class="term-out">System Integrity Protection status: enabled.</span>
+
+<span class="term-comment"># Zjištění detailů o čipu Apple Silicon</span>
+<span class="term-prompt">% </span><span class="term-cmd">sysctl</span> <span class="term-arg">machdep.cpu.brand_string</span>
+<span class="term-out">machdep.cpu.brand_string: Apple M3 Pro</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>zsh &bull; Diagnostika APFS svazků</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Výpis kontejnerů a šifrovaných svazků APFS</span>
+<span class="term-prompt">% </span><span class="term-cmd">diskutil</span> <span class="term-arg">apfs list</span>
+
+<span class="term-comment"># Zobrazení rozšířených atributů a karantény (Gatekeeper)</span>
+<span class="term-prompt">% </span><span class="term-cmd">xattr</span> <span class="term-param">-l</span> <span class="term-path">/Applications/Example.app</span>
+<span class="term-out">com.apple.quarantine: 0081;65a2c4e1;Safari;...</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Otázky a okruhy týkající se architektury macOS</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Stavba jádra XNU</h4>
+              <p>Popis hybridního jádra XNU jako kombinace mikrojádra Mach (IPC, vlákna, VM) a subsystému BSD (POSIX, sítě, VFS) běžících v jednom adresním prostoru.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Výhody APFS</h4>
+              <p>Schopnost vysvětlit klonování souborů bez kopírování bloků (Copy-on-Write) a sdílení volného prostoru mezi logickými disky.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Bezpečnostní model SIP</h4>
+              <p>Vysvětlení principu ochrany integrity systému, omezení moci uživatele root a kryptograficky podepsaného systémového svazku (SSV).</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Vysvětlete, proč je macOS plnohodnotným Unixem a jak se jeho jádro liší od monolitického jádra Linuxu.“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 10</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

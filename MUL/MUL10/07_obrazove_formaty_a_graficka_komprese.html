@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 07: Obrazové formáty a grafická komprese | MUL10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL10">
+          <span>&larr; MUL10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 07</span>
+          <span class="divider">&bull;</span>
+          <span>Obrazové formáty a grafická komprese</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 5: Komprese obrazu</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL10 &bull; 7. přednáška (45 min)</div>
+        <h1 class="hero-title">Obrazové formáty a grafická komprese</h1>
+        <p class="hero-desc">
+          Matematické metody komprese statického obrazu. Detailní rozbor ztrátového řetězce JPEG (DCT transformace a kvantování), bezeztrátových algoritmů PNG a TIFF a moderních webových formátů nové generace (WebP, AVIF).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">JPEG komprese</span>
+            <span class="hero-meta-val">YCbCr &bull; 8&times;8 DCT &bull; Kvantování</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Moderní formáty</span>
+            <span class="hero-meta-val">WebP &bull; AVIF (AV1)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 5</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PŘEHLED KOMPRESNÍCH METOD -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Kompresní teorie</div>
+            <h2 class="slide-title">Klasifikace grafických kompresních algoritmů</h2>
+            <p class="slide-subtitle">Rozdíl mezi eliminací statistické a vizuální redundance</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Algoritmy</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. Bezeztrátové algoritmy (Lossless)</h4>
+              <ul class="styled-list">
+                <li><strong>RLE (Run-Length Encoding):</strong> Ukládá sekvenci opakujících se stejných hodnot jako (počet, hodnota). Efektivní u čárové grafiky.</li>
+                <li><strong>LZW (Lempel-Ziv-Welch):</strong> Slovníková metoda nahrazující opakující se sekvence pixelů indexem ve slovníku (použito v GIF a TIFF).</li>
+                <li><strong>DEFLATE (PNG):</strong> Kombinace algoritmu LZ77 a Huffmanova entropického kódování doplněná o prediktivní prostorové filtry (Sub, Up, Average, Paeth).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. Ztrátové algoritmy (Lossy)</h4>
+              <ul class="styled-list">
+                <li><strong>Využití vizuální nedokonalosti:</strong> Lidské oko vnímá mnohem citlivěji změny jasu (luminance) než změny barevného odstínu (chrominance).</li>
+                <li><strong>Transformační kódování:</strong> Převedení prostorových dat do frekvenční domény a potlačení vysokých prostorových frekvencí (jemných šumů).</li>
+                <li><strong>Kompresní poměr:</strong> 10:1 až 20:1 při vizuálně téměř neznatelné ztrátě detailů.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: KOMPRESNÍ ŘETĚZEC JPEG -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Detailní architektura</div>
+            <h2 class="slide-title">Jak funguje JPEG (ISO/IEC 10918-1)</h2>
+            <p class="slide-subtitle">Pět fází kompresního potrubí od RGB po zkomprimovaný soubor</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový proces</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="timeline-step">
+            <div class="step-num">1</div>
+            <div>
+              <strong>Barevná transformace RGB &rarr; YCbCr:</strong> Oddělení jasu ($Y$) od barevných složek ($Cb$ modrá odchylka, $Cr$ červená odchylka). Umožňuje barevné podvzorkování (např. 4:2:0 zahodí 50 % barevných dat).
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-num">2</div>
+            <div>
+              <strong>Dělení na bloky $8 \times 8$ pixelů:</strong> Obraz je rozřezán na matice 64 pixelů a hodnoty jasu jsou posunuty z rozsahu $[0, 255]$ do symetrického $[-128, 127]$.
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-num">3</div>
+            <div>
+              <strong>Diskrétní kosinová transformace (2D-DCT):</strong> Převod prostorových hodnot na 64 frekvenčních koeficientů ($1\times$ stejnosměrný DC koeficient průměrného jasu + 63 střídavých AC koeficientů).
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-num">4</div>
+            <div>
+              <strong>Kvantování (JEDINÝ ZTRÁTOVÝ KROK):</strong> Každý koeficient je vydělen číslem z kvantizační matice $Q(u, v)$ a zaokrouhlen na celé číslo. Vysoké frekvence se vynulují!
+            </div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-num">5</div>
+            <div>
+              <strong>Cik-cak řazení (Zig-Zag) &amp; Huffman:</strong> Čtení od nízkých frekvencí k vysokým vygeneruje dlouhý řetězec nul, který je komprimován RLE a Huffmanovým kódováním.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: TRADIČNÍ FORMÁTY (PNG, GIF, TIFF) -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Porovnání formátů</div>
+            <h2 class="slide-title">PNG, GIF a TIFF v multimediální praxi</h2>
+            <p class="slide-subtitle">Kdy a proč zvolit konkrétní formát souboru</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Použití v praxi</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossless">PNG (Portable Network Graphics)</span>
+              <h4 style="margin: 0.5rem 0;">Webový král ostrosti a alfa kanálu</h4>
+              <p style="font-size: 0.85rem;">24-bit barvy + 8-bit plynulá průhlednost (256 úrovní transparence). Nulové artefakty kolem hran textu a tlačítek. Nevhodný pro rozsáhlé fotografie kvůli velkému datovému objemu.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">GIF (Graphics Interchange Format)</span>
+              <h4 style="margin: 0.5rem 0;">Historický formát z roku 1987</h4>
+              <p style="font-size: 0.85rem;">Limitován na 8bitovou paletu (256 barev). Pouze 1bitová binární průhlednost (bod je buď 100% vidět, nebo ne). Podpora jednoduchých animací bez zvuku. Dnes nahrazován videem MP4/WebM.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">TIFF (Tagged Image File Format)</span>
+              <h4 style="margin: 0.5rem 0;">Profesionální tisk a archivace</h4>
+              <p style="font-size: 0.85rem;">Podpora 16/32 bitů na kanál, barevného modelu CMYK, vrstev, ICC profilů a bezeztrátových kompresí LZW/ZIP. Standard v polygrafii a DTP studiích, nevhodný pro přímý web.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: MODERNÍ WEBOVÉ FORMÁTY (WEBP & AVIF) -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Next-Gen formáty</div>
+            <h2 class="slide-title">WebP a AVIF &bull; Budoucnost webového obrazu</h2>
+            <p class="slide-subtitle">Využití moderních video kodeků pro kompresi statických snímků</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Moderní web</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Formát WebP (Google)</h4>
+              <ul class="styled-list">
+                <li>Vychází z klíčových snímků video kodeku <strong>VP8</strong>.</li>
+                <li>Podporuje jak bezeztrátovou (o 26 % menší než PNG), tak ztrátovou kompresi (o 25–34 % menší než JPEG při stejné SSIM kvalitě).</li>
+                <li>Plná podpora průhlednosti (alfa) i u ztrátové komprese (což JPEG neumí!).</li>
+                <li>Univerzální podpora ve všech moderních prohlížečích (přes 97 % uživatelů).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Formát AVIF (Alliance for Open Media)</h4>
+              <ul class="styled-list">
+                <li>Využívá kompresní algoritmy open-source video kodeku <strong>AV1</strong>.</li>
+                <li>Až o <strong>50 % menší velikost než JPEG</strong> a o 20 % menší než WebP.</li>
+                <li>Nativní podpora 10bitových a 12bitových barev s vysokým dynamickým rozsahem (HDR) a barevného prostoru BT.2020.</li>
+                <li>Budoucí standard pro multimediální platformy a mobilní sítě.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z grafických formátů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 5</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Kroky JPEG</h4>
+              <p>RGB &rarr; YCbCr &rarr; Podvzorkování 4:2:0 &rarr; Bloky 8&times;8 &rarr; DCT transformace &rarr; Kvantování (ztráta) &rarr; Zig-Zag &amp; Huffman.</p>
+            </div>
+            <div class="summary-card">
+              <h4>PNG vs JPEG</h4>
+              <p>PNG používá bezeztrátový DEFLATE a 8bitový alfa kanál (ideální pro grafiku, UI). JPEG zahazuje vysoké frekvence (ideální pro foto).</p>
+            </div>
+            <div class="summary-card">
+              <h4>WebP &amp; AVIF</h4>
+              <p>Moderní formáty odvozené z video kodeků (VP8, AV1). Nabízejí o 30–50 % vyšší kompresní účinnost a podporu HDR.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Detailně popište princip komprese JPEG (zejména roli DCT a kvantování). Porovnejte vlastnosti formátů PNG, GIF a moderního WebP.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 07</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

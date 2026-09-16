@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUL10: Rozdělení multimédií a datové formáty | Výukový portál a prezentace</title>
+  <link rel="stylesheet" href="../../assets/css/dashboard-core.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    
+    <!-- Top Header / Brand -->
+    <header class="dashboard-header">
+      <div class="brand-box">
+        <a href="../index.html" class="brand-icon" title="Zpět na přehled předmětu MUL">
+          <svg class="icon" viewBox="0 0 24 24">
+            <polygon points="23 7 16 12 23 17 23 7"></polygon>
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+          </svg>
+        </a>
+        <div class="brand-text">
+          <h1>MUL10 &bull; Rozdělení multimédií a datové formáty</h1>
+          <p>Vyšší odborná škola &bull; 2. ročník &bull; 3. semestr (zimní období)</p>
+        </div>
+      </div>
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Přepnout světlý/tmavý motiv">
+        <svg class="icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <div class="hero-tag">Výukové materiály &bull; Webové prezentace</div>
+      <h2 class="hero-title">Základy multimédií, digitalizace a datové formáty</h2>
+      <p class="hero-desc">
+        Kompletní série 10 interaktivních výukových prezentací (45 minut na lekci) pro modul MUL10. Od teorie multimediální komunikace, kódování znaků a principů digitalizace zvuku přes rastrovou a vektorovou grafiku až po video kodeky, časovou kompresi a interaktivní animace.
+      </p>
+
+      <div class="metrics-row">
+        <div class="metric-item">
+          <span class="metric-num">10</span>
+          <span class="metric-label">Výukových lekcí</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">45 min</span>
+          <span class="metric-label">Na jednu lekci</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">4 kredity</span>
+          <span class="metric-label">Zkouška (3. semestr)</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">Okruhy 1&ndash;8</span>
+          <span class="metric-label">Profilové absolutorium</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Context Banner -->
+    <section class="db-banner">
+      <div class="db-banner-content">
+        <h3>
+          <svg class="icon" style="color: #c084fc;" viewBox="0 0 24 24">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          Klíčová didaktická témata a datové toky
+        </h3>
+        <p>Prezentace detailně rozebírají matematické a technologické principy: Nyquist-Shannonův teorém, vzorkování a kvantování, Bézierovy křivky, barevné modely RGB/CMYK, diskrétní kosinovou transformaci (DCT), prediktivní kódování a GOP strukturu v moderních video kodecích.</p>
+        <div class="db-pills">
+          <span class="db-pill">multimedia_basics</span>
+          <span class="db-pill">utf8_unicode</span>
+          <span class="db-pill">pcm_sampling</span>
+          <span class="db-pill">psychoacoustics</span>
+          <span class="db-pill">raster_ppi_dpi</span>
+          <span class="db-pill">bezier_curves</span>
+          <span class="db-pill">jpeg_png_webp</span>
+          <span class="db-pill">chroma_subsampling</span>
+          <span class="db-pill">h264_h265_av1</span>
+          <span class="db-pill">interactive_media</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+      <svg class="search-icon-svg" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="lessonSearch" class="search-input" placeholder="Hledat v lekcích (např. 'vzorkování', 'Bézier', 'RAW', 'JPEG', 'kodek', 'typografie')...">
+    </div>
+
+    <!-- Lessons Catalog Grid -->
+    <main class="lessons-grid" id="lessonsGrid">
+
+      <!-- LEKCE 01 -->
+      <article class="lesson-card" data-keywords="uvod multimedia komunikace definice hypermedium nelinearni interaktivita vzdelavani e-commerce zabava okruh 1">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 01</span>
+            <span class="lesson-exam-badge">Okruh absolutoria 1</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Úvod do multimédií a komunikace</h3>
+          <p class="lesson-desc">
+            Základní definice a dimenze multimédií, koncept hypermédia a nelineární navigace. Multimédia jako efektivní komunikační kanál a rozbor aplikačních oblastí (vzdělávání, obchod, průmysl, simulace a zábava).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Hypermédium</span>
+            <span class="lesson-tag">Interaktivita</span>
+            <span class="lesson-tag">Komunikační model</span>
+            <span class="lesson-tag">Aplikační domény</span>
+          </div>
+          <a href="01_uvod_do_multimedii_a_komunikace.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 02 -->
+      <article class="lesson-card" data-keywords="text typografie kodovani ascii utf8 unicode patkove bezpatkove anatomie pisma txt rtf pdf okruh 2">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 02</span>
+            <span class="lesson-exam-badge">Okruh absolutoria 2</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Text, typografie a kódování znaků</h3>
+          <p class="lesson-desc">
+            Role textu v multimediálních aplikacích. Vývoj znakových sad od ASCII přes kódové stránky až po standardy Unicode a UTF-8. Základy mikro a makrotypografie, anatomie písma, čitelnost a formáty TXT, RTF a PDF.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">ASCII &bull; UTF-8</span>
+            <span class="lesson-tag">Anatomie písma</span>
+            <span class="lesson-tag">Serif vs Sans</span>
+            <span class="lesson-tag">Formát PDF</span>
+          </div>
+          <a href="02_text_typografie_a_kodovani_znaku.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 03 -->
+      <article class="lesson-card" data-keywords="zvuk digitalizace vzorkovani nyquist shannon aliasing kvantovani bitova hloubka dynamicky rozsah adc dac okruh 3">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 03</span>
+            <span class="lesson-exam-badge">Okruh absolutoria 3</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Principy digitálního zvuku a vzorkování</h3>
+          <p class="lesson-desc">
+            Fyzikální podstata zvuku jako akustického vlnění. Proces digitalizace: vzorkovací frekvence, Nyquist-Shannonův teorém, aliasing a antialiasing filtry. Kvantování, bitová hloubka, dynamický rozsah (SNR) a převodníky ADC/DAC.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Nyquist-Shannon</span>
+            <span class="lesson-tag">Vzorkování 44.1/48 kHz</span>
+            <span class="lesson-tag">16 vs 24 bit</span>
+            <span class="lesson-tag">ADC &bull; DAC</span>
+          </div>
+          <a href="03_principy_digitalniho_zvuku_a_vzorkovani.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 04 -->
+      <article class="lesson-card" data-keywords="zvukove formaty komprese kodeky wav flac mp3 aac opus psychoakustika maskovani cbr vbr okruh 4">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 04</span>
+            <span class="lesson-exam-badge">Okruh absolutoria 4</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Zvukové formáty, komprese a kodeky</h3>
+          <p class="lesson-desc">
+            Klasifikace zvukových formátů: nekomprimované lineární PCM (WAV, AIFF), bezeztrátová komprese (FLAC, ALAC) a ztrátová redukce (MP3, AAC, Ogg Vorbis, Opus). Psychoakustické modely, maskování a srovnání CBR vs. VBR.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">PCM &bull; WAV</span>
+            <span class="lesson-tag">FLAC bezeztrátový</span>
+            <span class="lesson-tag">MP3 &bull; AAC &bull; Opus</span>
+            <span class="lesson-tag">Psychoakustika</span>
+          </div>
+          <a href="04_zvukove_formaty_komprese_a_kodeky.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 05 -->
+      <article class="lesson-card" data-keywords="rastrova grafika pixel ppi dpi rozliseni barevne modely rgb cmyk hsl lab alfa kanal transparence okruh 5">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 05</span>
+            <span class="lesson-exam-badge">Okruh absolutoria 5</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Rastrová grafika a barevné modely</h3>
+          <p class="lesson-desc">
+            Podstata rastrového obrazu, matice pixelů a prostorové rozlišení (PPI vs. DPI). Bitová hloubka a barevný prostor. Aditivní model RGB (obrazovky), subtraktivní CMYK (tisk), HSL a CIE Lab. Kanály a alfa průhlednost.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Pixelová matice</span>
+            <span class="lesson-tag">PPI vs DPI</span>
+            <span class="lesson-tag">RGB &bull; CMYK &bull; HSL</span>
+            <span class="lesson-tag">Alfa kanál</span>
+          </div>
+          <a href="05_rastrova_grafika_a_barevne_modely.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 06 -->
+      <article class="lesson-card" data-keywords="vektorova grafika krivky bezier bernstein uzlove body svg ai eps matematika skalovatelnost okruh 6">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 06</span>
+            <span class="lesson-exam-badge">Okruh absolutoria 6</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Vektorová grafika a matematika křivek</h3>
+          <p class="lesson-desc">
+            Matematický princip reprezentace obrazu pomocí geometrických primitiv a křivek. Bézierovy křivky (lineární, kvadratické, kubické), řídicí uzly a tečny. Srovnání vektoru s rastrem, standard W3C SVG a formáty AI/EPS.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Bézierovy křivky</span>
+            <span class="lesson-tag">W3C SVG specifikace</span>
+            <span class="lesson-tag">Nekonečná škálovatelnost</span>
+            <span class="lesson-tag">Rasterizace</span>
+          </div>
+          <a href="06_vektorova_grafika_a_matematika_krivek.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 07 -->
+      <article class="lesson-card" data-keywords="obrazove formaty graficka komprese jpeg png gif webp avif tiff dct rle deflate lzw okruh 5">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 07</span>
+            <span class="lesson-exam-badge">Okruh absolutoria 5</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Obrazové formáty a grafická komprese</h3>
+          <p class="lesson-desc">
+            Principy komprese statického obrazu. Bezeztrátové algoritmy (RLE, LZW, DEFLATE u PNG) a ztrátový kompresní řetězec JPEG (diskrétní kosinová transformace DCT a kvantování). Moderní formáty WebP a AVIF.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">JPEG &bull; DCT komprese</span>
+            <span class="lesson-tag">PNG &bull; DEFLATE</span>
+            <span class="lesson-tag">WebP &bull; AVIF</span>
+            <span class="lesson-tag">TIFF &bull; RAW</span>
+          </div>
+          <a href="07_obrazove_formaty_a_graficka_komprese.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 08 -->
+      <article class="lesson-card" data-keywords="video digitalni video snimkovani fps prokladany progresivni rozliseni pomery stran chroma subsampling 420 okruh 7">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 08</span>
+            <span class="lesson-exam-badge">Okruh absolutoria 7</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Principy digitálního videa a snímkování</h3>
+          <p class="lesson-desc">
+            Základní stavební kameny digitálního videa: vnímání plynulého pohybu, snímková frekvence (24, 25, 30, 60 fps). Prokládané (interlaced) vs. neprokládané (progressive) řádkování. Rozlišení, poměry stran a barevné podvzorkování 4:2:0.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Snímková frekvence (fps)</span>
+            <span class="lesson-tag">Interlaced vs Progressive</span>
+            <span class="lesson-tag">4K UHD &bull; 8K</span>
+            <span class="lesson-tag">Chroma Subsampling</span>
+          </div>
+          <a href="08_principy_digitalniho_videa_a_snimkovani.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 09 -->
+      <article class="lesson-card" data-keywords="video kodeky komprese kontejnery gop i p b snimky h264 hevc av1 mp4 mkv mov okruh 8">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 09</span>
+            <span class="lesson-exam-badge">Okruh absolutoria 8</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Video kodeky, komprese a kontejnery</h3>
+          <p class="lesson-desc">
+            Jak komprimovat gigabajty video dat: prostorová (intra-frame) a časová (inter-frame) redundance. Predikce pohybu, struktura GOP (I, P, B snímky). Srovnání standardů H.264/AVC, H.265/HEVC a AV1 s kontejnerovými formáty MP4, MKV a MOV.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Intra vs Inter frame</span>
+            <span class="lesson-tag">GOP &bull; I/P/B snímky</span>
+            <span class="lesson-tag">H.264 &bull; HEVC &bull; AV1</span>
+            <span class="lesson-tag">Kontejnery MP4/MKV</span>
+          </div>
+          <a href="09_video_kodeky_komprese_a_kontejnery.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 10 -->
+      <article class="lesson-card" data-keywords="animace interaktivita hardware principy animace klicove snimky interpolace periferie synteza okruh 1 okruh 20">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 10</span>
+            <span class="lesson-exam-badge">Syntéza modulu MUL10</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Animace, interaktivita a multimediální hardware</h3>
+          <p class="lesson-desc">
+            Fundamentální principy animace (Disneyho 12 pravidel), technika klíčových snímků (keyframing) a interpolace. Interaktivní multimédia řízená událostmi. Přehled technických zařízení a závěrečná syntéza znalostí modulu MUL10.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">12 principů animace</span>
+            <span class="lesson-tag">Keyframing</span>
+            <span class="lesson-tag">Event-driven UI</span>
+            <span class="lesson-tag">Technická zařízení</span>
+          </div>
+          <a href="10_animace_interaktivita_a_multimedialni_hardware.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+      <p>Vyšší odborná škola &bull; Výukové materiály modulu MUL10 &bull; 100% Offline & Pure Vanilla CSS/JS</p>
+      <div class="footer-pills">
+        <span class="footer-pill">Multimediální komunikace</span>
+        <span class="footer-pill">Digitální zvuk &bull; Vzorkování</span>
+        <span class="footer-pill">Rastr &bull; Vektory &bull; Bézier</span>
+        <span class="footer-pill">Video kodeky &bull; H.265/AV1</span>
+        <span class="footer-pill">Animace &bull; Interaktivita</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Live Search in Lessons
+    const searchInput = document.getElementById('lessonSearch');
+    const lessonCards = document.querySelectorAll('.lesson-card');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      lessonCards.forEach(card => {
+        const text = (card.textContent + ' ' + (card.getAttribute('data-keywords') || '')).toLowerCase();
+        if (text.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const sunIcon = `<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    const moonIcon = `<svg class="icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+
+    const savedTheme = localStorage.getItem('vos_presentation_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeBtn.innerHTML = savedTheme === 'dark' ? sunIcon : moonIcon;
+
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('vos_presentation_theme', next);
+      themeBtn.innerHTML = next === 'dark' ? sunIcon : moonIcon;
+    });
+  </script>
+</body>
+</html>

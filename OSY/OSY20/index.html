@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSY20: Činnost operačních systémů | Výukový portál a prezentace</title>
+  <link rel="stylesheet" href="../../assets/css/dashboard-core.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    
+    <!-- Top Header / Brand -->
+    <header class="dashboard-header">
+      <div class="brand-box">
+        <a href="../index.html" class="brand-icon" title="Zpět na přehled předmětu OSY">
+          <svg class="icon" viewBox="0 0 24 24">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+        </a>
+        <div class="brand-text">
+          <h1>OSY20 &bull; Činnost operačních systémů</h1>
+          <p>Vyšší odborná škola &bull; 3. ročník &bull; 5. semestr (zimní období)</p>
+        </div>
+      </div>
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Přepnout světlý/tmavý motiv">
+        <svg class="icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <div class="hero-tag">Výukové materiály &bull; Webové prezentace</div>
+      <h2 class="hero-title">Vnitřní mechanismy, správa paměti, procesy a jádro OS</h2>
+      <p class="hero-desc">
+        Kompletní série 10 interaktivních výukových prezentací (45 minut / lekce) pro modul OSY20. Od architektury Windows NT a procesorových režimů (Ring 0/3) přes přerušení a životní cyklus procesů až po preemptivní multitasking, virtuální stránkování paměti, ovladače zařízení, souborové systémy a bezpečný shell.
+      </p>
+
+      <div class="metrics-row">
+        <div class="metric-item">
+          <span class="metric-num">10</span>
+          <span class="metric-label">Výukových lekcí</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">45 min</span>
+          <span class="metric-label">Na jednu hodinu</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">3 kredity</span>
+          <span class="metric-label">Klasifikovaný zápočet</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">Okruh OSY</span>
+          <span class="metric-label">Profilová zkouška VOŠ</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Context Banner -->
+    <section class="db-banner">
+      <div class="db-banner-content">
+        <h3>
+          <svg class="icon" style="color: #06b6d4;" viewBox="0 0 24 24">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          Inženýrská perspektiva: od instrukce k systémovému volání
+        </h3>
+        <p>Všechny lekce jdou pod povrch uživatelských rozhraní: zkoumají chování hardware x86_64 / ARM64, tabulky přerušení IDT, stránkovací jednotku MMU, tabulky deskriptorů procesů i vnitřní struktury MFT a inodů na disku.</p>
+        <div class="db-pills">
+          <span class="db-pill">windows_nt_hal</span>
+          <span class="db-pill">ring0_kernel_mode</span>
+          <span class="db-pill">interrupt_idt_isr</span>
+          <span class="db-pill">elf_pe_loader</span>
+          <span class="db-pill">multitasking_cfs</span>
+          <span class="db-pill">virtual_memory_mmu</span>
+          <span class="db-pill">page_fault_tlb</span>
+          <span class="db-pill">io_subsystem_dma</span>
+          <span class="db-pill">ntfs_ext4_journal</span>
+          <span class="db-pill">shell_pipes_acl</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+      <svg class="search-icon-svg" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="lessonSearch" class="search-input" placeholder="Hledat v lekcích (např. 'Ring', 'paměť', 'přerušení', 'multitasking', 'NTFS', 'stránkování', 'ELF')...">
+    </div>
+
+    <!-- Lessons Catalog Grid -->
+    <main class="lessons-grid" id="lessonsGrid">
+
+      <!-- LEKCE 01 -->
+      <article class="lesson-card" data-keywords="windows nt jádro hal executive win32 subsystém registry lsass ntoskrnl">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 01</span>
+            <span class="lesson-exam-badge">Architektura Windows</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Architektura Microsoft Windows a jádro NT</h3>
+          <p class="lesson-desc">
+            Historie a vývoj rodiny Windows NT. Vrstvená architektura jádra: HAL, NT Kernel, Executive services, subsystém Win32, LSASS a koncepce systémového registru (Registry).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Windows NT</span>
+            <span class="lesson-tag">NT Executive</span>
+            <span class="lesson-tag">Win32 Subsystém</span>
+            <span class="lesson-tag">Registry Windows</span>
+          </div>
+          <a href="01_architektura_microsoft_windows_a_jadro_nt.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 02 -->
+      <article class="lesson-card" data-keywords="alternativní systémy mikrojádra qnx sel4 solaris illumos haiku beos bezpečnostní verifikace">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 02</span>
+            <span class="lesson-exam-badge">Alternativní koncepty</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Alternativní a specializované operační systémy</h3>
+          <p class="lesson-desc">
+            Prozkoumání netradičních architektur: mikrojádrové OS s formální verifikací (seL4, QNX), unixové větve Solaris/Illumos, modulární multimediální systémy (Haiku) a specializované OS.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">seL4 &amp; Mikrojádra</span>
+            <span class="lesson-tag">QNX Neutrino</span>
+            <span class="lesson-tag">Solaris / Illumos</span>
+            <span class="lesson-tag">Haiku OS</span>
+          </div>
+          <a href="02_alternativni_a_specializovane_operacni_systemy.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 03 -->
+      <article class="lesson-card" data-keywords="režimy procesoru ring 0 ring 3 user mode kernel mode syscall sysenter ochrana paměti">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 03</span>
+            <span class="lesson-exam-badge">Privilegia procesoru</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Režimy operačního systému a privilegia</h3>
+          <p class="lesson-desc">
+            Hardwarová ochrana procesoru: kruhy oprávnění x86 Ring 0–3 a úrovně ARM EL0–EL3. Oddělení User Mode a Kernel Mode, mechanismus systémových volání a bezpečnostní bariéry.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Ring 0 vs Ring 3</span>
+            <span class="lesson-tag">User vs Kernel Mode</span>
+            <span class="lesson-tag">syscall / sysenter</span>
+            <span class="lesson-tag">Kontextové přepnutí</span>
+          </div>
+          <a href="03_rezimy_operacniho_systemu_a_privilegia.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 04 -->
+      <article class="lesson-card" data-keywords="přerušení irq idt isr top half bottom half dpc apic výjimky obsluha hardware">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 04</span>
+            <span class="lesson-exam-badge">Událostní mechanismus</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Přerušení a obsluha událostí</h3>
+          <p class="lesson-desc">
+            Hardwarová a softwarová přerušení procesoru. Řadiče APIC a MSI, tabulka vektorů přerušení (IDT), rutina obsluhy ISR a dvoufázové zpracování (Top Half vs. Bottom Half / DPC).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">IRQ &amp; APIC</span>
+            <span class="lesson-tag">IDT tabulka</span>
+            <span class="lesson-tag">ISR Handlery</span>
+            <span class="lesson-tag">DPC &amp; Bottom Half</span>
+          </div>
+          <a href="04_preruseni_a_obsluha_udalosti.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 05 -->
+      <article class="lesson-card" data-keywords="proces spuštění programu binárka elf pe loader mapování paměti fork exec createprocess stavy procesu">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 05</span>
+            <span class="lesson-exam-badge">Životní cyklus kódu</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Životní cyklus procesu a spuštění programu</h3>
+          <p class="lesson-desc">
+            Cesta od souboru na disku k běžící instrukci: binární formáty ELF (Linux) a PE (Windows), práce systémového loaderu, mapování do virtuální paměti, mechanismus fork/exec vs CreateProcess a stavový diagram procesu.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">ELF &amp; PE formát</span>
+            <span class="lesson-tag">Systémový Loader</span>
+            <span class="lesson-tag">fork() + execve()</span>
+            <span class="lesson-tag">Stavy procesu</span>
+          </div>
+          <a href="05_zivotni_cyklus_procesu_a_spusteni_programu.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 06 -->
+      <article class="lesson-card" data-keywords="multitasking vlákna plánování cpu cfs round robin preemptivní kooperativní synchronizace mutex semafor deadlock">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 06</span>
+            <span class="lesson-exam-badge">Paralelismus a řízení</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Multitasking, vlákna a plánování procesoru</h3>
+          <p class="lesson-desc">
+            Kooperativní vs. preemptivní multitasking. Rozdíl mezi procesem a vláknem (Thread). Plánovače procesoru (Linux CFS, Windows priority), synchronizační primitiva (mutex, semafor) a řešení uváznutí (Deadlock).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Preemptivní plánování</span>
+            <span class="lesson-tag">Proces vs Vlákno</span>
+            <span class="lesson-tag">Linux CFS plánovač</span>
+            <span class="lesson-tag">Mutex &amp; Deadlock</span>
+          </div>
+          <a href="06_multitasking_vlakna_a_planovani_procesoru.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 07 -->
+      <article class="lesson-card" data-keywords="paměť virtuální paměť mmu stránkování tlb page fault swap swapování algoritmy náhrady lru clock">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 07</span>
+            <span class="lesson-exam-badge">Správa paměti</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Správa fyzické a virtuální paměti</h3>
+          <p class="lesson-desc">
+            Virtuální adresní prostor a hardwarová podpora stránkování. Funkce jednotky MMU a vyrovnávací paměti TLB, obsluha výpadku stránky (Page Fault), algoritmy náhrady stránek (LRU, Clock) a odkládací prostor (Swap).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Virtuální paměť</span>
+            <span class="lesson-tag">MMU &amp; Stránkování</span>
+            <span class="lesson-tag">Page Fault obsluha</span>
+            <span class="lesson-tag">Swap &amp; Paging File</span>
+          </div>
+          <a href="07_sprava_fyzicke_a_virtualni_pameti.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 08 -->
+      <article class="lesson-card" data-keywords="ovladače zařízení io subsystém dma polling interrupt řízení periferie bloková znaková zařízení umdf kmdf">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 08</span>
+            <span class="lesson-exam-badge">I/O Periferie</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Ovladače zařízení a I/O subsystém</h3>
+          <p class="lesson-desc">
+            Architektura vstupně-výstupního subsystému. Komunikační metody (Programmed I/O, přerušením řízené I/O, DMA přímý přístup do paměti), bloková vs. znaková zařízení a vývoj ovladačů (KMDF vs. UMDF).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">DMA řadiče</span>
+            <span class="lesson-tag">Bloková vs Znaková</span>
+            <span class="lesson-tag">Architektura ovladačů</span>
+            <span class="lesson-tag">Kernel vs User Space</span>
+          </div>
+          <a href="08_ovladace_zarizeni_a_io_subsytem.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 09 -->
+      <article class="lesson-card" data-keywords="souborové systémy vfs disk fat32 ntfs mft ext4 inody žurnálování diskové oddíly bloky">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 09</span>
+            <span class="lesson-exam-badge">Disková úložiště</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Souborové systémy a disková úložiště</h3>
+          <p class="lesson-desc">
+            Abstrakce virtuálního souborového systému (VFS). Struktury a principy populárních systémů: FAT32, NTFS (záznamy MFT), ext4 (inody, blokové skupiny, extents) a princip spolehlivého žurnálování.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">VFS abstrakce</span>
+            <span class="lesson-tag">NTFS &amp; MFT</span>
+            <span class="lesson-tag">ext4 inody</span>
+            <span class="lesson-tag">Žurnálování disků</span>
+          </div>
+          <a href="09_souborove_systemy_a_diskova_uloziste.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 10 -->
+      <article class="lesson-card" data-keywords="bezpečnost souborů práva permissions posix acl ugo rwx shell bash powershell roury přesměrování skripty">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 10</span>
+            <span class="lesson-exam-badge">Oprávnění &amp; Shell</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Bezpečnost souborových systémů a Shell</h3>
+          <p class="lesson-desc">
+            Přístupová práva: POSIX rwx, setuid/setgid sticky bity a pokročilé Access Control Lists (ACL). Role příkazového interpretu (Shell), roury, přesměrování I/O proudů a automatizace systémovými skripty.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">POSIX rwx &amp; ACL</span>
+            <span class="lesson-tag">setuid / setgid</span>
+            <span class="lesson-tag">Shell Roury &amp; Redirection</span>
+            <span class="lesson-tag">Bash &amp; PowerShell</span>
+          </div>
+          <a href="10_bezpecnost_souborovych_systemu_a_shell.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+      <p>Vyšší odborná škola &bull; Výukové materiály modulu OSY20 &bull; 100% Offline & Pure Vanilla CSS/JS</p>
+      <div class="footer-pills">
+        <span class="footer-pill">Windows NT</span>
+        <span class="footer-pill">Ring 0 / Ring 3</span>
+        <span class="footer-pill">IRQ &amp; Přerušení</span>
+        <span class="footer-pill">Plánování procesů</span>
+        <span class="footer-pill">Virtuální paměť &amp; MMU</span>
+        <span class="footer-pill">Souborové systémy &amp; Shell</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Live Search in Lessons
+    const searchInput = document.getElementById('lessonSearch');
+    const lessonCards = document.querySelectorAll('.lesson-card');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      lessonCards.forEach(card => {
+        const text = (card.textContent + ' ' + (card.getAttribute('data-keywords') || '')).toLowerCase();
+        if (text.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const sunIcon = `<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    const moonIcon = `<svg class="icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+
+    const savedTheme = localStorage.getItem('vos_presentation_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeBtn.innerHTML = savedTheme === 'dark' ? sunIcon : moonIcon;
+
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('vos_presentation_theme', next);
+      themeBtn.innerHTML = next === 'dark' ? sunIcon : moonIcon;
+    });
+  </script>
+</body>
+</html>

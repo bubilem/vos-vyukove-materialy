@@ -1,0 +1,402 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 03: HTTP metody, hlavičky a stavové kódy | WEB10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB10">
+          <span>&larr; WEB10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 03</span>
+          <span class="divider">&bull;</span>
+          <span>HTTP metody, hlavičky a stavové kódy</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 2</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB10 &bull; 3. přednáška (45 min)</div>
+        <h1 class="hero-title">HTTP metody, hlavičky &amp; Stavové kódy</h1>
+        <p class="hero-desc">
+          Přesná sémantika webové komunikace: bezpečné a idempotentní metody, anatomie požadavkových i odpovědních hlaviček a kompletní kategorizace stavových kódů (1xx až 5xx).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Sémantika protokolu</span>
+            <span class="hero-meta-val">RFC 9110 HTTP Semantics</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční příklady</span>
+            <span class="hero-meta-val">REST API endpointy edu_portal</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 2 (Metody, kódy, hlavičky)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: HTTP METODY A IDEMPOTENCE -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Požadavkové metody</div>
+            <h2 class="slide-title">Sémantika HTTP metod a Idempotence</h2>
+            <p class="slide-subtitle">Rozdíl mezi bezpečnou (Safe) a idempotentní (Idempotent) operací</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th>Metoda</th>
+                  <th>Bezpečná (Safe)?</th>
+                  <th>Idempotentní?</th>
+                  <th>Význam a typické použití</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>GET</code></td>
+                  <td><strong>ANO</strong></td>
+                  <td><strong>ANO</strong></td>
+                  <td>Pouze čtení dat ze serveru. Nesmí měnit stav na serveru. Lze cachovat.</td>
+                </tr>
+                <tr>
+                  <td><code>HEAD</code></td>
+                  <td><strong>ANO</strong></td>
+                  <td><strong>ANO</strong></td>
+                  <td>Stejné jako GET, ale server vrátí <strong>pouze hlavičky bez těla</strong> (např. pro kontrolu velikosti).</td>
+                </tr>
+                <tr>
+                  <td><code>POST</code></td>
+                  <td>NE</td>
+                  <td><strong>NE</strong></td>
+                  <td>Vytvoření nového podřízeného záznamu (objednávka, komentář). Každé volání vytvoří nový záznam!</td>
+                </tr>
+                <tr>
+                  <td><code>PUT</code></td>
+                  <td>NE</td>
+                  <td><strong>ANO</strong></td>
+                  <td>Úplné nahrazení existujícího záznamu (nebo vytvoření na přesném URL). Pět stejných volání = stejný stav.</td>
+                </tr>
+                <tr>
+                  <td><code>PATCH</code></td>
+                  <td>NE</td>
+                  <td>NE</td>
+                  <td>Částečná modifikace existujícího záznamu (např. změna pouze telefonního čísla).</td>
+                </tr>
+                <tr>
+                  <td><code>DELETE</code></td>
+                  <td>NE</td>
+                  <td><strong>ANO</strong></td>
+                  <td>Smazání daného prostředku. Opakované smazání již smazaného záznamu nezpůsobí novou změnu stavu.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout callout-exam" style="margin-top: 0.8rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Definice Idempotence pro zkoušejícího</div>
+              <p>Metoda je <strong>idempotentní</strong>, pokud vícenásobné odeslání totožného požadavku zanechá server ve <strong>stejném stavu</strong> jako jediné odeslání. Proto je <code>PUT</code> idempotentní (přepíše data na stejnou hodnotu), ale <code>POST</code> není (vytvořil by 5 duplicitních objednávek).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: KLÍČOVÉ HTTP HLAVIČKY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Metainformace přenosu</div>
+            <h2 class="slide-title">HTTP Hlavičky (Headers): Request vs. Response</h2>
+            <p class="slide-subtitle">Řízení vyjednávání obsahu, cachování, autentizace a bezpečnosti</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Hlavičky požadavku (Request Headers)</h4>
+                <ul class="styled-list">
+                  <li><code>Host: edu-portal.cz</code>: Povinná v HTTP/1.1 (umožňuje virtuální hosting na jedné IP).</li>
+                  <li><code>User-Agent</code>: Identifikace prohlížeče, verze a operačního systému klienta.</li>
+                  <li><code>Accept</code>: Jaké MIME typy klient preferuje (např. <code>application/json, text/html</code>).</li>
+                  <li><code>Authorization: Bearer [token]</code>: Přihlašovací údaje pro API.</li>
+                  <li><code>Cookie</code>: Hodnoty dříve nastavené serverem.</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Hlavičky odpovědi (Response Headers)</h4>
+                <ul class="styled-list">
+                  <li><code>Content-Type: text/html; charset=utf-8</code>: MIME typ a kódování posílaného těla.</li>
+                  <li><code>Content-Length: 1024</code>: Přesná velikost těla zprávy v bajtech.</li>
+                  <li><code>Set-Cookie</code>: Instrukce pro uložení cookie v prohlížeči.</li>
+                  <li><code>Cache-Control: max-age=3600</code>: Pravidla mezipaměti pro prohlížeče a CDN.</li>
+                  <li><code>Location: /login</code>: Cílové URL při přesměrování (kódy 301, 302).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: KATEGORIZACE STAVOVÝCH KÓDŮ (1XX AŽ 3XX) -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Výsledky komunikace</div>
+            <h2 class="slide-title">Stavové kódy: 1xx, 2xx (Úspěch) a 3xx (Přesměrování)</h2>
+            <p class="slide-subtitle">Standardizovaná trojmístná čísla informující o výsledku zpracování</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1xx Informační</h4>
+              <p>Požadavek byl přijat, pokračuje se ve zpracování.</p>
+              <ul class="styled-list">
+                <li><code>100 Continue</code>: Klient může poslat tělo požadavku.</li>
+                <li><code>101 Switching Protocols</code>: Přechod na WebSockets.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2xx Úspěšné (Success)</h4>
+              <p>Akce byla úspěšně přijata, pochopena a vyřízena.</p>
+              <ul class="styled-list">
+                <li><code>200 OK</code>: Standardní úspěšná odpověď.</li>
+                <li><code>201 Created</code>: Nový záznam byl úspěšně vytvořen (např. po POST).</li>
+                <li><code>204 No Content</code>: Úspěch, ale odpověď nemá žádné tělo (časté u DELETE).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>3xx Přesměrování (Redirection)</h4>
+              <p>Pro dokončení akce musí klient provést další krok.</p>
+              <ul class="styled-list">
+                <li><code>301 Moved Permanently</code>: Trvalé přesměrování (SEO přenáší link equity).</li>
+                <li><code>302 Found</code>: Dočasné přesměrování.</li>
+                <li><code>304 Not Modified</code>: Obsah v cache prohlížeče je stále aktuální!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: CHYBOVÉ KÓDY (4XX A 5XX) -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Chybové stavy</div>
+            <h2 class="slide-title">Chybové kódy: 4xx (Klient) vs. 5xx (Server)</h2>
+            <p class="slide-subtitle">Zásadní rozdíl v odpovědnosti: Požádal klient o nesmysl, nebo server zkolaboval?</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4 style="color: var(--accent-amber);">4xx Chyby klienta (Client Error)</h4>
+                <p>Klient poslal neplatný dotaz, chybí oprávnění nebo stránka neexistuje:</p>
+                <ul class="styled-list">
+                  <li><code>400 Bad Request</code>: Neplatná syntaxe těla dotazu (např. poškozený JSON).</li>
+                  <li><code>401 Unauthorized</code>: Uživatel <strong>není autentizován</strong> (není přihlášen).</li>
+                  <li><code>403 Forbidden</code>: Uživatel je přihlášen, ale <strong>nemá oprávnění</strong> k dané akci.</li>
+                  <li><code>404 Not Found</code>: Požadované URL na serveru neexistuje.</li>
+                  <li><code>429 Too Many Requests</code>: Rate limiting (překročen limit volání API).</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4 style="color: var(--accent-rose);">5xx Chyby serveru (Server Error)</h4>
+                <p>Požadavek klienta byl platný, ale server selhal při jeho obsluze:</p>
+                <ul class="styled-list">
+                  <li><code>500 Internal Server Error</code>: Neošetřená výjimka v kódu aplikace (crash v PHP/Node).</li>
+                  <li><code>502 Bad Gateway</code>: Reverzní proxy (Nginx) dostala neplatnou odpověď od backendu.</li>
+                  <li><code>503 Service Unavailable</code>: Server je dočasně přetížen nebo probíhá údržba.</li>
+                  <li><code>504 Gateway Timeout</code>: Backend neodpověděl reverzní proxy v časovém limitu.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 2 (Metody, kódy a hlavičky)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 2</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Bezpečné vs Idempotentní</h4>
+              <p>Bezpečné (nemění data): GET, HEAD. Idempotentní (opakování nemění stav): GET, HEAD, PUT, DELETE.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Rozdíl 401 vs. 403</h4>
+              <p><code>401 Unauthorized</code> = „Kdo jsi?“ (Nejsi přihlášen). <code>403 Forbidden</code> = „Vím, kdo jsi, ale sem nesmíš“.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Rozdíl 301 vs. 302</h4>
+              <p><code>301 Moved Permanently</code> trvale mění URL i v indexu vyhledávačů. <code>302 Found</code> je dočasný odskok.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Kódy 502 vs. 504</h4>
+              <p><code>502 Bad Gateway</code> = backend vrátil chybu. <code>504 Gateway Timeout</code> = backend neodpověděl včas.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická záludná otázka u absolutoria</div>
+              <p><em>„K čemu slouží stavový kód 304 Not Modified a proč šetří obrovské množství dat na mobilních sítích?“</em><br>
+              <strong>Správná odpověď:</strong> Kód <code>304 Not Modified</code> je vrácen, pokud klient pošle v hlavičce <code>If-None-Match: [ETag]</code> nebo <code>If-Modified-Since</code> a data na serveru se od té doby nezměnila. Server pošle <strong>pouze tuto hlavičku s nulovým tělem</strong>, čímž řekne prohlížeči: <em>„Použij svou verzi z lokální cache.“</em> Šetří se tak 100 % přenesených dat těla.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 03</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 07: Vývoj a standardizace značkovacího jazyka HTML | WEB10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB10">
+          <span>&larr; WEB10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 07</span>
+          <span class="divider">&bull;</span>
+          <span>Vývoj a standardizace HTML</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 3</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB10 &bull; 7. přednáška (45 min)</div>
+        <h1 class="hero-title">Vývoj a standardizace jazyka HTML</h1>
+        <p class="hero-desc">
+          Historie od Berners-Leeho vědeckého hypertextu v CERNu přes války prohlížečů a slepou větev striktního XHTML až po vznik skupiny WHATWG a živý standard HTML5 Living Standard.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Standardizační tělesa</span>
+            <span class="hero-meta-val">W3C &amp; WHATWG</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Aktuální model</span>
+            <span class="hero-meta-val">HTML Living Standard</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 3 (Vývoj, standardy a HTML)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: POČÁTKY A VÁLKY PROHLÍŽEČŮ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Historie webu</div>
+            <h2 class="slide-title">Od CERNu k HTML 4.01: Války prohlížečů</h2>
+            <p class="slide-subtitle">Zrod hypertextu v roce 1989 a boj mezi Netscape Navigatorem a Internet Explorerem</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. Vznik HTML (1989–1993)</h4>
+              <p>Tim Berners-Lee navrhl jednoduchý značkovací jazyk odvozený z SGML pro sdílení vědeckých článků mezi fyziky. Obsahoval jen pár tagů (<code>&lt;title&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;a&gt;</code>).</p>
+            </div>
+            <div class="content-card">
+              <h4>2. První válka prohlížečů</h4>
+              <p>Netscape vs. Microsoft IE (1995–1999). Prohlížeče soutěžily zaváděním proprietárních nestandardních značek (jako blikající <code>&lt;blink&gt;</code> nebo <code>&lt;marquee&gt;</code>). Web byl roztříštěný.</p>
+            </div>
+            <div class="content-card">
+              <h4>3. Standard HTML 4.01 (1999)</h4>
+              <p>Konsorcium W3C stabilizovalo trh: Zavedlo oddělení obsahu od stylů (přesun formátování do CSS) a varianty <em>Strict</em>, <em>Transitional</em> a <em>Frameset</em>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: SLEPÁ VĚTEV XHTML -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Krize standardizace</div>
+            <h2 class="slide-title">Slepá ulička: Éra XHTML (2000–2004)</h2>
+            <p class="slide-subtitle">Proč pokus W3C přetvořit HTML na striktní XML v reálném světě selhal</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Vize W3C: XHTML 1.0 &amp; 2.0</h4>
+                <ul class="styled-list">
+                  <li>W3C chtělo web podřídit přísné syntaxi XML.</li>
+                  <li>Všechny značky musely být malými písmeny, povinně uzavřené (<code>&lt;br /&gt;</code>), hodnoty atributů v uvozovkách.</li>
+                  <li><strong>Zásadní plán:</strong> XHTML 2.0 mělo zcela zahodit zpětnou kompatibilitu a zrušit podporu starých webových stránek.</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Důvod krachu: Yellow Screen of Death</h4>
+                <ul class="styled-list">
+                  <li>Při odeslání se správným MIME typem <code>application/xhtml+xml</code> musel prohlížeč při <strong>jediné drobné chybě</strong> (např. chybějící lomítko v diskusním komentáři) zastavit parsování a zobrazit chybovou žlutou obrazovku.</li>
+                  <li>Většina autorů proto posílala XHTML kód se starou hlavičkou <code>text/html</code>, takže jej prohlížeče parsovaly jako obyčejné benevolentní HTML.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: VZNIK WHATWG A HTML5 -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Revoluce vývoje</div>
+            <h2 class="slide-title">Vznik WHATWG a zrození HTML5</h2>
+            <p class="slide-subtitle">Vzpoura tvůrců prohlížečů a návrat k pragmatickému vývoji webu</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Kdo je WHATWG (2004)?</h4>
+                <p>Zástupci firem <strong>Apple, Mozilla a Opera</strong> (později se přidal Google) založili nezávislou pracovní skupinu poté, co W3C odmítlo dále rozvíjet klasické HTML.</p>
+                <h4 style="margin-top: 0.8rem;">Filozofie návrhu HTML5:</h4>
+                <ul class="styled-list">
+                  <li><strong>Zpětná kompatibilita:</strong> Žádný existující web na světě se nesmí rozbít (<em>Don't break the Web</em>).</li>
+                  <li><strong>Pavement Principle:</strong> Standardizovat to, co prohlížeče v praxi již léta dělají (i v ošetřování chyb).</li>
+                  <li><strong>Web jako aplikační platforma:</strong> Nativní podpora videa, audia, offline aplikací a JavaScriptových API.</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Usmíření W3C a WHATWG (2007–2019)</h4>
+                <p>W3C uznalo selhání XHTML 2.0 a v roce 2007 převzalo specifikaci HTML5 od WHATWG jako základ pro budoucí doporučení. V roce 2019 byla podepsána dohoda, že <strong>jedinou autoritativní verzí je WHATWG Living Standard</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: HTML LIVING STANDARD A VALIDACE -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Současný stav</div>
+            <h2 class="slide-title">HTML Living Standard &amp; W3C Validace</h2>
+            <p class="slide-subtitle">Proč už neexistuje HTML6 a jak udržet kód bezchybný</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Konec verzování: Living Standard</h4>
+                <p>Jazyk HTML se již nevydává v balíčcích s čísly (HTML 5.1, 5.2...). Místo toho existuje jeden <strong>průběžně aktualizovaný živý standard</strong>. Nové prvky a atributy jsou do specifikace doplňovány postupně po otestování v jádrech prohlížečů.</p>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Význam W3C Validátoru</h4>
+                <ul class="styled-list">
+                  <li>Odhalí neuzavřené značky a chybné vnořování elementů.</li>
+                  <li>Ověří přítomnost povinných atributů pro přístupnost (<code>alt</code> u obrázků, <code>lang</code> u html).</li>
+                  <li>Chrání před nečekanými chybami vykreslovacího jádra a usnadňuje SEO indexaci vyhledávači.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 3 (Standardy a vývoj HTML)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 3</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Role W3C a WHATWG</h4>
+              <p>W3C (mezinárodní konsorcium standardů) a WHATWG (prohlížečové konsorcium vytvářející živou specifikaci HTML).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Proč selhalo XHTML</h4>
+              <p>Přílišná striktnost XML parseru (Yellow Screen of Death) a ignorování reality zpětné kompatibility webu.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. HTML Living Standard</h4>
+              <p>Opustil číselné verze. Jedná se o plynule se vyvíjející standard webové platformy bez skokových verzí.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Validace kódu</h4>
+              <p>Nástroj pro zajištění technické čistoty, sémantické správnosti a bezbariérovosti webového dokumentu.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická otázka u absolutoria</div>
+              <p><em>„Vyžaduje moderní HTML5 povinné uzavírání nepárových tagů lomítkem, jako tomu bylo v XHTML (např. &lt;br /&gt; nebo &lt;img ... /&gt;)?“</em><br>
+              <strong>Správná odpověď:</strong> <strong>Nevyžaduje!</strong> V HTML5 specifikaci jsou nepárové značky definovány jako tzv. <em>Void elements</em> (např. <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;meta&gt;</code>). Zpětné lomítko na konci (<code>/&gt;</code>) je v HTML5 parserem zcela ignorováno a je povoleno pouze pro usnadnění přechodu vývojářům zvyklým na XHTML syntaxi.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 07</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

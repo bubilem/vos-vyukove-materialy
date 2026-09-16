@@ -1,0 +1,396 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 03: DOM struktura a objektový model | WEB20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB20">
+          <span>&larr; WEB20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 03</span>
+          <span class="divider">&bull;</span>
+          <span>DOM struktura a objektový model</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 7</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB20 &bull; 3. přednáška (45 min)</div>
+        <h1 class="hero-title">DOM struktura &amp; Objektový model dokumentu</h1>
+        <p class="hero-desc">
+          Způsob, jakým prohlížeč transformuje textový HTML kód na paměťový strom uzlů (DOM Tree), typologie uzlů, stromová navigace a propojení s CSSOM do výsledného Render Tree.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Architektura jádra</span>
+            <span class="hero-meta-val">DOM Living Standard (W3C / WHATWG)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Klíčový koncept</span>
+            <span class="hero-meta-val">Nodes, Elements, Render Tree</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 7 (Objektový model dokumentu)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: OD KÓDU K DOM STROMU -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Princip fungování prohlížeče</div>
+            <h2 class="slide-title">Jak vzniká DOM: Zpracování HTML kódu</h2>
+            <p class="slide-subtitle">Čtyři fáze transformace: Bajty &rarr; Znaky &rarr; Tokeny &rarr; Uzly &rarr; DOM strom</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <p>
+            Když prohlížeč přijme HTML odpověď ze sítě, nepracuje přímo s textem, ale provádí systematický parsing:
+          </p>
+          <div class="grid-4">
+            <div class="content-card">
+              <h4>1. Konverze (Bytes)</h4>
+              <p>Surové bajty <code>3C 68 74 6D 6C...</code> jsou podle kódování (<code>UTF-8</code>) převedeny na textové znaky.</p>
+            </div>
+            <div class="content-card">
+              <h4>2. Tokenizace</h4>
+              <p>Lexikální analyzátor identifikuje HTML značky a vytváří tokeny: <em>StartTag: html</em>, <em>Tag: body</em>, <em>EndTag: p</em>.</p>
+            </div>
+            <div class="content-card">
+              <h4>3. Tvorba uzlů (Nodes)</h4>
+              <p>Tokeny jsou transformovány na konkrétní objekty v paměti reprezentující uzly se svými vlastnostmi a metodami.</p>
+            </div>
+            <div class="content-card">
+              <h4>4. Sestavení DOM</h4>
+              <p>Protože se HTML tagy do sebe vnořují, uzly jsou propojeny do stromové hierarchie rodič-potomek.</p>
+            </div>
+          </div>
+          <div class="callout callout-tip">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Definice DOM pro zkoušku</div>
+              <p><strong>DOM (Document Object Model)</strong> je programové objektové rozhraní (API) reprezentující strukturovaný HTML nebo XML dokument jako strom objektů (uzlů), které lze dynamicky číst a modifikovat skripty.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: TYPY UZLŮ V DOM -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Typologie objektů</div>
+            <h2 class="slide-title">Typy uzlů a rozdíl mezi Node a Element</h2>
+            <p class="slide-subtitle">Hierarchie rozhraní: Document, Element, Text, Attribute a Comment</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th style="width: 20%;">Typ uzlu</th>
+                  <th style="width: 15%;">nodeType</th>
+                  <th style="width: 35%;">nodeName</th>
+                  <th style="width: 30%;">Příklad v HTML kódu</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>ELEMENT_NODE</code></td>
+                  <td><code>1</code></td>
+                  <td>Název tagu velkými písmeny (<code>"DIV"</code>, <code>"P"</code>)</td>
+                  <td><code>&lt;p class="lead"&gt;...&lt;/p&gt;</code></td>
+                </tr>
+                <tr>
+                  <td><code>ATTRIBUTE_NODE</code></td>
+                  <td><code>2</code></td>
+                  <td>Název atributu (<code>"class"</code>, <code>"id"</code>)</td>
+                  <td><code>class="lead"</code></td>
+                </tr>
+                <tr>
+                  <td><code>TEXT_NODE</code></td>
+                  <td><code>3</code></td>
+                  <td><code>"#text"</code></td>
+                  <td>Vlastní text uvnitř tagu i bílé znaky a odřádkování</td>
+                </tr>
+                <tr>
+                  <td><code>COMMENT_NODE</code></td>
+                  <td><code>8</code></td>
+                  <td><code>"#comment"</code></td>
+                  <td><code>&lt;!-- Poznámka k layoutu --&gt;</code></td>
+                </tr>
+                <tr>
+                  <td><code>DOCUMENT_NODE</code></td>
+                  <td><code>9</code></td>
+                  <td><code>"#document"</code></td>
+                  <td>Kořenový objekt celé stránky (<code>window.document</code>)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout callout-warning">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Pozor na bílé znaky v DOM!</div>
+              <p>Každé odřádkování a mezera mezi HTML tagy vytváří v DOM stromu samostatný <code>TEXT_NODE</code>! Proto vlastnost <code>childNodes</code> obsahuje více položek než <code>children</code> (která vrací pouze potomky typu Element).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: STROMOVÉ VZTAHY A NAVIGACE -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Hierarchie stromu</div>
+            <h2 class="slide-title">Stromové vztahy: Rodič, potomci a sourozenci</h2>
+            <p class="slide-subtitle">Rozhraní Node vs. Element pro bezpečnou orientaci v DOM</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Navigace přes uzly (včetně mezer)</h4>
+                <ul class="styled-list">
+                  <li><code>parentNode</code>: Rodičovský uzel.</li>
+                  <li><code>childNodes</code>: NodeList všech potomků (elementy, texty i komentáře).</li>
+                  <li><code>firstChild</code> / <code>lastChild</code>: První / poslední uzel.</li>
+                  <li><code>nextSibling</code> / <code>previousSibling</code>: Sousedící uzly na stejné úrovni.</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Navigace čistě po elementech (Doporučeno)</h4>
+                <ul class="styled-list">
+                  <li><code>parentElement</code>: Rodičovský HTML element.</li>
+                  <li><code>children</code>: HTMLCollection obsahující výhradně tagy (elementy).</li>
+                  <li><code>firstElementChild</code> / <code>lastElementChild</code>: První / poslední tag.</li>
+                  <li><code>nextElementSibling</code> / <code>previousElementSibling</code>: Následující / předchozí tag.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: CRITICAL RENDERING PATH & RENDER TREE -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vykreslování na obrazovku</div>
+            <h2 class="slide-title">DOM + CSSOM = Render Tree</h2>
+            <p class="slide-subtitle">Proč to, co je v DOMu, nemusí být na obrazovce (display: none vs. visibility: hidden)</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. DOM Tree</h4>
+              <p>Reprezentuje kompletní sémantický obsah a strukturu HTML dokumentu bez ohledu na to, zda má být vidět.</p>
+            </div>
+            <div class="content-card">
+              <h4>2. CSSOM Tree</h4>
+              <p>Strom kaskádových stylů (CSS Object Model). Obsahuje pravidla pro každý selektor a vypočtené hodnoty vlastností.</p>
+            </div>
+            <div class="content-card">
+              <h4>3. Render Tree</h4>
+              <p>Kombinace DOM a CSSOM. Obsahuje <strong>pouze viditelné uzly</strong> se všemi aplikovanými styly, podle nichž probíhá Layout (Reflow) a Paint.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Otázka k absolutoriu: display: none vs. visibility: hidden</div>
+              <ul class="styled-list" style="margin-top: 0.4rem;">
+                <li><code>display: none</code> &rarr; Element v <strong>DOM existuje</strong>, ale je <strong>zcela vyřazen z Render Tree</strong>. Nezabírá v layoutu žádné místo.</li>
+                <li><code>visibility: hidden</code> &rarr; Element je <strong>součástí Render Tree</strong>. Vykreslí se jako neviditelná obdélníková plocha a zachovává své rozměry v layoutu.</li>
+                <li><code>&lt;head&gt;</code>, <code>&lt;script&gt;</code>, <code>&lt;meta&gt;</code> &rarr; Vždy v DOM, nikdy v Render Tree.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 7 (DOM)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 7</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Co je to DOM</h4>
+              <p>Objektová stromová reprezentace dokumentu v paměti vytvořená prohlížečem při parsování HTML.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Rozdíl Node vs. Element</h4>
+              <p>Element je pouze jeden z podtypů uzlu (nodeType 1). Uzel může být i text (nodeType 3), komentář (8) či dokument (9).</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Vznik Render Tree</h4>
+              <p>Spojením DOM (struktura) a CSSOM (styly). Zahrnuje pouze vizuálně vykreslitelné prvky.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Reflow a Repaint</h4>
+              <p>Změna geometrie v DOM vyvolá náročný výpočet rozměrů (Reflow/Layout) a následné přemalování pixelů (Repaint).</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická zkoušková otázka</div>
+              <p><em>„Je HTML zdrojový kód zobrazený přes 'Zobrazit zdrojový kód stránky' totožný s tím, co vidíme v panelu Elements vývojářských nástrojů?“</em><br>
+              <strong>Správná odpověď:</strong> Není! Zobrazení zdrojového kódu (Ctrl+U) je statický text stažený ze serveru. Panel Elements ve vývojářských nástrojích (F12) zobrazuje živý DOM strom, který mohl být opraven chybovým parserem prohlížeče a dynamicky pozměněn skripty.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 03</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

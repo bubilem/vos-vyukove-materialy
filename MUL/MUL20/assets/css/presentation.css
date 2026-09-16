@@ -1,0 +1,70 @@
+/* ==========================================================================
+   MUL20 - Lokální modulové rozšíření (Práce s multimédii a technická zařízení)
+   Přebírá jádro z ../../../assets/css/presentation-core.css
+   ========================================================================== */
+
+@import "../../../assets/css/presentation-core.css";
+@import "../../../assets/css/syntax/web.css";
+
+:root {
+  --accent: #ec4899;
+  --accent-glow: rgba(236, 72, 153, 0.25);
+  --accent-rose: #f43f5e;
+  --accent-purple: #a855f7;
+  --accent-amber: #f59e0b;
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+}
+
+/* Modulová specifika MUL20: fotografické a studiové parametry */
+.spec-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+}
+
+.spec-param {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.88rem;
+}
+
+.spec-param:last-child {
+  border-bottom: none;
+}
+
+.spec-name {
+  color: var(--text-secondary);
+}
+
+.spec-value {
+  font-weight: 600;
+  color: #fbcfe8;
+  font-family: var(--font-mono);
+}
+
+.triangle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.triangle-node {
+  background: rgba(236, 72, 153, 0.08);
+  border: 1px solid rgba(236, 72, 153, 0.3);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-align: center;
+}
+
+.triangle-node h4 {
+  color: #f472b6;
+  margin-bottom: 0.4rem;
+  font-size: 1.05rem;
+}

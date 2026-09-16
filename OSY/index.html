@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSY – Operační systémy | Výukové moduly VOŠ</title>
+  <style>
+    :root {
+      --bg: #0b1117;
+      --card-bg: #121824;
+      --card-hover: #182232;
+      --border: #243042;
+      --text: #e6edf3;
+      --text-muted: #94a3b8;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.15);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 9999px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 30%, #a7f3d0 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .module-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .module-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 30px var(--accent-glow);
+      background: var(--card-hover);
+    }
+
+    .module-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .module-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      color: #fff;
+    }
+
+    .module-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      margin-bottom: 1.5rem;
+    }
+
+    .module-stats {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+
+    .module-stats span {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-arrow {
+      margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+
+    .module-card:hover .btn-arrow {
+      transform: translateX(4px);
+      background: var(--accent);
+      color: #000;
+    }
+
+    .overview-banner {
+      margin-top: 3rem;
+      background: rgba(18, 24, 36, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .overview-info h3 {
+      font-size: 1.15rem;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+
+    .overview-info p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .overview-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .doc-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .doc-link:hover {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <header class="header">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+          <rect x="4" y="4" width="16" height="16" rx="2" />
+          <rect x="9" y="9" width="6" height="6" />
+          <line x1="9" y1="1" x2="9" y2="4" />
+          <line x1="15" y1="1" x2="15" y2="4" />
+          <line x1="9" y1="20" x2="9" y2="23" />
+          <line x1="15" y1="20" x2="15" y2="23" />
+          <line x1="20" y1="9" x2="23" y2="9" />
+          <line x1="20" y1="14" x2="23" y2="14" />
+          <line x1="1" y1="9" x2="4" y2="9" />
+          <line x1="1" y1="14" x2="4" y2="14" />
+        </svg>
+        <span>VOŠ &bull; Výukové materiály</span>
+      </div>
+      <h1>OSY – Operační systémy</h1>
+      <p class="subtitle">Kompletní interaktivní výukové prezentace, systémová schémata a podklady k absolutoriu z architektury, správy a vnitřních mechanismů operačních systémů.</p>
+    </header>
+
+    <div class="modules-grid">
+      <!-- Modul OSY10 -->
+      <a href="OSY10/index.html" class="module-card">
+        <div>
+          <div class="module-tag">2. ročník &bull; 3. semestr (zimní období) &bull; 3 kredity</div>
+          <h2>OSY10: Typy operačních systémů</h2>
+          <p>
+            Abstrakce hardware (HAL) a správa prostředků, CLI/TUI/GUI rozhraní, desktopové a serverové systémy, mobilní OS, systémy řízení v reálném čase (RTOS), bezpečnostní modely, filozofie Unixu, distribuce BSD a architektura macOS.
+          </p>
+        </div>
+        <div class="module-stats">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            10 lekcí (60 slidů)
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+            </svg>
+            Klasifikovaný zápočet
+          </span>
+          <div class="btn-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+        </div>
+      </a>
+
+      <!-- Modul OSY20 -->
+      <a href="OSY20/index.html" class="module-card">
+        <div>
+          <div class="module-tag">3. ročník &bull; 5. semestr (zimní období) &bull; 3 kredity</div>
+          <h2>OSY20: Činnost operačních systémů</h2>
+          <p>
+            Architektura Windows NT, alternativní a mikrojádrové OS, procesorové režimy (Ring 0/3) a systémová volání, obsluha přerušení (IRQ/IDT), životní cyklus procesů, preemptivní multitasking a vlákna, virtuální paměť a stránkování, ovladače I/O, souborové systémy a bezpečný Shell.
+          </p>
+        </div>
+        <div class="module-stats">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+            </svg>
+            10 lekcí (60 slidů)
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+              <path d="M9 11l3 3L22 4" />
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+            </svg>
+            Klasifikovaný zápočet
+          </span>
+          <div class="btn-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <section class="overview-banner">
+      <div class="overview-info">
+        <h3>Dokumentace a metodické pokyny</h3>
+        <p>Studijní plány, vazby na profilové zkoušky VOŠ a jednotný standard prezentačního rámce.</p>
+      </div>
+      <div class="overview-links">
+        <a href="../docs/osy_operacni_systemy.md" class="doc-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>Osnova předmětu OSY</span>
+        </a>
+        <a href="../docs/presentation_framework_guide.md" class="doc-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>Manuál prezentací</span>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      Vyšší odborná škola &bull; Výukové materiály předmětu Operační systémy &bull; 100% Offline & Pure Vanilla CSS/JS
+    </footer>
+  </div>
+
+</body>
+
+</html>

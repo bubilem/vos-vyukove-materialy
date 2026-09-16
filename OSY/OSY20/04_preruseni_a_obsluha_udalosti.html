@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 04: Přerušení a obsluha událostí | OSY20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY20">
+          <span>&larr; OSY20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 04</span>
+          <span class="divider">&bull;</span>
+          <span>Přerušení a obsluha událostí</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: IRQ &amp; Přerušení</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY20 &bull; 4. přednáška (45 min)</div>
+        <h1 class="hero-title">Přerušení &amp; Obsluha událostí</h1>
+        <p class="hero-desc">
+          Základní mechanismus komunikace hardwaru s operačním systémem: asynchronní přerušení (IRQ), hardwarové řadiče APIC a MSI-X, tabulka vektorů přerušení (IDT), obslužná rutina ISR a technika dvoufázového zpracování (Top Half / Bottom Half v Linuxu a DPC ve Windows).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Hardwarový vektor</span>
+            <span class="hero-meta-val">IRQ, APIC, MSI-X</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Tabulka vektorů</span>
+            <span class="hero-meta-val">IDT (Interrupt Descriptor Table)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Dvoufázové řízení</span>
+            <span class="hero-meta-val">Top Half vs. Bottom Half / DPC</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PROČ PŘERUŠENÍ A TYPY PŘERUŠENÍ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní koncept</div>
+            <h2 class="slide-title">Princip přerušení vs. Aktivní čekání (Polling)</h2>
+            <p class="slide-subtitle">Proč moderní počítače nečekají v nekonečné smyčce na data</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Nevýhody aktivního dotazování (Polling)</h4>
+              <p>Při aktivním dotazování procesor v cyklu čte stavový registr periferie (např. klávesnice či síťové karty):</p>
+              <ul class="styled-list">
+                <li>100% zbytečné vytížení procesoru (spalování energie, zahřívání čipu).</li>
+                <li>CPU nemůže přepnout na jiné výpočty, protože by zmeškalo příchod dat.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Asynchronní přerušení (Interrupt-driven I/O)</h4>
+              <p>Procesor se věnuje běžícím aplikacím nebo přejde do úsporného stavu (<code>HLT</code>):</p>
+              <ul class="styled-list">
+                <li>Když zařízení (disk, síťovka, myš) dokončí práci, vyšle elektrický signál na sběrnici (IRQ).</li>
+                <li>CPU <strong>pozastaví vykonávání aktuálního programu</strong>, uloží stav a automaticky skočí na obslužnou rutinu.</li>
+                <li>Po dokončení obsluhy pokračuje původní program přesně tam, kde byl přerušen.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: KLASIFIKACE: IRQ, TRAPS A FAULTS -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Typologie událostí</div>
+            <h2 class="slide-title">Kategorie přerušení a procesorových výjimek</h2>
+            <p class="slide-subtitle">Rozdíl mezi událostí z periferie a chybou programu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">IDT Struktura</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. Hardwarová přerušení (Hardware IRQ)</h4>
+              <p>Asynchronní signály ze vnějšího světa (nezávislé na běžící instrukci):</p>
+              <ul class="styled-list">
+                <li>Stisk klávesy, příchod síťového paketu, dokončení čtení sektoru disku přes DMA.</li>
+                <li>Časovač procesoru (Timer interrupt) – tlukot srdce plánovače úloh.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. Výjimky procesoru (Exceptions / Faults)</h4>
+              <p>Synchronní události vyvolané přímo chybou v běžícím kódu:</p>
+              <ul class="styled-list">
+                <li><strong>Divide by zero (#DE, vektor 0):</strong> Dělení nulou.</li>
+                <li><strong>Page Fault (#PF, vektor 14):</strong> Pokus o přístup na nenamapovanou stránku paměti (klíčové pro virtuální paměť!).</li>
+                <li><strong>General Protection (#GP, vektor 13):</strong> Porušení privilegií Ring 0/3.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>3. Softwarová přerušení (Traps)</h4>
+              <p>Záměrně vyvolaná přerušení instrukcí v kódu:</p>
+              <ul class="styled-list">
+                <li>Instrukce <code>INT 3</code> (Breakpoint pro debuggery).</li>
+                <li>Instrukce <code>INT 0x80</code> nebo <code>syscall</code> pro systémová volání.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: DVOUFÁZOVÁ OBSLUHA (TOP / BOTTOM HALF) -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektura ovladačů</div>
+            <h2 class="slide-title">Dvoufázová obsluha přerušení</h2>
+            <p class="slide-subtitle">Jak nezablokovat systém při záplavě milionů přerušení za sekundu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: #f43f5e;">1. První fáze: Top Half / Hard IRQ</h4>
+              <p>Rutina přímé obsluhy přerušení (ISR – Interrupt Service Routine):</p>
+              <ul class="styled-list">
+                <li>Běží <strong>s vypnutými hardwarovými přerušeními</strong> (nebo vysokým IRQL).</li>
+                <li>Musí být extrémně rychlá (několik mikrosekund).</li>
+                <li>Účel: Přečíst data z bufferu řadiče do RAM, potvrdit přijetí řadiči (ACK / EOI) a <strong>naplánovat druhou fázi</strong>.</li>
+                <li>Nesmí volat funkce, které by mohly usnout (spát na mutexu nebo čekat na disk!).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4 style="color: #10b981;">2. Druhá fáze: Bottom Half / SoftIRQ / DPC</h4>
+              <p>Zpracování komplexní logiky na pozadí s povolenými přerušeními:</p>
+              <ul class="styled-list">
+                <li><strong>Linux implementace:</strong> SoftIRQs, Tasklets a Workqueues (jádrová vlákna <code>ksoftirqd</code>). Zajišťují např. průchod síťového paketu celým TCP/IP zásobníkem.</li>
+                <li><strong>Windows NT implementace:</strong> Deferred Procedure Calls (DPC). Běží na úrovni <code>DISPATCH_LEVEL</code> (IRQL 2).</li>
+                <li>Systém zůstává plně responzivní i při gigabitovém toku dat ze sítě.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ INSPEKCE PŘERUŠENÍ -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická diagnostika</div>
+            <h2 class="slide-title">Sledování přerušení v Linuxu a Windows</h2>
+            <p class="slide-subtitle">Zjišťování rozložení IRQ linek a aktivity DPC</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Terminál &bull; /proc/interrupts</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Počty obsloužených přerušení na jádro CPU</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Výpis čítačů přerušení pro síťovou kartu a NVMe disk</span>
+<span class="term-prompt">$ </span><span class="term-cmd">cat</span> <span class="term-path">/proc/interrupts</span> <span class="term-pipe">|</span> <span class="term-cmd">grep</span> <span class="term-param">-E</span> <span class="term-string">"nvme|eth0|timer"</span>
+
+<span class="term-comment"># Ukázka výstupu z /proc/interrupts:</span>
+<span class="term-out"> 128:  452109   384210   PCI-MSI 524288-edge   nvme0q0</span>
+<span class="term-out"> 129: 1420188  1399421   PCI-MSI 1572864-edge  eth0-TxRx-0</span>
+<span class="term-out"> LOC: 8492019  8120442   Local timer interrupts</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>powershell &bull; Analýza času stráveného v přerušeních</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Měření procenta času stráveného obsluhou přerušení a DPC</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Counter</span> <span class="term-param">-Counter</span> <span class="term-string">"\Processor(_Total)\% Interrupt Time"</span>,
+                        <span class="term-string">"\Processor(_Total)\% DPC Time"</span>
+
+<span class="term-comment"># DPC Latency: Pokud je % DPC Time trvale nad 10 %,</span>
+<span class="term-comment"># znamená to vadný nebo přetížený ovladač zařízení!</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Otázky z obsluhy přerušení a událostí</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Polling vs. Interrupt</h4>
+              <p>Schopnost porovnat energetickou a výpočetní efektivitu aktivního čekání (Polling) a přerušením řízeného I/O.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Účel tabulky IDT</h4>
+              <p>Popis funkce tabulky vektorů přerušení (Interrupt Descriptor Table) a způsobu, jakým procesor přiřazuje číslo vektoru konkrétnímu ovladači jádra.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Top Half vs. Bottom Half</h4>
+              <p>Detailní vysvětlení, proč je obsluha rozdělena na kritickou část (okamžité převzetí dat s vypnutým IRQ) a odloženou část (dopočítání s povoleným IRQ).</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Vysvětlete, jak procesor reaguje na hardwarovou výjimku Page Fault a proč tato výjimka nutně neznamená pád programu.“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 04</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 05: Programy pro 2D grafiku a rastrové úpravy | MUL20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL20">
+          <span>&larr; MUL20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 05</span>
+          <span class="divider">&bull;</span>
+          <span>Programy pro 2D grafiku a rastrové úpravy</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 12: 2D rastrová grafika</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL20 &bull; 5. přednáška (45 min)</div>
+        <h1 class="hero-title">Programy pro 2D grafiku a rastrové úpravy</h1>
+        <p class="hero-desc">
+          Profesionální digitální temná komora: rastrové editory (Adobe Photoshop, GIMP, Affinity Photo). Zásady nedestruktivního workflow, práce s vrstvami a maskami, tonální křivky, retuše a fotomontáže.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Software</span>
+            <span class="hero-meta-val">Photoshop &bull; GIMP &bull; Affinity</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Metodika</span>
+            <span class="hero-meta-val">Nedestruktivní maskování</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 12</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: EKOSYSTÉM RASTROVÝCH EDITORŮ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Grafický software</div>
+            <h2 class="slide-title">Rastrové grafické editory na trhu</h2>
+            <p class="slide-subtitle">Srovnání oborového standardu, open-source alternativy a moderního nářadí</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Přehled nástrojů</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossy">Adobe Photoshop</span>
+              <h4 style="margin: 0.5rem 0;">Průmyslový standard (1990)</h4>
+              <p style="font-size: 0.85rem;">Dominantní proprietární nástroj v reklamních agenturách a DTP studiích. Nativní formát PSD/PSB, pokročilá správa barev (Adobe Color Engine), inteligentní objekty a generativní AI výplně (Firefly).</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">GIMP (GNU Image Manipulation)</span>
+              <h4 style="margin: 0.5rem 0;">Otevřený open-source standard</h4>
+              <p style="font-size: 0.85rem;">Zdarma dostupný software pro Linux, Windows a macOS. Využívá GEGL grafickou knihovnu pro zpracování s vysokou bitovou hloubkou (32-bit float). Nativní formát XCF.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">Affinity Photo (Canva)</span>
+              <h4 style="margin: 0.5rem 0;">Jednorázová komerční licence</h4>
+              <p style="font-size: 0.85rem;">Moderní výkonná alternativa napsaná od základu pro hardwarovou akceleraci GPU a Metal. Plná podpora formátu PSD, RAW konverze a nedestruktivních živých filtrů.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: NEDESTRUKTIVNÍ WORKFLOW A MASKY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zlaté pravidlo retuše</div>
+            <h2 class="slide-title">Vrstvy, masky a nedestruktivní editace</h2>
+            <p class="slide-subtitle">Proč profesionální grafik nikdy nemaže pixely nástrojem Guma</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová metodika</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Maska vrstvy (Layer Mask)</h4>
+              <ul class="styled-list">
+                <li>8bitový černobílý kanál navázaný na vrstvu obrazu.</li>
+                <li><strong>Bílá barva:</strong> 100% viditelnost (pixel je zcela zobrazen).</li>
+                <li><strong>Černá barva:</strong> 100% průhlednost (pixel je maskován a prosvítá vrstva pod ním).</li>
+                <li><strong>Odstíny šedi:</strong> Částečná průhlednost (plynulé přechody, měkké okraje vlasů).</li>
+                <li><strong>Výhoda:</strong> Kdykoli lze štětcem s bílou barvou jakoukoli smazanou část vrátit zpět!</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Vrstvy úprav (Adjustment Layers) &amp; Smart Objects</h4>
+              <ul class="styled-list">
+                <li><strong>Vrstvy úprav:</strong> Křivky, úrovně či vyvážení barev se neaplikují do pixelů, ale leží jako samostatná matematická instrukce nad vrstvami. Lze je kdykoliv vypnout nebo přeladit.</li>
+                <li><strong>Smart Objects (Inteligentní objekty):</strong> Zabalí vrstvu do kontejneru. Při opakovaném zmenšování a zvětšování se neztrácí původní data a filtry zůstávají živě editovatelné (Smart Filters).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: TONÁLNÍ A BAREVNÉ KOREKCE -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Postprodukce tónů</div>
+            <h2 class="slide-title">Tonální křivky (Curves) a Úrovně (Levels)</h2>
+            <p class="slide-subtitle">Matematická manipulace s přenosovou charakteristikou jasu a barevných kanálů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový nástroj</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Křivky (Curves) &ndash; Král tónových úprav</h4>
+              <p>Graf převádějící vstupní jas (Input) na výstupní jas (Output):</p>
+              <ul class="styled-list">
+                <li><strong>Lineární přímka 45&deg;:</strong> Žádná změna obrazu ($\text{Output} = \text{Input}$).</li>
+                <li><strong>S-Křivka (S-Curve):</strong> Ztmavení stínů a zesvětlení světel &rarr; zvýšení kontrastu a vizuální hloubky.</li>
+                <li><strong>Invertovaná S-křivka:</strong> Změkčení kontrastu, vytvoření filmového "matného" looku.</li>
+                <li><strong>Jednotlivé kanály R, G, B:</strong> Umožňuje přesné barevné tónování (Color Grading &ndash; např. přidání azurové do stínů a teplé žluté do světel).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Úrovně (Levels) &bull; Nastavení bílého a černého bodu</h4>
+              <ul class="styled-list">
+                <li>Nastavuje ořezové meze pro stíny (černý bod), střední tóny (gama) a světla (bílý bod).</li>
+                <li>Posunem černého jezdce k patě histogramu odstraníme šedý závoj a dodáme obrazu plnou dynamiku.</li>
+                <li>Kápátka pro automatické vyvážení neutrální šedé (eliminace nežádoucího barevného nádechu světla).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: RETUŠE A FOTOMONTÁŽ -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktické postupy</div>
+            <h2 class="slide-title">Retušovací techniky &bull; Frekvenční separace</h2>
+            <p class="slide-subtitle">Jak odstranit vady pleti při zachování přirozené pórovité textury</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Profesionální retuš</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Základní retušovací nástroje</h4>
+              <ul class="styled-list">
+                <li><strong>Klonovací razítko (Clone Stamp):</strong> Přesně kopíruje pixely ze vzorkované oblasti (Alt+Click) na cílové místo.</li>
+                <li><strong>Retušovací štětec (Healing Brush):</strong> Kopíruje texturu ze vzorku, ale automaticky přizpůsobí jas a barvu okolnímu cíli.</li>
+                <li><strong>Obsahové vyplnění (Content-Aware Fill):</strong> Algoritmická syntéza textury z okolních oblastí snímku.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Frekvenční separace (Frequency Separation)</h4>
+              <p>Špičková metoda beauty retuše rozdělující obraz do dvou vrstev:</p>
+              <ul class="styled-list">
+                <li><strong>Nízké frekvence (Low Frequency):</strong> Rozostřená vrstva nesoucí pouze barvu, tón a světelné přechody. Retušují se zde fleky a stíny.</li>
+                <li><strong>Vysoké frekvence (High Frequency):</strong> Vrstva nesoucí jemnou texturu, póry a chloupky (High-Pass filtr). Retušují se zde pupínky a jizvy bez rozmazání barvy.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z 2D rastrové grafiky</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 12</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Masky vrstev</h4>
+              <p>Bílá odkrývá, černá skrývá. Umožňují 100% nedestruktivní retuš a kompozici fotomontáží bez nevratného mazání pixelů.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Křivky a S-křivka</h4>
+              <p>Základní nástroj řízení kontrastu. Manipulace s přenosem vstupního a výstupního jasu v celém obraze nebo v jednotlivých RGB kanálech.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Frekvenční separace</h4>
+              <p>Rozklad na nízkofrekvenční barevnou vrstvu a vysokofrekvenční vrstvu textury pro profesionální retuš pleti.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Vysvětlete princip nedestruktivní editace v rastrovém editoru (masky, vrstvy úprav). Popište fungování nástroje Křivky a metodu frekvenční separace.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 05</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

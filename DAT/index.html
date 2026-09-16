@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DAT – Databázové systémy | Výukové moduly VOŠ</title>
+  <style>
+    :root {
+      --bg: #0a0f1d;
+      --card-bg: #111827;
+      --card-hover: #1f2937;
+      --border: #1f2937;
+      --text: #f3f4f6;
+      --text-muted: #94a3b8;
+      --accent: #06b6d4;
+      --accent-glow: rgba(6, 182, 212, 0.2);
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --card-hover: #f1f5f9;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent: #0891b2;
+      --accent-glow: rgba(6, 182, 212, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2.5rem 1.5rem;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover {
+      color: var(--accent);
+    }
+
+    .theme-toggle-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      border-radius: 9999px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    .badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    h1 {
+      font-size: 2.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--text) 30%, var(--accent) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.12rem;
+      color: var(--text-muted);
+      max-width: 740px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .module-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .module-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 28px -6px var(--accent-glow);
+    }
+
+    .module-card.disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .module-card.disabled:hover {
+      transform: none;
+      border-color: var(--border);
+      box-shadow: none;
+    }
+
+    .module-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--card-accent, var(--accent));
+      opacity: 0.8;
+    }
+
+    .module-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--card-accent, var(--accent));
+      margin-bottom: 0.5rem;
+    }
+
+    .module-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .module-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .module-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      background: rgba(6, 182, 212, 0.15);
+      color: #06b6d4;
+    }
+
+    .status-pill.planned {
+      background: rgba(148, 163, 184, 0.15);
+      color: #94a3b8;
+    }
+
+    .status-pill svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav-bar">
+      <a href="../index.html" class="nav-back">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Zpět na centrální rozcestník
+      </a>
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Přepnout motiv">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </div>
+
+    <header class="header">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+        </svg>
+        Předmět DAT • VOŠ & SŠ
+      </div>
+      <h1>Databázové systémy</h1>
+      <p class="subtitle">
+        Kompletní výukové materiály pro relační databáze: konceptuální modelování (E-R), normální formy, jazyk SQL (DDL, DML, DQL), indexování, transakce a administraci SŘBD.
+      </p>
+    </header>
+
+    <div class="modules-grid">
+      <!-- DAT10 -->
+      <div class="module-card disabled" style="--card-accent: #64748b;">
+        <div>
+          <div class="module-tag">Modul 10 • 3. semestr</div>
+          <div class="module-title">
+            <span>DAT10: Úvod a modelování</span>
+          </div>
+          <p class="module-desc">
+            Historie databázových systémů, architektury SŘBD (DBMS), konceptuální E-R modelování (kardinalita, parcialita) a převod na relační model.
+          </p>
+        </div>
+        <div class="module-meta">
+          <span class="status-pill planned">Plánovaný modul</span>
+          <span>4 kredity</span>
+        </div>
+      </div>
+
+      <!-- DAT20 -->
+      <a href="DAT20/index.html" class="module-card" style="--card-accent: #06b6d4;">
+        <div>
+          <div class="module-tag">Modul 20 • 5. semestr</div>
+          <div class="module-title">
+            <span>DAT20: Relační databáze a SQL</span>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+          <p class="module-desc">
+            10 interaktivních lekcí: Normalizace (1NF–BCNF), DDL a integrita, DML příkazy, pokročilé SELECTy, JOIN operace, vnořené dotazy a model edu_eshop.
+          </p>
+        </div>
+        <div class="module-meta">
+          <span class="status-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            10 lekcí k dispozici
+          </span>
+          <span>5 kreditů • Zkouška</span>
+        </div>
+      </a>
+
+      <!-- DAT30 -->
+      <div class="module-card disabled" style="--card-accent: #64748b;">
+        <div>
+          <div class="module-tag">Modul 30 • 6. semestr</div>
+          <div class="module-title">
+            <span>DAT30: Využití a správa SŘBD</span>
+          </div>
+          <p class="module-desc">
+            Správa transakcí (ACID), indexy a exekuční plány, procedury, triggery, optimalizace výkonu a správa uživatelských práv v DBMS.
+          </p>
+        </div>
+        <div class="module-meta">
+          <span class="status-pill planned">Plánovaný modul</span>
+          <span>5 kreditů</span>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>Vyšší odborná škola &copy; 2026 • Výukový materiál pro obor Informační technologie</p>
+    </footer>
+  </div>
+
+  <script>
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const THEME_KEY = 'vos_presentation_theme';
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(THEME_KEY, next);
+    });
+  </script>
+</body>
+
+</html>

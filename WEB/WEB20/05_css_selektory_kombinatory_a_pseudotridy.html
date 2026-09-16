@@ -1,0 +1,401 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 05: CSS selektory, kombinátory a pseudotřídy | WEB20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB20">
+          <span>&larr; WEB20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 05</span>
+          <span class="divider">&bull;</span>
+          <span>CSS selektory, kombinátory a pseudotřídy</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 9</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB20 &bull; 5. přednáška (45 min)</div>
+        <h1 class="hero-title">CSS selektory, kombinátory &amp; pseudotřídy</h1>
+        <p class="hero-desc">
+          Přesné zacílení prvků v DOM stromu bez zbytečného zaplevelení HTML třídami: atributové filtry, stromové vztahy sourozenců, dynamické stavy uživatelského rozhraní a generovaný obsah.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Pokročilé selektory</span>
+            <span class="hero-meta-val">&gt;, +, ~, [attr^=], :nth-child(), ::before</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční model</span>
+            <span class="hero-meta-val">Komponenty portálu edu_portal</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 9 (Selektory a pseudotřídy)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: ATRIBUTOVÉ SELEKTORY -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Atributové selektory</div>
+            <h2 class="slide-title">Filtrování podle HTML atributů</h2>
+            <p class="slide-subtitle">Síla zástupných znaků (^=, $=, *=) bez nutnosti vytvářet pomocné třídy</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th style="width: 25%;">Selektor</th>
+                  <th style="width: 35%;">Význam podmínky</th>
+                  <th style="width: 40%;">Praktická ukázka pro edu_portal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>[target]</code></td>
+                  <td>Element má daný atribut definován bez ohledu na hodnotu.</td>
+                  <td><code>a[target] { color: var(--accent-amber); }</code></td>
+                </tr>
+                <tr>
+                  <td><code>[type="email"]</code></td>
+                  <td>Přesná rovnost celé hodnoty atributu.</td>
+                  <td>Cílení specificky na e-mailové pole formuláře.</td>
+                </tr>
+                <tr>
+                  <td><code>[href^="https://"]</code></td>
+                  <td>Hodnota atributu <strong>začíná</strong> zadaným řetězcem.</td>
+                  <td>Obarvení nebo přidání ikonky pro zabezpečené externí odkazy.</td>
+                </tr>
+                <tr>
+                  <td><code>[href$=".pdf"]</code></td>
+                  <td>Hodnota atributu <strong>končí</strong> zadaným řetězcem.</td>
+                  <td>Automatická indikace stahovatelného souboru PDF za odkazem.</td>
+                </tr>
+                <tr>
+                  <td><code>[class*="btn-"]</code></td>
+                  <td>Hodnota atributu <strong>obsahuje kdekoliv uvnitř</strong> podřetězec.</td>
+                  <td>Stylování všech tlačítek: <code>btn-primary</code>, <code>btn-danger</code>.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout callout-tip">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Tip: Ignorování velikosti písmen</div>
+              <p>Přidáním příznaku <code>i</code> na konec hranatých závorek ignorujete velikost písmen: <code>a[href$=".pdf" i]</code> zacílí i na soubory s koncovkou <code>.PDF</code>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: STROMOVÉ KOMBINÁTORY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vztahy v DOM stromu</div>
+            <h2 class="slide-title">Stromové kombinátory: Potomci vs. Sourozenci</h2>
+            <p class="slide-subtitle">Čtyři základní operátory pro hierarchické zacílení</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>1. Libovolný potomek (Mezera: <code>A B</code>)</h4>
+                <p>Vybere element <code>B</code>, který je kdekoliv zanořen uvnitř elementu <code>A</code> (děti, vnoučata atd.):</p>
+                <code>.article-body p</code>
+              </div>
+              <div class="content-card" style="margin-top: 0.8rem;">
+                <h4>2. Přímý potomek / dítě (<code>A &gt; B</code>)</h4>
+                <p>Vybere element <code>B</code>, pouze pokud je jeho <strong>bezprostředním rodičem</strong> element <code>A</code> (žádné hlubší zanoření):</p>
+                <code>.menu-list &gt; li</code>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>3. Sousední sourozenec (<code>A + B</code>)</h4>
+                <p>Vybere element <code>B</code>, který leží na stejné úrovni a následuje <strong>bezprostředně ihned za</strong> elementem <code>A</code>:</p>
+                <code>h2 + p { font-size: 1.2rem; } /* Perex článku */</code>
+              </div>
+              <div class="content-card" style="margin-top: 0.8rem;">
+                <h4>4. Obecný sourozenec (<code>A ~ B</code>)</h4>
+                <p>Vybere jakýkoliv element <code>B</code>, který má stejného rodiče a nachází se <strong>kdekoliv za</strong> elementem <code>A</code>:</p>
+                <code>h2 ~ p</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PSEUDOTŘÍDY -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Dynamické chování</div>
+            <h2 class="slide-title">Pseudotřídy: Uživatelské stavy a :nth-child()</h2>
+            <p class="slide-subtitle">Reakce na interakci a strukturální počítání položek v seznamech</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Stavové pseudotřídy (UX &amp; Formuláře)</h4>
+                <ul class="styled-list">
+                  <li><code>:hover</code>: Najetí kurzoru myši.</li>
+                  <li><code>:focus</code>: Zaměření prvku klávesnicí nebo kliknutím.</li>
+                  <li><code>:focus-visible</code>: Zobrazí rámeček pouze při navigaci klávesnicí (Tab), nikoliv při kliku myší!</li>
+                  <li><code>:active</code>: Okamžik stisknutí tlačítka myši.</li>
+                  <li><code>:checked</code>, <code>:disabled</code>, <code>:valid</code>: Reflexe stavu formulářového pole.</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Strukturální pseudotřída :nth-child(An + B)</h4>
+                <p>Umožňuje pruhovat tabulky, generovat mřížky nebo stylovat konkrétní položky:</p>
+                <ul class="styled-list">
+                  <li><code>:first-child</code> / <code>:last-child</code>: První / poslední prvek.</li>
+                  <li><code>:nth-child(odd)</code> nebo <code>(2n + 1)</code>: Každý lichý řádek.</li>
+                  <li><code>:nth-child(even)</code> nebo <code>(2n)</code>: Každý sudý řádek.</li>
+                  <li><code>:nth-child(3n)</code>: Každý třetí sloupec v katalogu kurzů.</li>
+                  <li><code>:not(.featured)</code>: Negace – vybere prvky bez dané třídy.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PSEUDOELEMENTY -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Generovaný obsah</div>
+            <h2 class="slide-title">Pseudoelementy: ::before, ::after a grafické efekty</h2>
+            <p class="slide-subtitle">Rozdíl mezi pseudotřídou (jedna dvojtečka) a pseudoelementem (dvě dvojtečky)</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">css &bull; dekorační ::before a ::after</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="css-sel">.card</span> {
+  <span class="css-prop">position</span>: <span class="css-val">relative</span>;
+  <span class="css-prop">padding</span>: <span class="css-num">1.5</span><span class="css-unit">rem</span>;
+}
+
+<span class="html-comment">/* Vytvoření dekoračního akcentního proužku */</span>
+<span class="css-sel">.card::before</span> {
+  <span class="css-prop">content</span>: <span class="css-val">""</span>;        <span class="html-comment">/* Povinná vlastnost! */</span>
+  <span class="css-prop">position</span>: <span class="css-val">absolute</span>;
+  <span class="css-prop">top</span>: <span class="css-num">0</span>;
+  <span class="css-prop">left</span>: <span class="css-num">0</span>;
+  <span class="css-prop">width</span>: <span class="css-num">4</span><span class="css-unit">px</span>;
+  <span class="css-prop">height</span>: <span class="css-num">100</span><span class="css-unit">%</span>;
+  <span class="css-prop">background</span>: <span class="css-val">#06b6d4</span>;
+}</code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Klíčové zásady pseudoelementů</h4>
+                <ul class="styled-list">
+                  <li><strong>Syntaktická konvence:</strong> Od CSS3 se pseudoelementy zapisují se <strong>dvěma dvojtečkami</strong> (<code>::before</code>, <code>::after</code>, <code>::placeholder</code>, <code>::selection</code>), zatímco pseudotřídy s jednou (<code>:hover</code>).</li>
+                  <li><strong>Povinná vlastnost content:</strong> Bez uvedení vlastnosti <code>content: ""</code> se pseudoelement v Render Tree vůbec nevytvoří!</li>
+                  <li><strong>Generování do DOM:</strong> <code>::before</code> se vloží jako <em>první potomek</em> cílového elementu, <code>::after</code> jako <em>poslední potomek</em>.</li>
+                  <li><strong>Kde nelze použít:</strong> Nelze aplikovat na nepárové nahrazované elementy (jako <code>&lt;img&gt;</code> nebo <code>&lt;input&gt;</code>).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 9 (Selektory a pseudotřídy)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 9</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Kombinátory</h4>
+              <p>Přesný rozdíl mezi mezerou (libovolný potomek), <code>&gt;</code> (přímé dítě), <code>+</code> (bezprostřední soused) a <code>~</code> (obecný sourozenec).</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Atributové selektory</h4>
+              <p>Zápisy <code>[attr]</code>, <code>[attr^=]</code> (začíná), <code>[attr$=]</code> (končí) a <code>[attr*=]</code> (obsahuje).</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Pseudotřídy :nth-child vs. :nth-of-type</h4>
+              <p><code>:nth-child</code> počítá všechny sourozence bez ohledu na tag, zatímco <code>:nth-of-type</code> filtruje pouze elementy stejného typu.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Pseudoelementy ::before a ::after</h4>
+              <p>Vytváření virtuálního obsahu v Render Tree, nutnost zadat <code>content</code> a vliv na specificitu (započítávají se jako tagy).</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Klasický chyták zkoušejícího</div>
+              <p><em>„V sekci máme nadpis &lt;h2&gt; a za ním odstavce &lt;p&gt;. Zacílí pravidlo <code>p:first-child</code> na první odstavec?“</em><br>
+              <strong>Správná odpověď:</strong> <strong>Nezacílí!</strong> Protože prvním potomkem sekce je nadpis <code>&lt;h2&gt;</code>, podmínka <em>„být odstavcem A ZÁROVEŇ být prvním potomkem“</em> není splněna. Pro zacílení na první odstavec se musí použít <code>p:first-of-type</code> nebo kombinátor <code>h2 + p</code>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 05</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

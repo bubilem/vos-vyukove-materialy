@@ -1,0 +1,488 @@
+﻿<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 10: Multimédia, konec pluginů a syntéza | WEB10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+</head>
+<body>
+  <div class="presentation-container">
+
+    <!-- Slide 1: Titulní slide -->
+    <section class="slide slide--title active" id="slide-1">
+      <div class="slide-content">
+        <div class="meta-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; vertical-align: -2px;">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          <span>WEB10 &bull; Lekce 10</span>
+        </div>
+        <h1>Multimédia na webu, konec pluginů a syntéza modulu</h1>
+        <p class="subtitle">Nativní prvky &lt;audio&gt; a &lt;video&gt;, srovnání SVG vs. Canvas, historický zánik proprietárních pluginů (Flash) a celková rekapitulace k absolutoriu</p>
+        <div class="title-footer">
+          <div class="module-pill">Modul WEB10: Základy webových technologií a HTML</div>
+          <div class="okruh-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 14px; height: 14px; vertical-align: -2px;">
+              <path d="M9 11l3 3L22 4"/>
+              <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+            </svg>
+            Vazba na Okruhy 5, 20 &amp; Syntéza
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2: Nativní multimédia v HTML5 -->
+    <section class="slide" id="slide-2">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div class="slide-number">02 / 06</div>
+          <div class="slide-category">Nativní audio a video</div>
+        </div>
+        <h2>Nativní multimédia v HTML5: &lt;video&gt; a &lt;audio&gt;</h2>
+        <p class="lead">HTML5 odstranilo nutnost externích pluginů a zavedlo nativní podporu multimédií s přímou hardwarovou akcelerací a JavaScriptovým API.</p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <polygon points="23 7 16 12 23 17 23 7"/>
+                <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+              </svg>
+              Značka &lt;video&gt; a její atributy
+            </h3>
+            <ul style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted); margin: 0; padding-left: 1.2rem;">
+              <li><code>controls</code>: Zobrazí nativní ovládací prvky prohlížeče (play, pause, hlasitost, fullscreen).</li>
+              <li><code>poster</code>: URL náhledového obrázku zobrazeného před spuštěním videa.</li>
+              <li><code>preload</code>: Určuje způsob načítání (<code>none</code>, <code>metadata</code>, <code>auto</code>).</li>
+              <li><code>autoplay + muted</code>: Automatické přehrávání moderní prohlížeče povolují výhradně se ztlumeným zvukem (<code>muted</code>).</li>
+              <li><code>&lt;source&gt;</code>: Umožňuje definovat alternativní formáty pro různé prohlížeče (WebM, MP4).</li>
+              <li><code>&lt;track&gt;</code>: Podpora titulků a kapitol ve formátu WebVTT.</li>
+            </ul>
+            <div class="code-box" style="margin-top: 1rem;">
+              <div class="code-box-header"><span>Robustní vložení videa v HTML5</span></div>
+              <pre><code>&lt;video controls poster="preview.jpg" preload="metadata"&gt;
+  &lt;source src="video.webm" type="video/webm"&gt;
+  &lt;source src="video.mp4"  type="video/mp4"&gt;
+  &lt;track src="cs.vtt" kind="subtitles" srclang="cs" label="Čeština" default&gt;
+  Váš prohlížeč nepodporuje přehrávání videa v HTML5.
+&lt;/video&gt;</code></pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <path d="M9 18V5l12-2v13"/>
+                <circle cx="6" cy="18" r="3"/>
+                <circle cx="18" cy="16" r="3"/>
+              </svg>
+              Značka &lt;audio&gt; a audio kodeky
+            </h3>
+            <div class="code-box">
+              <div class="code-box-header"><span>Nativní audio přehrávač</span></div>
+              <pre><code>&lt;audio controls preload="none"&gt;
+  &lt;source src="podcast.opus" type="audio/ogg; codecs=opus"&gt;
+  &lt;source src="podcast.mp3"  type="audio/mpeg"&gt;
+  Váš prohlížeč nepodporuje element audio.
+&lt;/audio&gt;</code></pre>
+            </div>
+
+            <div class="comparison-table" style="font-size: 0.85rem; margin-top: 1rem;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Kodek / Formát</th>
+                    <th>Výhody</th>
+                    <th>Využití</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>MP4 (H.264 / AAC)</strong></td>
+                    <td>100% kompatibilita, hardwarová podpora</td>
+                    <td>Univerzální standard</td>
+                  </tr>
+                  <tr>
+                    <td><strong>WebM (VP9 / Opus)</strong></td>
+                    <td>Otevřený formát, vysoká komprese</td>
+                    <td>Moderní web, YouTube</td>
+                  </tr>
+                  <tr>
+                    <td><strong>MP3</strong></td>
+                    <td>Univerzální audio formát</td>
+                    <td>Zpětná kompatibilita</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Opus / Ogg</strong></td>
+                    <td>Špičková kvalita i při nízkém datovém toku</td>
+                    <td>Streaming hlasu, podcasty</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 3: Vektor vs. Rastr a grafika na webu -->
+    <section class="slide" id="slide-3">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div class="slide-number">03 / 06</div>
+          <div class="slide-category">Webová grafika</div>
+        </div>
+        <h2>Vektorová grafika (SVG) vs. Rastr (&lt;canvas&gt;, obrázky)</h2>
+        <p class="lead">Volba grafického formátu zásadně ovlivňuje rychlost načítání, ostrost na Retina displejích a možnosti animace.</p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                <polyline points="2 17 12 22 22 17"/>
+                <polyline points="2 12 12 17 22 12"/>
+              </svg>
+              SVG (Scalable Vector Graphics)
+            </h3>
+            <ul style="font-size: 0.88rem; line-height: 1.5; color: var(--text-muted); margin: 0; padding-left: 1.2rem;">
+              <li><strong>Formát:</strong> XML značky popisující křivky, přímky a tvary.</li>
+              <li><strong>Škálovatelnost:</strong> Dokonale ostré při libovolném zvětšení a DPI.</li>
+              <li><strong>DOM a CSS:</strong> Každá část SVG je element v DOM stromu; lze stylovat CSS a animovat JS.</li>
+              <li><strong>Vhodné pro:</strong> Ikony, loga, diagramy, UI prvky.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+              &lt;canvas&gt; (Rastrové kreslení)
+            </h3>
+            <ul style="font-size: 0.88rem; line-height: 1.5; color: var(--text-muted); margin: 0; padding-left: 1.2rem;">
+              <li><strong>Formát:</strong> Prázdné rastrové plátno vykreslované procedurálně pomocí JavaScriptu (2D či WebGL/WebGPU).</li>
+              <li><strong>Výkon:</strong> Vhodné pro tisíce objektů současně (hry, vizualizace částic, generativní grafika).</li>
+              <li><strong>Nevýhody:</strong> Nemá DOM uzly, horší přístupnost pro čtečky, při změně rozlišení se musí překreslit.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+                <line x1="7" y1="2" x2="7" y2="22"/>
+                <line x1="17" y1="2" x2="17" y2="22"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+              </svg>
+              Moderní rastrové formáty
+            </h3>
+            <ul style="font-size: 0.88rem; line-height: 1.5; color: var(--text-muted); margin: 0; padding-left: 1.2rem;">
+              <li><strong>WebP:</strong> O 25–35 % menší než JPEG při srovnatelné kvalitě. Podporuje průhlednost i animace.</li>
+              <li><strong>AVIF:</strong> Extrémně efektivní komprese založená na AV1. Vynikající pro hero bannery a fotky.</li>
+              <li><strong>Značka &lt;picture&gt;:</strong> Servíruje optimální formát dle podpory prohlížeče s fallbackem na JPEG.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 4: Úpadek proprietárních pluginů -->
+    <section class="slide" id="slide-4">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div class="slide-number">04 / 06</div>
+          <div class="slide-category">Historie a bezpečnost</div>
+        </div>
+        <h2>Úpadek a konec proprietárních pluginů (Flash, Silverlight)</h2>
+        <p class="lead">Do příchodu HTML5 byl multimediální web závislý na binárních zásuvných modulech třetích stran. Proč musely definitivně zaniknout?</p>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Kritické důvody konce éry pluginů
+            </h3>
+            <ul style="font-size: 0.9rem; line-height: 1.55; color: var(--text-muted); margin: 0; padding-left: 1.2rem;">
+              <li><strong>Závažné bezpečnostní díry:</strong> Adobe Flash Player, Java Applety a Microsoft Silverlight běžely mimo sandbox prohlížeče a byly nejčastějším terčem zero-day útoků a malware.</li>
+              <li><strong>Mobilní revoluce (2007–2010):</strong> Steve Jobs odmítl povolit Flash na iOS (iPhone/iPad) kvůli obrovské spotřebě baterie, absenci dotykového ovládání a nestabilitě. Tím započal jeho pád.</li>
+              <li><strong>Uzavřený proprietární kód:</strong> Web je postaven na otevřených standardech (W3C/WHATWG). Proprietární binárky v rukou jedné korporace odporovaly filozofii svobodného internetu.</li>
+              <li><strong>Nepřístupnost:</strong> Obsah uvnitř Flash banneru byl pro vyhledávače (SEO) a screen readery neviditelnou „černou skříňkou“.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; vertical-align: -3px; color: var(--accent);">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Čím HTML5 pluginy nahradilo?
+            </h3>
+            <div class="comparison-table" style="font-size: 0.88rem; margin-top: 0.5rem;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Zastaralá technologie</th>
+                    <th>Moderní otevřená náhrada</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Flash Video (FLV)</td>
+                    <td><code>&lt;video&gt;</code> (MP4/H.264, WebM)</td>
+                  </tr>
+                  <tr>
+                    <td>Flash animace / hry</td>
+                    <td><code>&lt;canvas&gt;</code>, WebGL, CSS animace</td>
+                  </tr>
+                  <tr>
+                    <td>Flash Audio / zvuky</td>
+                    <td><code>&lt;audio&gt;</code>, Web Audio API</td>
+                  </tr>
+                  <tr>
+                    <td>Java Applety</td>
+                    <td>WebAssembly (Wasm) + JavaScript</td>
+                  </tr>
+                  <tr>
+                    <td>Silverlight</td>
+                    <td>Nativní HTML5 + EcmaScript</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.75rem;">
+              Oficiální konec podpory Adobe Flash byl celosvětově završen 31. prosince 2020 (End-of-Life).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 5: Celková syntéza modulu WEB10 -->
+    <section class="slide" id="slide-5">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div class="slide-number">05 / 06</div>
+          <div class="slide-category">Syntéza znalostí modulu</div>
+        </div>
+        <h2>Syntéza modulu WEB10: Cesta od paketu k sémantickému webu</h2>
+        <p class="lead">Kompletní přehled znalostí získaných v lekcích 01 až 10 a jejich propojení do uceleného inženýrského pohledu.</p>
+
+        <div class="grid-3" style="font-size: 0.88rem;">
+          <div class="card">
+            <h4 style="color: var(--accent);">1. Síťová vrstva a infrastruktura</h4>
+            <p style="color: var(--text-muted); margin: 0.4rem 0;">
+              Klient-server architektura &bull; Protokol HTTP/HTTPS &bull; TLS handshake a šifrování &bull; DNS překlad &bull; Webhosting a Cloud CDN.
+            </p>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; border-top: 1px solid var(--border); padding-top: 0.4rem;">
+              <strong>Pokryté lekce:</strong> 01, 02, 03, 04, 05, 06
+            </div>
+          </div>
+
+          <div class="card">
+            <h4 style="color: var(--accent);">2. Vývoj standardů a kostra HTML</h4>
+            <p style="color: var(--text-muted); margin: 0.4rem 0;">
+              Od SGML přes přísné XHTML k živému standardu WHATWG HTML5 &bull; Doctype, hlavička &lt;head&gt;, metadata, kódování UTF-8 a viewport pro mobily.
+            </p>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; border-top: 1px solid var(--border); padding-top: 0.4rem;">
+              <strong>Pokryté lekce:</strong> 07, 08
+            </div>
+          </div>
+
+          <div class="card">
+            <h4 style="color: var(--accent);">3. Obsah, multimédia a přístupnost</h4>
+            <p style="color: var(--text-muted); margin: 0.4rem 0;">
+              Hierarchie nadpisů &bull; Odkazy a URL adresace &bull; Přístupné tabulky &bull; Nativní multimédia &lt;audio&gt;/&lt;video&gt; &bull; Vektorové SVG vs Canvas &bull; Odchod pluginů.
+            </p>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem; border-top: 1px solid var(--border); padding-top: 0.4rem;">
+              <strong>Pokryté lekce:</strong> 09, 10
+            </div>
+          </div>
+        </div>
+
+        <div class="alert-box alert-box--info" style="margin-top: 1rem;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; flex-shrink: 0;">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <div>
+            <strong>Most k navazujícímu modulu WEB20:</strong> V modulu WEB10 jste zvládli strukturu, infrastrukturu a sémantiku obsahu. V navazujícím modulu <strong>WEB20</strong> tyto základy oživíte plnohodnotným stylováním (CSS, Flexbox, Grid, responzivní design, typografie a preprocesory SCSS).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 6: Shrnutí a zkušební checklist k absolutoriu -->
+    <section class="slide" id="slide-6">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div class="slide-number">06 / 06</div>
+          <div class="slide-category">Zkouškový checklist k absolutoriu</div>
+        </div>
+        <h2>Závěrečný zkušební checklist modulu WEB10</h2>
+        <p class="lead">Tento checklist pokrývá základní otázky okruhů 1 až 6 a 20 pro úspěšné složení zkoušky či absolutoria.</p>
+
+        <div class="grid-4" style="margin-top: 1rem;">
+          <div class="card">
+            <h4>Okruhy 1 &amp; 2</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              Vysvětlit komunikaci klient-server, princip TCP/IP, rozdíl HTTP/1.1 vs HTTP/2 a HTTP/3, metody GET/POST a význam stavových kódů (200, 301, 404, 500).
+            </p>
+          </div>
+          <div class="card">
+            <h4>Okruhy 2 &amp; 6</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              Popsat TLS handshake, certifikáty a autority, DNS stromovou hierarchii překladu domény a rozdíl mezi sdíleným hostingem, VPS a Cloud CDN.
+            </p>
+          </div>
+          <div class="card">
+            <h4>Okruhy 3 &amp; 4</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              Rozdíl HTML 4.01, XHTML a HTML5. Kostra dokumentu (&lt;!DOCTYPE html&gt;, &lt;html&gt;, &lt;head&gt;, &lt;body&gt;), význam kódování UTF-8 a hierarchie nadpisů.
+            </p>
+          </div>
+          <div class="card">
+            <h4>Okruhy 5 &amp; 20</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">
+              Nativní značky &lt;video&gt; a &lt;audio&gt;, podpora formátů (MP4, WebM), rozdíl mezi vektorovým SVG a rastrovým Canvasem, důvody zániku Adobe Flash.
+            </p>
+          </div>
+        </div>
+
+        <div class="exam-question-box" style="margin-top: 1.5rem;">
+          <div class="exam-question-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: var(--accent);">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <strong>Typická syntetická otázka komise u absolutoria:</strong>
+          </div>
+          <p class="exam-question-text">
+            „Popište detailně, co vše se odehraje od okamžiku, kdy uživatel zadá do adresního řádku https://www.skola.cz a stiskne Enter, až po vykreslení stránky včetně videa v HTML5?“
+          </p>
+          <div class="exam-answer-hint">
+            <strong>Stručná osnova odpovědi:</strong> 1) Prohlížeč zkontroluje DNS cache a provede rekurzivní DNS dotaz na IP adresu. 2) Naváže se TCP spojení (3-way handshake) na portu 443 a proběhne TLS handshake (ověření certifikátu, ustavení symetrického šifrovacího klíče). 3) Prohlížeč odešle HTTP požadavek (GET /) a obdrží HTML odpověď se stavovým kódem 200 OK. 4) Parser sestaví DOM strom, narazí na externí zdroje (CSS, JS, obrázky, video) a vyšle další paralelní požadavky. 5) Element &lt;video&gt; začne načítat první datové chunky (metadata/hlavičku kodeku H.264/WebM) a prohlížeč spustí přehrávání na GPU vrstvě bez potřeby Flash pluginu.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Spodní ovládací lišta dle standardu -->
+  <nav class="controls-bar" aria-label="Ovládání prezentace">
+    <div class="controls-left">
+      <a href="index.html" class="control-btn" title="Zpět na katalog lekcí">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </a>
+      <button class="control-btn" id="tocBtn" title="Obsah prezentace (M / O)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="controls-center">
+      <button class="control-btn" id="prevBtn" title="Předchozí slide (šipka vlevo / PgUp)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <span class="slide-counter" id="slideCounter">1 / 6</span>
+      <button class="control-btn" id="nextBtn" title="Další slide (šipka vpravo / Mezerník / PgDn)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="controls-right">
+      <button class="control-btn" id="themeToggle" title="Přepnout motiv (T)">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <button class="control-btn" id="fsBtn" title="Celá obrazovka (F)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+        </svg>
+      </button>
+      <button class="control-btn" id="helpBtn" title="Klávesové zkratky (?)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Modální okno obsahu -->
+  <div class="modal" id="tocModal" aria-hidden="true">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Obsah prezentace</h3>
+        <button class="modal-close" id="tocClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ul class="toc-list" id="tocList"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modální okno nápovědy -->
+  <div class="modal" id="helpModal" aria-hidden="true">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Klávesové zkratky</h3>
+        <button class="modal-close" id="helpClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcuts-grid">
+          <div class="shortcut-item"><kbd>&rarr;</kbd> / <kbd>Space</kbd><span>Další slide</span></div>
+          <div class="shortcut-item"><kbd>&larr;</kbd><span>Předchozí slide</span></div>
+          <div class="shortcut-item"><kbd>Home</kbd> / <kbd>End</kbd><span>První / poslední slide</span></div>
+          <div class="shortcut-item"><kbd>F</kbd><span>Celá obrazovka</span></div>
+          <div class="shortcut-item"><kbd>M</kbd> / <kbd>O</kbd><span>Obsah lekce</span></div>
+          <div class="shortcut-item"><kbd>T</kbd><span>Přepnout motiv</span></div>
+          <div class="shortcut-item"><kbd>?</kbd><span>Tato nápověda</span></div>
+          <div class="shortcut-item"><kbd>Esc</kbd><span>Zavřít okno</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

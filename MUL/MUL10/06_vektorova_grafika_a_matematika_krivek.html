@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 06: Vektorová grafika a matematika křivek | MUL10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL10">
+          <span>&larr; MUL10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 06</span>
+          <span class="divider">&bull;</span>
+          <span>Vektorová grafika a matematika křivek</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 6: Vektorová grafika</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL10 &bull; 6. přednáška (45 min)</div>
+        <h1 class="hero-title">Vektorová grafika a matematika křivek</h1>
+        <p class="hero-desc">
+          Popis obrazu prostřednictvím analytické geometrie. Matematická podstata Bézierových křivek, algoritmus de Casteljau, uzlové body, typy hladkosti $C^0/C^1$ a otevřený standard W3C SVG.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Matematika</span>
+            <span class="hero-meta-val">Bézierovy kubiky</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Standard</span>
+            <span class="hero-meta-val">W3C SVG &bull; PostScript</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 6</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: VEKTOR VS RASTR -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Porovnání paradigmat</div>
+            <h2 class="slide-title">Vektorová vs. Rastrová reprezentace</h2>
+            <p class="slide-subtitle">Proč se loga a ikony navrhují výhradně vektorově</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčové srovnání</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: #c084fc;">Vektorová grafika (Objektová)</h4>
+              <ul class="styled-list">
+                <li><strong>Matematický předpis:</strong> Obraz je definován jako množina bodů, čar, polygonů a Bézierových křivek se zadanou barvou výplně a tahu.</li>
+                <li><strong>Nekonečná škálovatelnost:</strong> Libovolné zvětšení (od vizitky po billboard) je absolutně ostré bez ztráty detailů.</li>
+                <li><strong>Kompaktní velikost souboru:</strong> Datový objem závisí na složitosti křivek, nikoliv na rozměrech plátna.</li>
+                <li><strong>Snadná editace:</strong> Každý objekt lze kdykoli posunout, změnit jeho barvu nebo upravit zakřivení.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4 style="color: #60a5fa;">Rastrová grafika (Pixelová)</h4>
+              <ul class="styled-list">
+                <li><strong>Pevná matice:</strong> Každý pixel má fixně danou souřadnici $X, Y$ a barvu.</li>
+                <li><strong>Limit rozlišení:</strong> Při zvětšení dochází k pixelizaci a ztrátě ostrosti.</li>
+                <li><strong>Velikost souboru:</strong> Roste úměrně s počtem pixelů a bitovou hloubkou.</li>
+                <li><strong>Doména:</strong> Nepostradatelná pro fotografie a komplexní scény s jemnými přechody a texturami z reálného světa.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: BÉZIEROVY KŘIVKY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Matematický fundament</div>
+            <h2 class="slide-title">Bézierovy křivky a Bernsteinovy polynomy</h2>
+            <p class="slide-subtitle">Vynález francouzských inženýrů Pierra Béziera (Renault) a Paula de Casteljau (Citroën)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový vzorec</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Stupně Bézierových křivek</h4>
+              <ul class="styled-list">
+                <li><strong>Lineární (1. stupeň):</strong> Úsečka mezi dvěma body $P_0$ a $P_1$: $B(t) = (1-t)P_0 + t P_1$.</li>
+                <li><strong>Kvadratická (2. stupeň):</strong> Tři body ($P_0, P_1, P_2$). Jeden řídicí bod mimo křivku. Používáno v písmech TrueType (TTF).</li>
+                <li><strong>Kubická (3. stupeň):</strong> Čtyři body: počáteční $P_0$, dva kontrolní body $P_1, P_2$ a koncový $P_3$. Standard pro PostScript, OpenType, PDF a SVG!</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Vzorec kubické Bézierovy křivky ($t \in [0, 1]$)</h4>
+              <div class="code-box">
+                <pre><code>B(t) = (1-t)³ P₀ + 3(1-t)²t P₁ + 3(1-t)t² P₂ + t³ P₃</code></pre>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                Parametr $t$ probíhá od $0$ (počáteční kotevní bod $P_0$) do $1$ (koncový kotevní bod $P_3$). Spojnice $P_0 - P_1$ a $P_2 - P_3$ tvoří tečny křivky v krajních bodech (směr a síla táhla).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: KOTEVNÍ BODY A HLADKOST -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Geometrické vlastnosti</div>
+            <h2 class="slide-title">Uzlové body a typy spojitosti křivek</h2>
+            <p class="slide-subtitle">Jak navazovat segmenty křivek bez nežádoucích zlomů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Topologie cest</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossy">Ostrý uzel ($C^0$ spojitost)</span>
+              <h4 style="margin: 0.5rem 0;">Corner Point</h4>
+              <p style="font-size: 0.85rem;">Křivky se v uzlu dotýkají (polohová spojitost $C^0$), ale jejich tečny svírají ostrý úhel. Vzniká viditelná špička nebo roh (např. vrchol trojúhelníku).</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">Hladký uzel ($C^1$ spojitost)</span>
+              <h4 style="margin: 0.5rem 0;">Smooth Point</h4>
+              <p style="font-size: 0.85rem;">Řídicí táhla leží na jedné přímce v opačných směrech, ale mohou mít různou délku. Tečný vektor má shodný směr &ndash; přechod je dokonale plynulý bez lomu.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">Symetrický uzel ($C^2$ spojitost)</span>
+              <h4 style="margin: 0.5rem 0;">Symmetric Point</h4>
+              <p style="font-size: 0.85rem;">Táhla leží na stejné přímce a navíc mají identickou délku. Zaručuje stejnou křivost na obou stranách uzlového bodu.</p>
+            </div>
+          </div>
+          <div class="callout callout-tip" style="margin-top: 0.6rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Pravidlo výplně: Non-Zero vs. Even-Odd</div>
+              <p>Při vykreslování složitých překrývajících se cest (např. písmeno 'O' s dírou uprostřed) algoritmus určuje vnitřek buď testem parity průsečíků paprsku (Even-Odd), nebo sčítáním orientovaných směrů obíhání křivky (Non-Zero Winding).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: FORMÁT SVG -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Webový standard</div>
+            <h2 class="slide-title">W3C SVG (Scalable Vector Graphics)</h2>
+            <p class="slide-subtitle">Vektorová grafika zapsaná v otevřeném formátu XML s podporou CSS a JS</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">SVG specifikace</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Základní prvky SVG</h4>
+              <ul class="styled-list">
+                <li><code>&lt;rect&gt;</code>, <code>&lt;circle&gt;</code>, <code>&lt;line&gt;</code>, <code>&lt;polygon&gt;</code>: Geometrická primitiva.</li>
+                <li><code>&lt;path d="..."&gt;</code>: Univerzální příkaz pro kreslení libovolné Bézierovy cesty.</li>
+                <li><strong>Příkazy v atributu d:</strong>
+                  <br><code>M x y</code> &ndash; Move to (přesun pera)
+                  <br><code>L x y</code> &ndash; Line to (přímka)
+                  <br><code>C x1 y1, x2 y2, x y</code> &ndash; Kubická Bézierova křivka
+                  <br><code>Z</code> &ndash; Close path (uzavření cesty)
+                </li>
+              </ul>
+            </div>
+            <div class="code-box">
+              <div class="code-box-header">
+                <span>svg &bull; ukázka kubické křivky</span>
+                <button class="btn-copy" title="Kopírovat">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre><code>&lt;svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;!-- Cesta začíná na [10,80], táhla [20,10] a [80,10], cíl [90,80] --&gt;
+  &lt;path d="M 10 80 C 20 10, 80 10, 90 80 Z" 
+        fill="rgba(168,85,247,0.3)" 
+        stroke="#a855f7" 
+        stroke-width="3" /&gt;
+&lt;/svg&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z vektorové grafiky</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 6</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Vektor vs Rastr</h4>
+              <p>Vektor je matematicky definovaný objekt nezávislý na rozlišení (ostrost v jakémkoli měřítku). Rastr je pevná matice pixelů.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Bézierova kubika</h4>
+              <p>Definována 4 body: 2 krajní kotevní body a 2 řídicí táhla určující tečný vektor a poloměr zakřivení křivky.</p>
+            </div>
+            <div class="summary-card">
+              <h4>W3C SVG</h4>
+              <p>Otevřený vektorový formát založený na XML, podporující stylování přes CSS, animace i skriptování v JavaScriptu.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Definujte matematický princip kubické Bézierovy křivky. Vysvětlete rozdíl mezi ostrým ($C^0$) a hladkým ($C^1$) uzlem a popište syntaxi SVG elementu path.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 06</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

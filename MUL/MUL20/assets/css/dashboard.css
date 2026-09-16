@@ -1,0 +1,13 @@
+/* ==========================================================================
+   MUL20 - Dashboard modulu (Práce s multimédii a technická zařízení)
+   Přebírá jádro z ../../../assets/css/dashboard-core.css
+   ========================================================================== */
+
+@import "../../../assets/css/dashboard-core.css";
+
+:root {
+  --accent: #ec4899;
+  --accent-glow: rgba(236, 72, 153, 0.25);
+  --accent-rose: #f43f5e;
+  --accent-amber: #f59e0b;
+}

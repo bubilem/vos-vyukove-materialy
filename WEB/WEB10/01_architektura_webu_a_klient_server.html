@@ -1,0 +1,376 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 01: Architektura webu a klient-server model | WEB10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB10">
+          <span>&larr; WEB10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 01</span>
+          <span class="divider">&bull;</span>
+          <span>Architektura webu a klient-server model</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 1</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB10 &bull; 1. přednáška (45 min)</div>
+        <h1 class="hero-title">Architektura webu &amp; Klient-Server model</h1>
+        <p class="hero-desc">
+          Základní principy sítě World Wide Web, architektura klient-server, role prohlížeče a webového serveru, životní cyklus požadavku a srovnání statického vs. dynamického webu.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Architektonický model</span>
+            <span class="hero-meta-val">Client-Server Request-Response</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční infrastruktura</span>
+            <span class="hero-meta-val">Model edu_network</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 1 (Architektura webu)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PRINCIP KLIENT-SERVER -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní paradigma</div>
+            <h2 class="slide-title">Principy architektury Klient-Server</h2>
+            <p class="slide-subtitle">Oddělení uživatelského rozhraní od aplikační a datové logiky</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>1. Webový klient (User Agent)</h4>
+                <p>Aplikace iniciující komunikaci (typicky webový prohlížeč – Chrome, Firefox, Safari, Edge, ale i vyhledávací bot nebo CLI nástroj curl):</p>
+                <ul class="styled-list">
+                  <li>Formuluje a odesílá <strong>HTTP požadavek (Request)</strong>.</li>
+                  <li>Přijímá <strong>HTTP odpověď (Response)</strong> od serveru.</li>
+                  <li>Parcuje HTML, CSS, JavaScript a vykresluje výsledek na obrazovku (Rendering).</li>
+                  <li>Zajišťuje interakci s uživatelem a běh klientských skriptů.</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>2. Webový server (Host)</h4>
+                <p>Počítačový systém s veřejnou IP adresou a nepřetržitým během, který naslouchá na síťovém portu (port 80 pro HTTP, port 443 pro HTTPS):</p>
+                <ul class="styled-list">
+                  <li>Přijímá příchozí požadavky od tisíců klientů současně.</li>
+                  <li>Ověřuje oprávnění, routuje cesty a spouští aplikační logiku.</li>
+                  <li>Čte statické soubory z disku nebo dotazuje databázi.</li>
+                  <li>Sestavuje a vrací HTTP odpověď se stavovým kódem a tělem zprávy.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="callout callout-tip" style="margin-top: 1rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Asymetrie modelu Klient-Server</div>
+              <p>Komunikaci v klasickém webovém modelu <strong>vždy iniciuje klient</strong>. Server je pasivní posluchač (Daemon) a bez předchozího požadavku klienta nemůže sám od sebe poslat data (výjimkou jsou moderní protokoly jako WebSockets).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: STATICKÝ VS DYNAMICKÝ WEB -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Typy webových řešení</div>
+            <h2 class="slide-title">Statický web vs. Dynamický web</h2>
+            <p class="slide-subtitle">Rozdíl mezi soubory na disku a během serverových skriptů s databází</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th style="width: 25%;">Vlastnost</th>
+                  <th style="width: 37%;">Statický web</th>
+                  <th style="width: 38%;">Dynamický web</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Generování obsahu</strong></td>
+                  <td>HTML kód je předem vytvořen a uložen na disku serveru.</td>
+                  <td>HTML kód se generuje v reálném čase za běhu skriptem (PHP, Node.js, Python).</td>
+                </tr>
+                <tr>
+                  <td><strong>Zátěž serveru</strong></td>
+                  <td>Extrémně nízká (server pouze čte soubor z disku a posílá bajty do sítě).</td>
+                  <td>Vyšší (spotřeba CPU a RAM pro interpretaci kódu a databázové dotazy).</td>
+                </tr>
+                <tr>
+                  <td><strong>Personalizace</strong></td>
+                  <td>Každý návštěvník dostává naprosto identický obsah.</td>
+                  <td>Obsah se mění podle přihlášeného uživatele, nákupního košíku, filtrů apod.</td>
+                </tr>
+                <tr>
+                  <td><strong>Databáze</strong></td>
+                  <td>Není vyžadována (žádné SQL).</td>
+                  <td>Typicky vyžaduje relační či nerelační databázi (MySQL, PostgreSQL, Mongo).</td>
+                </tr>
+                <tr>
+                  <td><strong>Typické použití</strong></td>
+                  <td>Prezentační weby, dokumentace, blogy (Astro, Hugo, 11ty).</td>
+                  <td>Informační systémy, e-shopy, sociální sítě, diskusní fóra.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: WEBOVÝ SERVER A SOFTWAROVÉ STACKY -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Serverové technologie</div>
+            <h2 class="slide-title">Webový server: Software a architektura</h2>
+            <p class="slide-subtitle">Srovnání procesních (Apache) a událostmi řízených (Nginx, Node.js) serverů</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>Apache HTTP Server</h4>
+              <p>Historický lídr webu. Využívá procesní / vláknový model (každé spojení má své vlákno). Velmi flexibilní díky souborům <code>.htaccess</code> a modulárnímu systému (mod_rewrite, mod_php).</p>
+            </div>
+            <div class="content-card">
+              <h4>Nginx (Engine-X)</h4>
+              <p>Moderní asynchronní server řízený událostmi (Event-driven). Zvládne desítky tisíc souběžných spojení s minimální pamětí. Často slouží jako <strong>Reverse Proxy</strong> a zátěžový vyvažovač (Load Balancer).</p>
+            </div>
+            <div class="content-card">
+              <h4>Node.js / Aplikační servery</h4>
+              <p>Serverový JavaScript s neblokujícím I/O. Samotný aplikační kód funguje jako HTTP server bez nutnosti externího webserveru (často běží za Nginxem jako proxy).</p>
+            </div>
+          </div>
+          <div class="callout callout-tip" style="margin-top: 1rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Co je to Reverse Proxy?</div>
+              <p>Obrácená proxy (např. Nginx) stojí před aplikačními servery. Zajišťuje terminaci šifrování HTTPS (SSL Offloading), servíruje statické assety, provádí kompresi Gzip/Brotli a rozděluje zátěž mezi více aplikačních nodů.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: ŽIVOTNÍ CYKLUS POŽADAVKU -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Komunikační řetězec</div>
+            <h2 class="slide-title">Život jednoho webového požadavku</h2>
+            <p class="slide-subtitle">Co přesně se stane od stisku Enteru v adresním řádku po zobrazení stránky</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-4">
+            <div class="content-card">
+              <h4>1. DNS Resoluce</h4>
+              <p>Prohlížeč zjistí IP adresu k doméně (např. <code>edu-portal.cz &rarr; 195.113.144.2</code>) přes lokální cache a DNS servery.</p>
+            </div>
+            <div class="content-card">
+              <h4>2. TCP &amp; TLS Handshake</h4>
+              <p>Navázání spolehlivého TCP spojení (SYN-ACK) a následné šifrované vyjednání symetrického klíče TLS na portu 443.</p>
+            </div>
+            <div class="content-card">
+              <h4>3. HTTP Dotaz &amp; Zpracování</h4>
+              <p>Odeslání <code>GET /index.html HTTP/1.1</code>. Server požadavek vyhodnotí a vrátí odpověď se stavovým kódem <code>200 OK</code> a HTML tělem.</p>
+            </div>
+            <div class="content-card">
+              <h4>4. Rendering v prohlížeči</h4>
+              <p>Jádro sestaví DOM strom, stáhne CSS a obrázky, vytvoří Render Tree, spočítá layout a vykreslí pixely (Paint).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 1 (Architektura webu)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 1</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Klient-Server model</h4>
+              <p>Asymetrická architektura: Klient odesílá požadavky (Request), server odpovídá (Response). Klient řídí prezentaci.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Statický vs Dynamický web</h4>
+              <p>Statický web servíruje hotové soubory bez backendového výpočtu. Dynamický web generuje HTML za běhu z databáze.</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Webový server &amp; Reverse Proxy</h4>
+              <p>Role serverů Apache a Nginx. Princip reverzní proxy pro vyvažování zátěže, SSL terminaci a cachování.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Cyklus Request-Response</h4>
+              <p>Posloupnost kroků: DNS resoluce &rarr; TCP spojení &rarr; TLS handshake &rarr; HTTP Request &rarr; HTTP Response &rarr; DOM Rendering.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická záludná otázka zkoušejícího</div>
+              <p><em>„Je Single Page Application (SPA) vytvořená v Reactu či Vue statický, nebo dynamický web z pohledu webového serveru?“</em><br>
+              <strong>Správná odpověď:</strong> Z pohledu <strong>webového serveru se jedná o statický web</strong>! Server pouze odesílá statický HTML soubor, CSS a zabalený JavaScript bundle. Veškeré dynamické generování HTML a routování probíhá až v prohlížeči uživatele (Client-Side Rendering – CSR).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 01</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

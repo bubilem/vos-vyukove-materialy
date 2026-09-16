@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 09: Zobrazovací technologie a projekční technika | MUL20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL20">
+          <span>&larr; MUL20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 09</span>
+          <span class="divider">&bull;</span>
+          <span>Zobrazovací technologie a projekční technika</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruhy 15 &amp; 16: Zobrazovače a projekce</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL20 &bull; 9. přednáška (45 min)</div>
+        <h1 class="hero-title">Zobrazovací technologie a projekční technika</h1>
+        <p class="hero-desc">
+          Konstrukce zobrazovačů a velkoformátové projekce: LCD panely (IPS, VA), samoemisní technologie OLED a QD-OLED, dynamický rozsah HDR, projekční systémy (DLP s čipem DMD, 3LCD, laser) a instalace projekčních ploch.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Panely</span>
+            <span class="hero-meta-val">IPS &bull; OLED &bull; Mini-LED</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Projekce</span>
+            <span class="hero-meta-val">DLP &bull; 3LCD &bull; Laser</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilové okruhy č. 15 &amp; 16</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: TECHNOLOGIE PANELŮ (LCD VS OLED) -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Displejové technologie</div>
+            <h2 class="slide-title">LCD panely (IPS, VA) vs. Samoemisní OLED</h2>
+            <p class="slide-subtitle">Rozdíl mezi tekutými krystaly s podsvícením a organickými diodami</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčové srovnání</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: #60a5fa;">LCD s LED / Mini-LED podsvícením</h4>
+              <ul class="styled-list">
+                <li><strong>Princip:</strong> Zadní LED podsvícení prochází polarizátory a vrstvou tekutých krystalů (TN, VA, IPS), které fungují jako světelné ventily.</li>
+                <li><strong>IPS (In-Plane Switching):</strong> Vynikající pozorovací úhly (178&deg;) a věrné barvy. Slabší statický kontrast (cca 1000:1) a prosvítání černé (IPS Glow).</li>
+                <li><strong>VA (Vertical Alignment):</strong> Hlubší černá a kontrast 3000:1 až 5000:1, ale horší úhly a pomalejší odezva tmavých tónů.</li>
+                <li><strong>Mini-LED:</strong> Tisíce zón lokálního stmívání (Full Array Local Dimming) pro extrémní jas až 2000 nitů.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4 style="color: #f472b6;">OLED a QD-OLED (Samoemisní)</h4>
+              <ul class="styled-list">
+                <li><strong>Princip:</strong> Každý jednotlivý subpixel je mikroskopická organická dioda, která vyzařuje vlastní světlo bez společného podsvícení.</li>
+                <li><strong>Dokonalá černá ($0\text{ nitů}$):</strong> Pixel se při černé barvě zcela vypne &rarr; teoreticky <strong>nekonečný kontrastní poměr</strong>.</li>
+                <li>Blesková doba odezvy pod <strong>0.1 ms</strong> (žádné duchy za rychlým pohybem) a perfektní úhly pohledu.</li>
+                <li><strong>Riziko:</strong> Teoretické nebezpečí vypálení statického obrazu (Burn-in) při dlouhodobém zobrazení loga TV stanice.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: HDR STANDARDY A GANGUTY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vysoký dynamický rozsah</div>
+            <h2 class="slide-title">HDR standardy a barevné gamuty displejů</h2>
+            <p class="slide-subtitle">Jak překročit omezení 100nitového televizního standardu SDR</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový standard</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill uncompressed">HDR10 (Otevřený standard)</span>
+              <h4 style="margin: 0.5rem 0;">10-bit &bull; Statická metadata</h4>
+              <p style="font-size: 0.85rem;">Statická metadata (SMPTE ST 2086) definují maximální jas pro celý film naráz. Špičkový jas až 1 000 nitů s křivkou PQ (Perceptual Quantizer). Standard pro UHD Blu-ray a herní konzole.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">Dolby Vision &bull; HDR10+</span>
+              <h4 style="margin: 0.5rem 0;">12-bit &bull; Dynamická metadata</h4>
+              <p style="font-size: 0.85rem;">Metadata se přenášejí pro <strong>každou scénu a snímek zvlášť</strong>. Televize adaptivně mapuje tóny (Tone Mapping) přesně na limit svého panelu. Poskytuje nejvyšší vizuální kvalitu na trhu.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">Barevné prostory (Gamuty)</span>
+              <h4 style="margin: 0.5rem 0;">sRGB vs. DCI-P3 vs. Rec.2020</h4>
+              <p style="font-size: 0.85rem;"><strong>sRGB:</strong> Běžný web a kancelář.<br><strong>DCI-P3:</strong> Digitální kino a moderní displeje (o 26 % širší než sRGB).<br><strong>Rec.2020:</strong> Cílový obří barevný prostor pro 8K HDR vysílání.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PROJEKČNÍ TECHNOLOGIE (DLP VS 3LCD) -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Projekční hardware</div>
+            <h2 class="slide-title">Projekční technologie: DLP vs. 3LCD &bull; Laser</h2>
+            <p class="slide-subtitle">Elektro-optické systémy pro zobrazení obrazu na plátno</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový rozbor</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4 style="color: #60a5fa;">DLP (Digital Light Processing &ndash; Texas Instruments)</h4>
+              <ul class="styled-list">
+                <li><strong>DMD čip (Digital Micromirror Device):</strong> Matice milionů mikroskopických zrcátek, z nichž každé se naklápí tisíckrát za sekundu (zapnuto/vypnuto).</li>
+                <li><strong>Barevné kolečko (Color Wheel):</strong> U jednočipových DLP rotuje kotouč s RGB filtry &ndash; barvy se promítají sekvenčně v čase.</li>
+                <li><strong>Duhový efekt (Rainbow Effect):</strong> Citliví diváci vnímají při rychlém pohybu očí barevné záblesky kolem světlých objektů.</li>
+                <li>Vysoký nativní kontrast, ostrý pixelový rastr a prachotěsná optika.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4 style="color: #f472b6;">3LCD technologie (Epson / Sony)</h4>
+              <ul class="styled-list">
+                <li>Dichroická zrcadla rozdělí bílé světlo na červený, zelený a modrý paprsek.</li>
+                <li>Každý paprsek prochází vlastním monochromatickým LCD panelem a v optickém hranolu se sloučí do plnobarevného obrazu.</li>
+                <li><strong>100% barevný jas (CLO):</strong> Barevný světelný tok je stejně silný jako bílý světelný tok &ndash; žádný duhový efekt, přirozené syté barvy.</li>
+                <li><strong>Laserové zdroje:</strong> Nahrazují vysokotlaké rtuťové výbojky (UHP). Okamžitý start bez zahřívání a životnost 20 000+ hodin.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PROJEKČNÍ PARAMETRY V PRAXI -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Instalační inženýring</div>
+            <h2 class="slide-title">Projekční parametry: ANSI lumeny, Throw Ratio a plátna</h2>
+            <p class="slide-subtitle">Jak správně navrhnout projekci do zasedací místnosti nebo domácího kina</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Instalace</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Světelný tok &bull; ANSI Lumeny</h4>
+              <ul class="styled-list">
+                <li>Standardizované měření světelného toku na projekční ploše v 9 testovacích bodech.</li>
+                <li><strong>1 500 &ndash; 2 500 ANSI lm:</strong> Domácí kino v zatemněné místnosti.</li>
+                <li><strong>3 500 &ndash; 5 000 ANSI lm:</strong> Školní učebny a kanceláře s částečným denním světlem.</li>
+                <li><strong>7 000+ ANSI lm:</strong> Velké auly, kongresové sály a divadla.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Geometrie projekce a optika</h4>
+              <ul class="styled-list">
+                <li><strong>Projekční poměr (Throw Ratio):</strong> Poměr projekční vzdálenosti $D$ k šířce obrazu $W$: $\text{TR} = D / W$.
+                  <br>&bull; <em>Standard:</em> $\text{TR} \approx 1.5 - 2.0$ (projektor vzadu v místnosti).
+                  <br>&bull; <em>Ultra Short Throw (UST):</em> $\text{TR} < 0.3$ (projektor těsně pod plátnem).
+                </li>
+                <li><strong>Lens Shift vs. Keystone:</strong> Optický posun objektivu (Lens Shift) mění polohu obrazu bez ztráty pixelů. Digitální lichoběžníková korekce (Keystone) deformuje pixely a degraduje ostrost!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu ze zobrazovačů a projekce</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruhy 15 &amp; 16</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>IPS vs OLED</h4>
+              <p>IPS nabízí stabilní barvy s podsvícením. Samoemisní OLED zhasíná jednotlivé pixely a dosahuje nekonečného kontrastu a dokonalé černé.</p>
+            </div>
+            <div class="summary-card">
+              <h4>HDR &amp; DCI-P3</h4>
+              <p>HDR rozšiřuje jasový rozsah (Dolby Vision s dynamickými metadaty). Barevný prostor DCI-P3 pokrývá o 26 % více barev než sRGB.</p>
+            </div>
+            <div class="summary-card">
+              <h4>DLP vs 3LCD</h4>
+              <p>DLP využívá mikrozrcadla DMD a rotující kotouč (duhový efekt). 3LCD míchá tři optické cesty se 100% barevným světelným tokem bez blikání.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Porovnejte technologii panelů IPS a OLED. Vysvětlete rozdíl mezi projekční technologií DLP a 3LCD a definujte pojem ANSI lumen a Throw Ratio.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 09</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

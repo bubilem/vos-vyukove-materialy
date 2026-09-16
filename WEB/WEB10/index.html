@@ -1,0 +1,427 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEB10: Webové technologie | Výukový portál a prezentace</title>
+  <link rel="stylesheet" href="../../assets/css/dashboard-core.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    
+    <!-- Top Header / Brand -->
+    <header class="dashboard-header">
+      <div class="brand-box">
+        <div class="brand-icon">
+          <svg class="icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>WEB10 &bull; Webové technologie</h1>
+          <p>Vyšší odborná škola &bull; 3. semestr &bull; Zimní období</p>
+        </div>
+      </div>
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Přepnout světlý/tmavý motiv">
+        <svg class="icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <div class="hero-tag">Výukové materiály &bull; Webové prezentace</div>
+      <h2 class="hero-title">Principy webové komunikace, architektura &amp; standardy HTML5</h2>
+      <p class="hero-desc">
+        Kompletní série 10 interaktivních výukových prezentací (45 minut / lekce) pro modul WEB10. Od principů fungování sítě WWW přes protokol HTTP/1 až HTTP/3, bezpečnost HTTPS a TLS, správu domén a DNS až po historii standardizace a tvorbu přístupných HTML5 dokumentů.
+      </p>
+
+      <div class="metrics-row">
+        <div class="metric-item">
+          <span class="metric-num">10</span>
+          <span class="metric-label">Výukových lekcí</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">45 min</span>
+          <span class="metric-label">Na jednu hodinu</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">4 kredity</span>
+          <span class="metric-label">Zakončeno zkouškou</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">Okruhy 1–6, 20</span>
+          <span class="metric-label">Otázky k absolutoriu</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Context Banner -->
+    <section class="db-banner">
+      <div class="db-banner-content">
+        <h3>
+          <svg class="icon" style="color: #06b6d4;" viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+            <line x1="6" y1="6" x2="6.01" y2="6"></line>
+            <line x1="6" y1="18" x2="6.01" y2="18"></line>
+          </svg>
+          Referenční model síťové infrastruktury: <code>edu_network</code>
+        </h3>
+        <p>Všechny lekce sledují životní cyklus webového požadavku ve školní síti. Od zadání URL v prohlížeči, překladu přes DNS resolver, sestavení šifrovaného TLS tunelu, odeslání HTTP hlaviček až po zpracování HTML5 kódu vykreslovacím jádrem.</p>
+        <div class="db-pills">
+          <span class="db-pill">client_server</span>
+          <span class="db-pill">http_1_2_3</span>
+          <span class="db-pill">https_tls</span>
+          <span class="db-pill">dns_records</span>
+          <span class="db-pill">cdn_edge</span>
+          <span class="db-pill">w3c_whatwg</span>
+          <span class="db-pill">html5_living</span>
+          <span class="db-pill">hypertext_links</span>
+          <span class="db-pill">html_tables</span>
+          <span class="db-pill">multimedia_canvas</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Bar -->
+    <div class="search-container">
+      <svg class="search-icon-svg" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="lessonSearch" class="search-input" placeholder="Hledat v lekcích (např. 'HTTP', 'HTTPS', 'DNS', 'metody', 'XHTML', 'stavové kódy', 'okruh 2')...">
+    </div>
+
+    <!-- Lessons Catalog Grid -->
+    <main class="lessons-grid" id="lessonsGrid">
+
+      <!-- LEKCE 01 -->
+      <article class="lesson-card" data-keywords="klient server architektura statický dynamický web request response prohlížeč server apache nginx nodejs vykreslovací jádro okruh 1">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 01</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 1</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Architektura webu a klient-server model</h3>
+          <p class="lesson-desc">
+            Základní principy sítě WWW, architektura klient-server, role webového klienta a serveru, životní cyklus požadavku (Request-Response) a srovnání statického a dynamického webu.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Klient-Server</span>
+            <span class="lesson-tag">Statický vs Dynamický</span>
+            <span class="lesson-tag">User Agent</span>
+            <span class="lesson-tag">Rendering Pipeline</span>
+          </div>
+          <a href="01_architektura_webu_a_klient_server.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 02 -->
+      <article class="lesson-card" data-keywords="http protokol tcp ip síťová komunikace bezstavovost cookies sessions http1 http2 multiplexing http3 quic udp okruh 2">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 02</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 2</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Protokol HTTP a síťová komunikace na webu</h3>
+          <p class="lesson-desc">
+            Místo protokolu HTTP v modelu TCP/IP, bezstavový charakter a řešení stavu pomocí cookies, evoluce protokolu od HTTP/1.1 přes binární multiplexing v HTTP/2 až po HTTP/3 nad protokolem QUIC.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">HTTP/1.1 vs HTTP/2</span>
+            <span class="lesson-tag">HTTP/3 &amp; QUIC</span>
+            <span class="lesson-tag">Bezstavovost</span>
+            <span class="lesson-tag">Cookies &amp; Sessions</span>
+          </div>
+          <a href="02_protokol_http_a_sitova_komunikace.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 03 -->
+      <article class="lesson-card" data-keywords="http metody get post put delete patch head options hlavičky content-type cache-control stavové kódy 200 301 302 401 403 404 500 502 503 okruh 2">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 03</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 2</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">HTTP metody, hlavičky a stavové kódy</h3>
+          <p class="lesson-desc">
+            Sémantika HTTP metod a jejich idempotence (GET, POST, PUT, DELETE, PATCH), přehled klíčových hlaviček požadavků a odpovědí a kategorizace stavových kódů (1xx až 5xx).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">GET / POST / PUT</span>
+            <span class="lesson-tag">Idempotence</span>
+            <span class="lesson-tag">Stavové kódy 1xx–5xx</span>
+            <span class="lesson-tag">Hlavičky &amp; Cache</span>
+          </div>
+          <a href="03_http_metody_hlavicky_a_kody.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 04 -->
+      <article class="lesson-card" data-keywords="https tls ssl šifrování certifikáty certifikační autorita let's encrypt symetrické asymetrické handshake man-in-the-middle hsts okruh 2 okruh 6">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 04</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 2, 6</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Zabezpečení webu – HTTPS, TLS a certifikáty</h3>
+          <p class="lesson-desc">
+            Rizika nešifrované komunikace, princip asymetrického a symetrického šifrování, průběh TLS Handshake, X.509 certifikáty, řetězec důvěry certifikačních autorit (CA) a bezpečnostní hlavičky.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">HTTPS &amp; TLS</span>
+            <span class="lesson-tag">TLS Handshake</span>
+            <span class="lesson-tag">Certifikáty X.509</span>
+            <span class="lesson-tag">Let's Encrypt</span>
+          </div>
+          <a href="04_zabezpeceni_webu_https_a_tls.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 05 -->
+      <article class="lesson-card" data-keywords="domény dns překlad ip záznamy a aaaa cname mx txt ttl webhosting sdílený vps cloud správa ftp sftp ssh git deploy okruh 6">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 05</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 6</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Doménový systém (DNS), webhosting a správa webu</h3>
+          <p class="lesson-desc">
+            Hierarchie DNS systému, typy DNS záznamů (A, AAAA, CNAME, MX, TXT), registrace a delegace domén, porovnání hostingových modelů (sdílený, VPS, cloud) a metody nasazení webu.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">DNS Resoluce</span>
+            <span class="lesson-tag">DNS Záznamy</span>
+            <span class="lesson-tag">Sdílený vs VPS</span>
+            <span class="lesson-tag">Deploy &amp; Správa</span>
+          </div>
+          <a href="05_domeny_dns_a_webhosting.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 06 -->
+      <article class="lesson-card" data-keywords="cloud cdn edge computing anycast cloudflare lighthouse pagespeed validátory w3c api služby webdesign jamstack okruh 6">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 06</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 6</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Cloudové služby, CDN a moderní ekosystém</h3>
+          <p class="lesson-desc">
+            Sítě pro doručování obsahu (CDN), princip edge serverů a cachování statických assetů, ochrana WAF, cloudová úložiště a přehled služeb, API a auditních nástrojů pro webdesignéry.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">CDN &amp; Edge</span>
+            <span class="lesson-tag">Cloudové služby</span>
+            <span class="lesson-tag">Lighthouse / DevTools</span>
+            <span class="lesson-tag">JAMstack</span>
+          </div>
+          <a href="06_cloud_cdn_a_webove_sluzby.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 07 -->
+      <article class="lesson-card" data-keywords="html historie vývoj w3c whatwg tim berners-lee xhtml xml selhání html5 living standard validace standardizace okruh 3">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 07</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 3</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Vývoj a standardizace značkovacího jazyka HTML</h3>
+          <p class="lesson-desc">
+            Historie od vzniku WWW v CERNu, specifikace HTML 1.0 až 4.01, slepá větev striktního XHTML a jeho selhání, vznik skupiny WHATWG a koncepce HTML5 jako živého standardu (Living Standard).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Historie HTML</span>
+            <span class="lesson-tag">XHTML vs HTML5</span>
+            <span class="lesson-tag">W3C &amp; WHATWG</span>
+            <span class="lesson-tag">Living Standard</span>
+          </div>
+          <a href="07_vyvoj_a_standardy_html.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 08 -->
+      <article class="lesson-card" data-keywords="html značky tagy atributy párové nepárové entity doctype head body meta kódování utf8 viewport sémantika okruh 4 okruh 3">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 08</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 4, 3</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Principy značkovacího jazyka HTML a kostra dokumentu</h3>
+          <p class="lesson-desc">
+            Formální syntaxe jazyka HTML, párové vs. nepárové (void) elementy, globální a specifické atributy, práce s entitami a kompletní anatomie základní kostry HTML5 dokumentu.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Párové vs Void tagy</span>
+            <span class="lesson-tag">Atributy &amp; data-*</span>
+            <span class="lesson-tag">HTML Entity</span>
+            <span class="lesson-tag">&lt;!DOCTYPE html&gt;</span>
+          </div>
+          <a href="08_principy_html_a_kostra_dokumentu.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 09 -->
+      <article class="lesson-card" data-keywords="text nadpisy h1 odstavce p odkazy a kotvy relativní absolutní seznamy ul ol dl tabulky table thead tbody th scope colspan okruh 4">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 09</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 4</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Základní stavební kameny – text, odkazy, seznamy a tabulky</h3>
+          <p class="lesson-desc">
+            Typografická hierarchie nadpisů a odstavců, sémantické hypertextové odkazy (relativní a absolutní cesty, kotvy), uspořádané a definiční seznamy a strukturování tabulkových dat.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Text &amp; Hierarchie</span>
+            <span class="lesson-tag">Hypertextové odkazy</span>
+            <span class="lesson-tag">Seznamy ul / ol / dl</span>
+            <span class="lesson-tag">Tabulková data</span>
+          </div>
+          <a href="09_text_odkazy_seznamy_a_tabulky.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 10 -->
+      <article class="lesson-card" data-keywords="multimédia audio video ústup pluginů flash java applety silverlight canvas svg grafika syntéza modulu absolutorium okruh 5 okruh 20">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 10</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 5, 20</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Multimédia, ústup pluginů a syntéza modulu WEB10</h3>
+          <p class="lesson-desc">
+            Historie a konec proprietárních pluginů (Flash, Java applety), nativní elementy video a audio v HTML5, bitmapový canvas vs. vektorové SVG a komplexní syntéza celého modulu WEB10.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Konec Flashe</span>
+            <span class="lesson-tag">&lt;video&gt; &amp; &lt;audio&gt;</span>
+            <span class="lesson-tag">Canvas vs SVG</span>
+            <span class="lesson-tag">Závěrečná syntéza</span>
+          </div>
+          <a href="10_multimedia_pluginy_a_synteza.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+      <p>Vyšší odborná škola &bull; Výukové materiály pro předmět Webové technologie (WEB10) &bull; 100% Offline podpora</p>
+      <div class="footer-pills">
+        <span class="footer-pill">Klient-Server</span>
+        <span class="footer-pill">HTTP / HTTPS</span>
+        <span class="footer-pill">DNS &amp; Webhosting</span>
+        <span class="footer-pill">CDN &amp; Cloud</span>
+        <span class="footer-pill">W3C / WHATWG</span>
+        <span class="footer-pill">HTML5 Základy</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Live Search in Lessons
+    const searchInput = document.getElementById('lessonSearch');
+    const lessonCards = document.querySelectorAll('.lesson-card');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      lessonCards.forEach(card => {
+        const text = (card.textContent + ' ' + (card.getAttribute('data-keywords') || '')).toLowerCase();
+        if (text.includes(query)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const sunIcon = `<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    const moonIcon = `<svg class="icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+
+    const savedTheme = localStorage.getItem('web10_theme') || localStorage.getItem('web20_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeBtn.innerHTML = savedTheme === 'dark' ? sunIcon : moonIcon;
+
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('web10_theme', next);
+      themeBtn.innerHTML = next === 'dark' ? sunIcon : moonIcon;
+    });
+  </script>
+</body>
+</html>

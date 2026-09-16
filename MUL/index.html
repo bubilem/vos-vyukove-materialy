@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUL – Multimédia | Výukové moduly VOŠ</title>
+  <style>
+    :root {
+      --bg: #0c0f1d;
+      --card-bg: #14172b;
+      --card-hover: #1c203b;
+      --border: #282e4e;
+      --text: #f3f4f6;
+      --text-muted: #94a3b8;
+      --accent: #a855f7;
+      --accent-mul20: #ec4899;
+      --accent-glow: rgba(168, 85, 247, 0.2);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem 1.5rem;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(168, 85, 247, 0.12);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-radius: 9999px;
+      color: #c084fc;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+
+    .badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    h1 {
+      font-size: 2.85rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 30%, #e879f9 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 740px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .module-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .module-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 30px var(--accent-glow);
+      background: var(--card-hover);
+    }
+
+    .module-card.mul20:hover {
+      border-color: var(--accent-mul20);
+      box-shadow: 0 12px 30px rgba(236, 72, 153, 0.2);
+    }
+
+    .card-top {
+      margin-bottom: 1.5rem;
+    }
+
+    .module-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #c084fc;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.6rem;
+    }
+
+    .mul20 .module-tag {
+      color: #f472b6;
+    }
+
+    .module-card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #ffffff;
+    }
+
+    .module-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .topics-list {
+      list-style: none;
+      margin: 1.25rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .topics-list li {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .topics-list li svg {
+      width: 14px;
+      height: 14px;
+      color: #a855f7;
+      flex-shrink: 0;
+    }
+
+    .mul20 .topics-list li svg {
+      color: #ec4899;
+    }
+
+    .card-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .meta-info {
+      color: var(--text-muted);
+    }
+
+    .cta-link {
+      color: #c084fc;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .mul20 .cta-link {
+      color: #f472b6;
+    }
+
+    .cta-link svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s ease;
+    }
+
+    .module-card:hover .cta-link svg {
+      transform: translateX(4px);
+    }
+
+    .card-disabled {
+      opacity: 0.75;
+      cursor: default;
+    }
+
+    .card-disabled:hover {
+      transform: none;
+      border-color: var(--border);
+      box-shadow: none;
+      background: var(--card-bg);
+    }
+
+    .exam-section {
+      margin-top: 3.5rem;
+      background: rgba(20, 23, 43, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.75rem;
+    }
+
+    .exam-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .exam-header h3 {
+      font-size: 1.15rem;
+      color: #ffffff;
+    }
+
+    .exam-header svg {
+      width: 20px;
+      height: 20px;
+      color: #fbbf24;
+    }
+
+    .exam-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .exam-item {
+      background: rgba(12, 15, 29, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 0.5rem;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .exam-num {
+      color: #c084fc;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 3.5rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+    }
+
+    .footer a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="23 7 16 12 23 17 23 7"></polygon>
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+        </svg>
+        <span>Vyšší odborná škola &bull; Studijní materiály</span>
+      </div>
+      <h1>MUL &ndash; Multimédia</h1>
+      <p class="subtitle">
+        Komplexní studijní portál a interaktivní webové prezentace pro předmět Multimédia. Od fundamentálních principů digitalizace obrazu a zvuku přes datové formáty, kodeky a komprese až po praktickou práci se studiovou technikou, fotoaparáty, optikou a postprodukcí.
+      </p>
+    </header>
+
+    <div class="modules-grid">
+      <!-- MUL10 Card -->
+      <a href="MUL10/index.html" class="module-card">
+        <div class="card-top">
+          <div class="module-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>Modul MUL10</span>
+          </div>
+          <h2>Rozdělení multimédií</h2>
+          <p>
+            Teoretické základy multimediální komunikace, digitalizace signálů, kódování písma, rastrová a vektorová grafika, principy digitálního videa a kodeky.
+          </p>
+          <ul class="topics-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Text, typografie a znakové sady</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Vzorkování, kvantování a audio kodeky</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Rastrová a vektorová grafika (Bézier)</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Video kodeky, GOP struktura a kontejnery</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card-bottom">
+          <span class="meta-info">3. semestr &bull; 4 kredity &bull; 10 lekcí</span>
+          <span class="cta-link">
+            <span>Otevřít lekce</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- MUL20 Card -->
+      <a href="MUL20/index.html" class="module-card mul20">
+        <div class="card-top">
+          <div class="module-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="13" r="4"></circle>
+              <path d="M5 7h1a2 2 0 0 0 2-2 1 1 0 0 1 1-1h6a1 1 0 0 1 1 1 2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"></path>
+            </svg>
+            <span>Modul MUL20</span>
+          </div>
+          <h2>Práce s multimédii</h2>
+          <p>
+            Studiová a záznamová technika, expoziční trojúhelník, optika fotoaparátů, 2D grafické editory, postprodukce videa a NLE střižny, zobrazovací technika a kabeláž.
+          </p>
+          <ul class="topics-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Mikrofony, směrové charakteristiky a akustika</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Expozice, snímače (CMOS/RAW) a objektivy</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>2D grafika, nedestruktivní vrstvy a masky</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Záznam videa (180° úhel), NLE střih a HDR</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card-bottom">
+          <span class="meta-info">5. semestr &bull; 5 kreditů &bull; 10 lekcí</span>
+          <span class="cta-link">
+            <span>Otevřít lekce</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- MUL30 Preview Card -->
+      <div class="module-card card-disabled">
+        <div class="card-top">
+          <div class="module-tag" style="color: #64748b;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span>Modul MUL30</span>
+          </div>
+          <h2 style="color: #94a3b8;">Použití multimédií</h2>
+          <p>
+            Nosiče dat, archivace a dlouhodobé ukládání, prostorový zvuk a domácí kino (Dolby Atmos), 3D modelování, virtuální a rozšířená realita (VR/AR).
+          </p>
+          <ul class="topics-list" style="opacity: 0.6;">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Nosiče dat a archivace (NAS, RAID, Cloud)</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Domácí kino a prostorový zvuk</span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>3D grafika, rendering a virtuální realita</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card-bottom">
+          <span class="meta-info">6. semestr &bull; 5 kreditů</span>
+          <span style="color: #64748b; font-size: 0.85rem; font-weight: 500;">Příprava podkladů</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exam Topics Preview -->
+    <div class="exam-section">
+      <div class="exam-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+        </svg>
+        <h3>Okruhy profilové zkoušky k absolutoriu (Multimédia)</h3>
+      </div>
+      <div class="exam-grid">
+        <div class="exam-item">
+          <span class="exam-num">1.</span>
+          <span>Úvod do multimédií a komunikace (MUL10)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">2.</span>
+          <span>Text a typografie v multimédiích (MUL10)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">3.</span>
+          <span>Principy digitálního zvuku a vzorkování (MUL10)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">4.</span>
+          <span>Zvukové formáty a komprese (MUL10)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">5.</span>
+          <span>Rastrová grafika a digitální obraz (MUL10)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">6.</span>
+          <span>Vektorová grafika a křivky (MUL10)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">7.</span>
+          <span>Principy digitálního videa (MUL10)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">8.</span>
+          <span>Video kodeky a kontejnery (MUL10)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">9.</span>
+          <span>Záznam a reprodukce zvuku (MUL20)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">10.</span>
+          <span>Principy digitální fotografie (MUL20)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">11.</span>
+          <span>Objektivy a optické příslušenství (MUL20)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">12.</span>
+          <span>Programy pro práci s 2D grafikou (MUL20)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">13.</span>
+          <span>Snímání a záznam videa (MUL20)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">14.</span>
+          <span>Zpracování videa a NLE střih (MUL20)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">15.</span>
+          <span>Zobrazovací technologie (MUL20)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">16.</span>
+          <span>Projekční technika (MUL20)</span>
+        </div>
+        <div class="exam-item">
+          <span class="exam-num">17.</span>
+          <span>Kabeláž a rozhraní multimédií (MUL20)</span>
+        </div>
+        <div class="exam-item" style="opacity: 0.7;">
+          <span class="exam-num">18.-20.</span>
+          <span>Nosiče dat, domácí kino, 3D & VR (MUL30)</span>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>Vyšší odborná škola &bull; Výukové materiály &bull; 100% offline podpora &bull; <a href="../index.html">Zpět na rozcestník oborů</a></p>
+    </footer>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,420 @@
+﻿<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 10: Syndikace obsahu a výměna dat – XML, RSS a Atom | WEB20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu WEB20">
+          <span>&larr; WEB20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 10</span>
+          <span class="divider">&bull;</span>
+          <span>Syndikace obsahu &bull; XML, RSS a Atom</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 13</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul WEB20 &bull; 10. přednáška (45 min)</div>
+        <h1 class="hero-title">Syndikace obsahu &amp; Výměna dat: XML, RSS a Atom</h1>
+        <p class="hero-desc">
+          Syntaxe a pravidla jazyka XML, validita dokumentů (DTD vs. XSD), distribuce webových článků pomocí kanálů RSS 2.0 a standardu Atom a závěrečná komplexní syntéza celého modulu WEB20.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Datové standardy</span>
+            <span class="hero-meta-val">XML 1.0, RSS 2.0, Atom (RFC 4287)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Referenční model</span>
+            <span class="hero-meta-val">News feed portálu edu_portal</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 13 &amp; Celková syntéza</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: JAZYK XML -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Datový formát</div>
+            <h2 class="slide-title">Jazyk XML: Pravidla a syntaxe</h2>
+            <p class="slide-subtitle">Univerzální hierarchický metajazyk pro ukládání a přenos strukturovaných dat</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">xml &bull; ukázka strukturovaných dat</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="xml-prolog">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="xml-tag">&lt;course</span> <span class="xml-attr">id</span>=<span class="xml-val">"WEB20"</span><span class="xml-tag">&gt;</span>
+  <span class="xml-tag">&lt;title&gt;</span>Webové technologie II<span class="xml-tag">&lt;/title&gt;</span>
+  <span class="xml-tag">&lt;credits&gt;</span>5<span class="xml-tag">&lt;/credits&gt;</span>
+  <span class="xml-tag">&lt;description&gt;</span>
+    <span class="code-kw">&lt;![CDATA[</span>
+      Obsahuje &lt;strong&gt;HTML5&lt;/strong&gt; a CSS layouty bez nutnosti escapování znaků &amp; a &lt;.
+    <span class="code-kw">]]&gt;</span>
+  <span class="xml-tag">&lt;/description&gt;</span>
+<span class="xml-tag">&lt;/course&gt;</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Přísná pravidla jazyka XML</h4>
+                <ul class="styled-list">
+                  <li><strong>Jediný kořenový prvek:</strong> Každý XML dokument musí mít právě jeden kořenový tag obalující veškerý obsah.</li>
+                  <li><strong>Case-Sensitive:</strong> XML striktně rozlišuje malá a velká písmena (<code>&lt;Title&gt;</code> &ne; <code>&lt;title&gt;</code>).</li>
+                  <li><strong>Povinné uzavírání:</strong> Každý tag musí být řádně uzavřen (<code>&lt;tag&gt;...&lt;/tag&gt;</code> nebo samouzavírací <code>&lt;tag /&gt;</code>).</li>
+                  <li><strong>Sekce CDATA:</strong> Blok <code>&lt;![CDATA[ ... ]]&gt;</code> zabraňuje XML parseru interpretovat znaky <code>&lt;</code> a <code>&amp;</code> uvnitř textu jako začátky nových značek.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: VALIDITA A SCHÉMATA -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Integrita dat</div>
+            <h2 class="slide-title">Well-Formed vs. Valid XML (DTD a XSD)</h2>
+            <p class="slide-subtitle">Rozdíl mezi syntaktickou správností a ověřením vůči datovému modelu</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Well-Formed (Správně formátovaný)</h4>
+                <p>Dokument vyhovuje obecným syntaktickým pravidlům jazyka XML (má kořenový tag, správné párování a uvozovky u atributů). Pokud XML není Well-Formed, parser okamžitě zastaví zpracování fatální chybou.</p>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Valid (Validní vůči schématu)</h4>
+                <p>Dokument je Well-Formed a <strong>navíc splňuje pravidla gramatiky</strong> definované v šabloně schématu (povolené názvy tagů, pořadí prvků, povinné atributy a datové typy hodnot).</p>
+              </div>
+            </div>
+          </div>
+          <div class="table-container" style="margin-top: 1rem;">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th style="width: 25%;">Kritérium</th>
+                  <th style="width: 35%;">DTD (Document Type Definition)</th>
+                  <th style="width: 40%;">XSD (XML Schema Definition)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Syntaxe</strong></td>
+                  <td>Vlastní historická textová syntaxe (mimo XML)</td>
+                  <td><strong>Plnohodnotný XML dokument</strong> (využívá jmenné prostory)</td>
+                </tr>
+                <tr>
+                  <td><strong>Datové typy</strong></td>
+                  <td>Velmi omezené (vše je v podstatě text / CDATA)</td>
+                  <td><strong>Bohatý typový systém</strong> (int, decimal, date, regex)</td>
+                </tr>
+                <tr>
+                  <td><strong>Jmenné prostory</strong></td>
+                  <td>Nepodporuje XML Namespaces</td>
+                  <td>Plná podpora XML Namespaces</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: FORMÁT RSS 2.0 -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Webová syndikace</div>
+            <h2 class="slide-title">Formát RSS 2.0 (Really Simple Syndication)</h2>
+            <p class="slide-subtitle">Distribuce novinek z webu edu_portal přímo do RSS čteček a agregátorů</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">xml &bull; kanál rss 2.0</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="xml-prolog">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="xml-tag">&lt;rss</span> <span class="xml-attr">version</span>=<span class="xml-val">"2.0"</span><span class="xml-tag">&gt;</span>
+  <span class="xml-tag">&lt;channel&gt;</span>
+    <span class="xml-tag">&lt;title&gt;</span>EduPortal &bull; Výukové novinky<span class="xml-tag">&lt;/title&gt;</span>
+    <span class="xml-tag">&lt;link&gt;</span>https://edu-portal.cz<span class="xml-tag">&lt;/link&gt;</span>
+    <span class="xml-tag">&lt;description&gt;</span>Aktuální články o webových technologiích<span class="xml-tag">&lt;/description&gt;</span>
+    <span class="xml-tag">&lt;language&gt;</span>cs<span class="xml-tag">&lt;/language&gt;</span>
+
+    <span class="xml-tag">&lt;item&gt;</span>
+      <span class="xml-tag">&lt;title&gt;</span>Principy kaskády a specificity v CSS<span class="xml-tag">&lt;/title&gt;</span>
+      <span class="xml-tag">&lt;link&gt;</span>https://edu-portal.cz/clanky/css-kaskada<span class="xml-tag">&lt;/link&gt;</span>
+      <span class="xml-tag">&lt;guid</span> <span class="xml-attr">isPermaLink</span>=<span class="xml-val">"true"</span><span class="xml-tag">&gt;</span>https://edu-portal.cz/clanky/css-kaskada<span class="xml-tag">&lt;/guid&gt;</span>
+      <span class="xml-tag">&lt;pubDate&gt;</span>Wed, 16 Sep 2026 10:00:00 +0200<span class="xml-tag">&lt;/pubDate&gt;</span>
+      <span class="xml-tag">&lt;description&gt;</span>Detailní průvodce výpočtem specificity...<span class="xml-tag">&lt;/description&gt;</span>
+    <span class="xml-tag">&lt;/item&gt;</span>
+  <span class="xml-tag">&lt;/channel&gt;</span>
+<span class="xml-tag">&lt;/rss&gt;</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Struktura RSS 2.0</h4>
+                <ul class="styled-list">
+                  <li><strong>Kořen &lt;rss version="2.0"&gt;:</strong> Obaluje kanál <code>&lt;channel&gt;</code>.</li>
+                  <li><strong>Povinné elementy kanálu:</strong> <code>&lt;title&gt;</code>, <code>&lt;link&gt;</code> a <code>&lt;description&gt;</code>.</li>
+                  <li><strong>Položka &lt;item&gt;:</strong> Reprezentuje jeden samostatný článek nebo epizodu podcastu (může mít i multimediální přílohu <code>&lt;enclosure&gt;</code>).</li>
+                  <li><strong>guid:</strong> Globálně unikátní identifikátor článku (zabraňuje duplicitnímu načtení ve čtečce).</li>
+                  <li><strong>Formát data pubDate:</strong> Striktní formát standardu RFC 822 (např. <em>Wed, 16 Sep 2026 10:00:00 +0200</em>).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: FORMÁT ATOM (RFC 4287) -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Moderní standard</div>
+            <h2 class="slide-title">Formát Atom (IETF RFC 4287) vs. RSS</h2>
+            <p class="slide-subtitle">Proč vznikl Atom a v čem překonává nedostatky RSS 2.0</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">xml &bull; kanál atom (rfc 4287)</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="xml-prolog">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="xml-tag">&lt;feed</span> <span class="xml-attr">xmlns</span>=<span class="xml-val">"http://www.w3.org/2005/Atom"</span><span class="xml-tag">&gt;</span>
+  <span class="xml-tag">&lt;title&gt;</span>EduPortal Atom Feed<span class="xml-tag">&lt;/title&gt;</span>
+  <span class="xml-tag">&lt;id&gt;</span>urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6<span class="xml-tag">&lt;/id&gt;</span>
+  <span class="xml-tag">&lt;updated&gt;</span>2026-09-16T10:00:00Z<span class="xml-tag">&lt;/updated&gt;</span>
+  <span class="xml-tag">&lt;link</span> <span class="xml-attr">href</span>=<span class="xml-val">"https://edu-portal.cz"</span><span class="xml-tag">/&gt;</span>
+
+  <span class="xml-tag">&lt;entry&gt;</span>
+    <span class="xml-tag">&lt;title&gt;</span>Responzivní design a Mobile-First<span class="xml-tag">&lt;/title&gt;</span>
+    <span class="xml-tag">&lt;id&gt;</span>https://edu-portal.cz/clanky/rwd<span class="xml-tag">&lt;/id&gt;</span>
+    <span class="xml-tag">&lt;updated&gt;</span>2026-09-16T10:00:00Z<span class="xml-tag">&lt;/updated&gt;</span>
+    <span class="xml-tag">&lt;summary&gt;</span>Praktický přehled media queries v CSS...<span class="xml-tag">&lt;/summary&gt;</span>
+    <span class="xml-tag">&lt;link</span> <span class="xml-attr">href</span>=<span class="xml-val">"https://edu-portal.cz/clanky/rwd"</span><span class="xml-tag">/&gt;</span>
+  <span class="xml-tag">&lt;/entry&gt;</span>
+<span class="xml-tag">&lt;/feed&gt;</span></code></pre>
+              </div>
+            </div>
+            <div>
+              <div class="content-card">
+                <h4>Výhody Atomu oproti RSS 2.0</h4>
+                <ul class="styled-list">
+                  <li><strong>Standardizováno v IETF:</strong> Atom je oficiální internetový RFC standard, zatímco specifikace RSS 2.0 byla "zmrazena" a obsahuje nejednoznačnosti.</li>
+                  <li><strong>Mezinárodní formát data:</strong> Atom striktně používá standardní ISO 8601 (např. <code>2026-09-16T10:00:00Z</code>) bez zmatků se zkratkami zón.</li>
+                  <li><strong>Povinný unikátní identifikátor (id):</strong> Každý kanál i každá položka <code>&lt;entry&gt;</code> musí mít trvalý URI/URN identifikátor.</li>
+                  <li><strong>Propojení s HTML:</strong> Automatická detekce prohlížečem:<br>
+                    <code>&lt;link rel="alternate" type="application/atom+xml" href="/atom.xml"&gt;</code>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: ZÁVĚREČNÁ SYNTÉZA MODULU WEB20 -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Syntéza modulu</div>
+            <h2 class="slide-title">Syntéza modulu WEB20 &amp; Příprava k absolutoriu</h2>
+            <p class="slide-subtitle">Kompletní mapa znalostí pro úspěšné složení zkoušky z Webových technologií</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruhy absolutoria 7–13</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Sémantika &amp; DOM (Okruh 7)</h4>
+              <p>Struktura HTML5 dokumentu, sekční elementy (header, nav, main, article), objektový model stromu DOM a vznik Render Tree.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. CSS &amp; Kaskáda (Okruhy 8–9)</h4>
+              <p>Výpočet specificity (A:B:C:D), mechanismus dědičnosti, stromové kombinátory (&gt;, +, ~) a pseudotřídy :nth-child().</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Box Model &amp; Layouty (Okruhy 10–11)</h4>
+              <p>border-box standard, režimy pozicování (sticky, absolute, z-index), jednorozměrný Flexbox a 2D mřížka CSS Grid.</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Preprocesory &amp; Syndikace (Okruhy 12–13)</h4>
+              <p>Proměnné a vnořování v Sass/Less, mixiny a partials, pravidla XML a rozdíly formátů RSS 2.0 vs. Atom.</p>
+            </div>
+          </div>
+          <div class="callout callout-exam">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Závěrečné doporučení k absolutoriu</div>
+              <p>Při ústní zkoušce vždy propojte teoretický výklad s praktickou ukázkou na kódu: od sémantického značkování stránky přes pravidla kaskády až po moderní responzivní layout a datovou syndikaci. Všechny prezentace modulu WEB20 máte k dispozici 100% offline v tomto výukovém balíčku!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar">
+      <a href="index.html" class="control-btn" title="Katalog lekcí">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 6"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 10</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý/světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

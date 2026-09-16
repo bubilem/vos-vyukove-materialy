@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 04: Zvukové formáty, komprese a kodeky | MUL10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL10">
+          <span>&larr; MUL10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 04</span>
+          <span class="divider">&bull;</span>
+          <span>Zvukové formáty, komprese a kodeky</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 4: Zvukové formáty</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL10 &bull; 4. přednáška (45 min)</div>
+        <h1 class="hero-title">Zvukové formáty, komprese a kodeky</h1>
+        <p class="hero-desc">
+          Architektura ukládání digitálního zvuku: nekomprimované PCM kontejnery, bezeztrátové komprese (FLAC), psychoakustické modely lidského sluchu a ztrátové kodeky (MP3, AAC, Opus).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Nekomprimované</span>
+            <span class="hero-meta-val">WAV (RIFF) &bull; AIFF</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Ztrátové kodeky</span>
+            <span class="hero-meta-val">MP3 &bull; AAC &bull; Opus</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 4</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: NEKOMPRIMOVANÉ AUDIO (WAV & AIFF) -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Surová data</div>
+            <h2 class="slide-title">Nekomprimovaný lineární PCM zvuk</h2>
+            <p class="slide-subtitle">Přímé ukládání binárních vzorků bez jakékoliv redukce dat</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Formát WAV</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Struktura kontejneru WAV (RIFF)</h4>
+              <p>Formát WAV (Waveform Audio File Format) vyvinutý společnostmi Microsoft a IBM využívá chunkovou strukturu RIFF:</p>
+              <ul class="styled-list">
+                <li><strong>RIFF Header (12 B):</strong> Identifikace 'RIFF', celková velikost souboru a typ 'WAVE'.</li>
+                <li><strong>Format Chunk ('fmt '):</strong> Popisuje vzorkovací frekvenci (např. 44100), bitovou hloubku (16) a počet kanálů (2).</li>
+                <li><strong>Data Chunk ('data'):</strong> Samotná posloupnost prokládaných binárních vzorků levého a pravého kanálu (L-R-L-R...).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Výhody a limity PCM</h4>
+              <ul class="styled-list">
+                <li><strong>Nulová latence:</strong> CPU nemusí před přehráním nebo střihem dekódovat žádný kompresní algoritmus.</li>
+                <li><strong>Absolutní integrita:</strong> Žádné zkreslení ani ztráta tónových detailů.</li>
+                <li><strong>Vysoké nároky na úložiště:</strong> ~10 MB na minutu sterea omezuje použití pro streaming.</li>
+                <li><strong>AIFF (Apple):</strong> Ekvivalent k WAV postavený na struktuře IFF (historicky Big-Endian).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: BEZEZTRÁTOVÁ KOMPRESE (FLAC) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Lossless kódování</div>
+            <h2 class="slide-title">Bezeztrátová komprese &bull; Standard FLAC</h2>
+            <p class="slide-subtitle">Jak zmenšit soubor na polovinu bez ztráty jediného bitu přesnosti</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový kodek</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Dvoufázový kompresní princip FLAC</h4>
+              <ul class="styled-list">
+                <li><strong>1. Lineární predikce (LPC):</strong> Matematický filtr odhaduje hodnotu následujícího vzorku na základě několika předchozích. Zvuk má vysokou časovou korelaci.</li>
+                <li><strong>2. Výpočet reziduí (Zbytků):</strong> Uloží se pouze odchylka (chyba) mezi skutečným vzorkem a predikovanou hodnotou.</li>
+                <li><strong>3. Entropické kódování:</strong> Malé hodnoty reziduí jsou zakódovány Golomb-Riceovým nebo Huffmanovým algoritmem.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Praktické parametry formátů</h4>
+              <ul class="styled-list">
+                <li><strong>Kompresní poměr:</strong> Zpravidla 50 % až 60 % původní velikosti WAV (úspora téměř poloviny místa).</li>
+                <li><strong>FLAC (Free Lossless Audio Codec):</strong> Otevřený formát bez licenčních poplatků, široká podpora napříč hardware.</li>
+                <li><strong>ALAC (Apple Lossless):</strong> Alternativa od společnosti Apple integrovaná v macOS/iOS ekosystému.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PSYCHOAKUSTICKÝ MODEL -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vnímání zvuku</div>
+            <h2 class="slide-title">Psychoakustika &bull; Odstranění redundance</h2>
+            <p class="slide-subtitle">Základní pilíř všech moderních ztrátových audio kodeků</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový princip</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. Absolutní práh slyšitelnosti (ATH)</h4>
+              <p>Lidské ucho není stejně citlivé na všechny frekvence. Maximální citlivost leží mezi <strong>2 kHz a 4 kHz</strong> (oblast lidské řeči). Na frekvencích pod 50 Hz a nad 16 kHz je citlivost velmi nízká. Zvuky pod tímto prahem kodek zahodí.</p>
+            </div>
+            <div class="content-card">
+              <h4>2. Frekvenční maskování (Simultánní)</h4>
+              <p>Silný tón na určité frekvenci (např. 1 000 Hz) vytvoří kolem sebe "maskovací kužel". Tišší zvuky na blízkých frekvencích (např. 1 050 Hz) se stanou pro lidský mozek naprosto neslyšitelné a kodek je nemusí ukládat.</p>
+            </div>
+          </div>
+          <div class="callout callout-tip" style="margin-top: 0.6rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Časové maskování (Temporal Masking)</div>
+              <p>Hlasitý úder bicího nástroje způsobí, že sluchový aparát na zlomky sekund nevnímá tiché zvuky, které zazněly těsně před ním (pre-masking, cca 5–20 ms) a bezprostředně po něm (post-masking, cca 50–100 ms).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: ZTRÁTOVÉ KODEKY A BITRATE -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Ztrátová komprese</div>
+            <h2 class="slide-title">MP3, AAC, Opus a řízení datového toku</h2>
+            <p class="slide-subtitle">Srovnání generací kodeků a režimů CBR vs. VBR</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Srovnání kodeků</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossy">MP3 (MPEG-1 Layer 3)</span>
+              <h4 style="margin: 0.5rem 0;">Standard z roku 1993</h4>
+              <p style="font-size: 0.85rem;">Transformace MDCT (32 sub-pásem). Dnes již technologicky překonaný, ale s 100% kompatibilitou se všemi zařízeními světa. Pro transparentní kvalitu vyžaduje 256–320 kbps.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">AAC (Advanced Audio Coding)</span>
+              <h4 style="margin: 0.5rem 0;">Nástupce v MPEG-4</h4>
+              <p style="font-size: 0.85rem;">Až 96 sub-pásem, lepší psychoakustický model a vyšší kompresní účinnost. Standard pro YouTube, Apple Music, Bluetooth (LDAC/AAC). Při 128 kbps překonává MP3 při 192 kbps.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">Opus (IETF RFC 6716)</span>
+              <h4 style="margin: 0.5rem 0;">Moderní král reálného času</h4>
+              <p style="font-size: 0.85rem;">Kombinuje kodeky SILK (lidská řeč) a CELT (hudba s ultra-nízkou latencí 5–20 ms). Standard pro WebRTC, Discord, Spotify a moderní streaming.</p>
+            </div>
+          </div>
+          <div class="grid-2" style="margin-top: 0.6rem;">
+            <div class="content-card">
+              <h4>CBR (Constant Bitrate)</h4>
+              <p style="font-size: 0.85rem;">Konstantní tok (např. 192 kbps fixně). Jednoduché streamování po síti s garantovanou šířkou pásma, ale plýtvá bity u ticha a nestíhá složité pasáže.</p>
+            </div>
+            <div class="content-card">
+              <h4>VBR (Variable Bitrate)</h4>
+              <p style="font-size: 0.85rem;">Dynamicky alokuje bity podle náročnosti pasáže (např. ticho 64 kbps, orchestrální tutti 320 kbps). Nabízí nejvyšší poměr kvality k celkové velikosti.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu ze zvukových kodeků</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 4</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Lineární PCM &amp; WAV</h4>
+              <p>Nekomprimovaná surová data bez ztrát a latence. Standard pro studiový záznam a CD audio (1 411 kbps).</p>
+            </div>
+            <div class="summary-card">
+              <h4>FLAC</h4>
+              <p>Bezeztrátová prediktivní komprese zmenšující velikost na cca 50–60 % při zachování 100% matematické shody s originálem.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Psychoakustika</h4>
+              <p>Využívá nedokonalostí lidského sluchu (práh slyšitelnosti, frekvenční a časové maskování) k bezpečnému zahození neslyšitelných dat.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Porovnejte nekomprimovaný WAV, bezeztrátový FLAC a ztrátový MP3/AAC. Vysvětlete pojem psychoakustické maskování a rozdíl mezi CBR a VBR.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 04</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

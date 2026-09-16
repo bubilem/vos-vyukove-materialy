@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 06: Multitasking, vlákna a plánování CPU | OSY20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY20">
+          <span>&larr; OSY20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 06</span>
+          <span class="divider">&bull;</span>
+          <span>Multitasking, vlákna a plánování CPU</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh: Plánování &amp; Vlákna</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul OSY20 &bull; 6. přednáška (45 min)</div>
+        <h1 class="hero-title">Multitasking, Vlákna &amp; Plánování CPU</h1>
+        <p class="hero-desc">
+          Souběžný a paralelní běh kódu: kooperativní vs. preemptivní multitasking, proces vs. odlehčené vlákno (Thread), moderní plánovače procesoru (Linux CFS, Windows Dynamic Priority), synchronizační primitiva (mutex, semafor, spinlock) a prevence uváznutí (Deadlock).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Režim multitaskingu</span>
+            <span class="hero-meta-val">Preemptivní s časovým kvantem</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Linux Scheduler</span>
+            <span class="hero-meta-val">Completely Fair Scheduler (CFS)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Synchronizace</span>
+            <span class="hero-meta-val">Mutex, Semafor, Deadlock</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: MULTITASKING: KOOPERATIVNÍ VS PREEMPTIVNÍ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní paradigma</div>
+            <h2 class="slide-title">Kooperativní vs. Preemptivní multitasking</h2>
+            <p class="slide-subtitle">Proč operační systém nesmí spoléhat na dobrou vůli běžící aplikace</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový rozdíl</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Kooperativní multitasking (Windows 3.1, Mac OS 9)</h4>
+              <p>Proces drží procesor tak dlouho, dokud se jej <strong>sám dobrovolně nevzdá</strong> voláním speciální funkce (např. <code>Yield()</code>):</p>
+              <ul class="styled-list">
+                <li><strong class="term-err">Fatální slabina:</strong> Pokud se program dostane do nekonečného cyklu (<code>while(1);</code>) nebo zamrzne, <strong>zamrzne celý počítač</strong> a nepomůže nic kromě tvrdého restartu.</li>
+                <li>Nelze garantovat odezvu žádnému jinému procesu.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Preemptivní multitasking (Linux, Windows NT, macOS)</h4>
+              <p>Operační systém má <strong>absolutní autoritu násilně odebrat procesor</strong> běžícímu vláknu:</p>
+              <ul class="styled-list">
+                <li>Využívá <strong>hardwarový časovač (Timer interrupt)</strong>: každých 1–10 ms přeruší procesor a spustí plánovač jádra.</li>
+                <li>Plánovač vyhodnotí spotřebovaný čas (časové kvantum / Time Slice), uloží stav vlákna a předá CPU jinému připravenému vláknu.</li>
+                <li>Zamrznutí jedné aplikace nemá žádný vliv na plynulý běh zbytku systému.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: PROCES VS. VLÁKNO -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Konstrukční jednotky</div>
+            <h2 class="slide-title">Rozdíl mezi procesem a vláknem (Thread)</h2>
+            <p class="slide-subtitle">Proč jsou vlákna nazývána odlehčenými procesy (Lightweight Processes)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Proces (Těžká váha)</h4>
+              <ul class="styled-list">
+                <li>Vlastník <strong>izolovaného virtuálního adresního prostoru</strong> (vlastní stránkovací tabulky v registru CR3).</li>
+                <li>Vlastní deskriptory souborů, síťové sokety, tokeny oprávnění a kvóty.</li>
+                <li>Přepnutí kontextu mezi dvěma procesy je nákladné: musí se přepsat CR3 a vyprázdnit mezipaměť TLB.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Vlákno (Odlehčená jednotka plánování)</h4>
+              <ul class="styled-list">
+                <li>Běží <strong>uvnitř procesu a sdílí jeho paměť</strong> (kód, globální data <code>.data</code>, haldu Heap i otevřené soubory).</li>
+                <li>Každé vlákno má <strong>vlastní zásobník (Stack)</strong> pro lokální proměnné a vlastní stav registrů CPU.</li>
+                <li>Přepnutí kontextu mezi vlákny téhož procesu je bleskurychlé: nemění se virtuální paměť ani TLB.</li>
+                <li>Riziko: Chyba v jednom vlákně (přepsání paměti) může zničit data ostatních vláken v procesu.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PLÁNOVÁNÍ CPU: LINUX CFS -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Algoritmy plánovače</div>
+            <h2 class="slide-title">Linux CFS (Completely Fair Scheduler)</h2>
+            <p class="slide-subtitle">Jak moderní Linux spravedlivě rozděluje výpočetní čas</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">CFS &bull; vruntime</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Koncept virtuálního běhového času (vruntime)</h4>
+              <p>CFS nesleduje fixní časová kvanta. Místo toho pro každou úlohu počítá proměnnou <code>vruntime</code>:</p>
+              <ul class="styled-list">
+                <li>Čím déle úloha běžela na CPU, tím vyšší má hodnotu <code>vruntime</code>.</li>
+                <li>Úlohy s prioritou (hodnota <em>nice</em> od -20 do +19): proces s vyšší prioritou přičítá <code>vruntime</code> pomaleji, takže získá větší podíl procesoru.</li>
+                <li>Plánovač vždy vybere k běhu úlohu s <strong>nejmenším vruntime</strong> (ta, která byla dosud nejvíce zanedbávána).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Implementace: Červeno-černý strom (Red-Black Tree)</h4>
+              <ul class="styled-list">
+                <li>Připravené úlohy jsou uloženy v samovyvažujícím se binárním stromu uspořádaném podle <code>vruntime</code>.</li>
+                <li>Nalezení další úlohy k běhu: nejlevější uzel stromu ($O(1)$ díky cachování ukazatele).</li>
+                <li>Vložení a odebrání úlohy má garantovanou logaritmickou složitost: $O(\log N)$.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: SYNCHRONIZACE A DEADLOCK -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Souběh a rizika</div>
+            <h2 class="slide-title">Kritické sekce, Mutex a uváznutí (Deadlock)</h2>
+            <p class="slide-subtitle">Čtyři Coffmanovy podmínky vzniku uváznutí</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Synchronizační primitiva</h4>
+              <ul class="styled-list">
+                <li><strong>Race Condition (Souběh):</strong> Dvě vlákna současně modifikují sdílenou proměnnou a výsledek závisí na náhodném pořadí instrukcí.</li>
+                <li><strong>Mutex (Mutual Exclusion):</strong> Zámek, který smí v daný okamžik vlastnit pouze jedno vlákno. Ostatní vlákna jsou jádrem uspána (Blocked).</li>
+                <li><strong>Spinlock:</strong> Zámek s aktivním čekáním v cyklu. Používá se výhradně v jádře pro velmi krátké operace, kde by režie uspání byla větší.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>4 Coffmanovy podmínky pro vznik Deadlocku</h4>
+              <p>K uváznutí dojde právě tehdy, když současně platí všechny 4 podmínky:</p>
+              <ol class="styled-list">
+                <li><strong>Vzájemné vyloučení (Mutual Exclusion):</strong> Prostředek může používat jen jeden proces.</li>
+                <li><strong>Držení a čekání (Hold and Wait):</strong> Proces drží jeden zámek a žádá o další.</li>
+                <li><strong>Neodstranitelnost (No Preemption):</strong> Držený zámek nelze procesu násilně odebrat.</li>
+                <li><strong>Kruhové čekání (Circular Wait):</strong> Proces A čeká na zámek držený B, a B čeká na zámek držený A.</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
+            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
+            <p class="slide-subtitle">Zkušební otázky z multitaskingu a plánování procesoru</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>1. Preemptivní přepnutí</h4>
+              <p>Pochopení role hardwarového časovače (Timer) při násilném odebrání procesoru zacyklené aplikaci.</p>
+            </div>
+            <div class="summary-card">
+              <h4>2. Proces vs. Vlákno</h4>
+              <p>Přesná definice toho, co vlákna v procesu sdílejí (virtuální paměť, kód, haldu, soubory) a co mají vlastní (registry CPU a zásobník Stack).</p>
+            </div>
+            <div class="summary-card">
+              <h4>3. Čtyři podmínky Deadlocku</h4>
+              <p>Znalost Coffmanových podmínek a způsobů, jak uváznutí předcházet (např. striktním hierarchickým řazením zamykání mutexů).</p>
+            </div>
+            <div class="summary-card">
+              <h4>4. Otázka u zkoušky</h4>
+              <p><em>„Vysvětlete, jak funguje plánovač Linux CFS a co vyjadřuje hodnota vruntime pro jednotlivé běžící úlohy.“</em></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <div class="toc-drawer" id="tocDrawer">
+      <aside class="toc-sidebar">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 06</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg> Klávesové zkratky</h3>
+          <button class="toc-close" id="helpCloseBtn"><svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

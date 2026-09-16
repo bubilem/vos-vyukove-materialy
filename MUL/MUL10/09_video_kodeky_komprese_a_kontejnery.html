@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 09: Video kodeky, komprese a kontejnery | MUL10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/web.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu MUL10">
+          <span>&larr; MUL10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 09</span>
+          <span class="divider">&bull;</span>
+          <span>Video kodeky, komprese a kontejnery</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Zkouškový okruh 8: Video kodeky</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul MUL10 &bull; 9. přednáška (45 min)</div>
+        <h1 class="hero-title">Video kodeky, komprese a kontejnery</h1>
+        <p class="hero-desc">
+          Zásadní technologie moderního streamingu: prostorová a časová komprese, kompenzace pohybu, struktura GOP (I, P, B snímky). Srovnání standardů H.264/AVC, H.265/HEVC a AV1 a role multimediálních kontejnerů (MP4, MKV).
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">GOP struktura</span>
+            <span class="hero-meta-val">I-Frame &bull; P-Frame &bull; B-Frame</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Standardy kodeků</span>
+            <span class="hero-meta-val">H.264 &bull; HEVC &bull; AV1</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Absolutorium</span>
+            <span class="hero-meta-val">Profilový okruh č. 8</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: INTRA VS INTER FRAME KOMPRESE -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Kompresní principy</div>
+            <h2 class="slide-title">Prostorová vs. Časová redundance</h2>
+            <p class="slide-subtitle">Proč pouhá komprese jednotlivých obrázků pro video nestačí</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová teorie</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. Prostorová komprese (Intra-frame)</h4>
+              <ul class="styled-list">
+                <li>Redukce redundantních dat <strong>uvnitř jediného statického snímku</strong>.</li>
+                <li>Využívá podobné principy jako JPEG: transformaci DCT nebo diskrétní vlnkovou transformaci (DWT) a kvantování.</li>
+                <li>Každý snímek je zcela nezávislý na okolních snímcích.</li>
+                <li>Příklady čistě intra-frame kodeků: <em>Apple ProRes</em>, <em>Avid DNxHD</em>, <em>Motion JPEG</em> (střihové a master formáty).</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>2. Časová komprese (Inter-frame)</h4>
+              <ul class="styled-list">
+                <li>Redukce podobností <strong>mezi po sobě jdoucími snímky v čase</strong>.</li>
+                <li>V reálném videu se 24&times; za sekundu většina pozadí vůbec nezmění &ndash; pohybuje se pouze postava nebo auto.</li>
+                <li><strong>Odhad a kompenzace pohybu (Motion Estimation):</strong> Kodek analyzuje vektor posunu bloku pixelů a uloží pouze pohybový vektor a malý rozdíl (reziduum).</li>
+                <li>Zajišťuje obrovský kompresní poměr (až 200:1).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: STRUKTURA GOP (I, P, B SNÍMKY) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Časové kódování</div>
+            <h2 class="slide-title">Struktura GOP (Group of Pictures) &bull; I, P a B snímky</h2>
+            <p class="slide-subtitle">Základní stavební jednotka časově komprimovaného video streamu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový koncept</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossless">I-Frame (Intra Coded)</span>
+              <h4 style="margin: 0.5rem 0;">Klíčový snímek (Keyframe)</h4>
+              <p style="font-size: 0.85rem;">Kompletní samostatný obraz (obdoba JPEG). Nezávisí na žádném jiném snímku. Slouží jako záchytný bod pro posun ve videu (Seek) a obnovu při ztrátě paketů. Má největší datovou velikost.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">P-Frame (Predicted)</span>
+              <h4 style="margin: 0.5rem 0;">Dopředná predikce</h4>
+              <p style="font-size: 0.85rem;">Ukládá pouze změny a pohybové vektory vzhledem k předchozímu I-snímku nebo P-snímku. Je podstatně menší než I-frame (cca 30–50 % velikosti).</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossy">B-Frame (Bi-directional)</span>
+              <h4 style="margin: 0.5rem 0;">Obousměrná predikce</h4>
+              <p style="font-size: 0.85rem;">Predikuje se jak z předchozího, tak z následujícího klíčového snímku! Má nejvyšší kompresní účinnost a nejmenší velikost, ale vyžaduje ukládání do vyrovnávací paměti a přerovnání snímků (PTS vs. DTS).</p>
+            </div>
+          </div>
+          <div class="code-box" style="margin-top: 0.6rem;">
+            <div class="code-box-header">
+              <span>gop &bull; typická sekvence (délka n = 12, vzdálenost m = 3)</span>
+              <button class="btn-copy" title="Kopírovat">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Kopírovat</span>
+              </button>
+            </div>
+            <pre><code>Zobrazovací pořadí:  I₀   B₁   B₂   P₃   B₄   B₅   P₆   B₇   B₈   P₉   B₁₀  B₁₁  I₁₂
+Přenosové pořadí:    I₀   P₃   B₁   B₂   P₆   B₄   B₅   P₉   B₇   B₈   I₁₂  B₁₀  B₁₁</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: EVOLUCE VIDEO KODEKŮ -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Standardy kodeků</div>
+            <h2 class="slide-title">Evoluce kodeků: H.264 &bull; H.265/HEVC &bull; AV1</h2>
+            <p class="slide-subtitle">Generační skoky ve výpočetní náročnosti a úspoře šířky pásma</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Standardy</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="media-compare-grid">
+            <div class="content-card">
+              <span class="format-pill lossy">H.264 / AVC (2003)</span>
+              <h4 style="margin: 0.5rem 0;">Univerzální dříč</h4>
+              <p style="font-size: 0.85rem;">Pevné makrobloky $16 \times 16$ pixelů. 100% hardwarová akcelerace na všem od levných telefonů po čipové karty. Vyžaduje cca 8–10 Mbps pro kvalitní Full HD 1080p.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill lossless">H.265 / HEVC (2013)</span>
+              <h4 style="margin: 0.5rem 0;">Standard pro 4K UHD</h4>
+              <p style="font-size: 0.85rem;">Variabilní kódovací bloky CTU ($8 \times 8$ až $64 \times 64$). O <strong>50 % nižší datový tok než H.264</strong> při stejné kvalitě obrazu. Umožnil 4K HDR streaming a formát UHD Blu-ray.</p>
+            </div>
+            <div class="content-card">
+              <span class="format-pill uncompressed">AV1 (AOMedia, 2018)</span>
+              <h4 style="margin: 0.5rem 0;">Otevřený standard budoucnosti</h4>
+              <p style="font-size: 0.85rem;">Konsorcium Google, Apple, Netflix, Meta, Microsoft. O 30 % efektivnější než HEVC, zcela bez licenčních poplatků (Royalty-Free). Dnes nasazeno na YouTube a Netflixu.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: KODEK VS KONTEJNER -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektura souborů</div>
+            <h2 class="slide-title">Rozdíl mezi kodekem a kontejnerem</h2>
+            <p class="slide-subtitle">Proč přípona souboru .mp4 nebo .mkv neříká nic o použité kompresi</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový chyták</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Kontejner (Obálka / Krabice)</h4>
+              <ul class="styled-list">
+                <li>Formát souboru, který slouží pro <strong>multiplexing</strong> různých datových proudů do jednoho celku.</li>
+                <li>Obsahuje video stopu, jednu či více audio stop (např. dabing CZ, EN), titulky, kapitoly a metadata.</li>
+                <li><strong>MP4 (ISO Base Media):</strong> Nejvyšší kompatibilita s telefony, webem a TV. Omezenější podpora exotických kodeků.</li>
+                <li><strong>MKV (Matroska):</strong> Extrémně flexibilní otevřený kontejner. Pojme libovolné kodeky, desítky audio stop a stylizované titulky ASS/SSA.</li>
+                <li><strong>MOV (QuickTime):</strong> Profesionální kontejner Apple optimalizovaný pro střihové střižny.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>Kodek (Kodér / Dekodér)</h4>
+              <ul class="styled-list">
+                <li>Matematický algoritmus, který provádí samotnou kompresi a dekompresi surových dat.</li>
+                <li>Video kodeky: <em>H.264, HEVC, AV1, VP9, ProRes</em>.</li>
+                <li>Audio kodeky: <em>AAC, MP3, AC3, Opus, FLAC</em>.</li>
+                <li><strong>Příklad v praxi:</strong> Soubor <code>film.mp4</code> může obsahovat uvnitř video komprimované kodekem <em>H.265</em> a zvuk komprimovaný kodekem <em>AAC</em>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z video kodeků</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria 8</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="summary-grid">
+            <div class="summary-card">
+              <h4>Intra vs Inter frame</h4>
+              <p>Intra-frame komprimuje uvnitř jednoho snímku (ProRes). Inter-frame eliminuje časové podobnosti mezi snímky pomocí vektorů pohybu.</p>
+            </div>
+            <div class="summary-card">
+              <h4>GOP snímky</h4>
+              <p>I-snímek je plný nezávislý klíčový obraz, P-snímek predikuje dopředu a B-snímek predikuje obousměrně z obou směrů v čase.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Kodek vs Kontejner</h4>
+              <p>Kodek (H.264/AV1) komprimuje bajty, zatímco kontejner (MP4/MKV) balí a synchronizuje video, zvuk, titulky a metadata dohromady.</p>
+            </div>
+            <div class="summary-card">
+              <h4>Zkušební otázka</h4>
+              <p>Vysvětlete strukturu GOP a popište rozdíl mezi I, P a B snímkem. Objasněte zásadní rozdíl mezi pojmy video kodek a video kontejner.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <div class="controls-left">
+        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
+        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+      </div>
+      <div class="controls-center">
+        <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      </div>
+      <div class="controls-right">
+        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
+        <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
+      </div>
+    </nav>
+
+    <!-- Table of Contents Modal / Drawer -->
+    <div class="toc-overlay" id="tocOverlay">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce 09</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row"><span>Další snímek</span><div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div></div>
+          <div class="shortcut-row"><span>Předchozí snímek</span><div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div></div>
+          <div class="shortcut-row"><span>První / Poslední snímek</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
+          <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
+          <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
+          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

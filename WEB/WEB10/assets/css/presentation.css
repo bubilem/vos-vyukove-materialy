@@ -1,0 +1,19 @@
+/* ==========================================================================
+   WEB10 - Lokální modulové rozšíření (Základy webu a HTML5)
+   Přebírá jádro z ../../assets/css/presentation-core.css
+   ========================================================================== */
+
+@import "../../../assets/css/presentation-core.css";
+@import "../../../assets/css/syntax/web.css";
+
+:root {
+  --accent: #38bdf8;
+  --accent-glow: rgba(56, 189, 248, 0.25);
+}
+
+/* Modulová specifika WEB10 */
+.network-packet-box {
+  border-left: 3px solid var(--accent);
+  padding-left: 0.75rem;
+  margin: 0.5rem 0;
+}
