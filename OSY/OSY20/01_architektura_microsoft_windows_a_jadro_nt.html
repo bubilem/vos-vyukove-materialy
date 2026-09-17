@@ -37,9 +37,6 @@
       </div>
       <div class="header-right">
         <span class="tag tag-exam">Zkouškový okruh: Windows NT</span>
-        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
-          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-        </button>
       </div>
     </header>
 
@@ -65,6 +62,10 @@
             <span class="hero-meta-label">Konfigurační databáze</span>
             <span class="hero-meta-val">Windows Registry Hives</span>
           </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Dědictví VMS</span>
+            <span class="hero-meta-val">Dave Cutler (DEC &rarr; Microsoft)</span>
+          </div>
         </div>
       </section>
 
@@ -83,22 +84,46 @@
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>Konec éry MS-DOS a Windows 9x</h4>
-              <p>Původní Windows 1.0 až 95/98/Me byly pouhou grafickou nadstavbou nad 16bitovým systémem MS-DOS:</p>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                  <span class="card-title-text">Konec éry MS-DOS a Windows 9x</span>
+                </div>
+                <span class="sys-badge sys-badge-hw">16-bit / Zastaralé</span>
+              </div>
+              <p class="card-subtext">Původní Windows 1.0 až 95/98/Me byly pouhou grafickou nadstavbou nad 16bitovým systémem MS-DOS:</p>
               <ul class="styled-list">
-                <li>Žádná paměťová ochrana – pád jedné aplikace shodil celý počítač.</li>
-                <li>Kooperativní multitasking a absence skutečného oddělení práv uživatelů.</li>
-                <li>Neschopnost obsluhovat vícejádrové procesory (SMP) a enterprise servery.</li>
+                <li><strong>Žádná paměťová ochrana:</strong> Pád jediné aplikace mohl přepsat data jádra a způsobit okamžité zhroucení celého PC (modrá smrt / BSOD).</li>
+                <li><strong>Kooperativní multitasking:</strong> Pokud program dobrovolně nepředal řízení procesoru, celý operační systém zamrzl.</li>
+                <li><strong>Absence bezpečnosti:</strong> Neexistovalo skutečné oddělení uživatelských účtů ani přístupová práva k souborům na disku FAT16/FAT32.</li>
+                <li><strong>Omezený hardware:</strong> Neschopnost efektivně adresovat více než stovky megabajtů RAM a nulová podpora pro vícejádrové CPU (SMP).</li>
               </ul>
+              <div class="info-banner warning" style="margin-top: auto;">
+                <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <div><strong>Zásadní rozdíl:</strong> Windows NT 3.1 (1993) byly napsány zcela od nuly. Neobsahovaly ani řádek kódu z MS-DOSu.</div>
+              </div>
             </div>
+
             <div class="content-card">
-              <h4>Projekt Windows New Technology (NT)</h4>
-              <p>V roce 1988 najal Microsoft architekta Davea Cutlera (autora VMS systému z DEC):</p>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                  <span class="card-title-text">Projekt Windows New Technology (NT)</span>
+                </div>
+                <span class="sys-badge sys-badge-kernel">Dave Cutler (DEC)</span>
+              </div>
+              <p class="card-subtext">V roce 1988 najal Microsoft architekta Davea Cutlera (autora systému VMS z DEC) a stanovil nekompromisní cíle:</p>
               <ul class="styled-list">
-                <li><strong>Cíle návrhu:</strong> Přenositelnost (x86, MIPS, Alpha, dnes ARM64), stabilita, symetrický multiprocesing (SMP), podpora POSIXu a bezpečnost splňující standard C2 (oranžová kniha DoD).</li>
-                <li>Zavedení hybridního jádra s přísným oddělením <strong>User Mode (Ring 3)</strong> a <strong>Kernel Mode (Ring 0)</strong>.</li>
-                <li>Dnešní Windows 10 a 11 jsou přímými potomky tohoto jádra (NT verze 10.0).</li>
+                <li><strong>Přenositelnost (Portability):</strong> Jádro psáno v C, nezávislé na architektuře (x86, MIPS, Alpha, dnes x86-64 a ARM64).</li>
+                <li><strong>Preemptivní multitasking:</strong> Plánovač jádra sám přiděluje časová kvanta procesoru. Žádná aplikace nemůže uzurpovat systém.</li>
+                <li><strong>SMP (Symmetric Multiprocessing):</strong> Podpora pro více fyzických CPU a jader na jedné základní desce.</li>
+                <li><strong>C2 Bezpečnost (DoD Orange Book):</strong> Bezpečnostní audit, striktní ACL práva, šifrované ukládání hesel a ochrana objektů.</li>
+                <li><strong>Dědictví dodnes:</strong> Dnešní Windows 10, 11 i Windows Server 2022/2025 jsou přímými potomky tohoto jádra (NT verze 10.0).</li>
               </ul>
+              <div class="info-banner tip" style="margin-top: auto;">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <div><strong>Klíčový koncept:</strong> Důsledné hardwarové oddělení <strong>User Mode (Ring 3)</strong> od <strong>Kernel Mode (Ring 0)</strong>.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -118,43 +143,87 @@
         </div>
         <div class="slide-body">
           <div class="grid-2">
-            <div>
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+                  <span class="card-title-text">Vrstvený stack (User vs. Kernel Mode)</span>
+                </div>
+                <span class="sys-badge sys-badge-user">Privilegované režimy</span>
+              </div>
+              <div class="layer-stack-hint">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span>Klikněte na libovolnou vrstvu pro detailní nápovědu a příklady software</span>
+              </div>
               <div class="layer-stack">
-                <div class="layer-item">
-                  <span>Aplikace &amp; Služby (Word, Chrome, SCM, Explorer)</span>
-                  <span class="sys-badge sys-badge-user">Ring 3</span>
+                <div class="layer-item layer-interactive" data-layer-id="user-apps" tabindex="0" role="button" aria-label="Zobrazit detail: Aplikace a služby">
+                  <span>Aplikace &amp; Služby (Prohlížeč, Office, Explorer)</span>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="sys-badge sys-badge-user">User (Ring 3)</span>
+                    <span class="layer-info-hint"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> Detail</span>
+                  </div>
                 </div>
-                <div class="layer-item">
+                <div class="layer-item layer-interactive" data-layer-id="subsystems" tabindex="0" role="button" aria-label="Zobrazit detail: Subsystémy prostředí">
                   <span>Subsystémy prostředí (Win32 API: kernel32, user32)</span>
-                  <span class="sys-badge sys-badge-user">csrss.exe</span>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="sys-badge sys-badge-user">csrss.exe</span>
+                    <span class="layer-info-hint"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> Detail</span>
+                  </div>
                 </div>
-                <div class="layer-item kernel-layer">
-                  <span>NT Executive (Memory, Process, Security, I/O, Object Mgr)</span>
-                  <span class="sys-badge sys-badge-kernel">Ring 0</span>
+                <div class="layer-item layer-interactive" data-layer-id="syscall" tabindex="0" role="button" aria-label="Zobrazit detail: SYSCALL Trap Handler" style="border-style: dashed; border-color: var(--accent); background: rgba(6, 182, 212, 0.08); justify-content: space-between; font-size: 0.82rem; color: var(--accent);">
+                  <span>&darr; Přechod mezi režimy: SYSCALL / SYSENTER (Trap Handler) &uarr;</span>
+                  <span class="layer-info-hint" style="color: var(--accent);"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> Detail</span>
                 </div>
-                <div class="layer-item kernel-layer" style="background: rgba(6, 182, 212, 0.2); border-color: #06b6d4;">
-                  <span>NT Kernel (Plánování vláken, synchronizace, obsluha přerušení)</span>
-                  <span class="sys-badge sys-badge-kernel">ntoskrnl</span>
+                <div class="layer-item kernel-layer layer-interactive" data-layer-id="executive" tabindex="0" role="button" aria-label="Zobrazit detail: NT Executive">
+                  <span>NT Executive (Memory, Process, Security, I/O, Objects)</span>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="sys-badge sys-badge-kernel">Ring 0</span>
+                    <span class="layer-info-hint"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> Detail</span>
+                  </div>
                 </div>
-                <div class="layer-item" style="border-color: #10b981; background: rgba(16, 185, 129, 0.15);">
+                <div class="layer-item kernel-layer layer-interactive" data-layer-id="kernel" tabindex="0" role="button" aria-label="Zobrazit detail: NT Kernel" style="background: rgba(6, 182, 212, 0.2); border-color: #06b6d4;">
+                  <span>NT Kernel (Plánování vláken, synchronizace, přerušení)</span>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="sys-badge sys-badge-kernel">ntoskrnl.exe</span>
+                    <span class="layer-info-hint"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> Detail</span>
+                  </div>
+                </div>
+                <div class="layer-item layer-interactive" data-layer-id="hal" tabindex="0" role="button" aria-label="Zobrazit detail: Hardware Abstraction Layer">
                   <span>Hardware Abstraction Layer (HAL)</span>
-                  <span class="sys-badge sys-badge-rt">hal.dll</span>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="sys-badge sys-badge-rt">hal.dll</span>
+                    <span class="layer-info-hint"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> Detail</span>
+                  </div>
                 </div>
-                <div class="layer-item hw-layer">
-                  <span>Fyzický procesor, sběrnice a řadiče paměti</span>
-                  <span class="sys-badge sys-badge-hw">Hardware</span>
+                <div class="layer-item hw-layer layer-interactive" data-layer-id="hardware" tabindex="0" role="button" aria-label="Zobrazit detail: Fyzický hardware">
+                  <span>Fyzický procesor, sběrnice PCIe, řadiče a paměť RAM</span>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="sys-badge sys-badge-hw">Hardware</span>
+                    <span class="layer-info-hint"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> Detail</span>
+                  </div>
                 </div>
               </div>
             </div>
+
             <div class="content-card">
-              <h4>Komponenty NT Executive</h4>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                  <span class="card-title-text">Komponenty NT Executive</span>
+                </div>
+                <span class="sys-badge sys-badge-kernel">Jádro systému</span>
+              </div>
               <ul class="styled-list">
-                <li><strong>Object Manager (Ob):</strong> Vše v NT je objekt (soubory, procesy, klíče registru). Poskytuje jednotné deskriptory, řízení přístupu a počítání referencí.</li>
-                <li><strong>Virtual Memory Manager (Mm):</strong> Řídí 64bitový virtuální adresní prostor, stránkování a mapované soubory.</li>
-                <li><strong>Process and Thread Manager (Ps):</strong> Vytváří a ukončuje procesy a vlákna.</li>
-                <li><strong>I/O Manager (Io):</strong> Zpracovává asynchronní požadavky na zařízení pomocí paketů <strong>IRP (I/O Request Packets)</strong>.</li>
-                <li><strong>Security Reference Monitor (SRM):</strong> Vynucuje bezpečnostní politiku a ACL přístupová práva v Kernel Mode.</li>
+                <li><strong>Object Manager (Ob):</strong> Vše v NT je objekt (soubory, procesy, vlákna, klíče registru). Poskytuje jednotné handle deskriptory, řízení přístupu a počítání referencí.</li>
+                <li><strong>Virtual Memory Manager (Mm):</strong> Řídí 64bitový virtuální adresní prostor, překlad adres přes stránkovací tabulky (PTE), working set procesů a odkládání (paging).</li>
+                <li><strong>Process and Thread Manager (Ps):</strong> Spravuje životní cyklus procesů a vláken (struktury EPROCESS a ETHREAD), přiděluje ID procesů.</li>
+                <li><strong>I/O Manager (Io):</strong> Zpracovává asynchronní vstupy/výstupy pomocí paketů <strong>IRP (I/O Request Packets)</strong>. Umožňuje vrstvení ovladačů zařízení.</li>
+                <li><strong>Security Reference Monitor (SRM):</strong> Vynucuje bezpečnostní politiku přímo v Kernel Mode. Porovnává přístupový token procesu s ACL deskriptorem objektu.</li>
               </ul>
+              <div class="info-banner tip" style="margin-top: auto;">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <div><strong>Proč hybridní jádro?</strong> Ovladače grafiky (GDI/DirectX) byly přesunuty do <code>win32k.sys</code> v Ring 0 kvůli maximálnímu výkonu grafického rozhraní.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -175,27 +244,48 @@
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>Kritické systémové procesy Windows</h4>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  <span class="card-title-text">Kritické systémové procesy Windows</span>
+                </div>
+                <span class="sys-badge sys-badge-user">User Space</span>
+              </div>
               <ul class="styled-list">
-                <li><strong>smss.exe (Session Manager):</strong> První uživatelský proces spuštěný jádrem. Startuje subsystém Win32 a spravuje stránkovací soubory.</li>
-                <li><strong>csrss.exe (Client/Server Runtime):</strong> Zajišťuje správu konzolových oken, vláken a procesů subsystému Win32.</li>
-                <li><strong>lsass.exe (Local Security Authority):</strong> Ověřuje přihlášení uživatelů, hesla, generuje bezpečnostní tokeny a spolupracuje s Active Directory.</li>
-                <li><strong>services.exe (Service Controller):</strong> Spravuje spouštění a běh služeb na pozadí.</li>
+                <li><strong>smss.exe (Session Manager):</strong> Úplně první uživatelský proces spuštěný jádrem. Startuje subsystém Win32, nastavuje proměnné prostředí a spravuje stránkovací soubory.</li>
+                <li><strong>csrss.exe (Client/Server Runtime):</strong> Zajišťuje správu konzolových oken (conhost), vytváření a ukončování procesů a vláken subsystému Win32.</li>
+                <li><strong>lsass.exe (Local Security Authority):</strong> Ověřuje přihlašovací údaje uživatelů, hesla (NTLM / Kerberos), vystavuje bezpečnostní tokeny a obsluhuje Active Directory.</li>
+                <li><strong>services.exe (Service Control Manager - SCM):</strong> Spouští systémové démony a služby na pozadí, řídí jejich závislosti a restarty při selhání.</li>
               </ul>
+              <div class="info-banner danger" style="margin-top: auto;">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                <div><strong>Ukončení procesu:</strong> Násilné ukončení <code>csrss.exe</code> nebo <code>lsass.exe</code> ve Správci úloh vyvolá okamžitou modrou smrt (CRITICAL_PROCESS_DIED).</div>
+              </div>
             </div>
+
             <div class="content-card">
-              <h4>Architektura Windows Registry</h4>
-              <p>Centrální hierarchická databáze konfiguračních údajů OS a aplikací:</p>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                  <span class="card-title-text">Architektura Windows Registry</span>
+                </div>
+                <span class="sys-badge sys-badge-kernel">Hierarchická DB</span>
+              </div>
+              <p class="card-subtext">Centrální hierarchická databáze konfiguračních údajů operačního systému, ovladačů a aplikací:</p>
               <ul class="styled-list">
                 <li><strong>Hlavní větve (Hives):</strong>
-                  <ul class="styled-list">
-                    <li><code>HKEY_LOCAL_MACHINE (HKLM)</code>: Nastavení platné pro celý počítač a hardware.</li>
-                    <li><code>HKEY_CURRENT_USER (HKCU)</code>: Profil a preference právě přihlášeného uživatele.</li>
-                    <li><code>HKEY_CLASSES_ROOT (HKCR)</code>: Asociace přípon souborů a COM objekty.</li>
+                  <ul class="styled-list" style="margin-top: 0.25rem;">
+                    <li><code>HKEY_LOCAL_MACHINE (HKLM)</code>: Globální nastavení platné pro celý počítač, hardware, ovladače a systémový software.</li>
+                    <li><code>HKEY_CURRENT_USER (HKCU)</code>: Profil a preference právě přihlášeného uživatele (dynamický alias do <code>HKEY_USERS</code>).</li>
+                    <li><code>HKEY_CLASSES_ROOT (HKCR)</code>: Asociace přípon souborů a registrace COM objektů.</li>
                   </ul>
                 </li>
-                <li>Fyzicky uloženo v binárních souborech v <code>C:\Windows\System32\config\</code>.</li>
+                <li><strong>Fyzické uložení:</strong> Binární soubory hive v <code>C:\Windows\System32\config\</code> (SYSTEM, SOFTWARE, SAM, SECURITY).</li>
               </ul>
+              <div class="info-banner tip" style="margin-top: auto;">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <div><strong>Datové typy:</strong> <code>REG_SZ</code> (textový řetězec), <code>REG_DWORD</code> (32bitové celé číslo), <code>REG_BINARY</code> (surová binární data).</div>
+              </div>
             </div>
           </div>
         </div>
@@ -206,58 +296,464 @@
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Praktická diagnostika</div>
-            <h2 class="slide-title">Inspekce jádra a registrů v PowerShellu</h2>
-            <p class="slide-subtitle">Zjišťování verzí NT jádra a manipulace s registry</p>
+            <h2 class="slide-title">Inspekce jádra, procesů a BCD v PowerShellu</h2>
+            <p class="slide-subtitle">Zjišťování verzí jádra, práce s registrem a konfigurace bootloaderu</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">PowerShell &bull; Registry</span>
+            <span class="tag">PowerShell &bull; BCD &bull; Registry</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
-            <div>
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                  <span class="card-title-text">Inspekce verze jádra a procesů</span>
+                </div>
+                <span class="sys-badge sys-badge-user">PowerShell CLI</span>
+              </div>
               <div class="code-box">
                 <div class="code-box-header">
-                  <span>powershell &bull; Inspekce verze jádra a systémových procesů</span>
+                  <span>powershell &bull; Verze jádra a systémové procesy</span>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre><code><span class="term-comment"># Zjištění přesné verze a sestavení jádra NT</span>
+                <pre><code><span class="term-comment"># 1. Zjištění přesné verze a čísla sestavení (Build) NT jádra</span>
 <span class="term-prompt">PS&gt; </span>[System.Environment]::OSVersion.Version
 <span class="term-out">Major  Minor  Build  Revision</span>
 <span class="term-out">-----  -----  -----  --------</span>
 <span class="term-out">10     0      22631  0</span>
 
-<span class="term-comment"># Ověření běhu kritických procesů csrss a lsass</span>
+<span class="term-comment"># 2. Informace o OS a bootovacím disku bez nutnosti práv správce</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-CimInstance</span> <span class="term-arg">Win32_OperatingSystem</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Select-Object</span> <span class="term-arg">Caption, Version, OSArchitecture, BootDevice</span>
+
+<span class="term-comment"># 3. Ověření běhu kritických procesů Session 0</span>
 <span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Process</span> <span class="term-param">-Name</span> <span class="term-arg">csrss, lsass, smss</span> <span class="term-pipe">|</span>
     <span class="term-cmd">Select-Object</span> <span class="term-arg">Id, ProcessName, SessionId, Path</span></code></pre>
               </div>
             </div>
-            <div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                  <span class="card-title-text">Registr &amp; Bootloader BCD (Řešení bcdedit)</span>
+                </div>
+                <span class="sys-badge sys-badge-kernel">Vyžaduje Správce</span>
+              </div>
+              <div class="info-banner warning" style="margin-bottom: 0.5rem;">
+                <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <div><strong>Proč se při `bcdedit | Select-String ...` nic neděje?</strong> Nástroj <code>bcdedit</code> vyžaduje <strong>práva Správce</strong>. Bez nich vrátí chybu <em>„Přístup byl odepřen“</em> do chybového kanálu (stderr), který <code>Select-String</code> ignoruje, takže výstup zůstane prázdný!</div>
+              </div>
               <div class="code-box">
                 <div class="code-box-header">
-                  <span>powershell &bull; Práce s registrem jako s diskem</span>
+                  <span>powershell (Správce) &bull; bcdedit a PSDrive</span>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre><code><span class="term-comment"># PowerShell přistupuje k registru přes PSDrive provider</span>
-<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-ItemProperty</span> <span class="term-param">-Path</span> <span class="term-string">"HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"</span> <span class="term-pipe">|</span>
-    <span class="term-cmd">Select-Object</span> <span class="term-arg">ProductName, DisplayVersion, CurrentBuild</span>
+                <pre><code><span class="term-comment"># Otevření nového PowerShellu jako Správce (Elevace):</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Start-Process</span> <span class="term-arg">powershell</span> <span class="term-param">-Verb</span> <span class="term-arg">RunAs</span>
 
-<span class="term-comment"># Zjištění boot parametrů jádra v registru BCD</span>
-<span class="term-prompt">PS&gt; </span><span class="term-cmd">bcdedit</span> <span class="term-pipe">|</span> <span class="term-cmd">Select-String</span> <span class="term-string">"identifier|path|nx"</span></code></pre>
+<span class="term-comment"># Čtení systémových parametrů bootu v BCD (jako Správce):</span>
+<span class="term-prompt">PS Administrator&gt; </span><span class="term-cmd">bcdedit</span> <span class="term-param">/enum</span> <span class="term-arg">{current}</span>
+<span class="term-out">identifier              {current}</span>
+<span class="term-out">device                  partition=C:</span>
+<span class="term-out">path                    \Windows\system32\winload.efi</span>
+<span class="term-out">description             Windows 11</span>
+<span class="term-out">nx                      OptIn</span></code></pre>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <!-- SLIDE 6: PRAKTICKÝ RÁDCE I – REGISTR, PAMĚŤ A CACHE -->
       <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktický rádce I &bull; Systémové ladění</div>
+            <h2 class="slide-title">Registr, Virtuální paměť, Cache a Pagefile</h2>
+            <p class="slide-subtitle">Jak spravovat odkládací prostor, uvolňovat Standby mezipaměť a editovat registr</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">regedit &bull; pagefile.sys &bull; RAMMap</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                  <span class="card-title-text">Systémový registr</span>
+                </div>
+                <span class="cmd-badge">regedit</span>
+              </div>
+              <p class="card-subtext">Přímá konfigurace chování systému a aplikací přes grafický editor nebo CLI:</p>
+              <div class="sub-card">
+                <div class="sub-card-title">Spuštění a CLI nástroje</div>
+                <div class="sub-card-desc">
+                  <code>Win+R</code> &rarr; <code>regedit</code>.<br>
+                  CLI: <code>reg query HKLM\...</code>, <code>reg add</code>, <code>reg delete</code>.
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">Klíčová cesta: AutoRun</div>
+                <div class="sub-card-desc">
+                  <code>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</code> – programy spouštěné po startu.
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">Záloha a export</div>
+                <div class="sub-card-desc">
+                  Před každým zásahem klikněte pravým tlačítkem na klíč &rarr; <strong>Exportovat</strong> do souboru <code>.reg</code> pro rychlé obnovení.
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span class="card-title-text">Virtuální paměť &amp; Paging</span>
+                </div>
+                <span class="cmd-badge">sysdm.cpl</span>
+              </div>
+              <p class="card-subtext">Rozšíření fyzické RAM na disk, řízené Virtual Memory Managerem (Mm):</p>
+              <div class="sub-card">
+                <div class="sub-card-title">Tři systémové soubory</div>
+                <div class="sub-card-desc">
+                  <code>pagefile.sys</code>: Hlavní odkládací prostor.<br>
+                  <code>swapfile.sys</code>: Suspendované UWP aplikace.<br>
+                  <code>hiberfil.sys</code>: Rychlé spouštění (Fast Startup).
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">Kde nastavit velikost</div>
+                <div class="sub-card-desc">
+                  <code>Win+R</code> &rarr; <code>sysdm.cpl</code> &rarr; karta <em>Upřesnit</em> &rarr; <em>Výkon: Nastavení</em> &rarr; <em>Upřesnit</em> &rarr; <em>Virtuální paměť</em>.
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">Doporučení pro SSD</div>
+                <div class="sub-card-desc">
+                  Na moderních NVMe discích ponechte velikost řízenou systémem. Nikdy swap nevypínejte úplně (potřebný pro Crash Dumpy).
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                  <span class="card-title-text">Mezipaměť (Cache) &amp; Standby</span>
+                </div>
+                <span class="cmd-badge">resmon.exe</span>
+              </div>
+              <p class="card-subtext">Správa mezipaměti souborů a diagnostika zahlcené pohotovostní paměti:</p>
+              <div class="sub-card">
+                <div class="sub-card-title">Tři stavy paměti RAM</div>
+                <div class="sub-card-desc">
+                  <strong>In-Use:</strong> Aktivní kód procesů.<br>
+                  <strong>Standby:</strong> Mezipaměť souborů z disku.<br>
+                  <strong>Free:</strong> Zcela prázdná nevytížená paměť.
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">Diagnostika ve Windows</div>
+                <div class="sub-card-desc">
+                  <code>resmon.exe</code> &rarr; záložka <em>Paměť</em>: barevný pruh ukazuje přesný poměr Standby a In-Use bloků.
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">Sysinternals RAMMap</div>
+                <div class="sub-card-desc">
+                  Nástroj od Marka Russinowiche: položka <em>Empty &rarr; Empty Standby List</em> okamžitě uvolní gigabajty keše bez restartu!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: PRAKTICKÝ RÁDCE II – DISKY, UŽIVATELÉ A INTEGRITA -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktický rádce II &bull; Administrátorská praxe</div>
+            <h2 class="slide-title">Disky, Uživatelé a Integrita systému Windows</h2>
+            <p class="slide-subtitle">Rozdělování oddílů GPT, správa místních účtů se SID/UAC a kontrola integrity NTFS</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">diskpart &bull; lusrmgr.msc &bull; icacls &bull; sfc &amp; DISM</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                  <span class="card-title-text">Disky &amp; Oddíly (Storage)</span>
+                </div>
+                <span class="cmd-badge">diskpart</span>
+              </div>
+              <p class="card-subtext">Správa fyzických disků, stylů oddílů MBR vs. GPT a údržba SSD svazků:</p>
+              <div class="sub-card">
+                <div class="sub-card-title">GUI: <code>diskmgmt.msc</code></div>
+                <div class="sub-card-desc">Grafická správa disků: inicializace nových disků, změna písmen jednotek a online zmenšení/rozšíření svazků.</div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">CLI: <code>diskpart.exe</code></div>
+                <div class="sub-card-desc" style="font-family: var(--font-mono); font-size: 0.77rem; line-height: 1.45;">
+                  list disk<br>
+                  select disk 1 &rarr; clean<br>
+                  convert gpt<br>
+                  create partition primary<br>
+                  format fs=ntfs quick label="Data" &rarr; assign
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">PowerShell &amp; SSD TRIM</div>
+                <div class="sub-card-desc">
+                  <code>Optimize-Volume -DriveLetter C -ReTrim -Verbose</code> (manuální TRIM SSD).<br>
+                  <code>fsutil fsinfo volumeinfo C:</code> (kontrola clusteru a NTFS flagů).
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  <span class="card-title-text">Uživatelé, Skupiny &amp; UAC</span>
+                </div>
+                <span class="cmd-badge">lusrmgr.msc</span>
+              </div>
+              <p class="card-subtext">Místní bezpečnostní účty, bezpečnostní identifikátory SID a elevace:</p>
+              <div class="sub-card">
+                <div class="sub-card-title">Konzola: <code>lusrmgr.msc</code></div>
+                <div class="sub-card-desc">Správa místních uživatelů a skupin: tvorba účtů, reset hesel, platnost expirace a členství v <em>Administrators / Users</em> (edice Pro/Ent).</div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">Rychlé příkazy <code>net user</code></div>
+                <div class="sub-card-desc" style="font-family: var(--font-mono); font-size: 0.77rem; line-height: 1.45;">
+                  net user student TajneHeslo123* /add<br>
+                  net localgroup Administrators student /add<br>
+                  net user student /active:yes /expires:never
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">UAC Token &amp; Práva (Privileges)</div>
+                <div class="sub-card-desc">
+                  Správce se přihlašuje s ořezaným standardním tokenem (Split Token).<br>
+                  <code>whoami /priv</code> &bull; <code>whoami /groups</code> (zobrazení aktivních práv a SID).
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                  <span class="card-title-text">Oprávnění NTFS &amp; Integrita OS</span>
+                </div>
+                <span class="cmd-badge">icacls &amp; sfc</span>
+              </div>
+              <p class="card-subtext">Přístupová práva DACL, převzetí vlastnictví a oprava systémových souborů:</p>
+              <div class="sub-card">
+                <div class="sub-card-title">NTFS práva: <code>icacls</code> &amp; <code>takeown</code></div>
+                <div class="sub-card-desc" style="font-family: var(--font-mono); font-size: 0.77rem; line-height: 1.45;">
+                  takeown /f "C:\Slozka" /r /d y<br>
+                  icacls "C:\Slozka" /grant Administrators:F /t<br>
+                  icacls "C:\Data" /grant Users:(OI)(CI)M
+                </div>
+                <div class="sub-card-desc" style="font-size: 0.78rem; color: var(--text-muted);">
+                  <code>(OI)(CI)M</code> = dědičnost na složky i soubory s právem Modify.
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">Integrita souborů: <code>sfc /scannow</code></div>
+                <div class="sub-card-desc">
+                  System File Checker: zkontroluje digitální podpisy a nahradí poškozené či přepsané knihovny jádra ze zálohy <code>WinSxS</code>.
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-title">Oprava Component Store: <code>DISM</code></div>
+                <div class="sub-card-desc">
+                  <code>DISM /Online /Cleanup-Image /RestoreHealth</code><br>
+                  Opraví poškozené úložiště komponent přes Windows Update ještě před spuštěním SFC.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: PRAKTICKÝ RÁDCE III – CHEAT SHEET KONZOLÍ A ZKRATEK -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktický rádce III &bull; Rychlé konzoly &amp; Cheat Sheet</div>
+            <h2 class="slide-title">Administrátorské konzoly MMC, aplety CPL a zkratky</h2>
+            <p class="slide-subtitle">Kompletní přehled diagnostických nástrojů, zástupců Nastavení a záchranných příkazů Windows</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">MMC (.msc) &bull; Aplety (.cpl) &bull; Klávesové zkratky &bull; Run</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                  <span class="card-title-text">Konzoly MMC (.msc)</span>
+                </div>
+                <span class="cmd-badge">Win+R &rarr; *.msc</span>
+              </div>
+              <p class="card-subtext">Specializované moduly Microsoft Management Console pro nízkoúrovňovou správu OS:</p>
+              <table class="admin-table compact">
+                <thead>
+                  <tr>
+                    <th>Konzola</th>
+                    <th>Systémová funkce</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="cmd-badge sm">compmgmt.msc</span></td>
+                    <td>Správa počítače (disky, služby, logy, uživatelé v 1 okně)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">devmgmt.msc</span></td>
+                    <td>Správce zařízení (hardware, stav ovladačů, HW ID)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">services.msc</span></td>
+                    <td>Správa systémových služeb (start, stop, typ spouštění)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">eventvwr.msc</span></td>
+                    <td>Prohlížeč událostí (logy Systém, Aplikace, Zabezpečení)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">secpol.msc</span></td>
+                    <td>Místní zásady zabezpečení (hesla, uzamčení účtů, audit)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">gpedit.msc</span></td>
+                    <td>Editor místních zásad skupiny (GPO konfigurace OS)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">wf.msc</span></td>
+                    <td>Firewall s pokročilým zabezpečením (inbound/outbound)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">perfmon.msc</span></td>
+                    <td>Sledování výkonu (reálné čítače CPU, RAM, disku a sítě)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">taskschd.msc</span></td>
+                    <td>Plánovač úloh (automatické skripty a systémové triggery)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                  <span class="card-title-text">Aplety CPL &amp; Utility</span>
+                </div>
+                <span class="cmd-badge">Win+R &rarr; *.cpl / *.exe</span>
+              </div>
+              <p class="card-subtext">Přímé spuštění klasických panelů a diagnostických nástrojů:</p>
+              <table class="admin-table compact">
+                <thead>
+                  <tr>
+                    <th>Příkaz</th>
+                    <th>Význam a použití</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="cmd-badge sm">sysdm.cpl</span></td>
+                    <td>Vlastnosti systému (Virtuální paměť, proměnné prostředí PATH, RDP)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">ncpa.cpl</span></td>
+                    <td>Síťová připojení (Ethernet/Wi-Fi adaptéry, DNS, statická IP)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">appwiz.cpl</span></td>
+                    <td>Programy a funkce (klasická odinstalace SW a součástí OS)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">powercfg.cpl</span></td>
+                    <td>Možnosti napájení (režimy spánku, hibernace, akce tlačítek)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">resmon.exe</span></td>
+                    <td>Sledování prostředků (přesné bloky Standby / In-Use v RAM)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">msconfig.exe</span></td>
+                    <td>Konfigurace systému (selektivní start, Safe Mode diagnostika)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">cleanmgr.exe</span></td>
+                    <td>Vyčištění disku (odstranění starých aktualizací a Windows.old)</td>
+                  </tr>
+                  <tr>
+                    <td><span class="cmd-badge sm">dxdiag.exe</span></td>
+                    <td>Diagnostika DirectX (grafický akcelerátor, WDDM ovladač)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+                  <span class="card-title-text">Power User zkratky &amp; Záchrana</span>
+                </div>
+                <span class="cmd-badge">Klávesy &amp; Run</span>
+              </div>
+              <p class="card-subtext">Blesková administrátorská navigace a příkazy pro krizové situace:</p>
+              <div style="display: flex; flex-direction: column; gap: 0.45rem;">
+                <div class="key-combo"><span class="key-badge-styled">Win</span>+<span class="key-badge-styled">X</span> <span style="font-size: 0.8rem; color: var(--text-secondary);">&rarr; Quick Link menu (Terminál jako Správce, Disky, Správce zařízení)</span></div>
+                <div class="key-combo"><span class="key-badge-styled">Ctrl</span>+<span class="key-badge-styled">Shift</span>+<span class="key-badge-styled">Esc</span> <span style="font-size: 0.8rem; color: var(--text-secondary);">&rarr; Správce úloh (okamžitý start bez přepnutí na Secure Desktop)</span></div>
+                <div class="key-combo"><span class="key-badge-styled">Win</span>+<span class="key-badge-styled">R</span> <span style="font-size: 0.8rem; color: var(--text-secondary);">&rarr; Dialog Spustit (přímý vstup pro všechny .msc konzoly i .cpl aplety)</span></div>
+                <div class="key-combo"><span class="key-badge-styled">Ctrl</span>+<span class="key-badge-styled">Shift</span>+<span class="key-badge-styled">Enter</span> <span style="font-size: 0.8rem; color: var(--text-secondary);">&rarr; Spustí vyhledanou aplikaci ze Startu rovnou jako Správce</span></div>
+                <div class="key-combo"><span class="key-badge-styled">Win</span>+<span class="key-badge-styled">Pause</span> <span style="font-size: 0.8rem; color: var(--text-secondary);">&rarr; Okamžité vyvolání informací o systému (CPU, RAM, edice Windows)</span></div>
+              </div>
+              <div class="sub-card" style="margin-top: 0.25rem;">
+                <div class="sub-card-title">Záchranné příkazy z Run (Win+R)</div>
+                <div class="sub-card-desc" style="font-family: var(--font-mono); font-size: 0.77rem; line-height: 1.5;">
+                  <strong>shutdown /r /fw /t 0</strong><br>
+                  <span style="font-family: var(--font-sans); color: var(--text-muted); font-size: 0.76rem;">&rarr; Restartuje PC rovnou do UEFI BIOSu (bez chytání F2/Del).</span><br>
+                  <strong>shutdown /r /o /t 0</strong><br>
+                  <span style="font-family: var(--font-sans); color: var(--text-muted); font-size: 0.76rem;">&rarr; Restartuje do nabídky Pokročilého spuštění (Nouzový režim).</span><br>
+                  <strong>shell:startup</strong><br>
+                  <span style="font-family: var(--font-sans); color: var(--text-muted); font-size: 0.76rem;">&rarr; Složka programů po spuštění pro právě přihlášeného uživatele.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="9">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
@@ -272,19 +768,19 @@
           <div class="summary-grid">
             <div class="summary-card">
               <h4>1. Proč hybridní jádro?</h4>
-              <p>Vysvětlení, proč Windows NT kombinují modulární strukturu Executive služeb s umístěním grafického subsystému (win32k.sys) do Kernel Mode.</p>
+              <p>Vysvětlení, proč Windows NT kombinují modulární strukturu Executive služeb s umístěním grafického subsystému (<code>win32k.sys</code>) do Kernel Mode kvůli vykreslovacímu výkonu.</p>
             </div>
             <div class="summary-card">
-              <h4>2. Role HAL</h4>
-              <p>Pochopení významu knihovny hal.dll pro izolaci zbytku jádra od odlišností procesorových patic a čipsetů základních desek.</p>
+              <h4>2. Role HAL a ntoskrnl</h4>
+              <p>Pochopení významu knihovny <code>hal.dll</code> pro izolaci zbytku jádra od odlišností procesorových patic, APIC řadičů přerušení a čipsetů základních desek.</p>
             </div>
             <div class="summary-card">
               <h4>3. Význam lsass a csrss</h4>
-              <p>Znalost funkcí klíčových subsystémových procesů (autentizace uživatelů a generování bezpečnostních tokenů vs. řízení Win32 prostředí).</p>
+              <p>Znalost funkcí klíčových subsystémových procesů (autentizace uživatelů a generování bezpečnostních tokenů vs. řízení Win32 prostředí a konzolí).</p>
             </div>
             <div class="summary-card">
               <h4>4. Otázka u zkoušky</h4>
-              <p><em>„Popište strukturu Windows Executive a vysvětlete, jakou roli hraje Object Manager při řízení přístupu k systémovým prostředkům.“</em></p>
+              <p><em>„Popište strukturu Windows Executive, princip stránkování virtuální paměti (pagefile.sys vs. standby list) a vysvětlete, jakou roli hraje Object Manager při řízení přístupu k systémovým prostředkům.“</em></p>
             </div>
           </div>
         </div>
@@ -292,23 +788,31 @@
 
     </main>
 
+    <!-- Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
       <div class="controls-left">
-        <a href="index.html" class="control-btn" title="Katalog lekcí"><svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a>
-        <button class="control-btn" id="tocBtn" title="Obsah (M/O)"><svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button>
+        <a href="index.html" class="control-btn" title="Katalog lekcí">
+          <svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        </a>
+        <button class="control-btn" id="tocBtn" title="Obsah lekce (M/O)">
+          <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+        </button>
+        <button class="control-btn" id="glossaryBtn" title="Slovník pojmů Windows NT (G)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="15" y2="7"></line><line x1="9" y1="11" x2="15" y2="11"></line></svg>
+        </button>
       </div>
       <div class="controls-center">
         <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-        <span class="slide-counter" id="slideCounter">1 / 6</span>
+        <span class="slide-counter" id="slideCounter">1 / 9</span>
         <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
       </div>
       <div class="controls-right">
-        <button class="control-btn" id="themeToggle" title="Přepnout motiv"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></button>
         <button class="control-btn" id="fsBtn" title="Celá obrazovka"><svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
         <button class="control-btn" id="helpBtn" title="Nápověda"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></button>
       </div>
     </nav>
 
+    <!-- Table of Contents Drawer -->
     <div class="toc-drawer" id="tocDrawer">
       <aside class="toc-sidebar">
         <div class="toc-header">
@@ -322,6 +826,7 @@
       </aside>
     </div>
 
+    <!-- Keyboard Shortcuts Help Modal -->
     <div class="modal-overlay" id="helpModal">
       <div class="modal-dialog">
         <div class="modal-header">
@@ -334,7 +839,91 @@
           <div class="shortcut-row"><span>První / Poslední</span><div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div></div>
           <div class="shortcut-row"><span>Celá obrazovka</span><span class="key-badge">F</span></div>
           <div class="shortcut-row"><span>Obsah lekce</span><div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div></div>
-          <div class="shortcut-row"><span>Přepnout motiv</span><span class="key-badge">T</span></div>
+          <div class="shortcut-row"><span>Slovník pojmů</span><span class="key-badge">G</span></div>
+          <div class="shortcut-row"><span>Zavřít dialog / modál</span><span class="key-badge">Esc</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- MODÁL: DETAIL VRSTVY ARCHITEKTURY JÁDRA NT       -->
+    <!-- ================================================ -->
+    <div class="modal-overlay" id="layerModal">
+      <div class="modal-dialog" style="max-width: 780px; width: 95vw; max-height: 88vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="flex-shrink: 0;">
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <svg class="icon" style="color: var(--accent); width: 1.35rem; height: 1.35rem;" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <div>
+              <h3 id="layerModalTitle" style="margin: 0; font-size: 1.12rem; color: var(--text-primary);">Název vrstvy</h3>
+              <div style="display: flex; gap: 0.45rem; align-items: center; margin-top: 0.25rem;">
+                <span id="layerModalModeBadge" class="sys-badge sys-badge-user">User (Ring 3)</span>
+                <span id="layerModalFileBadge" class="cmd-badge sm">csrss.exe</span>
+              </div>
+            </div>
+          </div>
+          <button class="toc-close" id="layerModalCloseBtn" aria-label="Zavřít detail vrstvy">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+
+        <div class="modal-body" id="layerModalBody" style="overflow-y: auto; flex: 1; padding: 1.15rem 1.35rem; display: flex; flex-direction: column; gap: 1rem;">
+          <!-- Dynamicky plněno JavaScriptem -->
+        </div>
+
+        <div class="layer-modal-nav" style="padding: 0.75rem 1.25rem; border-top: 1px solid var(--border-subtle); flex-shrink: 0; display: flex; justify-content: space-between; align-items: center;">
+          <button class="layer-nav-btn" id="layerPrevBtn">
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <span>Předchozí vrstva</span>
+          </button>
+          <div class="layer-quick-dots" id="layerQuickDots">
+            <!-- 7 přepínacích tlačítek 1..7 -->
+          </div>
+          <button class="layer-nav-btn" id="layerNextBtn">
+            <span>Další vrstva</span>
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================ -->
+    <!-- MODÁLNÍ SLOVNÍK POJMŮ WINDOWS NT & ARCHITEKTURY   -->
+    <!-- ================================================ -->
+    <div class="modal-overlay" id="glossaryModal">
+      <div class="modal-dialog" style="max-width: 860px; width: 95vw; max-height: 88vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="flex-shrink: 0;">
+          <h3 style="display: flex; align-items: center; gap: 0.6rem;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="15" y2="7"></line><line x1="9" y1="11" x2="15" y2="11"></line></svg>
+            Slovník pojmů &bull; Architektura a správa Windows NT
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+
+        <!-- Vyhledávací pole a filtry kategorií -->
+        <div style="padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; display: flex; flex-direction: column; gap: 0.6rem;">
+          <div style="position: relative;">
+            <svg class="icon" viewBox="0 0 24 24" style="position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); width: 1rem; height: 1rem;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="glossarySearch" placeholder="Hledat zkratku, pojem nebo příkaz (např. HAL, csrss, pagefile, BCD)..." style="width: 100%; padding: 0.5rem 0.75rem 0.5rem 2.25rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 0.9rem; outline: none;">
+          </div>
+          <div id="glossaryCategoryBtns" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <button class="glossary-cat-btn active" data-cat="all">Všechny pojmy</button>
+            <button class="glossary-cat-btn" data-cat="architecture">Architektura jádra</button>
+            <button class="glossary-cat-btn" data-cat="storage">Paměť &amp; Úložiště</button>
+            <button class="glossary-cat-btn" data-cat="security">Bezpečnost &amp; Práva</button>
+            <button class="glossary-cat-btn" data-cat="admin">Nástroje &amp; Správa</button>
+          </div>
+        </div>
+
+        <!-- Tělo slovníku (scrollovatelné) -->
+        <div class="modal-body" id="glossaryBody" style="overflow-y: auto; flex: 1; padding: 0.75rem 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; align-content: start;">
+          <!-- Generováno JavaScriptem -->
+        </div>
+
+        <div style="padding: 0.5rem 1.25rem; border-top: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0; display: flex; justify-content: space-between; align-items: center;">
+          <span id="glossaryResultCount">Zobrazeno všech 46 pojmů</span>
+          <span>Klávesová zkratka: <span class="key-badge">G</span></span>
         </div>
       </div>
     </div>
@@ -342,5 +931,550 @@
   </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
+
+  <!-- ==========================================
+       SLOVNÍK POJMŮ WINDOWS NT – DATOVÁ ZÁKLADNA A LOGIKA
+       ========================================== -->
+  <script>
+    (function () {
+      const GLOSSARY_DATA = [
+        // --- ARCHITEKTURA JÁDRA ---
+        { term: 'HAL', fullName: 'Hardware Abstraction Layer (hal.dll)', cat: 'architecture',
+          desc: 'Vrstva hardwarové abstrakce izolující jádro NT a ovladače od rozdílů v čipových sadách, APIC řadičích přerušení a procesorových sběrnicích.' },
+        { term: 'ntoskrnl.exe', fullName: 'NT OS Kernel Executable', cat: 'architecture',
+          desc: 'Hlavní binární obraz jádra Windows obsahující základní mikro-jádro (Kernel) i vyšší systémové služby (Executive).' },
+        { term: 'Ring 0', fullName: 'Kernel Mode (Privilegovaný režim CPU)', cat: 'architecture',
+          desc: 'Nejvyšší úroveň oprávnění procesoru x86/x64 s přímým neomezeným přístupem k fyzické paměti a hardwarovým instrukcím.' },
+        { term: 'Ring 3', fullName: 'User Mode (Uživatelský režim CPU)', cat: 'architecture',
+          desc: 'Izolovaný neprivilegovaný režim pro aplikace a subsystémy. Přístup k hardwaru je možný výhradně přes volání jádra (Syscall).' },
+        { term: 'csrss.exe', fullName: 'Client/Server Runtime Subsystem', cat: 'architecture',
+          desc: 'Kritický proces uživatelského režimu spravující konzolová okna, tvorbu/rušení procesů a Win32 vláken. Jeho pád způsobí BSOD.' },
+        { term: 'smss.exe', fullName: 'Session Manager Subsystem', cat: 'architecture',
+          desc: 'Úplně první uživatelský proces spuštěný jádrem. Startuje subsystém Win32, nastavuje pagefile a inicializuje relace (sessions).' },
+        { term: 'services.exe', fullName: 'Service Control Manager (SCM)', cat: 'architecture',
+          desc: 'Systémový proces odpovědný za spouštění, zastavování, monitorování a automatické restartování služeb běžících na pozadí.' },
+        { term: 'win32k.sys', fullName: 'Win32 Kernel-Mode Driver', cat: 'architecture',
+          desc: 'Ovladač grafického subsystému v Ring 0, který obsluhuje správce oken (USER), vykreslování (GDI) a DirectX rozhraní.' },
+        { term: 'Object Manager', fullName: 'Správce objektů NT Executive', cat: 'architecture',
+          desc: 'Poskytuje jednotnou reprezentaci všech systémových prostředků (soubory, procesy, klíče registru), počítání referencí a přístupová práva.' },
+        { term: 'IRP', fullName: 'I/O Request Packet', cat: 'architecture',
+          desc: 'Datová struktura používaná I/O Managerem pro asynchronní komunikaci mezi vrstvami ovladačů zařízení v jádře.' },
+        { term: 'SMP', fullName: 'Symmetric Multiprocessing', cat: 'architecture',
+          desc: 'Architektura umožňující paralelní běh operačního systému i aplikací na více procesorových jádrech se sdílenou pamětí RAM.' },
+        { term: 'Trap Handler', fullName: 'Obsluha přerušení a systémových volání', cat: 'architecture',
+          desc: 'Mechanismus procesoru zachytávající instrukce SYSCALL/SYSENTER a přepínající kontext vlákna z Ring 3 do Ring 0.' },
+
+        // --- PAMĚŤ A ÚLOŽIŠTĚ ---
+        { term: 'pagefile.sys', fullName: 'Hlavní stránkovací soubor (Paging File)', cat: 'storage',
+          desc: 'Odkládací prostor na disku spravovaný Virtual Memory Managerem pro neaktivní paměťové stránky při nedostatku fyzické RAM.' },
+        { term: 'swapfile.sys', fullName: 'Moderní odkládací soubor UWP', cat: 'storage',
+          desc: 'Specializovaný odkládací soubor zavedený ve Windows 8 pro uspávání a rychlé obnovování aplikací z Windows Store.' },
+        { term: 'hiberfil.sys', fullName: 'Soubor pro hibernaci a Fast Startup', cat: 'storage',
+          desc: 'Ukládá kompletní stav jádra na disk při vypnutí pro bleskový start (Fast Startup) nebo úplné uspání systému (Hibernace).' },
+        { term: 'Standby List', fullName: 'Pohotovostní paměť (Cache)', cat: 'storage',
+          desc: 'Stránky RAM obsahující dříve načtené soubory z disku. V případě požadavku aplikací jsou okamžitě uvolněny do Free stavu.' },
+        { term: 'Working Set', fullName: 'Pracovní sada procesu', cat: 'storage',
+          desc: 'Množina virtuálních paměťových stránek procesu, které jsou v daném okamžiku fyzicky alokovány ve skutečné paměti RAM.' },
+        { term: 'Registry Hive', fullName: 'Větev registru (Úl)', cat: 'storage',
+          desc: 'Logická skupina klíčů, podklíčů a hodnot uložená v samostatném binárním souboru v C:\\Windows\\System32\\config\\.' },
+        { term: 'HKLM', fullName: 'HKEY_LOCAL_MACHINE', cat: 'storage',
+          desc: 'Kořenová větev registru obsahující konfiguraci pro celý počítač: hardware, ovladače, systémové nastavení a nainstalovaný SW.' },
+        { term: 'HKCU', fullName: 'HKEY_CURRENT_USER', cat: 'storage',
+          desc: 'Dynamický odkaz na větev právě přihlášeného uživatele v HKEY_USERS (obsahuje plochu, barvy, osobní nastavení aplikací).' },
+        { term: 'GPT', fullName: 'GUID Partition Table', cat: 'storage',
+          desc: 'Moderní standard rozdělení disků pro UEFI systémy podporující disky nad 2 TB a až 128 primárních oddílů s CRC32 kontrolou.' },
+        { term: 'MBR', fullName: 'Master Boot Record', cat: 'storage',
+          desc: 'Zastaralý formát oddílů BIOSu s limitem 2 TB na disk a maximálně 4 primárními diskovými oddíly.' },
+        { term: 'NTFS', fullName: 'New Technology File System', cat: 'storage',
+          desc: 'Výchozí souborový systém Windows NT s podporou ACL zabezpečení, žurnálování, komprese, šifrování (EFS) a velkých souborů.' },
+        { term: 'ReFS', fullName: 'Resilient File System', cat: 'storage',
+          desc: 'Moderní serverový souborový systém Microsoftu zaměřený na odolnost proti poškození dat, automatickou opravu a obří svazky.' },
+
+        // --- BEZPEČNOST A PRÁVA ---
+        { term: 'lsass.exe', fullName: 'Local Security Authority Subsystem Service', cat: 'security',
+          desc: 'Bezpečnostní proces ověřující přihlášení uživatelů, hesla NTLM/Kerberos a generující bezpečnostní tokeny (Access Tokens).' },
+        { term: 'UAC', fullName: 'User Account Control (Řízení uživatelských účtů)', cat: 'security',
+          desc: 'Mechanismus spouštějící aplikace i u správců se standardními právy. Pro administrátorský zásah vyžaduje potvrzení přes Split Token.' },
+        { term: 'Split Token', fullName: 'Rozdělený přístupový token UAC', cat: 'security',
+          desc: 'Koncept, kdy uživatel ve skupině Administrators obdrží dva tokeny: omezený standardní a plný administrátorský, aktivovaný elevací.' },
+        { term: 'SID', fullName: 'Security Identifier (Bezpečnostní identifikátor)', cat: 'security',
+          desc: 'Unikátní neměnný řetězec identifikující uživatele, skupinu nebo počítač v systému (např. S-1-5-21-...-500 pro výchozího Administratora).' },
+        { term: 'ACL', fullName: 'Access Control List (Seznam řízení přístupu)', cat: 'security',
+          desc: 'Seznam záznamů ACE určujících, který uživatel či skupina (SID) má právo číst, zapisovat nebo spouštět daný objekt.' },
+        { term: 'SRM', fullName: 'Security Reference Monitor', cat: 'security',
+          desc: 'Komponenta jádra NT Executive porovnávající při každém otevření objektu uživatelský Access Token s jeho DACL seznamem.' },
+        { term: 'DEP / NX', fullName: 'Data Execution Prevention (No-Execute)', cat: 'security',
+          desc: 'Hardwarová ochrana procesoru bránící spuštění škodlivého kódu v datových oblastech paměti (Stack a Heap).' },
+        { term: 'ASLR', fullName: 'Address Space Layout Randomization', cat: 'security',
+          desc: 'Náhodné rozmístění klíčových datových oblastí a knihoven v paměti procesu při každém startu pro prevenci exploitů buffer overflow.' },
+
+        // --- NÁSTROJE A SPRÁVA ---
+        { term: 'bcdedit.exe', fullName: 'Boot Configuration Data Editor', cat: 'admin',
+          desc: 'Příkazový nástroj vyžadující práva Správce pro správu zavaděče Windows (BCD), testovacího podepisování ovladačů a boot parametrů.' },
+        { term: 'regedit.exe', fullName: 'Windows Registry Editor', cat: 'admin',
+          desc: 'Grafický nástroj pro procházení, úpravu, import a export klíčů a hodnot v systémovém registru Windows.' },
+        { term: 'sysdm.cpl', fullName: 'Vlastnosti systému (System Properties)', cat: 'admin',
+          desc: 'Klasický ovládací aplet pro správu virtuální paměti, proměnných prostředí, názvu počítače a vzdáleného přístupu (RDP).' },
+        { term: 'diskmgmt.msc', fullName: 'Správa disků (Disk Management)', cat: 'admin',
+          desc: 'Grafická MMC konzola pro inicializaci disků, formátování oddílů a přiřazování písmen jednotek.' },
+        { term: 'diskpart.exe', fullName: 'Příkazový nástroj pro správu oddílů', cat: 'admin',
+          desc: 'Mocný textový nástroj pro nízkoúrovňovou správu disků, konverzi GPT/MBR, čistění oddílů (clean) a skriptování.' },
+        { term: 'lusrmgr.msc', fullName: 'Místní uživatelé a skupiny', cat: 'admin',
+          desc: 'MMC konzola pro vytváření lokálních uživatelských účtů, resetování hesel a správu členství ve skupinách (pouze Pro/Enterprise).' },
+        { term: 'resmon.exe', fullName: 'Sledování prostředků (Resource Monitor)', cat: 'admin',
+          desc: 'Detailní diagnostický nástroj sledující v reálném čase využití CPU, disků, sítě a přesné rozdělení paměti RAM.' },
+        { term: 'RAMMap', fullName: 'Sysinternals RAMMap (Mark Russinovich)', cat: 'admin',
+          desc: 'Pokročilý diagnostický nástroj od Microsoft Sysinternals umožňující okamžité vyčištění Standby cache bez nutnosti restartu.' },
+        { term: 'icacls.exe', fullName: 'Integrity Control Access Control List', cat: 'security',
+          desc: 'Konzolový nástroj pro zobrazení, zálohování a rekurzivní úpravu seznamů řízení přístupu (DACL) a dědičnosti na NTFS oddílech.' },
+        { term: 'takeown.exe', fullName: 'Take Ownership Command Line Utility', cat: 'security',
+          desc: 'Příkaz umožňující administrátorovi převzít vlastnictví zamčeného či poškozeného souboru nebo složky před obnovou přístupových práv.' },
+        { term: 'sfc.exe', fullName: 'System File Checker (sfc /scannow)', cat: 'admin',
+          desc: 'Diagnostický nástroj jádra ověřující digitální podpisy a integritu všech chráněných systémových souborů s automatickou obnovou z WinSxS.' },
+        { term: 'DISM.exe', fullName: 'Deployment Image Servicing and Management', cat: 'admin',
+          desc: 'Servisní nástroj pro opravu komponentního úložiště Windows (Component Store / WinSxS) stažením zdravých kopií z Windows Update.' },
+        { term: 'gpedit.msc', fullName: 'Editor místních zásad skupiny (GPO Editor)', cat: 'admin',
+          desc: 'MMC konzola pro centrální konfiguraci uživatelských a systémových restrikcí a politik Windows (edice Pro a Enterprise).' },
+        { term: 'wf.msc', fullName: 'Windows Defender Firewall s pokročilým zabezpečením', cat: 'admin',
+          desc: 'Nativní MMC konzola pro podrobnou definici příchozích a odchozích síťových pravidel, portů a IP filtrů.' }
+      ];
+
+      const glossaryBody = document.getElementById('glossaryBody');
+      const glossarySearch = document.getElementById('glossarySearch');
+      const glossaryResultCount = document.getElementById('glossaryResultCount');
+      const catBtns = document.querySelectorAll('.glossary-cat-btn');
+      const glossaryModal = document.getElementById('glossaryModal');
+      const glossaryCloseBtn = document.getElementById('glossaryCloseBtn');
+      const glossaryBtn = document.getElementById('glossaryBtn');
+
+      let currentCat = 'all';
+      let currentSearch = '';
+
+      const catLabels = {
+        architecture: 'Architektura jádra',
+        storage: 'Paměť & Úložiště',
+        security: 'Bezpečnost & Práva',
+        admin: 'Nástroje & Správa'
+      };
+
+      function buildGlossary() {
+        if (!glossaryBody) return;
+        const q = currentSearch.toLowerCase();
+
+        const filtered = GLOSSARY_DATA.filter(item => {
+          const catMatch = currentCat === 'all' || item.cat === currentCat;
+          const searchMatch = !q
+            || item.term.toLowerCase().includes(q)
+            || item.fullName.toLowerCase().includes(q)
+            || item.desc.toLowerCase().includes(q);
+          return catMatch && searchMatch;
+        });
+
+        filtered.sort((a, b) => a.term.localeCompare(b.term, 'cs'));
+        glossaryBody.innerHTML = '';
+
+        if (filtered.length === 0) {
+          glossaryBody.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 2.5rem; color: var(--text-muted);">Žádný pojem nenalezen pro výraz "<strong>${q}</strong>".</div>`;
+        } else {
+          filtered.forEach(item => {
+            const entry = document.createElement('div');
+            entry.className = 'glossary-entry';
+            entry.innerHTML = `
+              <div class="glossary-entry-head">
+                <span class="glossary-term">${item.term}</span>
+                <span class="glossary-badge glossary-badge-${item.cat}">${catLabels[item.cat] || item.cat}</span>
+              </div>
+              <div class="glossary-full-name">${item.fullName}</div>
+              <div class="glossary-desc">${item.desc}</div>
+            `;
+            glossaryBody.appendChild(entry);
+          });
+        }
+
+        if (glossaryResultCount) {
+          glossaryResultCount.textContent = `Zobrazeno ${filtered.length} z ${GLOSSARY_DATA.length} pojmů`;
+        }
+      }
+
+      catBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          catBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCat = btn.getAttribute('data-cat');
+          buildGlossary();
+        });
+      });
+
+      if (glossarySearch) {
+        glossarySearch.addEventListener('input', e => {
+          currentSearch = e.target.value;
+          buildGlossary();
+        });
+      }
+
+      function openGlossary() {
+        if (!glossaryModal) return;
+        glossaryModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        if (glossarySearch) {
+          glossarySearch.value = '';
+          currentSearch = '';
+        }
+        currentCat = 'all';
+        catBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-cat') === 'all'));
+        buildGlossary();
+        setTimeout(() => { if (glossarySearch) glossarySearch.focus(); }, 100);
+      }
+
+      function closeGlossary() {
+        if (!glossaryModal) return;
+        glossaryModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (glossaryBtn) glossaryBtn.addEventListener('click', openGlossary);
+      if (glossaryCloseBtn) glossaryCloseBtn.addEventListener('click', closeGlossary);
+
+      if (glossaryModal) {
+        glossaryModal.addEventListener('click', e => {
+          if (e.target === glossaryModal) closeGlossary();
+        });
+      }
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'g' || e.key === 'G') {
+          if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
+          if (glossaryModal && glossaryModal.classList.contains('active')) {
+            closeGlossary();
+          } else {
+            openGlossary();
+          }
+        }
+        if (e.key === 'Escape') {
+          closeGlossary();
+        }
+      });
+
+      buildGlossary();
+    })();
+  </script>
+
+  <!-- ==========================================
+       INTERAKTIVNÍ INSPEKTOR VRSTEV JÁDRA NT (SLIDE 3)
+       ========================================== -->
+  <script>
+    (function () {
+      const LAYER_DATA = [
+        {
+          id: 'user-apps',
+          name: 'Uživatelské aplikace a služby na pozadí',
+          num: 1,
+          modeBadge: 'User Mode (Ring 3)',
+          modeClass: 'sys-badge-user',
+          fileBadge: '*.exe / Win32 Services',
+          borderColor: 'rgba(56, 189, 248, 0.45)',
+          pills: [
+            { label: 'chrome.exe (Browser)', type: 'app' },
+            { label: 'code.exe (VS Code)', type: 'app' },
+            { label: 'explorer.exe (Plocha Windows)', type: 'app' },
+            { label: 'WINWORD.EXE (Office)', type: 'app' },
+            { label: 'notepad.exe', type: 'app' },
+            { label: 'spoolsv.exe (Tisková služba)', type: 'sys' },
+            { label: 'wuauserv (Windows Update)', type: 'sys' },
+            { label: 'spotify.exe', type: 'app' }
+          ],
+          desc: 'Zahrnuje veškerý kód, který nespravuje samotný operační systém ani hardware: kancelářské programy, hry, prohlížeče i systémové služby běžící na pozadí. Běží ve striktně izolovaném virtuálním adresním prostoru (128 TB na architektuře x64). Aplikace nemá přímý přístup k hardwaru, I/O portům ani k paměti ostatních aplikací či jádra.',
+          swExplanation: 'Běžné programy a služby, které spouštíte. Běží v neprivilegovaném režimu Ring 3 – každý proces vidí pouze svůj vlastní virtuální paměťový prostor.',
+          security: '<strong>Chyba v kódu (Access Violation 0xC0000005):</strong> Pokus o přístup na nealokovanou adresu (např. čtení z nulového ukazatele nullptr) zachytí procesor. Windows proces okamžitě bezpečně ukončí, aniž by byl ohrožen zbytek systému nebo ostatní běžící aplikace.',
+          api: 'Win32 API (CreateProcess, CreateWindowEx, ReadFile), .NET CLR runtime, Java VM, Chromium IPC Sandbox'
+        },
+        {
+          id: 'subsystems',
+          name: 'Subsystémy prostředí & Klientské API knihovny',
+          num: 2,
+          modeBadge: 'User Mode (Ring 3) / Systémový most',
+          modeClass: 'sys-badge-user',
+          fileBadge: 'csrss.exe • ntdll.dll • kernel32.dll',
+          borderColor: 'rgba(56, 189, 248, 0.45)',
+          pills: [
+            { label: 'csrss.exe (Win32 Subsystem)', type: 'sys' },
+            { label: 'kernel32.dll / KernelBase.dll', type: 'sys' },
+            { label: 'user32.dll (Okna, Tlačítka)', type: 'sys' },
+            { label: 'gdi32.dll (2D Grafika, Fonty)', type: 'sys' },
+            { label: 'advapi32.dll (Registry, Tokeny)', type: 'sys' },
+            { label: 'ntdll.dll (Nativní NT API)', type: 'sys' }
+          ],
+          desc: 'Poskytují aplikacím standardizovaná programovací rozhraní (Windows API) a emulují operační prostředí. Zajišťují správu oken, tlačítek, front zpráv (Message Loops), konzolových oken a překládají Win32 volání na nativní systémové služby jádra.',
+          swExplanation: 'Kritický proces <code>csrss.exe</code> spravuje konzolová okna a vlákna. Knihovna <code>ntdll.dll</code> představuje nejnižší úroveň User Mode – exportuje stuby pro přechod do jádra.',
+          security: '<strong>Kritický systémový subsystém:</strong> Proces <code>csrss.exe</code> je chráněn jádrem. Jeho násilné ukončení způsobí okamžitý pád do BSOD (<em>CRITICAL_PROCESS_DIED 0xEF</em>), protože bez něj nelze spravovat uživatelské prostředí.',
+          api: 'Win32 API C/C++, POSIX subsystém, Nativní NT API stuby (Nt... / Zw...)'
+        },
+        {
+          id: 'syscall',
+          name: 'Systémová volání & Přechod režimů (SYSCALL / Trap Handler)',
+          num: 3,
+          modeBadge: 'Hardwarový přechod Ring 3 ➔ Ring 0',
+          modeClass: 'sys-badge-user',
+          fileBadge: 'SYSCALL / SYSENTER • KiSystemCall64',
+          borderColor: 'rgba(6, 182, 212, 0.55)',
+          pills: [
+            { label: 'Instrukce SYSCALL (x86-64)', type: 'hw' },
+            { label: 'Instrukce SYSENTER (x86)', type: 'hw' },
+            { label: 'KiSystemCall64 (Trap Handler jádra)', type: 'sys' },
+            { label: 'NtCreateFile', type: 'sys' },
+            { label: 'NtAllocateVirtualMemory', type: 'sys' },
+            { label: 'NtQuerySystemInformation', type: 'sys' },
+            { label: 'NtOpenProcessToken', type: 'sys' }
+          ],
+          desc: 'Přísně střežený hraniční přechod mezi neprivilegovaným kódem a všemocným jádrem. Aplikace nesmí do jádra skočit přímo; musí nastavit číslo požadované systémové služby do registru EAX/RAX a vyvolat CPU instrukci SYSCALL.',
+          swExplanation: 'Při provedení instrukce SYSCALL procesor uloží stav registrů aplikace, přepne zásobník na bezpečný Kernel Stack a předá řízení obsluze <code>KiSystemCall64</code> v ntoskrnl.exe.',
+          security: '<strong>Hardwarová bariéra CPU:</strong> Zabraňuje injektování škodlivého kódu do jádra. Trap Handler důsledně ověřuje paměťové ukazatele předané z uživatelského prostoru funkcemi <code>ProbeForRead</code> a <code>ProbeForWrite</code>.',
+          api: 'MSR registr IA32_LSTAR (adresa obsluhy jádra), volací konvence FastCall Windows x64'
+        },
+        {
+          id: 'executive',
+          name: 'Windows NT Executive (Vyšší systémové služby jádra)',
+          num: 4,
+          modeBadge: 'Kernel Mode (Ring 0)',
+          modeClass: 'sys-badge-kernel',
+          fileBadge: 'ntoskrnl.exe • win32k.sys',
+          borderColor: 'rgba(244, 63, 94, 0.45)',
+          pills: [
+            { label: 'Object Manager (Ob)', type: 'sys' },
+            { label: 'Virtual Memory Manager (Mm)', type: 'sys' },
+            { label: 'Process & Thread Manager (Ps)', type: 'sys' },
+            { label: 'I/O Manager (Io) & IRP', type: 'sys' },
+            { label: 'Security Ref Monitor (SRM)', type: 'sys' },
+            { label: 'win32k.sys (Grafika / DirectX Ring 0)', type: 'sys' },
+            { label: 'Plug and Play & Power (Pnp/Po)', type: 'sys' }
+          ],
+          desc: 'Poskytuje kompletní sadu vyšších systémových služeb operačního systému. Reprezentuje veškeré prostředky jako jednotné objekty, spravuje virtuální paměť a odkládání (pagefile.sys), směruje I/O požadavky ovladačům přes asynchronní pakety IRP a provádí bezpečnostní audit DACL.',
+          swExplanation: 'Zahrnuje klíčové komponenty jádra (Mm, Ps, Ob, Io, SRM) a ovladač <code>win32k.sys</code>, který byl v NT 4.0 přesunut do Ring 0 kvůli maximálnímu výkonu vykreslování oken a grafiky.',
+          security: '<strong>Neomezená privilegia:</strong> Kód v Ring 0 může adresovat jakoukoliv fyzickou paměť. Chyba v ovladači způsobí okamžitou havárii systému – BSOD (např. <em>IRQL_NOT_LESS_OR_EQUAL 0x0A</em>).',
+          api: 'Kernel-Mode Driver Framework (KMDF), Windows Driver Model (WDM), I/O Request Packets (IRP)'
+        },
+        {
+          id: 'kernel',
+          name: 'NT Kernel (Nízkoúrovňové mikro-jádro Windows)',
+          num: 5,
+          modeBadge: 'Kernel Mode (Ring 0) / Non-Paged RAM',
+          modeClass: 'sys-badge-kernel',
+          fileBadge: 'ntoskrnl.exe (Kernel Core)',
+          borderColor: 'rgba(244, 63, 94, 0.55)',
+          pills: [
+            { label: 'Thread Scheduler (Plánovač vláken)', type: 'sys' },
+            { label: 'Vícejádrové Spinlocky (SMP)', type: 'sys' },
+            { label: 'Context Switching (Přepínání CPU)', type: 'sys' },
+            { label: 'Obsluha přerušení ISR / DPC', type: 'sys' },
+            { label: 'Dispatcher objekty (Mutex/Semaphore)', type: 'sys' },
+            { label: 'KeBugCheckEx (BSOD engine)', type: 'sys' }
+          ],
+          desc: 'Absolutní srdce operačního systému. Je trvale uloženo v paměti RAM a nikdy se neodkládá na disk (Non-Paged Pool). Odpovídá za preemptivní plánování vláken podle 32 prioritních úrovní, synchronizaci paralelních jader procesoru a bleskovou obsluhu přerušení.',
+          swExplanation: 'Řídí to nejdůležitější: kdy které vlákno dostane čas procesoru, jak proběhne blesková výměna registrů při přepnutí kontextu a jak jsou ošetřena přerušení.',
+          security: '<strong>Kritická integrita:</strong> Jakákoliv neopravená chyba okamžitě aktivuje záchrannou rutinu <code>KeBugCheckEx</code>, která zastaví systém a vygeneruje Memory Dump pro diagnostiku.',
+          api: 'IRQL úrovně (PASSIVE_LEVEL, APC_LEVEL, DISPATCH_LEVEL, HIGH_LEVEL), nízkoúrovňový assembler CPU'
+        },
+        {
+          id: 'hal',
+          name: 'Hardware Abstraction Layer (HAL)',
+          num: 6,
+          modeBadge: 'Kernel Mode (Ring 0) / Abstrakce HW',
+          modeClass: 'sys-badge-rt',
+          fileBadge: 'C:\\Windows\\System32\\hal.dll',
+          borderColor: 'rgba(16, 185, 129, 0.45)',
+          pills: [
+            { label: 'hal.dll (Dynamická knihovna)', type: 'hw' },
+            { label: 'Řadiče přerušení APIC / IO-APIC', type: 'hw' },
+            { label: 'DMA & Sběrnice PCIe / PCI', type: 'hw' },
+            { label: 'Systémové časovače HPET / TSC', type: 'hw' },
+            { label: 'Architektury: x86-64 / ARM64', type: 'hw' },
+            { label: 'SMP Multi-Core Inicializace', type: 'hw' }
+          ],
+          desc: 'Architektonický klenot Davea Cutlera. Tenká vrstva nízkoúrovňového kódu, která izoluje jádro Windows od odlišností základních desek, APIC řadičů přerušení, systémových časovačů a procesorových čipsetů.',
+          swExplanation: 'Díky <code>hal.dll</code> je kód <code>ntoskrnl.exe</code> zcela univerzální – stejné binární jádro obslouží Intel Core i9, AMD Ryzen i procesory Qualcomm Snapdragon ARM64.',
+          security: '<strong>Ochrana mapování hardwaru:</strong> Zajišťuje bezpečné mapování registrů zařízení do paměti (MMIO) a předchází hardwarovým konfliktům na sběrnicích.',
+          api: 'HAL API pro ovladače (HalGetBusData, HalTranslateBusAddress, KeRaiseIrqlToDpcLevel)'
+        },
+        {
+          id: 'hardware',
+          name: 'Fyzický hardware počítače (Hardware Layer)',
+          num: 7,
+          modeBadge: 'Fyzický hardware a křemík',
+          modeClass: 'sys-badge-hw',
+          fileBadge: 'CPU • MMU • RAM • PCIe • NVMe • TPM',
+          borderColor: 'rgba(148, 163, 184, 0.45)',
+          pills: [
+            { label: 'CPU (Intel Core / AMD Ryzen / ARM)', type: 'hw' },
+            { label: 'MMU & TLB (Stránkovací jednotka)', type: 'hw' },
+            { label: 'DDR4 / DDR5 SDRAM', type: 'hw' },
+            { label: 'NVMe SSD (PCIe Gen 4/5)', type: 'hw' },
+            { label: 'GPU (GeForce / Radeon / Arc)', type: 'hw' },
+            { label: 'Bezpečnostní čip TPM 2.0', type: 'hw' },
+            { label: 'UEFI Firmware & ACPI tabulky', type: 'hw' }
+          ],
+          desc: 'Fyzický svět křemíkových čipů, procesorových jader, vodičů a paměťových buněk. Vykonává strojový mikrokód, zpracovává elektrické signály a reálně ukládá data.',
+          swExplanation: 'Jednotka MMU procesoru fyzicky ověřuje každou čtenou adresu proti tabulkám stránek. Čip TPM 2.0 bezpečně ukládá klíče pro šifrování disků BitLocker.',
+          security: '<strong>Hardwarová ochrana paměti:</strong> Procesor hardwarově kontroluje bit No-Execute (DEP/NX bit), který brání spuštění škodlivého kódu v datových oblastech paměti (Stack/Heap).',
+          api: 'PCIe protokoly, NVMe Command Queue, ACPI specifikace pro řízení spotřeby, instrukční sady x86-64 / ARM64'
+        }
+      ];
+
+      let currentLayerIndex = 0;
+
+      const layerModal = document.getElementById('layerModal');
+      const layerModalCloseBtn = document.getElementById('layerModalCloseBtn');
+      const layerModalTitle = document.getElementById('layerModalTitle');
+      const layerModalModeBadge = document.getElementById('layerModalModeBadge');
+      const layerModalFileBadge = document.getElementById('layerModalFileBadge');
+      const layerModalBody = document.getElementById('layerModalBody');
+      const layerPrevBtn = document.getElementById('layerPrevBtn');
+      const layerNextBtn = document.getElementById('layerNextBtn');
+      const layerQuickDots = document.getElementById('layerQuickDots');
+
+      function buildQuickDots() {
+        if (!layerQuickDots) return;
+        layerQuickDots.innerHTML = '';
+        LAYER_DATA.forEach((layer, idx) => {
+          const dot = document.createElement('button');
+          dot.className = 'layer-dot-btn' + (idx === currentLayerIndex ? ' active' : '');
+          dot.textContent = layer.num;
+          dot.title = `Přejít na vrstvu ${layer.num}: ${layer.name}`;
+          dot.addEventListener('click', () => {
+            renderLayer(idx);
+          });
+          layerQuickDots.appendChild(dot);
+        });
+      }
+
+      function renderLayer(index) {
+        if (index < 0 || index >= LAYER_DATA.length) return;
+        currentLayerIndex = index;
+        const layer = LAYER_DATA[index];
+
+        if (layerModalTitle) layerModalTitle.textContent = `${layer.num}. ${layer.name}`;
+        if (layerModalModeBadge) {
+          layerModalModeBadge.textContent = layer.modeBadge;
+          layerModalModeBadge.className = 'sys-badge ' + layer.modeClass;
+        }
+        if (layerModalFileBadge) {
+          layerModalFileBadge.textContent = layer.fileBadge;
+        }
+
+        if (layerPrevBtn) layerPrevBtn.disabled = index === 0;
+        if (layerNextBtn) layerNextBtn.disabled = index === LAYER_DATA.length - 1;
+
+        buildQuickDots();
+
+        if (layerModalBody) {
+          const pillsHtml = layer.pills.map(p =>
+            `<span class="sw-pill ${p.type}">${p.label}</span>`
+          ).join('');
+
+          layerModalBody.innerHTML = `
+            <div class="layer-detail-section">
+              <div class="layer-detail-heading">
+                <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Úloha vrstvy v operačním systému
+              </div>
+              <div class="layer-detail-text">${layer.desc}</div>
+            </div>
+
+            <div class="layer-detail-section">
+              <div class="layer-detail-heading">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                Příklady běžícího software, procesů &amp; komponent
+              </div>
+              <div class="software-pills-wrap">${pillsHtml}</div>
+              <div style="font-size: 0.83rem; color: var(--text-secondary); margin-top: 0.35rem; line-height: 1.45;">
+                ${layer.swExplanation}
+              </div>
+            </div>
+
+            <div class="layer-detail-section">
+              <div class="layer-detail-heading">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Bezpečnost &amp; Důsledky chyb (Crash Model)
+              </div>
+              <div class="layer-detail-text" style="border-left: 3px solid ${layer.borderColor};">${layer.security}</div>
+            </div>
+
+            <div class="layer-detail-section">
+              <div class="layer-detail-heading">
+                <svg class="icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Systémová rozhraní &amp; Mechanismus komunikace
+              </div>
+              <div class="layer-detail-text" style="font-family: var(--font-mono); font-size: 0.82rem; color: #38bdf8;">${layer.api}</div>
+            </div>
+          `;
+        }
+      }
+
+      function openLayerModal(layerId) {
+        if (!layerModal) return;
+        const foundIdx = LAYER_DATA.findIndex(l => l.id === layerId);
+        renderLayer(foundIdx !== -1 ? foundIdx : 0);
+        layerModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLayerModal() {
+        if (!layerModal) return;
+        layerModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      // Propojení kliknutí na prvky ve stacku
+      document.querySelectorAll('.layer-item.layer-interactive').forEach(item => {
+        const layerId = item.getAttribute('data-layer-id');
+        item.addEventListener('click', () => {
+          openLayerModal(layerId);
+        });
+        item.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openLayerModal(layerId);
+          }
+        });
+      });
+
+      if (layerModalCloseBtn) layerModalCloseBtn.addEventListener('click', closeLayerModal);
+      if (layerModal) {
+        layerModal.addEventListener('click', (e) => {
+          if (e.target === layerModal) closeLayerModal();
+        });
+      }
+
+      if (layerPrevBtn) {
+        layerPrevBtn.addEventListener('click', () => {
+          if (currentLayerIndex > 0) renderLayer(currentLayerIndex - 1);
+        });
+      }
+
+      if (layerNextBtn) {
+        layerNextBtn.addEventListener('click', () => {
+          if (currentLayerIndex < LAYER_DATA.length - 1) renderLayer(currentLayerIndex + 1);
+        });
+      }
+
+      // Klávesová navigace uvnitř modálu (Capture fáze pro zabránění přepnutí slidu)
+      document.addEventListener('keydown', (e) => {
+        if (layerModal && layerModal.classList.contains('active')) {
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            closeLayerModal();
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            if (currentLayerIndex > 0) renderLayer(currentLayerIndex - 1);
+          } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            if (currentLayerIndex < LAYER_DATA.length - 1) renderLayer(currentLayerIndex + 1);
+          }
+        }
+      }, true);
+    })();
+  </script>
 </body>
 </html>
