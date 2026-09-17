@@ -21,6 +21,8 @@
   let slideCounter = null;
   let prevBtn = null;
   let nextBtn = null;
+  let prevLessonBtn = null;
+  let nextLessonBtn = null;
   let themeToggle = null;
   let fsBtn = null;
   let tocBtn = null;
@@ -46,6 +48,8 @@
     slideCounter = document.getElementById('slideCounter') || document.querySelector('.slide-counter');
     prevBtn = document.getElementById('prevSlideBtn') || document.getElementById('prevBtn');
     nextBtn = document.getElementById('nextSlideBtn') || document.getElementById('nextBtn');
+    prevLessonBtn = document.getElementById('prevLessonBtn');
+    nextLessonBtn = document.getElementById('nextLessonBtn');
     themeToggle = document.getElementById('themeToggleBtn') || document.getElementById('themeToggle');
     fsBtn = document.getElementById('fullscreenBtn') || document.getElementById('fsBtn');
     tocBtn = document.getElementById('tocToggleBtn') || document.getElementById('tocBtn');
@@ -187,12 +191,46 @@
     }
   }
 
+  function goToPrevLesson() {
+    if (prevLessonBtn && !prevLessonBtn.classList.contains('disabled')) {
+      const href = prevLessonBtn.getAttribute('href');
+      if (href && href !== '#') {
+        window.location.href = href;
+      }
+    }
+  }
+
+  function goToNextLesson() {
+    if (nextLessonBtn && !nextLessonBtn.classList.contains('disabled')) {
+      const href = nextLessonBtn.getAttribute('href');
+      if (href && href !== '#') {
+        window.location.href = href;
+      }
+    }
+  }
+
   /**
    * Obsluha tlačítek v ovládací liště
    */
   function bindNavigationEvents() {
     if (prevBtn) prevBtn.addEventListener('click', (e) => { e.preventDefault(); prevSlide(); });
     if (nextBtn) nextBtn.addEventListener('click', (e) => { e.preventDefault(); nextSlide(); });
+
+    // Ošetření odkazů na předchozí / další lekci pokud jsou zakázané
+    if (prevLessonBtn) {
+      prevLessonBtn.addEventListener('click', (e) => {
+        if (prevLessonBtn.classList.contains('disabled') || prevLessonBtn.getAttribute('href') === '#') {
+          e.preventDefault();
+        }
+      });
+    }
+    if (nextLessonBtn) {
+      nextLessonBtn.addEventListener('click', (e) => {
+        if (nextLessonBtn.classList.contains('disabled') || nextLessonBtn.getAttribute('href') === '#') {
+          e.preventDefault();
+        }
+      });
+    }
 
     // Klik na počítadlo otevře osnovu
     if (slideCounter) {
@@ -244,6 +282,28 @@
 
       // Pokud je aktivní modál, neprovádět další klávesové akce
       if (isAnyModalOpen()) return;
+
+      // Přechod mezi tématy / lekcemi v rámci modulu
+      if ((e.ctrlKey || e.metaKey) && e.key === 'ArrowRight') {
+        e.preventDefault();
+        goToNextLesson();
+        return;
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToPrevLesson();
+        return;
+      }
+      if (e.shiftKey && (e.key === 'N' || e.key === 'n')) {
+        e.preventDefault();
+        goToNextLesson();
+        return;
+      }
+      if (e.shiftKey && (e.key === 'P' || e.key === 'p')) {
+        e.preventDefault();
+        goToPrevLesson();
+        return;
+      }
 
       switch (e.key) {
         case 'ArrowRight':
@@ -425,6 +485,14 @@
           <div class="shortcut-row">
             <span>Předchozí snímek</span>
             <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Další lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
           </div>
           <div class="shortcut-row">
             <span>První / Poslední snímek</span>

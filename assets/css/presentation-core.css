@@ -904,6 +904,14 @@ tbody tr:hover {
   transform: scale(0.95);
 }
 
+.control-btn.disabled,
+.control-btn[aria-disabled="true"] {
+  opacity: 0.32;
+  pointer-events: none;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+
 .control-btn.btn-nav-primary {
   background: var(--grad-primary);
   color: #ffffff;

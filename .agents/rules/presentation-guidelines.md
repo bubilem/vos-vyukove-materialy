@@ -61,48 +61,69 @@ Při vytváření nebo úpravách výukových materiálů a prezentací v tomto 
    Úroveň 4: Snímek             →  #slide-N (řízeno JS enginem, URL hash, swipe, klávesnice)
    ```
 
-   **Navigace zpět (v každé prezentaci):**
-   - Tlačítko `#homeBtn` → `../../index.html` (Domů — hlavní rozcestník, vždy 2 úrovně výše)
-   - Tlačítko `#moduleBtn` → `index.html` (← Zpět na modul)
-   - Badge v headeru `← NAZEV_MODULU` → `index.html` (alternativní odkaz)
+   **Navigace a přechod mezi tématy (v každé prezentaci):**
+   - Tlačítko `#prevLessonBtn` → `XX_predchozi_lekce.html` (nebo stav `disabled` u první lekce)
+   - Tlačítko `#moduleBtn` → `index.html` (přehled modulu, ikona grid/katalogu)
+   - Tlačítko `#nextLessonBtn` → `XX_dalsi_lekce.html` (nebo stav `disabled` u poslední lekce)
+   - Badge v headeru `← NAZEV_MODULU` → `index.html` (návrat do modulu)
 
 7. **Standardní Controls Bar — povinná struktura (NEKOPÍRUJ jiné varianty):**
-   Každá prezentace musí mít přesně tento `<nav class="controls-bar">` (nebo s `aria-label`):
+   Každá prezentace musí mít přesně tento `<nav class="controls-bar">` se sdruženým blokem přechodu mezi tématy:
 
    ```html
    <nav class="controls-bar" aria-label="Ovládání prezentace">
-     <!-- NAVIGACE HIERARCHIÍ -->
-     <a href="../../index.html" class="control-btn" id="homeBtn" title="Domů – hlavní rozcestník">
-       <svg class="icon" viewBox="0 0 24 24"><!-- dům SVG --></svg>
+     <!-- PŘECHOD MEZI LEKCEMI A MODUL (Varianta A) -->
+     <a href="01_predchozi.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Název (Ctrl+Šipka vlevo)">
+       <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
      </a>
-     <a href="index.html" class="control-btn" id="moduleBtn" title="← Zpět na modul">
-       <svg class="icon" viewBox="0 0 24 24"><!-- šipka zpět SVG --></svg>
+     <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu MODUL">
+       <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+     </a>
+     <a href="03_dalsi.html" class="control-btn" id="nextLessonBtn" title="Další lekce: Název (Ctrl+Šipka vpravo)">
+       <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
      </a>
      <div class="controls-divider"></div>
      <!-- POSUN PO SNÍMCÍCH -->
-     <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">...</button>
+     <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+       <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+     </button>
      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
-     <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">...</button>
+     <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+       <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+     </button>
      <div class="controls-divider"></div>
      <!-- NÁSTROJE -->
-     <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">...</button>
+     <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+       <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+     </button>
      <!-- SLOVNÍK: vždy přítomen s display:none, JS engine ho zobrazí pokud existuje #glossaryModal -->
-     <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">...</button>
-     <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">...</button>
-     <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">...</button>
+     <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+       <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+     </button>
+     <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+       <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+     </button>
+     <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+       <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+     </button>
    </nav>
    ```
 
-   **Klíčové ID kontrolérů (rozpoznávány JS enginem):**
-   - `homeBtn`, `moduleBtn` — navigace hierarchií (nové, JS engine je nepotřebuje ale musí být správně)
-   - `prevSlideBtn`, `nextSlideBtn` — posun snímků
-   - `slideCounter` — počítadlo (klik = TOC)
-   - `tocToggleBtn`, `tocOverlay`, `tocCloseBtn`, `tocList` — osnova
-   - `glossaryBtn`, `glossaryModal` — slovník (zobrazí se auto pokud #glossaryModal existuje)
-   - `fullscreenBtn` — fullscreen
-   - `helpToggleBtn`, `helpModal`, `helpCloseBtn` — nápověda klávesnice
-   - `themeToggleBtn` — v headeru, přepnutí motivu
-   - `progressBarFill` — v headeru, lišta průběhu
+   **Pravidla pro první a poslední lekci modulu:**
+   - U 1. lekce (`01_...`): `#prevLessonBtn` má třídu `control-btn disabled`, `aria-disabled="true"`, `tabindex="-1"`, `href="#"` a title `Předchozí lekce (žádná předchozí není)`.
+   - U poslední lekce (`10_...`): `#nextLessonBtn` má třídu `control-btn disabled`, `aria-disabled="true"`, `tabindex="-1"`, `href="#"` a title `Další lekce (žádná další není)`.
+   - Rozměr tlačítka (38×38 px) a ikona zůstávají, aby lišta neposkakovala.
+
+   **Klíčové ID kontrolérů a klávesové zkratky:**
+   - `prevLessonBtn`, `nextLessonBtn` — přechod mezi lekcemi (`Ctrl + Šipka vlevo / vpravo`, případně `Shift + P / N`)
+   - `moduleBtn` — návrat do katalogu modulu (ikona mřížky/gridu)
+   - `prevSlideBtn`, `nextSlideBtn` — posun po snímcích (`Šipka vlevo / vpravo`, `Backspace`, `Mezerník`)
+   - `slideCounter` — počítadlo snímků (klik = otevření osnovy)
+   - `tocToggleBtn`, `tocOverlay`, `tocCloseBtn`, `tocList` — osnova lekce (`M`, `O`)
+   - `glossaryBtn`, `glossaryModal` — slovník pojmů (`G`, auto-detekce)
+   - `fullscreenBtn` — celá obrazovka (`F`)
+   - `helpToggleBtn`, `helpModal`, `helpCloseBtn` — dialog nápovědy (`?`, `Escape`)
+   - `themeToggleBtn` — v horní liště, přepnutí motivu (`T`)
 
 8. **Slovník pojmů (Glossary):**
    - Je-li prezentace rozsáhlá a odborná (obvykle MUL20/OSY20 typ), přidej slovník jako `<div class="modal-overlay" id="glossaryModal">`.
