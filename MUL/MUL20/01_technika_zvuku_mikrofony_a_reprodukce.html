@@ -619,7 +619,7 @@
                 </div>
 
                 <div style="font-size: 0.76rem; color: var(--text-muted); background: rgba(0,0,0,0.25); padding: 0.4rem 0.6rem; border-radius: 4px;">
-                  💡 <strong>Pravidlo pro praxi:</strong> V digitálním věku nenahráváme těsně pod 0 dBFS! Cílíme na &minus;18 dBFS RMS (špičky max &minus;10 dBFS), abychom měli headroom pro ekvalizéry a kompresory.
+                  <svg class="icon" viewBox="0 0 24 24" style="width:0.9rem;height:0.9rem;vertical-align:-1px;display:inline-block;color:#f59e0b;"><path d="M12 2a6 6 0 0 0-6 6c0 2.22 1.21 4.16 3 5.2V16a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-2.8c1.79-1.04 3-2.98 3-5.2a6 6 0 0 0-6-6Z"></path><line x1="9" y1="21" x2="15" y2="21"></line><line x1="10" y1="18" x2="14" y2="18"></line></svg> <strong>Pravidlo pro praxi:</strong> V digitálním věku nenahráváme těsně pod 0 dBFS! Cílíme na &minus;18 dBFS RMS (špičky max &minus;10 dBFS), abychom měli headroom pro ekvalizéry a kompresory.
                 </div>
               </div>
             </div>
@@ -802,8 +802,8 @@
 
               <!-- Přepínač stavu místnosti -->
               <div class="room-toggle-bar">
-                <button class="room-toggle-btn active" id="btnTreatedRoom">✅ Ošetřené studio</button>
-                <button class="room-toggle-btn" id="btnUnTreatedRoom">⚠️ Neupravená místnost</button>
+                <button class="room-toggle-btn active" id="btnTreatedRoom"><svg class="icon" viewBox="0 0 24 24" style="width:0.85rem;height:0.85rem;vertical-align:-1px;margin-right:0.3rem;"><polyline points="20 6 9 17 4 12"></polyline></svg>Ošetřené studio</button>
+                <button class="room-toggle-btn" id="btnUnTreatedRoom"><svg class="icon" viewBox="0 0 24 24" style="width:0.85rem;height:0.85rem;vertical-align:-1px;margin-right:0.3rem;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>Neupravená místnost</button>
               </div>
             </div>
 
@@ -855,13 +855,318 @@
         </div>
       </section>
 
-      <!-- SLIDE 7: SUMMARY & INTERAKTIVNÍ ZKOUŠKOVÝ KVÍZ -->
+      <!-- SLIDE 7: PRAKTICKÁ STUDIOVÁ TECHNIKA & PRODUKCE -->
       <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická studiová technika &bull; Produkce</div>
+            <h2 class="slide-title">Průvodce výběrem techniky a produkční software</h2>
+            <p class="slide-subtitle">Klíčová nákupní kritéria pro mikrofony a poslech &bull; Přehled DAW a audio editorů pro nahrávání i mastering</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Nákupní rádce &amp; Software</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="tabs-header">
+            <button class="tab-btn active" data-target="tab-prac-mic">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+              Výběr mikrofonu &amp; Zvukovky
+            </button>
+            <button class="tab-btn" data-target="tab-prac-monitors">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><circle cx="12" cy="14" r="4"></circle><line x1="12" y1="6" x2="12.01" y2="6"></line></svg>
+              Studiový poslech &amp; Sluchátka
+            </button>
+            <button class="tab-btn" data-target="tab-prac-software">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg>
+              Software: DAW &amp; Audio editory
+            </button>
+            <button class="tab-btn" data-target="tab-prac-config">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+              Interaktivní konfigurátor studia
+            </button>
+          </div>
+
+          <!-- TAB 1: MIKROFONY & ZVUKOVÉ KARTY -->
+          <div class="tab-panel active" id="tab-prac-mic">
+            <div class="gear-grid">
+              <!-- LEVÝ SLOUPEC: JAK VYBRAT MIKROFON -->
+              <div class="gear-card">
+                <div class="gear-card-header">
+                  <div class="gear-card-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                    Kritéria výběru mikrofonu
+                  </div>
+                  <span class="gear-badge gear-badge-mic">Kapsle &amp; Parametry</span>
+                </div>
+                <div class="styled-list" style="font-size: 0.83rem; display: flex; flex-direction: column; gap: 0.55rem;">
+                  <div>
+                    <strong style="color: #60a5fa;">Kdy zvolit dynamický mikrofon:</strong><br>
+                    <span style="color: var(--text-secondary);">Ideální pro neošetřené akustické prostory, hlučné byty, podcasting, stream a živé vystoupení. Těžší kmitací cívka přirozeně potlačuje tiché parazitní odrazy místnosti. Vyžaduje mluvení z bezprostřední blízkosti (3–8 cm). Typičtí zástupci: <em>Shure SM58, Shure SM7B, Rode PodMic</em>.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #ec4899;">Kdy zvolit kondenzátorový velkomembránový (LDC):</strong><br>
+                    <span style="color: var(--text-secondary);">Pro studiové vokály, dabing a akustickou kytaru v tichém prostředí. Extrémně lehká zlacená membrána zachytí jemné výškové tranzienty a vzduch. V neošetřené místnosti však zachytí i ruch ulice a větrák PC. Typičtí zástupci: <em>Rode NT1, Audio-Technica AT2020</em>.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #f59e0b;">Na jaké hodnoty koukat v technickém listu:</strong><br>
+                    <span style="color: var(--text-secondary);">&bull; <strong>Vlastní šum (Self-noise):</strong> U kondenzátorů hledat <strong>&lt; 14–16 dBA</strong> (špičkové mikrofony mají &lt; 5 dBA). Nad 19 dBA je šum slyšet v pauzách.<br>
+                    &bull; <strong>Max SPL:</strong> Pro zpěv a řeč stačí &gt; 125 dB SPL; pro bicí a kytarové aparáty hledejte &gt; 140 dB SPL.<br>
+                    &bull; <strong>Citlivost (mV/Pa):</strong> Kondenzátory (15–30 mV/Pa) potřebují malý zisk; dynamické (1–2 mV/Pa) vyžadují silný preamp se ziskem +60 dB.</span>
+                  </div>
+                </div>
+                <div class="gear-tip-box">
+                  <strong>Tip z praxe:</strong> Pro dynamické mikrofony s nízkým výstupem (např. Shure SM7B s citlivostí 1.12 mV/Pa) je u levnějších zvukových karet nutný inline předzesilovač (Cloudlifter, sE Dynamite) poskytující čistý zisk +25 dB.
+                </div>
+              </div>
+
+              <!-- PRAVÝ SLOUPEC: XLR VS USB & PŘEVODNÍKY -->
+              <div class="gear-card">
+                <div class="gear-card-header">
+                  <div class="gear-card-title">
+                    <svg class="icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    XLR vs. USB &amp; Audio rozhraní
+                  </div>
+                  <span class="gear-badge gear-badge-mic">Připojení &amp; Řetězec</span>
+                </div>
+                <div class="styled-list" style="font-size: 0.83rem; display: flex; flex-direction: column; gap: 0.55rem;">
+                  <div>
+                    <strong style="color: #a855f7;">USB mikrofon (All-in-One):</strong><br>
+                    <span style="color: var(--text-secondary);">Obsahuje vestavěný předzesilovač a ADC. Výhoda: nulové dodatečné náklady, plug &amp; play pro online výuku a Twitch. <em>Nevýhody:</em> omezen na 1 kanál, nemožnost budoucího upgradu bez výměny celého mikrofonu, často vyšší latence a levnější převodník.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #38bdf8;">XLR mikrofon + Zvuková karta (Doporučeno):</strong><br>
+                    <span style="color: var(--text-secondary);">Profesionální modulární řešení. Symetrické vedení (CMRR) s nulovým rušením, kvalitní diskrétní předzesilovače, Phantom +48V, hardwarový direct monitoring bez latence a symetrické výstupy pro studiové monitory.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #10b981;">Doporučené zvukové karty pro studentský rozpočet:</strong><br>
+                    <span style="color: var(--text-secondary);">&bull; <strong>Focusrite Scarlett 2i2 (4th Gen):</strong> 120 dB dynamický rozsah, Auto-Gain, Air mód.<br>
+                    &bull; <strong>MOTU M2:</strong> Špičkové ESS Sabre32 Ultra převodníky, barevný LCD ukazatel úrovní.<br>
+                    &bull; <strong>Audient iD4 / iD14:</strong> Konzolovkový preamp třídy A s teplým analogovým zabarvením.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #f43f5e;">Povinné doplňky při nákupu:</strong><br>
+                    <span style="color: var(--text-secondary);">&bull; <strong>Pop-filtr:</strong> Dvouvrstvá síťka odklání proud vzduchu z ploziv (P, B) a chrání membránu před vlhkostí.<br>
+                    &bull; <strong>Pavouk (Shock mount):</strong> Odpružený držák tlumí vibrace z podlahy, stolu a psaní na klávesnici.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: STUDIOVÝ POSLECH & SLUCHÁTKA -->
+          <div class="tab-panel" id="tab-prac-monitors">
+            <div class="gear-grid">
+              <!-- LEVÝ SLOUPEC: STUDIOVÉ MONITORY -->
+              <div class="gear-card">
+                <div class="gear-card-header">
+                  <div class="gear-card-title">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"></rect><circle cx="12" cy="14" r="4"></circle><line x1="12" y1="6" x2="12.01" y2="6"></line></svg>
+                    Aktivní studiové monitory
+                  </div>
+                  <span class="gear-badge gear-badge-monitors">Nearfield poslech</span>
+                </div>
+                <div class="styled-list" style="font-size: 0.83rem; display: flex; flex-direction: column; gap: 0.55rem;">
+                  <div>
+                    <strong style="color: #f59e0b;">1. Proč studiový monitor a ne Hi-Fi repro:</strong><br>
+                    <span style="color: var(--text-secondary);">Hi-Fi reproboxy zvuk záměrně zkrášlují (prohnutá "V-curve" – přidané basy a cinkavé výšky). Studiový monitor má <strong>lineární frekvenční odezvu (Flat)</strong>: nehraje líbivě, ale pravdivě. Pokud zní nahrávka dobře na monitorech, bude hrát skvěle kdekoliv.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #38bdf8;">2. Velikost wooferu (basového měniče) podle místnosti:</strong><br>
+                    <span style="color: var(--text-secondary);">&bull; <strong>Malý pokoj (do 12–14 m²):</strong> Volte <strong>5" monitory</strong> (např. <em>Yamaha HS5, Adam Audio T5V, JBL 305P MkII</em>).<br>
+                    &bull; <strong>Střední studio (15–25 m²):</strong> <strong>6.5" až 8" monitory</strong> (např. <em>Yamaha HS8, Adam T7V, Kali Audio LP-6 v2</em>).</span>
+                  </div>
+                  <div>
+                    <strong style="color: #a855f7;">3. Bassreflex a umístění u stěny:</strong><br>
+                    <span style="color: var(--text-secondary);">Zadní bassreflex potřebuje min. 30–50 cm odstup od zdi. Při přiražení ke zdi dochází k boundary efektu (+6 dB nechtěných basů). Využijte přepínač <strong>Room Control / Acoustic Space (-2 dB / -4 dB)</strong> na zadním panelu monitoru. Vždy podložte monitory antivibračními podložkami.</span>
+                  </div>
+                </div>
+                <div class="gear-warn-box">
+                  <strong>Nejčastější chyba začátečníků:</strong> Koupě obřích 8" monitorů do malého dětského pokoje bez basových pastí. Místnost začne nekontrolovaně rezonovat na 50 Hz, basy se v sweet spotu vyruší a student začne basy chybně přidávat v EQ!
+                </div>
+              </div>
+
+              <!-- PRAVÝ SLOUPEC: STUDIOVÁ SLUCHÁTKA -->
+              <div class="gear-card">
+                <div class="gear-card-header">
+                  <div class="gear-card-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                    Studiová sluchátka: Uzavřená vs. Otevřená
+                  </div>
+                  <span class="gear-badge gear-badge-monitors">Kritický poslech</span>
+                </div>
+                <div class="styled-list" style="font-size: 0.83rem; display: flex; flex-direction: column; gap: 0.55rem;">
+                  <div>
+                    <strong style="color: #ec4899;">Uzavřená sluchátka (Closed-back) &bull; Určení: Záznam:</strong><br>
+                    <span style="color: var(--text-secondary);">Mušle jsou zcela utěsněné. Zabraňují přeslechu metronomu a podkladu do mikrofonu při nahrávání zpěvu (bleed). Poskytují silnější bas a skvělou izolaci, ale mají menší prostorovou scénu. Typičtí zástupci: <em>Beyerdynamic DT 770 Pro, Audio-Technica ATH-M50x, Sony MDR-7506</em>.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #10b981;">Otevřená sluchátka (Open-back) &bull; Určení: Mix &amp; Mastering:</strong><br>
+                    <span style="color: var(--text-secondary);">Zadní strana mušle má mřížku propouštějící zvuk ven. Poskytují mimořádně přirozený prostor, přesnou lokalizaci nástrojů a neunavují tolik sluch. Zvuk slyší celé okolí &ndash; nelze použít u otevřeného mikrofonu! Typičtí zástupci: <em>Beyerdynamic DT 990 Pro, Sennheiser HD 600, Sennheiser HD 560S</em>.</span>
+                  </div>
+                  <div>
+                    <strong style="color: #60a5fa;">Pozor na impedanci sluchátek (&Omega;):</strong><br>
+                    <span style="color: var(--text-secondary);">&bull; <strong>32 &ndash; 80 &Omega;:</strong> Univerzální pro notebooky, telefony a běžné USB zvukové karty.<br>
+                    &bull; <strong>250 &ndash; 600 &Omega;:</strong> Vyžadují vysoké napětí ze sluchátkového zesilovače. Zapojená do notebooku budou hrát potichu, dynamicky ploše a se zkreslením.</span>
+                  </div>
+                </div>
+                <div class="gear-tip-box">
+                  <strong>Doporučená studentská strategie:</strong> Pokud nemáte upravenou akustiku v pokoji, investujte raději do otevřených sluchátek (mix) + uzavřených sluchátek (nahrávání). Poskytnou věrnější poslech než monitory v holé místnosti.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: SOFTWARE: DAW & AUDIO EDITORY -->
+          <div class="tab-panel" id="tab-prac-software">
+            <div class="gear-grid">
+              <!-- LEVÝ SLOUPEC: DVOUSTOPÉ & SPEKTRÁLNÍ EDITORY -->
+              <div class="gear-card">
+                <div class="gear-card-header">
+                  <div class="gear-card-title">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Zvukové &amp; Spektrální editory
+                  </div>
+                  <span class="gear-badge gear-badge-free">Destruktivní &amp; Opravy</span>
+                </div>
+                <div class="sw-catalog-grid">
+                  <div class="sw-catalog-item">
+                    <div class="sw-item-head">
+                      <span class="sw-item-title">Audacity</span>
+                      <span class="gear-badge gear-badge-free">Open-Source</span>
+                    </div>
+                    <div class="sw-item-desc">Rychlý lineární ořez, normalizace, převody formátů, záznam mluveného slova, základní odstranění šumu (šumový profil). 100% zdarma pro Win/Mac/Linux.</div>
+                    <div class="sw-item-meta"><span>Licence: Zdarma (GPL)</span> &bull; <span>Podpora VST3</span></div>
+                  </div>
+
+                  <div class="sw-catalog-item">
+                    <div class="sw-item-head">
+                      <span class="sw-item-title">Adobe Audition</span>
+                      <span class="gear-badge gear-badge-sw">Komerční</span>
+                    </div>
+                    <div class="sw-item-desc">Průmyslový standard pro postprodukci zvuku k videu v Adobe Premiere. Spektrální čištění frekvencí, multitrack pro podcasting a EBU R128 loudness metering.</div>
+                    <div class="sw-item-meta"><span>Součást Creative Cloud</span> &bull; <span>Spektrální editor</span></div>
+                  </div>
+
+                  <div class="sw-catalog-item" style="grid-column: 1/-1;">
+                    <div class="sw-item-head">
+                      <span class="sw-item-title">iZotope RX (Spectral Repair)</span>
+                      <span class="gear-badge gear-badge-sw">Industry Standard</span>
+                    </div>
+                    <div class="sw-item-desc">Absolutní špička pro záchranu poškozeného audia. Moduly s AI: <em>Voice De-noise</em> (odstranění hučení), <em>De-reverb</em> (odstranění ozvěny místnosti), <em>De-clip</em> (oprava přebuzení analogu), <em>De-click</em> (potlačení mlaskání úst). Využíváno ve filmovém dabingu a restaurování archivů.</div>
+                    <div class="sw-item-meta"><span>Multiplatformní</span> &bull; <span>Stand-alone &amp; VST3/AU plug-iny</span></div>
+                  </div>
+                </div>
+                <div class="gear-tip-box">
+                  <strong>Rozdíl editor vs. DAW:</strong> Zvukový editor (Audacity/RX) provádí úpravy přímo na vzorcích audio souboru (destruktivně/spektrálně). DAW pracuje nedestruktivně v reálném čase.
+                </div>
+              </div>
+
+              <!-- PRAVÝ SLOUPEC: DIGITÁLNÍ ZVUKOVÉ PRACOVNÍ STANICE (DAW) -->
+              <div class="gear-card">
+                <div class="gear-card-header">
+                  <div class="gear-card-title">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    Profesionální vícestopá DAW
+                  </div>
+                  <span class="gear-badge gear-badge-sw">Produkce &amp; Mix</span>
+                </div>
+                <div class="sw-catalog-grid">
+                  <div class="sw-catalog-item">
+                    <div class="sw-item-head">
+                      <span class="sw-item-title">Cockos Reaper</span>
+                      <span class="gear-badge gear-badge-free">Doporučeno VOŠ</span>
+                    </div>
+                    <div class="sw-item-desc">Instalační soubor má pouhých ~15 MB! Extrémně nízká zátěž CPU, 60denní neomezené demo bez omezení funkcí, komerční licence jen $60. Plný 64-bit float mix engine.</div>
+                    <div class="sw-item-meta"><span>Win / macOS / Linux</span> &bull; <span>VST3 / JSFX</span></div>
+                  </div>
+
+                  <div class="sw-catalog-item">
+                    <div class="sw-item-head">
+                      <span class="sw-item-title">PreSonus Studio One</span>
+                      <span class="gear-badge gear-badge-sw">Moderní</span>
+                    </div>
+                    <div class="sw-item-desc">Nejintuitivnější workflow moderní éry s plnou podporou Drag &amp; Drop, integrovanou masteringovou sekcí (Project Page) a technologií ARA2 pro Melodyne.</div>
+                    <div class="sw-item-meta"><span>Dostupná verze Prime</span> &bull; <span>Inovativní GUI</span></div>
+                  </div>
+
+                  <div class="sw-catalog-item">
+                    <div class="sw-item-head">
+                      <span class="sw-item-title">Ableton Live</span>
+                      <span class="gear-badge gear-badge-sw">Elektronika / Live</span>
+                    </div>
+                    <div class="sw-item-desc">Dominantní nástroj pro EDM, techno, hip-hop a live looping. Unikátní Session View pro práci s audio smyčkami a klipy v reálném čase.</div>
+                    <div class="sw-item-meta"><span>Win / macOS</span> &bull; <span>Masivní syntéza &amp; MIDI</span></div>
+                  </div>
+
+                  <div class="sw-catalog-item">
+                    <div class="sw-item-head">
+                      <span class="sw-item-title">Avid Pro Tools</span>
+                      <span class="gear-badge gear-badge-sw">Studiový standard</span>
+                    </div>
+                    <div class="sw-item-desc">Standard světových nahrávacích studií, filmových mixů a dabingových režií. Proprietární plugin standard AAX a přísný hardware ekosystém.</div>
+                    <div class="sw-item-meta"><span>Předplatné</span> &bull; <span>AAX Native / DSP</span></div>
+                  </div>
+                </div>
+                <div class="gear-tip-box" style="margin-top: 0.5rem;">
+                  <strong>Plugin standardy:</strong> <strong>VST3</strong> (univerzální multiplatformní formát od Steinbergu &ndash; šetří výkon vypnutím pluginu při tichu), <strong>AU</strong> (výhradně macOS), <strong>AAX</strong> (výhradně Pro Tools).
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: INTERAKTIVNÍ KONFIGURÁTOR STUDIA -->
+          <div class="tab-panel" id="tab-prac-config">
+            <!-- Tlačítka scénářů -->
+            <div class="scenario-selector-grid">
+              <button class="scenario-btn active" data-scenario="podcast">
+                <div class="scenario-btn-title">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                  Podcast &amp; Hlas
+                </div>
+                <div class="scenario-btn-sub">Mluvené slovo v běžném pokoji</div>
+              </button>
+
+              <button class="scenario-btn" data-scenario="vocal">
+                <div class="scenario-btn-title">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                  Zpěv &amp; Akustika
+                </div>
+                <div class="scenario-btn-sub">Domácí studio pro zpěv a kytaru</div>
+              </button>
+
+              <button class="scenario-btn" data-scenario="producer">
+                <div class="scenario-btn-title">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                  EDM &amp; Beatmaking
+                </div>
+                <div class="scenario-btn-sub">Produkce v notebooku (Bedroom)</div>
+              </button>
+
+              <button class="scenario-btn" data-scenario="foley">
+                <div class="scenario-btn-title">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="m22 8-6 4 6 4V8Z"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg>
+                  Foley &amp; Zvuk k filmu
+                </div>
+                <div class="scenario-btn-sub">Terénní záznam ruchů a dialogů</div>
+              </button>
+            </div>
+
+            <!-- Detailní výsledek konfigurátoru -->
+            <div class="scenario-result-card" id="scenarioResultBox">
+              <!-- Dynamicky plněno z JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: SUMMARY & INTERAKTIVNÍ ZKOUŠKOVÝ KVÍZ -->
+      <section class="slide" data-slide="8">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Závěrečná syntéza &bull; Zkušební okruh 9</div>
             <h2 class="slide-title">Shrnutí lekce &amp; Interaktivní zkušební test</h2>
-            <p class="slide-subtitle">Ověření znalostí z techniky zvuku, měničů, řetězce a akustiky před absolutoriem</p>
+            <p class="slide-subtitle">Ověření znalostí z techniky zvuku, měničů, řetězce, akustiky a software před absolutoriem</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Profilová zkouška VOŠ</span>
@@ -890,6 +1195,10 @@
                     <strong style="color: #10b981;">4. Poslechová akustika a studiové úpravy:</strong><br>
                     <span style="color: var(--text-secondary);">Zásadní rozdíl mezi zvukovou izolací (hmota zdiva) a akustickou úpravou (absorpce, basové pasti, difuzory, RT60).</span>
                   </div>
+                  <div>
+                    <strong style="color: #f59e0b;">5. Volba techniky &amp; Produkční software:</strong><br>
+                    <span style="color: var(--text-secondary);">Kritéria výběru mikrofonů (citlivost, SPL, šum &lt;16 dBA) a studiových monitorů (velikost wooferu k místnosti, bassreflex). Rozdíl mezi destruktivním editorem (Audacity, RX) a DAW (Reaper, Pro Tools, Studio One). Standard VST3.</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -899,7 +1208,7 @@
               <div>
                 <div class="quiz-header">
                   <span style="font-weight: 700; font-size: 0.95rem; color: #fbcfe8;">Interaktivní ověření znalostí</span>
-                  <span class="tag" id="quizScoreTag" style="background: rgba(236,72,153,0.15); color: #fbcfe8;">Otázka 1 / 4</span>
+                  <span class="tag" id="quizScoreTag" style="background: rgba(236,72,153,0.15); color: #fbcfe8;">Otázka 1 / 5</span>
                 </div>
                 <div class="quiz-question-text" id="quizQuestionText">Načítání otázky...</div>
                 <div class="quiz-options-grid" id="quizOptionsContainer"></div>
@@ -907,7 +1216,7 @@
               </div>
 
               <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px solid var(--border-subtle);">
-                <span id="quizScoreCount" style="font-size: 0.8rem; color: var(--text-muted);">Správně: 0 / 4</span>
+                <span id="quizScoreCount" style="font-size: 0.8rem; color: var(--text-muted);">Správně: 0 / 5</span>
                 <button class="sim-btn" id="btnNextQuestion" style="display: none;">
                   Další otázka &rarr;
                 </button>
@@ -930,7 +1239,7 @@
       </div>
       <div class="controls-center">
         <button class="control-btn" id="prevBtn" title="Předchozí snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-        <span class="slide-counter" id="slideCounter">1 / 7</span>
+        <span class="slide-counter" id="slideCounter">1 / 8</span>
         <button class="control-btn" id="nextBtn" title="Další snímek"><svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
       </div>
       <div class="controls-right">
@@ -1015,7 +1324,7 @@
         </div>
 
         <div style="padding: 0.5rem 1.25rem; border-top: 1px solid var(--border-subtle); font-size: 0.75rem; color: var(--text-muted); flex-shrink: 0;">
-          <span id="glossaryResultCount">Zobrazeno všech 40 pojmů</span> &bull; Klávesová zkratka: <span class="key-badge">G</span>
+          <span id="glossaryResultCount">Zobrazeno všech 47 pojmů</span> &bull; Klávesová zkratka: <span class="key-badge">G</span>
         </div>
       </div>
     </div>
@@ -1028,19 +1337,20 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // ==========================================
-      // 1. PŘEPÍNÁNÍ TABŮ (SNÍMEK 2)
+      // 1. PŘEPÍNÁNÍ TABŮ (SNÍMKY 2 A 7)
       // ==========================================
-      const tabBtns = document.querySelectorAll('.tab-btn');
-      const tabPanels = document.querySelectorAll('.tab-panel');
-
-      tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          tabBtns.forEach(b => b.classList.remove('active'));
-          tabPanels.forEach(p => p.classList.remove('active'));
-          btn.classList.add('active');
-          const target = btn.getAttribute('data-target');
-          const panel = document.getElementById(target);
-          if (panel) panel.classList.add('active');
+      document.querySelectorAll('.tabs-header').forEach(header => {
+        const btns = header.querySelectorAll('.tab-btn');
+        const container = header.closest('.slide') || document;
+        btns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            btns.forEach(b => b.classList.remove('active'));
+            container.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            const targetId = btn.getAttribute('data-target');
+            const targetPanel = container.querySelector('#' + targetId) || document.getElementById(targetId);
+            if (targetPanel) targetPanel.classList.add('active');
+          });
         });
       });
 
@@ -1398,7 +1708,119 @@
       }
 
       // ==========================================
-      // 7. INTERAKTIVNÍ ZKOUŠKOVÝ KVÍZ (SNÍMEK 6)
+      // 7. INTERAKTIVNÍ KONFIGURÁTOR STUDIA (SNÍMEK 7)
+      // ==========================================
+      const scenarioData = {
+        podcast: {
+          title: 'Podcast & Hlasový komentář v běžném pokoji',
+          mic: 'Dynamický kardioidní (např. Rode PodMic, Shure MV7X, Shure SM58)',
+          micDetail: 'Těžší kmitací cívka a úzká kardioida účinně potlačují odrazy holých stěn a šum z ulice. Mluvte ze vzdálenosti 4–8 cm.',
+          monitors: 'Uzavřená studiová sluchátka (Audio-Technica ATH-M40x nebo Beyerdynamic DT 770 Pro 80 Ω)',
+          monitorsDetail: 'Monitory v neupraveném pokoji zkreslují; sluchátka poskytují detailní kontrolu bez přeslechu do mikrofonu.',
+          hw: '2-kanálové USB audio rozhraní (Focusrite Scarlett Solo / 2i2 4th Gen, MOTU M2) + stolní rameno + pop-filtr',
+          hwDetail: 'Symetrické XLR vedení pro čistý signál bez brumu; přímý odposlech (Direct Monitor) s nulovou latencí do uší.',
+          sw: 'Audacity (zdarma) nebo Cockos Reaper; na vyčištění šumu a dechu iZotope RX Voice De-noise',
+          swDetail: 'Pro mluvené slovo stačí rychlý dvoustopý střih, normalizace na −16 LUFS (podcastový standard) a jemný kompresor.',
+          budget: 'cca 6 500 – 11 000 Kč',
+          warn: 'Pozor na nákup citlivého kondenzátorového mikrofonu (např. Blue Yeti) do holého pokoje bez akustiky. Mikrofon zachytí každý nádech, větrák počítače i ozvěnu stěn!'
+        },
+        vocal: {
+          title: 'Domácí studio pro zpěv a akustickou kytaru',
+          mic: 'Velkomembránový kondenzátor (LDC, např. Rode NT1 5th Gen, Lewitt LCT 240 Pro, AT2020)',
+          micDetail: 'Extrémně nízký vlastní šum (< 5 dBA u NT1) a křišťálové výšky. Vyžaduje tichou místnost, odpružený pavouk a pop-filtr.',
+          monitors: 'Uzavřená sluchátka na zpěv (DT 770 Pro) + Otevřená sluchátka (Sennheiser HD 560S / DT 990 Pro) na mix',
+          monitorsDetail: 'Při zpěvu je nutná izolace (nulový bleed metronomu); na mix v pokoji jsou otevřená sluchátka přesnější než monitory.',
+          hw: 'Audio rozhraní s diskrétním preampem a +48V Phantomem (Audient iD4 / Focusrite Scarlett 2i2) + akustický paraván',
+          hwDetail: 'Diskrétní předzesilovač třídy A pro přirozenou dynamiku hlasu; paraván za mikrofonem omezí zadní odrazy.',
+          sw: 'PreSonus Studio One Artist nebo Cockos Reaper + Celemony Melodyne (ladění vokálů přes ARA2)',
+          swDetail: 'Vícestopé nahrávání s vrstvením doprovodných vokálů, send sběrnice pro reverb/delay a kompresor ve stylu 1176/LA-2A.',
+          budget: 'cca 12 000 – 19 000 Kč',
+          warn: 'Pozor na zpěv bez pop-filtru a bez odpruženého pavouka přímo u zdi. Do nahrávky proniknou masivní nárazy vzduchu z hlásek P/B a stojaté vlny!'
+        },
+        producer: {
+          title: 'EDM, Beatmaking & Produkce v notebooku',
+          mic: 'Kompaktní dynamický mikrofon (Shure SM58 / sE V7) nebo USB mikrofon pro scratch vokály a samply',
+          micDetail: 'Rychlé nahrání samplů, beatboxu nebo vokálních nápadů přímo u stolu bez nutnosti studiové akustiky.',
+          monitors: 'Aktivní 5" monitory (Adam Audio T5V / Yamaha HS5) s tlumicími podložkami + Otevřená sluchátka DT 990 Pro (80 Ω)',
+          monitorsDetail: '5" monitory jsou optimální pro místnosti do 14 m²; otevřená sluchátka odhalí stereofonní šířku a hluboké sub-basy.',
+          hw: 'USB-C audio rozhraní s MIDI I/O (MOTU M2 / Arturia MiniFuse 2) + 25/49klávesový MIDI kontroler s pady',
+          hwDetail: 'Extrémně nízká ASIO latence (< 5 ms) pro plynulé hraní na virtuální nástroje (VSTi syntezátory).',
+          sw: 'Ableton Live (Standard/Suite) nebo FL Studio Producer Edition + bezplatný syntezátor Vital',
+          swDetail: 'Session View a patternový sekvencer umožňují rychlou tvorbu beatů, sidechain kompresi a masivní automatizaci filtrů.',
+          budget: 'cca 15 000 – 26 000 Kč',
+          warn: 'Pozor na nákup obřích 8" monitorů do malého dětského pokoje bez basových pastí. Místnost bude dunět na 50 Hz a student při mixu basy nesmyslně ořeže!'
+        },
+        foley: {
+          title: 'Foley ruchy & Terénní záznam zvuku k filmu',
+          mic: 'Směrový shotgun (Rode NTG4+ / Sennheiser MKE 600) + stereo X/Y pár tužek (Rode M5)',
+          micDetail: 'Shotgun mikrofon s interferenční trubicí pro izolaci ruchů a dialogů; stereo pár pro záznam ambientní atmosféry lesa či města.',
+          monitors: 'Odolná uzavřená terénní sluchátka s vysokým mechanickým útlumem (Sennheiser HD 25 nebo Sony MDR-7506)',
+          monitorsDetail: 'Lehká konstrukce, vysoký akustický tlak bez zkreslení a perfektní izolace od větru a hluku okolí v terénu.',
+          hw: 'Přenosný terénní rekordér s 32-bit float záznamem (Zoom F3 / Zoom H6) + protivětrná kožešina "deadcat"',
+          hwDetail: '32-bit float záznam eliminuje nutnost nastavovat gain – signál nelze přebudit ani při výstřelu z děla.',
+          sw: 'Adobe Audition / Cockos Reaper + iZotope RX (Spectral Repair, De-wind, De-rustle)',
+          swDetail: 'Přesná synchronizace ruchů s obrazovou stopou (SMPTE timecode), spektrální odmazání projíždějících aut z historických scén.',
+          budget: 'cca 16 000 – 28 000 Kč',
+          warn: 'Pozor na natáčení venku bez protivětrné ochrany "deadcat". I mírný vánek rozkmitá membránu shotgunu a způsobí neopravitelný distortion!'
+        }
+      };
+
+      const scenarioBtns = document.querySelectorAll('.scenario-btn');
+      const scenarioResultBox = document.getElementById('scenarioResultBox');
+
+      function renderScenario(key) {
+        const d = scenarioData[key];
+        if (!d || !scenarioResultBox) return;
+
+        scenarioResultBox.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; padding-bottom: 0.45rem; border-bottom: 1px solid var(--border-subtle);">
+            <div style="font-weight: 700; font-size: 0.95rem; color: #fbcfe8;">${d.title}</div>
+            <span class="tag tag-exam" style="background: rgba(236,72,153,0.15); color: #fbcfe8;">Rozpočet: ${d.budget}</span>
+          </div>
+
+          <div class="config-summary-grid">
+            <div class="config-summary-item">
+              <div class="config-summary-label">1. Mikrofon</div>
+              <div class="config-summary-val">${d.mic}</div>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">${d.micDetail}</div>
+            </div>
+            <div class="config-summary-item">
+              <div class="config-summary-label">2. Poslech</div>
+              <div class="config-summary-val">${d.monitors}</div>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">${d.monitorsDetail}</div>
+            </div>
+            <div class="config-summary-item">
+              <div class="config-summary-label">3. Audio rozhraní</div>
+              <div class="config-summary-val">${d.hw}</div>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">${d.hwDetail}</div>
+            </div>
+            <div class="config-summary-item">
+              <div class="config-summary-label">4. Software &amp; DAW</div>
+              <div class="config-summary-val">${d.sw}</div>
+              <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">${d.swDetail}</div>
+            </div>
+          </div>
+
+          <div class="gear-warn-box" style="margin-top: 0.5rem;">
+            <strong>Častá past při nákupu:</strong> ${d.warn}
+          </div>
+        `;
+      }
+
+      scenarioBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          scenarioBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const sc = btn.getAttribute('data-scenario');
+          renderScenario(sc);
+        });
+      });
+
+      // Výchozí render scénáře
+      renderScenario('podcast');
+
+      // ==========================================
+      // 8. INTERAKTIVNÍ ZKOUŠKOVÝ KVÍZ (SNÍMEK 8)
       // ==========================================
       const quizQuestions = [
         {
@@ -1444,6 +1866,17 @@
           ],
           correct: 1,
           feedback: 'Přesně tak! Zvuková izolace vyžaduje těžkou hmotu (dvojité betonové/sádrokartonové stěny, vzduchové mezery). Akustická úprava ladí interiér režie (absorpce prvních odrazů, basové pasti, difuzory).'
+        },
+        {
+          q: '5. Podle jakého pravidla by měl student vybírat studiové monitory do běžného malého pokoje (do 12–14 m²)?',
+          options: [
+            'Koupit co největší 8" monitory pro maximální objem basů bez ohledu na velikost pokoje',
+            'Zvolit menší 5" monitory (případně doplněné otevřenými sluchátky), protože velké 8" měniče v malém neupraveném prostoru vybudí nekontrolovatelné stojaté vlnění a dunění na basech',
+            'Použít běžné Hi-Fi reproduktory, protože ty zvuk příjemně vylepší a zakryjí nedostatky mixu',
+            'V malém pokoji monitory nesmí hrát vůbec, zvuk lze kontrolovat jen na mobilním telefonu'
+          ],
+          correct: 1,
+          feedback: 'Přesně tak! Velké 8" monitory v malé místnosti bez masivních basových pastí vytvoří stojaté vlny na 40–80 Hz se skoky ±18 dB. Menší 5" monitory v kombinaci s kvalitními studiovými sluchátky poskytnou mnohem přesnější a pravdivější poslech.'
         }
       ];
 
@@ -1513,7 +1946,7 @@
         if (btnNextQuestion) {
           btnNextQuestion.style.display = 'inline-flex';
           if (currentQuizIndex === quizQuestions.length - 1) {
-            btnNextQuestion.textContent = 'Vyhodnotit kvíz 🏁';
+            btnNextQuestion.textContent = 'Vyhodnotit kvíz';
           } else {
             btnNextQuestion.innerHTML = 'Další otázka &rarr;';
           }
@@ -1526,8 +1959,8 @@
             currentQuizIndex++;
             loadQuizQuestion(currentQuizIndex);
           } else {
-            // Finální vyhodnocení
-            quizQuestionText.textContent = `🎉 Kvíz dokončen! Vaše skóre: ${quizScore} z ${quizQuestions.length}`;
+            // Finální vyhodnocení bez emotikonů
+            quizQuestionText.textContent = `Kvíz dokončen! Vaše skóre: ${quizScore} z ${quizQuestions.length}`;
             quizOptionsContainer.innerHTML = '';
             if (quizFeedbackBox) {
               quizFeedbackBox.className = 'quiz-feedback-box show correct';
@@ -1994,6 +2427,20 @@
           desc: 'Základní jednotka akustického tlaku (tlak 1 N/m²). Citlivost mikrofonů se standardně měří referenčním tónem 1 kHz o akustickém tlaku 1 Pa, což odpovídá 94 dB SPL – přibližně velmi hlasitý lidský hlas z bezprostřední blízkosti. Práh slyšení: 20 µPa (0 dB SPL). Citlivost kondenzátorového mikrofonu: ~15–30 mV/Pa.' },
 
         // --- SOFTWARE & FORMÁTY ---
+        { term: 'VST3', fullName: 'Virtual Studio Technology 3 (Steinberg)', cat: 'software',
+          desc: 'Třetí generace multiplatformního standardu pro audio efekty a virtuální syntezátory. Klíčová inovace: vypíná zpracování zvuku (CPU processing), pokud na vstupu stopy není žádný signál (ticho).' },
+        { term: 'AU', fullName: 'Audio Units (Apple macOS)', cat: 'software',
+          desc: 'Architektura pluginů integrovaná přímo do jádra Core Audio v operačních systémech macOS a iOS. Nativní formát pro Apple Logic Pro a GarageBand.' },
+        { term: 'AAX', fullName: 'Avid Audio eXtension', cat: 'software',
+          desc: 'Proprietární 64-bitový plugin formát společnosti Avid pro DAW systém Pro Tools. Existuje ve verzích Native (počítáno CPU počítače) a DSP (akcelerováno dedikovanými kartami HDX).' },
+        { term: 'Woofer', fullName: 'Nízkofrekvenční měnič (Basový reproduktor)', cat: 'connector',
+          desc: 'Elektroakustický měnič určený pro reprodukci basových a středobasových frekvencí (typicky 40 Hz – 2.5 kHz). Ve studiových monitorech se pro malé neupravené pokoje volí velikost 5 palců, pro větší režie 7" až 8".' },
+        { term: 'Bi-Amp', fullName: 'Bi-amplifikace (Oddělené zesilovače)', cat: 'connector',
+          desc: 'Konstrukce aktivních studiových monitorů, kdy woofer i tweeter mají svůj vlastní nezávislý koncový zesilovač (např. 50 W pro basy + 25 W pro výšky) napájený z aktivní frekvenční výhybky (crossover) před zesílením.' },
+        { term: 'Audacity', fullName: 'Audacity Audio Editor', cat: 'software',
+          desc: 'Populární open-source multiplatformní zvukový editor. Vhodný pro rychlý lineární střih, normalizaci, nahrávání podcastů a základní odstranění šumu. Úpravy provádí destruktivně.' },
+        { term: 'Reaper', fullName: 'Rapid Environment for Audio Production, Engineering and Recording', cat: 'software',
+          desc: 'Mimořádně efektivní a stabilní DAW vyvíjené společností Cockos. Instalační balíček má cca 15 MB, podporuje neomezené stopy, kompletní skriptování (EEL, Lua, Python) a běží na Windows, macOS i Linuxu.' },
         { term: 'WAV', fullName: 'Waveform Audio File Format', cat: 'software',
           desc: 'Bezztrátový audio kontejner (Microsoft/IBM). Ukládá surová PCM data bez komprese. Standard pro profesionální výměnu a archiv (24-bit / 96 kHz). Velké soubory: 1 minuta stereo 24/48 = ~34 MB.' },
         { term: 'FLAC', fullName: 'Free Lossless Audio Codec', cat: 'software',

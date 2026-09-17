@@ -764,3 +764,242 @@
   color: #0f172a;
   border-color: rgba(0,0,0,0.15);
 }
+
+/* ==========================================================================
+   PRAKTICKÝ SNÍMEK: NÁKUPNÍ RÁDCE A PŘEHLED SOFTWARE (MUL20-01)
+   ========================================================================== */
+.gear-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.gear-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.gear-card:hover {
+  border-color: rgba(236, 72, 153, 0.4);
+}
+
+.gear-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.65rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.gear-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fbcfe8;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gear-badge {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.gear-badge-mic {
+  background: rgba(96, 165, 250, 0.15);
+  color: #93c5fd;
+  border: 1px solid rgba(96, 165, 250, 0.3);
+}
+
+.gear-badge-monitors {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.gear-badge-sw {
+  background: rgba(168, 85, 247, 0.15);
+  color: #d8b4fe;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.gear-badge-free {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.gear-tip-box {
+  background: rgba(236, 72, 153, 0.06);
+  border-left: 3px solid var(--accent);
+  padding: 0.6rem 0.8rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.82rem;
+  margin-top: 0.6rem;
+  color: var(--text-secondary);
+}
+
+.gear-tip-box strong {
+  color: #f472b6;
+}
+
+.gear-warn-box {
+  background: rgba(239, 68, 68, 0.08);
+  border-left: 3px solid #ef4444;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.82rem;
+  margin-top: 0.6rem;
+  color: var(--text-secondary);
+}
+
+.gear-warn-box strong {
+  color: #fca5a5;
+}
+
+/* Interaktivní scénáře v konfigurátoru */
+.scenario-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.scenario-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.scenario-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(236, 72, 153, 0.5);
+}
+
+.scenario-btn.active {
+  background: rgba(236, 72, 153, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.25);
+}
+
+.scenario-btn-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.scenario-btn.active .scenario-btn-title {
+  color: #fbcfe8;
+}
+
+.scenario-btn-sub {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.scenario-result-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+}
+
+.config-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.config-summary-item {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.75rem;
+}
+
+.config-summary-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.config-summary-val {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fbcfe8;
+}
+
+/* Software katalog karty */
+.sw-catalog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.sw-catalog-item {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: var(--transition);
+}
+
+.sw-catalog-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(236, 72, 153, 0.3);
+}
+
+.sw-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sw-item-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.sw-item-desc {
+  font-size: 0.79rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+.sw-item-meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
