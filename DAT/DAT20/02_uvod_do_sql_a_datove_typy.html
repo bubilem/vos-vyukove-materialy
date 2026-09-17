@@ -160,15 +160,50 @@
                 <h4>Celá čísla (Integers)</h4>
                 <div class="table-container" style="margin-top: 0.5rem;">
                   <table class="db-table">
-                    <tr><th>Typ</th><th>Velikost</th><th>Rozsah (SIGNED / UNSIGNED)</th></tr>
-                    <tr><td><code>TINYINT</code></td><td>1 byte</td><td>-128 až 127 / 0 až 255</td></tr>
-                    <tr><td><code>SMALLINT</code></td><td>2 byty</td><td>0 až 65 535 (UNSIGNED)</td></tr>
-                    <tr><td><code>INT</code></td><td>4 byty</td><td>0 až 4,29 miliardy (UNSIGNED)</td></tr>
-                    <tr><td><code>BIGINT</code></td><td>8 bytů</td><td>Až 18 trilionů</td></tr>
+                    <thead>
+                      <tr>
+                        <th>Typ</th>
+                        <th>Velikost</th>
+                        <th>Rozsah (SIGNED)</th>
+                        <th>Rozsah (UNSIGNED)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><code>TINYINT</code></td>
+                        <td>1 byte</td>
+                        <td>-128 až 127</td>
+                        <td>0 až 255</td>
+                      </tr>
+                      <tr>
+                        <td><code>SMALLINT</code></td>
+                        <td>2 byty</td>
+                        <td>-32&nbsp;768 až 32&nbsp;767</td>
+                        <td>0 až 65&nbsp;535</td>
+                      </tr>
+                      <tr>
+                        <td><code>MEDIUMINT</code></td>
+                        <td>3 byty</td>
+                        <td>-8&nbsp;388&nbsp;608 až 8&nbsp;388&nbsp;607</td>
+                        <td>0 až 16&nbsp;777&nbsp;215</td>
+                      </tr>
+                      <tr>
+                        <td><code>INT</code></td>
+                        <td>4 byty</td>
+                        <td>-2&nbsp;147&nbsp;483&nbsp;648 až 2&nbsp;147&nbsp;483&nbsp;647<br><small style="color: var(--text-muted); font-size: 0.75rem;">(cca ±2,15 mld.)</small></td>
+                        <td>0 až 4&nbsp;294&nbsp;967&nbsp;295<br><small style="color: var(--text-muted); font-size: 0.75rem;">(cca 4,29 mld.)</small></td>
+                      </tr>
+                      <tr>
+                        <td><code>BIGINT</code></td>
+                        <td>8 bytů</td>
+                        <td>-2⁶³ až 2⁶³ - 1<br><small style="color: var(--text-muted); font-size: 0.75rem;">(cca ±9,22 trilionu)</small></td>
+                        <td>0 až 2⁶⁴ - 1<br><small style="color: var(--text-muted); font-size: 0.75rem;">(cca 18,45 trilionu)</small></td>
+                      </tr>
+                    </tbody>
                   </table>
                 </div>
                 <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.6rem;">
-                  V <code>edu_eshop</code>: <code>category.id</code> je <code>SMALLINT</code> (stačí pro desítky kategorií), <code>customer.id</code> je <code>INT UNSIGNED</code>.
+                  V <code>edu_eshop</code>: <code>review.score</code> je <code>TINYINT</code>, <code>category.id</code> je <code>SMALLINT</code>, <code>customer.id</code> a <code>product.id</code> jsou <code>INT UNSIGNED</code>.
                 </p>
               </div>
             </div>
@@ -261,11 +296,15 @@
             <div class="content-card">
               <h4>
                 <svg class="icon card-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                DATETIME vs TIMESTAMP
+                DATETIME vs. TIMESTAMP
               </h4>
-              <p><strong>DATE:</strong> pouze datum <code>YYYY-MM-DD</code> (např. <code>birth_date</code>).</p>
-              <p><strong>DATETIME:</strong> 8 bytů, rozsah 1000 až 9999. Ukládá přesný čas bez konverze časových zón.</p>
-              <p><strong>TIMESTAMP:</strong> 4 byty, automaticky převádí čas do/z UTC. <em>Pozor:</em> Problém roku 2038 (limit 32bitového celého čísla)!</p>
+              <p><strong>DATE:</strong> Pouze datum ve formátu <code>'YYYY-MM-DD'</code> (např. <code>birth_date</code>).</p>
+              <p style="margin-top: 0.35rem;">
+                <strong>DATETIME:</strong> Formát <code>'YYYY-MM-DD HH:MM:SS'</code> (rozsah rok 1000–9999). V SQL se s ním zadává a zachází jako s <strong>textovým řetězcem (stringem)</strong>. Ukládá přesnou hodnotu bez konverze časových zón.
+              </p>
+              <p style="margin-top: 0.35rem;">
+                <strong>TIMESTAMP:</strong> Funguje na principu <strong>UNIXTIME</strong> (počítají se sekundy od epochy 1.&nbsp;1.&nbsp;1970 00:00:00 UTC, 4&nbsp;byty). Automaticky převádí čas do/z UTC dle časové zóny serveru a klienta. <em>Pozor na rok 2038 (přetečení 32bitového celého čísla)!</em>
+              </p>
             </div>
 
             <div class="content-card">
