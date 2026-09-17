@@ -11,8 +11,48 @@
   --accent-glow: rgba(6, 182, 212, 0.25);
 }
 
-/* Modulová specifika DAT20 - Databázové tabulky */
+/* Modulová specifika DAT20 – Databázové tabulky */
+.db-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
 .db-table th {
   background: rgba(6, 182, 212, 0.12);
-  color: var(--accent-cyan);
+  color: var(--accent);
+  padding: 0.5rem 0.75rem;
+  font-weight: 700;
+  text-align: left;
+  border-bottom: 2px solid rgba(6, 182, 212, 0.3);
+}
+
+.db-table td {
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.db-table tr:last-child td {
+  border-bottom: none;
+}
+
+.db-table tr:hover td {
+  background: rgba(6, 182, 212, 0.04);
+}
+
+/* Callout pro edu_eshop specifika */
+.callout-eshop {
+  background: rgba(6, 182, 212, 0.06);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: var(--text-primary);
+}
+
+.callout-eshop .callout-icon {
+  color: var(--accent);
+}
+
+/* content-card accent hover pro DAT20 */
+.content-card:hover {
+  border-color: rgba(6, 182, 212, 0.3);
 }

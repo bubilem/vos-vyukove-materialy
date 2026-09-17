@@ -15,9 +15,9 @@ Při vytváření dalších výukových prezentací a modulů se řiďte dokumen
 - **Pravidla pro asistenta:** [.agents/rules/presentation-guidelines.md](.agents/rules/presentation-guidelines.md)
 
 ### Klíčové zásady ve zkratce:
-1. **Sdílené jádro & DRY strategie:** Společný vzhled, typografie, komponenty a JavaScriptový engine se nacházejí v kořenové složce `/assets/` (`presentation-core.css`, `dashboard-core.css`, `presentation-core.js`, `syntax/`). Lokální složky modulů obsahují pouze tenké styly s oborovými specifiky a akcenty.
+1. **Sdílené jádro & DRY strategie:** Společný vzhled, typografie, komponenty a JavaScriptové enginy se nacházejí v kořenové složce `/assets/` (`presentation-core.css`, `dashboard-core.css`, `presentation-core.js`, `dashboard-core.js`, `syntax/`). Lokální složky modulů obsahují pouze tenké styly s oborovými specifiky a akcenty.
 2. **Názvy souborů:** `XX_[nazev_kapitoly].html` s dvouciferným číslem a výstižným názvem (např. `01_normalizace_a_normalni_formy.html`).
 3. **Ikony:** VÝHRADNĚ jednobarevné vektorové inline SVG s `currentColor`. Zákaz barevných emotikonů.
-4. **Technologie:** 100% offline, Vanilla HTML5 + CSS + JS, relativní cesty, žádné externí závislosti.
+4. **Technologie:** 100% offline, Vanilla HTML5 + CSS + JS, relativní cesty, žádné externí závislosti, UTF-8 bez BOM.
 5. **Design:** Moderní tmavý motiv s možností přepnutí na světlý, plynulé animace, glassmorphism, tlačítko pro kopírování kódu.
-6. **Ovládání:** Kompletní klávesové zkratky (šipky, `F` fullscreen, `M`/`O` obsah, `T` téma, `?` nápověda), URL kotvy `#slide-N`, swipe pro dotyková zařízení.
+6. **Sjednocená navigace & ovládání:** Pevná 5-úrovňová struktura (Rozcestník → Předmět s horní lištou zpět → Modul s drobečkovou navigací a brand-icon odkazem → Prezentace se standardním controls-barem → Snímky). Celé dlaždice na všech úrovních jsou klikatelné. Kompletní klávesové zkratky (šipky, `F` fullscreen, `M`/`O` obsah, `T` téma, `G` slovník, `?` nápověda), URL kotvy `#slide-N`, swipe pro dotyková zařízení.

@@ -30,6 +30,8 @@
   let helpBtn = null;
   let helpModal = null;
   let helpCloseBtn = null;
+  let glossaryBtn = null;
+  let glossaryModal = null;
 
   /**
    * Inicializace enginu
@@ -47,12 +49,24 @@
     themeToggle = document.getElementById('themeToggleBtn') || document.getElementById('themeToggle');
     fsBtn = document.getElementById('fullscreenBtn') || document.getElementById('fsBtn');
     tocBtn = document.getElementById('tocToggleBtn') || document.getElementById('tocBtn');
-    tocOverlay = document.getElementById('tocOverlay') || document.getElementById('tocModal');
+    tocOverlay = document.getElementById('tocOverlay') || document.getElementById('tocModal') || document.getElementById('tocDrawer');
     tocCloseBtn = document.getElementById('tocCloseBtn') || document.getElementById('tocClose');
     tocList = document.getElementById('tocList');
     helpBtn = document.getElementById('helpToggleBtn') || document.getElementById('helpBtn');
     helpModal = document.getElementById('helpModal');
     helpCloseBtn = document.getElementById('helpCloseBtn') || document.getElementById('helpClose');
+
+    // Ensure Help Modal is always populated with pristine UTF-8 Czech text
+    ensureHelpModal();
+
+    // Glossary / Slovník (auto-detekce – zobrazí se jen pokud prezentace obsahuje #glossaryModal)
+    glossaryModal = document.getElementById('glossaryModal');
+    glossaryBtn = document.getElementById('glossaryBtn');
+    if (glossaryModal && glossaryBtn) {
+      glossaryBtn.style.display = '';
+    } else if (glossaryBtn) {
+      glossaryBtn.style.display = 'none';
+    }
 
     // 3. Inicializace motivu (Dark / Light)
     initTheme();
@@ -207,8 +221,23 @@
         return;
       }
 
-      // Zavření modálů přes Escape
+      // Zavření modálů přes Escape nebo opětovné stisknutí jejich zkratky
       if (e.key === 'Escape') {
+        closeAllModals();
+        return;
+      }
+      if (e.key === '?' && helpModal && helpModal.classList.contains('active')) {
+        e.preventDefault();
+        closeAllModals();
+        return;
+      }
+      if ((e.key === 'g' || e.key === 'G') && glossaryModal && glossaryModal.classList.contains('active')) {
+        e.preventDefault();
+        closeAllModals();
+        return;
+      }
+      if ((e.key === 'm' || e.key === 'M' || e.key === 'o' || e.key === 'O') && tocOverlay && tocOverlay.classList.contains('active')) {
+        e.preventDefault();
         closeAllModals();
         return;
       }
@@ -257,6 +286,11 @@
         case '?':
           e.preventDefault();
           toggleHelp();
+          break;
+        case 'g':
+        case 'G':
+          e.preventDefault();
+          toggleGlossary();
           break;
       }
     });
@@ -331,7 +365,8 @@
 
   function isAnyModalOpen() {
     return (tocOverlay && tocOverlay.classList.contains('active')) ||
-           (helpModal && helpModal.classList.contains('active'));
+           (helpModal && helpModal.classList.contains('active')) ||
+           (glossaryModal && glossaryModal.classList.contains('active'));
   }
 
   function closeAllModals() {
@@ -342,6 +377,10 @@
     if (helpModal) {
       helpModal.classList.remove('active');
       helpModal.setAttribute('aria-hidden', 'true');
+    }
+    if (glossaryModal) {
+      glossaryModal.classList.remove('active');
+      if (glossaryModal.setAttribute) glossaryModal.setAttribute('aria-hidden', 'true');
     }
   }
 
@@ -355,6 +394,68 @@
     }
   }
 
+  /**
+   * Garantuje existenci a 100% korektní UTF-8 obsah nápovědy klávesových zkratek
+   */
+  function ensureHelpModal() {
+    helpModal = document.getElementById('helpModal');
+    if (!helpModal) {
+      helpModal = document.createElement('div');
+      helpModal.className = 'modal-overlay';
+      helpModal.id = 'helpModal';
+      document.body.appendChild(helpModal);
+    }
+    helpModal.setAttribute('aria-hidden', 'true');
+    helpModal.innerHTML = `
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Slovník pojmů</span>
+            <span class="key-badge">G</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý / světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Nápověda (tento dialog)</span>
+            <span class="key-badge">?</span>
+          </div>
+        </div>
+      </div>
+    `;
+    helpCloseBtn = document.getElementById('helpCloseBtn');
+  }
+
   function toggleHelp() {
     if (!helpModal) return;
     const isActive = helpModal.classList.contains('active');
@@ -362,6 +463,16 @@
     if (!isActive) {
       helpModal.classList.add('active');
       helpModal.setAttribute('aria-hidden', 'false');
+    }
+  }
+
+  function toggleGlossary() {
+    if (!glossaryModal) return;
+    const isActive = glossaryModal.classList.contains('active');
+    closeAllModals();
+    if (!isActive) {
+      glossaryModal.classList.add('active');
+      if (glossaryModal.setAttribute) glossaryModal.setAttribute('aria-hidden', 'false');
     }
   }
 

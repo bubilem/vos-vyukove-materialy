@@ -76,6 +76,50 @@ body {
   padding: 2.5rem 2rem;
 }
 
+/* Drobečková navigace */
+.breadcrumb-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.breadcrumb-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+}
+
+.breadcrumb-link:hover {
+  color: var(--accent);
+  background: rgba(56, 189, 248, 0.08);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.breadcrumb-separator {
+  color: var(--text-muted);
+  opacity: 0.5;
+  font-size: 0.8rem;
+}
+
+.breadcrumb-current {
+  color: var(--text-primary);
+  font-weight: 600;
+  padding: 0.3rem 0.5rem;
+}
+
 /* Hlavička & Brand */
 .dashboard-header {
   display: flex;
@@ -103,6 +147,18 @@ body {
   font-size: 1.5rem;
   box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
   color: #ffffff;
+}
+
+a.brand-icon {
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s, filter 0.2s;
+}
+
+a.brand-icon:hover {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.55);
+  filter: brightness(1.12);
 }
 
 .brand-icon .icon {
@@ -341,6 +397,7 @@ body {
   text-decoration: none;
   color: inherit;
   backdrop-filter: blur(12px);
+  cursor: pointer;
 }
 
 .lesson-card:hover {
