@@ -151,9 +151,8 @@
               </div>
               <pre class="code-block"><code><span class="sql-comment">-- 1. Změna stavu objednávky konkrétního zákazníka</span>
 <span class="sql-keyword">UPDATE</span> `orders`
-<span class="sql-keyword">SET</span> 
-  `status` = <span class="sql-string">'shipped'</span>,
-  `created_at` = <span class="sql-func">NOW</span>()
+<span class="sql-keyword">SET</span>
+  `status` = <span class="sql-string">'shipped'</span>
 <span class="sql-keyword">WHERE</span> `id` = 3;
 
 <span class="sql-comment">-- 2. Plošné zdražení produktů v kategorii o 10 %</span>

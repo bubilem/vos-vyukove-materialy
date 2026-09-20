@@ -50,7 +50,7 @@
         <div class="hero-badge">Modul MUL10 &bull; 6. přednáška (45 min)</div>
         <h1 class="hero-title">Vektorová grafika a matematika křivek</h1>
         <p class="hero-desc">
-          Popis obrazu prostřednictvím analytické geometrie. Matematická podstata Bézierových křivek, algoritmus de Casteljau, uzlové body, typy hladkosti $C^0/C^1$ a otevřený standard W3C SVG.
+          Popis obrazu prostřednictvím analytické geometrie. Matematická podstata Bézierových křivek, algoritmus de Casteljau, uzlové body, typy hladkosti $C^0/G^1/C^1$ a otevřený standard W3C SVG.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
@@ -159,14 +159,14 @@
               <p style="font-size: 0.85rem;">Křivky se v uzlu dotýkají (polohová spojitost $C^0$), ale jejich tečny svírají ostrý úhel. Vzniká viditelná špička nebo roh (např. vrchol trojúhelníku).</p>
             </div>
             <div class="content-card">
-              <span class="format-pill lossless">Hladký uzel ($C^1$ spojitost)</span>
+              <span class="format-pill lossless">Hladký uzel ($G^1$ spojitost)</span>
               <h4 style="margin: 0.5rem 0;">Smooth Point</h4>
-              <p style="font-size: 0.85rem;">Řídicí táhla leží na jedné přímce v opačných směrech, ale mohou mít různou délku. Tečný vektor má shodný směr &ndash; přechod je dokonale plynulý bez lomu.</p>
+              <p style="font-size: 0.85rem;">Řídicí táhla leží na jedné přímce v opačných směrech, ale mohou mít různou délku. Tečný <em>směr</em> je shodný (geometrická spojitost $G^1$), přechod tedy nemá lom, ale velikost tečného vektoru se může na obou stranách lišit &ndash; proto nejde o plnou parametrickou spojitost $C^1$.</p>
             </div>
             <div class="content-card">
-              <span class="format-pill uncompressed">Symetrický uzel ($C^2$ spojitost)</span>
+              <span class="format-pill uncompressed">Symetrický uzel ($C^1$ spojitost)</span>
               <h4 style="margin: 0.5rem 0;">Symmetric Point</h4>
-              <p style="font-size: 0.85rem;">Táhla leží na stejné přímce a navíc mají identickou délku. Zaručuje stejnou křivost na obou stranách uzlového bodu.</p>
+              <p style="font-size: 0.85rem;">Táhla leží na stejné přímce a navíc mají identickou délku, takže se shoduje i velikost tečného vektoru (parametrická spojitost $C^1$). Křivost ($C^2$) tím ale stále není zaručena &ndash; ta závisí i na poloze dalších řídicích bodů segmentu.</p>
             </div>
           </div>
           <div class="callout callout-tip" style="margin-top: 0.6rem;">
@@ -256,7 +256,7 @@
             </div>
             <div class="summary-card">
               <h4>Zkušební otázka</h4>
-              <p>Definujte matematický princip kubické Bézierovy křivky. Vysvětlete rozdíl mezi ostrým ($C^0$) a hladkým ($C^1$) uzlem a popište syntaxi SVG elementu path.</p>
+              <p>Definujte matematický princip kubické Bézierovy křivky. Vysvětlete rozdíl mezi ostrým ($C^0$), hladkým ($G^1$) a symetrickým ($C^1$) uzlem a popište syntaxi SVG elementu path.</p>
             </div>
           </div>
         </div>

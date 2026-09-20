@@ -136,18 +136,18 @@
             <pre class="code-block"><code><span class="sql-keyword">SELECT</span> 
   c.`name` <span class="sql-keyword">AS</span> kategorie,
   <span class="sql-func">COUNT</span>(<span class="sql-keyword">DISTINCT</span> p.`id`)                         <span class="sql-keyword">AS</span> pocet_aktivnich_produktu,
-  <span class="sql-func">COALESCE</span>(<span class="sql-func">SUM</span>(oi.`quantity`), 0)                 <span class="sql-keyword">AS</span> prodano_kusu,
-  <span class="sql-func">COALESCE</span>(<span class="sql-func">SUM</span>(oi.`quantity` * oi.`unit_price`), 0) <span class="sql-keyword">AS</span> celkovy_obrat
+  <span class="sql-func">COALESCE</span>(<span class="sql-func">SUM</span>(<span class="sql-keyword">CASE WHEN</span> o.`status` <span class="sql-keyword">IS NULL OR</span> o.`status` != <span class="sql-string">'cancelled'</span> <span class="sql-keyword">THEN</span> oi.`quantity` <span class="sql-keyword">END</span>), 0)                 <span class="sql-keyword">AS</span> prodano_kusu,
+  <span class="sql-func">COALESCE</span>(<span class="sql-func">SUM</span>(<span class="sql-keyword">CASE WHEN</span> o.`status` <span class="sql-keyword">IS NULL OR</span> o.`status` != <span class="sql-string">'cancelled'</span> <span class="sql-keyword">THEN</span> oi.`quantity` * oi.`unit_price` <span class="sql-keyword">END</span>), 0) <span class="sql-keyword">AS</span> celkovy_obrat
 <span class="sql-keyword">FROM</span> `category` c
 <span class="sql-keyword">LEFT JOIN</span> `product_category` pc <span class="sql-keyword">ON</span> c.`id` = pc.`category_id`
 <span class="sql-keyword">LEFT JOIN</span> `product` p          <span class="sql-keyword">ON</span> pc.`product_id` = p.`id` <span class="sql-keyword">AND</span> p.`active` = <span class="sql-keyword">TRUE</span>
 <span class="sql-keyword">LEFT JOIN</span> `order_item` oi      <span class="sql-keyword">ON</span> p.`id` = oi.`product_id`
-<span class="sql-keyword">LEFT JOIN</span> `orders` o           <span class="sql-keyword">ON</span> oi.`order_id` = o.`id` <span class="sql-keyword">AND</span> o.`status` != <span class="sql-string">'cancelled'</span>
+<span class="sql-keyword">LEFT JOIN</span> `orders` o           <span class="sql-keyword">ON</span> oi.`order_id` = o.`id`
 <span class="sql-keyword">GROUP BY</span> c.`id`, c.`name`
 <span class="sql-keyword">ORDER BY</span> celkovy_obrat <span class="sql-keyword">DESC</span>;</code></pre>
           </div>
           <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.5rem;">
-            Díky řetězci <code>LEFT JOIN</code> se ve výpisu objeví i kategorie, které dosud nemají žádný prodej (obrat 0 Kč), místo aby z výsledků vypadly.
+            Díky řetězci <code>LEFT JOIN</code> se ve výpisu objeví i kategorie, které dosud nemají žádný prodej (obrat 0 Kč), místo aby z výsledků vypadly. Podmínku na zrušené objednávky <strong>nedáváme do <code>ON</code> ani <code>WHERE</code></strong> — to by řádky se zrušenou objednávkou (nebo bez objednávky vůbec) z výsledku úplně vyřadilo. Proto ji řešíme přes <code>CASE WHEN</code> uvnitř agregační funkce: řádek zůstane zachován, jen se nezapočítá do součtu.
           </p>
         </div>
       </section>
@@ -201,7 +201,7 @@
                 <tr>
                   <td><strong>12</strong></td>
                   <td>Spojování tabulek (JOIN)</td>
-                  <td>CROSS, INNER, LEFT, RIGHT, FULL OUTER, Self JOIN, aliasy, M:N spojení</td>
+                  <td>CROSS, INNER, LEFT, RIGHT, FULL OUTER (v MySQL/MariaDB nativně neexistuje, emulace přes UNION LEFT/RIGHT JOIN), Self JOIN, aliasy, M:N spojení</td>
                 </tr>
                 <tr>
                   <td><strong>13</strong></td>

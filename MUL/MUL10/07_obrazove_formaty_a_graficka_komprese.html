@@ -136,7 +136,7 @@
           <div class="timeline-step">
             <div class="step-num">4</div>
             <div>
-              <strong>Kvantování (JEDINÝ ZTRÁTOVÝ KROK):</strong> Každý koeficient je vydělen číslem z kvantizační matice $Q(u, v)$ a zaokrouhlen na celé číslo. Vysoké frekvence se vynulují!
+              <strong>Kvantování (hlavní ztrátový krok):</strong> Každý koeficient je vydělen číslem z kvantizační matice $Q(u, v)$ a zaokrouhlen na celé číslo. Vysoké frekvence se vynulují! (Ztrátovým krokem je i chroma subsampling 4:2:0 z kroku 1 – kvantování je jen ten hlavní, nikoli jediný.)
             </div>
           </div>
           <div class="timeline-step">
@@ -168,9 +168,9 @@
               <p style="font-size: 0.85rem;">24-bit barvy + 8-bit plynulá průhlednost (256 úrovní transparence). Nulové artefakty kolem hran textu a tlačítek. Nevhodný pro rozsáhlé fotografie kvůli velkému datovému objemu.</p>
             </div>
             <div class="content-card">
-              <span class="format-pill lossy">GIF (Graphics Interchange Format)</span>
+              <span class="format-pill lossless">GIF (Graphics Interchange Format)</span>
               <h4 style="margin: 0.5rem 0;">Historický formát z roku 1987</h4>
-              <p style="font-size: 0.85rem;">Limitován na 8bitovou paletu (256 barev). Pouze 1bitová binární průhlednost (bod je buď 100% vidět, nebo ne). Podpora jednoduchých animací bez zvuku. Dnes nahrazován videem MP4/WebM.</p>
+              <p style="font-size: 0.85rem;">Limitován na 8bitovou paletu (256 barev) — ta se volí ztrátovou kvantizací barev, ale samotná komprese LZW už je bezeztrátová. Pouze 1bitová binární průhlednost (bod je buď 100% vidět, nebo ne). Podpora jednoduchých animací bez zvuku. Dnes nahrazován videem MP4/WebM.</p>
             </div>
             <div class="content-card">
               <span class="format-pill uncompressed">TIFF (Tagged Image File Format)</span>

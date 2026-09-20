@@ -295,7 +295,7 @@
             <div class="callout-content">
               <div class="callout-title">Typická výpočetní úloha u zkoušky</div>
               <p><em>„Které pravidlo obarví odkaz na stránce: <code>#main-menu a { color: blue; }</code> nebo <code>header.site-header nav.main-navigation ul.menu-list li.menu-item a.link { color: red; }</code>?“</em><br>
-              <strong>Správná odpověď:</strong> Odkaz bude <strong>modrý</strong>! První pravidlo obsahuje jedno ID &rarr; specificita <strong>(0, 1, 0, 1)</strong>. Druhé pravidlo má sice 4 třídy a 4 tagy, ale 0 ID &rarr; specificita <strong>(0, 0, 4, 4)</strong>. ID má v kaskádě vyšší řádovou váhu.</p>
+              <strong>Správná odpověď:</strong> Odkaz bude <strong>modrý</strong>! První pravidlo obsahuje jedno ID &rarr; specificita <strong>(0, 1, 0, 1)</strong>. Druhé pravidlo má sice 5 tříd a 5 tagů (<code>.site-header</code>, <code>.main-navigation</code>, <code>.menu-list</code>, <code>.menu-item</code>, <code>.link</code> a <code>header</code>, <code>nav</code>, <code>ul</code>, <code>li</code>, <code>a</code>), ale 0 ID &rarr; specificita <strong>(0, 0, 5, 5)</strong>. ID má v kaskádě vyšší řádovou váhu.</p>
             </div>
           </div>
         </div>

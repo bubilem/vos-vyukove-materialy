@@ -141,7 +141,7 @@
                   <li><code>flex-grow: 1</code>: Schopnost prvku roztáhnout se a pohltit volné místo v kontejneru.</li>
                   <li><code>flex-shrink: 1</code>: Míra smrštění, pokud kontejner nestačí.</li>
                   <li><code>flex-basis: 200px</code>: Výchozí velikost před rozdělením volného místa.</li>
-                  <li><code>flex: 1 1 auto</code> (nebo zkráceně <code>flex: 1</code>): Zkratka pro grow, shrink a basis.</li>
+                  <li><code>flex: grow shrink basis</code>, např. <code>flex: 1 1 auto</code>: Zkratka pro grow, shrink a basis. Pozor: <code>flex: 1</code> je zkratka za <code>flex: 1 1 0%</code> (ne za <code>1 1 auto</code>) – prvky se pak dělí o volné místo bez ohledu na obsah. Zkratkou za <code>1 1 auto</code> je <code>flex: auto</code>.</li>
                   <li><code>align-self: center</code>: Individuální přebití <code>align-items</code> pro jednu položku.</li>
                 </ul>
               </div>
