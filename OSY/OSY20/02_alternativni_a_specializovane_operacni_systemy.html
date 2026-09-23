@@ -5,11 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lekce 02: Alternativní a specializované OS | OSY20</title>
   <link rel="stylesheet" href="../../assets/css/presentation-core.css">
-  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
   <link rel="stylesheet" href="assets/css/presentation.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Doplňkové jemné ladění specifických prvků pro alternativní OS */
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: #67e8f9;
+    }
+    .qubes-badge-red {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #fca5a5;
+    }
+    .qubes-badge-yellow {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.45);
+      color: #fde68a;
+    }
+    .qubes-badge-green {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      color: #a7f3d0;
+    }
+    .qubes-badge-black {
+      background: rgba(148, 163, 184, 0.15);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: #cbd5e1;
+    }
+    .story-box {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%);
+      border-left: 3px solid var(--accent);
+      padding: 1rem 1.15rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .story-title {
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.92rem;
+    }
+    .comparison-table-wrapper {
+      overflow-x: auto;
+      margin-top: 0.5rem;
+    }
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      text-align: left;
+    }
+    .comp-table th {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-primary);
+      padding: 0.75rem 0.9rem;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border-color);
+      white-space: nowrap;
+    }
+    .comp-table td {
+      padding: 0.75rem 0.9rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      vertical-align: middle;
+    }
+    .comp-table tr:hover td {
+      background: rgba(6, 182, 212, 0.04);
+      color: var(--text-primary);
+    }
+    .badge-os {
+      display: inline-block;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+  </style>
 </head>
 <body>
 
@@ -36,7 +122,7 @@
         </div>
       </div>
       <div class="header-right">
-        <span class="tag tag-exam">Zkouškový okruh: Alternativní architektury</span>
+        <span class="tag tag-primary">Fascinující světy mimo mainstream</span>
         <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
@@ -50,212 +136,552 @@
         <div class="hero-badge">Modul OSY20 &bull; 2. přednáška (45 min)</div>
         <h1 class="hero-title">Alternativní &amp; Specializované OS</h1>
         <p class="hero-desc">
-          Za hranicemi mainstreamu (Windows a Linux): formálně verifikovaná mikrojádra (seL4), komerční RTOS mikrojádro QNX v automotive, enterprise dědictví Sun Solaris a Illumos (ZFS, DTrace, Zóny) a čistě modulární multimediální systémy (BeOS / Haiku).
+          Fascinující světy za hranicemi Windows, macOS a běžného Linuxu. Podíváme se na systémy řídící rovery na Marsu, miliony aut, medicínské roboty, neprůstřelnou matematickou bezpečnost, digitální amnézii i geniální kuriozity programátorské historie.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Formální bezpečnost</span>
-            <span class="hero-meta-val">seL4 mikrojádro (Isabelle/HOL)</span>
+            <span class="hero-meta-label">Vesmír &amp; Automotive</span>
+            <span class="hero-meta-val">VxWorks &bull; QNX Neutrino</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Enterprise Unix</span>
-            <span class="hero-meta-val">Solaris / Illumos (ZFS, DTrace)</span>
+            <span class="hero-meta-label">Extrémní bezpečnost</span>
+            <span class="hero-meta-val">seL4 &bull; Qubes OS &bull; Tails</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Inženýrský přínos</span>
-            <span class="hero-meta-val">Modulární izolace chyb</span>
+            <span class="hero-meta-label">Průkopníci a kuriozity</span>
+            <span class="hero-meta-val">BeOS / Haiku &bull; TempleOS</span>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 2: MIKROJÁDRA A SEL4 -->
+      <!-- SLIDE 2: PROČ EXISTUJÍ JINÉ OS -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Matematická bezpečnost</div>
-            <h2 class="slide-title">Mikrojádro seL4: Matematicky dokázaná bezpečnost</h2>
-            <p class="slide-subtitle">První operační systém na světě s formálním důkazem korektnosti</p>
+            <div class="slide-category">Kontext a motivace</div>
+            <h2 class="slide-title">Proč potřebujeme víc než „Velkou trojku“?</h2>
+            <p class="slide-subtitle">Když Windows, macOS ani desktopový Linux v kritických situacích nestačí</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Výzkum &amp; Obrana</span>
+            <span class="tag">Architektury</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
+          <div class="grid-3">
             <div class="content-card">
-              <h4>Koncept formální verifikace</h4>
-              <p>Tradiční software se testuje empiricky (unit testy), což nikdy nedokáže nepřítomnost chyb. seL4 šlo cestou matematického důkazu:</p>
-              <ul class="styled-list">
-                <li>Pomocí interaktivního dokazovače vět <strong>Isabelle/HOL</strong> byl matematicky dokázán soulad binárního kódu se specifikací.</li>
-                <li><strong>Garantované vlastnosti:</strong> Žádné přetečení bufferu (Buffer Overflow), žádné nedovolené ukazatele (Null Pointer Dereference), žádný memory leak.</li>
-                <li>Systém má méně než 10 000 řádků kódu v C v Ring 0.</li>
-              </ul>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span class="card-title-text">Tvrdý reálný čas (RTOS)</span>
+                </div>
+              </div>
+              <p>Běžný OS řeší <em>průměrnou</em> rychlost odezvy – když se okno zasekne na 100&nbsp;ms, nic se nestane. V brzdách auta (ABS), letadle nebo kardiostimulátoru je však zpoždění o 5&nbsp;ms <strong>otázkou života a smrti</strong>.</p>
+              <div class="highlight-pill">Garantovaná maximální latence</div>
             </div>
+
             <div class="content-card">
-              <h4>Model Capabilities (Oprávnění)</h4>
-              <ul class="styled-list">
-                <li>Veškerý přístup k paměti, vláknům a IPC portům je řízen nepodvrhnutelnými tokeny (Capabilities).</li>
-                <li>Jádro nealokuje dynamickou paměť pro sebe – veškerou fyzickou paměť dělí a spravují uživatelské servery.</li>
-                <li>Nasazení: autonomní vojenské drony, satelity, bezpečnostně kritické zdravotnické implantáty.</li>
-              </ul>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  <span class="card-title-text">Matematická neprůstřelnost</span>
+                </div>
+              </div>
+              <p>Jádro Linuxu má přes 35 milionů řádků kódu a Windows ještě více. Nelze lidsky ohlídat, aby neobsahovalo stovky zranitelností. Specializovaná mikrojádra sází na minimalismus (10&nbsp;kLoC) a <strong>formální důkazy</strong>.</p>
+              <div class="highlight-pill">Nulové zranitelnosti z principu</div>
             </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  <span class="card-title-text">Izolace a soukromí</span>
+                </div>
+              </div>
+              <p>Běžné systémy důvěřují aplikacím příliš mnoho. Pokud útočník prolomí prohlížeč, může číst disk. Specializované OS staví neprostupné hradby mezi každou aplikací nebo nezapisují vůbec nic na disk.</p>
+              <div class="highlight-pill">Bezpečnost skrze izolaci</div>
+            </div>
+          </div>
+
+          <div class="story-box" style="margin-top: 1rem;">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              Myšlenka pro inženýry: Monokultura je nebezpečná
+            </div>
+            Pokud by celý svět běžel na jediném operačním systému, jediná zero-day zranitelnost by dokázala vyřadit globální energetiku, dopravu i nemocnice. Diverzita architektur je přirozený imunitní systém digitálního světa.
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: QNX NEUTRINO V PRŮMYSLU -->
+      <!-- SLIDE 3: VXWORKS A MISE NA MARS -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Průmyslová mikrojádra</div>
-            <h2 class="slide-title">QNX Neutrino: Mikrojádro v miliardě zařízení</h2>
-            <p class="slide-subtitle">Jak komerční mikrojádro ovládlo automobilový a medicínský průmysl</p>
+            <div class="slide-category">Vesmír &bull; Hard Real-Time</div>
+            <h2 class="slide-title">VxWorks: Systém, který dobývá vesmír</h2>
+            <p class="slide-subtitle">Proč NASA svěřuje rovery na Marsu právě komerčnímu RTOS od Wind River</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Otázka u zkoušky</span>
+            <span class="tag">Mise NASA</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>Architektura QNX Neutrino</h4>
+              <h4>Kde všude VxWorks létá?</h4>
               <ul class="styled-list">
-                <li><strong>Mikrojádro (Procnto):</strong> Pouze několik desítek kilobajtů kódu. Stará se pouze o posílání zpráv (Message Passing IPC) a plánování.</li>
-                <li><strong>Ovladače jako běžné procesy:</strong> Ovladač grafiky, USB i síťová karta běží v Ring 3. Pokud ovladač havaruje (např. chyba paměti), havarovaný proces je během zlomku sekundy restartován bez výpadku zbytku automobilu.</li>
-                <li><strong>Plná POSIX kompatibilita:</strong> Běžný vývojář píše standardní C kód se síťovými sokety a vlákny.</li>
+                <li><strong>Mars Rovery Curiosity &amp; Perseverance:</strong> Řídí veškerou avioniku, motoriku kol, robotické paže a telekomunikaci se Zemí.</li>
+                <li><strong>Sonda New Horizons:</strong> Prolétla kolem Pluta a Kuiperova pásu miliardy kilometrů od Slunce.</li>
+                <li><strong>Boeing 787 Dreamliner &amp; Airbus A400M:</strong> Letové palubní počítače a řízení stability letounu.</li>
+                <li><strong>James Webb Space Telescope (JWST):</strong> Kritické subsystémy polohování zrcadel v Lagrangeově bodě L2.</li>
               </ul>
             </div>
+
             <div class="content-card">
-              <h4>Kde QNX všude běží?</h4>
+              <h4>Čím se liší Hard RTOS od běžného OS?</h4>
               <ul class="styled-list">
-                <li><strong>Automotive (více než 235 milionů vozidel):</strong> Digitální přístrojové štíty (Cockpit), infotainment (Apple CarPlay a Android Auto běží nad QNX vrstvou) a pokročilé asistenční systémy (ADAS).</li>
-                <li><strong>Lékařská technika:</strong> Chirurgické robotické systémy, ventilátory na JIP.</li>
-                <li><strong>Průmyslové roboty:</strong> Výrobní linky a jaderné elektrárny.</li>
+                <li><strong>Deterministické plánování:</strong> Přepnutí kontextu (Task Switch) trvá přesně definovaný počet mikrosekund za jakékoliv zátěže.</li>
+                <li><strong>Žádné nečekané zamrznutí:</strong> Žádný Garbage Collector, žádné nepředvídatelné swapování stránek na disk.</li>
+                <li><strong>Odolnost proti radiaci:</strong> Běží na procesorech typu BAE RAD750 (odolné vůči kosmickému záření).</li>
               </ul>
             </div>
+          </div>
+
+          <div class="story-box">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+              Fascinující příběh: Záchrana sondy Mars Pathfinder (1997)
+            </div>
+            Krátce po přistání na Marsu začal rover Pathfinder nečekaně zamrzat a resetovat se. Důvodem byla učebnicová chyba <strong>Priority Inversion</strong> (úloha s nízkou prioritou zamkla sdílenou sběrnici, střední úloha ji nepustila k dokončení a úloha s vysokou prioritou vyhladověla, což aktivovalo Watchdog reset). Inženýři z NASA JPL dokázali ze Země na vzdálenost desítek milionů kilometrů nahrát do jádra VxWorks příkaz, který zapnul <em>Priority Inheritance</em> (dědění priority) – a misi zachránili!
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4: SOLARIS, ILLUMOS A HAIKU -->
+      <!-- SLIDE 4: QNX NEUTRINO V AUTOMOTIVE -->
       <section class="slide" data-slide="4">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Inženýrské klenoty</div>
-            <h2 class="slide-title">Solaris / Illumos a BeOS / Haiku</h2>
-            <p class="slide-subtitle">Inovace, které předběhly svou dobu a ovlivnily celý IT svět</p>
+            <div class="slide-category">Mikrojádra &bull; Automobilový průmysl</div>
+            <h2 class="slide-title">QNX Neutrino: Neviditelný vládce 235 milionů aut</h2>
+            <p class="slide-subtitle">Proč moderní automobily nesmí spoléhat na monolitické jádro</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Inovace</span>
+            <span class="tag">Automotive &amp; Medicína</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>Sun Solaris / Illumos (OpenIndiana, SmartOS)</h4>
-              <p>Enterprise Unix z laboratoří Sun Microsystems vytvořil tři revoluční technologie:</p>
+              <h4>Mikrojádro vs. záchrana života</h4>
+              <p>V běžném Linuxu nebo Windows běží ovladače grafiky, audia a USB přímo v jádře (Ring 0). Pokud ovladač havaruje, spadne celý systém (modrá obrazovka nebo kernel panic).</p>
               <ul class="styled-list">
-                <li><strong>ZFS (Zettabyte File System):</strong> Kombinace správce disků (RAID-Z) a souborového systému s 128bitovým adresováním a samoopravnými kontrolními součty.</li>
-                <li><strong>DTrace:</strong> Dynamické trasování jádra za běhu v produkci s nulovou režií při neaktivitě (převzal jej i macOS a Linux).</li>
-                <li><strong>Solaris Zones:</strong> Předchůdce moderních kontejnerů na úrovni OS.</li>
+                <li><strong>Mikrojádro QNX (procnto):</strong> Má pouze několik desítek kilobajtů kódu – obstarává jen plánování a meziprocesovou komunikaci (Message Passing IPC).</li>
+                <li><strong>Ovladače v Ring 3 (User Space):</strong> Ovladač Bluetooth i grafiky běží jako běžný proces.</li>
+                <li><strong>Okamžitý restart:</strong> Pokud řidič připojí zavirovaný flashdisk a spadne přehrávač hudby, QNX za 2&nbsp;milisekundy restartuje proces ovladače.</li>
               </ul>
             </div>
+
             <div class="content-card">
-              <h4>BeOS a jeho open-source nástupce Haiku</h4>
-              <p>Operační systém navržený od nuly v 90. letech pro multimédia a desktop:</p>
+              <h4>Kde všude QNX chrání lidi?</h4>
               <ul class="styled-list">
-                <li><strong>Pervazivní multithreading:</strong> Každé okno a každý grafický prvek má své vlastní vlákno. Systém byl bleskurychlý i na slabém hardware.</li>
-                <li><strong>Databázový souborový systém (BFS):</strong> Schopnost indexovat metadata souborů v reálném čase jako databázi SQL.</li>
+                <li><strong>Digitální kokpity a ADAS:</strong> Přístrojový štít s rychloměrem a asistenčními brzdami nesmí zamrznout, i kdyby selhal multimediální panel (Apple CarPlay a Android Auto běží jako izolované vrstvy nad QNX).</li>
+                <li><strong>Chirurgické roboty (Da Vinci):</strong> Chirurg ovládá mikro-nástroje na dálku – mikrosekundový zásek by mohl poškodit tkáň.</li>
+                <li><strong>Jaderné elektrárny a vlaky:</strong> Řídicí systémy vysokorychlostních souprav a zabezpečení reaktorů.</li>
               </ul>
             </div>
+          </div>
+
+          <div class="story-box">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"></path><circle cx="7" cy="17" r="2"></circle><path d="M9 17h6"></path><circle cx="17" cy="17" r="2"></circle></svg>
+              Proč QNX v autech neporazil ani Android Automotive?
+            </div>
+            Zatímco Android Automotive obsluhuje mapy a Spotify na velké obrazovce, kritické funkce vozu (tachometr, bezpečnostní kamery, detekce chodců a varovné kontrolky) zůstávají pod certifikovaným hypervizorem QNX (ISO 26262 ASIL D – nejvyšší úroveň automobilové bezpečnosti).
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: PRAKTICKÁ INSPEKCE DTRACE -->
+      <!-- SLIDE 5: SEL4 - FORMÁLNĚ DOKÁZANÁ BEZPEČNOST -->
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Pokročilá diagnostika</div>
-            <h2 class="slide-title">Dynamické trasování jádra pomocí DTrace</h2>
-            <p class="slide-subtitle">Okamžitá analýza systémových volání v systémech Illumos a FreeBSD</p>
+            <div class="slide-category">Matematická jistota</div>
+            <h2 class="slide-title">seL4: Jediný operační systém dokázaný jako věta</h2>
+            <p class="slide-subtitle">Konec hledání chyb testováním – matematický důkaz, že kód je dokonalý</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">DTrace &bull; CLI</span>
+            <span class="tag">Kryptografická obrana</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
-            <div>
-              <div class="code-box">
-                <div class="code-box-header">
-                  <span>dtrace &bull; Skript v jazyce D pro počítání syscallů za běhu</span>
-                  <button class="btn-copy" title="Kopírovat kód">
-                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span>Kopírovat</span>
-                  </button>
-                </div>
-                <pre><code><span class="term-comment"># Jednořádkový DTrace příkaz pro agregaci všech syscallů podle procesu</span>
-<span class="term-root"># </span><span class="term-cmd">dtrace</span> <span class="term-param">-n</span> <span class="term-string">'syscall:::entry { @[execname] = count(); }'</span>
+            <div class="content-card">
+              <h4>Princip formální verifikace</h4>
+              <p>Testování software může prokázat přítomnost chyb, ale nikdy jejich <strong>nepřítomnost</strong>. Výzkumníci z Data64 / Trustworthy Systems na to šli jinak:</p>
+              <ul class="styled-list">
+                <li>V interaktivním dokazovači vět <strong>Isabelle/HOL</strong> vytvořili formální matematický důkaz, že zkompilovaný binární kód jádra 100% odpovídá formální specifikaci.</li>
+                <li><strong>Matematické garance:</strong> Žádné přetečení vyrovnávací paměti (Buffer Overflow), žádné nulové ukazatele (Null Pointer Dereference), žádné memory leaky.</li>
+                <li>Jádro má pod 10&nbsp;000 řádků přísně prověřeného kódu v jazyce C.</li>
+              </ul>
+            </div>
 
-<span class="term-comment"># Výstup po stisku Ctrl+C (agregace v paměti jádra):</span>
-<span class="term-out">  sshd                                             14</span>
-<span class="term-out">  cron                                             28</span>
-<span class="term-out">  nginx                                          1840</span>
-<span class="term-out">  mysqld                                         9412</span></code></pre>
-              </div>
+            <div class="content-card">
+              <h4>Koncept „Capabilities“ (Tokeny práv)</h4>
+              <ul class="styled-list">
+                <li>V seL4 neexistuje koncept superuživatele (root).</li>
+                <li>Veškerý přístup k paměti, vláknům a komunikačním kanálům je řízen nepodvrhnutelnými tokeny oprávnění (Capabilities).</li>
+                <li>Jádro samo o sobě <strong>nealokuje žádnou dynamickou paměť</strong>! Veškerou paměť si musí striktně přidělovat a izolovat uživatelské subsystémy.</li>
+              </ul>
             </div>
-            <div>
-              <div class="code-box">
-                <div class="code-box-header">
-                  <span>dtrace &bull; Trasování délky diskových I/O operací</span>
-                  <button class="btn-copy" title="Kopírovat kód">
-                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span>Kopírovat</span>
-                  </button>
-                </div>
-                <pre><code><span class="term-comment"># Zjištění latence čtení z disku v nanosekundách</span>
-<span class="term-root"># </span><span class="term-cmd">dtrace</span> <span class="term-param">-n</span> <span class="term-string">'io:::start { start[arg0] = timestamp; }
-io:::done /start[arg0]/ {
-    @lat = quantize(timestamp - start[arg0]);
-    start[arg0] = 0;
-}'</span>
-<span class="term-comment"># Výstup vytvoří přesný histogram rozložení latence!</span></code></pre>
-              </div>
+          </div>
+
+          <div class="story-box">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              Test DARPA HACMS: Hackathon proti armádnímu vrtulníku Little Bird
             </div>
+            Americká vojenská agentura DARPA najala elitní tým hackerů (Red Team) a dala jim za úkol unést řízení vojenského autonomního vrtulníku <em>Boeing ULB Little Bird</em>. Hackeři dostali plný administrátorský přístup do civilní komunikační části běžící na Linuxu. Vrtulník však jako základní separační jádro používal <strong>seL4</strong>. Hackeři se měsíce snažili prorazit do řízení letových kormidel a motoru – a nepodařilo se jim propašovat ani jediný neoprávněný paket. seL4 obstálo na 100&nbsp;%.
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <!-- SLIDE 6: QUBES OS -->
       <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Shrnutí &amp; Zkouškový checklist</div>
-            <h2 class="slide-title">Klíčové znalosti k absolutoriu</h2>
-            <p class="slide-subtitle">Přehled alternativních a specializovaných systémů</p>
+            <div class="slide-category">Paranoidní bezpečnost</div>
+            <h2 class="slide-title">Qubes OS: Bezpečnost rozškatulkováním</h2>
+            <p class="slide-subtitle">„A Reasonably Secure Operating System“ – oblíbený systém investigativních novinářů</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Absolutorium</span>
+            <span class="tag">Hypervizor Xen</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="summary-grid">
-            <div class="summary-card">
-              <h4>1. Formální verifikace (seL4)</h4>
-              <p>Pochopení principu matematického důkazu nepřítomnosti chyb v kódu jádra na rozdíl od běžného testování.</p>
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Filozofie „Security by Compartmentalization“</h4>
+              <p>Qubes OS vychází z reality: <em>jakákoliv aplikace může obsahovat zero-day zranitelnost</em>. Místo marné snahy aplikace zabezpečit je uzavírá do izolovaných virtuálních strojů (AppVM) běžících nad hypervizorem typu 1 (Xen).</p>
+              <ul class="styled-list">
+                <li>Uživatel pracuje na jedné ploše, ale okna mají <strong>barevné rámečky</strong> indikující úroveň důvěryhodnosti.</li>
+                <li>Schránka (kopírovat/vložit) je izolovaná – nelze náhodně přenést malware z webu do citlivého dokumentu bez vědomého stisku speciální klávesové zkratky.</li>
+                <li>Síťová karta a USB řadiče běží v samostatných net-VM a usb-VM.</li>
+              </ul>
             </div>
-            <div class="summary-card">
-              <h4>2. Mikrojádro QNX v autech</h4>
-              <p>Zdůvodnění obliby QNX: běh ovladačů v uživatelském prostoru chrání před havárií kritických subsystémů vozidla.</p>
+
+            <div class="content-card">
+              <h4>Barevné světy na jedné obrazovce</h4>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.2rem;">
+                <div class="qubes-badge-red" style="padding: 0.5rem 0.8rem; border-radius: var(--radius-sm); font-size: 0.84rem;">
+                  <strong>🔴 Červené okno (Untrusted):</strong> Otevírání neznámých příloh, stahování z webu. I když virus infikuje systém, po zavření okna je virtuální stroj smazán.
+                </div>
+                <div class="qubes-badge-yellow" style="padding: 0.5rem 0.8rem; border-radius: var(--radius-sm); font-size: 0.84rem;">
+                  <strong>🟡 Žluté okno (Work):</strong> Běžná pracovní agenda, firemní e-maily a dokumenty.
+                </div>
+                <div class="qubes-badge-green" style="padding: 0.5rem 0.8rem; border-radius: var(--radius-sm); font-size: 0.84rem;">
+                  <strong>🟢 Zelené okno (Banking):</strong> Výhradně internetové bankovnictví a nákupy.
+                </div>
+                <div class="qubes-badge-black" style="padding: 0.5rem 0.8rem; border-radius: var(--radius-sm); font-size: 0.84rem;">
+                  <strong>⬛ Černé okno (Vault):</strong> Zcela odpojené od sítě – uchovává privátní PGP klíče a hesla.
+                </div>
+              </div>
             </div>
-            <div class="summary-card">
-              <h4>3. Přínosy Solarisu</h4>
-              <p>Znalost technologického dědictví: DTrace pro dynamické ladění a ZFS pro samoopravná disková pole.</p>
+          </div>
+
+          <div class="story-box">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              Doporučení Edwarda Snowdena
             </div>
-            <div class="summary-card">
-              <h4>4. Otázka u zkoušky</h4>
-              <p><em>„Vysvětlete, jaký je rozdíl mezi monolitickým jádrem Linuxu a mikrojádrem QNX z hlediska odolnosti proti chybám v ovladačích zařízení.“</em></p>
+            <em>„Pokud to s bezpečností myslíte opravdu vážně, Qubes OS je dnes to nejlepší, co existuje.“</em> Edward Snowden použil Qubes OS při předávání tajných dokumentů NSA novinářům, protože systém znemožňuje i těm nejpokročilejším státním exploitům získat kontrolu nad celým strojem.
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: TAILS OS -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Extrémní soukromí</div>
+            <h2 class="slide-title">Tails OS: Dokonalá digitální amnézie</h2>
+            <p class="slide-subtitle">Systém, který zapomene vše, jakmile vytáhnete flashdisk z USB</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Tor &bull; RAM-Only</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Jak funguje „Amnesic Incognito Live System“</h4>
+              <ul class="styled-list">
+                <li><strong>Běh 100% v paměti RAM:</strong> Systém se nikdy nedotkne interního pevného disku (SSD/HDD) v počítači. Počítač může být bez disku, nebo mít disk zašifrovaný.</li>
+                <li><strong>Nulová historie:</strong> Žádné logy prohlížeče, žádné dočasné soubory, žádné swapovací stopy po vypnutí nezůstávají nikde uloženy.</li>
+                <li><strong>Vynucený anonymní provoz:</strong> Veškerá síťová komunikace teče výhradně přes anonymizační síť <strong>Tor</strong>. Pokud by se libovolná aplikace pokusila komunikovat přímo do internetu mimo Tor, firewall systému paket nemilosrdně zahodí.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Nouzové vymazání: Záchranná brzda</h4>
+              <ul class="styled-list">
+                <li>Pokud v krizové situaci uživatel fyzicky vytáhne USB disk z počítače, aktivuje se <strong>Emergency Shutdown</strong>.</li>
+                <li>Jádro systému okamžitě přemaže celou operační paměť RAM náhodnými daty dříve, než procesor ztratí napájení.</li>
+                <li>Tím je eliminován i forenzní útok podchlazením paměťových modulů (Cold Boot Attack), při kterém lze z RAM vyčíst zbytky dešifrovacích klíčů.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="story-box">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+              Typické nasazení v reálném světě
+            </div>
+            Tails používají investigativní reportéři ve válečných oblastech, disidenti v totalitních režimech a právníci manipulující s přísně důvěrnými svědeckými výpověďmi. Umožňuje bezpečně pracovat i na cizím, potenciálně kompromitovaném počítači např. v hotelu nebo internetové kavárně.
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: BEOS A HAIKU -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Inženýrské klenoty &bull; Desktop</div>
+            <h2 class="slide-title">BeOS a Haiku: Multimediální blesk z 90. let</h2>
+            <p class="slide-subtitle">Operační systém, který o desítky let předběhl svou dobu v plynulosti a architektuře</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Předběhlo dobu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Revoluční BeOS (1995)</h4>
+              <p>Založen Jean-Louisem Gasséem (bývalým šéfem vývoje v Apple). V době Windows 95, kdy systém zamrzal při každém čtení z diskety, byl BeOS zjevením:</p>
+              <ul class="styled-list">
+                <li><strong>Totální multithreading:</strong> Každé jednotlivé okno i ovládací prvek měly své vlastní systémové vlákno. Systém byl dokonale plynulý i při přehrávání desítek videí najednou.</li>
+                <li><strong>Databázový souborový systém (BFS):</strong> Metadata souborů (autor, délka skladby, hodnocení, e-mail) byla indexována jako v SQL databázi. Okamžité vyhledávání 15 let před Spotlightem v macOS!</li>
+                <li>Apple téměř BeOS koupil v roce 1996 jako základ pro nový Mac OS (nakonec se však rozhodl pro NeXTSTEP Steva Jobse).</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Dnešní nástupce: Haiku OS</h4>
+              <ul class="styled-list">
+                <li>Komunitní open-source pokračovatel kompletně zpětně kompatibilní s BeOS.</li>
+                <li><strong>Neuvěřitelná lehkost:</strong> Na moderním PC nabootuje do plného grafického desktopu za <strong>3 sekundy</strong> a spotřebuje pod 400 MB paměti RAM.</li>
+                <li>Není založen na Unixu ani Linuxu – má vlastní čistou architekturu objektového C++ API.</li>
+                <li>Ukazuje, jak rychlý a svižný by mohl být moderní desktop bez gigabajtů telemetrického a bloated kódu.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="story-box">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Inspirace pro dnešní vývojáře
+            </div>
+            Mnoho konceptů, které dnes považujeme za samozřejmé (živé dotazovací složky, označování souborů tagy přímo v jádře a modulární mediální uzly), vzniklo právě v BeOS. Vyzkoušet si Haiku na flashce je pro každého studenta informatiky fascinující lekcí uživatelské plynulosti.
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: TEMPLEOS - FASCINUJÍCÍ FENOMÉN -->
+      <section class="slide" data-slide="9">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Unikátní fenomén &bull; Kuriozita</div>
+            <h2 class="slide-title">TempleOS: 120 000 řádků kódu od jediného člověka</h2>
+            <p class="slide-subtitle">Jeden z nejpozoruhodnějších inženýrských počinů v celé historii počítačů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Terry A. Davis</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Neuvěřitelný inženýrský výkon</h4>
+              <p>Americký programátor Terry A. Davis (který trpěl vážnou schizofrenií) strávil přes 10 let života izolovanou tvorbou vlastního operačního systému:</p>
+              <ul class="styled-list">
+                <li><strong>Zcela od nuly:</strong> Nenapsal pouhou distribuci – vytvořil vlastní 64bitové jádro, bootloader, 3D grafický engine, hudební syntetizátor i letový simulátor.</li>
+                <li><strong>Vlastní jazyk HolyC:</strong> Vytvořil kompletní kompilátor programovacího jazyka HolyC (rozšíření C), který funguje jako shell i kompilátor za běhu (JIT).</li>
+                <li>Celkem přes <strong>120 000 řádků kódu</strong> napsaných jediným párem rukou bez jakékoliv cizí knihovny!</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Bizarní, avšak geniální architektura</h4>
+              <ul class="styled-list">
+                <li><strong>Záměrné Ring 0 pro všechno:</strong> Systém nemá ochranu paměti ani oddělení jádra a uživatele. Davis tvrdil, že systém má fungovat jako moderní <em>Commodore 64</em> – plný nekonečný přístup k hardware bez povolení.</li>
+                <li><strong>Pevné rozlišení 640×480 v 16 barvách:</strong> Terry tvrdil, že tato omezení mu byla vnuknuta Bohem pro zachování jednoduchosti.</li>
+                <li><strong>Záměrně bez síťové karty:</strong> Z bezpečnostních i filozofických důvodů odmítl internetové připojení.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="story-box">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+              Odkaz v akademickém a hackerském světě
+            </div>
+            Navzdory tragickému osudu svého autora je TempleOS dodnes zkoumán na univerzitách i mezi systémovými programátory jako fascinující demonstrace technické geniality a toho, co dokáže jediný odhodlaný člověk postavit na zelené louce.
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: IBM Z/OS & OPENBSD -->
+      <section class="slide" data-slide="10">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Neviditelná páteř světa</div>
+            <h2 class="slide-title">IBM z/OS a OpenBSD: Spolehlivost a bezpečnost</h2>
+            <p class="slide-subtitle">Kdo drží při životě světové bankovnictví a šifrování internetu?</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Mainframy &bull; Zabezpečení</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>IBM z/OS na Mainframech</h4>
+              <p>Neviditelný pilíř, na kterém závisí globální ekonomika:</p>
+              <ul class="styled-list">
+                <li><strong>Kde běží:</strong> 44 z 50 největších světových bank, 10 největších pojišťoven, správa platebních karet Visa a Mastercard, rezervace letenek.</li>
+                <li><strong>Uptime v desítkách let:</strong> Mainframy IBM Z dokáží za plného chodu vyměnit procesorové desky, paměť i chlazení bez přerušení transakcí.</li>
+                <li><strong>Zpracování transakcí:</strong> Zvládají desítky miliard bezpečných šifrovaných finančních transakcí denně s nulovou tolerancí chyb.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>OpenBSD: Posedlost auditem</h4>
+              <p>Projekt vedený Theem de Raadtem zaměřený na čistotu a bezpečnost kódu:</p>
+              <ul class="styled-list">
+                <li><strong>Slavné motto:</strong> <em>„Only two remote holes in the default install, in a heck of a long time!“</em> (Pouze dvě vzdálené zranitelnosti ve výchozí instalaci za desítky let).</li>
+                <li><strong>Dar světu – OpenSSH:</strong> Projekt OpenBSD vytvořil a spravuje OpenSSH, který dnes slouží k bezpečné správě všech linuxových a cloudových serverů světa.</li>
+                <li>Průkopník bezpečnostních mechanizmů: <strong>W^X</strong> (Write XOR Execute) a přísný systém volání <code>pledge()</code> a <code>unveil()</code>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="story-box">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+              Proč banky nikdy nepřestanou používat mainframy?
+            </div>
+            Pokusy převést bankovní transakční systémy z mainframů s IBM z/OS na běžné x86 cloudové clustery často skončily miliardovými ztrátami. Žádný běžný operační systém nedosahuje takové úrovně hardwarově garantované integrity dat a propustnosti I/O kanálů.
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: VELKÉ SROVNÁNÍ ALTERNATIVNÍCH SYSTÉMŮ -->
+      <section class="slide" data-slide="11">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Syntéza &bull; Velký přehled</div>
+            <h2 class="slide-title">Velké srovnání alternativních systémů</h2>
+            <p class="slide-subtitle">Rychlý přehled specializovaných architektur a jejich typického uplatnění</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Komparace</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="comparison-table-wrapper">
+            <table class="comp-table">
+              <thead>
+                <tr>
+                  <th>Systém</th>
+                  <th>Architektura jádra</th>
+                  <th>Hlavní superschopnost</th>
+                  <th>Kde se s ním potkáme?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge-os" style="color: #38bdf8;">VxWorks</span></td>
+                  <td>Hard Real-Time (RTOS)</td>
+                  <td>Mikrosekundový determinismus reakcí</td>
+                  <td>Mars Rovery (NASA), letadla Boeing 787</td>
+                </tr>
+                <tr>
+                  <td><span class="badge-os" style="color: #06b6d4;">QNX Neutrino</span></td>
+                  <td>Mikrojádro (Message Passing)</td>
+                  <td>Ovladače v Ring 3 &bull; bleskový restart chyb</td>
+                  <td>235M+ aut, kokpity, chirurgické roboty</td>
+                </tr>
+                <tr>
+                  <td><span class="badge-os" style="color: #10b981;">seL4</span></td>
+                  <td>Formálně verifikované mikrojádro</td>
+                  <td>Matematický důkaz bezchybnosti kódu</td>
+                  <td>Vojenské drony, satelity, obranné systémy</td>
+                </tr>
+                <tr>
+                  <td><span class="badge-os" style="color: #a855f7;">Qubes OS</span></td>
+                  <td>Hypervizor typu 1 (Xen)</td>
+                  <td>Barevně izolované virtuální stroje (VMs)</td>
+                  <td>Investigativní žurnalistika, experti na kyberbezpečnost</td>
+                </tr>
+                <tr>
+                  <td><span class="badge-os" style="color: #f43f5e;">Tails OS</span></td>
+                  <td>Live RAM OS (Debian)</td>
+                  <td>Totální amnézie po vytažení USB + nucený Tor</td>
+                  <td>Whistlebloweři, ochrana anonymity, disidenti</td>
+                </tr>
+                <tr>
+                  <td><span class="badge-os" style="color: #f59e0b;">Haiku / BeOS</span></td>
+                  <td>Modulární objektový desktop</td>
+                  <td>Pervazivní multithreading &bull; BFS databáze</td>
+                  <td>Multimediální nadšenci, rychlý desktop bez balastu</td>
+                </tr>
+                <tr>
+                  <td><span class="badge-os" style="color: #e2e8f0;">IBM z/OS</span></td>
+                  <td>Mainframe OS</td>
+                  <td>Nulový výpadek (dekády) &bull; výměna CPU za chodu</td>
+                  <td>Světové banky, platební karty (Visa, MC), burzy</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 12: KONTROLNÍ OTÁZKY & K ZAMYŠLENÍ -->
+      <section class="slide" data-slide="12">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Diskuze &bull; K zamyšlení</div>
+            <h2 class="slide-title">Zajímavé kontrolní otázky</h2>
+            <p class="slide-subtitle">Témata pro ověření pochopení a diskuzi se spolužáky</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">K zamyšlení</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. Proč vaše auto nesmí mít monolitické jádro?</h4>
+              <p>Představte si, že v autě posloucháte hudbu z flashdisku a multimediální přehrávač zhavaruje kvůli vadnému MP3 souboru. Proč je v architektuře QNX zaručeno, že vám nepřestane fungovat tachometr ani brzdový asistent?</p>
+              <div class="highlight-pill">Nápověda: Ring 0 vs. Ring 3 a izolace procesů</div>
+            </div>
+
+            <div class="content-card">
+              <h4>2. K čemu je formální verifikace (seL4)?</h4>
+              <p>Jaký je zásadní rozdíl mezi tím, když programátor napíše 5 000 automatických unit testů, a tím, když tým seL4 použije matematický dokazovač Isabelle/HOL? Může mít seL4 chybu přetečení bufferu?</p>
+              <div class="highlight-pill">Nápověda: Testování vs. matematický důkaz věty</div>
+            </div>
+
+            <div class="content-card">
+              <h4>3. Červené vs. zelené okno v Qubes OS</h4>
+              <p>Když kliknete na škodlivý odkaz a stáhnete ransomware v červeném okně prohlížeče v Qubes OS, proč se tento ransomware nemůže dostat k vašim penězům v bankovnictví v zeleném okně ani k heslům v černém okně?</p>
+              <div class="highlight-pill">Nápověda: Hypervizor Xen a izolované domény</div>
+            </div>
+
+            <div class="content-card">
+              <h4>4. Proč nesmí mít Mars rover Garbage Collector?</h4>
+              <p>Vysvětlete, proč pro řízení motorů a orientace přistávacího modulu na Marsu nemůžeme použít systém v jazyce jako Java nebo běžný Linux s nepredikovatelným swapováním paměti na disk.</p>
+              <div class="highlight-pill">Nápověda: Tvrdý vs. měkký reálný čas a latence</div>
             </div>
           </div>
         </div>
@@ -265,7 +691,7 @@ io:::done /start[arg0]/ {
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="01_architektura_microsoft_windows_a_jadro_nt.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 01: Architektura Microsoft Windows a jádro NT (Ctrl+Šipka vlevo)">
+      <a href="01_architektura_microsoft_windows_a_jadro_nt.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 01: Architektura Microsoft Windows a jádro NT (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu OSY20">
@@ -278,7 +704,7 @@ io:::done /start[arg0]/ {
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 12</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -366,6 +792,10 @@ io:::done /start[arg0]/ {
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>
