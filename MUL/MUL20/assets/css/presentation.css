@@ -726,6 +726,11 @@
 .glossary-badge-unit          { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
 .glossary-badge-connector     { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
 .glossary-badge-software      { background: rgba(236, 72, 153, 0.2); color: #fbcfe8; }
+.glossary-badge-exposure      { background: rgba(236, 72, 153, 0.2); color: #fbcfe8; }
+.glossary-badge-optics        { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
+.glossary-badge-sensor        { background: rgba(168, 85, 247, 0.2); color: #d8b4fe; }
+.glossary-badge-format        { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+.glossary-badge-composition   { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
 
 .glossary-full-name {
   font-size: 0.78rem;
@@ -1003,3 +1008,953 @@
   color: var(--text-muted);
 }
 
+/* ==========================================================================
+   INTERAKTIVNÍ PRVKY PRO PRINCIPY FOTOGRAFIE (MUL20-02)
+   ========================================================================== */
+
+/* Expoziční simulátor */
+.expo-sim-container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1rem;
+  align-items: stretch;
+  margin-top: 0.5rem;
+}
+
+.expo-preview-wrap {
+  background: #090d16;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.expo-canvas-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #020617;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.expo-canvas-container canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.expo-hud-overlay {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #f8fafc;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.expo-hud-badge {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.expo-meter-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.8rem;
+}
+
+.expo-scale-track {
+  flex: 1;
+  height: 6px;
+  background: #1e293b;
+  border-radius: 3px;
+  position: relative;
+  overflow: visible;
+}
+
+.expo-scale-center {
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  width: 2px;
+  height: 14px;
+  background: #38bdf8;
+  transform: translateX(-50%);
+}
+
+.expo-scale-needle {
+  position: absolute;
+  top: -5px;
+  width: 12px;
+  height: 16px;
+  background: #ec4899;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: left 0.15s ease-out;
+  box-shadow: 0 0 8px rgba(236, 72, 153, 0.6);
+}
+
+.expo-controls-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.9rem;
+}
+
+.slider-control-card {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.slider-control-card:hover {
+  border-color: rgba(236, 72, 153, 0.35);
+}
+
+.slider-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slider-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.slider-val-badge {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ec4899;
+  background: rgba(236, 72, 153, 0.12);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(236, 72, 153, 0.3);
+}
+
+.styled-range-input {
+  width: 100%;
+  accent-color: #ec4899;
+  cursor: pointer;
+  height: 6px;
+  background: #334155;
+  border-radius: 3px;
+}
+
+.slider-subhint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Histogram widget */
+.histogram-box {
+  background: #020617;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem;
+  height: 65px;
+  position: relative;
+}
+
+.histogram-box canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Optická cesta a filtry (Slide 2) */
+.optical-path-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.optical-diagram-wrap {
+  background: #020617;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.optical-filter-btns {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.filter-btn {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.filter-btn:hover {
+  background: rgba(236, 72, 153, 0.15);
+  border-color: rgba(236, 72, 153, 0.4);
+  color: #fff;
+}
+
+.filter-btn.active {
+  background: #ec4899;
+  border-color: #f472b6;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.4);
+}
+
+/* Srovnávač velikosti senzorů (Slide 6) */
+.sensor-crop-wrap {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.sensor-stage-box {
+  background: #020617;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  aspect-ratio: 16 / 10;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.sensor-rect-layer {
+  position: absolute;
+  border: 2px solid;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 4px 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sensor-list-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sensor-list-item {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sensor-list-item:hover, .sensor-list-item.active {
+  border-color: #ec4899;
+  background: rgba(236, 72, 153, 0.12);
+}
+
+/* Bayerova matice a Demosaicing (Slide 7) */
+.demosaic-workbench {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+@media (max-width: 1024px) {
+  .demosaic-workbench {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bayer-grid-canvas {
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  background: #090d16;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.bayer-cell {
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  border: 2px solid transparent;
+  padding: 6px 2px;
+}
+
+.bayer-cell .cell-ch {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.bayer-cell .cell-val {
+  font-size: 0.68rem;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.bayer-cell .cell-coord {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-size: 0.55rem;
+  opacity: 0.65;
+}
+
+.bayer-cell:hover {
+  transform: translateY(-2px) scale(1.05);
+  z-index: 5;
+}
+
+.bayer-cell.r { background: #dc2626; color: #fff; }
+.bayer-cell.g { background: #16a34a; color: #fff; }
+.bayer-cell.b { background: #2563eb; color: #fff; }
+
+.bayer-cell.selected {
+  border-color: #fbbf24 !important;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.45), 0 0 16px rgba(251, 191, 36, 0.8) !important;
+  transform: scale(1.08);
+  z-index: 10;
+  animation: bayerPulse 1.8s infinite;
+}
+
+@keyframes bayerPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.45), 0 0 16px rgba(251, 191, 36, 0.8); }
+  50% { box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.65), 0 0 24px rgba(251, 191, 36, 0.95); }
+}
+
+.bayer-cell.donor-r {
+  border-color: #f87171 !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.7) !important;
+}
+
+.bayer-cell.donor-g {
+  border-color: #4ade80 !important;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.7) !important;
+}
+
+.bayer-cell.donor-b {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.7) !important;
+}
+
+.demosaic-preset-btn {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.73rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.demosaic-preset-btn:hover, .demosaic-preset-btn.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.demosaic-calc-card {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.demosaic-rgb-result-box {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.demosaic-rgb-preview {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+  transition: background-color 0.25s ease;
+}
+
+.isp-pipeline-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .isp-pipeline-strip {
+    grid-template-columns: 1fr;
+  }
+}
+
+.isp-strip-step {
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.65rem;
+  font-size: 0.73rem;
+  position: relative;
+  transition: var(--transition);
+}
+
+.isp-strip-step:hover {
+  border-color: #ec4899;
+  background: rgba(236, 72, 153, 0.08);
+}
+
+.isp-strip-step .step-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #ec4899;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Srovnání technologií (Slide 8) */
+.tech-compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.83rem;
+  margin-top: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.tech-compare-table th {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tech-compare-table td {
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.tech-compare-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tech-compare-table tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Kompozice & Estetika (Slide 10) */
+.composition-tool-wrap {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1rem;
+}
+
+.composition-canvas-frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #020617;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.composition-canvas-frame canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.comp-rule-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.comp-rule-btn {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--text-secondary);
+}
+
+.comp-rule-btn:hover, .comp-rule-btn.active {
+  background: rgba(236, 72, 153, 0.12);
+  border-color: #ec4899;
+  color: #fff;
+}
+
+.comp-rule-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 0.2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.comp-rule-desc {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+/* Srovnávač RAW vs JPEG (Slide 11) */
+.raw-jpeg-slider-wrap {
+  background: #020617;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.dyn-compare-canvas-box {
+  position: relative;
+  width: 100%;
+  height: 170px;
+  background: #090d16;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.dyn-compare-canvas-box canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Zkušební kvíz (Slide 12) */
+.quiz-box {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.quiz-q-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #f8fafc;
+}
+
+.quiz-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.quiz-opt-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.8rem;
+  text-align: left;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.quiz-opt-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(236, 72, 153, 0.4);
+  color: #fff;
+}
+
+.quiz-opt-btn.correct {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: #10b981 !important;
+  color: #a7f3d0 !important;
+}
+
+.quiz-opt-btn.incorrect {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+}
+
+.quiz-feedback {
+  font-size: 0.83rem;
+  font-weight: 600;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  display: none;
+}
+
+/* Interaktivní animace a geometrie clony (Slide 5) */
+.aperture-anim-workbench {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.iris-visual-box {
+  background: #020617;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.iris-svg-container {
+  width: 100%;
+  max-width: 250px;
+  aspect-ratio: 1;
+  position: relative;
+  margin: 0.25rem 0;
+}
+
+.iris-svg-container svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.aperture-stops-row {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0.5rem 0 0.2rem 0;
+  width: 100%;
+}
+
+.ap-stop-btn {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.ap-stop-btn:hover {
+  background: rgba(236, 72, 153, 0.2);
+  border-color: #ec4899;
+  color: #fff;
+}
+
+.ap-stop-btn.active {
+  background: #ec4899;
+  border-color: #f472b6;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+}
+
+.aperture-anim-ctrls {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.aperture-play-btn {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: var(--transition);
+}
+
+.aperture-play-btn:hover {
+  background: #38bdf8;
+  color: #020617;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+
+.aperture-math-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.math-formula-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.math-formula-title {
+  font-weight: 700;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.math-calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.8rem;
+}
+
+.math-calc-row:last-child {
+  border-bottom: none;
+}
+
+.math-calc-label {
+  color: var(--text-secondary);
+}
+
+.math-calc-value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #fbcfe8;
+}
+
+.transmission-bar-wrap {
+  background: #020617;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  height: 14px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 0.2rem;
+}
+
+.transmission-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ec4899, #f59e0b);
+  border-radius: 3px;
+  transition: width 0.3s ease-out;
+}
+
+/* Ohnisková vzdálenost a ohnisko (Slide 3) */
+.focal-workbench {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+@media (max-width: 1024px) {
+  .focal-workbench {
+    grid-template-columns: 1fr;
+  }
+}
+
+.focal-svg-box {
+  width: 100%;
+  background: #090d16;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.focal-preset-btn {
+  padding: 0.3rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.focal-preset-btn:hover, .focal-preset-btn.active {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* ==========================================================================
+   SLIDE 12: RAW vs JPEG VIZUÁLNÍ SROVNÁVAČ
+   ========================================================================== */
+.raw-jpeg-compare-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-top: 0.6rem;
+}
+
+.format-preview-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: var(--transition);
+}
+
+.format-preview-card.card-jpeg {
+  border-top: 3px solid #ec4899;
+}
+
+.format-preview-card.card-raw {
+  border-top: 3px solid #38bdf8;
+}
+
+.format-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.format-canvas-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #090d16;
+}
+
+.format-canvas-wrap canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.format-stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.69rem;
+  color: var(--text-secondary);
+}
+
+.format-stat-badge {
+  font-size: 0.68rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.badge-jpeg-alert {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-raw-success {
+  background: rgba(16, 185, 129, 0.18);
+  color: #a7f3d0;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}

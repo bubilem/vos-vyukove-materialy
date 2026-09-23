@@ -410,6 +410,10 @@
     if (helpBtn) helpBtn.addEventListener('click', toggleHelp);
     if (helpCloseBtn) helpCloseBtn.addEventListener('click', closeAllModals);
 
+    if (glossaryBtn) glossaryBtn.addEventListener('click', toggleGlossary);
+    const glossaryCloseBtn = document.getElementById('glossaryCloseBtn');
+    if (glossaryCloseBtn) glossaryCloseBtn.addEventListener('click', closeAllModals);
+
     // Zavření klikem na overlay mimo dialog
     if (tocOverlay) {
       tocOverlay.addEventListener('click', (e) => {
@@ -419,6 +423,11 @@
     if (helpModal) {
       helpModal.addEventListener('click', (e) => {
         if (e.target === helpModal) closeAllModals();
+      });
+    }
+    if (glossaryModal) {
+      glossaryModal.addEventListener('click', (e) => {
+        if (e.target === glossaryModal) closeAllModals();
       });
     }
   }
