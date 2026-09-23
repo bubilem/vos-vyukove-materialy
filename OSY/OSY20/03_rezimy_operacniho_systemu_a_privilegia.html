@@ -10,6 +10,343 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Doplňkové vizuální styly pro názorné pochopení režimů OS */
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: #67e8f9;
+    }
+    .highlight-pill.kernel {
+      background: rgba(244, 63, 94, 0.12);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: #fda4af;
+    }
+    .highlight-pill.success {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+    }
+    .highlight-pill.warning {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #fde68a;
+    }
+
+    .story-box {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%);
+      border-left: 3px solid var(--accent);
+      padding: 0.95rem 1.15rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .story-box.danger {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.09) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left-color: #f43f5e;
+    }
+    .story-box.warning {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.09) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left-color: #f59e0b;
+    }
+    .story-title {
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.92rem;
+    }
+    .story-box.danger .story-title {
+      color: #f43f5e;
+    }
+    .story-box.warning .story-title {
+      color: #f59e0b;
+    }
+
+    /* Krok za krokem: Cesta uložení souboru */
+    .step-flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-top: 0.4rem;
+    }
+    @media (max-width: 900px) {
+      .step-flow {
+        grid-template-columns: 1fr;
+      }
+    }
+    .step-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .step-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      background: rgba(6, 182, 212, 0.04);
+    }
+    .step-card.step-kernel {
+      border-color: rgba(244, 63, 94, 0.3);
+      background: rgba(244, 63, 94, 0.04);
+    }
+    .step-card.step-kernel:hover {
+      border-color: #f43f5e;
+      background: rgba(244, 63, 94, 0.08);
+    }
+    .step-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.55rem;
+      height: 1.55rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .step-badge.kernel {
+      background: #f43f5e;
+      color: #fff;
+    }
+    .step-location {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .loc-user {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .loc-kernel {
+      background: rgba(244, 63, 94, 0.15);
+      color: #fda4af;
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+    .loc-hw {
+      background: rgba(16, 185, 129, 0.15);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .step-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+    }
+    .step-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    /* Mýty vs. Fakta */
+    .myth-fact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .myth-fact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .myth-card {
+      background: rgba(244, 63, 94, 0.06);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+    .fact-card {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+    .myth-title {
+      color: #f43f5e;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+    .fact-title {
+      color: #10b981;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Kvízové interaktivní karty */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 900px) {
+      .quiz-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .quiz-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      justify-content: space-between;
+    }
+    .quiz-card:hover {
+      border-color: rgba(6, 182, 212, 0.5);
+    }
+    .quiz-q {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+    .quiz-q-num {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .quiz-ans {
+      display: none;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      background: rgba(6, 182, 212, 0.07);
+      border-left: 2px solid var(--accent);
+      padding: 0.55rem 0.75rem;
+      border-radius: 0 4px 4px 0;
+    }
+    .quiz-ans.revealed {
+      display: block;
+      animation: fadeInAns 0.25s ease-out;
+    }
+    @keyframes fadeInAns {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .btn-quiz-reveal {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      align-self: flex-start;
+    }
+    .btn-quiz-reveal:hover {
+      background: var(--accent);
+      color: #0f172a;
+      border-color: var(--accent);
+    }
+
+    /* ARM EL vrstvy tabulka / vizitky */
+    .el-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.65rem 0.95rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.2s ease;
+      gap: 0.75rem;
+    }
+    .el-row:hover {
+      border-color: var(--accent);
+      transform: translateX(3px);
+    }
+    .el-badge {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .el-0 { background: rgba(56, 189, 248, 0.18); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); }
+    .el-1 { background: rgba(244, 63, 94, 0.18); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.35); }
+    .el-2 { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.35); }
+    .el-3 { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+
+    .analogy-card {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      padding: 0.85rem 1.05rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+    }
+    .analogy-icon-wrap {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 182, 212, 0.12);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .analogy-icon-wrap.danger {
+      background: rgba(244, 63, 94, 0.12);
+      color: #f43f5e;
+    }
+    .analogy-icon-wrap.success {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+    }
+  </style>
 </head>
 <body>
 
@@ -32,12 +369,12 @@
         <div class="lesson-indicator">
           <span>Lekce 03</span>
           <span class="divider">&bull;</span>
-          <span>Režimy OS a privilegia procesoru</span>
+          <span>Režimy operačního systému a privilegia</span>
         </div>
       </div>
       <div class="header-right">
-        <span class="tag tag-primary">Ring 0/3 &amp; Syscalls</span>
-        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+        <span class="tag tag-primary">User vs. Kernel Mode &bull; Syscalls</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv (T)">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
       </div>
@@ -45,233 +382,648 @@
 
     <main class="slides-viewport">
 
-      <!-- SLIDE 1: TITLE -->
+      <!-- SLIDE 1: TITLE HERO -->
       <section class="slide title-slide active" data-slide="1">
         <div class="hero-badge">Modul OSY20 &bull; 3. přednáška (45 min)</div>
         <h1 class="hero-title">Režimy OS &amp; Privilegia procesoru</h1>
         <p class="hero-desc">
-          Hardwarová ochrana procesoru a bezpečnostní hranice operačního systému: hierarchické kruhy oprávnění x86 (Ring 0 až Ring 3), úrovně výjimek ARM (EL0 až EL3), User Mode vs. Kernel Mode, rychlé přepnutí kontextu pomocí instrukcí syscall/sysret a ochrana registrů CPU.
+          Jak procesor chrání počítač před okamžitým pádem. Prozkoumáme neviditelnou zeď mezi běžnými programy (User Mode) a všemocným jádrem (Kernel Mode), kruhy oprávnění Ring 0 až Ring 3, systémová volání (Syscalls) a důvod, proč chyba v prohlížeči neshodí celý operační systém.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Hardwarové kruhy</span>
-            <span class="hero-meta-val">x86 Ring 0 / Ring 3</span>
+            <span class="hero-meta-label">Hardwarová zeď</span>
+            <span class="hero-meta-val">User Mode vs. Kernel Mode</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Přechodová instrukce</span>
-            <span class="hero-meta-val">syscall, sysret (x86_64)</span>
+            <span class="hero-meta-label">Kruhy x86_64</span>
+            <span class="hero-meta-val">Ring 3 (Aplikace) &bull; Ring 0 (Jádro)</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Ochrana paměti</span>
-            <span class="hero-meta-val">U/S bit ve stránkovacích tabulkách</span>
+            <span class="hero-meta-label">Bezpečnostní most</span>
+            <span class="hero-meta-val">Instrukce <code>syscall</code> a <code>sysret</code></span>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 2: HARDWAROVÉ KRUHY OPRÁVNĚNÍ -->
+      <!-- SLIDE 2: PROČ POTŘEBUJEME REŽIMY -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Hardwarová architektura</div>
-            <h2 class="slide-title">Kruhy oprávnění (Privilege Rings)</h2>
-            <p class="slide-subtitle">Jak procesor hardwarově vynucuje autoritu operačního systému</p>
+            <div class="slide-category">Kontext a intuice</div>
+            <h2 class="slide-title">Proč procesor vůbec potřebuje režimy?</h2>
+            <p class="slide-subtitle">Co by se stalo, kdyby mohl kterýkoliv program dělat naprosto cokoliv</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Klíčový koncept</span>
+            <span class="tag">Základní princip</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  <span class="card-title-text">Divoký západ bez pravidel (MS-DOS)</span>
+                </div>
+              </div>
+              <p>V pionýrských dobách (MS-DOS, Windows 3.11/95) procesor žádné striktní bariéry neměl. Program mohl sáhnout na libovolný kousek operační paměti RAM i fyzického disku.</p>
+              <ul class="styled-list">
+                <li><strong>Počítačová hra měla chybu v kódu:</strong> Přepsala paměť operačního systému a celý počítač okamžitě zamrzl.</li>
+                <li><strong>Jediné řešení:</strong> Zmáčknout fyzické tlačítko <em>Reset</em> na bedně počítače a začít znovu.</li>
+                <li><strong>Virus či nešikovný kód:</strong> Mohl poslat přímý příkaz disku a nenávratně zformátovat data.</li>
+              </ul>
+              <div class="highlight-pill kernel">Žádná ochrana paměti = pád jednoho programu položí celý PC</div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  <span class="card-title-text">Životní metafora: Restaurace</span>
+                </div>
+              </div>
+              <p>Představte si moderní počítač jako fungující restauraci:</p>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.2rem;">
+                <div class="analogy-card">
+                  <div class="analogy-icon-wrap">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  </div>
+                  <div>
+                    <strong style="color: var(--text-primary); font-size: 0.86rem;">Host u stolu (User Mode / Aplikace):</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Může jíst své jídlo a číst lístek. Nesmí sám vběhnout do kuchyně se sekerou a sahat do rozpálené pánve.</div>
+                  </div>
+                </div>
+
+                <div class="analogy-card">
+                  <div class="analogy-icon-wrap success">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  </div>
+                  <div>
+                    <strong style="color: var(--text-primary); font-size: 0.86rem;">Číšník (Systémové volání / Syscall):</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Přebírá objednávku hosta, zkontroluje, zda má host peníze a zda je jídlo v nabídce.</div>
+                  </div>
+                </div>
+
+                <div class="analogy-card">
+                  <div class="analogy-icon-wrap danger">
+                    <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path><circle cx="12" cy="12" r="4"></circle></svg>
+                  </div>
+                  <div>
+                    <strong style="color: var(--text-primary); font-size: 0.86rem;">Kuchyně a šéfkuchař (Kernel Mode / Jádro OS):</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Jedině on má přístup k nožům, ohni a zásobám (hardware). Uvaří pokrm a předá ho zpět.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="story-box" style="margin-top: 0.8rem;">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              Zlaté pravidlo: Režimy nevymyslel software, vynucuje je fyzický křemík CPU
+            </div>
+            Ochranu procesoru nevymyslel Bill Gates ani Linus Torvalds. Je to <strong>hardwarová funkce mikroprocesoru</strong> (Intel, AMD, ARM). Samotný křemíkový čip procesoru ví, v jakém režimu zrovna běží, a pokud se neoprávněný program pokusí o zakázanou akci, procesor ho okamžitě hardwarově zastaví.
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: DVA SVĚTY (USER VS KERNEL MODE) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektura systému</div>
+            <h2 class="slide-title">Dva světy: User Mode vs. Kernel Mode</h2>
+            <p class="slide-subtitle">Běžné hřiště aplikací versus neomezená kontrola nad veškerým hardwarem</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Zásadní rozdělení</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <!-- User Mode Card -->
+            <div class="content-card" style="border-top: 3px solid #38bdf8;">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" style="color: #38bdf8;" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                  <span class="card-title-text" style="color: #38bdf8;">User Mode (Uživatelský režim)</span>
+                </div>
+                <span class="sys-badge sys-badge-user">Ring 3 &bull; Omezená práva</span>
+              </div>
+              <ul class="styled-list">
+                <li><strong>Kdo zde běží:</strong> 99 % programů – webový prohlížeč (Chrome), hry, Word, Discord, Spotify, vaše skripty v Pythonu i kalkulačka.</li>
+                <li><strong>Co smí:</strong> Počítat matematiku, číst a zapisovat <em>výhradně do své vlastní</em> přidělené virtuální paměti RAM.</li>
+                <li><strong>Co NESMÍ:</strong> Přímo přistupovat k fyzickému hardwaru (SSD, grafická karta, síťová karta) ani nahlížet do paměti ostatních programů.</li>
+                <li><strong>Co se stane při chybě:</strong> Systém aplikaci bez milosti ukončí (<em>„Program přestal pracovat“</em> / <em>Segmentation fault</em>). <strong>Zbytek počítače, Windows i ostatní otevřené aplikace běží dál!</strong></li>
+              </ul>
+              <div class="highlight-pill">Bezpečná izolace: Pád aplikace neohrozí operační systém</div>
+            </div>
+
+            <!-- Kernel Mode Card -->
+            <div class="content-card" style="border-top: 3px solid #f43f5e;">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" style="color: #f43f5e;" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                  <span class="card-title-text" style="color: #f43f5e;">Kernel Mode (Režim jádra)</span>
+                </div>
+                <span class="sys-badge sys-badge-kernel">Ring 0 &bull; Plná práva</span>
+              </div>
+              <ul class="styled-list">
+                <li><strong>Kdo zde běží:</strong> Samotné jádro operačního systému (<code>ntoskrnl.exe</code> ve Windows, <code>vmlinuz</code> v Linuxu) a nízkoúrovňové ovladače (grafika NVIDIA/AMD, Wi-Fi, diskový řadič).</li>
+                <li><strong>Co smí:</strong> Naprosto VŠECHNO. Má neomezený přímý přístup k fyzické RAM, registrům CPU, diskům i síťovým kartám.</li>
+                <li><strong>Co hlídá:</strong> Přiděluje paměť procesům, plánuje běh na jádrech procesoru a chrání hardware před zneužitím.</li>
+                <li><strong>Co se stane při chybě:</strong> <strong>Totální kolaps.</strong> Nad jádrem už nikdo není, kdo by chybu zachránil. Systém se okamžitě zastaví: <strong>Modrá smrt (BSOD)</strong> ve Windows nebo <strong>Kernel Panic</strong> v Linuxu.</li>
+              </ul>
+              <div class="highlight-pill kernel">Maximální moc = maximální riziko: Chyba v jádře sundá celý počítač</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: KRUHY OPRÁVNĚNÍ X86 -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Hardwarová architektura</div>
+            <h2 class="slide-title">Kruhy oprávnění (x86 Privilege Rings)</h2>
+            <p class="slide-subtitle">Proč má procesor 4 kruhy, ale moderní Windows a Linux používají jen dva</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Architektura x86_64</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div>
               <div class="ring-diagram">
-                <div class="ring-level ring-0">
-                  <span>Ring 0 &bull; Kernel Mode</span>
-                  <span class="sys-badge sys-badge-kernel">Plná práva (Jádro, Ovladače)</span>
+                <div class="ring-level ring-0" style="padding: 0.85rem 1rem;">
+                  <div>
+                    <span style="font-weight: 800; font-size: 0.95rem;">Ring 0 &bull; Kernel Mode</span>
+                    <div style="font-size: 0.76rem; opacity: 0.85; margin-top: 2px;">Jádro OS, ovladače hardware &bull; Absolutní práva</div>
+                  </div>
+                  <span class="sys-badge sys-badge-kernel">Aktivně využito</span>
                 </div>
-                <div class="ring-level" style="background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); color: #fde68a;">
-                  <span>Ring 1 &bull; Ovladače (Historické / Nepoužívá se)</span>
+
+                <div class="ring-level" style="background: rgba(245, 158, 11, 0.08); border: 1px dashed rgba(245, 158, 11, 0.35); color: #fde68a;">
+                  <div>
+                    <span style="font-weight: 700;">Ring 1 &bull; Ovladače zařízení</span>
+                    <div style="font-size: 0.72rem; opacity: 0.75; margin-top: 2px;">Původní návrh Intelu (1982) &bull; Dnes se nepoužívá</div>
+                  </div>
                   <span class="sys-badge sys-badge-hw">Nevyužito</span>
                 </div>
-                <div class="ring-level" style="background: rgba(245, 158, 11, 0.1); border: 1px dashed rgba(245, 158, 11, 0.3); color: #fde68a;">
-                  <span>Ring 2 &bull; OS Služby (Historické / Nepoužívá se)</span>
+
+                <div class="ring-level" style="background: rgba(245, 158, 11, 0.08); border: 1px dashed rgba(245, 158, 11, 0.35); color: #fde68a;">
+                  <div>
+                    <span style="font-weight: 700;">Ring 2 &bull; Služby operačního systému</span>
+                    <div style="font-size: 0.72rem; opacity: 0.75; margin-top: 2px;">Původní návrh pro souborové systémy &bull; Dnes se nepoužívá</div>
+                  </div>
                   <span class="sys-badge sys-badge-hw">Nevyužito</span>
                 </div>
-                <div class="ring-level ring-3">
-                  <span>Ring 3 &bull; User Mode</span>
-                  <span class="sys-badge sys-badge-user">Omezená práva (Aplikace)</span>
+
+                <div class="ring-level ring-3" style="padding: 0.85rem 1rem;">
+                  <div>
+                    <span style="font-weight: 800; font-size: 0.95rem;">Ring 3 &bull; User Mode</span>
+                    <div style="font-size: 0.76rem; opacity: 0.85; margin-top: 2px;">Aplikace, hry, prohlížeče &bull; Přísně omezená práva</div>
+                  </div>
+                  <span class="sys-badge sys-badge-user">Aktivně využito</span>
                 </div>
               </div>
             </div>
+
             <div class="content-card">
-              <h4>Privilegované instrukce CPU</h4>
-              <p>Pokud se aplikace v Ring 3 pokusí spustit kteroukoli z těchto instrukcí, procesor okamžitě vyvolá hardwarovou výjimku <strong>General Protection Fault (#GP)</strong> a jádro proces ukončí:</p>
+              <h4>Proč moderní systémy ignorují Ring 1 a 2?</h4>
+              <p>Inženýři Intelu v roce 1982 (procesor 80286) navrhli 4 vrstvy jako cibuli. V praxi se však ukázaly dva zásadní problémy:</p>
               <ul class="styled-list">
-                <li><code>HLT</code>: Zastavení procesoru do úsporného stavu.</li>
-                <li><code>CLI / STI</code>: Zákaz nebo povolení hardwarových přerušení.</li>
-                <li><code>LIDT / LGDT</code>: Změna tabulky přerušení (IDT) nebo deskriptorů.</li>
-                <li><code>MOV CR0, EAX</code>: Změna řídicích registrů (vypnutí stránkování či ochrany zápisu).</li>
+                <li><strong>Přenositelnost (Portabilita):</strong> Jiné procesory (ARM, MIPS, RISC-V) měly historicky pouze 2 režimy (User a Supervisor). Kdyby Windows NT nebo Linux používaly 4 kruhy, nemohly by snadno běžet na jiných čipech!</li>
+                <li><strong>Výkon procesoru:</strong> Přepínání mezi 4 úrovněmi zpomalovalo běh systému.</li>
               </ul>
+              <div class="info-banner warning" style="margin-top: 0.5rem;">
+                <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <div>
+                  <strong>Co je to privilegovaná instrukce?</strong><br>
+                  Příkazy jako <code>HLT</code> (uspi procesor) nebo <code>CLI</code> (zakaž reakci na myš a klávesnici). Pokud se je pokusí spustit program v Ring 3, procesor mu to nedovolí a vyvolá hardwarovou chybu <em>General Protection Fault (#GP)</em>.
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: MECHANISMUS PŘEPNUTÍ REŽIMU -->
-      <section class="slide" data-slide="3">
-        <div class="slide-header">
-          <div class="slide-titles">
-            <div class="slide-category">Běh instrukcí</div>
-            <h2 class="slide-title">Jak probíhá přechod z User do Kernel Mode</h2>
-            <p class="slide-subtitle">Evoluce od pomalého softwarového přerušení k rychlému instrukčnímu skoku</p>
-          </div>
-          <div class="slide-tags">
-            <span class="tag">Otázka k zamyšlení</span>
-          </div>
-        </div>
-        <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Evoluce systémových volání na x86</h4>
-              <ul class="styled-list">
-                <li><strong>Historická metoda: <code>INT 0x80</code> (Linux) / <code>INT 0x2E</code> (Windows):</strong> Vyvolání softwarového přerušení přes tabulku IDT. Uložení mnoha registrů na zásobník – režie cca 1000 taktů procesoru.</li>
-                <li><strong>Moderní x86_64: Instrukce <code>SYSCALL</code> / <code>SYSRET</code>:</strong> Rychlý skok pomocí speciálních MSR registrů (Model-Specific Registers). Režie klesla na desítky taktů!</li>
-                <li>Procesor v jediném taktu načte novou hodnotu čítače instrukcí (RIP) a přepne hodnotu ukazatele zásobníku (RSP) na <strong>jádrový zásobník (Kernel Stack)</strong> daného vlákna.</li>
-              </ul>
-            </div>
-            <div class="content-card">
-              <h4>Bezpečnostní bariéra: Oddělení zásobníků</h4>
-              <p>Každé vlákno v systému má <strong>dva zásobníky (Stacks)</strong>:</p>
-              <ul class="styled-list">
-                <li><strong>User Stack:</strong> V paměti procesu, plně pod kontrolou aplikace.</li>
-                <li><strong>Kernel Stack:</strong> V privilegované paměti jádra. Při přechodu do Ring 0 se okamžitě přepne zásobník. Aplikace nemůže podvrhnout návratovou adresu jádru přetečením svého zásobníku!</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SLIDE 4: ARM EXCEPTION LEVELS -->
-      <section class="slide" data-slide="4">
-        <div class="slide-header">
-          <div class="slide-titles">
-            <div class="slide-category">Architektura ARM64</div>
-            <h2 class="slide-title">Úrovně výjimek v procesorech ARM (AArch64)</h2>
-            <p class="slide-subtitle">Moderní hierarchie: od aplikací přes OS a hypervizor až po Secure World</p>
-          </div>
-          <div class="slide-tags">
-            <span class="tag">ARM64 &bull; EL0-EL3</span>
-          </div>
-        </div>
-        <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Čtyři úrovně Exception Levels (EL)</h4>
-              <ul class="styled-list">
-                <li><strong>EL0 (User):</strong> Běžné aplikace (ekvivalent Ring 3 na x86).</li>
-                <li><strong>EL1 (Kernel):</strong> Operační systém (Linux jádro, Windows NT, macOS XNU).</li>
-                <li><strong>EL2 (Hypervisor):</strong> Virtualizace (KVM, Xen, Apple Hypervisor). Spravuje virtuální stroje.</li>
-                <li><strong>EL3 (Secure Monitor / Firmware):</strong> Zabezpečený svět (TrustZone), správa kryptografických klíčů a bezpečný start (Secure Boot).</li>
-              </ul>
-            </div>
-            <div class="content-card">
-              <h4>Přechod mezi úrovněmi na ARM</h4>
-              <ul class="styled-list">
-                <li>Aplikace volá instrukci <code>SVC</code> (Supervisor Call) pro přechod z EL0 do EL1.</li>
-                <li>OS volá instrukci <code>HVC</code> (Hypervisor Call) pro přechod z EL1 do EL2.</li>
-                <li>Hypervizor volá instrukci <code>SMC</code> (Secure Monitor Call) pro přechod do EL3 (TrustZone).</li>
-                <li>Vyšší úroveň má vždy plnou kontrolu nad všemi nižšími úrovněmi.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SLIDE 5: PRAKTICKÁ INSPEKCE PRIVILEGIÍ -->
+      <!-- SLIDE 5: SYSTÉMOVÉ VOLÁNÍ (SYSCALL) -->
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Diagnostika na úrovni instrukcí</div>
-            <h2 class="slide-title">Čtení modelově specifických registrů (MSR)</h2>
-            <p class="slide-subtitle">Inspekce registru IA32_LSTAR určujícího cíl instrukce SYSCALL</p>
+            <div class="slide-category">Komunikace mezi režimy</div>
+            <h2 class="slide-title">Systémové volání (Syscall): Most mezi světy</h2>
+            <p class="slide-subtitle">Jak si aplikace slušně žádá operační systém o přístup k hardwaru</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">x86 Assembly &bull; CLI</span>
+            <span class="tag">Přechodový mechanismus</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
-            <div>
-              <div class="code-box">
-                <div class="code-box-header">
-                  <span>nasm &bull; Ukázka nízkoúrovňového syscallu na x86_64</span>
-                  <button class="btn-copy" title="Kopírovat kód">
-                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span>Kopírovat</span>
-                  </button>
-                </div>
-                <pre><code><span class="term-comment">; Volání zápisu na konzoli (sys_write) v čistém assembleru</span>
-<span class="term-cmd">mov</span> <span class="term-param">rax</span>, <span class="term-arg">1</span>          <span class="term-comment">; Číslo syscallu: sys_write v Linuxu</span>
-<span class="term-cmd">mov</span> <span class="term-param">rdi</span>, <span class="term-arg">1</span>          <span class="term-comment">; Deskriptor 1 = stdout</span>
-<span class="term-cmd">mov</span> <span class="term-param">rsi</span>, msg        <span class="term-comment">; Adresa textového řetězce</span>
-<span class="term-cmd">mov</span> <span class="term-param">rdx</span>, <span class="term-arg">14</span>         <span class="term-comment">; Délka řetězce</span>
-<span class="term-cmd">syscall</span>             <span class="term-comment">; Skok do Ring 0 (přepne CPU na adresu v IA32_LSTAR)</span>
+            <div class="content-card">
+              <h4>Základní rébus: Jak program bez práv něco uloží?</h4>
+              <p>Program v User Mode nesmí sáhnout na disk. Jak tedy textový editor uloží soubor nebo prohlížeč odešle data přes Wi-Fi?</p>
+              <ul class="styled-list">
+                <li><strong>Odpověď:</strong> Program musí <strong>požádat jádro OS</strong>, aby to udělalo za něj.</li>
+                <li>Tomuto oficiálnímu požadavku se říká <strong>Systémové volání (System Call / Syscall)</strong>.</li>
+                <li>Je to jako bankovní přepážka s neprůstřelným sklem: Aplikace podá formulář (požadavek), úředník (jádro) ho prověří a vydá hotovost (provede zápis).</li>
+              </ul>
+              <div class="highlight-pill success">Syscall je jediná povolená brána z User Mode do Kernel Mode</div>
+            </div>
 
-<span class="term-cmd">mov</span> <span class="term-param">rax</span>, <span class="term-arg">60</span>         <span class="term-comment">; Číslo syscallu: sys_exit</span>
-<span class="term-cmd">xor</span> <span class="term-param">rdi</span>, <span class="term-param">rdi</span>        <span class="term-comment">; Návratový kód 0</span>
-<span class="term-cmd">syscall</span></code></pre>
+            <div class="content-card">
+              <h4>Evoluce rychlosti: Od přerušení k bleskovému skoku</h4>
+              <p>Způsob, jakým se aplikace dohaduje s procesorem, prošel obrovským vývojem:</p>
+              <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.2rem;">
+                <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm);">
+                  <div style="font-weight: 700; color: #fde68a; font-size: 0.86rem;">Starý způsob: Softwarové přerušení (INT 0x80)</div>
+                  <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;">
+                    Procesor musel uložit hromadu stavů do paměti a projít tabulku přerušení IDT. Trvalo to kolem <strong>1 000 taktů CPU</strong>.
+                  </div>
+                </div>
+
+                <div style="background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.35); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm);">
+                  <div style="font-weight: 700; color: #67e8f9; font-size: 0.86rem;">Moderní 64bit způsob: Instrukce <code>SYSCALL</code> &bull; <code>SYSRET</code></div>
+                  <div style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;">
+                    Procesor skočí přímo na předem nachystanou adresu jádra uloženou ve speciálním registru CPU. Trvá to pouhých <strong>několik desítek taktů</strong>!
+                  </div>
+                </div>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.4rem;">
+                Běžný operační systém provede <strong>desítky tisíc systémových volání za jedinou sekundu</strong> (při každém pohnutí myší, načtení webu nebo přehrání zvuku).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: KROK ZA KROKEM: ULOŽENÍ SOUBORU -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Názorný proces</div>
+            <h2 class="slide-title">Příběh jednoho kliknutí na „Uložit soubor“</h2>
+            <p class="slide-subtitle">Co se stane v počítači během zlomku milisekundy od stisku tlačítka k zápisu na SSD</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">6 fází přechodu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="step-flow">
+            <!-- Step 1 -->
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-badge">1</span>
+                <span class="step-location loc-user">User Mode (Ring 3)</span>
+              </div>
+              <div class="step-title">Aplikace volá funkci</div>
+              <div class="step-desc">
+                Uživatel v Poznámkovém bloku klikne na „Uložit“. Aplikace zavolá standardní programátorskou funkci (např. <code>WriteFile()</code> ve Windows nebo <code>write()</code> v Linuxu).
               </div>
             </div>
-            <div>
-              <div class="code-box">
-                <div class="code-box-header">
-                  <span>bash &bull; Inspekce ochrany paměti a stránkování v Linuxu</span>
-                  <button class="btn-copy" title="Kopírovat kód">
-                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span>Kopírovat</span>
-                  </button>
-                </div>
-                <pre><code><span class="term-comment"># Zjištění, zda procesor podporuje hardwarovou ochranu stránek SMEP/SMAP</span>
-<span class="term-prompt">$ </span><span class="term-cmd">grep</span> <span class="term-param">-E</span> <span class="term-string">"smep|smap"</span> <span class="term-path">/proc/cpuinfo</span> <span class="term-pipe">|</span> <span class="term-cmd">head</span> <span class="term-param">-n</span> <span class="term-arg">1</span>
-<span class="term-out">flags : ... smep smap ...</span>
 
-<span class="term-comment"># SMEP (Supervisor Mode Execution Prevention):</span>
-<span class="term-comment"># Jádro v Ring 0 nesmí spustit instrukce ležící v paměti Ring 3!</span>
-<span class="term-comment"># Zabraňuje zneužití jádra útočníkem.</span></code></pre>
+            <!-- Step 2 -->
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-badge">2</span>
+                <span class="step-location loc-user">User Mode (Ring 3)</span>
+              </div>
+              <div class="step-title">Příprava formuláře</div>
+              <div class="step-desc">
+                Systémová knihovna naplní registry CPU: do jednoho registru dá číslo operace (např. „zápis“), do dalších adresu textu v RAM a identifikátor otevřeného souboru.
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card step-kernel">
+              <div class="step-header">
+                <span class="step-badge kernel">3</span>
+                <span class="step-location loc-kernel">Přepnutí do Ring 0</span>
+              </div>
+              <div class="step-title">Instrukce <code>syscall</code></div>
+              <div class="step-desc">
+                Procesor v jediném taktu hardwarově přepne úroveň z Ring 3 na Ring 0, uzamkne uživatelský zásobník a skočí na zabezpečený vstupní bod jádra.
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card step-kernel">
+              <div class="step-header">
+                <span class="step-badge kernel">4</span>
+                <span class="step-location loc-kernel">Kernel Mode (Ring 0)</span>
+              </div>
+              <div class="step-title">Bezpečnostní prověrka</div>
+              <div class="step-desc">
+                Jádro zkontroluje: Má uživatel právo zapisovat do této složky? Není disk plný? Nejde o pokus poškodit systémové soubory Windows? Pokud ne, schválí zápis.
+              </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step-card step-kernel">
+              <div class="step-header">
+                <span class="step-badge kernel">5</span>
+                <span class="step-location loc-hw">Ovladač &bull; Hardware</span>
+              </div>
+              <div class="step-title">Fyzický zápis na disk</div>
+              <div class="step-desc">
+                Jádro předá data ovladači diskového řadiče (NVMe/SATA). Řadič pošle elektrické signály do paměťových buněk SSD a potvrdí dokončení zápisu.
+              </div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="step-card">
+              <div class="step-header">
+                <span class="step-badge">6</span>
+                <span class="step-location loc-user">Návrat do Ring 3</span>
+              </div>
+              <div class="step-title">Instrukce <code>sysret</code></div>
+              <div class="step-desc">
+                Jádro instrukcí <code>sysret</code> přepne procesor zpět do bezpečného User Mode. Aplikace dostane zprávu: <em>„Zapsáno 1 024 bajtů“</em> a klidně pokračuje.
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SHRNUTÍ & KONTROLNÍ OTÁZKY -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 7: ARM EXCEPTION LEVELS (MOBILY & APPLE) -->
+      <section class="slide" data-slide="7">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Shrnutí &amp; Kontrolní otázky</div>
-            <h2 class="slide-title">Klíčové poznatky a otázky</h2>
-            <p class="slide-subtitle">Zkušební otázky z procesorových režimů a privilegií</p>
+            <div class="slide-category">Architektura ARM64</div>
+            <h2 class="slide-title">Jak to dělají mobily: ARM Exception Levels</h2>
+            <p class="slide-subtitle">Od aplikací v iPhonech a Androidu až po neproniknutelný „Bezpečný svět“</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Kontrolní otázky</span>
+            <span class="tag">ARM64 &bull; EL0 až EL3</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="summary-grid">
-            <div class="summary-card">
-              <h4>1. Ring 0 vs. Ring 3</h4>
-              <p>Schopnost přesně vysvětlit rozdíl v oprávněních procesoru (přístup k I/O portům, řídicím registrům CR0-CR4 a paměti označené příznakem Supervisor).</p>
+          <div class="grid-2">
+            <div>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0.6rem;">
+                Procesory ARM v telefonech i v počítačích Apple Mac (M1/M2/M3/M4) nepoužívají označení „kruhy“, nýbrž <strong>Úrovně výjimek (Exception Levels &bull; EL)</strong>:
+              </p>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <div class="el-row">
+                  <div>
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 0.88rem;">EL0 &bull; User Mode</div>
+                    <div style="font-size: 0.76rem; color: var(--text-secondary);">Běžné aplikace (Instagram, TikTok, mobilní hry). Obdoba Ring 3.</div>
+                  </div>
+                  <span class="el-badge el-0">EL0 &bull; Aplikace</span>
+                </div>
+
+                <div class="el-row">
+                  <div>
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 0.88rem;">EL1 &bull; Kernel Mode</div>
+                    <div style="font-size: 0.76rem; color: var(--text-secondary);">Operační systém (jádro Androidu, jádro iOS / macOS). Obdoba Ring 0.</div>
+                  </div>
+                  <span class="el-badge el-1">EL1 &bull; OS Jádro</span>
+                </div>
+
+                <div class="el-row">
+                  <div>
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 0.88rem;">EL2 &bull; Hypervisor</div>
+                    <div style="font-size: 0.76rem; color: var(--text-secondary);">Virtualizace &bull; Správa virtuálních počítačů (KVM, Apple Hypervisor).</div>
+                  </div>
+                  <span class="el-badge el-2">EL2 &bull; Virtualizace</span>
+                </div>
+
+                <div class="el-row">
+                  <div>
+                    <div style="font-weight: 700; color: var(--text-primary); font-size: 0.88rem;">EL3 &bull; Secure Monitor (TrustZone)</div>
+                    <div style="font-size: 0.76rem; color: var(--text-secondary);">Tajná komnata procesoru &bull; Nejvyšší možná úroveň hardwaru.</div>
+                  </div>
+                  <span class="el-badge el-3">EL3 &bull; Secure World</span>
+                </div>
+              </div>
             </div>
-            <div class="summary-card">
-              <h4>2. Instrukce SYSCALL</h4>
-              <p>Popis mechanismu skoku z User Mode do Kernel Mode, přepnutí na bezpečný Kernel Stack a návrat pomocí SYSRET.</p>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  <span class="card-title-text">Proč studenta nadchne EL3 (TrustZone)?</span>
+                </div>
+              </div>
+              <p>Představte si, že záškodník kompletně hackne telefon a získá nejvyšší práva <strong>Root</strong> v operačním systému Android (úroveň EL1).</p>
+              <p><strong>Dostane se k vašemu otisku prstu a platební kartě? NE!</strong></p>
+              <ul class="styled-list">
+                <li>V úrovni EL3 běží zcela izolovaný mikroprocesorový subsystém zvaný <strong>TrustZone</strong> (v iPhonech zvaný <em>Secure Enclave</em>).</li>
+                <li>Zde jsou uloženy biometrické vzorky otisků (Touch ID) a obličeje (Face ID).</li>
+                <li>Zde jsou šifrovací klíče pro <strong>Apple Pay a Google Wallet</strong>.</li>
+                <li>Ani samotné jádro Androidu do této paměti nevidí. Pouze se zeptá: <em>„Je přiložený prst pravý?“</em> a TrustZone odpoví pouze: <em>„Ano / Ne“</em>.</li>
+              </ul>
             </div>
-            <div class="summary-card">
-              <h4>3. ARM Exception Levels</h4>
-              <p>Znalost vrstev EL0 (User), EL1 (OS Kernel), EL2 (Hypervisor) a EL3 (Secure Monitor / TrustZone).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: PÁD APLIKACE VS BSOD (CROWDSTRIKE) -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Reálný svět a havárie</div>
+            <h2 class="slide-title">Pád aplikace vs. Modrá smrt (BSOD)</h2>
+            <p class="slide-subtitle">Proč systém chybu v aplikaci přežije, ale chyba v ovladači zastaví celou planetu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Případová studie</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card" style="border-top: 3px solid #38bdf8;">
+              <h4 style="color: #38bdf8;">Scénář A: Chyba v User Mode (Ring 3)</h4>
+              <p>V počítačové hře nebo v prohlížeči Chrome programátor špatně spočítal ukazatel v paměti a sáhl mimo přidělený prostor (Null Pointer Exception):</p>
+              <ul class="styled-list">
+                <li>Hardware procesoru detekuje neoprávněný přístup a vyvolá výjimku.</li>
+                <li>Jádro v Ring 0 zakročí: <em>„Tento proces porušil pravidla izolace.“</em></li>
+                <li>Jádro proces jednoduše ukončí a uvolní jeho paměť RAM.</li>
+                <li><strong>Výsledek:</strong> Okno hry zmizí, plocha funguje, hudba hraje dál. Běžný pád programu.</li>
+              </ul>
             </div>
-            <div class="summary-card">
-              <h4>4. Otázka k procvičení a zamyšlení</h4>
-              <p><em>„Co se stane na úrovni hardware a operačního systému, pokud se běžný program v C pokusí vykonat instrukci CLI (Clear Interrupts)?“</em></p>
+
+            <div class="content-card" style="border-top: 3px solid #f43f5e;">
+              <h4 style="color: #f43f5e;">Scénář B: Chyba v Kernel Mode (Ring 0)</h4>
+              <p>Ovladač grafické karty nebo antiviru běží v Ring 0 a udělá stejnou chybu (sáhne na neplatnou adresu paměti):</p>
+              <ul class="styled-list">
+                <li>Kdo zachrání situaci? <strong>NIKDO.</strong> V Ring 0 není žádná vyšší autorita.</li>
+                <li>Pokud by systém pokračoval, mohl by náhodně přepsat data na pevném disku nebo poškodit souborový systém.</li>
+                <li>Jediná bezpečná možnost je <strong>okamžitě nouzově zastavit CPU</strong>.</li>
+                <li><strong>Výsledek:</strong> Obrazovka zmodrá: <strong>Blue Screen of Death (BSOD)</strong>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- CrowdStrike Incident Box -->
+          <div class="story-box danger" style="margin-top: 0.8rem;">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              Globální lekce pro IT svět: Incident CrowdStrike (Červenec 2024)
+            </div>
+            19. července 2024 zkolabovalo <strong>8,5 milionu počítačů</strong> na celém světě – zastavila se letiště, nemocnice i banky. Důvod? Bezpečnostní software CrowdStrike Falcon běžel jako <strong>ovladač v Ring 0</strong> (aby mohl monitorovat nízkoúrovňové útoky). Rutinní aktualizace definic obsahovala chybný soubor, který v Ring 0 způsobil čtení neplatné paměti. Protože k chybě došlo v jádře, systém Windows neměl jinou volnost než okamžitě spadnout do BSOD. <em>Ponaučení: Kód v Kernel Mode musí být psán s 1 000× větší zodpovědností než běžná aplikace!</em>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: PRAKTICKÝ DETEKTIVNÍ POHLED -->
+      <section class="slide" data-slide="9">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktická diagnostika</div>
+            <h2 class="slide-title">Kde vidíme Kernel Mode v praxi?</h2>
+            <p class="slide-subtitle">Tři diagnostické triky, které si může vyzkoušet každý student na svém počítači</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Praktické nástroje</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <!-- Nástroj 1: Task Manager -->
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                  <span class="card-title-text">Windows Správce úloh</span>
+                </div>
+              </div>
+              <p>Stiskněte <span class="key-badge">Ctrl</span> + <span class="key-badge">Shift</span> + <span class="key-badge">Esc</span>, přejděte na záložku <strong>Výkon &rarr; Procesor</strong>. Klikněte pravým tlačítkem do grafu a zaškrtněte:</p>
+              <div class="highlight-pill" style="margin-bottom: 0.4rem;">„Zobrazit časy jádra“ (Kernel times)</div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary);">
+                V grafu přibude <strong>tmavší křivka</strong>. Ta vám ukáže, kolik procent výkonu CPU zrovna tráví v Ring 0 obsluhou ovladačů a systémových volání!
+              </p>
+            </div>
+
+            <!-- Nástroj 2: Process Monitor -->
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <span class="card-title-text">Sysinternals ProcMon</span>
+                </div>
+              </div>
+              <p>Legendární bezplatný nástroj od Microsoftu (autor Mark Russinovich):</p>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li>Zobrazuje v reálném čase <strong>každý jednotlivý syscall</strong>, který programy posílají jádru.</li>
+                <li>Uvidíte přesně, jaké soubory na disku aplikace otevírá a které klíče v registrech čte.</li>
+                <li>Skvělý nástroj, když zjišťujete, proč program hlásí „Přístup odepřen“.</li>
+              </ul>
+            </div>
+
+            <!-- Nástroj 3: strace v Linuxu -->
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                  <span class="card-title-text">Linux příkaz <code>strace</code></span>
+                </div>
+              </div>
+              <p>V Linuxu (nebo WSL ve Windows) stačí napsat:</p>
+              <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle); padding: 0.4rem 0.6rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.8rem; color: #38bdf8; margin: 0.3rem 0;">
+                $ strace cat soubor.txt
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary);">
+                Na obrazovce se vyvalí desítky volání: <code>openat()</code>, <code>read()</code>, <code>write()</code>, <code>close()</code>. Uvidíte anatomii programu přímo na úrovni jádra!
+              </p>
+            </div>
+          </div>
+
+          <div class="story-box" style="margin-top: 0.8rem;">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Diagnostická hádanka: Proč má procesor 100 % v časech jádra?
+            </div>
+            Pokud na počítači nic neděláte a graf CPU ukazuje vysoké vytížení v časech jádra (Kernel Time), nejde o zaseknutou hru ani prohlížeč. Znamená to problém v Ring 0: buďto vadný ovladač neustále cyklí, dochází k chybám čtení na poškozeném disku, nebo hardware posílá záplavu přerušení (Interrupt Storm).
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: SHRNUTÍ & KVÍZ -->
+      <section class="slide" data-slide="10">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkušební kvíz</div>
+            <h2 class="slide-title">Klíčové poznatky &amp; Kvíz pro začátečníky</h2>
+            <p class="slide-subtitle">Ověřte si, že rozumíte nejdůležitějším bariérám v operačním systému</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Kvíz &bull; Zkouška</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <!-- Mýtus vs. Fakt -->
+          <div class="myth-fact-grid">
+            <div class="myth-card">
+              <div class="myth-title">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                Častý mýtus studentů
+              </div>
+              <div style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45;">
+                <em>„Když v systému Windows kliknu pravým tlačítkem a zvolím <strong>Spustit jako správce (Run as Administrator)</strong>, program začne běžet v Ring 0 (Kernel Mode).“</em>
+              </div>
+            </div>
+
+            <div class="fact-card">
+              <div class="fact-title">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Inženýrská realita
+              </div>
+              <div style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45;">
+                <strong>Kdepak!</strong> Program stále běží v <strong>Ring 3 (User Mode)</strong>. Má pouze speciální bezpečnostní token, se kterým mu jádro povolí provádět citlivější systémová volání (např. instalaci softwaru či změnu času).
+              </div>
+            </div>
+          </div>
+
+          <!-- Kvízové otázky -->
+          <div class="quiz-grid" style="margin-top: 0.75rem;">
+            <!-- Quiz 1 -->
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q1</span>
+                <span>Proč Chrome spouští každý otevřený panel jako samostatný proces v User Mode?</span>
+              </div>
+              <div class="quiz-ans" id="ans1">
+                <strong>Odpověď:</strong> Pokud se na jedné stránce zasekne skript nebo stránka zhavaruje, spadne pouze ten jeden konkrétní proces. Ostatní panely i celý prohlížeč fungují dál bez přerušení.
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans1">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+
+            <!-- Quiz 2 -->
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q2</span>
+                <span>Co přesně se stane, pokud obyčejný program v C zkusí spustit instrukci <code>HLT</code> (uspi CPU)?</span>
+              </div>
+              <div class="quiz-ans" id="ans2">
+                <strong>Odpověď:</strong> Procesor instrukci odmítne vykonat, protože v Ring 3 je zakázaná. Vyvolá hardwarovou výjimku <em>General Protection Fault (#GP)</em> a jádro neposlušný program okamžitě zabije.
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans2">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+
+            <!-- Quiz 3 -->
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q3</span>
+                <span>Proč se útočník s plnými právy Root v Androidu nedostane k otisku vašeho prstu?</span>
+              </div>
+              <div class="quiz-ans" id="ans3">
+                <strong>Odpověď:</strong> Jádro Androidu běží pouze v úrovni <strong>EL1</strong>, zatímco biometrické senzory a klíče jsou zamčené v hardwarově odděleném světě <strong>EL3 (TrustZone)</strong>, kam jádro nemá přístup.
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans3">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
             </div>
           </div>
         </div>
@@ -281,7 +1033,7 @@
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="02_alternativni_a_specializovane_operacni_systemy.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 02: Alternativní a specializované OS (Ctrl+Šipka vlevo)">
+      <a href="02_alternativni_a_specializovane_operacni_systemy.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 02: Alternativní a specializované OS (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu OSY20">
@@ -294,7 +1046,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 10</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -302,7 +1054,7 @@
       <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
         <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
       </button>
-      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)">
         <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
       </button>
       <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
@@ -382,7 +1134,121 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glossary Modal (Slovník pojmů) -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 820px; width: 95vw; max-height: 85vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="flex-shrink: 0;">
+          <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Slovník pojmů &bull; Režimy OS a privilegia
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body" style="overflow-y: auto; flex: 1; padding: 1rem 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;">
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">User Mode</span>
+              <span class="glossary-badge glossary-badge-architecture">Ring 3</span>
+            </div>
+            <div class="glossary-full-name">Uživatelský režim procesoru</div>
+            <div class="glossary-desc">Režim s omezenými právy, ve kterém běží běžné aplikace. Zabraňuje přímému přístupu k hardwaru a izoluje paměť jednotlivých procesů.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Kernel Mode</span>
+              <span class="glossary-badge glossary-badge-security">Ring 0</span>
+            </div>
+            <div class="glossary-full-name">Režim jádra / Supervisor</div>
+            <div class="glossary-desc">Plně privilegovaný stav procesoru. Kód jádra a ovladačů má neomezený přístup k veškeré paměti RAM i fyzickému hardwaru počítače.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Syscall</span>
+              <span class="glossary-badge glossary-badge-admin">Přechod</span>
+            </div>
+            <div class="glossary-full-name">Systémové volání (System Call)</div>
+            <div class="glossary-desc">Oficiální programátorská žádost aplikace o službu operačního systému (např. otevření souboru, síťová komunikace či vykreslení na displej).</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">sysret</span>
+              <span class="glossary-badge glossary-badge-admin">Instrukce</span>
+            </div>
+            <div class="glossary-full-name">Návrat ze systémového volání</div>
+            <div class="glossary-desc">Blesková instrukce na x86_64, která přepne procesor z Ring 0 zpět do Ring 3 a předá řízení původnímu uživatelskému programu.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Privilegovaná instrukce</span>
+              <span class="glossary-badge glossary-badge-security">CPU Hard</span>
+            </div>
+            <div class="glossary-full-name">Instrukce vyhrazená jádru</div>
+            <div class="glossary-desc">Instrukce CPU (např. HLT, CLI, STI, změna registrů CR0-CR4), kterou smí vykonat pouze kód v Ring 0. Pokus o spuštění v Ring 3 vede k pádu programu.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">General Protection Fault</span>
+              <span class="glossary-badge glossary-badge-security">#GP Výjimka</span>
+            </div>
+            <div class="glossary-full-name">Chyba obecné ochrany</div>
+            <div class="glossary-desc">Hardwarová výjimka procesoru x86 vyvolaná při pokusu programu překročit svá oprávnění nebo zapsat do chráněné paměti jádra.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">BSOD</span>
+              <span class="glossary-badge glossary-badge-security">Kolaps</span>
+            </div>
+            <div class="glossary-full-name">Blue Screen of Death (Modrá smrt)</div>
+            <div class="glossary-desc">Nouzové zastavení operačního systému Windows při neopravitelné chybě v Kernel Mode (Ring 0), aby se zabránilo poškození dat na disku.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">TrustZone / EL3</span>
+              <span class="glossary-badge glossary-badge-architecture">ARM64</span>
+            </div>
+            <div class="glossary-full-name">Secure World na architektuře ARM</div>
+            <div class="glossary-desc">Hardwarově izolovaná doména procesorů ARM chránící biometrická data (otisk prstu, obličej) a šifrovací klíče k platebním kartám.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
+  <script>
+    // Interaktivní odkrývání odpovědí v kvízu na snímku 10
+    document.addEventListener('DOMContentLoaded', () => {
+      const quizButtons = document.querySelectorAll('.btn-quiz-reveal');
+      quizButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const ansEl = document.getElementById(targetId);
+          if (!ansEl) return;
+          const isRevealed = ansEl.classList.contains('revealed');
+          if (isRevealed) {
+            ansEl.classList.remove('revealed');
+            btn.querySelector('span').textContent = 'Zobrazit odpověď';
+          } else {
+            ansEl.classList.add('revealed');
+            btn.querySelector('span').textContent = 'Skrýt odpověď';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
