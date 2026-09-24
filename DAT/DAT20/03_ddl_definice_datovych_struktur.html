@@ -163,7 +163,7 @@
                   <strong><code>DEFAULT CURRENT_TIMESTAMP</code>:</strong> Databáze sama automaticky doplní aktuální systémové datum a čas při vložení řádku.
                 </li>
                 <li>
-                  <strong><code>ENGINE=InnoDB</code>:</strong> Standardní transakční engine MySQL podporující cizí klíče a zamykání na úrovni řádků (row-level locking).
+                  <strong><code>ENGINE=InnoDB</code>:</strong> Standardní transakční engine MySQL garantující vlastnosti <strong>ACID</strong>, cizí klíče a zamykání na úrovni řádků (row-level locking).
                 </li>
               </ul>
             </div>
@@ -171,8 +171,94 @@
         </div>
       </section>
 
-      <!-- SLIDE 4: ALTER TABLE -->
+      <!-- SLIDE 4: ACID & INNODB -->
       <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektura úložiště</div>
+            <h2 class="slide-title">Transakční engine InnoDB a principy ACID</h2>
+            <p class="slide-subtitle">Co znamená, že je tabulka ACID compliant a jak to InnoDB garantuje pod kapotou</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčový koncept RDBMS</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="table-container">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th style="width: 17%;">Vlastnost (ACID)</th>
+                  <th style="width: 41%;">Význam &amp; transakční pravidlo</th>
+                  <th style="width: 42%;">Jak to InnoDB řeší pod kapotou</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong style="color: var(--accent); font-size: 1.05rem;">A</strong> – <strong>Atomicity</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Nedělitelnost</span>
+                  </td>
+                  <td>
+                    <strong>Princip „všechno, nebo nic“:</strong> Transakce se provede buď celá, nebo vůbec. Pokud selže jediný SQL příkaz, všechny dosud provedené změny se vrátí zpět a v databázi nezůstane žádný nekonzistentní mezistav.
+                  </td>
+                  <td>
+                    <strong>Undo Log</strong> (segment vrácení změn). Pro každou modifikaci si ukládá reverzní záznam. Při chybě nebo příkazu <code>ROLLBACK</code> InnoDB pomocí undo logu zrekonstruuje původní stav před započetím transakce.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--accent); font-size: 1.05rem;">C</strong> – <strong>Consistency</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Konzistence</span>
+                  </td>
+                  <td>
+                    <strong>Převod z validního do validního stavu:</strong> Transakce nesmí porušit žádná stanovená integritní pravidla (datové typy, unikátnosti, cizí klíče). Stav před i po transakci musí být stoprocentně platný.
+                  </td>
+                  <td>
+                    Aktivní kontrola a striktní vynucování integritních omezení (<code>FOREIGN KEY</code>, <code>UNIQUE</code>, <code>NOT NULL</code>, <code>CHECK</code>). Dále <strong>Doublewrite Buffer</strong> chránící stránky před poškozením při pádu napájení.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--accent); font-size: 1.05rem;">I</strong> – <strong>Isolation</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Izolace</span>
+                  </td>
+                  <td>
+                    <strong>Nezávislost souběžných procesů:</strong> Současně běžící transakce se vzájemně neovlivňují a „nevidí“ své rozpracované změny. Chování odpovídá stavu, jako by transakce probíhaly sekvenčně za sebou.
+                  </td>
+                  <td>
+                    <strong>MVCC</strong> (Multi-Version Concurrency Control) – čtenáři neblokují zapisovatele a zapisovatelé neblokují čtenáře; <strong>zamykání na úrovni řádků (Row-Level Locking)</strong> a úrovně izolace (výchozí <em>REPEATABLE READ</em>).
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--accent); font-size: 1.05rem;">D</strong> – <strong>Durability</strong><br>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Trvalost</span>
+                  </td>
+                  <td>
+                    <strong>Nevratnost potvrzených změn:</strong> Jakmile je transakce potvrzena příkazem <code>COMMIT</code>, její výsledek je definitivně uložen na disk a neztratí se ani při náhlém výpadku proudu, pádu OS či havárii DBMS.
+                  </td>
+                  <td>
+                    <strong>Redo Log</strong> (princip WAL – <em>Write-Ahead Logging</em>) v souborech <code>ib_logfile</code>. Změny se okamžitě zapisují do sekvenčního logu; při havárii serveru provede InnoDB automatickou obnovu (<em>Crash Recovery</em>).
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="callout callout-eshop" style="margin-top: 0.65rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Propojení s DDL: Proč v definici tabulek volíme <code>ENGINE=InnoDB</code>?</div>
+              Starší výchozí engine MySQL <code>MyISAM</code> <strong>transakce nepodporoval (nebyl ACID compliant)</strong>, nezvládal cizí klíče a zamykal celé tabulky. Proto všechny tabulky e-shopu (<code>customer</code>, <code>order</code>, <code>product</code>) definujeme výhradně s <strong>InnoDB</strong>.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: ALTER TABLE -->
+      <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Změna struktury</div>
@@ -230,8 +316,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 5: DROP vs TRUNCATE vs DELETE -->
-      <section class="slide" data-slide="5">
+      <!-- SLIDE 6: DROP vs TRUNCATE vs DELETE -->
+      <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Klíčové srovnání</div>
@@ -311,8 +397,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 6: SUMMARY -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 7: SUMMARY -->
+      <section class="slide" data-slide="7">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Rekapitulace</div>
@@ -446,6 +532,10 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>
