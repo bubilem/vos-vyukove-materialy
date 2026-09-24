@@ -37,7 +37,7 @@
       </div>
       <div class="header-right">
         <span class="tag tag-exam">Zkouškový okruh 10: Technika fotoaparátů</span>
-        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv (T)">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
       </div>
@@ -45,197 +45,671 @@
 
     <main class="slides-viewport">
 
-      <!-- SLIDE 1: TITLE -->
+      <!-- SLIDE 1: TITLE & OVERVIEW -->
       <section class="slide title-slide active" data-slide="1">
-        <div class="hero-badge">Modul MUL20 &bull; 3. přednáška (45 min)</div>
+        <div class="hero-badge">Modul MUL20 &bull; 3. přednáška (45 min) &bull; Hardwarová architektura</div>
         <h1 class="hero-title">Konstrukce fotoaparátů, snímače a RAW</h1>
         <p class="hero-desc">
-          Technologická evoluce těl fotoaparátů: zrcadlovky DSLR vs. bezzrcadlovky CSC. Polovodičové čipy (CCD vs. CMOS BSI), velikosti snímačů a Crop faktor, Bayerova mozaika a proces debayeringu.
+          Technologický rozbor těl přístrojů a zpracování obrazu: od mechaniky optického hranolu zrcadlovek DSLR a bezzrcadlovek CSC přes křemíkovou architekturu čipů (CMOS, BSI, Stacked), Crop faktor a Bayerovu masku až po 14bitový formát RAW.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Konstrukce</span>
-            <span class="hero-meta-val">DSLR zrcadlovka vs. CSC</span>
+            <span class="hero-meta-label">Architektura</span>
+            <span class="hero-meta-val">DSLR zrcadlovka vs. CSC bezzrcadlovka</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Snímače</span>
-            <span class="hero-meta-val">Full Frame &bull; APS-C &bull; Crop</span>
+            <span class="hero-meta-label">Čipy & Mozaika</span>
+            <span class="hero-meta-val">BSI CMOS &bull; Crop faktor &bull; Bayer RGGB</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Absolutorium</span>
             <span class="hero-meta-val">Profilový okruh č. 10</span>
           </div>
         </div>
+
+        <div class="content-card" style="margin-top: 1rem; text-align: left;">
+          <h4 style="display: flex; align-items: center; gap: 0.5rem; color: #f472b6; margin-bottom: 0.5rem;">
+            <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            Evoluční linie fotografických těl
+          </h4>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; font-size: 0.8rem;">
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #ec4899;">
+              <strong style="color: #fbcfe8;">1. Analogové kinofilmové SLR</strong>
+              <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">35mm film & mechanika</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Chemický filmový pás $36 \times 24\text{ mm}$, mechanické natahování závěrky, zrcátko a matnice.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #38bdf8;">
+              <strong style="color: #bae6fd;">2. Digitální zrcadlovky (DSLR)</strong>
+              <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">CCD / CMOS + OVF hranol</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Sklopné zrcadlo, pětiboký hranol a samostatný AF senzor na dně těla. Extrémní výdrž baterie.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #a855f7;">
+              <strong style="color: #e9d5ff;">3. Bezzrcadlovky (CSC / MILC)</strong>
+              <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">Elektronický EVF & On-sensor AF</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Odstranění zrcadlové šachty, bleskový živý náhled na OLED EVF displeji (WYSIWYG) a AI ostření.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #10b981;">
+              <strong style="color: #a7f3d0;">4. Výpočetní fotomoduly</strong>
+              <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">Smartphony & Multi-frame ISP</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Miniaturní BSI senzory s HDR syntézou, skládáním desítek snímků v reálném čase a neurálním ISP.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- SLIDE 2: DSLR VS CSC BEZZRCADLOVKY -->
+      <!-- SLIDE 2: DSLR VS CSC ANIMACE -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Architektura těl</div>
+            <div class="slide-category">Architektura těl &bull; Interaktivní simulace</div>
             <h2 class="slide-title">Zrcadlovky (DSLR) vs. Bezzrcadlovky (CSC / Mirrorless)</h2>
-            <p class="slide-subtitle">Zásadní posun v optické a elektronické konstrukci těl</p>
+            <p class="slide-subtitle">Sledujte chod světelných paprsků skrze sklopné zrcátko, pentaprizma, závěrku a čip při expozici</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Klíčové srovnání</span>
+            <span class="tag tag-exam">Interaktivní animace</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4 style="color: #60a5fa;">DSLR (Digital Single-Lens Reflex)</h4>
-              <ul class="styled-list">
-                <li><strong>Optický hledáček (OVF):</strong> Světlo z objektivu se odráží od sklopného zrcátka nahoru do skleněného pětibokého hranolu (Pentaprism).</li>
-                <li>Při expozici se zrcátko sklopí nahoru &rarr; hledáček na okamžik zčerná (Blackout).</li>
-                <li>Oddělený fázový senzor automatického ostření (AF modul) na dně šachty (může trpět nepřesnostmi Front/Back focus).</li>
-                <li>Vysoká výdrž baterie (1000+ snímků), mechanická robustnost, ale větší rozměry a hmotnost.</li>
-              </ul>
+          <div class="camera-anim-workbench">
+            <!-- Vizuální stage s animovaným SVG řezem těla -->
+            <div class="camera-stage-box">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <span id="cameraArchTitle" style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;">Architektura: Digitální zrcadlovka (DSLR) s optickým hledáčkem (OVF)</span>
+                <span class="camera-state-badge" id="cameraStateBadge">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; display: inline-block;"></span>
+                  HLEDÁČEK AKTIVNÍ (NÁHLED)
+                </span>
+              </div>
+
+              <div class="camera-svg-wrap">
+                <svg id="cameraCrossSectionSvg" viewBox="0 0 760 380" width="100%" height="100%">
+                  <defs>
+                    <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#1e293b" />
+                      <stop offset="100%" stop-color="#0f172a" />
+                    </linearGradient>
+                    <linearGradient id="prismGrad" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="rgba(56, 189, 248, 0.45)" />
+                      <stop offset="50%" stop-color="rgba(125, 211, 252, 0.15)" />
+                      <stop offset="100%" stop-color="rgba(56, 189, 248, 0.55)" />
+                    </linearGradient>
+                    <linearGradient id="sensorGrad3" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#0284c7" />
+                      <stop offset="50%" stop-color="#0369a1" />
+                      <stop offset="100%" stop-color="#075985" />
+                    </linearGradient>
+                    <filter id="rayGlow">
+                      <feGaussianBlur stdDeviation="3.5" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                  </defs>
+
+                  <!-- Tělo fotoaparátu v řezu -->
+                  <rect x="240" y="50" width="460" height="300" rx="16" fill="url(#bodyGrad)" stroke="#334155" stroke-width="2.5" />
+                  
+                  <!-- Hledáčková kaplička nahoře -->
+                  <path d="M 330,50 L 400,10 L 510,10 L 560,50 Z" fill="#1e293b" stroke="#334155" stroke-width="2" />
+                  <text x="450" y="32" fill="#94a3b8" font-size="10" font-weight="700" text-anchor="middle">HRANOLOVÁ KAPLIČKA</text>
+
+                  <!-- Bajonet těla (čelo) -->
+                  <rect x="230" y="90" width="16" height="220" rx="4" fill="#64748b" stroke="#94a3b8" stroke-width="1.5" />
+                  <text x="238" y="80" fill="#ec4899" font-size="9" font-weight="800" text-anchor="middle">BAJONET</text>
+
+                  <!-- Objektiv před tělem (zjednodušený náčrt) -->
+                  <path d="M 40,110 L 230,110 L 230,290 L 40,290 Z" fill="rgba(15, 23, 42, 0.7)" stroke="#475569" stroke-dasharray="5,3" stroke-width="1.5" />
+                  <path d="M 90,120 Q 120,200 90,280 Q 75,200 90,120 Z" fill="rgba(56, 189, 248, 0.25)" stroke="#38bdf8" stroke-width="1.5" />
+                  <text x="135" y="205" fill="#64748b" font-size="11" font-weight="600" text-anchor="middle">OBJEKTIV</text>
+
+                  <!-- PENTAPRISM (Pětiboký hranol) - pouze DSLR -->
+                  <g id="svgPentaprismGroup">
+                    <polygon id="svgPentaprism" points="360,55 430,20 500,20 540,65 390,65" fill="url(#prismGrad)" stroke="#38bdf8" stroke-width="2" />
+                    <!-- Matnice (Focusing screen) -->
+                    <rect x="360" y="68" width="170" height="6" rx="2" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1" />
+                    <text x="445" y="62" fill="#38bdf8" font-size="9" font-weight="700" text-anchor="middle">Pentaprism (Hranol)</text>
+                    <text x="445" y="86" fill="#cbd5e1" font-size="8" text-anchor="middle">Matnice</text>
+                  </g>
+
+                  <!-- OVF Hledáček (Eyepiece) -->
+                  <g id="svgEyepieceGroup">
+                    <rect x="540" y="45" width="25" height="30" rx="3" fill="#0f172a" stroke="#64748b" stroke-width="1.5" />
+                    <circle cx="575" cy="60" r="10" fill="none" stroke="#94a3b8" stroke-width="2" />
+                    <path d="M 570,55 Q 575,60 570,65" stroke="#94a3b8" stroke-width="1.5" fill="none" />
+                    <text x="605" y="64" fill="#94a3b8" font-size="10" font-weight="600">OVF</text>
+                  </g>
+
+                  <!-- EVF Hledáček (pouze CSC) -->
+                  <g id="svgEvfGroup" style="display: none;">
+                    <rect x="535" y="40" width="35" height="35" rx="4" fill="#0284c7" stroke="#38bdf8" stroke-width="2" />
+                    <text x="552" y="62" fill="#fff" font-size="10" font-weight="800" text-anchor="middle">OLED</text>
+                    <text x="605" y="64" fill="#38bdf8" font-size="10" font-weight="700">EVF Displej</text>
+                  </g>
+
+                  <!-- SKLOPNÉ ZRCÁTKO (DSLR) -->
+                  <!-- Čep otáčení je v bodě (460, 140) -->
+                  <g id="svgMirrorAssembly">
+                    <!-- Hlavní polopropustné zrcátko (v klidu skloněno pod úhlem 45°) -->
+                    <line id="svgMainMirror" x1="370" y1="260" x2="470" y2="150" stroke="#f43f5e" stroke-width="5" stroke-linecap="round" />
+                    <!-- Sekundární AF sub-zrcátko -->
+                    <line id="svgSubMirror" x1="435" y1="188" x2="445" y2="235" stroke="#fb7185" stroke-width="2.5" stroke-dasharray="3,2" />
+                    <!-- Popisek zrcátka -->
+                    <text id="svgMirrorLabel" x="400" y="275" fill="#f43f5e" font-size="10" font-weight="700">Sklopné zrcadlo (45°)</text>
+                  </g>
+
+                  <!-- AF Modul na dně šachty (DSLR fázový senzor) -->
+                  <g id="svgAfModuleGroup">
+                    <rect x="420" y="315" width="60" height="20" rx="3" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5" />
+                    <text x="450" y="329" fill="#c7d2fe" font-size="8.5" font-weight="700" text-anchor="middle">AF SENZOR</text>
+                  </g>
+
+                  <!-- ZÁVĚRKA (Štěrbinové lamely) -->
+                  <rect id="svgShutterBlade" x="555" y="115" width="10" height="170" rx="2" fill="#475569" stroke="#94a3b8" stroke-width="1.5" />
+                  <text x="560" y="105" fill="#94a3b8" font-size="9" font-weight="700" text-anchor="middle">Závěrka</text>
+
+                  <!-- SNÍMAČ (Čip CMOS) -->
+                  <rect id="svgSensorChip" x="585" y="110" width="22" height="180" rx="3" fill="url(#sensorGrad3)" stroke="#38bdf8" stroke-width="2.5" />
+                  <text x="596" y="105" fill="#38bdf8" font-size="10" font-weight="800" text-anchor="middle">SENZOR</text>
+                  
+                  <!-- Zadní LCD displej -->
+                  <rect id="svgBackLcd" x="690" y="100" width="8" height="200" rx="2" fill="#020617" stroke="#38bdf8" stroke-width="1.5" />
+                  <text x="682" y="92" fill="#64748b" font-size="9" font-weight="700">LCD</text>
+
+                  <!-- SVĚTELNÉ PAPRSKY (ANIMOVANÉ TRASY) -->
+                  <!-- Režim DSLR Náhled (Mirror down): paprsek jde z objektivu -> odraz od zrcadla nahoru do matnice -> hranol -> OVF -->
+                  <g id="svgRaysDslrPreview" filter="url(#rayGlow)">
+                    <!-- Vstupní paprsek -->
+                    <path d="M 50,170 L 415,170" stroke="#fde047" stroke-width="3" fill="none" />
+                    <path d="M 50,230 L 445,230" stroke="#fde047" stroke-width="3" fill="none" />
+                    <!-- Odraz zrcadlem nahoru -->
+                    <path d="M 415,170 L 415,70 L 460,35 L 530,35 L 565,58" stroke="#fde047" stroke-width="3" fill="none" />
+                    <path d="M 445,230 L 445,70 L 475,45 L 535,45 L 565,62" stroke="#fef08a" stroke-width="2.5" fill="none" />
+                    <!-- Část do AF senzoru -->
+                    <path d="M 445,200 L 450,315" stroke="#a5b4fc" stroke-width="2" stroke-dasharray="4,3" fill="none" />
+                  </g>
+
+                  <!-- Režim Expozice (Mirror up + Shutter open): paprsky jdou přímo na senzor! -->
+                  <g id="svgRaysExposure" filter="url(#rayGlow)" style="display: none;">
+                    <path d="M 50,160 L 585,160" stroke="#fbbf24" stroke-width="4" fill="none" />
+                    <path d="M 50,200 L 585,200" stroke="#fde047" stroke-width="4.5" fill="none" />
+                    <path d="M 50,240 L 585,240" stroke="#fbbf24" stroke-width="4" fill="none" />
+                  </g>
+
+                  <!-- Režim CSC Náhled (No mirror): paprsky dopadají stále na senzor, elektronický signál do EVF a LCD -->
+                  <g id="svgRaysCscPreview" filter="url(#rayGlow)" style="display: none;">
+                    <path d="M 50,170 L 585,170" stroke="#38bdf8" stroke-width="3.5" fill="none" />
+                    <path d="M 50,200 L 585,200" stroke="#7dd3fc" stroke-width="4" fill="none" />
+                    <path d="M 50,230 L 585,230" stroke="#38bdf8" stroke-width="3.5" fill="none" />
+                    <!-- Digitální signál ze senzoru do EVF -->
+                    <path d="M 595,110 L 595,75 L 570,75" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="4,3" fill="none" />
+                    <!-- Digitální signál ze senzoru na zadní LCD -->
+                    <path d="M 607,200 L 690,200" stroke="#a855f7" stroke-width="2" stroke-dasharray="3,3" fill="none" />
+                  </g>
+
+                </svg>
+              </div>
+
+              <!-- HUD diagnostická lišta pod vizualizací -->
+              <div class="camera-hud-bar">
+                <span id="hudFlangeVal">Flange focal distance: 44.0 mm (EF bajonet)</span>
+                <span id="hudAfVal" style="color: #60a5fa;">Ostření: Samostatný fázový AF modul (Phase Detection)</span>
+                <span id="hudBlackoutVal" style="color: #f472b6;">Blackout při expozici: ANO (Zrcadlový ráz)</span>
+              </div>
             </div>
-            <div class="content-card">
-              <h4 style="color: #f472b6;">CSC (Compact System Camera / Mirrorless)</h4>
-              <ul class="styled-list">
-                <li><strong>Elektronický hledáček (EVF):</strong> Světlo dopadá přímo na snímač, který v reálném čase posílá obraz do miniaturního OLED displeje v hledáčku.</li>
-                <li><strong>WYSIWYG:</strong> V hledáčku fotograf vidí přesnou expozici, vyvážení bílé i hloubku ostrosti ještě před stiskem spouště.</li>
-                <li>Fázové ostření přímo na buňkách snímače (pokrytí 95–100 % plochy, detekce očí a AI rozpoznávání objektů).</li>
-                <li>Kratší vzdálenost bajonetu od čipu (Flange distance) umožňuje kompaktnější a opticky ostřejší objektivy.</li>
-              </ul>
+
+            <!-- Ovládací panel a technické srovnání -->
+            <div class="camera-ctrl-panel">
+              <div>
+                <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700;">Volba konstrukčního principu</span>
+                <div class="mode-selector-tabs" style="margin-top: 0.35rem;">
+                  <button class="mode-tab-btn active" id="btnModeDslr">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    DSLR (Zrcadlovka)
+                  </button>
+                  <button class="mode-tab-btn" id="btnModeCsc">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="12" cy="12" r="5"></circle></svg>
+                    CSC (Bezzrcadlovka)
+                  </button>
+                </div>
+              </div>
+
+              <!-- Spoušť akční tlačítko -->
+              <div>
+                <button class="shutter-trigger-btn" id="btnTriggerShutter">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3"></circle></svg>
+                  <span>Stisknout spoušť (Expozice snímku)</span>
+                </button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.35rem; font-size: 0.72rem; color: var(--text-muted);">
+                  <label style="display: flex; align-items: center; gap: 0.3rem; cursor: pointer;">
+                    <input type="checkbox" id="chkSlowMo" style="accent-color: #ec4899;">
+                    Zpomalený záběr (Slow-motion 0.3×)
+                  </label>
+                  <span id="shutterSpeedReadout" style="font-family: var(--font-mono); color: #ec4899; font-weight: 700;">Čas: 1/250 s</span>
+                </div>
+              </div>
+
+              <!-- Podrobná diagnostika aktuálního stavu -->
+              <div class="camera-diag-stats">
+                <div class="camera-diag-row">
+                  <span style="color: var(--text-secondary);">Hledáček:</span>
+                  <span class="camera-diag-val" id="diagFinder">Optický OVF (100% sklo, nulový lag)</span>
+                </div>
+                <div class="camera-diag-row">
+                  <span style="color: var(--text-secondary);">Mechanické otřesy:</span>
+                  <span class="camera-diag-val" id="diagShock">Zrcátkový ráz (Mirror Shock)</span>
+                </div>
+                <div class="camera-diag-row">
+                  <span style="color: var(--text-secondary);">Autofokus pokrytí:</span>
+                  <span class="camera-diag-val" id="diagAfCoverage">Středových 15–61 bodů</span>
+                </div>
+                <div class="camera-diag-row">
+                  <span style="color: var(--text-secondary);">Výdrž baterie:</span>
+                  <span class="camera-diag-val" id="diagBattery">Vysoká (1200+ snímků)</span>
+                </div>
+                <div class="camera-diag-row">
+                  <span style="color: var(--text-secondary);">Náhled expozice:</span>
+                  <span class="camera-diag-val" id="diagWysiwyg">Pouze odhad expozimetrem</span>
+                </div>
+              </div>
+
+              <div class="callout callout-info" style="font-size: 0.76rem; padding: 0.5rem 0.7rem; margin: 0;">
+                <strong style="color: #38bdf8;">Zkouškový poznatek:</strong> Odstranění zrcadla u CSC zkrátilo vzdálenost od bajonetu k čipu ze 44 mm na 18–20 mm. To umožňuje konstruovat mnohem ostřejší a světelnější objektivy.
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: ARCHITEKTURA SNÍMAČŮ (CCD VS CMOS) -->
+      <!-- SLIDE 3: TECHNOLOGIE SNÍMAČŮ CCD VS CMOS VS BSI -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Polovodičové technologie</div>
-            <h2 class="slide-title">Technologie snímačů &bull; CCD, CMOS a BSI</h2>
-            <p class="slide-subtitle">Jak fotodiody akumulují fotony a převádějí je na elektrický náboj</p>
+            <div class="slide-category">Polovodičové technologie &bull; Křemík</div>
+            <h2 class="slide-title">Technologie snímačů &bull; CCD, CMOS, BSI a Stacked</h2>
+            <p class="slide-subtitle">Jak fotodiody převádějí dopadající fotony na elektrický náboj a jak se vyvíjela architektura čipů</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Polovodiče</span>
+            <span class="tag tag-exam">Klíčová technologie</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>CCD vs. CMOS architektura</h4>
-              <ul class="styled-list">
-                <li><strong>CCD (Charge-Coupled Device):</strong> Historická technologie. Náboje z fotodiod se posouvají po řádcích do jednoho společného zesilovače. Špičkový analogový obraz, ale vysoká spotřeba energie a pomalé čtení.</li>
-                <li><strong>CMOS (Active Pixel Sensor):</strong> Každý pixel má svůj vlastní integrovaný zesilovač a tranzistory. Umožňuje extrémně rychlé paralelní vyčítání, nízkou spotřebu energie a nativní video 4K/8K.</li>
+              <h4 style="color: #38bdf8; display: flex; align-items: center; gap: 0.4rem;">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                1. CCD vs. CMOS (Active Pixel Sensor)
+              </h4>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li><strong>Princip fotoelektrického jevu:</strong> Dopadající foton vyrazí v PN přechodu křemíku elektron. Elektrony se shromažďují v potenciálové jámě (Full Well Capacity, cca 30 000 až 100 000 $e^-$).</li>
+                <li><strong>CCD (Charge-Coupled Device):</strong> Náboje z celé plochy se posouvají po řádcích do vertikálních a horizontálních posuvných registrů k jednomu společnému výstupnímu zesilovači. Vynikající homogenita a analogový vzhled, ale obrovská spotřeba a neschopnost rychlého videa.</li>
+                <li><strong>CMOS (APS):</strong> Každý jednotlivý pixel obsahuje vlastní sadu 3 až 4 tranzistorů (reset, transfer, zesilovač, volba řádku). Náboj se převádí na napětí přímo v buňce. Umožňuje masivně paralelní vysokorychlostní vyčítání a nativní 4K/8K video při zlomkové spotřebě energie.</li>
               </ul>
             </div>
+
             <div class="content-card">
-              <h4>Moderní inovace: BSI a Stacked CMOS</h4>
-              <ul class="styled-list">
-                <li><strong>FSI (Front-Side Illuminated):</strong> Kovové vodiče a sběrnice leží NAD fotodiodami a stíní část přicházejícího světla.</li>
-                <li><strong>BSI (Back-Side Illuminated):</strong> Výrobním procesem je čip otočen &ndash; fotodiody jsou na samotném povrchu. Zachytí o 30–40 % více světla, což drasticky snižuje šum při vysokém ISO.</li>
-                <li><strong>Stacked CMOS:</strong> Snímač je složen ze sendviče vrstev (fotodiody + logika + dedikovaná DRAM paměť). Bleskurychlé vyčítání snímku za 1/250 s bez rolling shutter zkreslení.</li>
+              <h4 style="color: #f472b6; display: flex; align-items: center; gap: 0.4rem;">
+                <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                2. BSI (Back-Illuminated) & Stacked CMOS
+              </h4>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li><strong>FSI (Front-Side Illuminated):</strong> U tradičního CMOS leží kovové vodiče, hliníkové sběrnice a tranzistory NAD světlocitlivou vrstvou. Část fotonů dopadajících pod úhlem se odrazí nebo je zastíněna ("efekt hluboké studny").</li>
+                <li><strong>BSI (Back-Side Illuminated):</strong> Křemíkový plátek je zbroušen na tloušťku několika mikrometrů a otočen o 180°. Fotodiody leží na samotném povrchu čipu bez překážek. Zachytí o <strong>30–40 % více fotonů</strong>, což zásadně snižuje šum a zvyšuje dynamický rozsah v šeru.</li>
+                <li><strong>Stacked CMOS (Skládaný čip):</strong> Sendvičová architektura tří vrstev spojených mikro-spoji: 1. fotodiody + 2. vysokorychlostní logika + 3. integrovaná DRAM vyrovnávací paměť. Umožňuje vyčtení 24–50 MPx senzoru za 1/250 s bez nutnosti mechanické závěrky.</li>
               </ul>
+            </div>
+          </div>
+
+          <!-- Schématický nákres FSI vs BSI -->
+          <div class="content-card" style="margin-top: 0.75rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: center; font-size: 0.8rem;">
+              <div style="background: rgba(0,0,0,0.25); padding: 0.6rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                <strong style="color: #94a3b8;">FSI čip (Front-Side):</strong>
+                <p style="margin: 4px 0; color: var(--text-secondary);">Mikročočka &rarr; Barevný filtr &rarr; <span style="color: #ef4444; font-weight: 700;">Kovové sběrnice (stíní)</span> &rarr; Fotodioda</p>
+                <div style="height: 6px; background: linear-gradient(90deg, #ef4444 60%, #334155 40%); border-radius: 3px; margin-top: 4px;"></div>
+                <span style="font-size: 0.7rem; color: var(--text-muted);">Světelná účinnost: ~60 %</span>
+              </div>
+              <div style="background: rgba(0,0,0,0.25); padding: 0.6rem; border-radius: var(--radius-sm); border: 1px solid rgba(236,72,153,0.3);">
+                <strong style="color: #fbcfe8;">BSI čip (Back-Illuminated):</strong>
+                <p style="margin: 4px 0; color: var(--text-secondary);">Mikročočka &rarr; Barevný filtr &rarr; <span style="color: #10b981; font-weight: 700;">Fotodioda (přímo)</span> &rarr; Kovové sběrnice dole</p>
+                <div style="height: 6px; background: linear-gradient(90deg, #10b981 92%, #334155 8%); border-radius: 3px; margin-top: 4px;"></div>
+                <span style="font-size: 0.7rem; color: #a7f3d0;">Světelná účinnost: ~90–95 %</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4: VELIKOSTI SNÍMAČŮ A CROP FAKTOR -->
+      <!-- SLIDE 4: FORMÁTY SNÍMAČŮ A CROP FAKTOR -->
       <section class="slide" data-slide="4">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Fyzické rozměry čipu</div>
-            <h2 class="slide-title">Formáty snímačů a Crop faktor</h2>
-            <p class="slide-subtitle">Vliv velikosti senzoru na zorný úhel, šum a ekvivalentní ohnisko</p>
+            <div class="slide-category">Fyzické formáty čipů &bull; Matematika</div>
+            <h2 class="slide-title">Formáty snímačů, Crop faktor a mýtus megapixelů</h2>
+            <p class="slide-subtitle">Vliv fyzické plochy senzoru na ekvivalentní ohnisko, hloubku ostrosti, odstup signál/šum a dynamický rozsah</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Zkouškový výpočet</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="media-compare-grid">
-            <div class="content-card">
-              <span class="format-pill lossless">Full Frame (Kinofilm 35mm)</span>
-              <h4 style="margin: 0.5rem 0;">Rozměr $36 \times 24\text{ mm}$</h4>
-              <p style="font-size: 0.85rem;"><strong>Crop faktor = 1.0&times;</strong> (referenční etalon). Velká plocha pixelů zaručuje obrovský dynamický rozsah, čistý obraz i při vysokém ISO a malé hloubky ostrosti pro filmový bokeh.</p>
+          <div class="sensor-crop-wrap">
+            <!-- Vizuální měřítko senzorů -->
+            <div class="sensor-stage-box" id="sensorStageBox">
+              <!-- Full Frame (100% referenční základ) -->
+              <div class="sensor-rect-layer" style="width: 86%; height: 86%; border-color: #ec4899; background: rgba(236, 72, 153, 0.08); z-index: 1;">
+                <span style="color: #f472b6;">Full Frame (36 &times; 24 mm) &bull; 1.0&times;</span>
+              </div>
+              <!-- APS-C (Sony/Nikon/Fuji 1.5x) -->
+              <div class="sensor-rect-layer" style="width: 57%; height: 57%; border-color: #38bdf8; background: rgba(56, 189, 248, 0.12); z-index: 2;">
+                <span style="color: #38bdf8;">APS-C (23.6 &times; 15.6 mm) &bull; 1.5&times;</span>
+              </div>
+              <!-- Micro Four Thirds (2.0x) -->
+              <div class="sensor-rect-layer" style="width: 42%; height: 44%; border-color: #a855f7; background: rgba(168, 85, 247, 0.15); z-index: 3;">
+                <span style="color: #c084fc;">MFT (17.3 &times; 13 mm) &bull; 2.0&times;</span>
+              </div>
+              <!-- 1" Senzor (2.7x) -->
+              <div class="sensor-rect-layer" style="width: 31%; height: 32%; border-color: #10b981; background: rgba(16, 185, 129, 0.18); z-index: 4;">
+                <span style="color: #34d399;">1" Kompakt (13.2 &times; 8.8 mm) &bull; 2.7&times;</span>
+              </div>
+              <!-- Smartphone 1/1.3" -->
+              <div class="sensor-rect-layer" style="width: 22%; height: 23%; border-color: #f59e0b; background: rgba(245, 158, 11, 0.22); z-index: 5;">
+                <span style="color: #fbbf24; font-size: 0.62rem;">Mobil 1/1.3"</span>
+              </div>
             </div>
-            <div class="content-card">
-              <span class="format-pill uncompressed">APS-C (Super 35)</span>
-              <h4 style="margin: 0.5rem 0;">Rozměr cca $23.6 \times 15.6\text{ mm}$</h4>
-              <p style="font-size: 0.85rem;"><strong>Crop faktor = 1.5&times;</strong> (Sony/Nikon/Fuji) nebo <strong>1.6&times;</strong> (Canon). Zorné pole odpovídá násobku ohniska: 50mm objektiv se chová jako 75mm teleobjektiv.</p>
-            </div>
-            <div class="content-card">
-              <span class="format-pill lossy">Micro Four Thirds (MFT)</span>
-              <h4 style="margin: 0.5rem 0;">Rozměr $17.3 \times 13.0\text{ mm}$</h4>
-              <p style="font-size: 0.85rem;"><strong>Crop faktor = 2.0&times;</strong> (Panasonic, OM System). Poloviční úhlopříčka oproti Full Frame. Kompaktní lehké teleobjektivy, ale vyšší šum v šeru a větší hloubka ostrosti.</p>
+
+            <!-- Interaktivní karta srovnání parametrů -->
+            <div class="sensor-list-cards">
+              <div class="content-card" style="padding: 0.75rem;">
+                <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Vzorec pro výpočet Crop faktoru</div>
+                <div class="code-box" style="margin: 0.3rem 0; padding: 0.4rem 0.6rem;">
+                  <pre><code>Crop Faktor (CF) = Úhlopříčka FF (43.27 mm) / Úhlopříčka senzoru</code></pre>
+                </div>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.35; margin-top: 0.3rem;">
+                  Snímač s menší plochou vyřízne pouze střed obrazového kruhu objektivu. Výsledný úhel záběru se zúží &ndash; <strong>50mm objektiv na APS-C nabídne stejné zorné pole jako 75mm objektiv na Full Frame ($50 \times 1.5 = 75\text{ mm}$)</strong>.
+                </p>
+              </div>
+
+              <!-- Mýtus megapixelů -->
+              <div class="content-card" style="padding: 0.75rem; border-left: 3px solid #ec4899;">
+                <h4 style="font-size: 0.88rem; color: #f472b6; margin-bottom: 0.3rem;">Mýtus megapixelů: Rozlišení vs. Plocha pixelu</h4>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.35;">
+                  48 MPx na miniaturním mobilním čipu znamená pixel o velikosti pouhých <strong>0.8 &mu;m</strong>, zatímco 24 MPx na Full Frame má buňku o hraně <strong>6.0 &mu;m</strong> (plocha je 56&times; větší!). Větší fotodioda pojme více fotonů &rarr; má vyšší odstup signál/šum (SNR), širší dynamický rozsah a netrpí brzkou difrakcí.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: BAYEROVA MASKA A RAW -->
+      <!-- SLIDE 5: BAYEROVA MASKA A DEMOSAICING WORKBENCH -->
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Barevná rekonstrukce</div>
-            <h2 class="slide-title">Bayerova maska (CFA) a proces Debayeringu</h2>
-            <p class="slide-subtitle">Proč je digitální senzor barvoslepý a jak vzniká barevný RAW obraz</p>
+            <div class="slide-category">Barevná rekonstrukce &bull; Interaktivní simulátor</div>
+            <h2 class="slide-title">Od fotonů k obrazu: Bayerova maska &amp; Demosaicing</h2>
+            <p class="slide-subtitle">Proč je křemíkový čip barvoslepý, k čemu slouží mozaika RGGB a jak funguje interpolace barev</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Algoritmus</span>
+            <span class="tag tag-exam">Zkouškový algoritmus</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Bayerova barevná mozaika (RGGB)</h4>
-              <ul class="styled-list">
-                <li>Fotodiody křemíku měří pouze intenzitu světla (počet fotonů), ne jeho barvu!</li>
-                <li>Před každým pixelem je umístěn miniaturní optický filtr jedné barvy:
-                  <br><strong>50 % Zelených (Green)</strong> &ndash; lidské oko je na zelenou nejcitlivější.
-                  <br><strong>25 % Červených (Red)</strong>
-                  <br><strong>25 % Modrých (Blue)</strong>
-                </li>
-              </ul>
+          <div class="demosaic-workbench">
+            <!-- Bayerova matice 4x4 k proklikání -->
+            <div class="content-card" style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 0.75rem;">
+              <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                <strong style="font-size: 0.82rem; color: #f8fafc;">Bayerova mozaika (4 &times; 4 vzorek)</strong>
+                <span style="font-size: 0.72rem; color: #38bdf8; font-family: var(--font-mono);">Klikněte na pixel</span>
+              </div>
+              <div class="bayer-grid-canvas" id="bayerGridContainer">
+                <!-- Vygenerováno dynamicky JavaScriptem -->
+              </div>
+              <div style="display: flex; gap: 0.4rem; margin-top: 0.6rem; width: 100%; justify-content: center;">
+                <button class="demosaic-preset-btn active" id="btnBayerPresetGreen">Zelený pixel G [1,1]</button>
+                <button class="demosaic-preset-btn" id="btnBayerPresetRed">Červený pixel R [0,0]</button>
+                <button class="demosaic-preset-btn" id="btnBayerPresetBlue">Modrý pixel B [1,2]</button>
+              </div>
             </div>
-            <div class="content-card">
-              <h4>Proces Debayeringu (Demosaicing)</h4>
-              <ul class="styled-list">
-                <li>Každý pixel senzoru zná pouze jednu barevnou složku (buď R, G, nebo B).</li>
-                <li>Zbývající dvě barvy pro každý bod musí obrazový procesor (nebo RAW konvertor v PC) <strong>matematicky interpolovat</strong> z hodnot okolních sousedních pixelů.</li>
-                <li><strong>RAW data:</strong> Soubor obsahuje pouze surová 14bitová čísla z Bayerovy mozaiky. K interpolaci barev, doostření a redukci šumu dochází až nedestruktivně v počítači.</li>
-              </ul>
+
+            <!-- Panel s výpočtem a ISP pipeline -->
+            <div class="demosaic-calc-card">
+              <div>
+                <h4 style="color: #38bdf8; font-size: 0.95rem; margin-bottom: 0.2rem;">
+                  Bilineární interpolace vybraného pixelu: <span id="calcPixelCoord">[1, 1]</span>
+                </h4>
+                <p style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.35;">
+                  Křemík měří pouze intenzitu fotonů. Filtr propustil pouze jednu vlnovou délku. Zbývající dvě složky dopočítává ISP procesor z okolních sousedů:
+                </p>
+              </div>
+
+              <!-- Matematický rozpad kanálů -->
+              <div style="display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.78rem; font-family: var(--font-mono);">
+                <div class="math-calc-row">
+                  <span class="math-calc-label" id="calcChan1Label">Zelený kanál (G - naměřeno):</span>
+                  <span class="math-calc-value" id="calcChan1Val" style="color: #4ade80;">168 (Nativní fotodioda)</span>
+                </div>
+                <div class="math-calc-row">
+                  <span class="math-calc-label" id="calcChan2Label">Červený kanál (R - průměr sousedů):</span>
+                  <span class="math-calc-value" id="calcChan2Val" style="color: #f87171;">(210 + 195) / 2 = 203</span>
+                </div>
+                <div class="math-calc-row">
+                  <span class="math-calc-label" id="calcChan3Label">Modrý kanál (B - průměr sousedů):</span>
+                  <span class="math-calc-value" id="calcChan3Val" style="color: #60a5fa;">(45 + 55) / 2 = 50</span>
+                </div>
+              </div>
+
+              <!-- Náhled výsledného RGB odstínu -->
+              <div class="demosaic-rgb-result-box">
+                <div class="demosaic-rgb-preview" id="demosaicRgbPreview" style="background-color: rgb(203, 168, 50);"></div>
+                <div>
+                  <strong style="color: #f8fafc; font-size: 0.85rem;">Výsledný RGB pixel:</strong>
+                  <div style="font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-mono);" id="demosaicRgbText">rgb(203, 168, 50) &bull; #CBA832</div>
+                  <div style="font-size: 0.72rem; color: #a7f3d0; margin-top: 2px;">Úplná 24bitová RGB barva sestavena bez ztráty rozlišení!</div>
+                </div>
+              </div>
+
+              <!-- ISP Pipeline pás -->
+              <div>
+                <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Průchod signálu obrazovým procesorem (ISP)</span>
+                <div class="isp-pipeline-strip">
+                  <div class="isp-strip-step">
+                    <span class="step-badge">1. Snímač</span>
+                    <div>Fotony &rarr; e⁻ náboj v potenciálové jámě</div>
+                  </div>
+                  <div class="isp-strip-step">
+                    <span class="step-badge">2. A/D Převod</span>
+                    <div>14bit digitalizace RAW dat čipu</div>
+                  </div>
+                  <div class="isp-strip-step">
+                    <span class="step-badge">3. Demosaic</span>
+                    <div>Interpolace Bayerovy mozaiky na RGB</div>
+                  </div>
+                  <div class="isp-strip-step">
+                    <span class="step-badge">4. Korekce</span>
+                    <div>Vyvážení bílé, barevný profil a odšum</div>
+                  </div>
+                  <div class="isp-strip-step">
+                    <span class="step-badge">5. Export</span>
+                    <div>Kvantizace do 8bit sRGB JPEG / HEIF</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SUMMARY -->
+      <!-- SLIDE 6: ZÁVĚRKA MECHANICKÁ VS ELEKTRONICKÁ -->
       <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Závěrečná syntéza</div>
-            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
-            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z techniky fotoaparátů</p>
+            <div class="slide-category">Řízení doby expozice &bull; Hardware</div>
+            <h2 class="slide-title">Závěrka: Mechanická štěrbinová vs. Elektronická</h2>
+            <p class="slide-subtitle">Princip první a druhé lamely, synchronizační čas blesku, zkreslení Rolling Shutter a revoluce Global Shutter</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Rolling vs Global</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <span class="format-pill lossless">Mechanická štěrbinová (Focal Plane)</span>
+              <h4 style="margin: 0.5rem 0; color: #38bdf8;">Dvě lamely (Curtains)</h4>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                Při expozici se rozběhne 1. lamela odkrývající čip. Při krátkých časech ($< 1/250\text{ s}$) se 2. lamela vydá hned za ní &ndash; přes senzor putuje pouze <strong>úzká štěrbina světla</strong>.
+              </p>
+              <div class="spec-param" style="margin-top: 0.5rem;">
+                <span class="spec-name">X-sync blesku:</span>
+                <span class="spec-value">1/200 s &ndash; 1/250 s</span>
+              </div>
+              <div class="spec-param">
+                <span class="spec-name">Limit životnosti:</span>
+                <span class="spec-value">150 000 &ndash; 500 000 cyklů</span>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <span class="format-pill uncompressed">Elektronická závěrka (Rolling Shutter)</span>
+              <h4 style="margin: 0.5rem 0; color: #f59e0b;">Řádkové postupné vyčítání</h4>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                Snímač se vyčítá řádek po řádku shora dolů (trvá cca 1/30 až 1/150 s). Rychle se pohybující objekty (vrtule letadla, golfová hůl) se na snímku <strong>geometricky prohnou</strong>.
+              </p>
+              <div class="spec-param" style="margin-top: 0.5rem;">
+                <span class="spec-name">Hlučnost:</span>
+                <span class="spec-value" style="color: #10b981;">100% tichá (bez hluku)</span>
+              </div>
+              <div class="spec-param">
+                <span class="spec-name">Riziko:</span>
+                <span class="spec-value" style="color: #ef4444;">Banding pod LED světly</span>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <span class="format-pill lossy">Globální závěrka (Global Shutter)</span>
+              <h4 style="margin: 0.5rem 0; color: #a855f7;">Okamžité vyčtení celého pole</h4>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;">
+                Všechny pixely senzoru začnou i ukončí expozici v identický nanosekundový okamžik. <strong>Absolutně nulové zkreslení pohybu</strong> a blesk lze synchronizovat na libovolný čas (např. 1/80 000 s!).
+              </p>
+              <div class="spec-param" style="margin-top: 0.5rem;">
+                <span class="spec-name">Zkreslení pohybu:</span>
+                <span class="spec-value" style="color: #10b981;">0 % (dokonale rovné)</span>
+              </div>
+              <div class="spec-param">
+                <span class="spec-name">Příklad v praxi:</span>
+                <span class="spec-value">Sony Alpha 9 III</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: DATOVÉ FORMÁTY RAW VS JPEG VS HEIF -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Záznam dat &bull; Dynamický rozsah</div>
+            <h2 class="slide-title">Formáty souborů: RAW vs. JPEG vs. HEIF</h2>
+            <p class="slide-subtitle">Interaktivní demonstrace záchrany přepalů a prokreslení stínů ve 14bitových surových datech</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškové srovnání</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="raw-jpeg-slider-wrap">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="color: #f8fafc; font-size: 0.88rem;">Simulátor tonální záchrany expozice (Shadow &amp; Highlight Recovery)</strong>
+                <p style="font-size: 0.74rem; color: var(--text-muted); margin-top: 2px;">Posouvejte korekci expozice v postprodukci a sledujte chování 8bitového JPEGu vs 14bitového RAWu</p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span style="font-size: 0.8rem; font-family: var(--font-mono); color: #ec4899; font-weight: 700;" id="rawRecoveryValue">Korekce: 0.0 EV</span>
+                <button class="control-btn" id="btnResetRawExp" style="font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">Reset (0 EV)</button>
+              </div>
+            </div>
+
+            <input type="range" class="styled-range-input" id="rawRecoverySlider" min="-3" max="3" step="0.5" value="0">
+
+            <div class="raw-jpeg-compare-box">
+              <!-- Náhled 8bit JPEG -->
+              <div class="format-preview-card card-jpeg">
+                <div class="format-preview-header">
+                  <span style="color: #ec4899;">8-bit JPEG (sRGB)</span>
+                  <span class="format-stat-badge badge-jpeg-alert" id="jpegStatusBadge">256 úrovní / kanál</span>
+                </div>
+                <div class="format-canvas-wrap">
+                  <canvas id="canvasPreviewJpeg" width="340" height="150"></canvas>
+                </div>
+                <div class="format-stat-row">
+                  <span>Dynamický rozsah: ~8–9 EV</span>
+                  <span id="jpegDestructText" style="color: #fca5a5;">Nevratná ztráta kresby v přepalech!</span>
+                </div>
+              </div>
+
+              <!-- Náhled 14bit RAW -->
+              <div class="format-preview-card card-raw">
+                <div class="format-preview-header">
+                  <span style="color: #38bdf8;">14-bit RAW (Surová Bayerova data)</span>
+                  <span class="format-stat-badge badge-raw-success" id="rawStatusBadge">16 384 úrovní / kanál</span>
+                </div>
+                <div class="format-canvas-wrap">
+                  <canvas id="canvasPreviewRaw" width="340" height="150"></canvas>
+                </div>
+                <div class="format-stat-row">
+                  <span>Dynamický rozsah: ~14–15 EV</span>
+                  <span style="color: #a7f3d0;">Plná záchrana struktury mraků i stínů</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: SUMMARY & CHECKLIST & MINITEST -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza a evaluace</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist a minitest</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z techniky fotoaparátů a snímačů</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Okruh absolutoria 10</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="summary-grid">
-            <div class="summary-card">
-              <h4>DSLR vs CSC</h4>
-              <p>DSLR používá sklopné zrcátko a optický hledáček. CSC bezzrcadlovky snímají přímo na čip a nabízejí elektronický hledáček s živým náhledem.</p>
+          <div class="grid-2">
+            <!-- Levý sloupec: 4 pilíře a otázky ke zkoušce -->
+            <div class="content-card">
+              <h4 style="color: #38bdf8; display: flex; align-items: center; gap: 0.4rem;">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Profilové otázky k absolutoriu
+              </h4>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li><strong>1. DSLR vs. Bezzrcadlovka (CSC):</strong> Popište konstrukční rozdíl mezi zrcadlovým hranolem (OVF) a elektronickým hledáčkem (EVF). Jaké výhody přináší kratší vzdálenost bajonetu od čipu (flange distance)?</li>
+                <li><strong>2. Technologie CMOS a BSI:</strong> Proč má BSI senzor vyšší citlivost než FSI a k čemu slouží sendvičová technologie Stacked CMOS?</li>
+                <li><strong>3. Výpočet Crop faktoru:</strong> Jaký ekvivalentní úhel záběru a hloubku ostrosti nabídne 50mm objektiv nasazený na APS-C senzoru (1.5x) a MFT senzoru (2.0x)?</li>
+                <li><strong>4. Bayerova maska (CFA):</strong> Proč jsou fotodiody barvoslepé a z jakého důvodu obsahuje Bayerova mozaika přesně 50 % zelených filtrů?</li>
+                <li><strong>5. Výhoda formátu RAW:</strong> Proč fotografovat do 14bitového RAWu namísto 8bitového JPEGu a jak probíhá proces Debayeringu v počítači?</li>
+              </ul>
             </div>
-            <div class="summary-card">
-              <h4>Crop faktor</h4>
-              <p>Poměr úhlopříčky Full Frame (35mm) k danému snímači. Zužuje zorné pole objektivu (např. 1.5x u APS-C a 2.0x u MFT).</p>
-            </div>
-            <div class="summary-card">
-              <h4>Bayerova maska</h4>
-              <p>Šachovnice filtrů RGGB (50% zelená). Výpočet plného RGB obrazu probíhá matematickou interpolací (Debayering).</p>
-            </div>
-            <div class="summary-card">
-              <h4>Zkušební otázka</h4>
-              <p>Porovnejte konstrukci zrcadlovky a bezzrcadlovky. Definujte pojem crop faktor a popište, jak funguje Bayerova maska na snímači CMOS.</p>
+
+            <!-- Pravý sloupec: Interaktivní minitest -->
+            <div class="quiz-box">
+              <div class="quiz-q-title" id="quizQuestionText">Otázka 1/3: Co se stane v optickém hledáčku (OVF) zrcadlovky v okamžiku expozice?</div>
+              <div class="quiz-options-list" id="quizOptionsContainer">
+                <button class="quiz-opt-btn" data-correct="true">A) Hledáček na zlomek sekundy zčerná (Blackout), protože se zrcátko vyklopí nahoru a zakryje cestu do hranolu.</button>
+                <button class="quiz-opt-btn" data-correct="false">B) V hledáčku fotograf vidí přesný výsledný snímek včetně expozice a vyvážení bílé.</button>
+                <button class="quiz-opt-btn" data-correct="false">C) Obraz v hledáčku se invertuje vzhůru nohama vlivem štěrbinové závěrky.</button>
+              </div>
+              <div class="quiz-feedback" id="quizFeedbackBox"></div>
+              <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.4rem;">
+                <button class="control-btn" id="quizNextBtn" style="font-size: 0.78rem; padding: 0.35rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); display: none;">
+                  Další otázka &rarr;
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -243,11 +717,9 @@
 
     </main>
 
-    <!-- Controls -->
-
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="02_principy_fotografie_a_expozicni_trojuhelnik.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 02: Principy fotografie a expoziční trojúhelník (Ctrl+Šipka vlevo)">
+      <a href="02_principy_fotografie_a_expozicni_trojuhelnik.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 02: Principy fotografie a expoziční trojúhelník (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu MUL20">
@@ -260,7 +732,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 08</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -268,8 +740,8 @@
       <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
         <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
       </button>
-      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      <button class="control-btn" id="glossaryBtn" title="Slovník hardwarových pojmů (G)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="15" y2="7"></line><line x1="9" y1="11" x2="15" y2="11"></line></svg>
       </button>
       <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
         <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
@@ -295,60 +767,703 @@
       </aside>
     </div>
 
-    <!-- Keyboard Shortcuts Help Modal -->
-    <div class="modal-overlay" id="helpModal" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-header">
-          <h3>
-            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
-            Klávesové zkratky
+    <!-- Slovník fotografických pojmů Modal (G) -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 820px; width: 95vw; max-height: 88vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="flex-shrink: 0;">
+          <h3 style="display: flex; align-items: center; gap: 0.6rem;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="15" y2="7"></line><line x1="9" y1="11" x2="15" y2="11"></line></svg>
+            Slovník hardwarových a datových pojmů &bull; Konstrukce, čipy a RAW
           </h3>
-          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
             <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
         </div>
-        <div class="modal-body">
-          <div class="shortcut-row">
-            <span>Další snímek</span>
-            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>Předchozí snímek</span>
-            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>Další lekce</span>
-            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>Předchozí lekce</span>
-            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>První / Poslední snímek</span>
-            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>Celá obrazovka</span>
-            <span class="key-badge">F</span>
-          </div>
-          <div class="shortcut-row">
-            <span>Obsah lekce</span>
-            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>Slovník pojmů</span>
-            <span class="key-badge">G</span>
-          </div>
-          <div class="shortcut-row">
-            <span>Přepnout tmavý / světlý motiv</span>
-            <span class="key-badge">T</span>
-          </div>
-          <div class="shortcut-row">
-            <span>Nápověda (tento dialog)</span>
-            <span class="key-badge">?</span>
-          </div>
 
+        <div style="padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0;">
+          <input type="text" id="glossarySearchInput" placeholder="Vyhledat pojem (např. BSI, Bayer, Debayering, EVF, OVF, RAW, Flange...)..." style="width: 100%; padding: 0.5rem 0.8rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 0.85rem;">
+        </div>
+
+        <div style="padding: 1.25rem; overflow-y: auto; flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 0.75rem;" id="glossaryContainer">
+          <div class="content-card" data-term="dslr">
+            <h4 style="color: #38bdf8; font-size: 0.9rem;">DSLR (Digital Single-Lens Reflex)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Jednooká digitální zrcadlovka. Využívá mechanicky sklopné zrcátko (45°) a pětiboký hranol pro přímý přenos světla do optického hledáčku (OVF).</p>
+          </div>
+          <div class="content-card" data-term="csc milc mirrorless">
+            <h4 style="color: #ec4899; font-size: 0.9rem;">CSC / MILC (Bezzrcadlovka)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Compact System Camera / Mirrorless Interchangeable Lens Camera. Nemá zrcadlo ani hranol &ndash; světlo dopadá trvale na senzor a obraz se promítá do elektronického hledáčku (EVF).</p>
+          </div>
+          <div class="content-card" data-term="evf ovf">
+            <h4 style="color: #a855f7; font-size: 0.9rem;">EVF vs. OVF hledáček</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">OVF je čistě optický průhled bez zpoždění a bez spotřeby. EVF je miniaturní OLED displej zobrazující reálnou expozici, vyvážení bílé, histogram a zebra pruhy před stiskem spouště.</p>
+          </div>
+          <div class="content-card" data-term="bsi cmos">
+            <h4 style="color: #10b981; font-size: 0.9rem;">BSI (Back-Side Illuminated) CMOS</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Snímač s obrácenou architekturou, kde fotodiody leží na samém povrchu před kovovými sběrnicemi. Zvyšuje zisk světla o 30–40 % a potlačuje šum.</p>
+          </div>
+          <div class="content-card" data-term="stacked cmos">
+            <h4 style="color: #f59e0b; font-size: 0.9rem;">Stacked CMOS (Skládaný čip)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Sendvič z pixelové vrstvy, logického obvodu a vysokorychlostní vyrovnávací DRAM paměti. Umožňuje čtení celého čipu za zlomky milisekund bez deformace rolling shutter.</p>
+          </div>
+          <div class="content-card" data-term="crop faktor">
+            <h4 style="color: #38bdf8; font-size: 0.9rem;">Crop faktor (Ohniskový násobič)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Poměr úhlopříčky Full Frame (35mm kinofilm, 43.27 mm) k danému menšímu senzoru. Např. APS-C má faktor 1.5&times;, Micro Four Thirds 2.0&times;.</p>
+          </div>
+          <div class="content-card" data-term="bayerova maska cfa">
+            <h4 style="color: #ec4899; font-size: 0.9rem;">Bayerova maska (RGGB)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Mozaika miniaturních barevných filtrů před fotodiodami. Tvořena 50 % zelené, 25 % červené a 25 % modré barvy, což odpovídá citlivosti lidského zraku.</p>
+          </div>
+          <div class="content-card" data-term="debayering demosaicing">
+            <h4 style="color: #a855f7; font-size: 0.9rem;">Debayering (Demosaicing)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Matematický algoritmus interpolace, který z jednobarevných hodnot sousedních pixelů dopočítá pro každý bod plné 3 barevné složky RGB.</p>
+          </div>
+          <div class="content-card" data-term="raw">
+            <h4 style="color: #10b981; font-size: 0.9rem;">Formát RAW (Surová data)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Bezztrátový digitální negativ obsahující nezpracovaná 12–14bitová čísla z A/D převodníku. Umožňuje dodatečnou nedestruktivní změnu vyvážení bílé a záchranu stínů o &plusmn;3–4 EV.</p>
+          </div>
+          <div class="content-card" data-term="rolling shutter global">
+            <h4 style="color: #f59e0b; font-size: 0.9rem;">Rolling Shutter vs. Global Shutter</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Rolling shutter čte senzor postupně po řádcích, což deformuje rychlý pohyb. Global shutter exponuje a vyčte všechny pixely naráz v jeden okamžik.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Framework Engine Script -->
   <script src="../../assets/js/presentation-core.js"></script>
+
+  <!-- Specializovaná interaktivní logika lekce 03 -->
+  <script>
+    (function() {
+      'use strict';
+
+      /* ======================================================================
+         1. INTERAKTIVNÍ ANIMOVANÝ MODEL: DSLR VS CSC (SLIDE 2)
+         ====================================================================== */
+      const btnModeDslr = document.getElementById('btnModeDslr');
+      const btnModeCsc = document.getElementById('btnModeCsc');
+      const btnTriggerShutter = document.getElementById('btnTriggerShutter');
+      const chkSlowMo = document.getElementById('chkSlowMo');
+      const cameraArchTitle = document.getElementById('cameraArchTitle');
+      const cameraStateBadge = document.getElementById('cameraStateBadge');
+      
+      const svgPentaprismGroup = document.getElementById('svgPentaprismGroup');
+      const svgEyepieceGroup = document.getElementById('svgEyepieceGroup');
+      const svgEvfGroup = document.getElementById('svgEvfGroup');
+      const svgMirrorAssembly = document.getElementById('svgMirrorAssembly');
+      const svgMainMirror = document.getElementById('svgMainMirror');
+      const svgSubMirror = document.getElementById('svgSubMirror');
+      const svgMirrorLabel = document.getElementById('svgMirrorLabel');
+      const svgAfModuleGroup = document.getElementById('svgAfModuleGroup');
+      const svgShutterBlade = document.getElementById('svgShutterBlade');
+      const svgRaysDslrPreview = document.getElementById('svgRaysDslrPreview');
+      const svgRaysExposure = document.getElementById('svgRaysExposure');
+      const svgRaysCscPreview = document.getElementById('svgRaysCscPreview');
+
+      const hudFlangeVal = document.getElementById('hudFlangeVal');
+      const hudAfVal = document.getElementById('hudAfVal');
+      const hudBlackoutVal = document.getElementById('hudBlackoutVal');
+
+      const diagFinder = document.getElementById('diagFinder');
+      const diagShock = document.getElementById('diagShock');
+      const diagAfCoverage = document.getElementById('diagAfCoverage');
+      const diagBattery = document.getElementById('diagBattery');
+      const diagWysiwyg = document.getElementById('diagWysiwyg');
+
+      let currentCameraMode = 'dslr'; // 'dslr' | 'csc'
+      let isExposing = false;
+
+      function updateCameraMode(mode) {
+        if (isExposing) return;
+        currentCameraMode = mode;
+
+        if (mode === 'dslr') {
+          btnModeDslr.classList.add('active');
+          btnModeCsc.classList.remove('active');
+          cameraArchTitle.textContent = 'Architektura: Digitální zrcadlovka (DSLR) s optickým hledáčkem (OVF)';
+          cameraStateBadge.className = 'camera-state-badge';
+          cameraStateBadge.innerHTML = '<span style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; display: inline-block;"></span> HLEDÁČEK AKTIVNÍ (OVF)';
+
+          svgPentaprismGroup.style.display = '';
+          svgEyepieceGroup.style.display = '';
+          svgEvfGroup.style.display = 'none';
+          svgMirrorAssembly.style.display = '';
+          svgAfModuleGroup.style.display = '';
+          svgRaysDslrPreview.style.display = '';
+          svgRaysExposure.style.display = 'none';
+          svgRaysCscPreview.style.display = 'none';
+
+          // Reset mirror position to 45 deg
+          svgMainMirror.setAttribute('x1', '370');
+          svgMainMirror.setAttribute('y1', '260');
+          svgMainMirror.setAttribute('x2', '470');
+          svgMainMirror.setAttribute('y2', '150');
+          svgMirrorLabel.style.display = '';
+          svgShutterBlade.setAttribute('height', '170');
+
+          hudFlangeVal.textContent = 'Flange focal distance: 44.0 mm (EF / F bajonet)';
+          hudAfVal.textContent = 'Ostření: Samostatný fázový AF modul na dně komory';
+          hudAfVal.style.color = '#60a5fa';
+          hudBlackoutVal.textContent = 'Blackout při expozici: ANO (Zrcadlový ráz)';
+          hudBlackoutVal.style.color = '#f472b6';
+
+          diagFinder.textContent = 'Optický OVF (100% sklo, nulový lag)';
+          diagShock.textContent = 'Zrcátkový ráz (Mirror Shock)';
+          diagAfCoverage.textContent = 'Středových 15–61 bodů';
+          diagBattery.textContent = 'Vysoká (1200+ snímků)';
+          diagWysiwyg.textContent = 'Pouze odhad expozimetrem';
+        } else {
+          btnModeCsc.classList.add('active');
+          btnModeDslr.classList.remove('active');
+          cameraArchTitle.textContent = 'Architektura: Bezzrcadlovka (CSC / Mirrorless) s elektronickým hledáčkem (EVF)';
+          cameraStateBadge.className = 'camera-state-badge';
+          cameraStateBadge.innerHTML = '<span style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7; display: inline-block;"></span> ŽIVÝ NÁHLED (EVF + LCD)';
+
+          svgPentaprismGroup.style.display = 'none';
+          svgEyepieceGroup.style.display = 'none';
+          svgEvfGroup.style.display = '';
+          svgMirrorAssembly.style.display = 'none';
+          svgAfModuleGroup.style.display = 'none';
+          svgRaysDslrPreview.style.display = 'none';
+          svgRaysExposure.style.display = 'none';
+          svgRaysCscPreview.style.display = '';
+
+          hudFlangeVal.textContent = 'Flange focal distance: 18.0 mm (E / RF / Z bajonet)';
+          hudAfVal.textContent = 'Ostření: Fázová detekce přímo na snímači (On-Sensor PDAF)';
+          hudAfVal.style.color = '#34d399';
+          hudBlackoutVal.textContent = 'Blackout při expozici: ŽÁDNÝ (Nebo mikro-ztemnění)';
+          hudBlackoutVal.style.color = '#38bdf8';
+
+          diagFinder.textContent = 'Elektronický EVF OLED (WYSIWYG náhled)';
+          diagShock.textContent = 'Žádný zrcadlový ráz (tichý chod)';
+          diagAfCoverage.textContent = '95–100 % plochy + AI detekce očí';
+          diagBattery.textContent = 'Střední (400–600 snímků)';
+          diagWysiwyg.textContent = 'Reálný náhled expozice a vyvážení';
+        }
+      }
+
+      if (btnModeDslr) btnModeDslr.addEventListener('click', () => updateCameraMode('dslr'));
+      if (btnModeCsc) btnModeCsc.addEventListener('click', () => updateCameraMode('csc'));
+
+      // Spoušť - sekvence expozice
+      if (btnTriggerShutter) {
+        btnTriggerShutter.addEventListener('click', () => {
+          if (isExposing) return;
+          isExposing = true;
+          btnTriggerShutter.disabled = true;
+
+          const slowMo = chkSlowMo && chkSlowMo.checked;
+          const tUp = slowMo ? 600 : 150;
+          const tExp = slowMo ? 1000 : 350;
+          const tDown = slowMo ? 600 : 150;
+
+          if (currentCameraMode === 'dslr') {
+            // 1. Zrcátko se vyklopí nahoru -> Blackout v OVF
+            cameraStateBadge.className = 'camera-state-badge blackout';
+            cameraStateBadge.innerHTML = '<span style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444; display: inline-block;"></span> ZRCÁTKO NAHOŘE &bull; BLACKOUT';
+            
+            // Zvednutí zrcadla vodorovně
+            svgMainMirror.setAttribute('x1', '370');
+            svgMainMirror.setAttribute('y1', '120');
+            svgMainMirror.setAttribute('x2', '510');
+            svgMainMirror.setAttribute('y2', '120');
+            svgSubMirror.style.display = 'none';
+            svgRaysDslrPreview.style.display = 'none';
+
+            setTimeout(() => {
+              // 2. Otevření závěrky -> Expozice čipu
+              cameraStateBadge.className = 'camera-state-badge exposing';
+              cameraStateBadge.innerHTML = '<span style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; display: inline-block;"></span> EXPOZICE &bull; ZÁVĚRKA OTEVŘENA';
+              svgShutterBlade.setAttribute('height', '10');
+              svgRaysExposure.style.display = '';
+
+              setTimeout(() => {
+                // 3. Zavření závěrky
+                svgShutterBlade.setAttribute('height', '170');
+                svgRaysExposure.style.display = 'none';
+                cameraStateBadge.className = 'camera-state-badge';
+                cameraStateBadge.textContent = 'VYČÍTÁNÍ ČIPU A SKLÁPĚNÍ ZRCADLA';
+
+                setTimeout(() => {
+                  // 4. Zrcátko spadne zpět dolů
+                  svgMainMirror.setAttribute('x1', '370');
+                  svgMainMirror.setAttribute('y1', '260');
+                  svgMainMirror.setAttribute('x2', '470');
+                  svgMainMirror.setAttribute('y2', '150');
+                  svgSubMirror.style.display = '';
+                  svgRaysDslrPreview.style.display = '';
+
+                  cameraStateBadge.className = 'camera-state-badge';
+                  cameraStateBadge.innerHTML = '<span style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; display: inline-block;"></span> HLEDÁČEK AKTIVNÍ (OVF)';
+                  btnTriggerShutter.disabled = false;
+                  isExposing = false;
+                }, tDown);
+
+              }, tExp);
+
+            }, tUp);
+
+          } else {
+            // CSC expozice: bez zrcadlového rázu!
+            cameraStateBadge.className = 'camera-state-badge exposing';
+            cameraStateBadge.innerHTML = '<span style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; display: inline-block;"></span> EXPOZICE SNÍMAČE (ELEKTRONICKÁ)';
+            svgRaysCscPreview.style.display = 'none';
+            svgRaysExposure.style.display = '';
+
+            setTimeout(() => {
+              svgRaysExposure.style.display = 'none';
+              svgRaysCscPreview.style.display = '';
+              cameraStateBadge.className = 'camera-state-badge';
+              cameraStateBadge.innerHTML = '<span style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7; display: inline-block;"></span> ŽIVÝ NÁHLED (EVF + LCD)';
+              btnTriggerShutter.disabled = false;
+              isExposing = false;
+            }, tExp);
+          }
+        });
+      }
+
+      /* ======================================================================
+         2. INTERAKTIVNÍ BAYEROVA MATICE & DEMOSAICING (SLIDE 5)
+         ====================================================================== */
+      const bayerGridContainer = document.getElementById('bayerGridContainer');
+      const calcPixelCoord = document.getElementById('calcPixelCoord');
+      const calcChan1Label = document.getElementById('calcChan1Label');
+      const calcChan1Val = document.getElementById('calcChan1Val');
+      const calcChan2Label = document.getElementById('calcChan2Label');
+      const calcChan2Val = document.getElementById('calcChan2Val');
+      const calcChan3Label = document.getElementById('calcChan3Label');
+      const calcChan3Val = document.getElementById('calcChan3Val');
+      const demosaicRgbPreview = document.getElementById('demosaicRgbPreview');
+      const demosaicRgbText = document.getElementById('demosaicRgbText');
+
+      const btnBayerPresetGreen = document.getElementById('btnBayerPresetGreen');
+      const btnBayerPresetRed = document.getElementById('btnBayerPresetRed');
+      const btnBayerPresetBlue = document.getElementById('btnBayerPresetBlue');
+
+      // 4x4 RGGB vzorek dat
+      const bayerData = [
+        [{ ch: 'R', val: 215 }, { ch: 'G', val: 145 }, { ch: 'R', val: 205 }, { ch: 'G', val: 140 }],
+        [{ ch: 'G', val: 175 }, { ch: 'B', val: 55 },  { ch: 'G', val: 165 }, { ch: 'B', val: 60 }],
+        [{ ch: 'R', val: 190 }, { ch: 'G', val: 155 }, { ch: 'R', val: 185 }, { ch: 'G', val: 150 }],
+        [{ ch: 'G', val: 160 }, { ch: 'B', val: 45 },  { ch: 'G', val: 155 }, { ch: 'B', val: 50 }]
+      ];
+
+      function buildBayerGrid() {
+        if (!bayerGridContainer) return;
+        bayerGridContainer.innerHTML = '';
+
+        for (let r = 0; r < 4; r++) {
+          for (let c = 0; c < 4; c++) {
+            const cellData = bayerData[r][c];
+            const cellDiv = document.createElement('div');
+            cellDiv.className = `bayer-cell ${cellData.ch.toLowerCase()}`;
+            cellDiv.id = `bayerCell_${r}_${c}`;
+            cellDiv.innerHTML = `
+              <span class="cell-coord">[${r},${c}]</span>
+              <span class="cell-ch">${cellData.ch}</span>
+              <span class="cell-val">${cellData.val}</span>
+            `;
+            cellDiv.addEventListener('click', () => selectBayerPixel(r, c));
+            bayerGridContainer.appendChild(cellDiv);
+          }
+        }
+      }
+
+      function selectBayerPixel(r, c) {
+        document.querySelectorAll('.bayer-cell').forEach(el => {
+          el.classList.remove('selected', 'donor-r', 'donor-g', 'donor-b');
+        });
+
+        const targetCell = document.getElementById(`bayerCell_${r}_${c}`);
+        if (targetCell) targetCell.classList.add('selected');
+
+        calcPixelCoord.textContent = `[Řádek ${r}, Sloupec ${c}]`;
+        const curr = bayerData[r][c];
+
+        let finalR = 0, finalG = 0, finalB = 0;
+
+        if (curr.ch === 'G') {
+          finalG = curr.val;
+          // Červení horizontální / vertikální dárci
+          const rDonors = [];
+          if (r > 0 && bayerData[r-1][c].ch === 'R') rDonors.push({ r: r-1, c, val: bayerData[r-1][c].val });
+          if (r < 3 && bayerData[r+1][c].ch === 'R') rDonors.push({ r: r+1, c, val: bayerData[r+1][c].val });
+          if (c > 0 && bayerData[r][c-1].ch === 'R') rDonors.push({ r, c: c-1, val: bayerData[r][c-1].val });
+          if (c < 3 && bayerData[r][c+1].ch === 'R') rDonors.push({ r, c: c+1, val: bayerData[r][c+1].val });
+
+          const bDonors = [];
+          if (r > 0 && bayerData[r-1][c].ch === 'B') bDonors.push({ r: r-1, c, val: bayerData[r-1][c].val });
+          if (r < 3 && bayerData[r+1][c].ch === 'B') bDonors.push({ r: r+1, c, val: bayerData[r+1][c].val });
+          if (c > 0 && bayerData[r][c-1].ch === 'B') bDonors.push({ r, c: c-1, val: bayerData[r][c-1].val });
+          if (c < 3 && bayerData[r][c+1].ch === 'B') bDonors.push({ r, c: c+1, val: bayerData[r][c+1].val });
+
+          rDonors.forEach(d => {
+            const el = document.getElementById(`bayerCell_${d.r}_${d.c}`);
+            if (el) el.classList.add('donor-r');
+          });
+          bDonors.forEach(d => {
+            const el = document.getElementById(`bayerCell_${d.r}_${d.c}`);
+            if (el) el.classList.add('donor-b');
+          });
+
+          finalR = rDonors.length ? Math.round(rDonors.reduce((a, b) => a + b.val, 0) / rDonors.length) : 200;
+          finalB = bDonors.length ? Math.round(bDonors.reduce((a, b) => a + b.val, 0) / bDonors.length) : 55;
+
+          calcChan1Label.textContent = 'Zelený kanál (G - naměřeno):';
+          calcChan1Val.textContent = `${finalG} (Nativní fotodioda)`;
+          calcChan1Val.style.color = '#4ade80';
+
+          calcChan2Label.textContent = 'Červený kanál (R - průměr sousedů):';
+          calcChan2Val.textContent = rDonors.map(d => d.val).join(' + ') + ` / ${rDonors.length} = ${finalR}`;
+          calcChan2Val.style.color = '#f87171';
+
+          calcChan3Label.textContent = 'Modrý kanál (B - průměr sousedů):';
+          calcChan3Val.textContent = bDonors.map(d => d.val).join(' + ') + ` / ${bDonors.length} = ${finalB}`;
+          calcChan3Val.style.color = '#60a5fa';
+
+        } else if (curr.ch === 'R') {
+          finalR = curr.val;
+          // Zelení dárci jsou nahoře, dole, vlevo, vpravo
+          const gDonors = [];
+          if (r > 0) gDonors.push({ r: r-1, c, val: bayerData[r-1][c].val });
+          if (r < 3) gDonors.push({ r: r+1, c, val: bayerData[r+1][c].val });
+          if (c > 0) gDonors.push({ r, c: c-1, val: bayerData[r][c-1].val });
+          if (c < 3) gDonors.push({ r, c: c+1, val: bayerData[r][c+1].val });
+
+          // Modří jsou diagonálně
+          const bDonors = [];
+          if (r > 0 && c > 0 && bayerData[r-1][c-1].ch === 'B') bDonors.push({ r: r-1, c: c-1, val: bayerData[r-1][c-1].val });
+          if (r > 0 && c < 3 && bayerData[r-1][c+1].ch === 'B') bDonors.push({ r: r-1, c: c+1, val: bayerData[r-1][c+1].val });
+          if (r < 3 && c > 0 && bayerData[r+1][c-1].ch === 'B') bDonors.push({ r: r+1, c: c-1, val: bayerData[r+1][c-1].val });
+          if (r < 3 && c < 3 && bayerData[r+1][c+1].ch === 'B') bDonors.push({ r: r+1, c: c+1, val: bayerData[r+1][c+1].val });
+
+          gDonors.forEach(d => {
+            const el = document.getElementById(`bayerCell_${d.r}_${d.c}`);
+            if (el) el.classList.add('donor-g');
+          });
+          bDonors.forEach(d => {
+            const el = document.getElementById(`bayerCell_${d.r}_${d.c}`);
+            if (el) el.classList.add('donor-b');
+          });
+
+          finalG = gDonors.length ? Math.round(gDonors.reduce((a, b) => a + b.val, 0) / gDonors.length) : 155;
+          finalB = bDonors.length ? Math.round(bDonors.reduce((a, b) => a + b.val, 0) / bDonors.length) : 55;
+
+          calcChan1Label.textContent = 'Červený kanál (R - naměřeno):';
+          calcChan1Val.textContent = `${finalR} (Nativní fotodioda)`;
+          calcChan1Val.style.color = '#f87171';
+
+          calcChan2Label.textContent = 'Zelený kanál (G - průměr sousedů):';
+          calcChan2Val.textContent = gDonors.map(d => d.val).join(' + ') + ` / ${gDonors.length} = ${finalG}`;
+          calcChan2Val.style.color = '#4ade80';
+
+          calcChan3Label.textContent = 'Modrý kanál (B - diagonální sousedé):';
+          calcChan3Val.textContent = bDonors.map(d => d.val).join(' + ') + ` / ${bDonors.length} = ${finalB}`;
+          calcChan3Val.style.color = '#60a5fa';
+
+        } else if (curr.ch === 'B') {
+          finalB = curr.val;
+          // Zelení dárci jsou nahoře, dole, vlevo, vpravo
+          const gDonors = [];
+          if (r > 0) gDonors.push({ r: r-1, c, val: bayerData[r-1][c].val });
+          if (r < 3) gDonors.push({ r: r+1, c, val: bayerData[r+1][c].val });
+          if (c > 0) gDonors.push({ r, c: c-1, val: bayerData[r][c-1].val });
+          if (c < 3) gDonors.push({ r, c: c+1, val: bayerData[r][c+1].val });
+
+          // Červení jsou diagonálně
+          const rDonors = [];
+          if (r > 0 && c > 0 && bayerData[r-1][c-1].ch === 'R') rDonors.push({ r: r-1, c: c-1, val: bayerData[r-1][c-1].val });
+          if (r > 0 && c < 3 && bayerData[r-1][c+1].ch === 'R') rDonors.push({ r: r-1, c: c+1, val: bayerData[r-1][c+1].val });
+          if (r < 3 && c > 0 && bayerData[r+1][c-1].ch === 'R') rDonors.push({ r: r+1, c: c-1, val: bayerData[r+1][c-1].val });
+          if (r < 3 && c < 3 && bayerData[r+1][c+1].ch === 'R') rDonors.push({ r: r+1, c: c+1, val: bayerData[r+1][c+1].val });
+
+          gDonors.forEach(d => {
+            const el = document.getElementById(`bayerCell_${d.r}_${d.c}`);
+            if (el) el.classList.add('donor-g');
+          });
+          rDonors.forEach(d => {
+            const el = document.getElementById(`bayerCell_${d.r}_${d.c}`);
+            if (el) el.classList.add('donor-r');
+          });
+
+          finalG = gDonors.length ? Math.round(gDonors.reduce((a, b) => a + b.val, 0) / gDonors.length) : 155;
+          finalR = rDonors.length ? Math.round(rDonors.reduce((a, b) => a + b.val, 0) / rDonors.length) : 195;
+
+          calcChan1Label.textContent = 'Modrý kanál (B - naměřeno):';
+          calcChan1Val.textContent = `${finalB} (Nativní fotodioda)`;
+          calcChan1Val.style.color = '#60a5fa';
+
+          calcChan2Label.textContent = 'Zelený kanál (G - průměr sousedů):';
+          calcChan2Val.textContent = gDonors.map(d => d.val).join(' + ') + ` / ${gDonors.length} = ${finalG}`;
+          calcChan2Val.style.color = '#4ade80';
+
+          calcChan3Label.textContent = 'Červený kanál (R - diagonální sousedé):';
+          calcChan3Val.textContent = rDonors.map(d => d.val).join(' + ') + ` / ${rDonors.length} = ${finalR}`;
+          calcChan3Val.style.color = '#f87171';
+        }
+
+        demosaicRgbPreview.style.backgroundColor = `rgb(${finalR}, ${finalG}, ${finalB})`;
+        demosaicRgbText.textContent = `rgb(${finalR}, ${finalG}, ${finalB}) • #${((1 << 24) + (finalR << 16) + (finalG << 8) + finalB).toString(16).slice(1).toUpperCase()}`;
+      }
+
+      buildBayerGrid();
+      selectBayerPixel(1, 0); // Default to a green cell
+
+      if (btnBayerPresetGreen) btnBayerPresetGreen.addEventListener('click', () => {
+        selectBayerPixel(1, 0);
+        btnBayerPresetGreen.classList.add('active');
+        btnBayerPresetRed.classList.remove('active');
+        btnBayerPresetBlue.classList.remove('active');
+      });
+      if (btnBayerPresetRed) btnBayerPresetRed.addEventListener('click', () => {
+        selectBayerPixel(0, 0);
+        btnBayerPresetRed.classList.add('active');
+        btnBayerPresetGreen.classList.remove('active');
+        btnBayerPresetBlue.classList.remove('active');
+      });
+      if (btnBayerPresetBlue) btnBayerPresetBlue.addEventListener('click', () => {
+        selectBayerPixel(1, 1);
+        btnBayerPresetBlue.classList.add('active');
+        btnBayerPresetGreen.classList.remove('active');
+        btnBayerPresetRed.classList.remove('active');
+      });
+
+      /* ======================================================================
+         3. INTERAKTIVNÍ RAW VS JPEG SROVNÁVAČ DYNAMICKÉHO ROZSAHU (SLIDE 7)
+         ====================================================================== */
+      const rawRecoverySlider = document.getElementById('rawRecoverySlider');
+      const rawRecoveryValue = document.getElementById('rawRecoveryValue');
+      const btnResetRawExp = document.getElementById('btnResetRawExp');
+      const canvasPreviewJpeg = document.getElementById('canvasPreviewJpeg');
+      const canvasPreviewRaw = document.getElementById('canvasPreviewRaw');
+      const jpegDestructText = document.getElementById('jpegDestructText');
+
+      function renderRecoveryCanvases(ev) {
+        if (!canvasPreviewJpeg || !canvasPreviewRaw) return;
+
+        const ctxJ = canvasPreviewJpeg.getContext('2d');
+        const ctxR = canvasPreviewRaw.getContext('2d');
+        const w = canvasPreviewJpeg.width;
+        const h = canvasPreviewJpeg.height;
+
+        // Vykreslení scény: nebe s mraky a sluncem nahoře, tmavé popředí dole
+        function drawBaseScene(ctx, isRaw) {
+          ctx.clearRect(0, 0, w, h);
+
+          // Nebe
+          let skyBrightness = 1 + ev * 0.35;
+          let rSky = Math.min(255, Math.max(0, 56 * skyBrightness));
+          let gSky = Math.min(255, Math.max(0, 140 * skyBrightness));
+          let bSky = Math.min(255, Math.max(0, 220 * skyBrightness));
+
+          if (!isRaw && ev > 1) {
+            // JPEG přepal na obloze
+            rSky = Math.min(255, rSky + (ev - 1) * 70);
+            gSky = Math.min(255, gSky + (ev - 1) * 70);
+            bSky = 255;
+          }
+
+          const skyGrad = ctx.createLinearGradient(0, 0, 0, h * 0.65);
+          skyGrad.addColorStop(0, `rgb(${Math.round(rSky)}, ${Math.round(gSky)}, ${Math.round(bSky)})`);
+          skyGrad.addColorStop(1, '#bae6fd');
+          ctx.fillStyle = skyGrad;
+          ctx.fillRect(0, 0, w, h * 0.65);
+
+          // Slunce a mraky
+          ctx.beginPath();
+          ctx.arc(w * 0.75, h * 0.25, 20, 0, Math.PI * 2);
+          if (!isRaw && ev > 0.5) {
+            ctx.fillStyle = '#ffffff'; // Ořez v JPEGu
+          } else {
+            ctx.fillStyle = 'rgba(254, 240, 138, 0.95)';
+          }
+          ctx.fill();
+
+          // Mraky kolem slunce
+          ctx.fillStyle = (!isRaw && ev > 1) ? '#ffffff' : 'rgba(255, 255, 255, 0.7)';
+          ctx.beginPath();
+          ctx.arc(w * 0.65, h * 0.28, 22, 0, Math.PI * 2);
+          ctx.arc(w * 0.72, h * 0.23, 26, 0, Math.PI * 2);
+          ctx.arc(w * 0.82, h * 0.29, 20, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Tmavé hory a les v popředí (stíny)
+          let shadowBoost = 1 + ev * 0.45;
+          let rMtn = Math.min(255, Math.max(5, 20 * shadowBoost));
+          let gMtn = Math.min(255, Math.max(10, 45 * shadowBoost));
+          let bMtn = Math.min(255, Math.max(15, 30 * shadowBoost));
+
+          if (!isRaw && ev < -1) {
+            // JPEG propad do totální černé
+            rMtn = 0; gMtn = 0; bMtn = 0;
+          }
+
+          ctx.fillStyle = `rgb(${Math.round(rMtn)}, ${Math.round(gMtn)}, ${Math.round(bMtn)})`;
+          ctx.beginPath();
+          ctx.moveTo(0, h * 0.65);
+          ctx.lineTo(w * 0.3, h * 0.35);
+          ctx.lineTo(w * 0.55, h * 0.65);
+          ctx.lineTo(w * 0.8, h * 0.4);
+          ctx.lineTo(w, h * 0.65);
+          ctx.lineTo(w, h);
+          ctx.lineTo(0, h);
+          ctx.closePath();
+          ctx.fill();
+
+          // Pokud je to JPEG s vysokým vytažením stínů (ev > 1.5), simuluj ošklivý posterizační šum a artefakty
+          if (!isRaw && ev > 1) {
+            ctx.fillStyle = 'rgba(239, 68, 68, 0.15)';
+            ctx.fillRect(0, h * 0.65, w, h * 0.35);
+          }
+        }
+
+        drawBaseScene(ctxJ, false);
+        drawBaseScene(ctxR, true);
+
+        if (ev > 1) {
+          jpegDestructText.textContent = 'Přepaly v nebi jsou nenávratně oříznuty na #FFFFFF (Clipped)!';
+          jpegDestructText.style.color = '#ef4444';
+        } else if (ev < -1) {
+          jpegDestructText.textContent = 'Stíny spadly do beztvaré černé (Crushed blacks), banding!';
+          jpegDestructText.style.color = '#ef4444';
+        } else {
+          jpegDestructText.textContent = 'Normální expozice bez výrazných artefaktů.';
+          jpegDestructText.style.color = 'var(--text-muted)';
+        }
+      }
+
+      if (rawRecoverySlider) {
+        rawRecoverySlider.addEventListener('input', (e) => {
+          const val = parseFloat(e.target.value);
+          rawRecoveryValue.textContent = `Korekce: ${val > 0 ? '+' : ''}${val.toFixed(1)} EV`;
+          renderRecoveryCanvases(val);
+        });
+      }
+
+      if (btnResetRawExp) {
+        btnResetRawExp.addEventListener('click', () => {
+          if (rawRecoverySlider) {
+            rawRecoverySlider.value = 0;
+            rawRecoveryValue.textContent = 'Korekce: 0.0 EV';
+            renderRecoveryCanvases(0);
+          }
+        });
+      }
+
+      renderRecoveryCanvases(0);
+
+      /* ======================================================================
+         4. INTERAKTIVNÍ MINITEST (SLIDE 8)
+         ====================================================================== */
+      const quizQuestions = [
+        {
+          q: "Otázka 1/3: Co se stane v optickém hledáčku (OVF) zrcadlovky v okamžiku expozice?",
+          opts: [
+            { text: "A) Hledáček na zlomek sekundy zčerná (Blackout), protože se zrcátko vyklopí nahoru a zakryje cestu do hranolu.", correct: true },
+            { text: "B) V hledáčku fotograf vidí přesný výsledný snímek včetně expozice a vyvážení bílé.", correct: false },
+            { text: "C) Obraz v hledáčku se invertuje vzhůru nohama vlivem štěrbinové závěrky.", correct: false }
+          ],
+          explain: "Správně! U zrcadlovky se zrcátko musí fyzicky vyklopit, aby uvolnilo cestu světlu na senzor. Během expozice je optický hledáček slepý (Blackout)."
+        },
+        {
+          q: "Otázka 2/3: Proč obsahuje Bayerova mozaika (RGGB) přesně 50 % zelených buněk a jen 25 % červených a modrých?",
+          opts: [
+            { text: "A) Křemíkové fotodiody nedokáží detekovat červené a modré fotony.", correct: false },
+            { text: "B) Lidské oko má nejvyšší spektrální citlivost na zelenou vlnovou délku a vnímá v ní nejvíce detailů.", correct: true },
+            { text: "C) Zelené světlo má nejdelší vlnovou délku a proniká nejhlouběji do křemíku.", correct: false }
+          ],
+          explain: "Přesně tak! Dr. Bryce Bayer navrhl filtr tak, aby odpovídal fyziologii lidského zraku (čípky M v sítnici mají maximum citlivosti kolem 555 nm)."
+        },
+        {
+          q: "Otázka 3/3: Jaký je hlavní rozdíl mezi FSI a moderním BSI CMOS snímačem?",
+          opts: [
+            { text: "A) BSI senzor používá černobílý film namísto polovodičů.", correct: false },
+            { text: "B) BSI má fotodiody na samotném povrchu čipu a sběrnice jsou pod nimi, takže zachytí o 30–40 % více světla.", correct: true },
+            { text: "C) BSI senzor vyžaduje externí mechanické chlazení kapalným dusíkem.", correct: false }
+          ],
+          explain: "Správně! U Back-Illuminated (BSI) čipu jsou kovové spoje přesunuty na zadní stranu, takže nestíní světlocitlivé fotodiody."
+        }
+      ];
+
+      let currentQIdx = 0;
+      const qText = document.getElementById('quizQuestionText');
+      const qContainer = document.getElementById('quizOptionsContainer');
+      const qFeedback = document.getElementById('quizFeedbackBox');
+      const qNextBtn = document.getElementById('quizNextBtn');
+
+      function loadQuizQuestion(idx) {
+        if (!qText || !qContainer || !qFeedback || !qNextBtn) return;
+        const qData = quizQuestions[idx];
+        qText.textContent = qData.q;
+        qContainer.innerHTML = '';
+        qFeedback.style.display = 'none';
+        qNextBtn.style.display = 'none';
+
+        qData.opts.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'quiz-opt-btn';
+          btn.textContent = opt.text;
+          btn.addEventListener('click', () => {
+            const allBtns = qContainer.querySelectorAll('.quiz-opt-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (opt.correct) {
+              btn.classList.add('correct');
+              qFeedback.style.display = 'block';
+              qFeedback.style.background = 'rgba(16, 185, 129, 0.2)';
+              qFeedback.style.color = '#a7f3d0';
+              qFeedback.style.border = '1px solid #10b981';
+              qFeedback.textContent = `Výborně! ${qData.explain}`;
+            } else {
+              btn.classList.add('incorrect');
+              qFeedback.style.display = 'block';
+              qFeedback.style.background = 'rgba(239, 68, 68, 0.2)';
+              qFeedback.style.color = '#fca5a5';
+              qFeedback.style.border = '1px solid #ef4444';
+              qFeedback.textContent = `Bohužel ne. ${qData.explain}`;
+            }
+
+            if (currentQIdx < quizQuestions.length - 1) {
+              qNextBtn.style.display = 'block';
+            }
+          });
+          qContainer.appendChild(btn);
+        });
+      }
+
+      if (qNextBtn) {
+        qNextBtn.addEventListener('click', () => {
+          currentQIdx++;
+          if (currentQIdx < quizQuestions.length) {
+            loadQuizQuestion(currentQIdx);
+          }
+        });
+      }
+
+      loadQuizQuestion(0);
+
+      // Vyhledávání ve slovníku pojmů
+      const glossarySearchInput = document.getElementById('glossarySearchInput');
+      const glossaryContainer = document.getElementById('glossaryContainer');
+      if (glossarySearchInput && glossaryContainer) {
+        glossarySearchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          const cards = glossaryContainer.querySelectorAll('.content-card');
+          cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            const term = card.getAttribute('data-term') || '';
+            if (text.includes(query) || term.includes(query)) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      }
+
+    })();
+  </script>
 </body>
 </html>
