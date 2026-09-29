@@ -37,7 +37,7 @@
       </div>
       <div class="header-right">
         <span class="tag tag-exam">Zkouškový okruh 11: Objektivy a optika</span>
-        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv (T)">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
       </div>
@@ -45,203 +45,718 @@
 
     <main class="slides-viewport">
 
-      <!-- SLIDE 1: TITLE -->
+      <!-- SLIDE 1: TITLE & OPTICAL SYSTEM -->
       <section class="slide title-slide active" data-slide="1">
-        <div class="hero-badge">Modul MUL20 &bull; 4. přednáška (45 min)</div>
+        <div class="hero-badge">Modul MUL20 &bull; 4. přednáška (45 min) &bull; Optická soustava</div>
         <h1 class="hero-title">Objektivy, optika a vady zobrazení</h1>
         <p class="hero-desc">
-          Geometrická a fyzikální optika objektivů: ohnisková vzdálenost, úhel záběru, světelnost (f-stop vs. T-stop), optické vady (aberace, distorze, vinětace), stabilizační technologie (OIS/IBIS) a filtry.
+          Geometrická a vlnová optika fotografických objektivů: ohnisková vzdálenost, úhel záběru, chod paprsků v pevných, zoom a teleobjektivech, světelnost f-stop vs. filmový T-stop, korekce optických aberací, stabilizace obrazu OIS/IBIS a filtry.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
             <span class="hero-meta-label">Optika</span>
-            <span class="hero-meta-val">Ohnisko &bull; Úhel záběru</span>
+            <span class="hero-meta-val">Ohnisko &bull; Úhel záběru &bull; Ray Tracing</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Světelnost</span>
-            <span class="hero-meta-val">f-stop vs. cine T-stop</span>
+            <span class="hero-meta-label">Světelnost & Vady</span>
+            <span class="hero-meta-val">f-stop vs. T-stop &bull; ED skla &bull; Asférické členy</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Absolutorium</span>
             <span class="hero-meta-val">Profilový okruh č. 11</span>
           </div>
         </div>
+
+        <div class="content-card" style="margin-top: 1rem; text-align: left;">
+          <h4 style="display: flex; align-items: center; gap: 0.5rem; color: #f472b6; margin-bottom: 0.5rem;">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            Cesta světelných paprsků soustavou objektivu
+          </h4>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; font-size: 0.8rem;">
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #ec4899;">
+              <strong style="color: #fbcfe8;">1. Filtrový závit & přední čočka</strong>
+              <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">Vstupní pupila</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Soustřeďuje vstupní světelný kužel. Antireflexní fluorové vrstvy odpuzují prach, mastnotu a vodu.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #38bdf8;">
+              <strong style="color: #bae6fd;">2. Vnitřní optické skupiny</strong>
+              <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">Variátor, kompenzátor, ostření</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Kombinace spojek a rozptylek koriguje sférické zkreslení. Lineární ultrazvukové motory posouvají ostřicí blok.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #a855f7;">
+              <strong style="color: #e9d5ff;">3. Irisová clona & OIS člen</strong>
+              <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">Regulace toku a stabilizace</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Zaoblené lamely tvoří kruhový otvor pro plynulý bokeh. Plovoucí OIS čočka kompenzuje chvění ruky.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #10b981;">
+              <strong style="color: #a7f3d0;">4. Zadní člen a kovový bajonet</strong>
+              <div style="color: var(--text-muted); font-size: 0.72rem; margin-top: 2px;">Výstupní pupila a sběrnice</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Zajišťuje telecentrický dopad paprsků na pixely čipu. Pozlacené piny přenášejí AF instrukce a EXIF data.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- SLIDE 2: OHNISKOVÁ VZDÁLENOST A ÚHEL ZÁBĚRU -->
+      <!-- SLIDE 2: OHNISKOVÁ VZDÁLENOST A SIMULÁTOR -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Geometrická optika</div>
-            <h2 class="slide-title">Ohnisková vzdálenost a úhel záběru</h2>
-            <p class="slide-subtitle">Vzdálenost optického středu soustavy čoček od roviny snímače</p>
+            <div class="slide-category">Optická geometrie &bull; Interaktivní simulace</div>
+            <h2 class="slide-title">Podstata ohniska a ohniskové vzdálenosti</h2>
+            <p class="slide-subtitle">Jak spojná čočka láme rovnoběžné paprsky do ohniska F, co vyjadřuje hodnota f v milimetrech a jak řídí zorný úhel</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Základní klasifikace</span>
+            <span class="tag tag-exam">Interaktivní simulátor</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="media-compare-grid">
-            <div class="content-card">
-              <span class="format-pill uncompressed">Širokoúhlé (&lt; 35 mm)</span>
-              <h4 style="margin: 0.5rem 0;">14 mm &ndash; 35 mm</h4>
-              <p style="font-size: 0.85rem;">Široký úhel záběru (60&deg; až 114&deg;). Zdůrazňuje popředí a opticky vzdaluje pozadí. Vhodné pro architekturu, krajinu, reportáž ve stísněném interiéru.</p>
+          <div class="focal-workbench">
+            <!-- Vizuální geometrický diagram lomu paprsků -->
+            <div class="focal-svg-box">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                <span id="focalBadgeCategory" style="font-size: 0.78rem; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.12); padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid rgba(56, 189, 248, 0.3);">Normální / Základní objektiv (cca 50 mm)</span>
+                <span id="focalSliderValue" style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: #ec4899;">f = 50 mm</span>
+              </div>
+
+              <!-- SVG optická lavice -->
+              <svg id="focalOpticSvg" viewBox="0 0 540 210" width="100%" height="180">
+                <defs>
+                  <linearGradient id="focalLensGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="rgba(56, 189, 248, 0.5)" />
+                    <stop offset="50%" stop-color="rgba(147, 197, 253, 0.2)" />
+                    <stop offset="100%" stop-color="rgba(56, 189, 248, 0.5)" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Optická osa čočky (vodorovná osa) -->
+                <line x1="20" y1="105" x2="520" y2="105" stroke="#475569" stroke-dasharray="4,4" stroke-width="1.2" />
+
+                <!-- Vstupující rovnoběžné světelné paprsky -->
+                <g id="svgIncomingRays">
+                  <line x1="30" y1="45" x2="160" y2="45" stroke="#fde047" stroke-width="2.5" />
+                  <line x1="30" y1="75" x2="160" y2="75" stroke="#fef08a" stroke-width="2" />
+                  <line x1="30" y1="105" x2="160" y2="105" stroke="#fde047" stroke-width="2.5" />
+                  <line x1="30" y1="135" x2="160" y2="135" stroke="#fef08a" stroke-width="2" />
+                  <line x1="30" y1="165" x2="160" y2="165" stroke="#fde047" stroke-width="2.5" />
+                </g>
+
+                <!-- Spojná čočka (optický střed v X = 160) -->
+                <path id="svgLensShape" d="M 160,25 Q 178,105 160,185 Q 142,105 160,25 Z" fill="url(#focalLensGrad)" stroke="#38bdf8" stroke-width="2" />
+                <line x1="160" y1="20" x2="160" y2="190" stroke="#38bdf8" stroke-dasharray="2,2" stroke-width="1" opacity="0.6" />
+                <text x="160" y="202" fill="#38bdf8" font-size="9" font-weight="700" text-anchor="middle">Hlavní rovina H</text>
+
+                <!-- Lámané paprsky sbíhající se do ohniska F na senzoru -->
+                <g id="svgRefractedRays">
+                  <line id="refRay1" x1="160" y1="45" x2="330" y2="105" stroke="#fde047" stroke-width="2.5" />
+                  <line id="refRay2" x1="160" y1="75" x2="330" y2="105" stroke="#fef08a" stroke-width="2" />
+                  <line id="refRayMid" x1="160" y1="105" x2="330" y2="105" stroke="#fde047" stroke-width="2.5" />
+                  <line id="refRay3" x1="160" y1="135" x2="330" y2="105" stroke="#fef08a" stroke-width="2" />
+                  <line id="refRay4" x1="160" y1="165" x2="330" y2="105" stroke="#fde047" stroke-width="2.5" />
+                </g>
+
+                <!-- Ohnisko F -->
+                <circle id="svgFocalPoint" cx="330" cy="105" r="5" fill="#f43f5e" stroke="#fff" stroke-width="1.5" />
+                <text id="svgFocalLabel" x="330" y="94" fill="#f43f5e" font-size="10" font-weight="800" text-anchor="middle">F (Ohnisko)</text>
+
+                <!-- Rovina snímače -->
+                <line id="svgSensorLine" x1="330" y1="35" x2="330" y2="175" stroke="#38bdf8" stroke-width="2.5" />
+                <rect id="svgSensorChip" x="328" y="45" width="5" height="120" rx="2" fill="#0284c7" />
+                <text id="svgSensorLabel" x="330" y="25" fill="#38bdf8" font-size="9" font-weight="700" text-anchor="middle">Rovina čipu</text>
+
+                <!-- Kóta ohniskové vzdálenosti f -->
+                <line id="dimLine" x1="160" y1="165" x2="330" y2="165" stroke="#ec4899" stroke-width="1.5" />
+                <line x1="160" y1="160" x2="160" y2="170" stroke="#ec4899" stroke-width="1.5" />
+                <line id="dimTickR" x1="330" y1="160" x2="330" y2="170" stroke="#ec4899" stroke-width="1.5" />
+                <text id="dimText" x="245" y="160" fill="#fbcfe8" font-size="10" font-weight="800" text-anchor="middle">f = 50 mm</text>
+
+                <!-- Kužel zorného úhlu -->
+                <path id="svgFovCone" d="M 160,105 L 30,45 L 30,165 Z" fill="rgba(236, 72, 153, 0.08)" stroke="#ec4899" stroke-dasharray="3,3" stroke-width="1" />
+                <text id="svgFovAngleText" x="75" y="109" fill="#ec4899" font-size="9" font-weight="700">46.8°</text>
+              </svg>
+
+              <!-- Táhlo ohniskové vzdálenosti a presety -->
+              <div style="margin-top: 0.4rem;">
+                <input type="range" class="styled-range-input" id="focalSlider" min="14" max="400" step="1" value="50">
+                <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.4rem;">
+                  <button class="focal-preset-btn" data-f="14">14 mm (Ultraširoký)</button>
+                  <button class="focal-preset-btn" data-f="24">24 mm (Krajina)</button>
+                  <button class="focal-preset-btn" data-f="35">35 mm (Reportáž)</button>
+                  <button class="focal-preset-btn active" data-f="50">50 mm (Základní)</button>
+                  <button class="focal-preset-btn" data-f="85">85 mm (Portrét)</button>
+                  <button class="focal-preset-btn" data-f="200">200 mm (Tele)</button>
+                </div>
+              </div>
             </div>
-            <div class="content-card">
-              <span class="format-pill lossless">Základní (cca 50 mm)</span>
-              <h4 style="margin: 0.5rem 0;">45 mm &ndash; 55 mm</h4>
-              <p style="font-size: 0.85rem;">Úhel záběru cca 46&deg;. Odpovídá přirozené lidské perspektivě bez optického stlačení nebo protažení prostoru. Univerzální "padesátka" s vysokou světelností ($f/1.4$).</p>
-            </div>
-            <div class="content-card">
-              <span class="format-pill lossy">Teleobjektivy (&gt; 70 mm)</span>
-              <h4 style="margin: 0.5rem 0;">85 mm &ndash; 600 mm+</h4>
-              <p style="font-size: 0.85rem;">Úzký úhel záběru (28&deg; až 4&deg;). "Stlačuje" perspektivu &ndash; vzdálené objekty působí, jako by stály těsně za sebou. Ideální pro portréty (85/135 mm) a wildlife/sport (300/400 mm).</p>
+
+            <!-- Pravý panel: Výřez scény a telemetrie -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 0.75rem;">
+              <div>
+                <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Simulace úhlu záběru na scéně</span>
+                <div style="position: relative; width: 100%; aspect-ratio: 16/10; border-radius: var(--radius-sm); overflow: hidden; margin-top: 0.3rem; border: 1px solid var(--border-subtle);">
+                  <canvas id="focalSceneCanvas" width="320" height="200" style="width: 100%; height: 100%; display: block;"></canvas>
+                  <div id="focalCropFrame" style="position: absolute; border: 2px solid #ec4899; box-shadow: 0 0 10px rgba(236,72,153,0.5); pointer-events: none; transition: all 0.15s ease-out;"></div>
+                </div>
+              </div>
+
+              <!-- Telemetrie -->
+              <div style="display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.4rem; font-size: 0.78rem;">
+                <div class="math-calc-row">
+                  <span class="math-calc-label">Diagonální úhel záběru:</span>
+                  <span class="math-calc-value" id="readoutAngle">46.8°</span>
+                </div>
+                <div class="math-calc-row">
+                  <span class="math-calc-label">Perspektivní stlačení:</span>
+                  <span class="math-calc-value" id="readoutMagnification" style="color: #38bdf8;">1.00&times; (Přirozená lidská)</span>
+                </div>
+                <div class="math-calc-row">
+                  <span class="math-calc-label">Optická mohutnost:</span>
+                  <span class="math-calc-value" id="readoutDiopters">+20.0 dpt</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: SVĚTELNOST: F-STOP VS T-STOP -->
+      <!-- SLIDE 3: TYPY OBJEKTIVŮ A PRŮCHOD SVĚTLA RAY TRACING -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Fotometrie</div>
-            <h2 class="slide-title">Světelnost: f-stop vs. T-stop</h2>
-            <p class="slide-subtitle">Rozdíl mezi teoretickou geometrií a skutečnou světelnou propustností</p>
+            <div class="slide-category">Konstrukční typy &bull; Interaktivní Ray Tracing</div>
+            <h2 class="slide-title">Průchod světla objektivy: Pevné, Zoom a Teleobjektivy</h2>
+            <p class="slide-subtitle">Sledujte, jak se mění lom paprsků uvnitř pevných skel, transfokátorů a teleobjektivů při pohybu optických skupin</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Klíčový rozdíl</span>
+            <span class="tag tag-exam">Interaktivní optika</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="lens-ray-workbench">
+            <!-- Vizuální Ray Tracing SVG stage -->
+            <div class="lens-ray-stage">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                <span id="lensSchemeTitle" style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;">Pevný objektiv (Prime 50 mm f/1.4) &bull; Dvojitý Gauss</span>
+                <span id="lensApertureBadge" style="font-family: var(--font-mono); font-size: 0.75rem; color: #ec4899; font-weight: 700;">Max. světelnost: f/1.4</span>
+              </div>
+
+              <div class="lens-ray-svg-wrap">
+                <svg id="lensRaySvg" viewBox="0 0 680 260" width="100%" height="100%">
+                  <defs>
+                    <linearGradient id="lensGlass1" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="rgba(56, 189, 248, 0.45)" />
+                      <stop offset="100%" stop-color="rgba(147, 197, 253, 0.15)" />
+                    </linearGradient>
+                    <linearGradient id="lensGlassEd" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="rgba(16, 185, 129, 0.5)" />
+                      <stop offset="100%" stop-color="rgba(52, 211, 153, 0.2)" />
+                    </linearGradient>
+                    <linearGradient id="lensGlassAsp" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="rgba(236, 72, 153, 0.5)" />
+                      <stop offset="100%" stop-color="rgba(244, 114, 182, 0.2)" />
+                    </linearGradient>
+                  </defs>
+
+                  <!-- Optická osa -->
+                  <line x1="10" y1="130" x2="670" y2="130" stroke="#334155" stroke-dasharray="4,4" stroke-width="1.2" />
+
+                  <!-- Tubus objektivu -->
+                  <rect id="svgBarrelRect" x="60" y="25" width="480" height="210" rx="10" fill="none" stroke="#475569" stroke-dasharray="6,4" stroke-width="1.5" />
+                  <line x1="540" y1="20" x2="540" y2="240" stroke="#ec4899" stroke-width="2.5" />
+                  <text x="540" y="15" fill="#ec4899" font-size="9" font-weight="800" text-anchor="middle">BAJONET</text>
+
+                  <!-- Snímač fotoaparátu -->
+                  <rect x="610" y="35" width="16" height="190" rx="3" fill="#0284c7" stroke="#38bdf8" stroke-width="2" />
+                  <text x="618" y="240" fill="#38bdf8" font-size="9" font-weight="700" text-anchor="middle">Čip</text>
+
+                  <!-- Skupina světelných paprsků (dynamické cesty) -->
+                  <g id="svgDynamicRays" filter="url(#rayGlow)">
+                    <path id="rayPathTop" d="M 10,60 L 95,60 L 190,80 L 290,105 L 430,120 L 610,128" fill="none" stroke="#fde047" stroke-width="2.5" />
+                    <path id="rayPathMid" d="M 10,130 L 610,130" fill="none" stroke="#fef08a" stroke-width="2" />
+                    <path id="rayPathBot" d="M 10,200 L 95,200 L 190,180 L 290,155 L 430,140 L 610,132" fill="none" stroke="#fde047" stroke-width="2.5" />
+                  </g>
+
+                  <!-- DYNAMICKÉ OPTICKÉ ČLENY -->
+                  <g id="svgLensGroup1">
+                    <!-- Přední spojka (člen 1) -->
+                    <path d="M 90,35 Q 115,130 90,225 Q 75,130 90,35 Z" fill="url(#lensGlass1)" stroke="#38bdf8" stroke-width="1.5" />
+                    <text x="95" y="248" fill="#94a3b8" font-size="8" text-anchor="middle">Přední člen</text>
+                  </g>
+
+                  <g id="svgLensGroup2" transform="translate(0, 0)">
+                    <!-- Pohyblivá zoom skupina / variátor -->
+                    <path id="elemZoom1" d="M 190,50 Q 175,130 190,210 L 210,210 Q 225,130 210,50 Z" fill="url(#lensGlassEd)" stroke="#10b981" stroke-width="1.5" />
+                    <text id="lblZoomGroup" x="200" y="248" fill="#10b981" font-size="8" font-weight="700" text-anchor="middle">ED Člen</text>
+                  </g>
+
+                  <!-- Irisová clona -->
+                  <rect x="290" y="35" width="8" height="55" rx="2" fill="#f43f5e" />
+                  <rect x="290" y="170" width="8" height="55" rx="2" fill="#f43f5e" />
+                  <text x="294" y="248" fill="#f43f5e" font-size="8" font-weight="700" text-anchor="middle">Clona</text>
+
+                  <g id="svgLensGroup3" transform="translate(0, 0)">
+                    <!-- Kompenzátor / zadní asférická skupina -->
+                    <path id="elemRear1" d="M 390,45 Q 415,130 390,215 Q 375,130 390,45 Z" fill="url(#lensGlassAsp)" stroke="#ec4899" stroke-width="1.5" />
+                    <text id="lblRearGroup" x="395" y="248" fill="#ec4899" font-size="8" font-weight="700" text-anchor="middle">Asférický</text>
+                  </g>
+
+                  <g id="svgLensGroup4">
+                    <!-- Zadní korekční člen před bajonetem -->
+                    <path d="M 480,55 Q 495,130 480,205 Z" fill="url(#lensGlass1)" stroke="#38bdf8" stroke-width="1.5" />
+                  </g>
+
+                </svg>
+              </div>
+
+              <!-- Posuvník zoomu (aktivní pouze v režimu ZOOM) -->
+              <div id="zoomSliderControl" style="margin-top: 0.4rem; display: none;">
+                <div style="display: flex; justify-content: space-between; font-size: 0.76rem; margin-bottom: 0.2rem;">
+                  <span style="color: var(--text-secondary);">Transfokace zoomu (Posun optických skupin uvnitř tubusu):</span>
+                  <span id="zoomReadoutVal" style="font-family: var(--font-mono); font-weight: 700; color: #10b981;">24 mm (Širokoúhlý)</span>
+                </div>
+                <input type="range" class="styled-range-input" id="zoomElementSlider" min="24" max="70" step="1" value="24" style="accent-color: #10b981;">
+              </div>
+            </div>
+
+            <!-- Volba typu objektivu a technický výklad -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 0.85rem;">
+              <div>
+                <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Zvolte optickou konstrukci</span>
+                <div class="lens-type-nav" style="margin-top: 0.35rem;">
+                  <button class="lens-type-btn active" id="btnTypePrime">
+                    <span>Pevné sklo</span>
+                    <span style="font-size: 0.68rem; opacity: 0.8;">50 mm f/1.4</span>
+                  </button>
+                  <button class="lens-type-btn" id="btnTypeZoom">
+                    <span>Transfokátor</span>
+                    <span style="font-size: 0.68rem; opacity: 0.8;">24–70 mm f/2.8</span>
+                  </button>
+                  <button class="lens-type-btn" id="btnTypeTele">
+                    <span>Teleobjektiv</span>
+                    <span style="font-size: 0.68rem; opacity: 0.8;">200 mm f/4</span>
+                  </button>
+                </div>
+
+                <div id="lensTypeDescBox" style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 0.6rem;">
+                  <strong style="color: #fbcfe8;">Pevný objektiv (Prime Lens):</strong>
+                  <p style="margin-top: 4px;">Konstruován na jedno fixní ohnisko. Má nejméně skleněných přechodů vzduch-sklo (cca 6–8 členů), což minimalizuje odlesky a maximalizuje kontrast. Umožňuje extrémní světelnost ($f/1.2$ až $f/1.8$) a nádherné rozostření pozadí.</p>
+                </div>
+              </div>
+
+              <!-- Klíčové srovnávací parametry -->
+              <div style="display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.6rem; font-size: 0.78rem;">
+                <div class="math-calc-row">
+                  <span class="math-calc-label">Počet optických členů:</span>
+                  <span class="math-calc-value" id="specLensCount">7 členů v 5 skupinách</span>
+                </div>
+                <div class="math-calc-row">
+                  <span class="math-calc-label">Optická ostrost v rozích:</span>
+                  <span class="math-calc-value" id="specSharpness" style="color: #10b981;">Vynikající (bez kompromisů)</span>
+                </div>
+                <div class="math-calc-row">
+                  <span class="math-calc-label">Hmotnost a rozměry:</span>
+                  <span class="math-calc-value" id="specWeight">Kompaktní (cca 280 g)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SVĚTELNOST: F-STOP VS T-STOP -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Fotometrie &bull; Transmise světla</div>
+            <h2 class="slide-title">Světelnost: Geometrická f-stop vs. Filmová T-stop</h2>
+            <p class="slide-subtitle">Rozdíl mezi teoretickou geometrií clonového čísla a reálnou světelnou propustností soustavy čoček</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkouškový rozdíl</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4 style="color: #60a5fa;">Geometrická clona &ndash; f-stop</h4>
+              <h4 style="color: #60a5fa; display: flex; align-items: center; gap: 0.4rem;">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Geometrická clona &ndash; f-stop
+              </h4>
               <div class="code-box" style="margin: 0.5rem 0;">
-                <pre><code>N = f / D       (ohnisko / vstupní pupila)</code></pre>
+                <pre><code>N = f / D       (ohnisková vzdálenost / průměr vstupní pupily)</code></pre>
               </div>
-              <ul class="styled-list">
-                <li>Čistě matematický poměr ohniskové vzdálenosti k průměru vstupního otvoru.</li>
-                <li><strong>Ignoruje ztráty světla:</strong> Každý optický člen (čočka) uvnitř objektivu část světla pohltí a odrazí.</li>
-                <li>Objektiv složený z 18 čoček se světelností $f/2.8$ propustí ve skutečnosti méně světla než jednoduchý objektiv z 5 čoček při $f/2.8$.</li>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li>Čistě matematický geometrický poměr. Neřeší, co se se světlem děje uvnitř tubusu.</li>
+                <li><strong>Ztráty světla:</strong> Každá skleněná čočka část fotonů absorbuje a na každém rozhraní vzduch-sklo dochází k odrazu (cca 0.5–2 % i přes multicoating vrstvy).</li>
+                <li>Komplexní zoom objektiv složený z 18 čoček při $f/2.8$ propustí na senzor znatelně méně fotonů než jednoduchý pevný objektiv z 5 čoček při $f/2.8$!</li>
               </ul>
             </div>
+
             <div class="content-card">
-              <h4 style="color: #f472b6;">Transmisní clona &ndash; T-stop (Filmová)</h4>
+              <h4 style="color: #f472b6; display: flex; align-items: center; gap: 0.4rem;">
+                <svg class="icon" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                Transmisní clona &ndash; T-stop (Kinematografická)
+              </h4>
               <div class="code-box" style="margin: 0.5rem 0;">
-                <pre><code>T = f-stop / &radic;Transmise</code></pre>
+                <pre><code>T = f-stop / &radic;&tau;       (&tau; = reálná propustnost / transmise skla)</code></pre>
               </div>
-              <ul class="styled-list">
-                <li><strong>Skutečně naměřená propustnost:</strong> Reálné množství fotonů, které projde sklem na senzor.</li>
-                <li>Filmové cinema objektivy (ARRI, Cooke, Zeiss Cine) jsou cejchovány výhradně v <strong>T-stopech (např. T1.5, T2.1)</strong>.</li>
-                <li>Zaručuje, že při výměně objektivu ze širokoúhlého na teleobjektiv uprostřed scény zůstane expozice v kameře absolutně identická bez nutnosti korekce!</li>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li><strong>Skutečně fotometricky naměřená hodnota:</strong> Udává absolutní množství světla, které fyzicky dopadne na snímač.</li>
+                <li>Filmové cine objektivy (ARRI, Cooke, Zeiss, Angénieux) jsou cejchovány <strong>výhradně v T-stopech (T1.5, T2.1, T2.9)</strong>.</li>
+                <li><strong>Klíčová výhoda pro video:</strong> Při přehození širokoúhlého objektivu za teleobjektiv uprostřed filmové scény zůstane expozice v kameře na 100 % identická bez jakékoli odchylky v jasu.</li>
               </ul>
+            </div>
+          </div>
+
+          <div class="content-card" style="margin-top: 0.6rem;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; font-size: 0.8rem;">
+              <div>
+                <strong style="color: #38bdf8;">Tvar lamel a bokeh:</strong>
+                <p style="color: var(--text-secondary); margin-top: 3px;">Zaoblené (circular) lamely clony (9 až 11 lamel) zachovávají kruhový tvar světelných koleček v bokehu i po zaclonění.</p>
+              </div>
+              <div>
+                <strong style="color: #ec4899;">Difrakční hvězdičky (Sunstars):</strong>
+                <p style="color: var(--text-secondary); margin-top: 3px;">Lichý počet lamel vytváří dvojnásobný počet cípů hvězdičky kolem slunce (9 lamel &rarr; 18 cípů). Sudý počet vytváří stejný počet cípů (8 lamel &rarr; 8 cípů).</p>
+              </div>
+              <div>
+                <strong style="color: #10b981;">Cibulové kroužky (Onion rings):</strong>
+                <p style="color: var(--text-secondary); margin-top: 3px;">Nežádoucí soustředné kružnice uvnitř bokehu způsobené mikro-stopami po lisovacích formách asférických čoček (XA členy je eliminují).</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4: OPTICKÉ VADY ZOBRAZENÍ -->
-      <section class="slide" data-slide="4">
+      <!-- SLIDE 5: OPTICKÉ VADY ZOBRAZENÍ A KOREKCE -->
+      <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Optické aberace</div>
-            <h2 class="slide-title">Optické vady čoček a jejich korekce</h2>
-            <p class="slide-subtitle">Nedokonalosti lomu světla ve skleněné optické soustavě</p>
+            <div class="slide-category">Optické aberace &bull; Interaktivní demonstrace</div>
+            <h2 class="slide-title">Optické vady čoček (aberace) a jejich korekce</h2>
+            <p class="slide-subtitle">Proč se paprsky nelámou dokonale, jak vznikají barevné lemy a sférická měkkost a jak je výrobci potlačují</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Zkouškový rozbor</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>1. Chromatická aberace (Barevná vada)</h4>
-              <p>Různé vlnové délky světla (červená, zelená, modrá) se lomí pod různým úhlem (disperze skla) a neprotnou se v jednom ohnisku. Projevuje se fialovými nebo zelenými lemy na kontrastních hranách. Korigují ji nízkorozptylová skla (ED / Fluorite).</p>
+          <div class="aberration-interactive-wrap">
+            <!-- Vizuální plátno vady -->
+            <div class="aberration-stage">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                  <strong style="font-size: 0.85rem; color: #38bdf8;" id="aberrationTitle">Chromatická aberace (Barevná vada)</strong>
+                  <span style="font-size: 0.72rem; color: #f472b6; font-family: var(--font-mono);" id="aberrationElementTag">Korekce: ED / Fluoritová skla</span>
+                </div>
+                <div class="aberration-canvas-frame">
+                  <canvas id="aberrationCanvas" width="400" height="230"></canvas>
+                </div>
+              </div>
+              <div style="font-size: 0.76rem; color: var(--text-muted); margin-top: 0.4rem;" id="aberrationNote">
+                Zelené a fialové lemy na kontrastních přechodech (větve proti nebi) vlivem různé vlnové délky RGB barev.
+              </div>
             </div>
-            <div class="content-card">
-              <h4>2. Geometrické zkreslení (Distorze)</h4>
-              <p>Zvětšení se liší v závislosti na vzdálenosti od optické osy:
-                <br>&bull; <strong>Soudkovité (Barrel):</strong> Rovné linie se vyklenují ven (u širokoúhlých objektivů).
-                <br>&bull; <strong>Poduškovité (Pincushion):</strong> Linie se prohýbají dovnitř (u teleobjektivů).
-              </p>
-            </div>
-          </div>
-          <div class="grid-2" style="margin-top: 0.6rem;">
-            <div class="content-card">
-              <h4>3. Vinětace (Vignetting)</h4>
-              <p>Úbytek světla v rozích obrazu vůči středu vlivem mechanického tubusu a úhlu dopadu světla na krajní pixely. Zmírňuje se přivřením clony o 1–2 stupně.</p>
-            </div>
-            <div class="content-card">
-              <h4>4. Koma a Sférická vada</h4>
-              <p><strong>Sférická vada:</strong> paprsky procházející okrajem sférické čočky mají jiné ohnisko než paprsky ze středu, což způsobuje celoplošné změkčení obrazu (i na ose). <strong>Koma:</strong> obdobný problém u mimoosových paprsků, kdy bodové světelné zdroje v rozích snímku vypadají jako komety. Obě vady se řeší zařazením <strong>asférických členů</strong>.</p>
+
+            <!-- Seznam tlačítek jednotlivých vad -->
+            <div class="aberration-btn-list">
+              <button class="aberration-opt-btn active" data-ab="chromatic">
+                <div class="aberration-opt-title">
+                  <span>1. Chromatická aberace</span>
+                  <span style="color: #ec4899;">ED / LD Skla</span>
+                </div>
+                <div class="aberration-opt-desc">Barevný rozptyl (disperze). Červené, zelené a modré paprsky mají různý index lomu a neprotnou se v jednom ohnisku.</div>
+              </button>
+
+              <button class="aberration-opt-btn" data-ab="spherical">
+                <div class="aberration-opt-title">
+                  <span>2. Sférická vada &amp; Koma</span>
+                  <span style="color: #38bdf8;">Asférické členy</span>
+                </div>
+                <div class="aberration-opt-desc">Paprsky procházející okrajem sférické čočky mají kratší ohnisko než středové &ndash; celkové změkčení obrazu a "kometové" chvosty hvězd.</div>
+              </button>
+
+              <button class="aberration-opt-btn" data-ab="distortion">
+                <div class="aberration-opt-title">
+                  <span>3. Geometrická distorze</span>
+                  <span style="color: #10b981;">Soudkovitá / Poduškovitá</span>
+                </div>
+                <div class="aberration-opt-desc">Změna zvětšení v závislosti na vzdálenosti od osy. Širokáče prohýbají linie ven (barrel), teleobjektivy dovnitř (pincushion).</div>
+              </button>
+
+              <button class="aberration-opt-btn" data-ab="vignetting">
+                <div class="aberration-opt-title">
+                  <span>4. Vinětace (Úbytek světla)</span>
+                  <span style="color: #f59e0b;">Zaclonění / Korekční profily</span>
+                </div>
+                <div class="aberration-opt-desc">Ztmavení rohů vůči středu kvůli mechanickému tubusu a šikmému dopadu paprsků na krycí sklo pixelů čipu.</div>
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: STABILIZACE A FILTRY -->
-      <section class="slide" data-slide="5">
-        <div class="slide-header">
-          <div class="slide-titles">
-            <div class="slide-category">Stabilizace a optické příslušenství</div>
-            <h2 class="slide-title">Stabilizace obrazu (OIS / IBIS) a filtry</h2>
-            <p class="slide-subtitle">Jak udržet ostrý snímek z ruky a jak ovlivnit světlo před objektivem</p>
-          </div>
-          <div class="slide-tags">
-            <span class="tag">Příslušenství</span>
-          </div>
-        </div>
-        <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Optická stabilizace (OIS vs. IBIS)</h4>
-              <ul class="styled-list">
-                <li><strong>OIS (Optical In-Lens Stabilization):</strong> Pohyblivý optický člen v objektivu řízený gyroskopy. Účinnější u dlouhých teleobjektivů (200 mm+).</li>
-                <li><strong>IBIS (In-Body Image Stabilization):</strong> Celý snímač v těle fotoaparátu je zavěšen na elektromagnetickém pólu v 5 osách (Yaw, Pitch, Roll, X, Y). Stabilizuje jakýkoli nasazený objektiv.</li>
-                <li>Umožňuje prodloužit bezpečný čas z ruky až o 5–8 EV stupňů!</li>
-              </ul>
-            </div>
-            <div class="content-card">
-              <h4>Klíčové fotografické filtry</h4>
-              <ul class="styled-list">
-                <li><strong>CPL (Cirkulární polarizační filtr):</strong> Propouští světlo kmitající pouze v jedné rovině. Odstraňuje odlesky z nekovových povrchů (voda, sklo) a ztmavuje a sytí modrou oblohu. Nelze nasimulovat v Photoshopu!</li>
-                <li><strong>ND (Neutral Density &ndash; neutrální šedý):</strong> Rovnoměrně tlumí přicházející světlo v celém spektru (např. ND8 = &minus;3 EV, ND1000 = &minus;10 EV). Umožňuje dlouhé expozice ve dne a dodržení 180° úhlu závěrky u videa.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SLIDE 6: SUMMARY -->
+      <!-- SLIDE 6: STABILIZACE OBRAZU OIS VS IBIS -->
       <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Závěrečná syntéza</div>
-            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
-            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z optiky a objektivů</p>
+            <div class="slide-category">Stabilizace &bull; Interaktivní simulace otřesů</div>
+            <h2 class="slide-title">Stabilizace obrazu: Optická (OIS) vs. Snímačová (IBIS)</h2>
+            <p class="slide-subtitle">Sledujte, jak gyroskopy detekují úhlové chvění ruky a jak plovoucí optický člen nebo plovoucí senzor udržují paprsek v klidu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Interaktivní animace</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="stabilization-workbench">
+            <!-- Vizuální SVG model objektivu se stabilizací -->
+            <div class="stab-stage-box">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span id="stabModeTitle" style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;">Stabilizace: OIS (Optický stabilizační člen v objektivu)</span>
+                <span id="stabGainBadge" style="font-family: var(--font-mono); font-size: 0.75rem; background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid rgba(56, 189, 248, 0.3);">Zisk: +4.5 EV</span>
+              </div>
+
+              <div class="stab-svg-wrap">
+                <svg id="stabSimSvg" viewBox="0 0 660 250" width="100%" height="100%">
+                  <!-- Tělo tubusu a fotoaparátu -->
+                  <g id="svgShakeRig" transform="translate(0, 0)">
+                    <rect x="50" y="30" width="380" height="190" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1.5" />
+                    <rect x="430" y="20" width="180" height="210" rx="10" fill="#1e293b" stroke="#64748b" stroke-width="2" />
+                    <text x="240" y="22" fill="#64748b" font-size="9" font-weight="700">TUBUS OBJEKTIVU (OIS)</text>
+                    <text x="520" y="15" fill="#38bdf8" font-size="9" font-weight="700">TĚLO FOTOAPARÁTU (IBIS)</text>
+
+                    <!-- Pevná přední čočka -->
+                    <path d="M 80,45 Q 100,125 80,205 Z" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="1.5" />
+
+                    <!-- Gyroskopický senzor v objektivu -->
+                    <rect x="180" y="38" width="40" height="18" rx="3" fill="#831843" stroke="#f43f5e" stroke-width="1" />
+                    <text x="200" y="50" fill="#fbcfe8" font-size="8" font-weight="700" text-anchor="middle">GYRO</text>
+
+                    <!-- PLOVOUCÍ OPTICKÝ STABILIZAČNÍ ČLEN (OIS) -->
+                    <!-- Bude se pohybovat v protifázi nahoru/dolů -->
+                    <g id="svgOisFloatingElement" transform="translate(0, 0)">
+                      <rect x="235" y="50" width="30" height="150" rx="6" fill="rgba(236, 72, 153, 0.35)" stroke="#ec4899" stroke-width="2" />
+                      <line x1="250" y1="40" x2="250" y2="210" stroke="#f472b6" stroke-dasharray="2,2" stroke-width="1" />
+                      <text x="250" y="130" fill="#fff" font-size="9" font-weight="800" text-anchor="middle">OIS</text>
+                    </g>
+                    <text x="250" y="235" fill="#ec4899" font-size="8.5" font-weight="700" text-anchor="middle">Plovoucí člen</text>
+
+                    <!-- Pevný zadní člen objektivu -->
+                    <path d="M 370,55 Q 385,125 370,195 Z" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="1.5" />
+
+                    <!-- 5-OSÝ PLOVOUCÍ SNÍMAČ (IBIS) -->
+                    <!-- Zavěšený na magnetickém rámu v těle -->
+                    <g id="svgIbisFloatingSensor" transform="translate(0, 0)">
+                      <rect x="500" y="45" width="22" height="160" rx="3" fill="#0284c7" stroke="#38bdf8" stroke-width="2.5" />
+                      <circle cx="511" cy="125" r="4" fill="#38bdf8" />
+                      <!-- Magnetické aktuátory (X, Y) -->
+                      <rect x="495" y="35" width="32" height="6" rx="2" fill="#38bdf8" />
+                      <rect x="495" y="209" width="32" height="6" rx="2" fill="#38bdf8" />
+                    </g>
+                    <text x="511" y="240" fill="#38bdf8" font-size="8.5" font-weight="700" text-anchor="middle">IBIS Senzor</text>
+
+                    <!-- Světelný paprsek -->
+                    <path id="svgStabRay" d="M 30,125 L 80,125 L 250,125 L 500,125" fill="none" stroke="#fde047" stroke-width="3.5" filter="url(#rayGlow)" />
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Mini náhled výsledné ostrosti -->
+              <div class="stab-mini-preview-wrap">
+                <canvas class="stab-preview-canvas" id="stabPreviewCanvas" width="144" height="104"></canvas>
+                <div style="font-size: 0.76rem;">
+                  <strong style="color: #f8fafc;" id="stabPreviewLabel">Výsledný snímek z ruky: Ostrý</strong>
+                  <div style="color: var(--text-muted); margin-top: 2px;" id="stabPreviewDesc">Bezpečný čas prodloužen z 1/250 s na 1/15 s bez rozmazání!</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ovládací panel stabilizace -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between; padding: 0.85rem;">
+              <div>
+                <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Režim stabilizace</span>
+                <div class="stab-mode-pills" style="margin-top: 0.35rem;">
+                  <button class="stab-pill-btn" id="btnStabOff">Vypnuto</button>
+                  <button class="stab-pill-btn active" id="btnStabOis">OIS (Objektiv)</button>
+                  <button class="stab-pill-btn" id="btnStabIbis">IBIS (Tělo)</button>
+                  <button class="stab-pill-btn" id="btnStabDual">Dual I.S.</button>
+                </div>
+
+                <div style="margin-top: 0.6rem;">
+                  <button class="shake-toggle-btn shaking" id="btnToggleShake">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                    <span>Simulace otřesů ruky: AKTIVNÍ</span>
+                  </button>
+                </div>
+
+                <div style="margin-top: 0.6rem;">
+                  <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Aktivní stabilizované osy</span>
+                  <div class="axis-indicators-grid">
+                    <div class="axis-badge active-axis" id="axisYaw">Yaw (Kývání)</div>
+                    <div class="axis-badge active-axis" id="axisPitch">Pitch (Klopení)</div>
+                    <div class="axis-badge" id="axisRoll">Roll (Rotace)</div>
+                    <div class="axis-badge" id="axisX">X (Posun)</div>
+                    <div class="axis-badge" id="axisY">Y (Posun)</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Srovnávací tabulka vlivu na expozici -->
+              <div style="display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.6rem; font-size: 0.78rem;">
+                <div class="math-calc-row">
+                  <span class="math-calc-label">Bezpečný čas bez IS (200mm):</span>
+                  <span class="math-calc-value" style="color: #ef4444;">1/250 s</span>
+                </div>
+                <div class="math-calc-row">
+                  <span class="math-calc-label">Bezpečný čas s aktivním IS:</span>
+                  <span class="math-calc-value" id="safeShutterValue" style="color: #10b981;">1/15 s (Zisk 4 EV)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: FOTOGRAFICKÉ FILTRY A PŘÍSLUŠENSTVÍ -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Optické příslušenství &bull; Interaktivní filtr</div>
+            <h2 class="slide-title">Fotografické filtry: UV, CPL Polarizační a ND Neutrální</h2>
+            <p class="slide-subtitle">Jak fyzicky modifikovat světelné vlnění před vstupem do čočky pro odstranění odlesků a zachování filmového času</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Interaktivní filtry</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="optical-path-container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div class="optical-filter-btns">
+                <button class="filter-btn active" id="filterNoneBtn">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                  Bez filtru
+                </button>
+                <button class="filter-btn" id="filterUvBtn">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path></svg>
+                  UV Filtr (Mechanická ochrana)
+                </button>
+                <button class="filter-btn" id="filterCplBtn">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path></svg>
+                  CPL Polarizační (-1.5 EV)
+                </button>
+                <button class="filter-btn" id="filterNdBtn">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg>
+                  ND8 Neutrální (-3 EV)
+                </button>
+              </div>
+              <span id="activeFilterDesc" style="font-size: 0.78rem; color: #fbcfe8; font-family: var(--font-mono);">Propustnost: 100 % světla &bull; Přímé paprsky</span>
+            </div>
+
+            <!-- SVG průchod světla filtrem -->
+            <div class="optical-diagram-wrap">
+              <svg id="opticalRaySvg" viewBox="0 0 840 200" width="100%" height="190" style="display:block;">
+                <!-- Paprsky -->
+                <g id="opticalLightRays" filter="url(#rayGlow)" opacity="0.95">
+                  <path id="rayTop" d="M 10,40 L 70,40 L 200,60 L 380,85 L 530,95 L 680,105 L 770,110" fill="none" stroke="#fef08a" stroke-width="2.5" />
+                  <path id="rayMid" d="M 10,100 L 70,100 L 200,100 L 380,100 L 530,100 L 680,100 L 770,100" fill="none" stroke="#fde047" stroke-width="3" />
+                  <path id="rayBot" d="M 10,160 L 70,160 L 200,140 L 380,115 L 530,105 L 680,95 L 770,90" fill="none" stroke="#fef08a" stroke-width="2.5" />
+                </g>
+
+                <!-- Výměnný filtr na závitu -->
+                <rect id="svgFilterElement" x="65" y="15" width="12" height="170" rx="4" fill="rgba(255,255,255,0.1)" stroke="#94a3b8" stroke-width="1.5" />
+                <text x="71" y="195" fill="#94a3b8" font-size="9" font-weight="700" text-anchor="middle">FILTR</text>
+
+                <!-- Tubus objektivu -->
+                <rect x="85" y="10" width="570" height="180" rx="8" fill="none" stroke="#334155" stroke-dasharray="6,4" stroke-width="1" />
+
+                <!-- Optické členy -->
+                <path d="M 175,20 Q 210,100 175,180 Q 160,100 175,20 Z" fill="rgba(56, 189, 248, 0.35)" stroke="#38bdf8" stroke-width="1.5" />
+                <text x="185" y="195" fill="#38bdf8" font-size="9" font-weight="600" text-anchor="middle">Přední čočka</text>
+
+                <!-- Irisová clona -->
+                <rect x="375" y="20" width="8" height="50" rx="2" fill="#f43f5e" />
+                <rect x="375" y="130" width="8" height="50" rx="2" fill="#f43f5e" />
+                <text x="379" y="195" fill="#f43f5e" font-size="9" font-weight="600" text-anchor="middle">Clona</text>
+
+                <!-- Zadní člen a bajonet -->
+                <path d="M 520,30 Q 545,100 520,170 Z" fill="rgba(56, 189, 248, 0.35)" stroke="#38bdf8" stroke-width="1.5" />
+                <line x1="645" y1="10" x2="645" y2="190" stroke="#ec4899" stroke-width="2" />
+                <text x="645" y="195" fill="#ec4899" font-size="9" font-weight="800" text-anchor="middle">BAJONET</text>
+
+                <!-- Senzor -->
+                <rect x="755" y="25" width="16" height="150" rx="3" fill="#0284c7" stroke="#38bdf8" stroke-width="2" />
+                <text x="763" y="195" fill="#38bdf8" font-size="9" font-weight="700" text-anchor="middle">Senzor</text>
+              </svg>
+            </div>
+
+            <!-- Tři filtry výklad -->
+            <div class="grid-3" style="margin-top: 0.2rem;">
+              <div class="content-card">
+                <h4 style="color: #60a5fa; font-size: 0.9rem;">UV a Ochranný filtr</h4>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                  Odřezává neviditelné ultrafialové záření ($< 390\text{ nm}$), které na horách způsobuje modravý opar. V moderní digitální praxi slouží primárně jako <strong>mechanický štít přední čočky</strong> proti poškrábání a nárazu.
+                </p>
+              </div>
+              <div class="content-card">
+                <h4 style="color: #a855f7; font-size: 0.9rem;">CPL Polarizační filtr</h4>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                  Otáčením kroužku propouští pouze světlo kmitající v jedné rovině. <strong>Odstraňuje lesky z vody, skla a listí</strong> a dramaticky zvyšuje sytost modré oblohy. Jeho optický účinek nelze nasimulovat v žádném softwaru!
+                </p>
+              </div>
+              <div class="content-card">
+                <h4 style="color: #f59e0b; font-size: 0.9rem;">ND Neutrální šedý filtr</h4>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                  Plošně tlumí přicházející světlo v celém spektru bez změny barevnosti. Umožňuje <strong>dlouhé expozice vody a mraků za poledního slunce</strong> a dodržení 180° filmového úhlu závěrky ($1/50\text{ s}$ při $f/1.8$) u videa.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: SUMMARY & CHECKLIST & MINITEST -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza a evaluace</div>
+            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist a minitest</h2>
+            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z optiky, objektivů a vad zobrazení</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Okruh absolutoria 11</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="summary-grid">
-            <div class="summary-card">
-              <h4>Ohnisko a perspektiva</h4>
-              <p>Krátké ohnisko rozšiřuje zorný úhel a zdůrazňuje prostor. Teleobjektivy zužují úhel a stlačují vzdálenosti mezi objekty.</p>
+          <div class="grid-2">
+            <!-- Otázky ke zkoušce -->
+            <div class="content-card">
+              <h4 style="color: #38bdf8; display: flex; align-items: center; gap: 0.4rem;">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Profilové zkušební otázky
+              </h4>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li><strong>1. Ohnisková vzdálenost a úhel záběru:</strong> Jak se klasifikují objektivy podle ohniska (širokoúhlé, základní, teleobjektivy)? Jaký vliv má ohnisko na perspektivní stlačení prostoru?</li>
+                <li><strong>2. Rozdíl mezi f-stop a T-stop:</strong> Proč filmaři používají výhradně T-stopy namísto geometrických clonových čísel?</li>
+                <li><strong>3. Optické aberace a korekce:</strong> Co způsobuje chromatickou aberaci a pomocí jakých optických skel se koriguje? K čemu slouží asférické členy?</li>
+                <li><strong>4. Stabilizace OIS vs. IBIS:</strong> Popište mechanismus plovoucího optického členu v objektivu oproti 5-osému elektromagnetickému závěsu snímače v těle.</li>
+                <li><strong>5. Polarizační a ND filtry:</strong> Na jakém fyzikálním principu funguje cirkulární polarizační filtr (CPL) a proč je nepostradatelný?</li>
+              </ul>
             </div>
-            <div class="summary-card">
-              <h4>f-stop vs T-stop</h4>
-              <p>f-stop je teoretický geometrický poměr. T-stop udává reálnou fotometrickou propustnost světla, klíčovou pro filmovou techniku.</p>
-            </div>
-            <div class="summary-card">
-              <h4>CPL a ND filtry</h4>
-              <p>CPL filtr fyzicky filtruje polarizované světlo (odrazy na vodě). ND filtr redukuje expozici pro zachování filmové clony a dlouhých časů.</p>
-            </div>
-            <div class="summary-card">
-              <h4>Zkušební otázka</h4>
-              <p>Jaké jsou hlavní typy objektivů podle ohniska? Vysvětlete rozdíl mezi f-stop a T-stop a vyjmenujte hlavní optické vady včetně způsobů korekce.</p>
+
+            <!-- Interaktivní minitest -->
+            <div class="quiz-box">
+              <div class="quiz-q-title" id="quizQuestionText">Otázka 1/3: Proč cinema objektivy používají clonová čísla T-stop namísto běžných f-stop?</div>
+              <div class="quiz-options-list" id="quizOptionsContainer">
+                <button class="quiz-opt-btn" data-correct="true">A) T-stop vyjadřuje skutečně naměřenou světelnou propustnost (transmisi) po započtení všech ztrát odrazy na čočkách.</button>
+                <button class="quiz-opt-btn" data-correct="false">B) T-stop udává teplotu zahřátí optických členů při dlouhém záznamu videa.</button>
+                <button class="quiz-opt-btn" data-correct="false">C) f-stop nelze u video objektivů matematicky vypočítat z důvodu zaoblených lamel.</button>
+              </div>
+              <div class="quiz-feedback" id="quizFeedbackBox"></div>
+              <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 0.4rem;">
+                <button class="control-btn" id="quizNextBtn" style="font-size: 0.78rem; padding: 0.35rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); display: none;">
+                  Další otázka &rarr;
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -249,11 +764,9 @@
 
     </main>
 
-    <!-- Controls -->
-
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="03_konstrukce_fotoaparatu_snimace_a_raw.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 03: Konstrukce fotoaparátů, snímače a RAW (Ctrl+Šipka vlevo)">
+      <a href="03_konstrukce_fotoaparatu_snimace_a_raw.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 03: Konstrukce fotoaparátů, snímače a RAW (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu MUL20">
@@ -266,7 +779,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 08</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -274,8 +787,8 @@
       <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
         <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
       </button>
-      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      <button class="control-btn" id="glossaryBtn" title="Slovník optických pojmů (G)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="15" y2="7"></line><line x1="9" y1="11" x2="15" y2="11"></line></svg>
       </button>
       <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
         <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
@@ -301,60 +814,928 @@
       </aside>
     </div>
 
-    <!-- Keyboard Shortcuts Help Modal -->
-    <div class="modal-overlay" id="helpModal" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-header">
-          <h3>
-            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
-            Klávesové zkratky
+    <!-- Slovník optických pojmů Modal (G) -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 820px; width: 95vw; max-height: 88vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="flex-shrink: 0;">
+          <h3 style="display: flex; align-items: center; gap: 0.6rem;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path><line x1="9" y1="7" x2="15" y2="7"></line><line x1="9" y1="11" x2="15" y2="11"></line></svg>
+            Slovník optických a konstrukčních pojmů &bull; Objektivy, vady a filtry
           </h3>
-          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
             <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
           </button>
         </div>
-        <div class="modal-body">
-          <div class="shortcut-row">
-            <span>Další snímek</span>
-            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>Předchozí snímek</span>
-            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>Další lekce</span>
-            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>Předchozí lekce</span>
-            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>První / Poslední snímek</span>
-            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>Celá obrazovka</span>
-            <span class="key-badge">F</span>
-          </div>
-          <div class="shortcut-row">
-            <span>Obsah lekce</span>
-            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
-          </div>
-          <div class="shortcut-row">
-            <span>Slovník pojmů</span>
-            <span class="key-badge">G</span>
-          </div>
-          <div class="shortcut-row">
-            <span>Přepnout tmavý / světlý motiv</span>
-            <span class="key-badge">T</span>
-          </div>
-          <div class="shortcut-row">
-            <span>Nápověda (tento dialog)</span>
-            <span class="key-badge">?</span>
-          </div>
 
+        <div style="padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0;">
+          <input type="text" id="glossarySearchInput" placeholder="Vyhledat optický pojem (např. T-stop, OIS, IBIS, Aberace, ED sklo, Asférický, CPL, ND, Distorze...)..." style="width: 100%; padding: 0.5rem 0.8rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-size: 0.85rem;">
+        </div>
+
+        <div style="padding: 1.25rem; overflow-y: auto; flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 0.75rem;" id="glossaryContainer">
+          <div class="content-card" data-term="ohniskova vzdalenost ohnisko">
+            <h4 style="color: #38bdf8; font-size: 0.9rem;">Ohnisková vzdálenost (f)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Vzdálenost optického středu soustavy (hlavní roviny) od bodu F, do kterého se sbíhají rovnoběžné paprsky. Určuje zorný úhel objektivu.</p>
+          </div>
+          <div class="content-card" data-term="t-stop f-stop svetelnost">
+            <h4 style="color: #ec4899; font-size: 0.9rem;">f-stop vs. T-stop</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">f-stop je teoretická geometrická světelnost. T-stop je fotometricky kalibrovaná skutečná propustnost (transmise) klíčová pro video a film.</p>
+          </div>
+          <div class="content-card" data-term="chromaticka aberace ed fluorit">
+            <h4 style="color: #a855f7; font-size: 0.9rem;">Chromatická aberace &amp; ED skla</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Barevná vada způsobená disperzí skla (různým lomem barevných složek). Korigují ji nízkorozptylová skla (ED / SLD / fluoritové čočky).</p>
+          </div>
+          <div class="content-card" data-term="asfericky clen sfericka koma">
+            <h4 style="color: #10b981; font-size: 0.9rem;">Asférický optický člen (ASP)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Čočka s nesférickým zakřivením plochy. Eliminuje sférickou vadu a komu v rozích snímku a nahrazuje několik běžných čoček najednou.</p>
+          </div>
+          <div class="content-card" data-term="ois stabilizace opticka">
+            <h4 style="color: #f59e0b; font-size: 0.9rem;">OIS (Optical Image Stabilization)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Optická stabilizace v objektivu. Plovoucí optický člen se elektromagneticky pohybuje v protifázi k otřesům ruky. Zvláště účinná u dlouhých teleobjektivů.</p>
+          </div>
+          <div class="content-card" data-term="ibis snimacova stabilizace">
+            <h4 style="color: #38bdf8; font-size: 0.9rem;">IBIS (In-Body Image Stabilization)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Mechanická stabilizace celého snímače na magnetickém 5-osém pólu v těle přístroje. Funguje se všemi nasazenými objektivy i historickými skly.</p>
+          </div>
+          <div class="content-card" data-term="cpl polarizacni filtr">
+            <h4 style="color: #ec4899; font-size: 0.9rem;">CPL Filtr (Kruhový polarizátor)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Optický filtr propouštějící pouze polarizované světlo. Odstraňuje odlesky z vody a skla a sytí modrou oblohu. Jeho efekt nelze vytvořit v postprodukci.</p>
+          </div>
+          <div class="content-card" data-term="nd neutralni sedy filtr">
+            <h4 style="color: #a855f7; font-size: 0.9rem;">ND Filtr (Neutral Density)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Neutrální šedý filtr tlumící expozici bez změny barev. Umožňuje pohybové rozmazání vody za dne a udržení kinematografické clony u videa.</p>
+          </div>
+          <div class="content-card" data-term="distorze vinetace">
+            <h4 style="color: #10b981; font-size: 0.9rem;">Distorze a Vinětace</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Distorze je tvarové zkreslení rovných linií (soudkovité u širokáčů, poduškovité u tele). Vinětace je úbytek jasu v rozích snímku.</p>
+          </div>
+          <div class="content-card" data-term="transfokator zoom prime">
+            <h4 style="color: #f59e0b; font-size: 0.9rem;">Zoom vs. Pevný objektiv (Prime)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Zoom mění ohnisko posunem vnitřních skupin (variátoru a kompenzátoru). Prime má pevné ohnisko, méně skel, vyšší světelnost a nulové mechanické vůle.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Framework Engine Script -->
   <script src="../../assets/js/presentation-core.js"></script>
+
+  <!-- Specializovaná interaktivní logika lekce 04 -->
+  <script>
+    (function() {
+      'use strict';
+
+      /* ======================================================================
+         1. SIMULÁTOR OHNISKOVÉ VZDÁLENOSTI (SLIDE 2)
+         ====================================================================== */
+      const focalSlider = document.getElementById('focalSlider');
+      const focalSliderValue = document.getElementById('focalSliderValue');
+      const focalPresetBtns = document.querySelectorAll('.focal-preset-btn');
+      const focalBadgeCategory = document.getElementById('focalBadgeCategory');
+      const readoutAngle = document.getElementById('readoutAngle');
+      const readoutMagnification = document.getElementById('readoutMagnification');
+      const readoutDiopters = document.getElementById('readoutDiopters');
+
+      const svgLensShape = document.getElementById('svgLensShape');
+      const svgSensorLine = document.getElementById('svgSensorLine');
+      const svgSensorChip = document.getElementById('svgSensorChip');
+      const svgSensorLabel = document.getElementById('svgSensorLabel');
+      const svgFocalPoint = document.getElementById('svgFocalPoint');
+      const svgFocalLabel = document.getElementById('svgFocalLabel');
+      const dimLine = document.getElementById('dimLine');
+      const dimTickR = document.getElementById('dimTickR');
+      const dimText = document.getElementById('dimText');
+      const svgFovCone = document.getElementById('svgFovCone');
+      const svgFovAngleText = document.getElementById('svgFovAngleText');
+      const focalCropFrame = document.getElementById('focalCropFrame');
+      const focalSceneCanvas = document.getElementById('focalSceneCanvas');
+
+      function drawFocalScene() {
+        if (!focalSceneCanvas) return;
+        const ctx = focalSceneCanvas.getContext('2d');
+        const w = focalSceneCanvas.width;
+        const h = focalSceneCanvas.height;
+
+        ctx.clearRect(0, 0, w, h);
+
+        // Obloha
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, h * 0.65);
+        skyGrad.addColorStop(0, '#0284c7');
+        skyGrad.addColorStop(0.6, '#38bdf8');
+        skyGrad.addColorStop(1, '#bae6fd');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, w, h * 0.65);
+
+        // Slunce
+        ctx.beginPath();
+        ctx.arc(w * 0.78, h * 0.22, 16, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(254, 240, 138, 0.9)';
+        ctx.fill();
+
+        // Vzdálené hory
+        ctx.fillStyle = '#64748b';
+        ctx.beginPath();
+        ctx.moveTo(0, h * 0.65);
+        ctx.lineTo(w * 0.22, h * 0.28);
+        ctx.lineTo(w * 0.45, h * 0.65);
+        ctx.lineTo(w * 0.68, h * 0.32);
+        ctx.lineTo(w, h * 0.65);
+        ctx.lineTo(0, h * 0.65);
+        ctx.fill();
+
+        // Zasněžené vrcholky
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.moveTo(w * 0.22, h * 0.28);
+        ctx.lineTo(w * 0.17, h * 0.36);
+        ctx.lineTo(w * 0.22, h * 0.34);
+        ctx.lineTo(w * 0.27, h * 0.37);
+        ctx.closePath();
+        ctx.fill();
+
+        // Louka v popředí
+        const grassGrad = ctx.createLinearGradient(0, h * 0.65, 0, h);
+        grassGrad.addColorStop(0, '#15803d');
+        grassGrad.addColorStop(1, '#166534');
+        ctx.fillStyle = grassGrad;
+        ctx.fillRect(0, h * 0.65, w, h * 0.35);
+
+        // Chalupa ve středu
+        const houseX = w * 0.48;
+        const houseY = h * 0.58;
+        ctx.fillStyle = '#78350f';
+        ctx.fillRect(houseX - 18, houseY, 36, 24);
+        // Střecha
+        ctx.fillStyle = '#b91c1c';
+        ctx.beginPath();
+        ctx.moveTo(houseX - 22, houseY);
+        ctx.lineTo(houseX, houseY - 14);
+        ctx.lineTo(houseX + 22, houseY);
+        ctx.closePath();
+        ctx.fill();
+        // Okno
+        ctx.fillStyle = '#fde047';
+        ctx.fillRect(houseX - 10, houseY + 6, 8, 8);
+        // Dveře
+        ctx.fillStyle = '#451a03';
+        ctx.fillRect(houseX + 3, houseY + 8, 8, 16);
+      }
+
+      function updateFocalLength(f) {
+        if (!focalSliderValue) return;
+        f = Math.max(14, Math.min(400, f));
+        focalSlider.value = f;
+        focalSliderValue.textContent = `f = ${f} mm`;
+
+        // Matematický výpočet diagonálního úhlu záběru na Full Frame (d = 43.27 mm)
+        const angleRad = 2 * Math.atan(43.27 / (2 * f));
+        const angleDeg = (angleRad * 180 / Math.PI).toFixed(1);
+        const diopters = (1000 / f).toFixed(1);
+        const magnification = (f / 50).toFixed(2);
+
+        readoutAngle.textContent = `${angleDeg}°`;
+        readoutMagnification.textContent = `${magnification}× (Relativně k 50mm)`;
+        readoutDiopters.textContent = `+${diopters} dpt`;
+
+        // Kategorie objektivu
+        if (f <= 20) {
+          focalBadgeCategory.textContent = 'Ultra-širokoúhlý objektiv (14–20 mm)';
+          focalBadgeCategory.style.color = '#38bdf8';
+        } else if (f <= 35) {
+          focalBadgeCategory.textContent = 'Širokoúhlý objektiv (24–35 mm)';
+          focalBadgeCategory.style.color = '#34d399';
+        } else if (f <= 60) {
+          focalBadgeCategory.textContent = 'Normální / Základní objektiv (50 mm)';
+          focalBadgeCategory.style.color = '#a855f7';
+        } else if (f <= 135) {
+          focalBadgeCategory.textContent = 'Portrétní / Střední teleobjektiv (85–135 mm)';
+          focalBadgeCategory.style.color = '#ec4899';
+        } else {
+          focalBadgeCategory.textContent = 'Silný teleobjektiv (200–400+ mm)';
+          focalBadgeCategory.style.color = '#f59e0b';
+        }
+
+        // Aktualizace pozice ohniska v SVG lavici
+        const lensX = 160;
+        const normF = Math.log2(f / 14) / Math.log2(400 / 14);
+        const focalDistPx = 60 + normF * 280;
+        const sensorX = lensX + focalDistPx;
+
+        // Vykreslení spojky podle mohutnosti
+        const lensBulge = 8 + (1 - normF) * 16;
+        svgLensShape.setAttribute('d', `M ${lensX},25 Q ${lensX + lensBulge},105 ${lensX},185 Q ${lensX - lensBulge},105 ${lensX},25 Z`);
+
+        // Posun senzoru a ohniska
+        svgSensorLine.setAttribute('x1', sensorX);
+        svgSensorLine.setAttribute('x2', sensorX);
+        svgSensorChip.setAttribute('x', sensorX - 2);
+        svgSensorLabel.setAttribute('x', sensorX);
+        svgFocalPoint.setAttribute('cx', sensorX);
+        svgFocalLabel.setAttribute('x', sensorX);
+
+        dimLine.setAttribute('x2', sensorX);
+        dimTickR.setAttribute('x1', sensorX);
+        dimTickR.setAttribute('x2', sensorX);
+        dimText.setAttribute('x', (lensX + sensorX) / 2);
+        dimText.textContent = `f = ${f} mm`;
+
+        // Paprsky lomu
+        const refRay1 = document.getElementById('refRay1');
+        const refRay2 = document.getElementById('refRay2');
+        const refRayMid = document.getElementById('refRayMid');
+        const refRay3 = document.getElementById('refRay3');
+        const refRay4 = document.getElementById('refRay4');
+        if (refRay1) {
+          refRay1.setAttribute('x2', sensorX);
+          refRay2.setAttribute('x2', sensorX);
+          refRayMid.setAttribute('x2', sensorX);
+          refRay3.setAttribute('x2', sensorX);
+          refRay4.setAttribute('x2', sensorX);
+        }
+
+        // Zorný kužel
+        const coneHalfSpread = Math.tan(angleRad / 2) * 130;
+        const coneYTop = Math.max(10, 105 - coneHalfSpread);
+        const coneYBot = Math.min(200, 105 + coneHalfSpread);
+        svgFovCone.setAttribute('d', `M ${lensX},105 L 30,${coneYTop} L 30,${coneYBot} Z`);
+        svgFovAngleText.textContent = `${angleDeg}°`;
+
+        // Ořezový rámeček na náhledu scény
+        if (focalCropFrame) {
+          const cropRatio = Math.max(0.08, Math.min(1.0, 14 / f));
+          const wPct = cropRatio * 100;
+          const hPct = cropRatio * 100;
+          focalCropFrame.style.width = `${wPct}%`;
+          focalCropFrame.style.height = `${hPct}%`;
+          focalCropFrame.style.left = `${(100 - wPct) / 2}%`;
+          focalCropFrame.style.top = `${(100 - hPct) / 2}%`;
+        }
+
+        focalPresetBtns.forEach(b => {
+          b.classList.toggle('active', parseInt(b.getAttribute('data-f'), 10) === f);
+        });
+      }
+
+      if (focalSlider) {
+        focalSlider.addEventListener('input', (e) => updateFocalLength(parseInt(e.target.value, 10)));
+      }
+      focalPresetBtns.forEach(btn => {
+        btn.addEventListener('click', () => updateFocalLength(parseInt(btn.getAttribute('data-f'), 10)));
+      });
+
+      drawFocalScene();
+      updateFocalLength(50);
+
+      /* ======================================================================
+         2. RAY TRACING & TYPY OBJEKTIVŮ (SLIDE 3)
+         ====================================================================== */
+      const btnTypePrime = document.getElementById('btnTypePrime');
+      const btnTypeZoom = document.getElementById('btnTypeZoom');
+      const btnTypeTele = document.getElementById('btnTypeTele');
+      const zoomSliderControl = document.getElementById('zoomSliderControl');
+      const zoomElementSlider = document.getElementById('zoomElementSlider');
+      const zoomReadoutVal = document.getElementById('zoomReadoutVal');
+
+      const lensSchemeTitle = document.getElementById('lensSchemeTitle');
+      const lensApertureBadge = document.getElementById('lensApertureBadge');
+      const lensTypeDescBox = document.getElementById('lensTypeDescBox');
+      const specLensCount = document.getElementById('specLensCount');
+      const specSharpness = document.getElementById('specSharpness');
+      const specWeight = document.getElementById('specWeight');
+
+      const svgBarrelRect = document.getElementById('svgBarrelRect');
+      const svgLensGroup2 = document.getElementById('svgLensGroup2');
+      const svgLensGroup3 = document.getElementById('svgLensGroup3');
+      const elemZoom1 = document.getElementById('elemZoom1');
+      const elemRear1 = document.getElementById('elemRear1');
+      const lblZoomGroup = document.getElementById('lblZoomGroup');
+      const lblRearGroup = document.getElementById('lblRearGroup');
+
+      const rayPathTop = document.getElementById('rayPathTop');
+      const rayPathMid = document.getElementById('rayPathMid');
+      const rayPathBot = document.getElementById('rayPathBot');
+
+      let currentLensType = 'prime'; // 'prime' | 'zoom' | 'tele'
+
+      function setLensType(type) {
+        currentLensType = type;
+        [btnTypePrime, btnTypeZoom, btnTypeTele].forEach(b => b.classList.remove('active'));
+
+        if (type === 'prime') {
+          btnTypePrime.classList.add('active');
+          zoomSliderControl.style.display = 'none';
+          lensSchemeTitle.textContent = 'Pevný objektiv (Prime 50 mm f/1.4) • Dvojitý Gauss';
+          lensApertureBadge.textContent = 'Max. světelnost: f/1.4';
+          lensApertureBadge.style.color = '#ec4899';
+
+          lensTypeDescBox.innerHTML = `
+            <strong style="color: #fbcfe8;">Pevný objektiv (Prime Lens):</strong>
+            <p style="margin-top: 4px;">Konstruován na jedno fixní ohnisko. Má nejméně skleněných přechodů vzduch-sklo (cca 6–8 členů), což minimalizuje odlesky a maximalizuje kontrast. Umožňuje extrémní světelnost ($f/1.2$ až $f/1.8$) a nádherné rozostření pozadí.</p>
+          `;
+          specLensCount.textContent = '7 členů v 5 skupinách';
+          specSharpness.textContent = 'Vynikající (od clony f/2.0)';
+          specWeight.textContent = 'Kompaktní (cca 280 g)';
+
+          svgBarrelRect.setAttribute('width', '480');
+          svgLensGroup2.setAttribute('transform', 'translate(0, 0)');
+          svgLensGroup3.setAttribute('transform', 'translate(0, 0)');
+          lblZoomGroup.textContent = 'ED Člen';
+          lblRearGroup.textContent = 'Asférický';
+
+          rayPathTop.setAttribute('d', 'M 10,60 L 95,60 L 190,80 L 290,105 L 430,120 L 610,128');
+          rayPathBot.setAttribute('d', 'M 10,200 L 95,200 L 190,180 L 290,155 L 430,140 L 610,132');
+
+        } else if (type === 'zoom') {
+          btnTypeZoom.classList.add('active');
+          zoomSliderControl.style.display = 'block';
+          lensSchemeTitle.textContent = 'Transfokátor (Zoom 24–70 mm f/2.8) • Více-skupinový variátor';
+          lensApertureBadge.textContent = 'Konstantní světelnost: f/2.8';
+          lensApertureBadge.style.color = '#10b981';
+
+          lensTypeDescBox.innerHTML = `
+            <strong style="color: #a7f3d0;">Zoom objektiv (Transfokátor):</strong>
+            <p style="margin-top: 4px;">Změna ohniska se děje mechanickým posunem vnitřních skupin (variátoru a kompenzátoru). Umožňuje univerzální pokrytí od širokého úhlu po portrét, vyžaduje však 15–20 optických členů a precizní mechanické vačky.</p>
+          `;
+          specLensCount.textContent = '18 členů v 13 skupinách';
+          specSharpness.textContent = 'Velmi vysoká (špičkový zoom)';
+          specWeight.textContent = 'Těžší (cca 850 g)';
+
+          updateZoomElements(parseInt(zoomElementSlider.value, 10));
+
+        } else if (type === 'tele') {
+          btnTypeTele.classList.add('active');
+          zoomSliderControl.style.display = 'none';
+          lensSchemeTitle.textContent = 'Teleobjektiv (Telephoto 200 mm f/4) • Retrofocus design';
+          lensApertureBadge.textContent = 'Světelnost: f/4';
+          lensApertureBadge.style.color = '#38bdf8';
+
+          lensTypeDescBox.innerHTML = `
+            <strong style="color: #bae6fd;">Teleobjektiv (Telephoto design):</strong>
+            <p style="margin-top: 4px;">Využívá silnou spojnou přední skupinu kombinovanou se zadní silnou rozptylkou. To umožňuje "zkrátit" fyzickou délku tubusu &ndash; 200mm objektiv má fyzickou délku pouze cca 140 mm namísto skutečných 20 centimetrů!</p>
+          `;
+          specLensCount.textContent = '14 členů v 10 skupinách';
+          specSharpness.textContent = 'Vynikající kresba i v rozích';
+          specWeight.textContent = 'Robustní kovový tubus (750 g)';
+
+          svgBarrelRect.setAttribute('width', '480');
+          svgLensGroup2.setAttribute('transform', 'translate(-30, 0)');
+          svgLensGroup3.setAttribute('transform', 'translate(40, 0)');
+          lblZoomGroup.textContent = 'Přední tele-skupina';
+          lblRearGroup.textContent = 'Rozptylná skupina';
+
+          rayPathTop.setAttribute('d', 'M 10,75 L 95,75 L 170,100 L 290,118 L 430,124 L 610,129');
+          rayPathBot.setAttribute('d', 'M 10,185 L 95,185 L 170,160 L 290,142 L 430,136 L 610,131');
+        }
+      }
+
+      function updateZoomElements(zoomF) {
+        if (currentLensType !== 'zoom') return;
+        const norm = (zoomF - 24) / (70 - 24); // 0 až 1
+        zoomReadoutVal.textContent = `${zoomF} mm (${zoomF <= 35 ? 'Širokoúhlý' : (zoomF <= 50 ? 'Základní' : 'Krátké tele')})`;
+
+        // Posun variátoru a kompenzátoru
+        const shiftX1 = norm * 45;
+        const shiftX2 = -norm * 35;
+        svgLensGroup2.setAttribute('transform', `translate(${shiftX1}, 0)`);
+        svgLensGroup3.setAttribute('transform', `translate(${shiftX2}, 0)`);
+
+        // Dynamická změna lomu paprsků podle ohniska
+        const topY1 = 60 + norm * 20;
+        const botY1 = 200 - norm * 20;
+        const midRayConv = 110 + norm * 15;
+        rayPathTop.setAttribute('d', `M 10,${topY1} L 95,${topY1} L ${190 + shiftX1},${topY1 + 20} L 290,${midRayConv} L ${390 + shiftX2},124 L 610,129`);
+        rayPathBot.setAttribute('d', `M 10,${botY1} L 95,${botY1} L ${190 + shiftX1},${botY1 - 20} L 290,${260 - midRayConv} L ${390 + shiftX2},136 L 610,131`);
+      }
+
+      if (btnTypePrime) btnTypePrime.addEventListener('click', () => setLensType('prime'));
+      if (btnTypeZoom) btnTypeZoom.addEventListener('click', () => setLensType('zoom'));
+      if (btnTypeTele) btnTypeTele.addEventListener('click', () => setLensType('tele'));
+      if (zoomElementSlider) {
+        zoomElementSlider.addEventListener('input', (e) => updateZoomElements(parseInt(e.target.value, 10)));
+      }
+
+      /* ======================================================================
+         3. OPTICKÉ VADY ZOBRAZENÍ A INTERAKTIVNÍ CANVAS (SLIDE 5)
+         ====================================================================== */
+      const aberrationCanvas = document.getElementById('aberrationCanvas');
+      const aberrationTitle = document.getElementById('aberrationTitle');
+      const aberrationElementTag = document.getElementById('aberrationElementTag');
+      const aberrationNote = document.getElementById('aberrationNote');
+      const aberrationBtns = document.querySelectorAll('.aberration-opt-btn');
+
+      function renderAberrationDemo(type) {
+        if (!aberrationCanvas) return;
+        const ctx = aberrationCanvas.getContext('2d');
+        const w = aberrationCanvas.width;
+        const h = aberrationCanvas.height;
+
+        ctx.clearRect(0, 0, w, h);
+
+        if (type === 'chromatic') {
+          aberrationTitle.textContent = 'Chromatická aberace (Barevná vada)';
+          aberrationElementTag.textContent = 'Korekce: ED / Fluoritová skla';
+          aberrationNote.textContent = 'Fialové a zelené kontury na kontrastních hranách v důsledku různého indexu lomu barevných složek (disperze).';
+
+          // Pozadí bílá záře
+          ctx.fillStyle = '#f8fafc';
+          ctx.fillRect(0, 0, w, h);
+
+          // Černý kontrastní kmen stromu / sloupu
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(w * 0.45, 0, w * 0.1, h);
+
+          // Fialový lem vlevo
+          ctx.fillStyle = 'rgba(168, 85, 247, 0.75)';
+          ctx.fillRect(w * 0.45 - 6, 0, 6, h);
+
+          // Zelený lem vpravo
+          ctx.fillStyle = 'rgba(34, 197, 94, 0.75)';
+          ctx.fillRect(w * 0.55, 0, 6, h);
+
+          // Textový popisek
+          ctx.font = '12px Inter, sans-serif';
+          ctx.fillStyle = '#7c3aed';
+          ctx.fillText('← Fialový lem (Purpurová vada)', w * 0.1, h * 0.3);
+          ctx.fillStyle = '#15803d';
+          ctx.fillText('Zelený lem →', w * 0.65, h * 0.3);
+
+        } else if (type === 'spherical') {
+          aberrationTitle.textContent = 'Sférická vada & Koma';
+          aberrationElementTag.textContent = 'Korekce: Asférické členy (ASP)';
+          aberrationNote.textContent = 'Okrajové paprsky čočky se sbíhají blíže než středové. Bodové světlo v rozích snímku vytváří závoj s kometovým chvostem.';
+
+          ctx.fillStyle = '#020617';
+          ctx.fillRect(0, 0, w, h);
+
+          // Ostrá hvězda ve středu
+          ctx.beginPath();
+          ctx.arc(w * 0.5, h * 0.5, 4, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
+          ctx.fillStyle = '#38bdf8';
+          ctx.font = '11px Inter, sans-serif';
+          ctx.fillText('Střed: Ostrý bod', w * 0.42, h * 0.6);
+
+          // Bod v rohu s komou (chvost komety)
+          const cx = w * 0.85;
+          const cy = h * 0.25;
+          ctx.fillStyle = 'rgba(254, 240, 138, 0.2)';
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + 35, cy - 15);
+          ctx.lineTo(cx + 40, cy + 15);
+          ctx.closePath();
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
+
+          ctx.fillStyle = '#f43f5e';
+          ctx.fillText('Roh: Koma (deformace)', w * 0.65, h * 0.4);
+
+        } else if (type === 'distortion') {
+          aberrationTitle.textContent = 'Geometrická distorze (Soudkovitá vs. Poduškovitá)';
+          aberrationElementTag.textContent = 'Korekce: Optická skladba & Profily těla';
+          aberrationNote.textContent = 'Zvětšení obrazu není konstantní napříč polem. Širokoúhlé objektivy prohýbají linie ven (barrel), teleobjektivy dovnitř (pincushion).';
+
+          ctx.fillStyle = '#090d16';
+          ctx.fillRect(0, 0, w, h);
+
+          // Soudkovitá síť vlevo
+          ctx.strokeStyle = '#ec4899';
+          ctx.lineWidth = 1.5;
+          const ox = w * 0.25;
+          const oy = h * 0.5;
+          for (let i = -3; i <= 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(ox + i * 16, oy - 60);
+            ctx.quadraticCurveTo(ox + i * 22, oy, ox + i * 16, oy + 60);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(ox - 60, oy + i * 16);
+            ctx.quadraticCurveTo(ox, oy + i * 22, ox + 60, oy + i * 16);
+            ctx.stroke();
+          }
+          ctx.fillStyle = '#ec4899';
+          ctx.font = '11px Inter, sans-serif';
+          ctx.fillText('Soudkovité (Širokáč)', ox - 50, oy + 80);
+
+          // Poduškovitá síť vpravo
+          ctx.strokeStyle = '#38bdf8';
+          const ox2 = w * 0.75;
+          for (let i = -3; i <= 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(ox2 + i * 22, oy - 60);
+            ctx.quadraticCurveTo(ox2 + i * 14, oy, ox2 + i * 22, oy + 60);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(ox2 - 60, oy + i * 22);
+            ctx.quadraticCurveTo(ox2, oy + i * 14, ox2 + 60, oy + i * 22);
+            ctx.stroke();
+          }
+          ctx.fillStyle = '#38bdf8';
+          ctx.fillText('Poduškovité (Tele)', ox2 - 45, oy + 80);
+
+        } else if (type === 'vignetting') {
+          aberrationTitle.textContent = 'Vinětace (Úbytek světla v rozích)';
+          aberrationElementTag.textContent = 'Korekce: Přiclonění o 1–2 EV / Profily';
+          aberrationNote.textContent = 'Optický a mechanický úbytek světelného toku na periferii čoček. Projevuje se ztmavením rohů vůči středu snímku.';
+
+          // Radiální přechod z jasného středu do tmavých rohů
+          const grad = ctx.createRadialGradient(w * 0.5, h * 0.5, 30, w * 0.5, h * 0.5, w * 0.55);
+          grad.addColorStop(0, '#f8fafc');
+          grad.addColorStop(0.5, '#cbd5e1');
+          grad.addColorStop(1, '#020617');
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, w, h);
+
+          ctx.fillStyle = '#0f172a';
+          ctx.font = '11px Inter, sans-serif';
+          ctx.fillText('Střed: 100 % světla', w * 0.4, h * 0.45);
+          ctx.fillStyle = '#cbd5e1';
+          ctx.fillText('Rohy: úbytek -1 až -2 EV', w * 0.05, h * 0.15);
+        }
+      }
+
+      aberrationBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          aberrationBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderAberrationDemo(btn.getAttribute('data-ab'));
+        });
+      });
+
+      renderAberrationDemo('chromatic');
+
+      /* ======================================================================
+         4. STABILIZACE OBRAZU OIS VS IBIS (SLIDE 6)
+         ====================================================================== */
+      const btnStabOff = document.getElementById('btnStabOff');
+      const btnStabOis = document.getElementById('btnStabOis');
+      const btnStabIbis = document.getElementById('btnStabIbis');
+      const btnStabDual = document.getElementById('btnStabDual');
+      const btnToggleShake = document.getElementById('btnToggleShake');
+      const stabModeTitle = document.getElementById('stabModeTitle');
+      const stabGainBadge = document.getElementById('stabGainBadge');
+      const safeShutterValue = document.getElementById('safeShutterValue');
+      const stabPreviewCanvas = document.getElementById('stabPreviewCanvas');
+      const stabPreviewLabel = document.getElementById('stabPreviewLabel');
+      const stabPreviewDesc = document.getElementById('stabPreviewDesc');
+
+      const axisYaw = document.getElementById('axisYaw');
+      const axisPitch = document.getElementById('axisPitch');
+      const axisRoll = document.getElementById('axisRoll');
+      const axisX = document.getElementById('axisX');
+      const axisY = document.getElementById('axisY');
+
+      const svgShakeRig = document.getElementById('svgShakeRig');
+      const svgOisFloatingElement = document.getElementById('svgOisFloatingElement');
+      const svgIbisFloatingSensor = document.getElementById('svgIbisFloatingSensor');
+      const svgStabRay = document.getElementById('svgStabRay');
+
+      let stabMode = 'ois'; // 'off' | 'ois' | 'ibis' | 'dual'
+      let isShaking = true;
+      let animFrameId = null;
+      let shakeTime = 0;
+
+      function updateStabMode(mode) {
+        stabMode = mode;
+        [btnStabOff, btnStabOis, btnStabIbis, btnStabDual].forEach(b => b.classList.remove('active'));
+
+        [axisYaw, axisPitch, axisRoll, axisX, axisY].forEach(a => a.classList.remove('active-axis'));
+
+        if (mode === 'off') {
+          btnStabOff.classList.add('active');
+          stabModeTitle.textContent = 'Stabilizace: VYPNUTO (Pouze pevný závěs)';
+          stabGainBadge.textContent = 'Zisk: 0 EV';
+          stabGainBadge.style.color = '#ef4444';
+          stabGainBadge.style.borderColor = '#ef4444';
+          safeShutterValue.textContent = '1/250 s (Pravidlo 1/f)';
+          safeShutterValue.style.color = '#ef4444';
+          stabPreviewLabel.textContent = 'Výsledný snímek z ruky: ROZMAZANÝ';
+          stabPreviewLabel.style.color = '#ef4444';
+          stabPreviewDesc.textContent = 'Otřesy ruky se přenášejí přímo na čip. Hrozí pohybová neostrost!';
+
+        } else if (mode === 'ois') {
+          btnStabOis.classList.add('active');
+          stabModeTitle.textContent = 'Stabilizace: OIS (Optický stabilizační člen v objektivu)';
+          stabGainBadge.textContent = 'Zisk: +4.0 EV';
+          stabGainBadge.style.color = '#38bdf8';
+          stabGainBadge.style.borderColor = '#38bdf8';
+          safeShutterValue.textContent = '1/15 s (Zisk 4 EV)';
+          safeShutterValue.style.color = '#10b981';
+          axisYaw.classList.add('active-axis');
+          axisPitch.classList.add('active-axis');
+          stabPreviewLabel.textContent = 'Výsledný snímek z ruky: OSTRÝ';
+          stabPreviewLabel.style.color = '#10b981';
+          stabPreviewDesc.textContent = 'Plovoucí optický člen vyrovnává úhlový náklon Pitch a Yaw.';
+
+        } else if (mode === 'ibis') {
+          btnStabIbis.classList.add('active');
+          stabModeTitle.textContent = 'Stabilizace: IBIS (5-osý magnetický závěs snímače v těle)';
+          stabGainBadge.textContent = 'Zisk: +5.5 EV';
+          stabGainBadge.style.color = '#a855f7';
+          stabGainBadge.style.borderColor = '#a855f7';
+          safeShutterValue.textContent = '1/8 s (Zisk 5 EV)';
+          safeShutterValue.style.color = '#10b981';
+          axisYaw.classList.add('active-axis');
+          axisPitch.classList.add('active-axis');
+          axisRoll.classList.add('active-axis');
+          axisX.classList.add('active-axis');
+          axisY.classList.add('active-axis');
+          stabPreviewLabel.textContent = 'Výsledný snímek z ruky: PERFEKTNĚ OSTRÝ';
+          stabPreviewLabel.style.color = '#10b981';
+          stabPreviewDesc.textContent = 'Snímač koriguje 5 os včetně rotace (Roll) a lineárního posunu.';
+
+        } else if (mode === 'dual') {
+          btnStabDual.classList.add('active');
+          stabModeTitle.textContent = 'Stabilizace: DUAL I.S. (Synchronní OIS v objektivu + IBIS v těle)';
+          stabGainBadge.textContent = 'Zisk: +7.5 EV';
+          stabGainBadge.style.color = '#ec4899';
+          stabGainBadge.style.borderColor = '#ec4899';
+          safeShutterValue.textContent = '1/2 s z ruky!';
+          safeShutterValue.style.color = '#ec4899';
+          axisYaw.classList.add('active-axis');
+          axisPitch.classList.add('active-axis');
+          axisRoll.classList.add('active-axis');
+          axisX.classList.add('active-axis');
+          axisY.classList.add('active-axis');
+          stabPreviewLabel.textContent = 'Výsledný snímek: ABSOLUTNĚ DOKONALÝ';
+          stabPreviewLabel.style.color = '#ec4899';
+          stabPreviewDesc.textContent = 'Maximální synergická kompenzace &ndash; ostré snímky i z ruky na půl sekundy!';
+        }
+      }
+
+      if (btnStabOff) btnStabOff.addEventListener('click', () => updateStabMode('off'));
+      if (btnStabOis) btnStabOis.addEventListener('click', () => updateStabMode('ois'));
+      if (btnStabIbis) btnStabIbis.addEventListener('click', () => updateStabMode('ibis'));
+      if (btnStabDual) btnStabDual.addEventListener('click', () => updateStabMode('dual'));
+
+      if (btnToggleShake) {
+        btnToggleShake.addEventListener('click', () => {
+          isShaking = !isShaking;
+          btnToggleShake.classList.toggle('shaking', isShaking);
+          btnToggleShake.querySelector('span').textContent = isShaking ? 'Simulace otřesů ruky: AKTIVNÍ' : 'Simulace otřesů ruky: POZASTAVENO';
+        });
+      }
+
+      // Animační smyčka otřesů a kompenzace
+      function stabAnimationLoop() {
+        if (isShaking) {
+          shakeTime += 0.05;
+        }
+
+        const shakeAmpY = isShaking ? Math.sin(shakeTime * 3) * 12 + Math.cos(shakeTime * 7) * 6 : 0;
+        const shakeRot = isShaking ? Math.sin(shakeTime * 2.5) * 1.5 : 0;
+
+        // Celý tubus se chvěje
+        if (svgShakeRig) {
+          svgShakeRig.setAttribute('transform', `translate(0, ${shakeAmpY}) rotate(${shakeRot}, 330, 125)`);
+        }
+
+        // Kompenzace OIS členu (v protifázi)
+        let oisOffsetY = 0;
+        let ibisOffsetY = 0;
+
+        if (stabMode === 'ois') {
+          oisOffsetY = -shakeAmpY * 0.85;
+        } else if (stabMode === 'ibis') {
+          ibisOffsetY = -shakeAmpY * 0.95;
+        } else if (stabMode === 'dual') {
+          oisOffsetY = -shakeAmpY * 0.5;
+          ibisOffsetY = -shakeAmpY * 0.5;
+        }
+
+        if (svgOisFloatingElement) {
+          svgOisFloatingElement.setAttribute('transform', `translate(0, ${oisOffsetY})`);
+        }
+        if (svgIbisFloatingSensor) {
+          svgIbisFloatingSensor.setAttribute('transform', `translate(0, ${ibisOffsetY})`);
+        }
+
+        // Dráha paprsku:
+        let rayTargetY = 125;
+        if (stabMode === 'off') {
+          rayTargetY = 125 + shakeAmpY;
+        } else {
+          rayTargetY = 125; // stabilizováno na střed čipu
+        }
+
+        if (svgStabRay) {
+          svgStabRay.setAttribute('d', `M 30,125 L 80,125 L 250,${125 + oisOffsetY} L 500,${rayTargetY}`);
+        }
+
+        // Vykreslení mini náhledu do plátna
+        if (stabPreviewCanvas) {
+          const ctxP = stabPreviewCanvas.getContext('2d');
+          const pw = stabPreviewCanvas.width;
+          const ph = stabPreviewCanvas.height;
+          ctxP.clearRect(0, 0, pw, ph);
+
+          let smearY = 0;
+          if (stabMode === 'off' && isShaking) {
+            smearY = Math.sin(shakeTime * 3) * 14;
+          }
+
+          // Cíl (ostrá šachovnice / bod)
+          ctxP.fillStyle = '#0f172a';
+          ctxP.fillRect(0, 0, pw, ph);
+
+          if (stabMode === 'off' && isShaking) {
+            // Rozmazaný duch
+            ctxP.fillStyle = 'rgba(236, 72, 153, 0.4)';
+            ctxP.fillRect(pw * 0.35, ph * 0.35 + smearY * 0.6, pw * 0.3, ph * 0.3);
+            ctxP.fillStyle = 'rgba(56, 189, 248, 0.5)';
+            ctxP.fillRect(pw * 0.35, ph * 0.35 + smearY, pw * 0.3, ph * 0.3);
+          } else {
+            // Ostrý zaostřený čtverec
+            ctxP.fillStyle = '#10b981';
+            ctxP.fillRect(pw * 0.35, ph * 0.35, pw * 0.3, ph * 0.3);
+            ctxP.strokeStyle = '#fff';
+            ctxP.lineWidth = 2;
+            ctxP.strokeRect(pw * 0.35, ph * 0.35, pw * 0.3, ph * 0.3);
+          }
+        }
+
+        animFrameId = requestAnimationFrame(stabAnimationLoop);
+      }
+
+      animFrameId = requestAnimationFrame(stabAnimationLoop);
+      updateStabMode('ois');
+
+      /* ======================================================================
+         5. INTERAKTIVNÍ FILTRY UV / CPL / ND (SLIDE 7)
+         ====================================================================== */
+      const filterNoneBtn = document.getElementById('filterNoneBtn');
+      const filterUvBtn = document.getElementById('filterUvBtn');
+      const filterCplBtn = document.getElementById('filterCplBtn');
+      const filterNdBtn = document.getElementById('filterNdBtn');
+      const svgFilterElement = document.getElementById('svgFilterElement');
+      const activeFilterDesc = document.getElementById('activeFilterDesc');
+      const rayTop = document.getElementById('rayTop');
+      const rayMid = document.getElementById('rayMid');
+      const rayBot = document.getElementById('rayBot');
+
+      function setFilter(type) {
+        [filterNoneBtn, filterUvBtn, filterCplBtn, filterNdBtn].forEach(b => b && b.classList.remove('active'));
+        if (!svgFilterElement) return;
+
+        if (type === 'none') {
+          filterNoneBtn.classList.add('active');
+          svgFilterElement.setAttribute('fill', 'rgba(255,255,255,0.08)');
+          svgFilterElement.setAttribute('stroke', '#94a3b8');
+          activeFilterDesc.textContent = 'Propustnost: 100 % světla • Přímé paprsky bez modifikace';
+          setRayIntensity(1.0, '#fde047');
+        } else if (type === 'uv') {
+          filterUvBtn.classList.add('active');
+          svgFilterElement.setAttribute('fill', 'rgba(147, 197, 253, 0.35)');
+          svgFilterElement.setAttribute('stroke', '#60a5fa');
+          activeFilterDesc.textContent = 'Blokuje UV záření (< 390 nm) • Mechanická ochrana přední čočky';
+          setRayIntensity(0.98, '#93c5fd');
+        } else if (type === 'cpl') {
+          filterCplBtn.classList.add('active');
+          svgFilterElement.setAttribute('fill', 'rgba(99, 102, 241, 0.45)');
+          svgFilterElement.setAttribute('stroke', '#818cf8');
+          activeFilterDesc.textContent = 'CPL Polarizace • Eliminuje odlesky z vody a skla, sytí oblohu (-1.5 EV)';
+          setRayIntensity(0.65, '#a5b4fc');
+        } else if (type === 'nd') {
+          filterNdBtn.classList.add('active');
+          svgFilterElement.setAttribute('fill', 'rgba(15, 23, 42, 0.85)');
+          svgFilterElement.setAttribute('stroke', '#475569');
+          activeFilterDesc.textContent = 'ND8 filtr (-3 EV) • Tlumí 87.5 % světla • Umožňuje dlouhé časy za dne';
+          setRayIntensity(0.25, '#fde047');
+        }
+      }
+
+      function setRayIntensity(opacity, color) {
+        [rayTop, rayMid, rayBot].forEach(r => {
+          if (r) {
+            r.setAttribute('stroke', color);
+            r.style.opacity = opacity;
+          }
+        });
+      }
+
+      if (filterNoneBtn) filterNoneBtn.addEventListener('click', () => setFilter('none'));
+      if (filterUvBtn) filterUvBtn.addEventListener('click', () => setFilter('uv'));
+      if (filterCplBtn) filterCplBtn.addEventListener('click', () => setFilter('cpl'));
+      if (filterNdBtn) filterNdBtn.addEventListener('click', () => setFilter('nd'));
+
+      /* ======================================================================
+         6. MINITEST (SLIDE 8)
+         ====================================================================== */
+      const quizQuestions = [
+        {
+          q: "Otázka 1/3: Proč cinema objektivy používají clonová čísla T-stop namísto běžných f-stop?",
+          opts: [
+            { text: "A) T-stop vyjadřuje skutečně naměřenou světelnou propustnost (transmisi) po započtení všech ztrát odrazy na čočkách.", correct: true },
+            { text: "B) T-stop udává teplotu zahřátí optických členů při dlouhém záznamu videa.", correct: false },
+            { text: "C) f-stop nelze u video objektivů matematicky vypočítat z důvodu zaoblených lamel.", correct: false }
+          ],
+          explain: "Správně! f-stop je pouhý teoretický geometrický poměr f/D. T-stop zohledňuje reálné ztráty světla, takže expozice scény zůstane při výměně skel identická."
+        },
+        {
+          q: "Otázka 2/3: Jaký je hlavní optický přínos asférického členu (ASP)?",
+          opts: [
+            { text: "A) Zvyšuje ohniskovou vzdálenost objektivu na dvojnásobek.", correct: false },
+            { text: "B) Koriguje sférickou vadu a komu v rozích snímku, čímž zajišťuje ostrost po celé ploše čipu.", correct: true },
+            { text: "C) Zabraňuje vnikání prachu a vlhkosti do bajonetu fotoaparátu.", correct: false }
+          ],
+          explain: "Přesně tak! Běžná sférická čočka láme okrajové paprsky blíže než středové. Asférická plocha s proměnným zakřivením srovná všechny paprsky do jediného ostrého ohniska."
+        },
+        {
+          q: "Otázka 3/3: Který z následujících efektů NENÍ možné nasimulovat v Photoshopu a vyžaduje fyzický optický filtr?",
+          opts: [
+            { text: "A) Odstranění odlesků z hladiny jezera a prokouknutí pod vodu pomocí CPL filtru.", correct: true },
+            { text: "B) Ztmavení celé expozice o -1 EV.", correct: false },
+            { text: "C) Přidání jemné vinětace do rohů snímku.", correct: false }
+          ],
+          explain: "Správně! Fyzický polarizační filtr CPL odstraňuje polarizované fotony přímo ze scény. Pokud je odlesk jednou zapsán na senzoru, informace pod vodou je ztracena a nelze ji v postprodukci obnovit."
+        }
+      ];
+
+      let currentQIdx = 0;
+      const qText = document.getElementById('quizQuestionText');
+      const qContainer = document.getElementById('quizOptionsContainer');
+      const qFeedback = document.getElementById('quizFeedbackBox');
+      const qNextBtn = document.getElementById('quizNextBtn');
+
+      function loadQuizQuestion(idx) {
+        if (!qText || !qContainer || !qFeedback || !qNextBtn) return;
+        const qData = quizQuestions[idx];
+        qText.textContent = qData.q;
+        qContainer.innerHTML = '';
+        qFeedback.style.display = 'none';
+        qNextBtn.style.display = 'none';
+
+        qData.opts.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'quiz-opt-btn';
+          btn.textContent = opt.text;
+          btn.addEventListener('click', () => {
+            const allBtns = qContainer.querySelectorAll('.quiz-opt-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (opt.correct) {
+              btn.classList.add('correct');
+              qFeedback.style.display = 'block';
+              qFeedback.style.background = 'rgba(16, 185, 129, 0.2)';
+              qFeedback.style.color = '#a7f3d0';
+              qFeedback.style.border = '1px solid #10b981';
+              qFeedback.textContent = `Výborně! ${qData.explain}`;
+            } else {
+              btn.classList.add('incorrect');
+              qFeedback.style.display = 'block';
+              qFeedback.style.background = 'rgba(239, 68, 68, 0.2)';
+              qFeedback.style.color = '#fca5a5';
+              qFeedback.style.border = '1px solid #ef4444';
+              qFeedback.textContent = `Bohužel ne. ${qData.explain}`;
+            }
+
+            if (currentQIdx < quizQuestions.length - 1) {
+              qNextBtn.style.display = 'block';
+            }
+          });
+          qContainer.appendChild(btn);
+        });
+      }
+
+      if (qNextBtn) {
+        qNextBtn.addEventListener('click', () => {
+          currentQIdx++;
+          if (currentQIdx < quizQuestions.length) {
+            loadQuizQuestion(currentQIdx);
+          }
+        });
+      }
+
+      loadQuizQuestion(0);
+
+      // Vyhledávání ve slovníku pojmů
+      const glossarySearchInput = document.getElementById('glossarySearchInput');
+      const glossaryContainer = document.getElementById('glossaryContainer');
+      if (glossarySearchInput && glossaryContainer) {
+        glossarySearchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          const cards = glossaryContainer.querySelectorAll('.content-card');
+          cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            const term = card.getAttribute('data-term') || '';
+            if (text.includes(query) || term.includes(query)) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      }
+
+    })();
+  </script>
 </body>
 </html>
