@@ -10,6 +10,286 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Doplňkové vizuální styly pro srozumitelné pochopení multitaskingu a vláken */
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: #67e8f9;
+    }
+    .highlight-pill.kernel {
+      background: rgba(244, 63, 94, 0.12);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: #fda4af;
+    }
+    .highlight-pill.success {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+    }
+    .highlight-pill.warning {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #fde68a;
+    }
+
+    .story-box {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%);
+      border-left: 3px solid var(--accent);
+      padding: 0.95rem 1.15rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .story-box.danger {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.09) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left-color: #f43f5e;
+    }
+    .story-box.warning {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.09) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left-color: #f59e0b;
+    }
+    .story-title {
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.92rem;
+    }
+    .story-box.danger .story-title { color: #f43f5e; }
+    .story-box.warning .story-title { color: #f59e0b; }
+
+    /* Karty metafor */
+    .analogy-card {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      padding: 0.85rem 1.05rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+    }
+    .analogy-icon-wrap {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 182, 212, 0.12);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .analogy-icon-wrap.danger { background: rgba(244, 63, 94, 0.12); color: #f43f5e; }
+    .analogy-icon-wrap.success { background: rgba(16, 185, 129, 0.12); color: #10b981; }
+    .analogy-icon-wrap.warning { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+
+    /* Kroky a karty */
+    .flow-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-top: 0.4rem;
+    }
+    @media (max-width: 992px) {
+      .flow-steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .flow-steps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .flow-step-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .flow-step-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      background: rgba(6, 182, 212, 0.05);
+    }
+    .flow-step-num {
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0f172a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .flow-step-num.kernel { background: #f43f5e; color: #ffffff; }
+    .flow-step-num.success { background: #10b981; color: #ffffff; }
+
+    /* Porovnávací tabulka */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin-top: 0.4rem;
+    }
+    .compare-table th {
+      text-align: left;
+      padding: 0.55rem 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+    .compare-table td {
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+    .compare-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Mýty vs. Fakta */
+    .myth-fact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 0.4rem;
+    }
+    @media (max-width: 768px) {
+      .myth-fact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .myth-card {
+      background: rgba(244, 63, 94, 0.06);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+    .fact-card {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+    .myth-title {
+      color: #f43f5e;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+    .fact-title {
+      color: #10b981;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Kvízové karty */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 900px) {
+      .quiz-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .quiz-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      justify-content: space-between;
+    }
+    .quiz-card:hover {
+      border-color: rgba(6, 182, 212, 0.5);
+    }
+    .quiz-q {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+    .quiz-q-num {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .quiz-ans {
+      display: none;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      background: rgba(6, 182, 212, 0.07);
+      border-left: 2px solid var(--accent);
+      padding: 0.55rem 0.75rem;
+      border-radius: 0 4px 4px 0;
+    }
+    .quiz-ans.revealed {
+      display: block;
+      animation: fadeInAns 0.25s ease-out;
+    }
+    @keyframes fadeInAns {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .btn-quiz-reveal {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      align-self: flex-start;
+    }
+    .btn-quiz-reveal:hover {
+      background: var(--accent);
+      color: #0f172a;
+      border-color: var(--accent);
+    }
+  </style>
 </head>
 <body>
 
@@ -36,8 +316,8 @@
         </div>
       </div>
       <div class="header-right">
-        <span class="tag tag-primary">Plánování &amp; Vlákna</span>
-        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+        <span class="tag tag-primary">Plánování &bull; Vlákna &bull; CFS</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv (T)">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
       </div>
@@ -45,25 +325,29 @@
 
     <main class="slides-viewport">
 
-      <!-- SLIDE 1: TITLE -->
+      <!-- SLIDE 1: TITLE HERO -->
       <section class="slide title-slide active" data-slide="1">
         <div class="hero-badge">Modul OSY20 &bull; 6. přednáška (45 min)</div>
         <h1 class="hero-title">Multitasking, Vlákna &amp; Plánování CPU</h1>
         <p class="hero-desc">
-          Souběžný a paralelní běh kódu: kooperativní vs. preemptivní multitasking, proces vs. odlehčené vlákno (Thread), moderní plánovače procesoru (Linux CFS, Windows Dynamic Priority), synchronizační primitiva (mutex, semafor, spinlock) a prevence uváznutí (Deadlock).
+          Jak může procesor se 4 jádry plynule obsluhovat 300 běžících programů najednou, přehrávat video na YouTube a ještě stahovat hru? Tajemství iluze současného běhu: od preempce a hardwarového časovače přes lehká vlákna až po chytré plánovače Linux CFS, Windows priority a prevenci uváznutí (Deadlock).
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Režim multitaskingu</span>
-            <span class="hero-meta-val">Preemptivní s časovým kvantem</span>
+            <span class="hero-meta-label">Princip iluze</span>
+            <span class="hero-meta-val">Preemptivní multitasking (Časová kvanta)</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Linux Scheduler</span>
-            <span class="hero-meta-val">Completely Fair Scheduler (CFS)</span>
+            <span class="hero-meta-label">Dům vs. Obyvatelé</span>
+            <span class="hero-meta-val">Proces vs. Odlehčené vlákno (Thread)</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Synchronizace</span>
-            <span class="hero-meta-val">Mutex, Semafor, Deadlock</span>
+            <span class="hero-meta-label">Mozek plánování</span>
+            <span class="hero-meta-val">Linux CFS &bull; vruntime &bull; Strom RB-Tree</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zaseknutí na křižovatce</span>
+            <span class="hero-meta-val">Mutex, Závod o data &bull; Deadlock</span>
           </div>
         </div>
       </section>
@@ -72,173 +356,535 @@
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Základní paradigma</div>
-            <h2 class="slide-title">Kooperativní vs. Preemptivní multitasking</h2>
-            <p class="slide-subtitle">Proč operační systém nesmí spoléhat na dobrou vůli běžící aplikace</p>
+            <div class="slide-category">Základní myšlenka</div>
+            <h2 class="slide-title">Jak vzniká iluze, že běží všechno naráz?</h2>
+            <p class="slide-subtitle">Kooperativní vs. Preemptivní multitasking: Proč se systém nesmí spoléhat na slušnost programů</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Klíčový rozdíl</span>
+            <span class="tag">Iluze současnosti</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>Kooperativní multitasking (Windows 3.1, Mac OS 9)</h4>
-              <p>Proces drží procesor tak dlouho, dokud se jej <strong>sám dobrovolně nevzdá</strong> voláním speciální funkce (např. <code>Yield()</code>):</p>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span class="card-title-text">Kooperativní multitasking (Stará éra)</span>
+                </div>
+              </div>
+              <p>Fungoval na principu „gentlemanské dohody“ (Windows 3.11, starý Mac OS 9):</p>
+              <div class="analogy-card" style="margin: 0.3rem 0;">
+                <div class="analogy-icon-wrap danger">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <div>
+                  <strong style="color: #f43f5e; font-size: 0.88rem;">Představte si ze života:</strong>
+                  <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                    Jeden mikrofon ve třídě. Žák mluví tak dlouho, dokud se sám dobrovolně nerozhodne předat mikrofon spolužákovi.
+                  </p>
+                </div>
+              </div>
               <ul class="styled-list">
-                <li><strong class="term-err">Fatální slabina:</strong> Pokud se program dostane do nekonečného cyklu (<code>while(1);</code>) nebo zamrzne, <strong>zamrzne celý počítač</strong> a nepomůže nic kromě tvrdého restartu.</li>
-                <li>Nelze garantovat odezvu žádnému jinému procesu.</li>
+                <li><strong>Fatální slabina:</strong> Pokud programátor udělal chybu a napsal nekonečnou smyčku (<code>while(true);</code>), program mikrofon nikdy nepustil.</li>
+                <li><strong>Výsledek:</strong> Okamžitě zamrzl celý počítač, kurzor myši ztuhl a pomohl jen tvrdý restart bedny!</li>
               </ul>
             </div>
+
             <div class="content-card">
-              <h4>Preemptivní multitasking (Linux, Windows NT, macOS)</h4>
-              <p>Operační systém má <strong>absolutní autoritu násilně odebrat procesor</strong> běžícímu vláknu:</p>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><shield x="12" y="22" width="20" height="20" rx="2"></shield><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  <span class="card-title-text">Preemptivní multitasking (Moderní svět)</span>
+                </div>
+              </div>
+              <p>Operační systém má <strong>absolutní autoritu násilně odebrat procesor</strong> (Windows NT, Linux, macOS):</p>
+              <div class="analogy-card" style="margin: 0.3rem 0;">
+                <div class="analogy-icon-wrap success">
+                  <svg class="icon" viewBox="0 0 24 24"><clock cx="12" cy="12" r="10"></clock><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                </div>
+                <div>
+                  <strong style="color: #10b981; font-size: 0.88rem;">Představte si ze života:</strong>
+                  <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                    Nekompromisní učitel se stopkami v ruce! Každému dá přesně 10 milisekund (časové kvantum). Jakmile stopky zapípají, mikrofon žákovi bez řečí vytrhne.
+                  </p>
+                </div>
+              </div>
               <ul class="styled-list">
-                <li>Využívá <strong>hardwarový časovač (Timer interrupt)</strong>: každých 1–10 ms přeruší procesor a spustí plánovač jádra.</li>
-                <li>Plánovač vyhodnotí spotřebovaný čas (časové kvantum / Time Slice), uloží stav vlákna a předá CPU jinému připravenému vláknu.</li>
-                <li>Zamrznutí jedné aplikace nemá žádný vliv na plynulý běh zbytku systému.</li>
+                <li>Stopky řídí <strong>hardwarový časovač procesoru (Timer IRQ)</strong>.</li>
+                <li>I kdyby se hra nebo program úplně zasekly, systém dál hraje hudbu a vy můžete zamrzlý program v klidu ukončit přes Správce úloh!</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: PROCES VS. VLÁKNO -->
+      <!-- SLIDE 3: PROCES VS VLÁKNO (DŮM A OBYVATELÉ) -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Konstrukční jednotky</div>
-            <h2 class="slide-title">Rozdíl mezi procesem a vláknem (Thread)</h2>
-            <p class="slide-subtitle">Proč jsou vlákna nazývána odlehčenými procesy (Lightweight Processes)</p>
+            <div class="slide-category">Konstrukční stavební kameny</div>
+            <h2 class="slide-title">Proces vs. Vlákno: Rodinný dům a jeho obyvatelé</h2>
+            <p class="slide-subtitle">Proč jsou vlákna nazývána odlehčenými procesy a co spolu sdílejí</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Otázka k zamyšlení</span>
+            <span class="tag">Process vs. Thread</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>Proces (Těžká váha)</h4>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><home x="3" y="9" width="18" height="12" rx="2"></home><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                  <span class="card-title-text">Proces = Samostatný rodinný dům</span>
+                </div>
+              </div>
+              <p>Těžká váha v systému – jednotka izolace a zdrojů:</p>
               <ul class="styled-list">
-                <li>Vlastník <strong>izolovaného virtuálního adresního prostoru</strong> (vlastní stránkovací tabulky v registru CR3).</li>
-                <li>Vlastní deskriptory souborů, síťové sokety, tokeny oprávnění a kvóty.</li>
-                <li>Přepnutí kontextu mezi dvěma procesy je nákladné: musí se přepsat CR3 a vyprázdnit mezipaměť TLB.</li>
+                <li><strong>Vlastní adresa a pozemek:</strong> Každý proces má svůj vlastní virtuální adresní prostor chráněný hardwarem.</li>
+                <li><strong>Zabezpečení:</strong> Jeden dům se nemůže bez povolení podívat do skříně jiného domu (ochrana paměti).</li>
+                <li><strong>Bezpečný pád:</strong> Když v jednom domě praskne voda nebo začne hořet (pád programu), sousední domy v ulici dál normálně fungují.</li>
+                <li><strong>Vysoká cena:</strong> Postavit nový dům (vytvořit proces) trvá déle a stojí víc paměti.</li>
               </ul>
+              <div class="highlight-pill kernel" style="margin-top: auto;">Proces vlastní paměť, soubory a oprávnění</div>
             </div>
+
             <div class="content-card">
-              <h4>Vlákno (Odlehčená jednotka plánování)</h4>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><users x="2" y="2" width="20" height="20" rx="2"></users><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  <span class="card-title-text">Vlákno (Thread) = Lidé žijící v domě</span>
+                </div>
+              </div>
+              <p>Lehká váha – skutečná jednotka, kterou plánovač posílá na jádro CPU:</p>
               <ul class="styled-list">
-                <li>Běží <strong>uvnitř procesu a sdílí jeho paměť</strong> (kód, globální data <code>.data</code>, haldu Heap i otevřené soubory).</li>
-                <li>Každé vlákno má <strong>vlastní zásobník (Stack)</strong> pro lokální proměnné a vlastní stav registrů CPU.</li>
-                <li>Přepnutí kontextu mezi vlákny téhož procesu je bleskurychlé: nemění se virtuální paměť ani TLB.</li>
-                <li>Riziko: Chyba v jednom vlákně (přepsání paměti) může zničit data ostatních vláken v procesu.</li>
+                <li><strong>Všechno sdílejí:</strong> Všichni lidé v domě mají společnou kuchyň, obývák i ledničku (kód programu, haldu Heap i globální data).</li>
+                <li><strong>Co má každý své?</strong> Každý má v kapse vlastní poznámkový bloček (<strong>zásobník Stack</strong> pro lokální proměnné) a vlastní myšlenky (<strong>registry procesoru</strong>).</li>
+                <li><strong>Bleskový vznik:</strong> Vytvořit nové vlákno uvnitř domu je 10&times; rychlejší než stavět nový dům.</li>
+                <li><strong>Riziko:</strong> Když jeden člověk otráví vodu v ledničce (přepíše paměť), <strong>otráví celý dům a proces spadne</strong>!</li>
               </ul>
+              <div class="highlight-pill success" style="margin-top: auto;">Vlákna sdílejí paměť procesu, ale mají vlastní Stack</div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4: PLÁNOVÁNÍ CPU: LINUX CFS -->
+      <!-- SLIDE 4: PŘEPNUTÍ KONTEXTU (CONTEXT SWITCH) -->
       <section class="slide" data-slide="4">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Algoritmy plánovače</div>
-            <h2 class="slide-title">Linux CFS (Completely Fair Scheduler)</h2>
-            <p class="slide-subtitle">Jak moderní Linux spravedlivě rozděluje výpočetní čas</p>
+            <div class="slide-category">Režie systému</div>
+            <h2 class="slide-title">Přepnutí kontextu: Skrytá daň za multitasking</h2>
+            <p class="slide-subtitle">Co všechno musí jádro udělat, aby předalo procesor z programu A programu B</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">CFS &bull; vruntime</span>
+            <span class="tag">Context Switch &bull; TLB</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>Koncept virtuálního běhového času (vruntime)</h4>
-              <p>CFS nesleduje fixní časová kvanta. Místo toho pro každou úlohu počítá proměnnou <code>vruntime</code>:</p>
-              <ul class="styled-list">
-                <li>Čím déle úloha běžela na CPU, tím vyšší má hodnotu <code>vruntime</code>.</li>
-                <li>Úlohy s prioritou (hodnota <em>nice</em> od -20 do +19): proces s vyšší prioritou přičítá <code>vruntime</code> pomaleji, takže získá větší podíl procesoru.</li>
-                <li>Plánovač vždy vybere k běhu úlohu s <strong>nejmenším vruntime</strong> (ta, která byla dosud nejvíce zanedbávána).</li>
-              </ul>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><refresh-cw x="2" y="2" width="20" height="20" rx="2"></refresh-cw><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                  <span class="card-title-text">Co se děje při střídání stráží?</span>
+                </div>
+              </div>
+              <p style="font-size: 0.84rem; color: var(--text-secondary);">
+                Představte si šachového velmistra, který hraje simultánku proti 30 hráčům. Pokaždé, když přejde k jinému stolu:
+              </p>
+              <div class="flow-steps-grid" style="grid-template-columns: 1fr; gap: 0.45rem;">
+                <div class="flow-step-card">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="flow-step-num kernel">1</span>
+                    <strong style="font-size: 0.85rem;">Uložit stav programu A</strong>
+                  </div>
+                  <p style="font-size: 0.79rem; color: var(--text-secondary); margin: 0;">
+                    Všechny registry procesoru (kde v kódu stál a co měl spočítáno) se uloží do paměti.
+                  </p>
+                </div>
+                <div class="flow-step-card">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="flow-step-num warning">2</span>
+                    <strong style="font-size: 0.85rem;">Přepnout adresu paměti (Registr CR3)</strong>
+                  </div>
+                  <p style="font-size: 0.79rem; color: var(--text-secondary); margin: 0;">
+                    Pokud přepínáme na jiný proces, musí se přepnout celá virtuální paměť a <strong>vymaže se rychlá cache TLB</strong> (tzv. studený start).
+                  </p>
+                </div>
+                <div class="flow-step-card">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="flow-step-num success">3</span>
+                    <strong style="font-size: 0.85rem;">Nahrát registry programu B a pokračovat</strong>
+                  </div>
+                  <p style="font-size: 0.79rem; color: var(--text-secondary); margin: 0;">
+                    Procesor nahraje registry nového programu a skočí na jeho další instrukci.
+                  </p>
+                </div>
+              </div>
             </div>
+
             <div class="content-card">
-              <h4>Implementace: Červeno-černý strom (Red-Black Tree)</h4>
-              <ul class="styled-list">
-                <li>Připravené úlohy jsou uloženy v samovyvažujícím se binárním stromu uspořádaném podle <code>vruntime</code>.</li>
-                <li>Nalezení další úlohy k běhu: nejlevější uzel stromu ($O(1)$ díky cachování ukazatele).</li>
-                <li>Vložení a odebrání úlohy má garantovanou logaritmickou složitost: $O(\log N)$.</li>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><zap x="13" y="2" width="10" height="20" rx="2"></zap><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span class="card-title-text">Proč je přepnutí mezi vlákny 10&times; rychlejší?</span>
+                </div>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                Když přepínáte mezi dvěma vlákny <strong>uvnitř stejného procesu</strong>:
+              </p>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li><strong style="color: #10b981;">Paměť zůstává stejná:</strong> Nemění se registr <code>CR3</code> ani virtuální prostor (jsme ve stejném domě!).</li>
+                <li><strong style="color: #10b981;">TLB cache zůstává horká:</strong> Procesor nemusí znovu překládat adresy paměti z RAM.</li>
+                <li>Přepnou se jen registry a ukazatel zásobníku. Celá akce trvá jen desítky nanosekund.</li>
               </ul>
+              <div class="story-box danger" style="margin-top: auto; padding: 0.55rem 0.85rem;">
+                <div class="story-title" style="font-size: 0.82rem;">Zlaté inženýrské pravidlo:</div>
+                <div style="font-size: 0.77rem; color: var(--text-secondary);">
+                  Mít v systému 10 000 vláken neznamená 10 000&times; vyšší výkon. Pokud procesor stráví víc času přepínáním kontextu než samotným počítáním, systém se udusí (tzv. Thrashing).
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: SYNCHRONIZACE A DEADLOCK -->
+      <!-- SLIDE 5: LINUX CFS PLÁNOVAČ A VRUNTIME -->
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Souběh a rizika</div>
-            <h2 class="slide-title">Kritické sekce, Mutex a uváznutí (Deadlock)</h2>
-            <p class="slide-subtitle">Čtyři Coffmanovy podmínky vzniku uváznutí</p>
+            <div class="slide-category">Mozek Linuxového jádra</div>
+            <h2 class="slide-title">Linux CFS: Plánovač, který měří spravedlnost</h2>
+            <p class="slide-subtitle">Jak funguje Completely Fair Scheduler a tajemství proměnné vruntime</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Otázka k zamyšlení</span>
+            <span class="tag">Linux CFS &bull; vruntime</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>Synchronizační primitiva</h4>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><scale x="2" y="2" width="20" height="20" rx="2"></scale><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg>
+                  <span class="card-title-text">Metafora spravedlivého rodiče</span>
+                </div>
+              </div>
+              <p>Představte si spravedlivého rodiče, který dává dětem lízat zmrzlinu a stopuje čas:</p>
               <ul class="styled-list">
-                <li><strong>Race Condition (Souběh):</strong> Dvě vlákna současně modifikují sdílenou proměnnou a výsledek závisí na náhodném pořadí instrukcí.</li>
-                <li><strong>Mutex (Mutual Exclusion):</strong> Zámek, který smí v daný okamžik vlastnit pouze jedno vlákno. Ostatní vlákna jsou jádrem uspána (Blocked).</li>
-                <li><strong>Spinlock:</strong> Zámek s aktivním čekáním v cyklu. Používá se výhradně v jádře pro velmi krátké operace, kde by režie uspání byla větší.</li>
+                <li>Každé dítě (proces) má v deníčku číslo: <strong>vruntime</strong> (kolik času už strávilo na procesoru).</li>
+                <li><strong>Kdo jde na řadu příště?</strong> Vždy to dítě, které má <strong>nejmenší vruntime</strong> (bylo dosud nejvíce zanedbáváno)!</li>
+                <li>Když dítě chvíli běží na CPU, jeho <code>vruntime</code> povyroste a rodič ho pošle dozadu, aby dal šanci ostatním.</li>
               </ul>
             </div>
+
             <div class="content-card">
-              <h4>4 Coffmanovy podmínky pro vznik Deadlocku</h4>
-              <p>K uváznutí dojde právě tehdy, když současně platí všechny 4 podmínky:</p>
-              <ol class="styled-list">
-                <li><strong>Vzájemné vyloučení (Mutual Exclusion):</strong> Prostředek může používat jen jeden proces.</li>
-                <li><strong>Držení a čekání (Hold and Wait):</strong> Proces drží jeden zámek a žádá o další.</li>
-                <li><strong>Neodstranitelnost (No Preemption):</strong> Držený zámek nelze procesu násilně odebrat.</li>
-                <li><strong>Kruhové čekání (Circular Wait):</strong> Proces A čeká na zámek držený B, a B čeká na zámek držený A.</li>
-              </ol>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><git-branch x="6" y="3" width="12" height="18" rx="2"></git-branch><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                  <span class="card-title-text">Červeno-černý strom a hodnota "nice"</span>
+                </div>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                Jak do toho vstupuje priorita procesu (číslo <strong>nice</strong> od -20 do +19)?
+              </p>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li><strong>Důležitý proces (nice -20):</strong> Jeho virtuální čas plyne pomalu. Běží na procesoru dlouho, ale v deníčku mu naskočí jen kousek. Získá obří porci CPU!</li>
+                <li><strong>Slušný proces (nice +19):</strong> Říká: <em>„Já nespěchám.“</em> Jeho <code>vruntime</code> naskakuje mílovými kroky a procesor dostane jen tehdy, když nikdo jiný nic nechce.</li>
+                <li><strong>Strom RB-Tree:</strong> Procesy jsou seřazené ve stromu. Plánovač nemusí nic hledat – rovnou sáhne po <strong>nejlevějším uzlu</strong> stromu ($O(1)$ bleskový výběr).</li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SHRNUTÍ & KONTROLNÍ OTÁZKY -->
+      <!-- SLIDE 6: WINDOWS PLÁNOVÁNÍ A P/E JÁDRA -->
       <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Shrnutí &amp; Kontrolní otázky</div>
-            <h2 class="slide-title">Klíčové poznatky a otázky</h2>
-            <p class="slide-subtitle">Zkušební otázky z multitaskingu a plánování procesoru</p>
+            <div class="slide-category">Architektura Windows &amp; Moderní CPU</div>
+            <h2 class="slide-title">Plánování ve Windows: Dynamické bonusy a hybridní procesory</h2>
+            <p class="slide-subtitle">Proč Windows reagují bleskově na kliknutí a jak zkrotit výkonná P-Core a úsporná E-Core</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Kontrolní otázky</span>
+            <span class="tag">Priority Boost &bull; Intel P/E-Core</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><trending-up x="2" y="2" width="20" height="20" rx="2"></trending-up><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                  <span class="card-title-text">Dynamické bonusy (Priority Boost)</span>
+                </div>
+              </div>
+              <p>Windows používají 32 prioritních úrovní (0 až 31):</p>
+              <ul class="styled-list">
+                <li>Běžné programy běží okolo priority 8.</li>
+                <li><strong>Tajemství okamžité odezvy:</strong> Když pohnete myší, kliknete na okno nebo stisknete klávesu, Windows danému oknu <strong>dočasně zvýší prioritu o +2 až +6 stupňů</strong>!</li>
+                <li>Aktivní okno pod vaším kurzorem okamžitě předežene stahování na pozadí. Proto Windows působí tak plynule při práci na ploše.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><cpu x="4" y="4" width="16" height="16" rx="2"></cpu><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                  <span class="card-title-text">Výzva dneška: Hybridní procesory (P-Core a E-Core)</span>
+                </div>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                Moderní čipy (Intel Core 12.+ generace, Apple Silicon M-série, ARM big.LITTLE) mají dva druhy jader:
+              </p>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li><strong style="color: #f43f5e;">P-Core (Performance):</strong> Obří výkonná jádra s vysokou spotřebou.</li>
+                <li><strong style="color: #10b981;">E-Core (Efficiency):</strong> Malá úsporná jádra pro běh na pozadí.</li>
+                <li><strong>Intel Thread Director:</strong> Speciální hardware přímo v CPU napovídá plánovači Windows: <em>„Hru a render pošli na P-Core, ale aktualizaci Windows a Discord na pozadí pošli na E-Core!“</em></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: SYNCHRONIZACE: RACE CONDITION A MUTEX -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Nástrahy více vláken</div>
+            <h2 class="slide-title">Když dvě vlákna sahají na stejná data: Race Condition &amp; Mutex</h2>
+            <p class="slide-subtitle">Jak zabránit tomu, aby si vlákna navzájem přepsala proměnné pod rukama</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Race Condition &bull; Mutex</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><alert-triangle x="10.29" y="3.86" width="16" height="16" rx="2"></alert-triangle><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                  <span class="card-title-text">Závod o data (Race Condition)</span>
+                </div>
+              </div>
+              <p>Máte na bankovním účtu 1 000 Kč. Vy a váš kamarád zkusíte ve stejnou milisekundu vybrat z bankomatu 1 000 Kč:</p>
+              <ul class="styled-list">
+                <li>Vlákno 1 přečte: Zůstatek je 1000 Kč (v pořádku).</li>
+                <li>Vlákno 2 přečte: Zůstatek je 1000 Kč (v pořádku).</li>
+                <li>Obě vlákna vydají 1000 Kč a zapíšou zůstatek 0 Kč. <strong>Z bankomatu vylezlo 2 000 Kč, ale banka přišla o peníze!</strong></li>
+                <li>Výsledek závisí na náhodném načasování instrukcí procesoru &ndash; noční můra na ladění chyb!</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><lock x="3" y="11" width="18" height="11" rx="2"></lock><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  <span class="card-title-text">Řešení: Mutex (Zámek na klíč)</span>
+                </div>
+              </div>
+              <p>Představte si to jako <strong>záchod v kavárně</strong>:</p>
+              <ul class="styled-list">
+                <li>Kdo chce pracovat s účtem, musí si nejdřív vzít klíč a <strong>zamknout se zevnitř (Mutex Lock)</strong>.</li>
+                <li>Druhý člověk vidí zamčeno, nesmí dovnitř &ndash; <strong>musí počkat na chodbě</strong> (plánovač ho uspí do stavu Blocked).</li>
+                <li>Až první člověk skončí, odemkne dveře (<strong>Mutex Unlock</strong>) a druhý může bezpečně vstoupit.</li>
+                <li><strong>Spinlock (Aktivní cloumání klikou):</strong> Vlákno nejde spát, ale v rychlé smyčce cloumá klikou. Používá se jen v jádře na bleskové nanosekundové operace.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: DEADLOCK (UVÁZNUTÍ) -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Horor pro vývojáře</div>
+            <h2 class="slide-title">Uváznutí (Deadlock): Když všichni čekají na všechny</h2>
+            <p class="slide-subtitle">Čtyři podmínky vzniku pasti, ze které není cesty ven, a jak jí předejít</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Deadlock &bull; Uváznutí</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="story-box danger" style="margin-top: 0;">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><x-octagon x="7.86" y="2" width="16" height="16" rx="2"></x-octagon><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+              Metafora: Dva kuchaři s nožem a prkénkem
+            </div>
+            Kuchař A drží nůž a čeká na prkénko. Kuchař B drží prkénko a čeká na nůž. Ani jeden nechce svůj nástroj pustit a oba budou stát a čekat navěky! Program zamrzne a přestane odpovídat.
+          </div>
+
+          <div class="grid-2" style="margin-top: 0.6rem;">
+            <div class="content-card">
+              <h4 style="color: #f43f5e; margin: 0; font-size: 0.95rem;">4 podmínky, kdy Deadlock nastane (Coffman):</h4>
+              <ol class="styled-list" style="font-size: 0.81rem; margin-top: 0.35rem;">
+                <li><strong>1. Vzájemné vyloučení:</strong> Nástroj smí mít v ruce jen jeden člověk.</li>
+                <li><strong>2. Drž a čekej:</strong> Držím svůj nástroj a odmítám ho pustit, dokud nedostanu ten druhý.</li>
+                <li><strong>3. Nelze vytrhnout:</strong> Nikdo mi nesmí nástroj násilím vzít z ruky.</li>
+                <li><strong>4. Kruhové čekání:</strong> Vznikne uzavřený kruh: A čeká na B a B čeká na A.</li>
+              </ol>
+            </div>
+
+            <div class="content-card">
+              <h4 style="color: #10b981; margin: 0; font-size: 0.95rem;">Jak Deadlocku spolehlivě zabránit?</h4>
+              <p style="font-size: 0.82rem; color: var(--text-secondary);">
+                Stačí rozbít jedinou ze čtyř podmínek!
+              </p>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li><strong style="color: #10b981;">Zlaté pravidlo pořadí:</strong> Stanovte přísné pořadí zamykání. Všichni kuchaři si MUSÍ VŽDY vzít nejdřív prkénko a až pak nůž. Kruhové čekání nikdy nemůže vzniknout!</li>
+                <li><strong>Timeouty (Časové limity):</strong> Pokud nezískám druhý zámek do 5 sekund, pustím i ten první a zkusím to za chvíli znovu.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: PRAKTICKÁ DIAGNOSTIKA & KVÍZ -->
+      <section class="slide" data-slide="9">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praxe a ověření</div>
+            <h2 class="slide-title">Praktické sledování vláken &amp; Studentský kvíz</h2>
+            <p class="slide-subtitle">Příkazy v terminálu a okamžité prověření znalostí</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Praxe &bull; Kvíz</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>bash &bull; Práce s prioritami a vlákny v Linuxu</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Spuštění náročného výpočtu se sníženou prioritou (bude hodný):</span>
+<span class="term-prompt">$ </span><span class="term-cmd">nice</span> <span class="term-param">-n</span> 15 <span class="term-cmd">tar</span> <span class="term-param">-czf</span> backup.tar.gz /data
+
+<span class="term-comment"># Změna priority již běžícího procesu za běhu (PID 1234):</span>
+<span class="term-prompt">$ </span><span class="term-cmd">renice</span> <span class="term-param">-n</span> -5 <span class="term-param">-p</span> 1234
+
+<span class="term-comment"># Výpis všech jednotlivých vláken daného procesu:</span>
+<span class="term-prompt">$ </span><span class="term-cmd">ps</span> <span class="term-param">-eLf</span> <span class="term-pipe">|</span> <span class="term-cmd">grep</span> firefox</code></pre>
+              </div>
+            </div>
+
+            <div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>powershell &bull; Nastavení priority procesu ve Windows</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Nastavení vysoké priority pro proces hry nebo renderování:</span>
+<span class="term-prompt">PS&gt; </span>$p = <span class="term-cmd">Get-Process</span> <span class="term-param">-Name</span> <span class="term-arg">game</span>
+<span class="term-prompt">PS&gt; </span>$p.PriorityClass = <span class="term-string">"High"</span>
+
+<span class="term-comment"># Omezení procesu pouze na konkrétní jádra CPU (CPU Affinity):</span>
+<span class="term-comment"># Bitová maska 3 = binárně 0011 (povoleno jen pro jádro 0 a 1):</span>
+<span class="term-prompt">PS&gt; </span>$p.ProcessorAffinity = 3</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-grid" style="margin-top: 0.5rem;">
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q1</span>
+                <span>Proč u preemptivního multitaskingu nezamrzne celý PC, když program spadne do nekonečné smyčky?</span>
+              </div>
+              <div class="quiz-ans" id="ans1">
+                Protože hardwarový časovač (Timer IRQ) po vypršení časového kvanta procesoru násilně sebere řízení a předá jádro jinému programu. Systém se na dobrou vůli aplikace vůbec neptá.
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans1">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q2</span>
+                <span>Co mají vlákna uvnitř jednoho procesu vlastní a co naopak sdílejí?</span>
+              </div>
+              <div class="quiz-ans" id="ans2">
+                Sdílejí kód, globální data, haldu (Heap) i otevřené soubory. Vlastní má každé vlákno pouze registry procesoru a svůj zásobník (Stack) pro lokální proměnné.
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans2">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q3</span>
+                <span>Jaký je rozdíl mezi zámkem Mutex a zámkem Spinlock?</span>
+              </div>
+              <div class="quiz-ans" id="ans3">
+                U Mutexu čekající vlákno usne a uvolní jádro CPU pro jiné úlohy. U Spinlocku vlákno neusíná, ale v nekonečném cyklu cloumá klikou (žere 100 % CPU, hodí se jen na nanosekundy).
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans3">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: ZKUŠEBNÍ CHECKLIST K ABSOLUTORIU -->
+      <section class="slide" data-slide="10">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškové okruhy</div>
+            <h2 class="slide-title">Shrnutí &amp; Zkušební checklist k absolutoriu</h2>
+            <p class="slide-subtitle">Otázky, které se zkoušející u absolutoria a zkoušek nejčastěji ptá</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Zkušební tahák</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="summary-grid">
             <div class="summary-card">
-              <h4>1. Preemptivní přepnutí</h4>
-              <p>Pochopení role hardwarového časovače (Timer) při násilném odebrání procesoru zacyklené aplikaci.</p>
+              <h4>1. Kooperativní vs. Preemptivní</h4>
+              <p>Kooperativní spoléhá na to, že se aplikace sama vzdá CPU (jedna chyba položí celý PC). Preemptivní využívá časovač a procesor odebere násilím.</p>
             </div>
+
             <div class="summary-card">
               <h4>2. Proces vs. Vlákno</h4>
-              <p>Přesná definice toho, co vlákna v procesu sdílejí (virtuální paměť, kód, haldu, soubory) a co mají vlastní (registry CPU a zásobník Stack).</p>
+              <p>Proces je dům s izolovanou virtuální pamětí. Vlákna jsou lidé v domě – sdílejí paměť a haldu, ale mají vlastní zásobník (Stack) a registry.</p>
             </div>
+
             <div class="summary-card">
-              <h4>3. Čtyři podmínky Deadlocku</h4>
-              <p>Znalost Coffmanových podmínek a způsobů, jak uváznutí předcházet (např. striktním hierarchickým řazením zamykání mutexů).</p>
+              <h4>3. Linux CFS &amp; vruntime</h4>
+              <p>Plánovač měří každé úloze virtuální čas na CPU (vruntime) v červeno-černém stromu. Příště spustí tu úlohu, která má nejmenší vruntime.</p>
             </div>
+
             <div class="summary-card">
-              <h4>4. Otázka k procvičení a zamyšlení</h4>
-              <p><em>„Vysvětlete, jak funguje plánovač Linux CFS a co vyjadřuje hodnota vruntime pro jednotlivé běžící úlohy.“</em></p>
+              <h4>4. Deadlock a 4 podmínky</h4>
+              <p>Vzájemné zablokování více vláken čekajících na vzájemně držené zámky. Prevence: striktní globální pořadí zamykání mutexů.</p>
             </div>
+          </div>
+
+          <div class="story-box" style="margin-top: 0.8rem;">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              Kam pokračujeme příště? (Lekce 07)
+            </div>
+            Už víme, jak se procesy střídají na procesoru. V následující přednášce prozkoumáme: <strong>Správa fyzické a virtuální paměti</strong> (jak funguje MMU jednotka, stránkování paměti, TLB cache a co se stane při nedostatku RAM).
           </div>
         </div>
       </section>
@@ -247,7 +893,7 @@
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="05_zivotni_cyklus_procesu_a_spusteni_programu.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 05: Životní cyklus procesu a spuštění programu (Ctrl+Šipka vlevo)">
+      <a href="05_zivotni_cyklus_procesu_a_spusteni_programu.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 05: Životní cyklus procesu a spuštění programu (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu OSY20">
@@ -260,7 +906,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 10</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -348,7 +994,157 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glossary Modal (Slovník pojmů) -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 820px; width: 95vw; max-height: 85vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="flex-shrink: 0;">
+          <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Slovník pojmů &bull; Multitasking, vlákna a plánování CPU
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body" style="overflow-y: auto; flex: 1; padding: 1rem 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;">
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Multitasking</span>
+              <span class="glossary-badge glossary-badge-architecture">Základ</span>
+            </div>
+            <div class="glossary-full-name">Souběžný běh více úloh na jednom počítači</div>
+            <div class="glossary-desc">Schopnost operačního systému střídat běh více programů tak rychle, že má uživatel dojem, že všechny programy běží současně.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Preempce</span>
+              <span class="glossary-badge glossary-badge-security">Mechanismus</span>
+            </div>
+            <div class="glossary-full-name">Násilné odebrání procesoru běžícímu programu</div>
+            <div class="glossary-desc">Vlastnost moderních OS: jádro se neptá na dovolení. Po vypršení časového kvanta hardware časovač přeruší CPU a plánovač předá řízení jinému vláknu.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Time Slice</span>
+              <span class="glossary-badge glossary-badge-admin">Čas</span>
+            </div>
+            <div class="glossary-full-name">Časové kvantum (Porce času na procesoru)</div>
+            <div class="glossary-desc">Krátký časový úsek (obvykle 1 až 20 milisekund), který plánovač přidělí jednomu vláknu k nepřetržitému běhu na jádře CPU.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Vlákno (Thread)</span>
+              <span class="glossary-badge glossary-badge-architecture">Jednotka</span>
+            </div>
+            <div class="glossary-full-name">Odlehčený proces (LWP)</div>
+            <div class="glossary-desc">Základní jednotka plánování CPU. Běží uvnitř procesu a sdílí jeho paměť, ale má vlastní zásobník (Stack) a vlastní stav registrů.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Context Switch</span>
+              <span class="glossary-badge glossary-badge-admin">Režie</span>
+            </div>
+            <div class="glossary-full-name">Přepnutí kontextu (Střídání programů)</div>
+            <div class="glossary-desc">Uložení registrů odcházejícího vlákna a nahrání registrů nového vlákna do CPU. Mezi procesy navíc vyžaduje přepnutí virtuální paměti CR3 a vymazání TLB.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">CFS</span>
+              <span class="glossary-badge glossary-badge-architecture">Linux</span>
+            </div>
+            <div class="glossary-full-name">Completely Fair Scheduler (Zcela férový plánovač)</div>
+            <div class="glossary-desc">Výchozí plánovač Linuxového jádra. Každé úloze počítá virtuální čas běhu (vruntime) a jako další vybírá úlohu, která byla dosud nejvíce zanedbána.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">vruntime</span>
+              <span class="glossary-badge glossary-badge-admin">CFS Metrika</span>
+            </div>
+            <div class="glossary-full-name">Virtuální běhový čas úlohy</div>
+            <div class="glossary-desc">Ukazatel v Linuxu, kolik výpočetního času úloha spotřebovala. U prioritních úloh (nízké nice) přibývá pomaleji, takže dostanou větší podíl CPU.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Priority Boost</span>
+              <span class="glossary-badge glossary-badge-architecture">Windows</span>
+            </div>
+            <div class="glossary-full-name">Dynamické zvýšení priority okna</div>
+            <div class="glossary-desc">Mechanismus Windows: když uživatel klikne myší na okno nebo píše na klávesnici, systém tomuto oknu dočasně zvedne prioritu, aby reagovalo bleskově.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Race Condition</span>
+              <span class="glossary-badge glossary-badge-security">Chyba souběhu</span>
+            </div>
+            <div class="glossary-full-name">Závod o data (Souběh)</div>
+            <div class="glossary-desc">Závažná chyba programu, kdy dvě vlákna současně modifikují stejnou paměť a výsledek závisí na náhodném načasování procesoru.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Mutex</span>
+              <span class="glossary-badge glossary-badge-security">Zámek</span>
+            </div>
+            <div class="glossary-full-name">Mutual Exclusion (Vzájemné vyloučení)</div>
+            <div class="glossary-desc">Synchronizační zámek. V kritické sekci smí být v daný moment pouze jedno vlákno. Ostatní zájemci jsou plánovačem uspáni (Blocked), dokud se neodemkne.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Spinlock</span>
+              <span class="glossary-badge glossary-badge-admin">Aktivní čekání</span>
+            </div>
+            <div class="glossary-full-name">Zámek s aktivním vyčkáváním v cyklu</div>
+            <div class="glossary-desc">Vlákno nejde spát, ale v rychlé smyčce neustále testuje zámek. Používá se výhradně v jádře na kratičké operace, kde by režie uspání byla příliš vysoká.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Deadlock</span>
+              <span class="glossary-badge glossary-badge-security">Uváznutí</span>
+            </div>
+            <div class="glossary-full-name">Smrtící objetí (Kruhové uváznutí)</div>
+            <div class="glossary-desc">Stav, kdy vlákno A drží zámek 1 a čeká na zámek 2, zatímco vlákno B drží zámek 2 a čeká na zámek 1. Obě vlákna zamrznou a budou čekat navždy.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
+  <script>
+    // Interaktivní odkrývání odpovědí v kvízu na snímku 9
+    document.addEventListener('DOMContentLoaded', () => {
+      const quizButtons = document.querySelectorAll('.btn-quiz-reveal');
+      quizButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const ansEl = document.getElementById(targetId);
+          if (!ansEl) return;
+          const isRevealed = ansEl.classList.contains('revealed');
+          if (isRevealed) {
+            ansEl.classList.remove('revealed');
+            btn.querySelector('span').textContent = 'Zobrazit odpověď';
+          } else {
+            ansEl.classList.add('revealed');
+            btn.querySelector('span').textContent = 'Skrýt odpověď';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

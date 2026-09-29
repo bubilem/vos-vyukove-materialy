@@ -10,6 +10,414 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Vizuální styly pro srozumitelné studentské pojetí přerušení a událostí */
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: #67e8f9;
+    }
+    .highlight-pill.kernel {
+      background: rgba(244, 63, 94, 0.12);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: #fda4af;
+    }
+    .highlight-pill.success {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+    }
+    .highlight-pill.warning {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #fde68a;
+    }
+
+    .story-box {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%);
+      border-left: 3px solid var(--accent);
+      padding: 0.95rem 1.15rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .story-box.danger {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.09) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left-color: #f43f5e;
+    }
+    .story-box.warning {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.09) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left-color: #f59e0b;
+    }
+    .story-title {
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.92rem;
+    }
+    .story-box.danger .story-title { color: #f43f5e; }
+    .story-box.warning .story-title { color: #f59e0b; }
+
+    /* Kroky a karty */
+    .flow-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-top: 0.4rem;
+    }
+    @media (max-width: 992px) {
+      .flow-steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .flow-steps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .flow-step-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .flow-step-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      background: rgba(6, 182, 212, 0.05);
+    }
+    .flow-step-num {
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0f172a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .flow-step-num.kernel {
+      background: #f43f5e;
+      color: #ffffff;
+    }
+    .flow-step-num.success {
+      background: #10b981;
+      color: #ffffff;
+    }
+
+    /* Schéma toku signálu */
+    .hardware-diagram-box {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    /* Zásobníkový rámec (Stack frame) */
+    .stack-frame-box {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.25);
+    }
+    .stack-frame-header {
+      padding: 0.45rem 0.8rem;
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid var(--border-color);
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+    }
+    .stack-slot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.48rem 0.8rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+    .stack-slot:last-child {
+      border-bottom: none;
+    }
+    .stack-slot.auto-saved {
+      background: rgba(244, 63, 94, 0.12);
+      color: #fda4af;
+      border-left: 3px solid #f43f5e;
+    }
+    .stack-slot.isr-saved {
+      background: rgba(6, 182, 212, 0.12);
+      color: #67e8f9;
+      border-left: 3px solid var(--accent);
+    }
+    .stack-desc-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: block;
+      font-family: var(--font-main);
+    }
+
+    /* Časová osa Top Half / Bottom Half */
+    .timeline-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .timeline-split {
+        grid-template-columns: 1fr;
+      }
+    }
+    .phase-card {
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.15rem;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.025);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .phase-card.top-half {
+      border-color: rgba(244, 63, 94, 0.35);
+      background: linear-gradient(180deg, rgba(244, 63, 94, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+    }
+    .phase-card.bottom-half {
+      border-color: rgba(16, 185, 129, 0.35);
+      background: linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+    }
+
+    /* IRQL stupnice */
+    .irql-ladder {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.35rem;
+    }
+    .irql-step {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.84rem;
+      background: rgba(255, 255, 255, 0.025);
+      transition: all 0.2s ease;
+    }
+    .irql-step:hover {
+      transform: translateX(4px);
+      border-color: var(--accent);
+    }
+    .irql-step.high { border-color: rgba(244, 63, 94, 0.4); background: rgba(244, 63, 94, 0.08); }
+    .irql-step.dirql { border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.08); }
+    .irql-step.dispatch { border-color: rgba(6, 182, 212, 0.4); background: rgba(6, 182, 212, 0.08); }
+    .irql-step.passive { border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.08); }
+
+    /* Mýty vs. Fakta */
+    .myth-fact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 0.4rem;
+    }
+    @media (max-width: 768px) {
+      .myth-fact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .myth-card {
+      background: rgba(244, 63, 94, 0.06);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+    .fact-card {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+    .myth-title {
+      color: #f43f5e;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+    .fact-title {
+      color: #10b981;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Kvízové interaktivní karty */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 900px) {
+      .quiz-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .quiz-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      justify-content: space-between;
+    }
+    .quiz-card:hover {
+      border-color: rgba(6, 182, 212, 0.5);
+    }
+    .quiz-q {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+    .quiz-q-num {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .quiz-ans {
+      display: none;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      background: rgba(6, 182, 212, 0.07);
+      border-left: 2px solid var(--accent);
+      padding: 0.55rem 0.75rem;
+      border-radius: 0 4px 4px 0;
+    }
+    .quiz-ans.revealed {
+      display: block;
+      animation: fadeInAns 0.25s ease-out;
+    }
+    @keyframes fadeInAns {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .btn-quiz-reveal {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      align-self: flex-start;
+    }
+    .btn-quiz-reveal:hover {
+      background: var(--accent);
+      color: #0f172a;
+      border-color: var(--accent);
+    }
+
+    .analogy-card {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      padding: 0.85rem 1.05rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+    }
+    .analogy-icon-wrap {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 182, 212, 0.12);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .analogy-icon-wrap.danger {
+      background: rgba(244, 63, 94, 0.12);
+      color: #f43f5e;
+    }
+    .analogy-icon-wrap.success {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+    }
+
+    /* Porovnávací tabulka Polling vs Interrupt */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin-top: 0.4rem;
+    }
+    .compare-table th {
+      text-align: left;
+      padding: 0.55rem 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+    .compare-table td {
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+    .compare-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+  </style>
 </head>
 <body>
 
@@ -36,8 +444,8 @@
         </div>
       </div>
       <div class="header-right">
-        <span class="tag tag-primary">IRQ &amp; Přerušení</span>
-        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+        <span class="tag tag-primary">Hardware IRQ &bull; IDT &bull; DPC</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv (T)">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
       </div>
@@ -45,154 +453,561 @@
 
     <main class="slides-viewport">
 
-      <!-- SLIDE 1: TITLE -->
+      <!-- SLIDE 1: TITLE HERO -->
       <section class="slide title-slide active" data-slide="1">
         <div class="hero-badge">Modul OSY20 &bull; 4. přednáška (45 min)</div>
         <h1 class="hero-title">Přerušení &amp; Obsluha událostí</h1>
         <p class="hero-desc">
-          Základní mechanismus komunikace hardwaru s operačním systémem: asynchronní přerušení (IRQ), hardwarové řadiče APIC a MSI-X, tabulka vektorů přerušení (IDT), obslužná rutina ISR a technika dvoufázového zpracování (Top Half / Bottom Half v Linuxu a DPC ve Windows).
+          Jak počítač pozná, že jste klikli myší nebo že ze sítě dorazila zpráva? Procesor nečeká u dveří, ale reaguje na zazvonění. Prozkoumáme <strong>přerušení (Interrupt)</strong> – základní signál, kterým hardware bleskově probouzí procesor, aniž by pálil energii v prázdném vyčkávání.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Hardwarový vektor</span>
-            <span class="hero-meta-val">IRQ, APIC, MSI-X</span>
+            <span class="hero-meta-label">Signál zvenku</span>
+            <span class="hero-meta-val">Hardware IRQ (zvonek pro procesor)</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Tabulka vektorů</span>
-            <span class="hero-meta-val">IDT (Interrupt Descriptor Table)</span>
+            <span class="hero-meta-label">Seznam reakcí</span>
+            <span class="hero-meta-val">Tabulka IDT (telefonní seznam obsluh)</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Dvoufázové řízení</span>
-            <span class="hero-meta-val">Top Half vs. Bottom Half / DPC</span>
+            <span class="hero-meta-label">Dvoufázová záchrana</span>
+            <span class="hero-meta-val">Top Half &amp; Bottom Half (jak nezamrznout)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Reálný svět</span>
+            <span class="hero-meta-val">Proč praská zvuk ve hrách (DPC Latency)</span>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 2: PROČ PŘERUŠENÍ A TYPY PŘERUŠENÍ -->
+      <!-- SLIDE 2: POLLING VS INTERRUPT (PROČ PŘERUŠENÍ?) -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Základní koncept</div>
-            <h2 class="slide-title">Princip přerušení vs. Aktivní čekání (Polling)</h2>
-            <p class="slide-subtitle">Proč moderní počítače nečekají v nekonečné smyčce na data</p>
+            <div class="slide-category">Základní myšlenka</div>
+            <h2 class="slide-title">Proč přerušení? Polling vs. Přerušením řízený hardware</h2>
+            <p class="slide-subtitle">Jaký je rozdíl mezi neustálým vyptáváním a zazvoněním zvonku</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Otázka k zamyšlení</span>
+            <span class="tag">Princip fungování</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>Nevýhody aktivního dotazování (Polling)</h4>
-              <p>Při aktivním dotazování procesor v cyklu čte stavový registr periferie (např. klávesnice či síťové karty):</p>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span class="card-title-text">Aktivní čekání (Polling)</span>
+                </div>
+              </div>
+              <p>Procesor v nekonečné smyčce dokola kontroluje zařízení a ptá se: <em>„Máš data? Už máš data? A teď?“</em></p>
+              <div class="analogy-card" style="margin: 0.4rem 0;">
+                <div class="analogy-icon-wrap danger">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <div>
+                  <strong style="color: #f43f5e; font-size: 0.88rem;">Představte si ze života:</strong>
+                  <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                    Každých 10 sekund píšete učiteli zprávu: <em>„Už je opravený test? Už?“</em> Jste vyčerpaní, nemůžete dělat nic jiného, vybíjí se baterka a učitel šílí.
+                  </p>
+                </div>
+              </div>
               <ul class="styled-list">
-                <li>100% zbytečné vytížení procesoru (spalování energie, zahřívání čipu).</li>
-                <li>CPU nemůže přepnout na jiné výpočty, protože by zmeškalo příchod dat.</li>
+                <li><strong>100% zátěž jádra naprázdno:</strong> Procesor topí, větráky hučí a baterie notebooku bleskově mizí.</li>
+                <li><strong>Počítač nestíhá jiné věci:</strong> Jádro nemůže přepnout na jinou práci, protože se bojí, že zmešká data.</li>
+                <li><strong>Kdy se přesto hodí?</strong> Jen u extrémních 100Gbps serverových sítí, kde pakety létají tak rychle, že by zvonění nestíhalo.</li>
               </ul>
             </div>
+
             <div class="content-card">
-              <h4>Asynchronní přerušení (Interrupt-driven I/O)</h4>
-              <p>Procesor se věnuje běžícím aplikacím nebo přejde do úsporného stavu (<code>HLT</code>):</p>
-              <ul class="styled-list">
-                <li>Když zařízení (disk, síťovka, myš) dokončí práci, vyšle elektrický signál na sběrnici (IRQ).</li>
-                <li>CPU <strong>pozastaví vykonávání aktuálního programu</strong>, uloží stav a automaticky skočí na obslužnou rutinu.</li>
-                <li>Po dokončení obsluhy pokračuje původní program přesně tam, kde byl přerušen.</li>
-              </ul>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span class="card-title-text">Přerušení (Interrupt)</span>
+                </div>
+              </div>
+              <p>Procesor v klidu pracuje na jiných aplikacích. A když nic neběží, prostě <strong>usne</strong> (instrukce <code>HLT</code>).</p>
+              <div class="analogy-card" style="margin: 0.4rem 0;">
+                <div class="analogy-icon-wrap success">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                </div>
+                <div>
+                  <strong style="color: #10b981; font-size: 0.88rem;">Představte si ze života:</strong>
+                  <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                    Učitel řekne: <em>„Až to bude, pípne ti notifikace.“</em> Vy v klidu hrajete hry nebo spíte. Až pípne mobil (IRQ signál), kouknete na známku a vrátíte se k zábavě.
+                  </p>
+                </div>
+              </div>
+              <table class="compare-table">
+                <thead>
+                  <tr>
+                    <th>Otázka</th>
+                    <th>Aktivní čekání (Polling)</th>
+                    <th>Přerušení (Interrupt)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Vytížení CPU, když nic neděláte?</strong></td>
+                    <td style="color: #f43f5e;">100 % (pálí elektřinu)</td>
+                    <td style="color: #10b981;">0 % (procesor spí a šetří)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Jak rychle zareaguje na kliknutí?</strong></td>
+                    <td>Až přijde na řadu ve smyčce</td>
+                    <td style="color: #10b981;">Okamžitě za pár nanosekund</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Může dělat jinou práci?</strong></td>
+                    <td style="color: #f43f5e;">Ne, pořád se dokola ptá</td>
+                    <td style="color: #10b981;">Ano, věnuje se čemukoliv jinému</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: KLASIFIKACE: IRQ, TRAPS A FAULTS -->
+      <!-- SLIDE 3: HARDWAROVÁ CESTA SIGNÁLU & APIC/MSI -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Typologie událostí</div>
-            <h2 class="slide-title">Kategorie přerušení a procesorových výjimek</h2>
-            <p class="slide-subtitle">Rozdíl mezi událostí z periferie a chybou programu</p>
+            <div class="slide-category">Jak to teče po drátech</div>
+            <h2 class="slide-title">Cesta přerušení: Od tlačítka myši k jádru procesoru</h2>
+            <p class="slide-subtitle">Jak řadiče na desce doručují elektrický signál bez chaosu a konfliktů</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">IDT Struktura</span>
+            <span class="tag">PIC &bull; APIC &bull; MSI-X</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                  <span class="card-title-text">Tři éry řadičů přerušení</span>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                <div class="sub-card">
+                  <div class="sub-card-header">
+                    <span class="sub-card-title">1. Historický čip Intel 8259 PIC (1981)</span>
+                    <span class="highlight-pill kernel">Staré časy</span>
+                  </div>
+                  <p class="sub-card-desc">
+                    Měl jen <strong>15 fyzických drátů</strong> pro celý počítač. Když jste do PC přidali zvukovou kartu i síťovku, musely se dělit o stejný drát. Docházelo k legendárním <strong>IRQ konfliktům</strong> a musely se ručně přepínat kovové propojky (jumpery) na kartách!
+                  </p>
+                </div>
+
+                <div class="sub-card">
+                  <div class="sub-card-header">
+                    <span class="sub-card-title">2. Dnešní standard: APIC (Chytrá ústředna)</span>
+                    <span class="highlight-pill">Dnešní PC</span>
+                  </div>
+                  <p class="sub-card-desc">
+                    Když máme vícejádrové CPU, čip <strong>I/O APIC</strong> na desce funguje jako chytrá recepční: přerušení od síťové karty pošle jádru 2, disk jádru 3 a klávesnici jádru 0. Žádné jádro se nehltí (tzv. <em>IRQ afinita</em>).
+                  </p>
+                </div>
+
+                <div class="sub-card">
+                  <div class="sub-card-header">
+                    <span class="sub-card-title">3. Moderní PCIe: MSI / MSI-X (Přímé SMS zprávy)</span>
+                    <span class="highlight-pill success">Nejmodernější</span>
+                  </div>
+                  <p class="sub-card-desc">
+                    <strong>Žádné samostatné dráty pro přerušení!</strong> Rychlá grafická karta nebo NVMe disk pošlou po sběrnici normální paměťovou zprávu přímo do RAM. Jedna síťová karta může mít přes 2000 vlastních nezávislých linek!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                  <span class="card-title-text">Názorný tok: Kdo komu předává zprávu</span>
+                </div>
+              </div>
+              <div class="hardware-diagram-box">
+                <svg viewBox="0 0 460 220" style="width: 100%; height: auto; max-width: 440px;">
+                  <!-- Periferie -->
+                  <rect x="10" y="20" width="110" height="45" rx="6" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="1.5" />
+                  <text x="65" y="42" fill="#38bdf8" font-size="11" font-weight="700" text-anchor="middle" font-family="Inter, sans-serif">Disk / Síťovka</text>
+                  <text x="65" y="56" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="JetBrains Mono, monospace">Dokončil jsem práci!</text>
+
+                  <rect x="10" y="85" width="110" height="45" rx="6" fill="rgba(56, 189, 248, 0.15)" stroke="#38bdf8" stroke-width="1.5" />
+                  <text x="65" y="107" fill="#38bdf8" font-size="11" font-weight="700" text-anchor="middle" font-family="Inter, sans-serif">Myš / Klávesnice</text>
+                  <text x="65" y="121" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="JetBrains Mono, monospace">Uživatel kliknul!</text>
+
+                  <rect x="10" y="150" width="110" height="45" rx="6" fill="rgba(245, 158, 11, 0.15)" stroke="#f59e0b" stroke-width="1.5" />
+                  <text x="65" y="172" fill="#fbbf24" font-size="11" font-weight="700" text-anchor="middle" font-family="Inter, sans-serif">Systémový časovač</text>
+                  <text x="65" y="186" fill="#94a3b8" font-size="9" text-anchor="middle" font-family="JetBrains Mono, monospace">Uběhlo 10 ms!</text>
+
+                  <!-- Spojovací šipky do I/O APIC -->
+                  <path d="M 120 42 L 170 100" stroke="#06b6d4" stroke-width="2" stroke-dasharray="4,4" fill="none" />
+                  <path d="M 120 107 L 170 107" stroke="#06b6d4" stroke-width="2" fill="none" />
+                  <path d="M 120 172 L 170 115" stroke="#06b6d4" stroke-width="2" stroke-dasharray="4,4" fill="none" />
+
+                  <!-- I/O APIC -->
+                  <rect x="170" y="80" width="105" height="55" rx="6" fill="rgba(6, 182, 212, 0.18)" stroke="#06b6d4" stroke-width="2" />
+                  <text x="222" y="101" fill="#67e8f9" font-size="11" font-weight="700" text-anchor="middle" font-family="Inter, sans-serif">I/O APIC</text>
+                  <text x="222" y="115" fill="#cbd5e1" font-size="8" text-anchor="middle" font-family="JetBrains Mono, monospace">Chytrá ústředna</text>
+                  <text x="222" y="127" fill="#67e8f9" font-size="8" text-anchor="middle" font-family="Inter, sans-serif">Určí číslo vektoru</text>
+
+                  <!-- Sběrnice APIC do CPU -->
+                  <path d="M 275 107 L 315 107" stroke="#06b6d4" stroke-width="2.5" fill="none" />
+
+                  <!-- CPU Core s Local APIC -->
+                  <rect x="315" y="40" width="135" height="140" rx="8" fill="rgba(244, 63, 94, 0.12)" stroke="#f43f5e" stroke-width="2" />
+                  <text x="382" y="65" fill="#fda4af" font-size="13" font-weight="800" text-anchor="middle" font-family="Inter, sans-serif">JÁDRO CPU #0</text>
+
+                  <rect x="325" y="80" width="115" height="35" rx="4" fill="rgba(244, 63, 94, 0.25)" stroke="#fb7185" stroke-width="1.2" />
+                  <text x="382" y="96" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle" font-family="Inter, sans-serif">Local APIC</text>
+                  <text x="382" y="108" fill="#fda4af" font-size="8" text-anchor="middle" font-family="JetBrains Mono, monospace">Příjemce signálu</text>
+
+                  <rect x="325" y="125" width="115" height="42" rx="4" fill="rgba(15, 23, 42, 0.6)" stroke="#cbd5e1" stroke-width="1" />
+                  <text x="382" y="142" fill="#cbd5e1" font-size="10" font-weight="700" text-anchor="middle" font-family="Inter, sans-serif">Spuštění obsluhy</text>
+                  <text x="382" y="156" fill="#67e8f9" font-size="9" text-anchor="middle" font-family="JetBrains Mono, monospace">Skoč na IDT[číslo]</text>
+                </svg>
+              </div>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; text-align: center;">
+                Periferie vyšle signál &rarr; Ústředna mu přidělí číslo vektoru (0–255) &rarr; CPU jádro bleskově spustí příslušnou funkci.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: TYPOLOGIE UDÁLOSTÍ: IRQ, VÝJIMKY A PASTI -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Tři druhy událostí</div>
+            <h2 class="slide-title">Kdo všechno může vyrušit procesor?</h2>
+            <p class="slide-subtitle">Rozdíl mezi signálem z klávesnice, chybou v programu a žádostí o systémovou službu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Seznam 256 čísel (IDT)</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-3">
             <div class="content-card">
-              <h4>1. Hardwarová přerušení (Hardware IRQ)</h4>
-              <p>Asynchronní signály ze vnějšího světa (nezávislé na běžící instrukci):</p>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span class="card-title-text">1. Signály zvenku (Hardwarová IRQ)</span>
+                </div>
+              </div>
+              <p>Procesor za ně vůbec nemůže – někdo zvenčí zazvonil na zvonek:</p>
               <ul class="styled-list">
-                <li>Stisk klávesy, příchod síťového paketu, dokončení čtení sektoru disku přes DMA.</li>
-                <li>Časovač procesoru (Timer interrupt) – tlukot srdce plánovače úloh.</li>
+                <li><strong>Tiknutí hodin (Timer):</strong> Každých pár milisekund připomene: <em>„Je čas přepnout na jiný program!“</em> (základ multitaskingu).</li>
+                <li><strong>Hardware akce:</strong> Klávesnice hlásí stisk písmene, disk hlásí načtení souboru, síťovka příchod paketu.</li>
+                <li><strong>Nouzový poplach (NMI):</strong> Závažná hardwarová porucha (přehřátí procesoru, vadná RAM). Tenhle signál nelze ignorovat!</li>
               </ul>
+              <div class="highlight-pill" style="margin-top: auto;">Čísla 32 až 255 v tabulce IDT</div>
             </div>
+
             <div class="content-card">
-              <h4>2. Výjimky procesoru (Exceptions / Faults)</h4>
-              <p>Synchronní události vyvolané přímo chybou v běžícím kódu:</p>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                  <span class="card-title-text">2. Výstrahy procesoru (Výjimky)</span>
+                </div>
+              </div>
+              <p>Nastávají uvnitř procesoru, když program udělá něco nečekaného:</p>
               <ul class="styled-list">
-                <li><strong>Divide by zero (#DE, vektor 0):</strong> Dělení nulou.</li>
-                <li><strong>Page Fault (#PF, vektor 14):</strong> Pokus o přístup na nenamapovanou stránku paměti (klíčové pro virtuální paměť!).</li>
-                <li><strong>General Protection (#GP, vektor 13):</strong> Porušení privilegií Ring 0/3.</li>
+                <li><strong>Opravitelná zádrhel (Fault – např. Page Fault #14):</strong> Program chce data, která ještě nejsou v RAM. <em>Pozor, to není pád!</em> Systém data dočte z disku a nechá program pokračovat!</li>
+                <li><strong>Záchranná brzda (Trap – Breakpoint):</strong> Slouží programátorům pro zastavení programu v debuggeru na daném řádku.</li>
+                <li><strong>Závažná havárie (Abort):</strong> Dělení nulou nebo sahání do cizí paměti &rarr; systém program okamžitě sestřelí.</li>
               </ul>
+              <div class="highlight-pill kernel" style="margin-top: auto;">Čísla 0 až 31 vyhrazená procesoru</div>
             </div>
+
             <div class="content-card">
-              <h4>3. Softwarová přerušení (Traps)</h4>
-              <p>Záměrně vyvolaná přerušení instrukcí v kódu:</p>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                  <span class="card-title-text">3. Záměrné volání (Software Trap)</span>
+                </div>
+              </div>
+              <p>Program sám záměrně zavolá instrukci přerušení, protože potřebuje pomoc jádra:</p>
               <ul class="styled-list">
-                <li>Instrukce <code>INT 3</code> (Breakpoint pro debuggery).</li>
-                <li>Instrukce <code>INT 0x80</code> nebo <code>syscall</code> pro systémová volání.</li>
+                <li><strong>Žádost o službu (Systémové volání):</strong> Běžná aplikace nesmí sama zapisovat na fyzický disk ani posílat data do sítě.</li>
+                <li>Musí proto slušně požádat operační systém (historicky instrukcí <code>INT 0x80</code>, dnes bleskovou instrukcí <code>syscall</code>).</li>
+                <li>Procesor bezpečně přepne z uživatelského režimu (Ring 3) do chráněného jádra (Ring 0).</li>
               </ul>
+              <div class="highlight-pill success" style="margin-top: auto;">Programátorský most do jádra OS</div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4: DVOUFÁZOVÁ OBSLUHA (TOP / BOTTOM HALF) -->
-      <section class="slide" data-slide="4">
-        <div class="slide-header">
-          <div class="slide-titles">
-            <div class="slide-category">Architektura ovladačů</div>
-            <h2 class="slide-title">Dvoufázová obsluha přerušení</h2>
-            <p class="slide-subtitle">Jak nezablokovat systém při záplavě milionů přerušení za sekundu</p>
-          </div>
-          <div class="slide-tags">
-            <span class="tag">Otázka k zamyšlení</span>
-          </div>
-        </div>
-        <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4 style="color: #f43f5e;">1. První fáze: Top Half / Hard IRQ</h4>
-              <p>Rutina přímé obsluhy přerušení (ISR – Interrupt Service Routine):</p>
-              <ul class="styled-list">
-                <li>Běží <strong>s vypnutými hardwarovými přerušeními</strong> (nebo vysokým IRQL).</li>
-                <li>Musí být extrémně rychlá (několik mikrosekund).</li>
-                <li>Účel: Přečíst data z bufferu řadiče do RAM, potvrdit přijetí řadiči (ACK / EOI) a <strong>naplánovat druhou fázi</strong>.</li>
-                <li>Nesmí volat funkce, které by mohly usnout (spát na mutexu nebo čekat na disk!).</li>
-              </ul>
-            </div>
-            <div class="content-card">
-              <h4 style="color: #10b981;">2. Druhá fáze: Bottom Half / SoftIRQ / DPC</h4>
-              <p>Zpracování komplexní logiky na pozadí s povolenými přerušeními:</p>
-              <ul class="styled-list">
-                <li><strong>Linux implementace:</strong> SoftIRQs, Tasklets a Workqueues (jádrová vlákna <code>ksoftirqd</code>). Zajišťují např. průchod síťového paketu celým TCP/IP zásobníkem.</li>
-                <li><strong>Windows NT implementace:</strong> Deferred Procedure Calls (DPC). Běží na úrovni <code>DISPATCH_LEVEL</code> (IRQL 2).</li>
-                <li>Systém zůstává plně responzivní i při gigabitovém toku dat ze sítě.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SLIDE 5: PRAKTICKÁ INSPEKCE PŘERUŠENÍ -->
+      <!-- SLIDE 5: ANATOMIE OBSLUHY & IDT ZÁSOBNÍKOVÝ RÁMEC -->
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Praktická diagnostika</div>
-            <h2 class="slide-title">Sledování přerušení v Linuxu a Windows</h2>
-            <p class="slide-subtitle">Zjišťování rozložení IRQ linek a aktivity DPC</p>
+            <div class="slide-category">Krok za krokem</div>
+            <h2 class="slide-title">Co přesně procesor udělá, když přijde přerušení?</h2>
+            <p class="slide-subtitle">Jako když při čtení knihy zazvoní zvonek: vložit záložku, obsloužit a číst dál</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Terminál &bull; /proc/interrupts</span>
+            <span class="tag">Záložka v paměti &bull; Stack Frame</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                  <span class="card-title-text">Pět bleskových automatických kroků</span>
+                </div>
+              </div>
+              <div class="flow-steps-grid" style="grid-template-columns: 1fr; gap: 0.5rem;">
+                <div class="flow-step-card">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="flow-step-num">1</span>
+                    <strong style="font-size: 0.86rem;">Dokončí stávající instrukci</strong>
+                  </div>
+                  <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">
+                    Procesor nikdy nesekne instrukci v půlce. Dodělá rozpracovaný mikrokrok a přejde na záchranu.
+                  </p>
+                </div>
+
+                <div class="flow-step-card">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="flow-step-num kernel">2</span>
+                    <strong style="font-size: 0.86rem;">Vloží záložku (Uloží registry na Kernel Stack)</strong>
+                  </div>
+                  <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">
+                    Sám hardware okamžitě uloží: <em>Kde v programu jsem byl</em> (<code>RIP</code>), <em>Kde byl zásobník</em> (<code>RSP</code>) a <em>V jakém stavu byl procesor</em> (<code>RFLAGS</code>).
+                  </p>
+                </div>
+
+                <div class="flow-step-card">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="flow-step-num">3</span>
+                    <strong style="font-size: 0.86rem;">Naladí telefonní seznam (Tabulku IDT)</strong>
+                  </div>
+                  <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">
+                    Vezme číslo události (např. 129 pro síťovku), najde v tabulce IDT adresu funkce v jádře a skočí na její kód (<strong>ISR</strong> – Interrupt Service Routine).
+                  </p>
+                </div>
+
+                <div class="flow-step-card">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="flow-step-num success">4</span>
+                    <strong style="font-size: 0.86rem;">Návrat instrukcí IRETQ</strong>
+                  </div>
+                  <p style="font-size: 0.8rem; color: var(--text-secondary); margin: 0;">
+                    Jakmile je práce hotová, zavolá se <code>IRETQ</code>. Procesor vytáhne uloženou záložku a program pokračuje, aniž by tušil, že ho někdo na setinu sekundy přerušil!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><layers x="2" y="2" width="20" height="20" rx="2"></layers><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg>
+                  <span class="card-title-text">Co přesně si procesor poznamená (Zásobník)</span>
+                </div>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary);">
+                Tento záchranný balíček uloží přímo hardware do bezpečné paměti jádra:
+              </p>
+              <div class="stack-frame-box">
+                <div class="stack-frame-header">
+                  <span>Uložený registr</span>
+                  <span>Lidské vysvětlení pro studenty</span>
+                  <span>Kdo to uložil?</span>
+                </div>
+                <div class="stack-slot auto-saved">
+                  <span>SS &amp; RSP</span>
+                  <span><span class="stack-desc-sub">Kde měl program rozdělané své proměnné (Zásobník)</span></span>
+                  <span class="highlight-pill kernel">Hardware CPU</span>
+                </div>
+                <div class="stack-slot auto-saved">
+                  <span>RFLAGS</span>
+                  <span><span class="stack-desc-sub">Výsledky posledních porovnání (příznaky větší/menší/nula)</span></span>
+                  <span class="highlight-pill kernel">Hardware CPU</span>
+                </div>
+                <div class="stack-slot auto-saved">
+                  <span>CS &amp; RIP</span>
+                  <span><span class="stack-desc-sub">Záložka: Přesná adresa instrukce, kde byl program přerušen</span></span>
+                  <span class="highlight-pill kernel">Hardware CPU</span>
+                </div>
+                <div class="stack-slot isr-saved">
+                  <span>RAX, RCX...</span>
+                  <span><span class="stack-desc-sub">Pracovní registry (uloží si ovladač, aby nic nepomíchal)</span></span>
+                  <span class="highlight-pill">Obslužný kód</span>
+                </div>
+              </div>
+              <div class="story-box warning" style="margin-top: 0.5rem; padding: 0.65rem 0.85rem;">
+                <div class="story-title" style="font-size: 0.84rem;">Proč je to tak geniální?</div>
+                <div style="font-size: 0.78rem; color: var(--text-secondary);">
+                  Aplikace (např. webový prohlížeč nebo hra) vůbec nemusí vědět, že v počítači existuje nějaká síťová karta nebo disk. Přerušení proběhne zcela neviditelně na pozadí!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: DVOUFÁZOVÁ OBSLUHA (TOP / BOTTOM HALF) -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektonický fígl</div>
+            <h2 class="slide-title">Dvoufázová obsluha (Top Half vs. Bottom Half)</h2>
+            <p class="slide-subtitle">Proč se obsluha rozděluje na bleskového poslíčka a klidného dělníka na pozadí</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Linux SoftIRQ &bull; Windows DPC</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="story-box danger" style="margin-top: 0;">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              Zásadní problém: Během přerušení má procesor "ucpané uši"
+            </div>
+            Když procesor obsluhuje přerušení (běží v rutině ISR), má z bezpečnostních důvodů <strong>vypnutá další přerušení</strong>. Kdyby ovladač síťové karty zpracovával celý gigabajtový film přímo v této první fázi, trvalo by to milisekundy. Během té doby by procesor přeslechl kliknutí myši, zvuková karta by ztratila data a <strong>celý počítač by viditelně zamrzl</strong>!
+          </div>
+
+          <div class="timeline-split">
+            <div class="phase-card top-half">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="color: #f43f5e; margin: 0; font-size: 1.05rem;">1. Fáze: Top Half (Rychlý poslíček)</h4>
+                <span class="highlight-pill kernel">Trvá 1 mikrosekundu</span>
+              </div>
+              <p style="font-size: 0.84rem; color: var(--text-secondary); margin: 0;">
+                Okamžitá blesková reakce přímo v ovladači (ISR). Dělá jen to nejnutnější:
+              </p>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li>Vyzvedne data z vyrovnávací paměti karty a hodí je do RAM.</li>
+                <li>Kývne na kartu: <em>„Mám to, díky!“</em> (potvrzení <strong>ACK / EOI</strong>).</li>
+                <li><strong>Nalepí lísteček na nástěnku:</strong> Naplánuje druhou fázi.</li>
+                <li><strong>Okamžitě uvolní procesor</strong> pro ostatní zařízení i programy!</li>
+                <li><strong>Přísný zákaz čekání:</strong> Rutina nesmí usnout ani čekat na disk (hrozí okamžitý deadlock).</li>
+              </ul>
+            </div>
+
+            <div class="phase-card bottom-half">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="color: #10b981; margin: 0; font-size: 1.05rem;">2. Fáze: Bottom Half (Klidný dělník)</h4>
+                <span class="highlight-pill success">Přerušení povolena</span>
+              </div>
+              <p style="font-size: 0.84rem; color: var(--text-secondary); margin: 0;">
+                Zpracování náročné logiky na pozadí, kdy už procesor normálně slyší ostatní:
+              </p>
+              <ul class="styled-list" style="font-size: 0.82rem;">
+                <li>Zkontroluje kontrolní součty síťového paketu, rozbalí šifrování a doručí data do vašeho prohlížeče.</li>
+                <li><strong>V Linuxu:</strong> Říká se tomu <code>SoftIRQ</code> nebo <code>Tasklet</code> (běží na pozadí).</li>
+                <li><strong>Ve Windows:</strong> Říká se tomu <strong>DPC (Deferred Procedure Call)</strong>.</li>
+                <li>Systém zůstává krásně plynulý i při stahování plnou gigabitovou rychlostí.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: WINDOWS IRQL & DPC LATENCY PROBLÉM -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Proč to zajímá hráče a muzikanty</div>
+            <h2 class="slide-title">Windows IRQL &amp; Proč občas praská zvuk nebo se sekají hry</h2>
+            <p class="slide-subtitle">Jak prioritní žebříček ve Windows vysvětluje tajemství fenoménu DPC Latency</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">DPC Latency &bull; Herní záseky</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                  <span class="card-title-text">Žebříček přednosti ve Windows (IRQL)</span>
+                </div>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary);">
+                Jednoduché pravidlo: <strong>Vyšší číslo má vždycky přednost</strong> a okamžitě přeruší nižší číslo:
+              </p>
+              <div class="irql-ladder">
+                <div class="irql-step high">
+                  <div>
+                    <strong>HIGH_LEVEL (31) – Poplach nejvyšší nouze</strong>
+                    <div style="font-size: 0.72rem; color: var(--text-secondary);">Okamžité zastavení PC při havárii hardware</div>
+                  </div>
+                  <span class="highlight-pill kernel">Absolutní přednost</span>
+                </div>
+                <div class="irql-step dirql">
+                  <div>
+                    <strong>DIRQL (3 až 26) – Hardwarový blesk (Top Half)</strong>
+                    <div style="font-size: 0.72rem; color: var(--text-secondary);">Přímá reakce na signál ze síťovky, myši nebo disku</div>
+                  </div>
+                  <span class="highlight-pill warning">Hardware ISR</span>
+                </div>
+                <div class="irql-step dispatch">
+                  <div>
+                    <strong>DISPATCH_LEVEL (2) – DPC dělník &amp; Plánovač</strong>
+                    <div style="font-size: 0.72rem; color: var(--text-secondary);">Dopočítávání síťových paketů a přepínání vláken procesoru</div>
+                  </div>
+                  <span class="highlight-pill">DPC úroveň</span>
+                </div>
+                <div class="irql-step passive">
+                  <div>
+                    <strong>PASSIVE_LEVEL (0) – Běžný svět</strong>
+                    <div style="font-size: 0.72rem; color: var(--text-secondary);">Všechny vaše hry, prohlížeč Chrome, Spotify, Word...</div>
+                  </div>
+                  <span class="highlight-pill success">Uživatelské programy</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                  <span class="card-title-text">Záhada praskajícího zvuku: Co je DPC Latency?</span>
+                </div>
+              </div>
+              <div class="story-box danger" style="margin-top: 0;">
+                <div class="story-title">Jak vznikne lupnutí ve sluchátkách?</div>
+                Zvuková karta má malý zásobník (buffer) na pár milisekund zvuku. Pokud má vaše grafická karta (<code>nvlddmkm.sys</code>) nebo Wi-Fi karta špatně napsaný ovladač, který se v rutině DPC "zasekne" na déle než 1&ndash;2 milisekundy, zvuková karta nedostane včas další noty. <strong>Buffer se vyprázdní a vy uslyšíte lupnutí nebo zásek obrazu ve hře!</strong>
+              </div>
+
+              <div class="sub-card" style="margin-top: 0.5rem;">
+                <div class="sub-card-header">
+                  <span class="sub-card-title">Tip pro studenty: Nástroj LatencyMon</span>
+                  <span class="highlight-pill success">Zdarma ke stažení</span>
+                </div>
+                <p class="sub-card-desc">
+                  Můžete si ho doma stáhnout a spustit. LatencyMon změří váš počítač a přesně ukáže prstem na konkrétní soubor ovladače <code>.sys</code>, který vám způsobuje lagy ve hrách!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: PRAKTICKÁ DIAGNOSTIKA V LINUXU A WINDOWS -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Jak to vyzkoušet v praxi</div>
+            <h2 class="slide-title">Kde přerušení reálně uvidíte ve svém počítači</h2>
+            <p class="slide-subtitle">Příkazy v Linuxu a sledování zátěže ve Windows</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Praktická ukázka</span>
           </div>
         </div>
         <div class="slide-body">
@@ -200,72 +1015,186 @@
             <div>
               <div class="code-box">
                 <div class="code-box-header">
-                  <span>bash &bull; Počty obsloužených přerušení na jádro CPU</span>
+                  <span>bash &bull; Tajný soubor /proc/interrupts v Linuxu</span>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre><code><span class="term-comment"># Výpis čítačů přerušení pro síťovou kartu a NVMe disk</span>
-<span class="term-prompt">$ </span><span class="term-cmd">cat</span> <span class="term-path">/proc/interrupts</span> <span class="term-pipe">|</span> <span class="term-cmd">grep</span> <span class="term-param">-E</span> <span class="term-string">"nvme|eth0|timer"</span>
+                <pre><code><span class="term-comment"># Podívejte se na počítadlo všech přerušení od zapnutí PC:</span>
+<span class="term-prompt">$ </span><span class="term-cmd">cat</span> <span class="term-path">/proc/interrupts</span> <span class="term-pipe">|</span> <span class="term-cmd">head</span> <span class="term-param">-n</span> 10
 
-<span class="term-comment"># Ukázka výstupu z /proc/interrupts:</span>
-<span class="term-out"> 128:  452109   384210   PCI-MSI 524288-edge   nvme0q0</span>
-<span class="term-out"> 129: 1420188  1399421   PCI-MSI 1572864-edge  eth0-TxRx-0</span>
-<span class="term-out"> LOC: 8492019  8120442   Local timer interrupts</span></code></pre>
+<span class="term-comment"># Výstup ukazuje, kolikrát které jádro obsloužilo jaké zařízení:</span>
+<span class="term-out">           CPU0       CPU1       CPU2       CPU3</span>
+<span class="term-out"> 128:   1482910     982104    1120491    1084200  PCI-MSI  nvme0 (Disk)</span>
+<span class="term-out"> 129:   4501289    4390122    4481023    4409180  PCI-MSI  eth0 (Síťovka)</span>
+<span class="term-out"> LOC:  28401928   27192004   28104921   27918204  Tikot hodin plánovače</span>
+
+<span class="term-comment"># Všimněte si: Miliony přerušení jsou rozděleny rovnoměrně!</span>
+<span class="term-comment"># O to se stará služba "irqbalance", aby jedno jádro nepadalo únavou.</span></code></pre>
               </div>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.4rem;">
+                Pokud by všechna čísla naskakovala jen na <code>CPU0</code> a na ostatních byla nula, počítač by byl při stahování ze sítě výrazně pomalejší.
+              </p>
             </div>
+
             <div>
               <div class="code-box">
                 <div class="code-box-header">
-                  <span>powershell &bull; Analýza času stráveného v přerušeních</span>
+                  <span>powershell &bull; Diagnostika přerušení ve Windows</span>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre><code><span class="term-comment"># Měření procenta času stráveného obsluhou přerušení a DPC</span>
+                <pre><code><span class="term-comment"># Změřte, kolik procent výkonu počítače padne na přerušení a DPC:</span>
 <span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Counter</span> <span class="term-param">-Counter</span> <span class="term-string">"\Processor(_Total)\% Interrupt Time"</span>,
-                        <span class="term-string">"\Processor(_Total)\% DPC Time"</span>
+                        <span class="term-string">"\Processor(_Total)\% DPC Time"</span> <span class="term-param">-Continuous</span>
 
-<span class="term-comment"># DPC Latency: Pokud je % DPC Time trvale nad 10 %,</span>
-<span class="term-comment"># znamená to vadný nebo přetížený ovladač zařízení!</span></code></pre>
+<span class="term-comment"># Jak těmto číslům rozumět:</span>
+<span class="term-out">Normální stav v klidu:      Méně než 1 % (vše funguje skvěle)</span>
+<span class="term-out">Stahování plnou parou:      Okolo 5 až 10 % (naprosto v pořádku)</span>
+<span class="term-out">POZOR - vadný ovladač:      Trvale nad 20 % (myš se seká, CPU hučí)</span>
+
+<span class="term-comment"># Ve Správci úloh (Ctrl+Shift+Esc) to najdete pod položkou:</span>
+<span class="term-comment"># "Systémová přerušení" (System Interrupts).</span></code></pre>
               </div>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.4rem;">
+                Když vám někdo přinese notebook, který se neustále seká, a ve Správci úloh bere proces <em>System Interrupts</em> hodně procent, víte hned: vadný disk, Wi-Fi nebo poškozený kabel!
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SHRNUTÍ & KONTROLNÍ OTÁZKY -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 9: MÝTY VS FAKTA & INTERAKTIVNÍ KVÍZ -->
+      <section class="slide" data-slide="9">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Shrnutí &amp; Kontrolní otázky</div>
-            <h2 class="slide-title">Klíčové poznatky a otázky</h2>
-            <p class="slide-subtitle">Otázky z obsluhy přerušení a událostí</p>
+            <div class="slide-category">Rychlé prověření</div>
+            <h2 class="slide-title">Mýty vs. Fakta &amp; Studentský kvíz</h2>
+            <p class="slide-subtitle">Zboření nejčastějších omylů a okamžitá kontrola, zda látce rozumíte</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Kontrolní otázky</span>
+            <span class="tag">Klikací kvíz</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="myth-fact-grid">
+            <div class="myth-card">
+              <div class="myth-title">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                Mýtus: „Page Fault znamená okamžitý pád aplikace.“
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">
+                Kdepak! To je nejčastější omyl u zkoušek. <strong>Page Fault je naprosto běžná věc.</strong> Znamená jen, že požadovaná data zatím leží na disku. Systém je v klidu načte do RAM a program jede dál. Pád nastane jedině tehdy, když program sáhne někam, kam vůbec nemá právo.
+              </p>
+            </div>
+
+            <div class="fact-card">
+              <div class="fact-title">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Fakt: „V první fázi obsluhy (ISR) se NIKDY nesmí spát ani čekat.“
+              </div>
+              <p style="font-size: 0.81rem; color: var(--text-secondary); margin: 0; line-height: 1.45;">
+                Proč by čekání na disk způsobilo okamžitý kolaps? Vznikne <strong>smrtící kruhová past (Deadlock)</strong>:
+              </p>
+              <ul class="styled-list" style="font-size: 0.77rem; margin-top: 0.35rem; margin-bottom: 0;">
+                <li><strong>Krok 1:</strong> Ovladač v ISR řekne disku: <em>„Načti soubor a já na tebe počkám.“</em></li>
+                <li><strong>Krok 2:</strong> Disk po chvíli data načte a chce procesoru oznámit: <em>„Hotovo!“</em> Jenže disk to oznamuje <strong>opět hardwarovým přerušením</strong>.</li>
+                <li><strong>Krok 3 (Past):</strong> Procesor má ale v tuto chvíli další přerušení <strong>zablokována</strong>! Signál od disku nikdy nepřijme.</li>
+                <li><strong>Výsledek:</strong> Procesor věčně čeká na zprávu, kterou sám neslyší. Zastaví se hodiny, plánovač úloh i myš a pomůže jedině tlačítko Reset.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="quiz-grid">
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q1</span>
+                <span>Proč má moderní počítač přerušení místo toho, aby se pořád dokola ptal zařízení (polling)?</span>
+              </div>
+              <div class="quiz-ans" id="ans1">
+                Protože při stálém dotazování (polling) jede procesor na 100 % i v klidu, zbytečně topí a nestíhá jiné programy. Díky přerušení může procesor spát a probudí se jen tehdy, když je opravdu co dělat.
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans1">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q2</span>
+                <span>Proč se obsluha rozděluje na dvě fáze (Top Half a Bottom Half / DPC)?</span>
+              </div>
+              <div class="quiz-ans" id="ans2">
+                První fáze (Top Half) musí bleskově převzít data a uvolnit procesor, aby nezamrzl systém a nepřeslechla se jiná zařízení. Teprve druhá fáze (Bottom Half) v klidu dopočítá zbytek s povolenými přerušeními.
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans2">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q3</span>
+                <span>Co je to DPC Latency a jak poznám, že s ní má můj počítač problém?</span>
+              </div>
+              <div class="quiz-ans" id="ans3">
+                Je to zpoždění způsobené špatně napsaným ovladačem, který zablokuje procesor na moc dlouho. Poznáte to tak, že vám při poslechu hudby praská ve sluchátkách nebo se vám ve hrách na zlomek vteřiny seká obraz.
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans3">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: ZKUŠEBNÍ SHRNUTÍ & CHECKLIST K ABSOLUTORIU -->
+      <section class="slide" data-slide="10">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Co musíte vědět ke zkoušce</div>
+            <h2 class="slide-title">Shrnutí &amp; Zkušební checklist pro studenty</h2>
+            <p class="slide-subtitle">Čtyři klíčové otázky, které se zkoušející u absolutoria a zkoušek nejčastěji ptá</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Zkušební tahák</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="summary-grid">
             <div class="summary-card">
-              <h4>1. Polling vs. Interrupt</h4>
-              <p>Schopnost porovnat energetickou a výpočetní efektivitu aktivního čekání (Polling) a přerušením řízeného I/O.</p>
+              <h4>1. Co je to Polling a proč raději používáme přerušení?</h4>
+              <p>Polling = neustálé vyptávání se zařízení (žere 100 % CPU). Přerušení = zařízení samo zazvoní signálem IRQ. Šetří energii, snižuje zahřívání a umožňuje multitasking.</p>
             </div>
+
             <div class="summary-card">
-              <h4>2. Účel tabulky IDT</h4>
-              <p>Popis funkce tabulky vektorů přerušení (Interrupt Descriptor Table) a způsobu, jakým procesor přiřazuje číslo vektoru konkrétnímu ovladači jádra.</p>
+              <h4>2. K čemu slouží tabulka IDT v paměti?</h4>
+              <p>Funguje jako telefonní seznam 256 čísel (vektorů). Když přijde signál s číslem události, procesor se podívá do IDT a hned ví, na kterou funkci v jádře má skočit.</p>
             </div>
+
             <div class="summary-card">
-              <h4>3. Top Half vs. Bottom Half</h4>
-              <p>Detailní vysvětlení, proč je obsluha rozdělena na kritickou část (okamžité převzetí dat s vypnutým IRQ) a odloženou část (dopočítání s povoleným IRQ).</p>
+              <h4>3. Proč má obsluha dvě fáze (Top / Bottom Half)?</h4>
+              <p>V první fázi (ISR) jsou vypnutá přerušení – musí trvat jen mikrosekundu (převzít data a potvrdit). Druhá fáze (SoftIRQ v Linuxu, DPC ve Windows) v klidu dopočítá zbytek.</p>
             </div>
+
             <div class="summary-card">
-              <h4>4. Otázka k procvičení a zamyšlení</h4>
-              <p><em>„Vysvětlete, jak procesor reaguje na hardwarovou výjimku Page Fault a proč tato výjimka nutně neznamená pád programu.“</em></p>
+              <h4>4. Co je to Page Fault a proč to není pád programu?</h4>
+              <p>Je to výjimka CPU číslo 14. Říká: <em>„Tato data zatím nejsou v RAM.“</em> Systém je dočte z disku a program v klidu pokračuje dál. Je to základ fungování virtuální paměti.</p>
             </div>
+          </div>
+
+          <div class="story-box" style="margin-top: 0.8rem;">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              Kam pokračujeme příště? (Lekce 05)
+            </div>
+            Přerušení od časovače procesoru (Timer IRQ) každých 10 milisekund probudí plánovač operačního systému. V další přednášce se podíváme na <strong>Životní cyklus procesu a spuštění programu</strong> (od poklepání na ikonu přes načtení EXE souboru až po běh v paměti).
           </div>
         </div>
       </section>
@@ -274,7 +1203,7 @@
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="03_rezimy_operacniho_systemu_a_privilegia.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 03: Režimy operačního systému a privilegia (Ctrl+Šipka vlevo)">
+      <a href="03_rezimy_operacniho_systemu_a_privilegia.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 03: Režimy operačního systému a privilegia (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu OSY20">
@@ -287,7 +1216,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 10</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -375,7 +1304,157 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glossary Modal (Slovník pojmů) -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 820px; width: 95vw; max-height: 85vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="flex-shrink: 0;">
+          <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Slovník pojmů &bull; Přerušení a obsluha událostí
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body" style="overflow-y: auto; flex: 1; padding: 1rem 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;">
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">IRQ</span>
+              <span class="glossary-badge glossary-badge-architecture">Hardware</span>
+            </div>
+            <div class="glossary-full-name">Interrupt Request (Zvonek pro procesor)</div>
+            <div class="glossary-desc">Elektrický signál, kterým zařízení (myš, disk, síťovka) říká procesoru: <em>„Mám pro tebe data, vyruš se ze své práce a věnuj se mi!“</em></div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">ISR</span>
+              <span class="glossary-badge glossary-badge-security">Jádro</span>
+            </div>
+            <div class="glossary-full-name">Interrupt Service Routine (Obslužná funkce)</div>
+            <div class="glossary-desc">Krátká funkce v ovladači, na kterou procesor skočí po zazvonění přerušení. Musí být blesková, aby nebrzdila zbytek systému.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">IDT</span>
+              <span class="glossary-badge glossary-badge-architecture">x86_64</span>
+            </div>
+            <div class="glossary-full-name">Interrupt Descriptor Table (Telefonní seznam obsluh)</div>
+            <div class="glossary-desc">Tabulka v paměti o 256 položkách. Podle čísla události (vektoru) v ní procesor okamžitě najde adresu příslušné obslužné funkce v jádře.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">APIC</span>
+              <span class="glossary-badge glossary-badge-architecture">Čipset</span>
+            </div>
+            <div class="glossary-full-name">Chytrá ústředna přerušení</div>
+            <div class="glossary-desc">Moderní řadič, který nahradil starý PIC. Umí rozdělovat přerušení mezi jednotlivá jádra vícejádrového procesoru (aby jedno jádro nedřelo všechno).</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">MSI / MSI-X</span>
+              <span class="glossary-badge glossary-badge-admin">PCIe</span>
+            </div>
+            <div class="glossary-full-name">Message Signaled Interrupts (SMS zprávy po sběrnici)</div>
+            <div class="glossary-desc">Moderní způsob, kdy karty netahají žádné speciální dráty pro přerušení, ale pošlou do paměti RAM normální datovou zprávu. Podporuje tisíce linek.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Top Half</span>
+              <span class="glossary-badge glossary-badge-security">Fáze 1</span>
+            </div>
+            <div class="glossary-full-name">První fáze obsluhy (Rychlý poslíček)</div>
+            <div class="glossary-desc">Okamžitá reakce ovladače trvající pár mikrosekund. Převezme data do RAM, potvrdí zařízení převzetí a naplánuje druhou fázi.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Bottom Half / DPC</span>
+              <span class="glossary-badge glossary-badge-security">Fáze 2</span>
+            </div>
+            <div class="glossary-full-name">Druhá fáze obsluhy (Dělník na pozadí)</div>
+            <div class="glossary-desc">Zpracování složité logiky (např. rozbalení síťového paketu) na pozadí s povolenými přerušeními. Zajišťuje, aby počítač nezamrzal při zátěži.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">IRQL</span>
+              <span class="glossary-badge glossary-badge-architecture">Windows NT</span>
+            </div>
+            <div class="glossary-full-name">Žebříček přednosti ve Windows</div>
+            <div class="glossary-desc">Stupnice priorit 0 až 31. Kód s vyšším číslem vždy okamžitě přeruší a pozastaví kód s nižším číslem. Běžné programy běží na nule (PASSIVE_LEVEL).</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Page Fault</span>
+              <span class="glossary-badge glossary-badge-admin">Vektor 14</span>
+            </div>
+            <div class="glossary-full-name">Výpadek stránky (Chybějící data v RAM)</div>
+            <div class="glossary-desc">Naprosto normální situace virtuální paměti! Nastane, když program chce data, která zatím leží na disku. Systém je v tichosti dočte a program pokračuje.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">NMI</span>
+              <span class="glossary-badge glossary-badge-security">Kritické</span>
+            </div>
+            <div class="glossary-full-name">Nemaskovatelné přerušení (Poplach nejvyšší nouze)</div>
+            <div class="glossary-desc">Signál procesoru, který nelze softwarově zakázat. Vyvolá se při havarijních stavech, například při vadné paměti RAM nebo přehřívání čipu.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">IRETQ</span>
+              <span class="glossary-badge glossary-badge-architecture">Instrukce</span>
+            </div>
+            <div class="glossary-full-name">Návrat z přerušení (Otevření knihy se záložkou)</div>
+            <div class="glossary-desc">Instrukce procesoru, která ze zásobníku vytáhne původní stav registrů a vrátí program přesně do bodu, kde byl před přerušením pozastaven.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Polling</span>
+              <span class="glossary-badge glossary-badge-admin">Koncept</span>
+            </div>
+            <div class="glossary-full-name">Aktivní čekání (Neustálé vyptávání)</div>
+            <div class="glossary-desc">Nevýhodný způsob komunikace, kde procesor v nekonečné smyčce dokola testuje zařízení. Zbytečně žere energii a topí na 100 %.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
+  <script>
+    // Interaktivní odkrývání odpovědí v kvízu na snímku 9
+    document.addEventListener('DOMContentLoaded', () => {
+      const quizButtons = document.querySelectorAll('.btn-quiz-reveal');
+      quizButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const ansEl = document.getElementById(targetId);
+          if (!ansEl) return;
+          const isRevealed = ansEl.classList.contains('revealed');
+          if (isRevealed) {
+            ansEl.classList.remove('revealed');
+            btn.querySelector('span').textContent = 'Zobrazit odpověď';
+          } else {
+            ansEl.classList.add('revealed');
+            btn.querySelector('span').textContent = 'Skrýt odpověď';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

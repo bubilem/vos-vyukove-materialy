@@ -10,6 +10,312 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Doplňkové vizuální styly pro srozumitelné pochopení procesů */
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: #67e8f9;
+    }
+    .highlight-pill.kernel {
+      background: rgba(244, 63, 94, 0.12);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: #fda4af;
+    }
+    .highlight-pill.success {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+    }
+    .highlight-pill.warning {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #fde68a;
+    }
+
+    .story-box {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%);
+      border-left: 3px solid var(--accent);
+      padding: 0.95rem 1.15rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .story-box.danger {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.09) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left-color: #f43f5e;
+    }
+    .story-box.warning {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.09) 0%, rgba(15, 23, 42, 0.4) 100%);
+      border-left-color: #f59e0b;
+    }
+    .story-title {
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.92rem;
+    }
+    .story-box.danger .story-title { color: #f43f5e; }
+    .story-box.warning .story-title { color: #f59e0b; }
+
+    /* Karty metafor */
+    .analogy-card {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      padding: 0.85rem 1.05rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+    }
+    .analogy-icon-wrap {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 182, 212, 0.12);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+    .analogy-icon-wrap.danger { background: rgba(244, 63, 94, 0.12); color: #f43f5e; }
+    .analogy-icon-wrap.success { background: rgba(16, 185, 129, 0.12); color: #10b981; }
+    .analogy-icon-wrap.warning { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+
+    /* Kroky a karty */
+    .flow-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      margin-top: 0.4rem;
+    }
+    @media (max-width: 992px) {
+      .flow-steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .flow-steps-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .flow-step-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .flow-step-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      background: rgba(6, 182, 212, 0.05);
+    }
+    .flow-step-num {
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0f172a;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+    .flow-step-num.kernel { background: #f43f5e; color: #ffffff; }
+    .flow-step-num.success { background: #10b981; color: #ffffff; }
+
+    /* Porovnávací tabulka */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      margin-top: 0.4rem;
+    }
+    .compare-table th {
+      text-align: left;
+      padding: 0.55rem 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+    .compare-table td {
+      padding: 0.55rem 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+    .compare-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Mýty vs. Fakta */
+    .myth-fact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 0.4rem;
+    }
+    @media (max-width: 768px) {
+      .myth-fact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .myth-card {
+      background: rgba(244, 63, 94, 0.06);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+    .fact-card {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+    }
+    .myth-title {
+      color: #f43f5e;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+    .fact-title {
+      color: #10b981;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Kvízové karty */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 900px) {
+      .quiz-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .quiz-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      justify-content: space-between;
+    }
+    .quiz-card:hover {
+      border-color: rgba(6, 182, 212, 0.5);
+    }
+    .quiz-q {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+    .quiz-q-num {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .quiz-ans {
+      display: none;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      background: rgba(6, 182, 212, 0.07);
+      border-left: 2px solid var(--accent);
+      padding: 0.55rem 0.75rem;
+      border-radius: 0 4px 4px 0;
+    }
+    .quiz-ans.revealed {
+      display: block;
+      animation: fadeInAns 0.25s ease-out;
+    }
+    @keyframes fadeInAns {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .btn-quiz-reveal {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      align-self: flex-start;
+    }
+    .btn-quiz-reveal:hover {
+      background: var(--accent);
+      color: #0f172a;
+      border-color: var(--accent);
+    }
+
+    /* Schéma paměťového rozložení procesu */
+    .mem-layout-box {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.25);
+    }
+    .mem-zone {
+      padding: 0.45rem 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+    }
+    .mem-zone:last-child { border-bottom: none; }
+    .mem-zone.stack { background: rgba(168, 85, 247, 0.12); color: #d8b4fe; border-left: 3px solid #a855f7; }
+    .mem-zone.gap   { background: rgba(255, 255, 255, 0.02); color: var(--text-muted); justify-content: center; font-style: italic; font-size: 0.75rem; }
+    .mem-zone.heap  { background: rgba(56, 189, 248, 0.12); color: #7dd3fc; border-left: 3px solid #38bdf8; }
+    .mem-zone.bss   { background: rgba(245, 158, 11, 0.12); color: #fde68a; border-left: 3px solid #f59e0b; }
+    .mem-zone.data  { background: rgba(16, 185, 129, 0.12); color: #6ee7b7; border-left: 3px solid #10b981; }
+    .mem-zone.text  { background: rgba(244, 63, 94, 0.12); color: #fda4af; border-left: 3px solid #f43f5e; }
+  </style>
 </head>
 <body>
 
@@ -36,8 +342,8 @@
         </div>
       </div>
       <div class="header-right">
-        <span class="tag tag-primary">Procesy &amp; ELF/PE</span>
-        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+        <span class="tag tag-primary">Procesy &bull; ELF / PE &bull; fork/exec</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv (T)">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
       </div>
@@ -45,163 +351,445 @@
 
     <main class="slides-viewport">
 
-      <!-- SLIDE 1: TITLE -->
+      <!-- SLIDE 1: TITLE HERO -->
       <section class="slide title-slide active" data-slide="1">
         <div class="hero-badge">Modul OSY20 &bull; 5. přednáška (45 min)</div>
         <h1 class="hero-title">Životní cyklus procesu &amp; Spuštění programu</h1>
         <p class="hero-desc">
-          Od pasivního binárního souboru na disku k aktivní instrukci v CPU: formáty spustitelných souborů (ELF v Linuxu, PE ve Windows), role systémového zavaděče (Loader), mapování sekcí do virtuální paměti, vznik procesu (fork/exec vs. CreateProcess) a stavy procesů.
+          Co se stane v počítači mezi okamžikem, kdy dvakrát kliknete na ikonu hry, a chvílí, kdy se na displeji objeví první snímek? Prozkoumáme cestu od spícího souboru na disku (ELF / PE) přes kouzlo systémového zavaděče až po oživení v paměti RAM a stavy procesů.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Binární formáty</span>
-            <span class="hero-meta-val">ELF (.text, .data, .bss) vs PE</span>
+            <span class="hero-meta-label">Mrtvý vs. Živý</span>
+            <span class="hero-meta-val">Program na disku vs. Běžící proces</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Vznik procesu</span>
-            <span class="hero-meta-val">fork() + execve() vs CreateProcess()</span>
+            <span class="hero-meta-label">Jak je kód zabalený</span>
+            <span class="hero-meta-val">Sekce .text, .data, .bss a hlavičky</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Stavový automat</span>
-            <span class="hero-meta-val">Ready, Running, Blocked, Zombie</span>
+            <span class="hero-meta-label">Příchod na svět</span>
+            <span class="hero-meta-val">Klonování fork() vs. CreateProcess()</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Od narození po hrob</span>
+            <span class="hero-meta-val">Ready, Running, Blocked a Zombie</span>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 2: STRUKTURA BINÁRKY (ELF VS PE) -->
+      <!-- SLIDE 2: PROGRAM VS PROCES & RECEPT -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Binární formáty</div>
-            <h2 class="slide-title">Anatomie spustitelného souboru</h2>
-            <p class="slide-subtitle">Jak je kód organizován uvnitř souboru ELF (Linux) a PE (Windows)</p>
+            <div class="slide-category">Základní intuice</div>
+            <h2 class="slide-title">Program vs. Proces: Kuchařka a vaření</h2>
+            <p class="slide-subtitle">Proč je zásadní rozdíl mezi souborem na disku a běžící instancí v paměti</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Klíčová struktura</span>
+            <span class="tag">Klíčový rozdíl</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  <span class="card-title-text">Program: Pasivní recept v kuchařce</span>
+                </div>
+              </div>
+              <p>Soubor uložený na SSD disku (např. <code>game.exe</code> nebo <code>/bin/bash</code>):</p>
+              <div class="analogy-card" style="margin: 0.3rem 0;">
+                <div class="analogy-icon-wrap warning">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                </div>
+                <div>
+                  <strong style="color: #f59e0b; font-size: 0.88rem;">Metafora:</strong>
+                  <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                    Kuchařská kniha ležící zavřená v polici. Obsahuje návod, jak upéct pizzu, ale sama o sobě nic nedělá, nehřeje a těsto nezamíchá.
+                  </p>
+                </div>
+              </div>
+              <ul class="styled-list">
+                <li>Mrtvý shluk bajtů na disku, žádnou paměť RAM ani procesor nespotřebovává.</li>
+                <li>Může na disku ležet roky, aniž by o něm procesor věděl.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span class="card-title-text">Proces: Kuchař, který aktivně vaří!</span>
+                </div>
+              </div>
+              <p>Program probuzený k životu operačním systémem v paměti RAM:</p>
+              <div class="analogy-card" style="margin: 0.3rem 0;">
+                <div class="analogy-icon-wrap success">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                </div>
+                <div>
+                  <strong style="color: #10b981; font-size: 0.88rem;">Metafora:</strong>
+                  <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.2rem;">
+                    Kuchař v kuchyni! V ruce má vařečku (jádro CPU), na lince mouku a sýr (paměť RAM), troubu (grafická karta) a čte instrukce z knihy řádek po řádku.
+                  </p>
+                </div>
+              </div>
+              <table class="compare-table">
+                <thead>
+                  <tr>
+                    <th>Vlastnost</th>
+                    <th>Program</th>
+                    <th>Proces</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Kde existuje?</strong></td>
+                    <td>Pouze na disku (SSD / HDD)</td>
+                    <td style="color: #10b981;">Žije v operační paměti (RAM)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Kolikrát může běžet?</strong></td>
+                    <td>Je to 1 soubor</td>
+                    <td style="color: #10b981;">Jeden program můžete spustit 10&times; (10 procesů)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Má vlastní identitu?</strong></td>
+                    <td>Má jen název souboru</td>
+                    <td style="color: #10b981;">Má unikátní číslo <strong>PID</strong>, vlastníka a práva</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: ANATOMIE SPOUŠTĚCÍHO SOUBORU (ELF / PE) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Jak je program zabalený</div>
+            <h2 class="slide-title">Anatomie spustitelného souboru (ELF a PE)</h2>
+            <p class="slide-subtitle">Co je uvnitř souboru .exe ve Windows a binárky v Linuxu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Sekce souboru</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div>
-              <div class="layer-stack">
-                <div class="layer-item" style="border-color: #f59e0b; background: rgba(245, 158, 11, 0.15);">
-                  <span>Hlavička souboru (ELF / PE Header, Magic Bytes, Entry Point)</span>
-                  <span class="sys-badge sys-badge-hw">Header</span>
+              <div class="mem-layout-box">
+                <div class="mem-zone text">
+                  <span>Hlavička souboru (Magic Bytes: 0x7F 'ELF' nebo 'MZ')</span>
+                  <span class="highlight-pill kernel">Průkaz totožnosti</span>
                 </div>
-                <div class="layer-item kernel-layer">
-                  <span>Sekce .text (Strojové instrukce procesoru, Read-Only, Executable)</span>
-                  <span class="sys-badge sys-badge-kernel">Kód</span>
+                <div class="mem-zone text">
+                  <span>Sekce .text &bull; Strojový kód programu</span>
+                  <span class="highlight-pill kernel">Jen pro čtení &amp; běh</span>
                 </div>
-                <div class="layer-item" style="border-color: #38bdf8; background: rgba(56, 189, 248, 0.15);">
-                  <span>Sekce .rodata (Konstantní řetězce, konstanty, Read-Only)</span>
-                  <span class="sys-badge sys-badge-user">Konstanty</span>
+                <div class="mem-zone data">
+                  <span>Sekce .rodata &bull; Konstantní texty ("Ahoj světe")</span>
+                  <span class="highlight-pill">Jen pro čtení</span>
                 </div>
-                <div class="layer-item" style="border-color: #10b981; background: rgba(16, 185, 129, 0.15);">
-                  <span>Sekce .data (Inicializované globální a statické proměnné, Read-Write)</span>
-                  <span class="sys-badge sys-badge-rt">Globální data</span>
+                <div class="mem-zone data">
+                  <span>Sekce .data &bull; Proměnné s výchozí hodnotou (int skore = 100;)</span>
+                  <span class="highlight-pill success">Čtení i zápis</span>
                 </div>
-                <div class="layer-item">
-                  <span>Sekce .bss (Neinicializované proměnné – na disku nezabírá místo, nuluje loader)</span>
-                  <span class="sys-badge">BSS</span>
+                <div class="mem-zone bss">
+                  <span>Sekce .bss &bull; Vynulované proměnné (int buffer[10000];)</span>
+                  <span class="highlight-pill warning">Šetří místo na disku!</span>
+                </div>
+              </div>
+              <div class="story-box warning" style="margin-top: 0.5rem; padding: 0.65rem 0.85rem;">
+                <div class="story-title" style="font-size: 0.85rem;">Fígl se sekcí .bss pro úsporu disku:</div>
+                <div style="font-size: 0.79rem; color: var(--text-secondary);">
+                  Kdybyste v programu vytvořili pole o velikosti 1 GB samých nul, soubor na disku nebude mít 1 GB! V souboru je jen kratičká poznámka: <em>„Až mě spustíš, připrav v RAM 1 GB nul.“</em> O to se postará zavaděč za běhu.
                 </div>
               </div>
             </div>
+
             <div class="content-card">
-              <h4>Dynamické linkování (.so / .dll)</h4>
-              <p>Většina moderních programů není statická, ale dynamicky linkovaná:</p>
-              <ul class="styled-list">
-                <li>V binárním souboru je uložena pouze tabulka importů (jaké funkce z jakých dynamických knihoven program potřebuje).</li>
-                <li><strong>Dynamic Linker / Loader (ld-linux.so ve Windows ntdll.dll):</strong> Před spuštěním najde knihovny v souborovém systému, namapuje je do paměti a provede provázání adres (Relocation).</li>
-                <li>Výhoda: Úspora fyzické paměti – kód knihovny <code>libc.so</code> je v RAM fyzicky pouze jednou a sdílí jej stovky procesů.</li>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><package x="2" y="2" width="20" height="20" rx="2"></package><path d="M16.5 9.4 7.55 4.24a1.78 1.78 0 0 0-2.5 1.55v12.42a1.78 1.78 0 0 0 2.5 1.55L16.5 14.6a1.78 1.78 0 0 0 0-3.2z"></path></svg>
+                  <span class="card-title-text">Kouzelník jménem Loader (Zavaděč)</span>
+                </div>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                Když dvakrát kliknete na ikonu, systémový zavaděč provede tyto 3 věci:
+              </p>
+              <ul class="styled-list" style="font-size: 0.83rem;">
+                <li><strong>1. Zkontroluje průkaz (Magic Bytes):</strong> Zda soubor není poškozený a zda je určen pro náš procesor (např. x86_64 vs. ARM64).</li>
+                <li><strong>2. Připraví virtuální pokojíček:</strong> Namapuje sekci <code>.text</code> jako zakázanou pro zápis (aby si program omylem nebo virem nepřepsal vlastní kód) a sekci <code>.data</code> pro zápis.</li>
+                <li><strong>3. Najde Entry Point:</strong> Zjistí, na které přesné adrese v paměti začíná první instrukce (vstupní brána do programu, kde se zavolá váš <code>main()</code>).</li>
               </ul>
+              <div class="highlight-pill" style="margin-top: auto;">Linux používá formát ELF &bull; Windows formát PE (.exe / .dll)</div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: MECHANISMUS VZNIKU PROCESU -->
-      <section class="slide" data-slide="3">
-        <div class="slide-header">
-          <div class="slide-titles">
-            <div class="slide-category">Systémová volání</div>
-            <h2 class="slide-title">Jak vzniká proces: Unix vs. Windows</h2>
-            <p class="slide-subtitle">Srovnání dvoukrokového modelu fork/exec a jednokrokového CreateProcess</p>
-          </div>
-          <div class="slide-tags">
-            <span class="tag">Otázka k zamyšlení</span>
-          </div>
-        </div>
-        <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Unixový model: <code>fork()</code> + <code>execve()</code></h4>
-              <ol class="styled-list">
-                <li><strong>fork():</strong> Vytvoří přesný klon volajícího procesu (rodiče). Potomek získá stejnou paměť, deskriptory souborů a oprávnění.
-                  <ul class="styled-list">
-                    <li>Optimalizace <strong>Copy-on-Write (CoW):</strong> Paměť se ve skutečnosti fyzicky nekopíruje, pouze se označí jako Read-Only a sdílí se, dokud jeden z procesů neprovede zápis.</li>
-                  </ul>
-                </li>
-                <li><strong>execve():</strong> Nahradí paměťový prostor aktuálního procesu novým binárním obrazem z disku a spustí jeho <code>main()</code>.</li>
-                <li>Tento oddělený dvoukrokový mechanismus umožňuje např. přesměrovat vstupy a výstupy (roury) ještě před spuštěním nového programu.</li>
-              </ol>
-            </div>
-            <div class="content-card">
-              <h4>Windows model: <code>CreateProcess()</code></h4>
-              <ul class="styled-list">
-                <li>Vytvoření procesu probíhá v <strong>jediném komplexním volání API</strong>.</li>
-                <li>Předávají se desítky parametrů: název spustitelného souboru, parametry příkazové řádky, bezpečnostní deskriptory, proměnné prostředí a konfigurace oken.</li>
-                <li>Jádro rovnou alokuje nový adresní prostor, načte PE binárku, připraví vlákno a spustí jej.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SLIDE 4: STAVOVÝ AUTOMAT PROCESU -->
+      <!-- SLIDE 4: DYNAMICKÉ LINKOVÁNÍ (DLL A .SO) -->
       <section class="slide" data-slide="4">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Řízení procesu</div>
-            <h2 class="slide-title">Stavy procesu a přechody mezi nimi</h2>
-            <p class="slide-subtitle">Od narození (New) po ukončení (Terminated / Zombie)</p>
+            <div class="slide-category">Sdílení kódu</div>
+            <h2 class="slide-title">Dynamické knihovny: Proč nemá každá hra vlastní kopii Windows?</h2>
+            <p class="slide-subtitle">Jak fungují soubory .dll ve Windows a .so v Linuxu a proč šetří gigabajty RAM</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Klíčový diagram</span>
+            <span class="tag">DLL &bull; Sdílení paměti</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
             <div class="content-card">
-              <h4>Pět základních stavů procesu</h4>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><copy x="8" y="8" width="12" height="12" rx="2"></copy><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
+                  <span class="card-title-text">Statické linkování (Starý způsob)</span>
+                </div>
+              </div>
+              <p>Představte si, že každá kniha v knihovně by na konci měla vytištěný celý slovník cizích slov:</p>
               <ul class="styled-list">
-                <li><span class="process-state-badge state-ready">New</span> – Proces je vytvářen, alokují se struktury PCB (Process Control Block).</li>
-                <li><span class="process-state-badge state-ready">Ready (Připraven)</span> – Proces má vše potřebné v paměti a čeká ve frontě na přidělení procesoru plánovačem.</li>
-                <li><span class="process-state-badge state-running">Running (Běžící)</span> – Instrukce procesu jsou právě vykonávány na jádře CPU.</li>
-                <li><span class="process-state-badge state-blocked">Blocked / Waiting (Čekající)</span> – Proces čeká na externí událost (dokončení čtení z disku, příchod síťového paketu, spánek). CPU mu nemůže být přiděleno.</li>
-                <li><span class="process-state-badge state-zombie">Terminated (Ukončen)</span> – Proces skončil, uvolnil paměť, ale jeho návratový kód čeká v tabulce procesů, až si jej rodič vyzvedne voláním <code>wait()</code>.</li>
+                <li>Všechny funkce pro kreslení oken, zvuk i matematiku jsou napevno zakomponované přímo do každého <code>.exe</code> souboru.</li>
+                <li><strong>Nevýhoda 1:</strong> Soubory jsou obrovské.</li>
+                <li><strong>Nevýhoda 2 (Plýtvání RAM):</strong> Kdybyste spustili 20 programů, kód pro zobrazení okna by byl v paměti RAM zbytečně dvacetkrát!</li>
+                <li><strong>Nevýhoda 3:</strong> Bezpečnostní chyba v knihovně znamená nutnost přeložit a vydat znova všechny programy na světě.</li>
               </ul>
             </div>
+
             <div class="content-card">
-              <h4>Co je proces Zombie a Sirotek (Orphan)?</h4>
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><link2 x1="15" y1="7" x2="9" y2="13"></link2><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                  <span class="card-title-text">Dynamické linkování (.dll a .so)</span>
+                </div>
+              </div>
+              <p>Program má v sobě jen nákupní lístek: <em>„K běhu budu potřebovat knihovnu kernel32.dll.“</em></p>
               <ul class="styled-list">
-                <li><strong>Zombie proces:</strong> Proces, který skončil (např. zavolal <code>exit(0)</code>), ale jeho rodič ještě nezavolal <code>wait()</code>. Nezabírá RAM ani CPU, ale zabírá záznam v tabulce procesů (PID).</li>
-                <li><strong>Sirotek (Orphan):</strong> Proces, jehož rodičovský proces skončil dříve než on sám. Jádro sirotka automaticky adoptuje procesem <code>init / systemd (PID 1)</code>, který po jeho skončení řádně zavolá <code>wait()</code> a uklidí záznam.</li>
+                <li>Při spuštění zavaděč najde knihovnu v systému a připojí ji k programu.</li>
+                <li><strong>Zázrak sdílené paměti:</strong> Fyzický kód knihovny leží v celé paměti RAM <strong>přesně jedenkrát</strong>! Všechny programy v počítači se dívají na stejné místo ve fyzické paměti.</li>
+                <li><strong>Snadné aktualizace:</strong> Když Microsoft nebo tvůrci Linuxu opraví chybu v knihovně, oprava začne okamžitě platit pro všechny programy v počítači.</li>
+              </ul>
+              <div class="story-box danger" style="margin-top: 0.3rem; padding: 0.55rem 0.85rem;">
+                <div class="story-title" style="font-size: 0.82rem;">Znáte hlášku: "MSVCR140.dll nebyl nalezen"?</div>
+                <div style="font-size: 0.77rem; color: var(--text-secondary);">
+                  Přesně to se stane, když programu chybí dynamická knihovna, na kterou spoléhá. Program se odmítne vůbec spustit!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: VZNIK PROCESU: UNIX VS WINDOWS -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Jak se rodí proces</div>
+            <h2 class="slide-title">Dva pohledy na svět: Klonování vs. Narození na zelené louce</h2>
+            <p class="slide-subtitle">Proč Linux používá fork() + execve(), zatímco Windows volá CreateProcess()</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">fork &bull; CreateProcess</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><users x="2" y="2" width="20" height="20" rx="2"></users><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                  <span class="card-title-text">Unixový svět: fork() a execve()</span>
+                </div>
+              </div>
+              <p>V Linuxu a macOS se nový proces téměř nikdy nenarodí sám od sebe – <strong>vždycky se nejdřív naklonuje z rodiče</strong>!</p>
+              <div class="flow-steps-grid" style="grid-template-columns: 1fr; gap: 0.45rem;">
+                <div class="flow-step-card">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="flow-step-num">1</span>
+                    <strong style="font-size: 0.85rem;">fork(): Vytvoření dokonalého dvojčete</strong>
+                  </div>
+                  <p style="font-size: 0.79rem; color: var(--text-secondary); margin: 0;">
+                    Rodič se rozdvojí. Vznikne potomek, který má přesně stejnou paměť, otevřené soubory i proměnné.
+                  </p>
+                </div>
+                <div class="flow-step-card">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="flow-step-num success">2</span>
+                    <strong style="font-size: 0.85rem;">execve(): Výměna mozku!</strong>
+                  </div>
+                  <p style="font-size: 0.79rem; color: var(--text-secondary); margin: 0;">
+                    Potomek zahodí původní paměť rodiče a natáhne do sebe úplně nový program z disku.
+                  </p>
+                </div>
+              </div>
+              <div class="story-box" style="margin-top: 0.35rem; padding: 0.5rem 0.8rem; font-size: 0.8rem;">
+                <strong>Geniální výhoda:</strong> Mezi <code>fork</code> a <code>execve</code> může rodič potomkovi přenastavit vstup a výstup – přesně takhle fungují unixové roury (<code>|</code>)!
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><plus-circle cx="12" cy="12" r="10"></plus-circle><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                  <span class="card-title-text">Windows svět: CreateProcess()</span>
+                </div>
+              </div>
+              <p>Windows žádné klonování nepoužívá. Má jedno obrovské, mocné systémové volání:</p>
+              <ul class="styled-list">
+                <li>Funkce <code>CreateProcess()</code> bere <strong>10 různých parametrů</strong>.</li>
+                <li>Rovnou řeknete: <em>„Tady je soubor na disku, tyto parametry mu předej, toto je jeho pracovní složka a takhle velké okno mu otevři.“</em></li>
+                <li>Systém na zelené louce postaví zbrusu nový proces, rovnou do něj natáhne PE soubor a spustí jeho první vlákno.</li>
+                <li>Jednodušší na pochopení, ale méně flexibilní pro skládání příkazů než unixové roury.</li>
+              </ul>
+              <div class="highlight-pill success" style="margin-top: auto;">Windows tvoří proces jedním vrzem &bull; Unix ve dvou krocích</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: COPY-ON-WRITE KOUZLO -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Chytrá optimalizace</div>
+            <h2 class="slide-title">Kouzlo Copy-on-Write: Proč je klonování bleskové?</h2>
+            <p class="slide-subtitle">Jak operační systém obelstí kopírování gigabajtů paměti RAM</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">CoW &bull; Trik jádra</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="story-box danger" style="margin-top: 0;">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><alert-circle cx="12" cy="12" r="10"></alert-circle><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              Zdánlivý problém s klonováním
+            </div>
+            Představte si proces, který v RAM zabírá 4 GB dat. Kdyby volání <code>fork()</code> muselo v paměti fyzicky zkopírovat všechny 4 gigabajty bajt po bajtu, trvalo by to několik desetin sekundy! A kdyby potomek hned vzápětí zavolal <code>execve()</code>, celé tohle obří kopírování by se okamžitě spláchlo do koše.
+          </div>
+
+          <div class="grid-2" style="margin-top: 0.6rem;">
+            <div class="content-card">
+              <h4 style="color: #10b981; margin: 0; font-size: 1rem;">Geniální řešení: Fyzicky se nekopíruje VŮBEC NIC!</h4>
+              <p style="font-size: 0.83rem; color: var(--text-secondary);">
+                Operační systém rodiči i potomkovi pouze nastaví ukazatele na <strong>stejnou fyzickou paměť v RAM</strong>.
+              </p>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li>Všechny stránky paměti se označí příznakem <strong>Jen pro čtení (Read-Only)</strong>.</li>
+                <li>Oba procesy z nich mohou bleskově číst bez jakékoliv prodlevy (fork proběhne za pár mikrosekund).</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4 style="color: var(--accent); margin: 0; font-size: 1rem;">Kopíruje se teprve při změně (Copy-on-Write)</h4>
+              <p style="font-size: 0.83rem; color: var(--text-secondary);">
+                Co když chce potomek do nějaké proměnné zapsat novou hodnotu?
+              </p>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li>Při pokusu o zápis do Read-Only paměti hardware vyvolá výjimku <strong>Page Fault</strong>.</li>
+                <li>Jádro systém tiše zasáhne: <em>„Aha, vy chcete zapisovat! Dobře, zkopíruji jen tuto jednu 4KB stránku zvlášť pro tebe.“</em></li>
+                <li>Rodič má svou původní hodnotu, potomek má novou kopii. Ušetřily se gigabajty paměti i drahocenný čas procesoru!</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: PRAKTICKÁ INSPEKCE BINÁREK A PROCESŮ -->
-      <section class="slide" data-slide="5">
+      <!-- SLIDE 7: STAVOVÝ AUTOMAT PROCESU -->
+      <section class="slide" data-slide="7">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Praktická diagnostika</div>
-            <h2 class="slide-title">Inspekce sekcí ELF a stromu procesů</h2>
-            <p class="slide-subtitle">Nástroje readelf, size, pstree a Get-Process</p>
+            <div class="slide-category">Život procesu v čase</div>
+            <h2 class="slide-title">Stavy procesu: Od čekárny u doktora po hrob</h2>
+            <p class="slide-subtitle">Jak plánovač přepíná procesy mezi stavem Připraven, Běžící a Čekající</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Terminál &bull; readelf</span>
+            <span class="tag">Stavový automat</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><activity points="22 12 18 12 15 21 9 3 6 12 2 12"></activity><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                  <span class="card-title-text">Metafora čekárny u lékaře</span>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.45rem;">
+                <div class="sub-card">
+                  <div class="sub-card-header">
+                    <span class="sub-card-title"><span class="process-state-badge state-ready">New</span> Vytváří se</span>
+                  </div>
+                  <p class="sub-card-desc">Pacient přichází do budovy polikliniky, zakládá se mu karta (struktura PCB v jádře).</p>
+                </div>
+                <div class="sub-card">
+                  <div class="sub-card-header">
+                    <span class="sub-card-title"><span class="process-state-badge state-ready">Ready (Připraven)</span> V čekárně</span>
+                  </div>
+                  <p class="sub-card-desc">Má všechno nachystané, sedí na židli a čeká, až sestra zavolá jeho číslo na řadu.</p>
+                </div>
+                <div class="sub-card">
+                  <div class="sub-card-header">
+                    <span class="sub-card-title"><span class="process-state-badge state-running">Running (Běžící)</span> V ordinaci</span>
+                  </div>
+                  <p class="sub-card-desc">Lékař (jádro CPU) se mu plně věnuje a provádí jeho instrukce.</p>
+                </div>
+                <div class="sub-card">
+                  <div class="sub-card-header">
+                    <span class="sub-card-title"><span class="process-state-badge state-blocked">Blocked (Čekající)</span> Poslán na rentgen</span>
+                  </div>
+                  <p class="sub-card-desc">Čeká na data z disku nebo sítě. Nemá smysl, aby seděl u doktora – lékař mezitím vezme dalšího pacienta z čekárny!</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><users x="2" y="2" width="20" height="20" rx="2"></users><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                  <span class="card-title-text">Záhada jménem Zombie a Sirotek (Orphan)</span>
+                </div>
+              </div>
+              <div class="sub-card">
+                <div class="sub-card-header">
+                  <span class="sub-card-title"><span class="process-state-badge state-zombie">Zombie proces</span> Mrtvý, co ještě neodešel</span>
+                </div>
+                <p class="sub-card-desc">
+                  Proces už skončil (zavolal <code>exit</code>). <strong>Nežere žádnou paměť RAM ani procesor!</strong> Pouze čeká v tabulce procesů na svého rodiče, až si vyzvedne jeho výstupní kód (číslo chyby) funkcí <code>wait()</code>. Jakmile si ho rodič vyzvedne, zombie zmizí.
+                </p>
+              </div>
+
+              <div class="sub-card" style="margin-top: 0.4rem;">
+                <div class="sub-card-header">
+                  <span class="sub-card-title"><span class="highlight-pill success">Sirotek (Orphan)</span> Dítě bez rodiče</span>
+                </div>
+                <p class="sub-card-desc">
+                  Co když rodičovský proces nečekaně spadne, ale jeho spuštěné děti ještě běží? Vzniknou sirotci. Operační systém je nenechá na holičkách: <strong>automaticky je adoptuje prapředek všech procesů</strong> (proces <code>systemd / init</code> s PID 1), který po nich po skončení řádně uklidí!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: PRAKTICKÁ INSPEKCE V LINUXU A WINDOWS -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktické příkazy</div>
+            <h2 class="slide-title">Kde procesy a sekce prozkoumáte naživo</h2>
+            <p class="slide-subtitle">Jak se dívat pod kapotu v Linuxovém terminálu a ve Windows PowerShellu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Terminál &bull; Diagnostika</span>
           </div>
         </div>
         <div class="slide-body">
@@ -209,75 +797,176 @@
             <div>
               <div class="code-box">
                 <div class="code-box-header">
-                  <span>bash &bull; Analýza sekcí spustitelného souboru ELF</span>
+                  <span>bash &bull; Práce s procesy v Linuxu</span>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre><code><span class="term-comment"># Zjištění velikostí sekcí .text, .data a .bss</span>
+                <pre><code><span class="term-comment"># Stromová struktura rodin procesů (kdo koho spustil):</span>
+<span class="term-prompt">$ </span><span class="term-cmd">pstree</span> <span class="term-param">-p</span> <span class="term-pipe">|</span> <span class="term-cmd">head</span> <span class="term-param">-n</span> 8
+<span class="term-out">systemd(1)───sshd(842)───bash(1204)───pstree(4510)</span>
+
+<span class="term-comment"># Jak zjistit velikost sekcí .text, .data a .bss v programu:</span>
 <span class="term-prompt">$ </span><span class="term-cmd">size</span> <span class="term-path">/bin/ls</span>
 <span class="term-out">   text    data     bss     dec     hex filename</span>
 <span class="term-out"> 142018    4892    4160  151070   24d1e /bin/ls</span>
 
-<span class="term-comment"># Výpis vstupního bodu (Entry Point) a hlavičky ELF</span>
-<span class="term-prompt">$ </span><span class="term-cmd">readelf</span> <span class="term-param">-h</span> <span class="term-path">/bin/ls</span> <span class="term-pipe">|</span> <span class="term-cmd">grep</span> <span class="term-param">-E</span> <span class="term-string">"Type:|Entry point"</span>
-<span class="term-out">  Type:                              DYN (Position-Independent Executable)</span>
-<span class="term-out">  Entry point address:               0x6180</span></code></pre>
+<span class="term-comment"># Hledání zombie procesů v systému (stav Z nebo defunct):</span>
+<span class="term-prompt">$ </span><span class="term-cmd">ps</span> <span class="term-param">aux</span> <span class="term-pipe">|</span> <span class="term-cmd">grep</span> <span class="term-string">'[Zz]'</span></code></pre>
               </div>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.4rem;">
+                Všimněte si: <code>systemd</code> má PID 1 – je to prapředek všeho, který startuje jako první při zapnutí Linuxu.
+              </p>
             </div>
+
             <div>
               <div class="code-box">
                 <div class="code-box-header">
-                  <span>powershell &bull; Inspekce hierarchie procesů a modulů DLL</span>
+                  <span>powershell &bull; Inspekce procesů a DLL ve Windows</span>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre><code><span class="term-comment"># Výpis načtených dynamických knihoven (DLL) procesu</span>
+                <pre><code><span class="term-comment"># Které dynamické knihovny (.dll) má zrovna načtené Průzkumník?</span>
 <span class="term-prompt">PS&gt; </span>(<span class="term-cmd">Get-Process</span> <span class="term-param">-Name</span> <span class="term-arg">explorer</span>).Modules <span class="term-pipe">|</span>
-    <span class="term-cmd">Select-Object</span> <span class="term-arg">ModuleName, BaseAddress</span> <span class="term-pipe">|</span> <span class="term-cmd">Select-Object</span> <span class="term-param">-First</span> <span class="term-arg">6</span>
+    <span class="term-cmd">Select-Object</span> <span class="term-arg">ModuleName, BaseAddress</span> <span class="term-pipe">|</span> <span class="term-cmd">Select-Object</span> <span class="term-param">-First</span> 4
 
-<span class="term-comment"># Zjištění rodičovského procesu (ParentProcessId) přes WMI</span>
+<span class="term-comment"># Kdo je rodičem daného procesu (Parent Process ID)?</span>
 <span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-CimInstance</span> <span class="term-param">-ClassName</span> <span class="term-arg">Win32_Process</span> <span class="term-pipe">|</span>
-    <span class="term-cmd">Select-Object</span> <span class="term-arg">ProcessId, Name, ParentProcessId</span> <span class="term-pipe">|</span> <span class="term-cmd">Select-Object</span> <span class="term-param">-First</span> <span class="term-arg">6</span></code></pre>
+    <span class="term-cmd">Select-Object</span> <span class="term-arg">ProcessId, Name, ParentProcessId</span> <span class="term-pipe">|</span> <span class="term-cmd">Select-Object</span> <span class="term-param">-First</span> 4</code></pre>
               </div>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.4rem;">
+                Tip pro praxi: Skvělý bezplatný nástroj <strong>Process Explorer</strong> od Microsoft Sysinternals vám ukáže barevný strom všech procesů a jejich DLL modulů.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SHRNUTÍ & KONTROLNÍ OTÁZKY -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 9: MÝTY VS FAKTA & STUDENTSKÝ KVÍZ -->
+      <section class="slide" data-slide="9">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Shrnutí &amp; Kontrolní otázky</div>
-            <h2 class="slide-title">Klíčové poznatky a otázky</h2>
-            <p class="slide-subtitle">Otázky z životního cyklu procesů a binárních souborů</p>
+            <div class="slide-category">Rychlé prověření</div>
+            <h2 class="slide-title">Mýty vs. Fakta &amp; Kvíz o procesech</h2>
+            <p class="slide-subtitle">Zboření častých omylů a okamžitá kontrola pochopení</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Kontrolní otázky</span>
+            <span class="tag">Klikací kvíz</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="myth-fact-grid">
+            <div class="myth-card">
+              <div class="myth-title">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                Mýtus: „Zombie proces žere spoustu procesoru a paměti RAM.“
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">
+                Omyl! Zombie proces <strong>nežere vůbec žádnou paměť RAM ani procesor</strong>. Veškerou paměť už dávno vrátil systému. Zůstává po něm jen jeden jediný řádek v tabulce procesů s návratovým kódem, dokud si ho rodič nevyzvedne.
+              </p>
+            </div>
+
+            <div class="fact-card">
+              <div class="fact-title">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Fakt: „Proces a vlákno nejsou jedno a to samé.“
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">
+                Představte si <strong>proces jako dům</strong> (má vlastní adresu, chráněnou zahradu a klíč). <strong>Vlákna jsou lidé</strong>, kteří v tom domě žijí a pracují – sdílejí stejnou kuchyň i ledničku (společnou paměť), ale každý může dělat jinou činnost.
+              </p>
+            </div>
+          </div>
+
+          <div class="quiz-grid">
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q1</span>
+                <span>Proč je v binárním souboru sekce .text označená jako Read-Only (jen pro čtení)?</span>
+              </div>
+              <div class="quiz-ans" id="ans1">
+                Aby si program kvůli chybě v kódu nebo zákeřnému viru nemohl sám přepsat své vlastní instrukce za běhu. Chrání to stabilitu i bezpečnost systému.
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans1">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q2</span>
+                <span>Jaký je rozdíl mezi stavem Připraven (Ready) a Čekající (Blocked)?</span>
+              </div>
+              <div class="quiz-ans" id="ans2">
+                Připravený proces má vše v RAM a může IHNED běžet, jen čeká na volné jádro CPU. Čekající proces běžet nemůže, protože čeká na externí událost (např. dočtení souboru z disku).
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans2">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+
+            <div class="quiz-card">
+              <div class="quiz-q">
+                <span class="quiz-q-num">Q3</span>
+                <span>Proč se při unixovém fork() nekopíruje celá RAM z rodiče na potomka?</span>
+              </div>
+              <div class="quiz-ans" id="ans3">
+                Díky optimalizaci Copy-on-Write (CoW). Fyzicky se RAM nekopíruje, oba procesy sdílejí stejné stránky. Zkopíruje se jen ta malá část, do které jeden z nich zkusí zapsat.
+              </div>
+              <button class="btn-quiz-reveal" data-target="ans3">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                <span>Zobrazit odpověď</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: ZKUŠEBNÍ CHECKLIST K ABSOLUTORIU -->
+      <section class="slide" data-slide="10">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškové okruhy</div>
+            <h2 class="slide-title">Shrnutí &amp; Zkušební checklist k absolutoriu</h2>
+            <p class="slide-subtitle">Otázky, které se zkoušející u absolutoria a zkoušek z OS nejčastěji ptá</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Zkušební tahák</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="summary-grid">
             <div class="summary-card">
-              <h4>1. Sekce binárního souboru</h4>
-              <p>Znalost obsahu sekcí .text (instrukce), .data (inicializovaná data), .bss (neinicializovaná data) a způsobu jejich mapování do paměti.</p>
+              <h4>1. Program vs. Proces</h4>
+              <p>Program je pasivní recept na disku (.exe/ELF). Proces je aktivní běžící instance v paměti RAM s přiděleným PID, zásobníkem a zdroji.</p>
             </div>
+
             <div class="summary-card">
-              <h4>2. fork() a Copy-on-Write</h4>
-              <p>Vysvětlení mechanismu CoW: proč fork nekopíruje fyzickou RAM a jak šetří čas při následném volání execve.</p>
+              <h4>2. Sekce .text, .data a .bss</h4>
+              <p>.text obsahuje instrukce (Read-Only), .data má inicializované proměnné a .bss obsahuje vynulovaná data, která na disku nezabírají žádné místo.</p>
             </div>
+
             <div class="summary-card">
-              <h4>3. Stavy a Zombie</h4>
-              <p>Schopnost nakreslit stavový diagram procesu a vysvětlit, proč vzniká zombie proces a jak se odstraňuje.</p>
+              <h4>3. fork() + execve() vs. CreateProcess()</h4>
+              <p>Unix klonuje proces ve dvou fázích (s trikem Copy-on-Write pro bleskovou rychlost). Windows vytváří proces rovnou z nuly jedním voláním.</p>
             </div>
+
             <div class="summary-card">
-              <h4>4. Otázka k procvičení a zamyšlení</h4>
-              <p><em>„Popište detailně, co se stane od okamžiku, kdy v shellu napíšete './program' a stisknete Enter, až po spuštění první instrukce funkce main().“</em></p>
+              <h4>4. Co je to Zombie proces?</h4>
+              <p>Proces, který už skončil, ale jeho rodič si ještě nevyzvedl jeho návratový kód přes wait(). Nežere RAM ani CPU, jen zabírá řádek v tabulce procesů.</p>
             </div>
+          </div>
+
+          <div class="story-box" style="margin-top: 0.8rem;">
+            <div class="story-title">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              Kam pokračujeme příště? (Lekce 06)
+            </div>
+            Když už víme, jak proces vznikne a jaké má stavy, v další přednášce prozkoumáme: <strong>Multitasking, vlákna a plánování procesoru</strong> (jak operační systém stíhá spouštět stovky procesů na několika málo jádrech CPU a co je to plánovač CFS).
           </div>
         </div>
       </section>
@@ -286,7 +975,7 @@
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="04_preruseni_a_obsluha_udalosti.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 04: Přerušení a obsluha událostí (Ctrl+Šipka vlevo)">
+      <a href="04_preruseni_a_obsluha_udalosti.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 04: Přerušení a obsluha událostí (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu OSY20">
@@ -299,7 +988,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 10</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -387,7 +1076,157 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glossary Modal (Slovník pojmů) -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 820px; width: 95vw; max-height: 85vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="flex-shrink: 0;">
+          <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Slovník pojmů &bull; Životní cyklus procesu a spuštění programu
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body" style="overflow-y: auto; flex: 1; padding: 1rem 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;">
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Proces</span>
+              <span class="glossary-badge glossary-badge-architecture">Základ</span>
+            </div>
+            <div class="glossary-full-name">Aktivní běžící program v paměti RAM</div>
+            <div class="glossary-desc">Program probuzený k životu. Má vlastní virtuální paměťový prostor, otevřené soubory, proměnné a alespoň jedno běžící vlákno.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">PID</span>
+              <span class="glossary-badge glossary-badge-admin">Identifikátor</span>
+            </div>
+            <div class="glossary-full-name">Process Identifier (Rodné číslo procesu)</div>
+            <div class="glossary-desc">Unikátní celé číslo přidělené operačním systémem každému nově vzniklému procesu. Slouží ke správě a posílání signálů (např. kill).</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">ELF</span>
+              <span class="glossary-badge glossary-badge-architecture">Linux / Unix</span>
+            </div>
+            <div class="glossary-full-name">Executable and Linkable Format</div>
+            <div class="glossary-desc">Standardní formát spustitelných souborů a sdílených knihoven v Linuxu a Unixech. Začíná magickými bajty <code>0x7F 'E' 'L' 'F'</code>.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">PE</span>
+              <span class="glossary-badge glossary-badge-architecture">Windows</span>
+            </div>
+            <div class="glossary-full-name">Portable Executable (.exe / .dll)</div>
+            <div class="glossary-desc">Formát binárních souborů operačního systému Windows. Z historických důvodů začíná hlavičkou MS-DOS s magickými písmeny <code>MZ</code>.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Sekce .text</span>
+              <span class="glossary-badge glossary-badge-security">Kód</span>
+            </div>
+            <div class="glossary-full-name">Strojové instrukce procesoru</div>
+            <div class="glossary-desc">Část binárního souboru a paměti obsahující samotný přeložený kód. Je označena jako Read-Only, aby se zabránilo nechtěnému přepsání instrukcí.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Sekce .bss</span>
+              <span class="glossary-badge glossary-badge-admin">Paměť</span>
+            </div>
+            <div class="glossary-full-name">Block Started by Symbol (Nulovaná data)</div>
+            <div class="glossary-desc">Sekce pro globální proměnné, které nemají zadanou výchozí hodnotu (jsou nulové). Na disku nezabírá žádné místo, loader ji vynuluje až v RAM.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">fork()</span>
+              <span class="glossary-badge glossary-badge-security">Unix API</span>
+            </div>
+            <div class="glossary-full-name">Klonování stávajícího procesu</div>
+            <div class="glossary-desc">Systémové volání v Unixu, které vytvoří přesnou kopii volajícího procesu (rodiče). Potomek získá vlastní PID, ale sdílí paměť přes Copy-on-Write.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">execve()</span>
+              <span class="glossary-badge glossary-badge-security">Unix API</span>
+            </div>
+            <div class="glossary-full-name">Výměna běžícího programu za nový</div>
+            <div class="glossary-desc">Systémové volání, které přepíše paměť aktuálního procesu novým binárním programem z disku a spustí jeho funkci <code>main()</code>.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Copy-on-Write</span>
+              <span class="glossary-badge glossary-badge-architecture">Trik jádra</span>
+            </div>
+            <div class="glossary-full-name">Kopírování až při prvním zápisu (CoW)</div>
+            <div class="glossary-desc">Chytrá technika správy paměti: po fork() se RAM fyzicky nekopíruje, oba procesy ji sdílejí. Zkopíruje se teprve ta stránka, do které chce někdo zapsat.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Zombie proces</span>
+              <span class="glossary-badge glossary-badge-admin">Stav</span>
+            </div>
+            <div class="glossary-full-name">Ukončený proces čekající na převzetí</div>
+            <div class="glossary-desc">Proces, který již doběhl a uvolnil svou paměť, ale jeho záznam zůstává v tabulce procesů, dokud si rodič nevyzvedne výstupní kód voláním wait().</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Sirotek (Orphan)</span>
+              <span class="glossary-badge glossary-badge-admin">Stav</span>
+            </div>
+            <div class="glossary-full-name">Běžící proces, jehož rodič předčasně skončil</div>
+            <div class="glossary-desc">Proces, jehož rodičovský proces zanikl dříve než on sám. Sirotka automaticky adoptuje proces init / systemd (PID 1), který po něm řádně uklidí.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">CreateProcess()</span>
+              <span class="glossary-badge glossary-badge-architecture">Windows API</span>
+            </div>
+            <div class="glossary-full-name">Vytvoření nového procesu ve Windows</div>
+            <div class="glossary-desc">Základní volání Win32 API, které v jednom kroku alokuje adresní prostor, načte PE soubor z disku, připraví vlákno a proces spustí.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
+  <script>
+    // Interaktivní odkrývání odpovědí v kvízu na snímku 9
+    document.addEventListener('DOMContentLoaded', () => {
+      const quizButtons = document.querySelectorAll('.btn-quiz-reveal');
+      quizButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const ansEl = document.getElementById(targetId);
+          if (!ansEl) return;
+          const isRevealed = ansEl.classList.contains('revealed');
+          if (isRevealed) {
+            ansEl.classList.remove('revealed');
+            btn.querySelector('span').textContent = 'Zobrazit odpověď';
+          } else {
+            ansEl.classList.add('revealed');
+            btn.querySelector('span').textContent = 'Skrýt odpověď';
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
