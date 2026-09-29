@@ -10,6 +10,254 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Doplňkové responzivní styly a interaktivní workbench pro Lekci 05 */
+    .software-tabs {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+    }
+    .software-tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition);
+    }
+    .software-tab-btn:hover {
+      background: rgba(236, 72, 153, 0.12);
+      border-color: rgba(236, 72, 153, 0.4);
+      color: var(--text-primary);
+    }
+    .software-tab-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 14px var(--accent-glow);
+    }
+    .software-detail-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+    .sw-badge-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: var(--font-mono);
+    }
+    .sw-badge-commercial { background: rgba(236, 72, 153, 0.2); color: #fbcfe8; border: 1px solid rgba(236, 72, 153, 0.4); }
+    .sw-badge-foss       { background: rgba(16, 185, 129, 0.2); color: #a7f3d0; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .sw-badge-canva      { background: rgba(56, 189, 248, 0.2); color: #bae6fd; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .sw-badge-web        { background: rgba(245, 158, 11, 0.2); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.4); }
+    
+    .mask-workbench-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+    .canvas-preview-card {
+      background: #020617;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .canvas-preview-wrap {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      background: repeating-conic-gradient(#1e293b 0% 25%, #0f172a 0% 50%) 50% / 16px 16px;
+    }
+    .canvas-preview-wrap canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .curve-workbench-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+    .curve-graph-wrap {
+      background: #020617;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .blend-matrix-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+    .blend-mode-btn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 0.5rem 0.85rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      cursor: pointer;
+      text-align: left;
+      transition: var(--transition);
+      margin-bottom: 0.4rem;
+    }
+    .blend-mode-btn:hover {
+      background: rgba(236, 72, 153, 0.12);
+      border-color: rgba(236, 72, 153, 0.4);
+      color: var(--text-primary);
+    }
+    .blend-mode-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+    .blend-mode-btn.active .blend-tag {
+      background: rgba(0, 0, 0, 0.35);
+      color: #fbcfe8;
+    }
+    .blend-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+    }
+
+    .freq-sep-flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .freq-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.85rem;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .freq-card:hover {
+      border-color: var(--accent);
+      background: var(--bg-card-hover);
+    }
+    .freq-card.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 14px var(--accent-glow);
+      background: rgba(236, 72, 153, 0.08);
+    }
+
+    .format-matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+    .format-matrix-table th, .format-matrix-table td {
+      padding: 0.5rem 0.65rem;
+      border: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+    .format-matrix-table th {
+      background: rgba(255, 255, 255, 0.04);
+      color: #f472b6;
+      font-weight: 700;
+    }
+    .format-matrix-table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .use-case-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+    }
+    .use-case-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: var(--transition);
+    }
+    .use-case-box:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .styled-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .styled-btn:hover {
+      background: rgba(236, 72, 153, 0.2);
+      border-color: var(--accent);
+    }
+    .styled-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    @media (max-width: 992px) {
+      .software-detail-grid,
+      .mask-workbench-grid,
+      .curve-workbench-grid,
+      .blend-matrix-grid,
+      .freq-sep-flow,
+      .use-case-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -37,7 +285,7 @@
       </div>
       <div class="header-right">
         <span class="tag tag-exam">Zkouškový okruh 12: 2D rastrová grafika</span>
-        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv (T)">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
       </div>
@@ -45,196 +293,781 @@
 
     <main class="slides-viewport">
 
-      <!-- SLIDE 1: TITLE -->
+      <!-- SLIDE 1: TITLE & DIGITAL DARKROOM PIPELINE -->
       <section class="slide title-slide active" data-slide="1">
-        <div class="hero-badge">Modul MUL20 &bull; 5. přednáška (45 min)</div>
+        <div class="hero-badge">Modul MUL20 &bull; 5. přednáška (45 min) &bull; Digitální temná komora</div>
         <h1 class="hero-title">Programy pro 2D grafiku a rastrové úpravy</h1>
         <p class="hero-desc">
-          Profesionální digitální temná komora: rastrové editory (Adobe Photoshop, GIMP, Affinity Photo). Zásady nedestruktivního workflow, práce s vrstvami a maskami, tonální křivky, retuše a fotomontáže.
+          Architektura moderních rastrových grafických editorů (Adobe Photoshop, GIMP, Affinity Photo, Krita, Photopea). Zásady 100% nedestruktivního workflow, matematická podstata režimů prolnutí, tonální korekce křivkami a úrovněmi, high-end beauty retuš metodou frekvenční separace a správa formátů PSD, PSB, XCF, TIFF.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Software</span>
-            <span class="hero-meta-val">Photoshop &bull; GIMP &bull; Affinity</span>
+            <span class="hero-meta-label">Software &amp; Nástroje</span>
+            <span class="hero-meta-val">Photoshop &bull; GIMP &bull; Affinity &bull; Krita</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Metodika</span>
-            <span class="hero-meta-val">Nedestruktivní maskování</span>
+            <span class="hero-meta-label">Klíčové metodiky</span>
+            <span class="hero-meta-val">Masky &bull; Křivky &bull; Frekvenční separace</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Absolutorium</span>
             <span class="hero-meta-val">Profilový okruh č. 12</span>
           </div>
         </div>
+
+        <div class="content-card" style="margin-top: 1rem; text-align: left;">
+          <h4 style="display: flex; align-items: center; gap: 0.5rem; color: #f472b6; margin-bottom: 0.5rem; font-size: 0.95rem;">
+            <svg class="icon card-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            Kompletní produkční řetězec zpracování rastrového obrazu
+          </h4>
+          <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.65rem; font-size: 0.78rem;">
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #ec4899;">
+              <strong style="color: #fbcfe8;">1. Akvizice &amp; RAW</strong>
+              <div style="color: var(--text-muted); font-size: 0.7rem; margin-top: 2px;">Surová data ze snímače</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Bayerova maska, 14–16 bit na kanál, lineární data bez křivek gama.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #38bdf8;">
+              <strong style="color: #bae6fd;">2. RAW Vyvolání</strong>
+              <div style="color: var(--text-muted); font-size: 0.7rem; margin-top: 2px;">Demosaicing &amp; Gamut</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">ACR / Darktable, barevný prostor ProPhoto RGB, korekce optiky a expozice.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #a855f7;">
+              <strong style="color: #e9d5ff;">3. Retuš &amp; Vrstvy</strong>
+              <div style="color: var(--text-muted); font-size: 0.7rem; margin-top: 2px;">Nedestruktivní zásahy</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Masky vrstev, inteligentní objekty, frekvenční separace a klonování.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #f59e0b;">
+              <strong style="color: #fde68a;">4. Color Grading</strong>
+              <div style="color: var(--text-muted); font-size: 0.7rem; margin-top: 2px;">Tónový mastering</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">Křivky (S-curve), selektivní barvy, Dodge &amp; Burn, 3D LUT tabulky.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #10b981;">
+              <strong style="color: #a7f3d0;">5. Výstup &amp; Export</strong>
+              <div style="color: var(--text-muted); font-size: 0.7rem; margin-top: 2px;">Tisk vs. Obrazovka</div>
+              <p style="margin-top: 4px; color: var(--text-secondary); line-height: 1.3;">CMYK ISO Coated v2 pro DTP tisk; sRGB WebP / AVIF pro web a mobilní UI.</p>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <!-- SLIDE 2: EKOSYSTÉM RASTROVÝCH EDITORŮ -->
+      <!-- SLIDE 2: DETAILNÍ PROFIL RASTROVÉHO SOFTWARE NA TRHU -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Grafický software</div>
-            <h2 class="slide-title">Rastrové grafické editory na trhu</h2>
-            <p class="slide-subtitle">Srovnání oborového standardu, open-source alternativy a moderního nářadí</p>
+            <div class="slide-category">Softwarový ekosystém &bull; Interaktivní srovnávač</div>
+            <h2 class="slide-title">Podrobná charakteristika rastrových editorů</h2>
+            <p class="slide-subtitle">Architektura renderovacích motorů, formáty, licenční modely a silné stránky v praxi</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Přehled nástrojů</span>
+            <span class="tag tag-exam">Zkušební přehled</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="media-compare-grid">
-            <div class="content-card">
-              <span class="format-pill lossy">Adobe Photoshop</span>
-              <h4 style="margin: 0.5rem 0;">Průmyslový standard (1990)</h4>
-              <p style="font-size: 0.85rem;">Dominantní proprietární nástroj v reklamních agenturách a DTP studiích. Nativní formát PSD/PSB, pokročilá správa barev (Adobe Color Engine), inteligentní objekty a generativní AI výplně (Firefly).</p>
+          <div class="software-tabs">
+            <button class="software-tab-btn active" data-sw="ps">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="9" y2="15"></line><path d="M9 9h3a2 2 0 0 1 0 4H9"></path></svg>
+              <span>Adobe Photoshop</span>
+            </button>
+            <button class="software-tab-btn" data-sw="gimp">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+              <span>GIMP (GNU Image Manipulation)</span>
+            </button>
+            <button class="software-tab-btn" data-sw="affinity">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"></polygon><circle cx="12" cy="12" r="4"></circle></svg>
+              <span>Affinity Photo (Canva)</span>
+            </button>
+            <button class="software-tab-btn" data-sw="krita">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 2v20M2 12h20"></path><circle cx="12" cy="12" r="7"></circle></svg>
+              <span>Krita</span>
+            </button>
+            <button class="software-tab-btn" data-sw="photopea">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              <span>Photopea (WebAssembly)</span>
+            </button>
+          </div>
+
+          <div class="software-detail-grid">
+            <!-- Levý sloupec: Detail vybraného software -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+                  <h3 id="swTitle" style="color: #f472b6; margin: 0; font-size: 1.15rem;">Adobe Photoshop (1990–současnost)</h3>
+                  <span id="swBadge" class="sw-badge-pill sw-badge-commercial">Průmyslový standard</span>
+                </div>
+                <p id="swDesc" style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0.8rem;">
+                  Dominantní nástroj světových grafických a DTP studií. Architektura stojí na Mercury Graphics Engine s akcelerací GPU, podpoře CMYK / přímých barev Pantone a integrovaném modulu Adobe Camera Raw. Nativní formát PSD a PSB pro gigapixelové soubory.
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.8rem; margin-bottom: 0.8rem;">
+                  <div style="background: rgba(255,255,255,0.03); padding: 0.5rem 0.7rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                    <div style="color: var(--text-muted); font-size: 0.7rem;">Renderovací jádro &amp; engine:</div>
+                    <strong id="swEngine" style="color: #38bdf8;">Mercury Graphics Engine + ACE</strong>
+                  </div>
+                  <div style="background: rgba(255,255,255,0.03); padding: 0.5rem 0.7rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                    <div style="color: var(--text-muted); font-size: 0.7rem;">Nativní formáty souborů:</div>
+                    <strong id="swFormats" style="color: #a855f7; font-family: var(--font-mono);">.PSD, .PSB (nad 2 GB / 300k px)</strong>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.82rem;">
+                  <strong style="color: #fbcfe8;">Klíčové technologické přednosti:</strong>
+                  <ul class="styled-list" id="swStrengths" style="margin-top: 0.3rem;">
+                    <li>Inteligentní objekty (Smart Objects) s nedestruktivními živými filtry.</li>
+                    <li>Generativní AI výplně Adobe Firefly s kontextovým doplňováním pixelů.</li>
+                    <li>Špičková správa barev (Color Management Engine) a certifikovaný tiskový soft-proofing.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div style="background: rgba(0,0,0,0.3); padding: 0.5rem 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); margin-top: 0.6rem; font-size: 0.78rem;">
+                <span style="color: var(--text-muted);">Licence a ekosystém: </span>
+                <span id="swLicense" style="color: #fcd34d; font-weight: 600;">Předplatné Adobe Creative Cloud &bull; Úzká vazba na Illustrator, InDesign, Premiere Pro</span>
+              </div>
             </div>
-            <div class="content-card">
-              <span class="format-pill lossless">GIMP (GNU Image Manipulation)</span>
-              <h4 style="margin: 0.5rem 0;">Otevřený open-source standard</h4>
-              <p style="font-size: 0.85rem;">Zdarma dostupný software pro Linux, Windows a macOS. Využívá GEGL grafickou knihovnu pro zpracování s vysokou bitovou hloubkou (32-bit float). Nativní formát XCF.</p>
-            </div>
-            <div class="content-card">
-              <span class="format-pill uncompressed">Affinity Photo (Canva)</span>
-              <h4 style="margin: 0.5rem 0;">Od roku 2025 zdarma</h4>
-              <p style="font-size: 0.85rem;">Moderní výkonná alternativa napsaná od základu pro hardwarovou akceleraci GPU a Metal. Plná podpora formátu PSD, RAW konverze a nedestruktivních živých filtrů. Po akvizici společností Canva sloučen do jedné bezplatné aplikace (dříve jednorázová komerční licence).</p>
+
+            <!-- Pravý sloupec: Srovnávací přehledová matice -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <h4 style="color: #38bdf8; margin-bottom: 0.4rem; font-size: 0.92rem;">Rychlé srovnání pro potřeby absolutoria</h4>
+              <div style="overflow-x: auto;">
+                <table class="format-matrix-table">
+                  <thead>
+                    <tr>
+                      <th>Software</th>
+                      <th>Cena / Licence</th>
+                      <th>32-bit Float</th>
+                      <th>CMYK / Tisk</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Photoshop</strong></td>
+                      <td>Měsíční subskripce</td>
+                      <td>Ano (HDR)</td>
+                      <td>Špičková podpora</td>
+                    </tr>
+                    <tr>
+                      <td><strong>GIMP</strong></td>
+                      <td>Zdarma (GPLv3)</td>
+                      <td>Ano (GEGL engine)</td>
+                      <td>Omezená (přes pluginy)</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Affinity</strong></td>
+                      <td>Zdarma od 2025 (Canva)</td>
+                      <td>Plná GPU akcelerace</td>
+                      <td>Plný CMYK &amp; Pantone</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Krita</strong></td>
+                      <td>Zdarma (GPLv3)</td>
+                      <td>Ano (OpenEXR)</td>
+                      <td>Výborná (ICC profily)</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Photopea</strong></td>
+                      <td>Zdarma v prohlížeči</td>
+                      <td>8 / 16-bit</td>
+                      <td>Základní konverze</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="margin-top: 0.8rem; background: rgba(236,72,153,0.06); border: 1px solid rgba(236,72,153,0.25); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; font-size: 0.78rem; line-height: 1.4;">
+                <strong style="color: #f472b6;">Doporučení pro studentskou praxi:</strong>
+                <p style="margin-top: 3px; color: var(--text-secondary);">
+                  Pro komerční reklamní zakázky a DTP tisk zůstává standardem <strong>Photoshop</strong>. Pro bezplatné plnohodnotné komerční i školní nasazení na macOS/Windows je ideální <strong>Affinity Photo</strong>. Pro Linuxové stanice a automatizované dávkové skripty <strong>GIMP</strong>. Pro rychlou editaci PSD kdekoli na cestách poslouží <strong>Photopea</strong>.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: NEDESTRUKTIVNÍ WORKFLOW A MASKY -->
+      <!-- SLIDE 3: NEDESTRUKTIVNÍ WORKFLOW, VRSTVY A MASKY -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Zlaté pravidlo retuše</div>
-            <h2 class="slide-title">Vrstvy, masky a nedestruktivní editace</h2>
-            <p class="slide-subtitle">Proč profesionální grafik nikdy nemaže pixely nástrojem Guma</p>
+            <div class="slide-category">Zlaté pravidlo retuše &bull; Interaktivní simulátor</div>
+            <h2 class="slide-title">Vrstvy, masky a nedestruktivní workflow</h2>
+            <p class="slide-subtitle">Proč profesionální grafik nikdy nemaže pixely a jak funguje 8/16-bitová maska vrstvy</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Klíčová metodika</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Maska vrstvy (Layer Mask)</h4>
-              <ul class="styled-list">
-                <li>8bitový černobílý kanál navázaný na vrstvu obrazu.</li>
-                <li><strong>Bílá barva:</strong> 100% viditelnost (pixel je zcela zobrazen).</li>
-                <li><strong>Černá barva:</strong> 100% průhlednost (pixel je maskován a prosvítá vrstva pod ním).</li>
-                <li><strong>Odstíny šedi:</strong> Částečná průhlednost (plynulé přechody, měkké okraje vlasů).</li>
-                <li><strong>Výhoda:</strong> Kdykoli lze štětcem s bílou barvou jakoukoli smazanou část vrátit zpět!</li>
-              </ul>
+          <div class="mask-workbench-grid">
+            <!-- Teoretický panel: 4 pilíře nedestruktivity -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h4 style="color: #f472b6; margin-bottom: 0.5rem; font-size: 0.95rem;">4 pilíře nedestruktivní editace</h4>
+                <ul class="styled-list" style="font-size: 0.82rem; gap: 0.5rem;">
+                  <li>
+                    <strong>Maska vrstvy (Layer Mask):</strong><br>
+                    Černobílý kanál navázaný na vrstvu.
+                    <span style="color: #6ee7b7; font-weight: 700;">Bílá (255)</span> = 100% viditelné pixely.
+                    <span style="color: #fca5a5; font-weight: 700;">Černá (0)</span> = 100% průhledné (skryté).
+                    <span style="color: #93c5fd; font-weight: 700;">Šedé tóny</span> = plynulá poloprůhlednost pro měkké okraje.
+                  </li>
+                  <li>
+                    <strong>Vrstvy úprav (Adjustment Layers):</strong><br>
+                    Křivky, úrovně, expozice či vyvážení barev se neaplikují do pixelů, ale leží jako samostatná matematická instrukce v zásobníku vrstev. Lze je kdykoli dodatečně otevřít, vypnout či přeladit.
+                  </li>
+                  <li>
+                    <strong>Inteligentní objekty (Smart Objects):</strong><br>
+                    Zabalí rastrová či vektorová data do chráněného kontejneru. Při opakovaném zmenšování a zvětšování se neztrácí původní data a filtry zůstávají živě editovatelné (Smart Filters).
+                  </li>
+                  <li>
+                    <strong>Ořezové masky (Clipping Masks):</strong><br>
+                    Omezí působnost vrstvy úprav nebo textury výhradně na neprůhledné pixely vrstvy ležící bezprostředně pod ní (<kbd>Alt+Click</kbd> mezi vrstvy).
+                  </li>
+                </ul>
+              </div>
+
+              <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: var(--radius-sm); padding: 0.5rem 0.75rem; font-size: 0.78rem;">
+                <strong style="color: #fca5a5;">Tabu profesionála: Nástroj Guma (Eraser)</strong><br>
+                <span style="color: var(--text-secondary);">Nevratně zahazuje pixelová data. Jakmile soubor uložíte a zavřete, smazané pixely již nikdy nevrátíte. Maska umožňuje chybu napravit i po deseti letech!</span>
+              </div>
             </div>
-            <div class="content-card">
-              <h4>Vrstvy úprav (Adjustment Layers) &amp; Smart Objects</h4>
-              <ul class="styled-list">
-                <li><strong>Vrstvy úprav:</strong> Křivky, úrovně či vyvážení barev se neaplikují do pixelů, ale leží jako samostatná matematická instrukce nad vrstvami. Lze je kdykoliv vypnout nebo přeladit.</li>
-                <li><strong>Smart Objects (Inteligentní objekty):</strong> Zabalí vrstvu do kontejneru. Při opakovaném zmenšování a zvětšování se neztrácí původní data a filtry zůstávají živě editovatelné (Smart Filters).</li>
-              </ul>
+
+            <!-- Interaktivní plátno s maskou -->
+            <div class="canvas-preview-card">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.82rem; font-weight: 700; color: #38bdf8;">Interaktivní demonstrace masky vrstvy</span>
+                <span id="maskStatusText" style="font-size: 0.72rem; font-family: var(--font-mono); color: #fbcfe8;">Maska: Gradientní přechod</span>
+              </div>
+
+              <div class="canvas-preview-wrap">
+                <canvas id="maskCanvas" width="400" height="240"></canvas>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+                <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                  <button class="styled-btn active" id="btnMaskGrad">
+                    <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    Přechod (Gradient)
+                  </button>
+                  <button class="styled-btn" id="btnMaskCircle">
+                    <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
+                    Měkký kruh (Štětec)
+                  </button>
+                  <button class="styled-btn" id="btnMaskInvert">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.85.83 6.72 2.24"></path><polyline points="21 3 21 9 15 9"></polyline></svg>
+                    Invertovat masku (Ctrl+I)
+                  </button>
+                  <button class="styled-btn" id="btnMaskReset">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                    100% Bílá (Odkrýt vše)
+                  </button>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.76rem; color: var(--text-secondary); background: rgba(0,0,0,0.3); padding: 0.35rem 0.6rem; border-radius: 4px;">
+                  <span>Krytí horní vrstvy (Opacity):</span>
+                  <input type="range" id="maskOpacitySlider" min="0" max="100" value="100" style="width: 140px; accent-color: var(--accent); cursor: pointer;">
+                  <span id="maskOpacityVal" style="font-family: var(--font-mono); font-weight: 700; color: #ec4899;">100 %</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4: TONÁLNÍ A BAREVNÉ KOREKCE -->
+      <!-- SLIDE 4: REŽIMY PROLNUTÍ (BLEND MODES) A JEJICH MATEMATIKA -->
       <section class="slide" data-slide="4">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Postprodukce tónů</div>
-            <h2 class="slide-title">Tonální křivky (Curves) a Úrovně (Levels)</h2>
-            <p class="slide-subtitle">Matematická manipulace s přenosovou charakteristikou jasu a barevných kanálů</p>
+            <div class="slide-category">Matematika pixelů &bull; Interaktivní komparátor</div>
+            <h2 class="slide-title">Režimy prolnutí vrstev (Blending Modes)</h2>
+            <p class="slide-subtitle">Jak algoritmy míchají pixely vrchní vrstvy (Blend) se spodní podkladovou vrstvou (Base)</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Zkouškový nástroj</span>
+            <span class="tag tag-exam">Zkoušková algebra obrazu</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Křivky (Curves) &ndash; Král tónových úprav</h4>
-              <p>Graf převádějící vstupní jas (Input) na výstupní jas (Output):</p>
-              <ul class="styled-list">
-                <li><strong>Lineární přímka 45&deg;:</strong> Žádná změna obrazu ($\text{Output} = \text{Input}$).</li>
-                <li><strong>S-Křivka (S-Curve):</strong> Ztmavení stínů a zesvětlení světel &rarr; zvýšení kontrastu a vizuální hloubky.</li>
-                <li><strong>Invertovaná S-křivka:</strong> Změkčení kontrastu, vytvoření filmového "matného" looku.</li>
-                <li><strong>Jednotlivé kanály R, G, B:</strong> Umožňuje přesné barevné tónování (Color Grading &ndash; např. přidání azurové do stínů a teplé žluté do světel).</li>
-              </ul>
+          <div class="blend-matrix-grid">
+            <!-- Levý sloupec: Volič režimů -->
+            <div class="content-card" style="padding: 0.75rem;">
+              <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; display: block; margin-bottom: 0.4rem;">Vyberte režim prolnutí:</span>
+              
+              <div style="display: flex; flex-direction: column;">
+                <div style="font-size: 0.7rem; color: #94a3b8; font-weight: 700; margin: 0.2rem 0;">BĚŽNÉ</div>
+                <button class="blend-mode-btn active" data-mode="normal">
+                  <span>Normal (Normální)</span>
+                  <span class="blend-tag">Krytí 100%</span>
+                </button>
+
+                <div style="font-size: 0.7rem; color: #f43f5e; font-weight: 700; margin: 0.4rem 0 0.2rem 0;">ZTMAVOVACÍ (Bílá mizí)</div>
+                <button class="blend-mode-btn" data-mode="multiply">
+                  <span>Multiply (Násobit)</span>
+                  <span class="blend-tag">A &times; B / 255</span>
+                </button>
+
+                <div style="font-size: 0.7rem; color: #38bdf8; font-weight: 700; margin: 0.4rem 0 0.2rem 0;">ZESVĚTLOVACÍ (Černá mizí)</div>
+                <button class="blend-mode-btn" data-mode="screen">
+                  <span>Screen (Závoj)</span>
+                  <span class="blend-tag">1 - (1-A)(1-B)</span>
+                </button>
+
+                <div style="font-size: 0.7rem; color: #a855f7; font-weight: 700; margin: 0.4rem 0 0.2rem 0;">KONTRASTNÍ (50% šedá mizí)</div>
+                <button class="blend-mode-btn" data-mode="overlay">
+                  <span>Overlay (Překrýt)</span>
+                  <span class="blend-tag">Kombinace Mult+Scr</span>
+                </button>
+
+                <div style="font-size: 0.7rem; color: #10b981; font-weight: 700; margin: 0.4rem 0 0.2rem 0;">SLOŽKOVÉ</div>
+                <button class="blend-mode-btn" data-mode="luminosity">
+                  <span>Luminosity (Světlost)</span>
+                  <span class="blend-tag">Jas vrchní, barva spodní</span>
+                </button>
+              </div>
             </div>
-            <div class="content-card">
-              <h4>Úrovně (Levels) &bull; Nastavení bílého a černého bodu</h4>
-              <ul class="styled-list">
-                <li>Nastavuje ořezové meze pro stíny (černý bod), střední tóny (gama) a světla (bílý bod).</li>
-                <li>Posunem černého jezdce k patě histogramu odstraníme šedý závoj a dodáme obrazu plnou dynamiku.</li>
-                <li>Kápátka pro automatické vyvážení neutrální šedé (eliminace nežádoucího barevného nádechu světla).</li>
-              </ul>
+
+            <!-- Pravý sloupec: Živý náhled na plátně, obě vrstvy a matematický rozbor -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <!-- Horní lišta s režimem a přepínači zobrazení vrstev -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.4rem;">
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span id="blendCategoryBadge" class="sw-badge-pill sw-badge-commercial">Běžný režim</span>
+                    <h3 id="blendModeTitle" style="color: #fbcfe8; margin: 0; font-size: 1.05rem;">Normal</h3>
+                  </div>
+
+                  <!-- Přepínače zobrazení hlavního plátna -->
+                  <div style="display: flex; gap: 0.3rem;" id="blendViewModeGroup">
+                    <button class="styled-btn active" id="btnViewBlend" style="padding: 0.25rem 0.65rem; font-size: 0.74rem;">
+                      Prolnutí (A &otimes; B)
+                    </button>
+                    <button class="styled-btn" id="btnViewLayerA" style="padding: 0.25rem 0.65rem; font-size: 0.74rem;">
+                      Pouze Vrstva A
+                    </button>
+                    <button class="styled-btn" id="btnViewLayerB" style="padding: 0.25rem 0.65rem; font-size: 0.74rem;">
+                      Pouze Vrstva B
+                    </button>
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 1rem; align-items: start;">
+                  <!-- Vlevo: Hlavní plátno a miniatury obou zdrojových vrstev -->
+                  <div>
+                    <div class="canvas-preview-wrap" style="aspect-ratio: 16 / 11; position: relative;">
+                      <canvas id="blendCanvas" width="340" height="235"></canvas>
+                      <div id="blendCanvasHud" style="position: absolute; bottom: 6px; left: 6px; font-size: 0.62rem; font-family: var(--font-mono); font-weight: 700; background: rgba(0,0,0,0.8); color: #a7f3d0; padding: 2px 6px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.1);">
+                        Výsledek: Prolnutí (A &otimes; B)
+                      </div>
+                    </div>
+
+                    <!-- Miniatury zdrojových vrstev pod hlavním plátnem -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;">
+                      <div style="background: rgba(0,0,0,0.35); padding: 0.35rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); text-align: center;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; padding: 0 2px;">
+                          <strong style="color: #38bdf8; font-size: 0.68rem;">Vrstva A: Podklad</strong>
+                          <span style="font-size: 0.62rem; color: var(--text-muted); font-family: var(--font-mono);">Base</span>
+                        </div>
+                        <div style="width: 100%; aspect-ratio: 16 / 10; border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: #020617;">
+                          <canvas id="canvasThumbA" width="160" height="100" style="width: 100%; height: 100%; display: block;"></canvas>
+                        </div>
+                      </div>
+
+                      <div style="background: rgba(0,0,0,0.35); padding: 0.35rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); text-align: center;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; padding: 0 2px;">
+                          <strong style="color: #f472b6; font-size: 0.68rem;">Vrstva B: Překrytí</strong>
+                          <span style="font-size: 0.62rem; color: var(--text-muted); font-family: var(--font-mono);">Blend</span>
+                        </div>
+                        <div style="width: 100%; aspect-ratio: 16 / 10; border-radius: 3px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: #020617;">
+                          <canvas id="canvasThumbB" width="160" height="100" style="width: 100%; height: 100%; display: block;"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Vpravo: Volič obsahu Vrstvy B, Matematický vzorec a podrobný rozbor -->
+                  <div style="display: flex; flex-direction: column; gap: 0.45rem;">
+                    <!-- Volič obsahu Vrstvy B -->
+                    <div style="background: rgba(0,0,0,0.3); padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem;">
+                        <span style="font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Obsah Vrstvy B (Co vkládáme):</span>
+                        <span id="layerBBadgeInfo" style="font-size: 0.64rem; color: #fbcfe8; font-family: var(--font-mono); font-weight: 700;">Univerzální terč</span>
+                      </div>
+                      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.25rem;" id="layerBPresetGroup">
+                        <button class="styled-btn active" data-bpreset="universal" style="padding: 0.25rem 0.4rem; font-size: 0.68rem; justify-content: center;">
+                          Univerzální terč
+                        </button>
+                        <button class="styled-btn" data-bpreset="signature" style="padding: 0.25rem 0.4rem; font-size: 0.68rem; justify-content: center;">
+                          Podpis (Bílé pozadí)
+                        </button>
+                        <button class="styled-btn" data-bpreset="fire" style="padding: 0.25rem 0.4rem; font-size: 0.68rem; justify-content: center;">
+                          Plameny (Černé pozadí)
+                        </button>
+                        <button class="styled-btn" data-bpreset="texture" style="padding: 0.25rem 0.4rem; font-size: 0.68rem; justify-content: center;">
+                          Textura (50% šedá)
+                        </button>
+                      </div>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.35); padding: 0.45rem 0.65rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                      <div style="color: var(--text-muted); font-size: 0.68rem;">Matematický vzorec výpočtu pixelu:</div>
+                      <code id="blendFormula" style="color: #38bdf8; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; word-break: break-all;">Result = Blend</code>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.02); padding: 0.45rem 0.65rem; border-radius: var(--radius-sm); border-left: 2px solid #ec4899; font-size: 0.76rem; line-height: 1.35;">
+                      <strong style="color: #fbcfe8;">Vliv neutrální barvy:</strong><br>
+                      <span id="blendNeutralColor" style="color: #e2e8f0;">Žádná (vrstva překrývá podklad)</span>
+                    </div>
+
+                    <div style="font-size: 0.76rem; line-height: 1.4;">
+                      <strong style="color: #f472b6;">Typické využití v praxi:</strong>
+                      <p id="blendUseDesc" style="margin-top: 2px; color: var(--text-secondary);">Standardní neprůhledná kresba, text a plné grafické vrstvy.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recepty z praxe -->
+              <div style="margin-top: 0.65rem; padding-top: 0.6rem; border-top: 1px solid var(--border-subtle); display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; font-size: 0.74rem;">
+                <div style="background: rgba(255,255,255,0.02); padding: 0.35rem 0.5rem; border-radius: var(--radius-sm); border-left: 2px solid #ef4444;">
+                  <strong style="color: #fca5a5;">Podpisy &amp; Čárová grafika</strong>
+                  <p style="color: var(--text-secondary); margin-top: 2px;">Černý podpis na bílém papíře &rarr; <strong>Multiply</strong> způsobí, že bílý papír okamžitě zmizí bez ořezu!</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); padding: 0.35rem 0.5rem; border-radius: var(--radius-sm); border-left: 2px solid #38bdf8;">
+                  <strong style="color: #bae6fd;">Oheň, Kouř &amp; Jiskry</strong>
+                  <p style="color: var(--text-secondary); margin-top: 2px;">Efekty na černém pozadí &rarr; <strong>Screen</strong> zanechá pouze jasné plameny a černou eliminuje.</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); padding: 0.35rem 0.5rem; border-radius: var(--radius-sm); border-left: 2px solid #a855f7;">
+                  <strong style="color: #e9d5ff;">Texturování omítky &amp; kůže</strong>
+                  <p style="color: var(--text-secondary); margin-top: 2px;">Vložení textury na stěnu &rarr; <strong>Overlay</strong> zachová stíny i světla původního objektu.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: RETUŠE A FOTOMONTÁŽ -->
+      <!-- SLIDE 5: TONÁLNÍ A BAREVNÉ ÚPRAVY: KŘIVKY, ÚROVNĚ A HISTOGRAM -->
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Praktické postupy</div>
-            <h2 class="slide-title">Retušovací techniky &bull; Frekvenční separace</h2>
-            <p class="slide-subtitle">Jak odstranit vady pleti při zachování přirozené pórovité textury</p>
+            <div class="slide-category">Tónový mastering &bull; Interaktivní simulátor</div>
+            <h2 class="slide-title">Křivky (Curves), Úrovně (Levels) a Histogram</h2>
+            <p class="slide-subtitle">Matematická transformace jasu $Y_{\text{out}} = f(X_{\text{in}})$ v celkovém jasu i v jednotlivých RGB kanálech</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Profesionální retuš</span>
+            <span class="tag tag-exam">Klíčový zkouškový nástroj</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Základní retušovací nástroje</h4>
-              <ul class="styled-list">
-                <li><strong>Klonovací razítko (Clone Stamp):</strong> Přesně kopíruje pixely ze vzorkované oblasti (Alt+Click) na cílové místo.</li>
-                <li><strong>Retušovací štětec (Healing Brush):</strong> Kopíruje texturu ze vzorku, ale automaticky přizpůsobí jas a barvu okolnímu cíli.</li>
-                <li><strong>Obsahové vyplnění (Content-Aware Fill):</strong> Algoritmická syntéza textury z okolních oblastí snímku.</li>
-              </ul>
+          <div class="curve-workbench-grid">
+            <!-- Levý panel: Interaktivní křivka a SVG graf -->
+            <div class="curve-graph-wrap">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span id="curvePresetTitle" style="font-size: 0.85rem; font-weight: 700; color: #38bdf8;">S-Křivka (Zvýšení dynamického kontrastu)</span>
+                <span id="curveChannelBadge" style="font-family: var(--font-mono); font-size: 0.72rem; color: #ec4899; font-weight: 700; background: rgba(236,72,153,0.15); padding: 0.15rem 0.5rem; border-radius: 4px;">Kanál: RGB Master</span>
+              </div>
+
+              <!-- Interaktivní SVG křivkový graf -->
+              <svg id="curveSvg" viewBox="0 0 300 240" width="100%" height="200" style="background: rgba(0,0,0,0.6); border-radius: 6px; border: 1px solid rgba(255,255,255,0.08);">
+                <!-- Mřížka 4x4 (stíny, středy, světla) -->
+                <line x1="30" y1="30" x2="270" y2="30" stroke="#334155" stroke-dasharray="2,2" stroke-width="1" />
+                <line x1="30" y1="90" x2="270" y2="90" stroke="#334155" stroke-dasharray="2,2" stroke-width="1" />
+                <line x1="30" y1="150" x2="270" y2="150" stroke="#334155" stroke-dasharray="2,2" stroke-width="1" />
+                <line x1="30" y1="210" x2="270" y2="210" stroke="#475569" stroke-width="1.5" />
+
+                <line x1="30" y1="30" x2="30" y2="210" stroke="#475569" stroke-width="1.5" />
+                <line x1="90" y1="30" x2="90" y2="210" stroke="#334155" stroke-dasharray="2,2" stroke-width="1" />
+                <line x1="150" y1="30" x2="150" y2="210" stroke="#334155" stroke-dasharray="2,2" stroke-width="1" />
+                <line x1="210" y1="30" x2="210" y2="210" stroke="#334155" stroke-dasharray="2,2" stroke-width="1" />
+                <line x1="270" y1="30" x2="270" y2="210" stroke="#334155" stroke-dasharray="2,2" stroke-width="1" />
+
+                <!-- Referenční lineární diagonála 45° -->
+                <line x1="30" y1="210" x2="270" y2="30" stroke="#475569" stroke-dasharray="4,4" stroke-width="1" />
+
+                <!-- Aktivní tonální křivka -->
+                <path id="curvePath" d="M 30,210 C 110,225 190,15 270,30" fill="none" stroke="#ec4899" stroke-width="3" stroke-linecap="round" />
+
+                <!-- Kotevní body -->
+                <circle id="cpBlack" cx="30" cy="210" r="5" fill="#38bdf8" stroke="#fff" stroke-width="1.5" />
+                <circle id="cpShadow" cx="90" cy="180" r="5" fill="#ec4899" stroke="#fff" stroke-width="1.5" />
+                <circle id="cpHighlight" cx="210" cy="60" r="5" fill="#ec4899" stroke="#fff" stroke-width="1.5" />
+                <circle id="cpWhite" cx="270" cy="30" r="5" fill="#38bdf8" stroke="#fff" stroke-width="1.5" />
+
+                <text x="30" y="225" fill="#94a3b8" font-size="9" text-anchor="middle">0 (Černá)</text>
+                <text x="150" y="225" fill="#94a3b8" font-size="9" text-anchor="middle">128 (Středy)</text>
+                <text x="270" y="225" fill="#94a3b8" font-size="9" text-anchor="middle">255 (Bílá)</text>
+                <text x="20" y="125" fill="#94a3b8" font-size="9" text-anchor="middle" transform="rotate(-90 20 125)">Výstup jasu (Output)</text>
+              </svg>
+
+              <!-- Presety a přepínače křivky -->
+              <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+                <button class="styled-btn active" id="btnCurveS">S-Křivka (Kontrast)</button>
+                <button class="styled-btn" id="btnCurveLinear">Lineární (Neutrální)</button>
+                <button class="styled-btn" id="btnCurveFade">Matný filmový fade</button>
+                <button class="styled-btn" id="btnCurveHigh">Agresivní drama</button>
+              </div>
             </div>
-            <div class="content-card">
-              <h4>Frekvenční separace (Frequency Separation)</h4>
-              <p>Špičková metoda beauty retuše rozdělující obraz do dvou vrstev:</p>
-              <ul class="styled-list">
-                <li><strong>Nízké frekvence (Low Frequency):</strong> Rozostřená vrstva nesoucí pouze barvu, tón a světelné přechody. Retušují se zde fleky a stíny.</li>
-                <li><strong>Vysoké frekvence (High Frequency):</strong> Vrstva nesoucí jemnou texturu, póry a chloupky (High-Pass filtr). Retušují se zde pupínky a jizvy bez rozmazání barvy.</li>
+
+            <!-- Pravý panel: Vizuální vliv na tóny obrazu & Úrovně (Levels) -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h4 style="color: #38bdf8; margin-bottom: 0.4rem; font-size: 0.92rem;">Simulace tónové odezvy &amp; dynamického rozsahu</h4>
+                <div style="position: relative; width: 100%; height: 95px; border-radius: 4px; overflow: hidden; border: 1px solid var(--border-subtle); margin-bottom: 0.6rem;">
+                  <canvas id="curvePreviewCanvas" width="300" height="95" style="width: 100%; height: 100%; display: block;"></canvas>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); font-size: 0.8rem; line-height: 1.45;">
+                  <strong style="color: #fbcfe8;">Jak křivky mění náladu fotografie:</strong>
+                  <p id="curveEffectDesc" style="color: var(--text-secondary); margin-top: 3px;">
+                    Ztmavením stínů pod úhlopříčku a vytažením světel nad úhlopříčku vzniká tvar písmene „S“. Dochází ke zvýšení mikrokontrastu a separaci objektu od pozadí bez ořezu černého a bílého bodu.
+                  </p>
+                </div>
+              </div>
+
+              <div style="margin-top: 0.8rem; padding-top: 0.6rem; border-top: 1px solid var(--border-subtle);">
+                <h5 style="color: #f59e0b; margin-bottom: 0.3rem; font-size: 0.84rem;">Úrovně (Levels) vs. Křivky (Curves)</h5>
+                <ul class="styled-list" style="font-size: 0.77rem; gap: 0.3rem;">
+                  <li><strong>Úrovně:</strong> Omezují vstupní a výstupní černý bod, bílý bod a nelineární gammu (středy). Ideální pro odstranění šedého závoje a ořez prázdných okrajů histogramu.</li>
+                  <li><strong>Křivky:</strong> Umožňují přidat desítky kontrolních bodů po celé délce tonálního spektra. Zvládnou vše co Úrovně, plus přesné tónování kanálů R, G, B (Color Grading).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: RETUŠE A FREKVENČNÍ SEPARACE -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">High-End Postprodukce &bull; Rozklad obrazu</div>
+            <h2 class="slide-title">Retušovací techniky a Frekvenční separace</h2>
+            <p class="slide-subtitle">Jak odstranit pupínky a fleky bez rozmazání přirozených kožních pórů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Zkušební metoda</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="freq-sep-flow">
+            <!-- 1. Originál -->
+            <div class="freq-card active" id="fcardOrig" data-fview="orig">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem;">
+                <span class="sw-badge-pill sw-badge-commercial">Krok 1</span>
+                <span style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono);">Original RAW</span>
+              </div>
+              <h4 style="color: #fbcfe8; font-size: 0.88rem; margin-bottom: 0.3rem;">Surový portrétní snímek</h4>
+              <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35;">Vysoké prostorové rozlišení zachycuje póry, ale také zarudnutí, odlesky potu a akné.</p>
+            </div>
+
+            <!-- 2. Nízké frekvence -->
+            <div class="freq-card" id="fcardLow" data-fview="low">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem;">
+                <span class="sw-badge-pill sw-badge-foss">Nízké frekvence</span>
+                <span style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono);">Gaussian Blur (r≈4px)</span>
+              </div>
+              <h4 style="color: #a7f3d0; font-size: 0.88rem; margin-bottom: 0.3rem;">Barva &amp; Tón (Low Freq)</h4>
+              <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35;">Nese pouze barevné přechody, stíny a odstín. Retušují se zde fleky směšovacím štětcem (Mixer Brush).</p>
+            </div>
+
+            <!-- 3. Vysoké frekvence -->
+            <div class="freq-card" id="fcardHigh" data-fview="high">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem;">
+                <span class="sw-badge-pill sw-badge-canva">Vysoké frekvence</span>
+                <span style="font-size: 0.72rem; color: var(--text-muted); font-family: var(--font-mono);">High Pass / Linear Light</span>
+              </div>
+              <h4 style="color: #bae6fd; font-size: 0.88rem; margin-bottom: 0.3rem;">Textura &amp; Póry (High Freq)</h4>
+              <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35;">50% šedá vrstva nesoucí ostrost, mikrotexturu a řasy. Retušují se zde pupínky klonovacím razítkem.</p>
+            </div>
+          </div>
+
+          <div class="mask-workbench-grid" style="margin-top: 0.5rem;">
+            <!-- Vizualizace plátna -->
+            <div class="canvas-preview-card">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.82rem; font-weight: 700; color: #38bdf8;">Vizuální simulace frekvenčních vrstev</span>
+                <span id="freqStateLabel" style="font-size: 0.72rem; font-family: var(--font-mono); color: #fbcfe8;">Zobrazení: Celý složený obraz</span>
+              </div>
+              <div class="canvas-preview-wrap" style="aspect-ratio: 16 / 9;">
+                <canvas id="freqCanvas" width="380" height="215"></canvas>
+              </div>
+              <div style="display: flex; gap: 0.4rem; justify-content: center; margin-top: 0.2rem;">
+                <button class="styled-btn active" id="btnFreqComp">Složený výsledek</button>
+                <button class="styled-btn" id="btnFreqLow">Pouze barva (Rozostřená)</button>
+                <button class="styled-btn" id="btnFreqHigh">Pouze textura (Šedý filtr)</button>
+              </div>
+            </div>
+
+            <!-- Nástrojový arzenál retušéra -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <h4 style="color: #f472b6; margin-bottom: 0.4rem; font-size: 0.92rem;">Arzenál retušovacích nástrojů</h4>
+              <ul class="styled-list" style="font-size: 0.8rem; gap: 0.45rem;">
+                <li>
+                  <strong>Klonovací razítko (Clone Stamp):</strong><br>
+                  Přesná kopie pixelů 1:1 ze vzorkované oblasti (<kbd>Alt+Click</kbd>). Ideální pro texturovou vrstvu ve frekvenční separaci, protože nemění barvu.
+                </li>
+                <li>
+                  <strong>Retušovací štětec (Healing Brush):</strong><br>
+                  Přebírá texturu ze vzorku, ale automaticky dopočítává osvětlení a barvu podle okolí cíle (algoritmus řešení Poissonovy rovnice).
+                </li>
+                <li>
+                  <strong>Bodový retušovací štětec (Spot Healing):</strong><br>
+                  Automatická retuš bez nutnosti manuálního vzorkování (sám prozkoumá okolí).
+                </li>
+                <li>
+                  <strong>Výplň podle obsahu (Content-Aware Fill):</strong><br>
+                  Syntéza textury na velkých plochách (odstranění turistů z pláže, drátů vysokého napětí).
+                </li>
+                <li>
+                  <strong>Zkapalnění (Liquify):</strong><br>
+                  Parametrická manipulace s proporcemi, tvary obličeje a oděvy pomocí elastické mřížky.
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SUMMARY -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 7: FORMÁTY, BITOVÉ HLOUBKY A PRAKTICKÁ POUŽITÍ -->
+      <section class="slide" data-slide="7">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Závěrečná syntéza</div>
-            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
-            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z 2D rastrové grafiky</p>
+            <div class="slide-category">Datové formáty &bull; Workflow z praxe</div>
+            <h2 class="slide-title">Formáty souborů, bitová hloubka a reálná praxe</h2>
+            <p class="slide-subtitle">Rozdíl mezi pracovními a exportními formáty, 8 vs. 16 bitů a 4 scénáře nasazení</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Produkční standardy</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="software-detail-grid">
+            <!-- Levý sloupec: Formáty a bitová hloubka -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h4 style="color: #f472b6; margin-bottom: 0.5rem; font-size: 0.95rem;">Pracovní vs. Exportní formáty</h4>
+                <div style="font-size: 0.78rem; display: flex; flex-direction: column; gap: 0.45rem;">
+                  <div style="background: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #ec4899;">
+                    <strong style="color: #fbcfe8;">PSD &amp; PSB (Photoshop Document / Big):</strong>
+                    <p style="color: var(--text-secondary); margin-top: 2px;">Proprietární kontejner Adobe. Uchovává vrstvy, masky, cesty, inteligentní objekty a historii. Limit PSD je 2 GB a 30 000 px; formát PSB zvládá až 300 000 px a stovky gigabajtů (billboardy).</p>
+                  </div>
+                  <div style="background: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #10b981;">
+                    <strong style="color: #a7f3d0;">XCF (GIMP) &amp; AFPHOTO (Affinity):</strong>
+                    <p style="color: var(--text-secondary); margin-top: 2px;">Otevřený formát GIMPu (uchovává GEGL uzly) a nativní optimalizovaný formát Affinity s bleskovým ukládáním historie.</p>
+                  </div>
+                  <div style="background: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: var(--radius-sm); border-left: 2px solid #38bdf8;">
+                    <strong style="color: #bae6fd;">TIFF (Tagged Image File Format):</strong>
+                    <p style="color: var(--text-secondary); margin-top: 2px;">Univerzální standard pro DTP a polygrafii. Podporuje vrstvy, CMYK, 16/32 bitů a bezeztrátovou kompresi LZW či ZIP.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 0.6rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle); padding: 0.5rem 0.7rem; border-radius: var(--radius-sm); font-size: 0.76rem;">
+                <strong style="color: #fde68a;">8-bit vs. 16-bit vs. 32-bit Float:</strong>
+                <p style="color: var(--text-secondary); margin-top: 2px;">
+                  8 bitů = pouhých 256 tónů na kanál (při prudkém vytažení křivek vzniká pruhování – <em>Banding</em>). 16 bitů = 65 536 úrovní (nutnost pro RAW retuš). 32 bitů = HDR s hodnotami jasu &gt; 1.0 (filmové efekty).
+                </p>
+              </div>
+            </div>
+
+            <!-- Pravý sloupec: 4 praktické příklady užití -->
+            <div class="use-case-grid">
+              <div class="use-case-box">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="color: #38bdf8; font-size: 0.85rem;">1. E-Commerce &amp; Produkt</strong>
+                  <span class="sw-badge-pill sw-badge-canva">DTP Tisk</span>
+                </div>
+                <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35;">
+                  Přesné vyříznutí produktu ořezovou cestou (Pen Tool), umístění na čistě bílé pozadí (<code style="color:#a7f3d0">#FFFFFF</code>), umělé vržené stíny a konverze do profilu CMYK ISO Coated v2 pro katalog.
+                </p>
+              </div>
+
+              <div class="use-case-box">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="color: #ec4899; font-size: 0.85rem;">2. Beauty &amp; Fashion</strong>
+                  <span class="sw-badge-pill sw-badge-commercial">Magazín</span>
+                </div>
+                <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35;">
+                  Vyvolání 16-bit RAW v ACR, frekvenční separace pro zachování struktury pórů pleti, Dodge &amp; Burn modelace lícních kostí, doostření očí maskou a eliminace červených žilek.
+                </p>
+              </div>
+
+              <div class="use-case-box">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="color: #a855f7; font-size: 0.85rem;">3. Filmový Matte Painting</strong>
+                  <span class="sw-badge-pill sw-badge-foss">VFX &amp; Film</span>
+                </div>
+                <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35;">
+                  Kombinace 20+ fotografií a 3D renderů do fiktivní sci-fi krajiny. Sjednocení barevné teploty pomocí křivek, přidání atmosférického oparu (režim Screen) a filmového zrna.
+                </p>
+              </div>
+
+              <div class="use-case-box">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="color: #10b981; font-size: 0.85rem;">4. Web &amp; Mobilní UI</strong>
+                  <span class="sw-badge-pill sw-badge-web">Web / App</span>
+                </div>
+                <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35;">
+                  Tvorba hrdinských bannerů (Hero Images) a průhledných PNG ikon. Export do moderních formátů WebP a AVIF s prediktivní kompresí a generování variant pro displeje Retina 1&times;, 2&times;, 3&times;.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: SHRNUTÍ, CHECKLIST A MINITEST -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečná syntéza &bull; Zkušební prověrka</div>
+            <h2 class="slide-title">Shrnutí lekce &amp; Absolventský minitest</h2>
+            <p class="slide-subtitle">Klíčové teze k profilovému okruhu č. 12 absolutoria a interaktivní ověření znalostí</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Okruh absolutoria 12</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="summary-grid">
-            <div class="summary-card">
-              <h4>Masky vrstev</h4>
-              <p>Bílá odkrývá, černá skrývá. Umožňují 100% nedestruktivní retuš a kompozici fotomontáží bez nevratného mazání pixelů.</p>
+          <div class="software-detail-grid">
+            <!-- Levý sloupec: Checklist k absolutoriu -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h4 style="color: #f472b6; margin-bottom: 0.4rem; font-size: 0.95rem;">Zkušební checklist k absolutoriu (Okruh 12)</h4>
+                <ul class="styled-list" style="font-size: 0.8rem; gap: 0.45rem;">
+                  <li><strong>Nedestruktivní editace:</strong> Masky vrstev (bílá odkrývá, černá skrývá, šedá určuje průhlednost), vrstvy úprav, inteligentní objekty.</li>
+                  <li><strong>Software trhu:</strong> Photoshop (průmyslový DTP standard, PSD/PSB), GIMP (otevřený FOSS, GEGL engine, XCF), Affinity Photo (moderní Metal/DirectX GPU engine).</li>
+                  <li><strong>Tonální úpravy:</strong> S-křivka pro řízení kontrastu ($Y = f(X)$), úrovně pro ořez černého/bílého bodu a histogram.</li>
+                  <li><strong>Režimy prolnutí:</strong> Multiply pro stíny (bílá mizí), Screen pro světla (černá mizí), Overlay pro textury.</li>
+                  <li><strong>Frekvenční separace:</strong> Rozdělení na nízké frekvence (barva a tón) a vysoké frekvence (textura, póry, detaily).</li>
+                </ul>
+              </div>
+
+              <div style="background: rgba(236,72,153,0.08); border: 1px solid rgba(236,72,153,0.3); border-radius: var(--radius-sm); padding: 0.5rem 0.75rem; font-size: 0.78rem;">
+                <strong style="color: #fbcfe8;">Otázka zkušební komise:</strong>
+                <p style="color: var(--text-secondary); margin-top: 2px;">„Vysvětlete, proč v komerční retuši nesmíte mazat pixely nástrojem guma a jakým způsobem oddělíte retuš barvy pleti od struktury kožních pórů.“</p>
+              </div>
             </div>
-            <div class="summary-card">
-              <h4>Křivky a S-křivka</h4>
-              <p>Základní nástroj řízení kontrastu. Manipulace s přenosem vstupního a výstupního jasu v celém obraze nebo v jednotlivých RGB kanálech.</p>
-            </div>
-            <div class="summary-card">
-              <h4>Frekvenční separace</h4>
-              <p>Rozklad na nízkofrekvenční barevnou vrstvu a vysokofrekvenční vrstvu textury pro profesionální retuš pleti.</p>
-            </div>
-            <div class="summary-card">
-              <h4>Zkušební otázka</h4>
-              <p>Vysvětlete princip nedestruktivní editace v rastrovém editoru (masky, vrstvy úprav). Popište fungování nástroje Křivky a metodu frekvenční separace.</p>
+
+            <!-- Pravý sloupec: Interaktivní minitest -->
+            <div class="content-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Interaktivní zkušební kvíz</span>
+                  <span id="quizCounter" style="font-family: var(--font-mono); font-size: 0.75rem; color: #38bdf8; font-weight: 700;">Otázka 1 ze 3</span>
+                </div>
+                <h4 id="quizQuestionText" style="color: #fbcfe8; font-size: 0.92rem; margin-bottom: 0.75rem; line-height: 1.4;">
+                  Otázka se načítá...
+                </h4>
+                <div id="quizOptionsContainer" style="display: flex; flex-direction: column; gap: 0.45rem;">
+                  <!-- Dynamická tlačítka odpovědí -->
+                </div>
+              </div>
+
+              <div>
+                <div id="quizFeedbackBox" style="display: none; padding: 0.6rem 0.8rem; border-radius: var(--radius-sm); font-size: 0.8rem; line-height: 1.4; margin-top: 0.6rem;"></div>
+                <button id="quizNextBtn" class="styled-btn" style="display: none; margin-top: 0.6rem; width: 100%; justify-content: center; background: var(--accent); color: #fff;">
+                  Další zkušební otázka &rarr;
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -242,11 +1075,9 @@
 
     </main>
 
-    <!-- Controls -->
-
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="04_objektivy_optika_a_vady_zobrazeni.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 04: Objektivy, optika a vady zobrazení (Ctrl+Šipka vlevo)">
+      <a href="04_objektivy_optika_a_vady_zobrazeni.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 04: Objektivy, optika a vady zobrazení (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu MUL20">
@@ -259,7 +1090,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 08</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -347,7 +1178,1232 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
 
+    <!-- Slovník pojmů Modal -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 760px; max-height: 85vh; display: flex; flex-direction: column;">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Slovník pojmů: 2D rastrová grafika &amp; editory
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+
+        <div style="padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-subtle); display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+          <input type="text" id="glossarySearchInput" placeholder="Hledat termín (např. PSD, maska, křivky, frekvenční...)" style="flex: 1; min-width: 220px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.45rem 0.8rem; color: var(--text-primary); font-size: 0.85rem;">
+        </div>
+
+        <div class="modal-body" id="glossaryContainer" style="overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; padding: 1rem 1.25rem;">
+          <div class="content-card" data-term="psd psb adobe photoshop document">
+            <h4 style="color: #ec4899; font-size: 0.9rem;">PSD / PSB (Photoshop Big)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Proprietární rastrový kontejner. Uchovává kompletní strom vrstev, masky a živé filtry. Formát PSB odstraňuje limit 2 GB a 30 000 px pro velkoformátovou grafiku.</p>
+          </div>
+          <div class="content-card" data-term="xcf gimp experimental computing facility">
+            <h4 style="color: #10b981; font-size: 0.9rem;">XCF (GIMP Format)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Nativní otevřený formát aplikace GIMP. Ukládá vrstvy, cesty, kanály a GEGL instrukce. Vhodný pro open-source a Linuxové produkční řetězce.</p>
+          </div>
+          <div class="content-card" data-term="tiff tagged image file format">
+            <h4 style="color: #38bdf8; font-size: 0.9rem;">TIFF (Tagged Image File Format)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Standard pro polygrafii a archivaci. Podporuje 16-bit i 32-bit hloubku, CMYK barvy, vrstvy a bezeztrátovou kompresi LZW nebo ZIP.</p>
+          </div>
+          <div class="content-card" data-term="gegl generic graphics library gimp">
+            <h4 style="color: #a855f7; font-size: 0.9rem;">GEGL Engine</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Generická grafická knihovna tvořící renderovací jádro GIMPu. Umožňuje nedestruktivní operace a interní zpracování v 32-bitovém plovoucím formátu.</p>
+          </div>
+          <div class="content-card" data-term="maska vrstvy layer mask nedestruktivni">
+            <h4 style="color: #f59e0b; font-size: 0.9rem;">Maska vrstvy (Layer Mask)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Šedotónový kanál řídící viditelnost vrstvy. Bílá = 100% vidět, černá = 100% skrýt, šedá = poloprůhlednost. Umožňuje 100% nedestruktivní retuš a koláž.</p>
+          </div>
+          <div class="content-card" data-term="inteligentni objekt smart object">
+            <h4 style="color: #ec4899; font-size: 0.9rem;">Smart Object (Inteligentní objekt)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Obal vrstvy zachovávající původní zdrojová data. Umožňuje neomezené transformace (zmenšení/zvětšení) a aplikaci živých filtrů bez ztráty rozlišení.</p>
+          </div>
+          <div class="content-card" data-term="orezova maska clipping mask">
+            <h4 style="color: #10b981; font-size: 0.9rem;">Ořezová maska (Clipping Mask)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Metoda, při níž vrstva přebírá průhlednost vrstvy ležící bezprostředně pod ní. Efekt se zobrazí pouze na ploše tvaru základní vrstvy.</p>
+          </div>
+          <div class="content-card" data-term="rezimy prolnuti blend modes multiply screen overlay">
+            <h4 style="color: #38bdf8; font-size: 0.9rem;">Režimy prolnutí (Blending Modes)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Matematické algoritmy míchání barev vrchní a spodní vrstvy. Multiply (násobení) pro stíny, Screen (závoj) pro světla, Overlay (překrytí) pro textury.</p>
+          </div>
+          <div class="content-card" data-term="frekvencni separace frequency separation beauty retus">
+            <h4 style="color: #f472b6; font-size: 0.9rem;">Frekvenční separace</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Rozklad obrazu na vrstvu nízkých frekvencí (barva, tón, stíny) a vysokých frekvencí (textura, póry, detaily). Standard pro špičkovou beauty retuš.</p>
+          </div>
+          <div class="content-card" data-term="s krivka s curve krivky curves kontrast">
+            <h4 style="color: #a855f7; font-size: 0.9rem;">S-Křivka (S-Curve)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Tonální křivka se ztmavenými stíny a zesvětlenými jasy. Zvyšuje vizuální kontrast a hloubku bez ořezu černého a bílého bodu.</p>
+          </div>
+          <div class="content-card" data-term="bitova hloubka bit depth 8 16 32 banding posterizace">
+            <h4 style="color: #f59e0b; font-size: 0.9rem;">Bitová hloubka (Bit Depth)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Počet bitů na barvový kanál. 8 bitů = 256 úrovní (hrozba posterizace a pruhování); 16 bitů = 65 536 úrovní (pro RAW retuše); 32 bitů float = HDR.</p>
+          </div>
+          <div class="content-card" data-term="dodge and burn zesvetleni ztmaveni modelace">
+            <h4 style="color: #ec4899; font-size: 0.9rem;">Dodge &amp; Burn (Zesvětlení a Ztmavení)</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; margin-top: 4px;">Klasická technika z temné komory přenesená do digitálu. Selektivní lokální modelace světel a stínů pro zdůraznění plasticity obličeje a svalů.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Framework Engine Script -->
   <script src="../../assets/js/presentation-core.js"></script>
+
+  <!-- Specializovaná interaktivní logika lekce 05 -->
+  <script>
+    (function() {
+      'use strict';
+
+      /* ======================================================================
+         1. INTERAKTIVNÍ PROFIL SOFTWARE (SLIDE 2)
+         ====================================================================== */
+      const swDatabase = {
+        ps: {
+          title: "Adobe Photoshop (1990–současnost)",
+          badge: "Průmyslový standard",
+          badgeClass: "sw-badge-commercial",
+          desc: "Dominantní proprietární nástroj v reklamních agenturách, DTP a filmových studiích. Architektura stojí na Mercury Graphics Engine s akcelerací GPU, certifikované správě barev Adobe Color Engine (ACE) a modulu Adobe Camera Raw. Nativní formát PSD a velkoformátový PSB.",
+          engine: "Mercury Graphics Engine + ACE",
+          formats: ".PSD, .PSB (až 300 000 px / > 2 GB)",
+          strengths: [
+            "Inteligentní objekty (Smart Objects) s nedestruktivními živými filtry.",
+            "Generativní AI výplně Adobe Firefly s kontextovým doplňováním chybějících pixelů.",
+            "Průmyslový standard pro předtiskovou přípravu CMYK a přímé barvy Pantone."
+          ],
+          license: "Měsíční/roční předplatné Adobe Creative Cloud • Úzká integrace s InDesign a Illustrator"
+        },
+        gimp: {
+          title: "GIMP (GNU Image Manipulation Program)",
+          badge: "Svobodný open-source (GPLv3)",
+          badgeClass: "sw-badge-foss",
+          desc: "Vlajková loď svobodného grafického software. Běží na Linuxu, Windows i macOS. Zpracování probíhá přes modulární knihovnu GEGL (Generic Graphics Library) podporující nedestruktivní 32-bitový plovoucí formát na kanál. Skvělý pro automatizované skriptování.",
+          engine: "GEGL (Generic Graphics Library) 32-bit float",
+          formats: ".XCF (otevřený bezeztrátový formát vrstev)",
+          strengths: [
+            "100% zdarma bez licenčních poplatků pro komerční i školní nasazení.",
+            "Výkonné skriptovací rozhraní Script-Fu a Python-Fu pro dávkové zpracování na serveru.",
+            "Plná podpora otevřených linuxových standardů a nízké hardwarové nároky."
+          ],
+          license: "Svobodná licence GNU GPLv3 • K dispozici zdrojové kódy pro úpravy"
+        },
+        affinity: {
+          title: "Affinity Photo (Serif / Canva)",
+          badge: "Od roku 2025 zdarma",
+          badgeClass: "sw-badge-canva",
+          desc: "Moderní rastrový editor napsaný od základu v moderním C++ pro hardwarovou akceleraci Apple Metal, DirectX a OpenCL. Nabízí okamžitou odezvu i při stovkách vrstev, živé filtry v reálném čase bez nutnosti rasterizace a plné 32-bit HDR workflow. Po akvizici společností Canva integrován a poskytován studentům i tvůrcům zdarma.",
+          engine: "Moderní Metal / DirectX GPU jádro",
+          formats: ".afphoto (kompatibilní mezi macOS, Windows i iPadem)",
+          strengths: [
+            "Živé nedestruktivní filtry (Live Filters) počítané v reálném čase bez zpoždění.",
+            "Nativní bezeztrátový import a export formátů PSD a RAW.",
+            "Plná podpora barev CMYK, LAB a skládání panoramat i Focus Stacking."
+          ],
+          license: "Součást kreativního ekosystému Canva (dříve jednorázová licence)"
+        },
+        krita: {
+          title: "Krita (Specialista na malbu & ilustraci)",
+          badge: "Open-source malířský etalon",
+          badgeClass: "sw-badge-foss",
+          desc: "Svobodný open-source editor primárně navržený pro koncept art, digitální malbu, ilustrace a texturování pro 3D. Obsahuje revoluční štětcové enginy, asistenty perspektivy a stabilizátory tahu ruky pro grafické tablety.",
+          engine: "Krita Painting Engine + OpenGL akcelerace",
+          formats: ".KRA (nativní projektový formát), podpora PSD",
+          strengths: [
+            "Špičková simulace reálných výtvarných technik (olej, akvarel, křída, tuš).",
+            "Nástroje pro tvorbu bezešvých dlaždicových textur a 2D animací snímek po snímku.",
+            "Správa barevných profilů ICC a práce v prostorech CMYK a LAB."
+          ],
+          license: "Zdarma pod licencí GNU GPL • Vyvíjeno komunitou digitálních umělců"
+        },
+        photopea: {
+          title: "Photopea (Ivan Kuckir)",
+          badge: "WebAssembly v prohlížeči",
+          badgeClass: "sw-badge-web",
+          desc: "Unikátní plnohodnotný grafický editor běžící 100% v internetovém prohlížeči. Využívá WebAssembly a HTML5 Canvas. Všechna data se zpracovávají lokálně v paměti RAM vašeho počítače bez odesílání na vzdálený server.",
+          engine: "WebAssembly + Canvas + IndexedDB",
+          formats: "Přímé otevírání PSD, XCF, Sketch, XD, RAW",
+          strengths: [
+            "Nulová instalace – funguje na jakémkoli počítači, Chromebooku či mobilu.",
+            "Téměř identické klávesové zkratky a ergonomie s Adobe Photoshopem.",
+            "Okamžité otevření souboru PSD i na zařízeních bez instalovaného Adobe CC."
+          ],
+          license: "Zdarma s volitelným předplatným pro odstranění bannerů"
+        }
+      };
+
+      const swTabBtns = document.querySelectorAll('.software-tab-btn');
+      const swTitle = document.getElementById('swTitle');
+      const swBadge = document.getElementById('swBadge');
+      const swDesc = document.getElementById('swDesc');
+      const swEngine = document.getElementById('swEngine');
+      const swFormats = document.getElementById('swFormats');
+      const swStrengths = document.getElementById('swStrengths');
+      const swLicense = document.getElementById('swLicense');
+
+      function setSoftware(key) {
+        const data = swDatabase[key];
+        if (!data || !swTitle) return;
+
+        swTitle.textContent = data.title;
+        swBadge.textContent = data.badge;
+        swBadge.className = `sw-badge-pill ${data.badgeClass}`;
+        swDesc.textContent = data.desc;
+        swEngine.textContent = data.engine;
+        swFormats.textContent = data.formats;
+        swLicense.textContent = data.license;
+
+        swStrengths.innerHTML = '';
+        data.strengths.forEach(str => {
+          const li = document.createElement('li');
+          li.textContent = str;
+          swStrengths.appendChild(li);
+        });
+
+        swTabBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-sw') === key);
+        });
+      }
+
+      swTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          setSoftware(btn.getAttribute('data-sw'));
+        });
+      });
+
+      /* ======================================================================
+         2. INTERAKTIVNÍ MASKA VRSTVY (SLIDE 3)
+         ====================================================================== */
+      const maskCanvas = document.getElementById('maskCanvas');
+      const maskStatusText = document.getElementById('maskStatusText');
+      const maskOpacitySlider = document.getElementById('maskOpacitySlider');
+      const maskOpacityVal = document.getElementById('maskOpacityVal');
+      const btnMaskGrad = document.getElementById('btnMaskGrad');
+      const btnMaskCircle = document.getElementById('btnMaskCircle');
+      const btnMaskInvert = document.getElementById('btnMaskInvert');
+      const btnMaskReset = document.getElementById('btnMaskReset');
+
+      let currentMaskType = 'gradient'; // 'gradient', 'circle', 'all'
+      let isMaskInverted = false;
+      let maskOpacity = 1.0;
+
+      function renderMaskDemo() {
+        if (!maskCanvas) return;
+        const ctx = maskCanvas.getContext('2d');
+        const w = maskCanvas.width;
+        const h = maskCanvas.height;
+
+        ctx.clearRect(0, 0, w, h);
+
+        // 1. Spodní podkladová vrstva: Krásný barevný západ slunce s horami
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+        skyGrad.addColorStop(0, '#f43f5e');
+        skyGrad.addColorStop(0.5, '#ec4899');
+        skyGrad.addColorStop(1, '#8b5cf6');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Slunce
+        ctx.beginPath();
+        ctx.arc(w * 0.5, h * 0.45, 35, 0, Math.PI * 2);
+        ctx.fillStyle = '#fde047';
+        ctx.fill();
+
+        // Hory na spodní vrstvě
+        ctx.fillStyle = '#1e1b4b';
+        ctx.beginPath();
+        ctx.moveTo(0, h);
+        ctx.lineTo(w * 0.3, h * 0.55);
+        ctx.lineTo(w * 0.6, h * 0.75);
+        ctx.lineTo(w * 0.85, h * 0.45);
+        ctx.lineTo(w, h);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = 'rgba(255,255,255,0.7)';
+        ctx.font = '11px JetBrains Mono, monospace';
+        ctx.fillText('Spodní vrstva: Barevný podklad', 10, h - 12);
+
+        // 2. Vykreslení vrchní vrstvy s aplikovanou maskou
+        // Vytvoříme offscreen canvas pro vrchní vrstvu a její masku
+        const topCanvas = document.createElement('canvas');
+        topCanvas.width = w;
+        topCanvas.height = h;
+        const tctx = topCanvas.getContext('2d');
+
+        // Vrchní vrstva: Monochromatický technický náčrt / noční scéna
+        tctx.fillStyle = '#0f172a';
+        tctx.fillRect(0, 0, w, h);
+
+        // Geometrické mřížky a technické prvky
+        tctx.strokeStyle = '#38bdf8';
+        tctx.lineWidth = 1;
+        for (let x = 0; x < w; x += 25) {
+          tctx.beginPath();
+          tctx.moveTo(x, 0);
+          tctx.lineTo(x, h);
+          tctx.stroke();
+        }
+        for (let y = 0; y < h; y += 25) {
+          tctx.beginPath();
+          tctx.moveTo(0, y);
+          tctx.lineTo(w, y);
+          tctx.stroke();
+        }
+        tctx.fillStyle = '#38bdf8';
+        tctx.font = '12px JetBrains Mono, monospace';
+        tctx.fillText('VRCHNÍ VRSTVA (Technický výkres)', 20, 35);
+        tctx.fillText('Maska odkrývá spodní západ slunce!', 20, 55);
+
+        // 3. Aplikace masky do alfa kanálu vrchní vrstvy pomocí 'destination-in'
+        tctx.globalCompositeOperation = 'destination-in';
+
+        if (currentMaskType === 'gradient') {
+          const mGrad = tctx.createLinearGradient(0, 0, w, 0);
+          if (!isMaskInverted) {
+            mGrad.addColorStop(0, 'rgba(0,0,0,1)');   // Bílá maska (vidět vrchní)
+            mGrad.addColorStop(1, 'rgba(0,0,0,0)');   // Černá maska (průhledná, vidět spodní)
+          } else {
+            mGrad.addColorStop(0, 'rgba(0,0,0,0)');
+            mGrad.addColorStop(1, 'rgba(0,0,0,1)');
+          }
+          tctx.fillStyle = mGrad;
+          tctx.fillRect(0, 0, w, h);
+        } else if (currentMaskType === 'circle') {
+          const radGrad = tctx.createRadialGradient(w * 0.5, h * 0.5, 10, w * 0.5, h * 0.5, 95);
+          if (!isMaskInverted) {
+            radGrad.addColorStop(0, 'rgba(0,0,0,0)'); // Uprostřed průhledné (vidět slunce)
+            radGrad.addColorStop(1, 'rgba(0,0,0,1)'); // Okraje vidět vrchní
+          } else {
+            radGrad.addColorStop(0, 'rgba(0,0,0,1)');
+            radGrad.addColorStop(1, 'rgba(0,0,0,0)');
+          }
+          tctx.fillStyle = radGrad;
+          tctx.fillRect(0, 0, w, h);
+        } else if (currentMaskType === 'all') {
+          tctx.fillStyle = isMaskInverted ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,1)';
+          tctx.fillRect(0, 0, w, h);
+        }
+
+        // Vykreslit výslednou zamaskovanou vrchní vrstvu na hlavní canvas s daným krytím
+        ctx.globalAlpha = maskOpacity;
+        ctx.drawImage(topCanvas, 0, 0);
+        ctx.globalAlpha = 1.0;
+      }
+
+      if (btnMaskGrad) {
+        btnMaskGrad.addEventListener('click', () => {
+          currentMaskType = 'gradient';
+          maskStatusText.textContent = isMaskInverted ? 'Maska: Obrácený gradient' : 'Maska: Lineární gradient (Zleva doprava)';
+          document.querySelectorAll('.mask-workbench-grid .styled-btn').forEach(b => b.classList.remove('active'));
+          btnMaskGrad.classList.add('active');
+          renderMaskDemo();
+        });
+      }
+
+      if (btnMaskCircle) {
+        btnMaskCircle.addEventListener('click', () => {
+          currentMaskType = 'circle';
+          maskStatusText.textContent = 'Maska: Měkký radiální kruh štětce';
+          document.querySelectorAll('.mask-workbench-grid .styled-btn').forEach(b => b.classList.remove('active'));
+          btnMaskCircle.classList.add('active');
+          renderMaskDemo();
+        });
+      }
+
+      if (btnMaskInvert) {
+        btnMaskInvert.addEventListener('click', () => {
+          isMaskInverted = !isMaskInverted;
+          maskStatusText.textContent = `Maska: ${isMaskInverted ? 'Invertovaná (Ctrl+I)' : 'Běžná polarita'}`;
+          renderMaskDemo();
+        });
+      }
+
+      if (btnMaskReset) {
+        btnMaskReset.addEventListener('click', () => {
+          currentMaskType = 'all';
+          isMaskInverted = false;
+          maskStatusText.textContent = 'Maska: 100% Bílá (Plné krytí horní vrstvy)';
+          document.querySelectorAll('.mask-workbench-grid .styled-btn').forEach(b => b.classList.remove('active'));
+          btnMaskReset.classList.add('active');
+          renderMaskDemo();
+        });
+      }
+
+      if (maskOpacitySlider && maskOpacityVal) {
+        maskOpacitySlider.addEventListener('input', (e) => {
+          maskOpacity = parseInt(e.target.value, 10) / 100;
+          maskOpacityVal.textContent = `${e.target.value} %`;
+          renderMaskDemo();
+        });
+      }
+
+      renderMaskDemo();
+
+      /* ======================================================================
+         3. REŽIMY PROLNUTÍ (BLEND MODES - SLIDE 4)
+         ====================================================================== */
+      const blendCanvas = document.getElementById('blendCanvas');
+      const blendModeBtns = document.querySelectorAll('.blend-mode-btn');
+      const blendCategoryBadge = document.getElementById('blendCategoryBadge');
+      const blendModeTitle = document.getElementById('blendModeTitle');
+      const blendFormula = document.getElementById('blendFormula');
+      const blendNeutralColor = document.getElementById('blendNeutralColor');
+      const blendUseDesc = document.getElementById('blendUseDesc');
+
+      const blendData = {
+        normal: {
+          cat: "Běžný režim",
+          badgeClass: "sw-badge-commercial",
+          formula: "Result = Blend",
+          neutral: "Žádná (vrstva překrývá podklad podle své opacity)",
+          use: "Standardní neprůhledná kresba, text a plné grafické vrstvy.",
+          composite: "source-over"
+        },
+        multiply: {
+          cat: "Ztmavovací rodina",
+          badgeClass: "sw-badge-commercial",
+          formula: "Result = (Base × Blend) / 255",
+          neutral: "Bílá barva (RGB 255,255,255 je neutrální a 100% zmizí)",
+          use: "Vkládání naskenovaných perokreseb a podpisů bez nutnosti ořezu, tvorba hlubokých stínů.",
+          composite: "multiply"
+        },
+        screen: {
+          cat: "Zesvětlovací rodina",
+          badgeClass: "sw-badge-canva",
+          formula: "Result = 255 - ((255 - Base) × (255 - Blend)) / 255",
+          neutral: "Černá barva (RGB 0,0,0 je neutrální a 100% zmizí)",
+          use: "Aplikace jisker, plamenů, kouře a záblesků vyfotografovaných na černém pozadí.",
+          composite: "screen"
+        },
+        overlay: {
+          cat: "Kontrastní rodina",
+          badgeClass: "sw-badge-foss",
+          formula: "Base < 128 ? 2×Base×Blend : 255 - 2×(255-Base)×(255-Blend)",
+          neutral: "50% neutrální šedá (RGB 128,128,128 nemá žádný vliv)",
+          use: "Nanášení textury dřeva, kamene či šumu na objekt se zachováním jeho původních stínů a světel.",
+          composite: "overlay"
+        },
+        luminosity: {
+          cat: "Složková rodina",
+          badgeClass: "sw-badge-web",
+          formula: "Result = Jas vrchní vrstvy + Odstín a sytost spodní vrstvy",
+          neutral: "Žádná (zcela přepisuje jasovou složku)",
+          use: "Aplikace tonálních křivek na portrét bez nežádoucího přesycení barevnosti kůže.",
+          composite: "luminosity"
+        }
+      };
+
+      const canvasThumbA = document.getElementById('canvasThumbA');
+      const canvasThumbB = document.getElementById('canvasThumbB');
+      const blendCanvasHud = document.getElementById('blendCanvasHud');
+      const btnViewBlend = document.getElementById('btnViewBlend');
+      const btnViewLayerA = document.getElementById('btnViewLayerA');
+      const btnViewLayerB = document.getElementById('btnViewLayerB');
+
+      let currentBlendModeKey = 'normal';
+      let currentBlendView = 'blend'; // 'blend', 'layerA', 'layerB'
+
+      // Vykreslení Podkladové Vrstvy A (Base)
+      function drawLayerA(ctx, w, h) {
+        ctx.save();
+        // Základní barevný gradient krajiny / studia
+        const baseGrad = ctx.createLinearGradient(0, 0, w, h);
+        baseGrad.addColorStop(0, '#0c4a6e');
+        baseGrad.addColorStop(0.45, '#0284c7');
+        baseGrad.addColorStop(1, '#0f172a');
+        ctx.fillStyle = baseGrad;
+        ctx.fillRect(0, 0, w, h);
+
+        // Hory / geometrické těleso v popředí
+        ctx.fillStyle = '#0369a1';
+        ctx.beginPath();
+        ctx.moveTo(0, h);
+        ctx.lineTo(w * 0.25, h * 0.45);
+        ctx.lineTo(w * 0.55, h * 0.8);
+        ctx.lineTo(w * 0.85, h * 0.35);
+        ctx.lineTo(w, h);
+        ctx.closePath();
+        ctx.fill();
+
+        // Jasný bílý kruhový objekt (např. měsíc / produkt)
+        ctx.fillStyle = '#f8fafc';
+        ctx.beginPath();
+        ctx.arc(w * 0.35, h * 0.45, Math.min(w, h) * 0.18, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#bae6fd';
+        ctx.font = '10px JetBrains Mono, monospace';
+        ctx.fillText('Vrstva A (Podklad)', 10, h - 10);
+        ctx.restore();
+      }
+
+      let currentLayerBPreset = 'universal'; // 'universal', 'signature', 'fire', 'texture'
+      const layerBBadgeInfo = document.getElementById('layerBBadgeInfo');
+      const layerBPresetBtns = document.querySelectorAll('#layerBPresetGroup button');
+
+      const presetNames = {
+        universal: 'Univerzální terč',
+        signature: 'Podpis (Bílé pozadí)',
+        fire: 'Plameny (Černé pozadí)',
+        texture: 'Textura (50% šedá)'
+      };
+
+      // Vykreslení Vrchní Vrstvy B (Blend) podle vybraného presetu
+      function drawLayerB(ctx, w, h) {
+        ctx.save();
+
+        if (currentLayerBPreset === 'signature') {
+          // 1. BÍLÉ POZADÍ (Papír) s černým naskenovaným podpisem a červeným razítkem
+          // Klíčové pro MULTIPLY: Bílá (255) je neutrální a zmizí, černá kresba zůstává!
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, w, h);
+
+          // Jemné vodicí linky papíru
+          ctx.strokeStyle = 'rgba(203, 213, 225, 0.4)';
+          ctx.lineWidth = 1;
+          for (let y = 30; y < h; y += 28) {
+            ctx.beginPath();
+            ctx.moveTo(15, y);
+            ctx.lineTo(w - 15, y);
+            ctx.stroke();
+          }
+
+          // Černý naskenovaný inkoustový podpis
+          ctx.strokeStyle = '#020617';
+          ctx.lineWidth = 3;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.beginPath();
+          ctx.moveTo(w * 0.12, h * 0.58);
+          ctx.bezierCurveTo(w * 0.22, h * 0.22, w * 0.32, h * 0.8, w * 0.44, h * 0.38);
+          ctx.bezierCurveTo(w * 0.54, h * 0.12, w * 0.62, h * 0.82, w * 0.76, h * 0.45);
+          ctx.lineTo(w * 0.84, h * 0.52);
+          ctx.stroke();
+
+          // Červené kulaté úřední razítko
+          ctx.strokeStyle = '#dc2626';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.arc(w * 0.78, h * 0.62, 26, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.fillStyle = '#dc2626';
+          ctx.font = 'bold 8px JetBrains Mono, monospace';
+          ctx.fillText('ORIGINÁL', w * 0.78 - 18, h * 0.62 + 3);
+
+          ctx.fillStyle = '#020617';
+          ctx.font = '9px JetBrains Mono, monospace';
+          ctx.fillText('Vrstva B: Bílý papír + Černý podpis', 10, h - 8);
+
+        } else if (currentLayerBPreset === 'fire') {
+          // 2. ČERNÉ POZADÍ (RGB 0,0,0) se zářícím ohněm a jiskrami
+          // Klíčové pro SCREEN: Černá (0) je neutrální a zmizí, oheň a jiskry zůstávají!
+          ctx.fillStyle = '#000000';
+          ctx.fillRect(0, 0, w, h);
+
+          // Zářící plamen / světelná koule
+          const fireGrad = ctx.createRadialGradient(w * 0.62, h * 0.46, 4, w * 0.62, h * 0.46, Math.min(w, h) * 0.45);
+          fireGrad.addColorStop(0, '#ffffff');
+          fireGrad.addColorStop(0.2, '#fde047');
+          fireGrad.addColorStop(0.55, '#f97316');
+          fireGrad.addColorStop(0.85, '#dc2626');
+          fireGrad.addColorStop(1, 'rgba(0, 0, 0, 1)');
+          ctx.fillStyle = fireGrad;
+          ctx.fillRect(0, 0, w, h);
+
+          // Létající jiskry
+          ctx.fillStyle = '#fef08a';
+          const sparks = [[0.25, 0.4], [0.42, 0.25], [0.72, 0.22], [0.82, 0.38], [0.55, 0.18], [0.68, 0.78]];
+          sparks.forEach(([sx, sy]) => {
+            ctx.beginPath();
+            ctx.arc(w * sx, h * sy, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+          });
+
+          ctx.fillStyle = '#fde68a';
+          ctx.font = '9px JetBrains Mono, monospace';
+          ctx.fillText('Vrstva B: Černé pozadí + Oheň/Jiskry', 10, h - 8);
+
+        } else if (currentLayerBPreset === 'texture') {
+          // 3. 50% NEUTRÁLNÍ ŠEDÁ PLOCHA (RGB 128,128,128) s reliéfem
+          // Klíčové pro OVERLAY: 50% šedá má nulový vliv, světlé/tmavé hrany tvoří plastičnost!
+          ctx.fillStyle = '#808080';
+          ctx.fillRect(0, 0, w, h);
+
+          // Vystupující rýhy reliéfu (tmavé stíny + světlé hrany)
+          ctx.lineWidth = 2;
+          for (let y = 16; y < h - 18; y += 18) {
+            ctx.strokeStyle = '#333333'; // Ztmavující stín (hodnota < 128)
+            ctx.beginPath();
+            ctx.moveTo(10, y);
+            ctx.lineTo(w - 10, y);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#cccccc'; // Zesvětlující hrana (hodnota > 128)
+            ctx.beginPath();
+            ctx.moveTo(10, y + 2.5);
+            ctx.lineTo(w - 10, y + 2.5);
+            ctx.stroke();
+          }
+
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '9px JetBrains Mono, monospace';
+          ctx.fillText('Vrstva B: 50% Šedá textura (128)', 10, h - 8);
+
+        } else {
+          // 4. UNIVERZÁLNÍ TESTOVACÍ TERČ:
+          // Spojuje všechny 3 situace vedle sebe, aby byl okamžitě patrný vliv na celém spektru!
+          
+          // Levá zóna: BÍLÁ ZÓNA (255)
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, w * 0.45, h * 0.78);
+          ctx.fillStyle = '#0f172a';
+          ctx.font = 'bold 10px JetBrains Mono, monospace';
+          ctx.fillText('BÍLÁ (255)', 12, 28);
+          ctx.font = '8px JetBrains Mono, monospace';
+          ctx.fillText('Multiply: Zmizí', 12, 45);
+          ctx.fillText('Screen: Přepal', 12, 60);
+
+          // Tmavý inkoustový symbol v bílé zóně
+          ctx.strokeStyle = '#020617';
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.arc(w * 0.22, h * 0.48, 18, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(w * 0.22 - 12, h * 0.48);
+          ctx.lineTo(w * 0.22 + 12, h * 0.48);
+          ctx.moveTo(w * 0.22, h * 0.48 - 12);
+          ctx.lineTo(w * 0.22, h * 0.48 + 12);
+          ctx.stroke();
+
+          // Pravá zóna: ČERNÁ ZÓNA (0)
+          ctx.fillStyle = '#000000';
+          ctx.fillRect(w * 0.55, 0, w * 0.45, h * 0.78);
+          const orbGrad = ctx.createRadialGradient(w * 0.78, h * 0.45, 3, w * 0.78, h * 0.45, 42);
+          orbGrad.addColorStop(0, '#ffffff');
+          orbGrad.addColorStop(0.25, '#fde047');
+          orbGrad.addColorStop(0.65, '#ea580c');
+          orbGrad.addColorStop(1, 'rgba(0,0,0,1)');
+          ctx.fillStyle = orbGrad;
+          ctx.fillRect(w * 0.55, 0, w * 0.45, h * 0.78);
+
+          ctx.fillStyle = '#fef08a';
+          ctx.font = 'bold 10px JetBrains Mono, monospace';
+          ctx.fillText('ČERNÁ (0)', w * 0.58, 28);
+          ctx.font = '8px JetBrains Mono, monospace';
+          ctx.fillText('Screen: Zmizí', w * 0.58, 45);
+          ctx.fillText('Multiply: Černá', w * 0.58, 60);
+
+          // Střední zóna: 50% NEUTRÁLNÍ ŠEDÁ (128)
+          ctx.fillStyle = '#808080';
+          ctx.fillRect(w * 0.45, 0, w * 0.1, h * 0.78);
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 7px JetBrains Mono, monospace';
+          ctx.save();
+          ctx.translate(w * 0.51, h * 0.55);
+          ctx.rotate(-Math.PI / 2);
+          ctx.fillText('50% ŠEDÁ (128)', 0, 0);
+          ctx.restore();
+
+          // Spodní horizontální gradient 0 -> 128 -> 255
+          const bottomGrad = ctx.createLinearGradient(0, 0, w, 0);
+          bottomGrad.addColorStop(0, '#000000');
+          bottomGrad.addColorStop(0.5, '#808080');
+          bottomGrad.addColorStop(1, '#ffffff');
+          ctx.fillStyle = bottomGrad;
+          ctx.fillRect(0, h * 0.78, w, h * 0.22);
+
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '8px JetBrains Mono, monospace';
+          ctx.fillText('0 (Černá)', 8, h - 6);
+          ctx.fillText('128 (Šedá)', w * 0.44, h - 6);
+          ctx.fillStyle = '#020617';
+          ctx.fillText('255 (Bílá)', w - 55, h - 6);
+        }
+
+        ctx.restore();
+      }
+
+      function setLayerBPreset(presetKey) {
+        currentLayerBPreset = presetKey;
+        if (layerBBadgeInfo) layerBBadgeInfo.textContent = presetNames[presetKey] || presetKey;
+
+        layerBPresetBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-bpreset') === presetKey);
+        });
+
+        renderBlendDemo();
+      }
+
+      layerBPresetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          setLayerBPreset(btn.getAttribute('data-bpreset'));
+        });
+      });
+
+      function updateBlendThumbnails() {
+        if (canvasThumbA) {
+          const ctxA = canvasThumbA.getContext('2d');
+          ctxA.clearRect(0, 0, canvasThumbA.width, canvasThumbA.height);
+          drawLayerA(ctxA, canvasThumbA.width, canvasThumbA.height);
+        }
+        if (canvasThumbB) {
+          const ctxB = canvasThumbB.getContext('2d');
+          ctxB.clearRect(0, 0, canvasThumbB.width, canvasThumbB.height);
+          drawLayerB(ctxB, canvasThumbB.width, canvasThumbB.height);
+        }
+      }
+
+      function renderBlendDemo() {
+        if (!blendCanvas) return;
+        const ctx = blendCanvas.getContext('2d');
+        const w = blendCanvas.width;
+        const h = blendCanvas.height;
+
+        ctx.clearRect(0, 0, w, h);
+
+        const info = blendData[currentBlendModeKey] || blendData.normal;
+
+        if (currentBlendView === 'layerA') {
+          drawLayerA(ctx, w, h);
+          if (blendCanvasHud) blendCanvasHud.textContent = 'Zobrazení: Pouze Podkladová Vrstva A (Base)';
+        } else if (currentBlendView === 'layerB') {
+          drawLayerB(ctx, w, h);
+          if (blendCanvasHud) blendCanvasHud.textContent = `Zobrazení: Pouze Vrchní Vrstva B (${presetNames[currentLayerBPreset]})`;
+        } else {
+          // Režim Prolnutí A ⊗ B
+          drawLayerA(ctx, w, h);
+          ctx.globalCompositeOperation = info.composite;
+          drawLayerB(ctx, w, h);
+          ctx.globalCompositeOperation = 'source-over';
+          if (blendCanvasHud) blendCanvasHud.textContent = `Výsledek: Prolnutí (A ⊗ B) [${currentBlendModeKey.toUpperCase()}] • ${presetNames[currentLayerBPreset]}`;
+        }
+
+        updateBlendThumbnails();
+      }
+
+      // Přepínání pohledů na hlavní plátno
+      function setBlendView(view) {
+        currentBlendView = view;
+        [btnViewBlend, btnViewLayerA, btnViewLayerB].forEach(b => {
+          if (b) b.classList.remove('active');
+        });
+
+        if (view === 'blend' && btnViewBlend) btnViewBlend.classList.add('active');
+        if (view === 'layerA' && btnViewLayerA) btnViewLayerA.classList.add('active');
+        if (view === 'layerB' && btnViewLayerB) btnViewLayerB.classList.add('active');
+
+        renderBlendDemo();
+      }
+
+      if (btnViewBlend) btnViewBlend.addEventListener('click', () => setBlendView('blend'));
+      if (btnViewLayerA) btnViewLayerA.addEventListener('click', () => setBlendView('layerA'));
+      if (btnViewLayerB) btnViewLayerB.addEventListener('click', () => setBlendView('layerB'));
+
+      blendModeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const m = btn.getAttribute('data-mode');
+          currentBlendModeKey = m;
+          blendModeBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const data = blendData[m];
+          if (data) {
+            blendCategoryBadge.textContent = data.cat;
+            blendCategoryBadge.className = `sw-badge-pill ${data.badgeClass}`;
+            blendModeTitle.textContent = btn.querySelector('span').textContent;
+            blendFormula.textContent = data.formula;
+            blendNeutralColor.textContent = data.neutral;
+            blendUseDesc.textContent = data.use;
+
+            // Inteligentní volba vhodného podkladu Vrstvy B pro demonstraci specifického režimu:
+            if (m === 'multiply') {
+              setLayerBPreset('signature'); // Bílý papír + naskenovaný podpis -> bílá zmizí!
+            } else if (m === 'screen') {
+              setLayerBPreset('fire');      // Černé pozadí + oheň -> černá zmizí!
+            } else if (m === 'overlay') {
+              setLayerBPreset('texture');   // 50% šedá textura -> šedá zmizí!
+            } else {
+              setLayerBPreset('universal'); // Univerzální terč pro Normal / Luminosity
+            }
+
+            // Vždy přepneme náhled na prolnutí
+            setBlendView('blend');
+          }
+        });
+      });
+
+      renderBlendDemo();
+
+      /* ======================================================================
+         4. TONÁLNÍ KŘIVKY (CURVES - SLIDE 5)
+         ====================================================================== */
+      const curvePath = document.getElementById('curvePath');
+      const cpShadow = document.getElementById('cpShadow');
+      const cpHighlight = document.getElementById('cpHighlight');
+      const cpBlack = document.getElementById('cpBlack');
+      const cpWhite = document.getElementById('cpWhite');
+      const curvePresetTitle = document.getElementById('curvePresetTitle');
+      const curveEffectDesc = document.getElementById('curveEffectDesc');
+      const curvePreviewCanvas = document.getElementById('curvePreviewCanvas');
+
+      const btnCurveS = document.getElementById('btnCurveS');
+      const btnCurveLinear = document.getElementById('btnCurveLinear');
+      const btnCurveFade = document.getElementById('btnCurveFade');
+      const btnCurveHigh = document.getElementById('btnCurveHigh');
+
+      const curvePresets = {
+        s: {
+          title: "S-Křivka (Zvýšení dynamického kontrastu)",
+          desc: "Ztmavením stínů a zesvětlením světel vzniká charakteristické písmeno „S“. Kontrast a vizuální hloubka vzrostou, přičemž černý a bílý bod zůstávají chráněny před ořezem.",
+          d: "M 30,210 C 110,225 190,15 270,30",
+          shadowPos: [90, 180],
+          hiPos: [210, 60],
+          blackY: 210,
+          whiteY: 30,
+          fn: (x) => 1 / (1 + Math.exp(-10 * (x - 0.5)))
+        },
+        linear: {
+          title: "Lineární přímka 45° (Neutrální stav bez úprav)",
+          desc: "Přímka pod úhlem 45° vyjadřuje stav Output = Input. Do obrazu nebyly vneseny žádné matematické modifikace jasu.",
+          d: "M 30,210 L 270,30",
+          shadowPos: [90, 165],
+          hiPos: [210, 75],
+          blackY: 210,
+          whiteY: 30,
+          fn: (x) => x
+        },
+        fade: {
+          title: "Filmový matný fade (Vintage filmový look)",
+          desc: "Černý bod je vytažen nahoru (stíny nejsou černé, ale kouřově šedé) a světla jsou mírně sražena. Vytváří populární nostalgický analogový vzhled.",
+          d: "M 30,170 C 100,165 190,65 270,55",
+          shadowPos: [90, 150],
+          hiPos: [210, 70],
+          blackY: 170,
+          whiteY: 55,
+          fn: (x) => 0.2 + 0.65 * x
+        },
+        high: {
+          title: "Agresivní drama (Vysoký tónový kontrast)",
+          desc: "Strmý přechod středních tónů. Rychlý spád do absolutní černé a prudký vzestup do bílé. Zvýrazňuje textury skal, architektury a dramatických mraků.",
+          d: "M 30,210 C 130,240 170,0 270,30",
+          shadowPos: [90, 205],
+          hiPos: [210, 35],
+          blackY: 210,
+          whiteY: 30,
+          fn: (x) => Math.pow(x, 2.2) > 0.5 ? Math.min(1, Math.pow(x, 0.4)) : Math.pow(x, 3)
+        }
+      };
+
+      function setCurvePreset(key) {
+        const p = curvePresets[key];
+        if (!p || !curvePath) return;
+
+        curvePresetTitle.textContent = p.title;
+        curveEffectDesc.textContent = p.desc;
+        curvePath.setAttribute('d', p.d);
+
+        if (cpShadow) {
+          cpShadow.setAttribute('cx', p.shadowPos[0]);
+          cpShadow.setAttribute('cy', p.shadowPos[1]);
+        }
+        if (cpHighlight) {
+          cpHighlight.setAttribute('cx', p.hiPos[0]);
+          cpHighlight.setAttribute('cy', p.hiPos[1]);
+        }
+        if (cpBlack) cpBlack.setAttribute('cy', p.blackY);
+        if (cpWhite) cpWhite.setAttribute('cy', p.whiteY);
+
+        renderCurveCanvas(p.fn);
+      }
+
+      function renderCurveCanvas(transferFn) {
+        if (!curvePreviewCanvas) return;
+        const ctx = curvePreviewCanvas.getContext('2d');
+        const w = curvePreviewCanvas.width;
+        const h = curvePreviewCanvas.height;
+
+        ctx.clearRect(0, 0, w, h);
+
+        // Vykreslíme tónový pás od 0 do 255 přepočtený křivkou
+        for (let x = 0; x < w; x++) {
+          const inVal = x / w;
+          const outVal = Math.max(0, Math.min(1, transferFn(inVal)));
+          const colByte = Math.round(outVal * 255);
+          ctx.fillStyle = `rgb(${colByte}, ${colByte}, ${colByte})`;
+          ctx.fillRect(x, 0, 1, h * 0.6);
+        }
+
+        // Pod tím vykreslíme referenční původní lineární gradient
+        for (let x = 0; x < w; x++) {
+          const colByte = Math.round((x / w) * 255);
+          ctx.fillStyle = `rgb(${colByte}, ${colByte}, ${colByte})`;
+          ctx.fillRect(x, h * 0.65, 1, h * 0.35);
+        }
+
+        ctx.fillStyle = '#f43f5e';
+        ctx.font = '9px JetBrains Mono, monospace';
+        ctx.fillText('Výstupní tón (Output)', 8, 14);
+        ctx.fillStyle = '#94a3b8';
+        ctx.fillText('Původní lineární vstup (Input)', 8, h - 6);
+      }
+
+      if (btnCurveS) btnCurveS.addEventListener('click', () => {
+        document.querySelectorAll('.curve-graph-wrap .styled-btn').forEach(b => b.classList.remove('active'));
+        btnCurveS.classList.add('active');
+        setCurvePreset('s');
+      });
+      if (btnCurveLinear) btnCurveLinear.addEventListener('click', () => {
+        document.querySelectorAll('.curve-graph-wrap .styled-btn').forEach(b => b.classList.remove('active'));
+        btnCurveLinear.classList.add('active');
+        setCurvePreset('linear');
+      });
+      if (btnCurveFade) btnCurveFade.addEventListener('click', () => {
+        document.querySelectorAll('.curve-graph-wrap .styled-btn').forEach(b => b.classList.remove('active'));
+        btnCurveFade.classList.add('active');
+        setCurvePreset('fade');
+      });
+      if (btnCurveHigh) btnCurveHigh.addEventListener('click', () => {
+        document.querySelectorAll('.curve-graph-wrap .styled-btn').forEach(b => b.classList.remove('active'));
+        btnCurveHigh.classList.add('active');
+        setCurvePreset('high');
+      });
+
+      setCurvePreset('s');
+
+      /* ======================================================================
+         5. FREKVENČNÍ SEPARACE (SLIDE 6)
+         ====================================================================== */
+      const freqCanvas = document.getElementById('freqCanvas');
+      const freqStateLabel = document.getElementById('freqStateLabel');
+      const btnFreqComp = document.getElementById('btnFreqComp');
+      const btnFreqLow = document.getElementById('btnFreqLow');
+      const btnFreqHigh = document.getElementById('btnFreqHigh');
+      const fcardOrig = document.getElementById('fcardOrig');
+      const fcardLow = document.getElementById('fcardLow');
+      const fcardHigh = document.getElementById('fcardHigh');
+
+      // Vykreslení realistické textury kožních pórů po CELÉ ploše plátna
+      function drawSkinTexture(ctx, w, h, isHighPassOnly) {
+        ctx.save();
+        // Deterministický generátor pseudonáhodných čísel pro konzistentní texturu
+        let seed = 428913;
+        function rnd() {
+          seed = (seed * 1664525 + 1013904223) % 4294967296;
+          return seed / 4294967296;
+        }
+
+        // 1. Celoplošné mikro-póry rovnoměrně rozprostřené po 100 % plochy (1800 pórů)
+        for (let i = 0; i < 1800; i++) {
+          const px = rnd() * w;
+          const py = rnd() * h;
+          const r = rnd() * 1.3 + 0.6;
+
+          if (isHighPassOnly) {
+            // High Pass reliéf na 50% šedé: tmavý stín a světlý mikroskopický odlesk
+            ctx.fillStyle = 'rgba(20, 20, 20, 0.45)';
+            ctx.fillRect(px, py, r, r);
+            ctx.fillStyle = 'rgba(240, 240, 240, 0.4)';
+            ctx.fillRect(px + 0.8, py + 0.8, r, r);
+          } else {
+            // Složený přirozený obraz: jemné mikroskopické ztmavení póru a lehký odlesk
+            ctx.fillStyle = 'rgba(70, 15, 35, 0.18)';
+            ctx.beginPath();
+            ctx.arc(px, py, r, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (rnd() > 0.55) {
+              ctx.fillStyle = 'rgba(255, 255, 255, 0.16)';
+              ctx.beginPath();
+              ctx.arc(px + 0.6, py + 0.6, r * 0.7, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+        }
+
+        // 2. Jemné kožní linky a mikrostruktura rozložená po ploše
+        for (let i = 0; i < 35; i++) {
+          const lx = rnd() * (w - 30) + 15;
+          const ly = rnd() * (h - 30) + 15;
+          const len = rnd() * 18 + 6;
+          const angle = (rnd() - 0.5) * 1.5;
+
+          ctx.beginPath();
+          ctx.moveTo(lx, ly);
+          ctx.lineTo(lx + Math.cos(angle) * len, ly + Math.sin(angle) * len);
+
+          if (isHighPassOnly) {
+            ctx.strokeStyle = 'rgba(30, 30, 30, 0.35)';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(lx + 0.7, ly + 0.7);
+            ctx.lineTo(lx + Math.cos(angle) * len + 0.7, ly + Math.sin(angle) * len + 0.7);
+            ctx.strokeStyle = 'rgba(235, 235, 235, 0.35)';
+            ctx.stroke();
+          } else {
+            ctx.strokeStyle = 'rgba(90, 25, 45, 0.12)';
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+
+        // 3. Drobná vada pleti (akné / pupínek) pro demonstraci retuše
+        const blemishX = w * 0.68;
+        const blemishY = h * 0.42;
+        if (isHighPassOnly) {
+          // Ve vysoké frekvenci je z pupínku pouze reliéfní hrbol (vyretušuje se klonovacím razítkem)
+          ctx.strokeStyle = 'rgba(15, 15, 15, 0.6)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(blemishX, blemishY, 6, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.strokeStyle = 'rgba(245, 245, 245, 0.6)';
+          ctx.beginPath();
+          ctx.arc(blemishX + 1, blemishY + 1, 6, 0, Math.PI * 2);
+          ctx.stroke();
+        } else {
+          // V celkovém obrazu je vidět vystouplá nerovnost
+          ctx.fillStyle = 'rgba(190, 24, 93, 0.4)';
+          ctx.beginPath();
+          ctx.arc(blemishX, blemishY, 7, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+
+      function drawFreqDemo(view) {
+        if (!freqCanvas) return;
+        const ctx = freqCanvas.getContext('2d');
+        const w = freqCanvas.width;
+        const h = freqCanvas.height;
+
+        ctx.clearRect(0, 0, w, h);
+
+        if (view === 'comp') {
+          // 1. Složený přirozený obraz: Rozostřená barva + ostrá celoplošná textura pórů
+          const skinGrad = ctx.createRadialGradient(w * 0.48, h * 0.48, 15, w * 0.48, h * 0.48, Math.min(w, h) * 0.75);
+          skinGrad.addColorStop(0, '#fce7f3');
+          skinGrad.addColorStop(0.35, '#fbcfe8');
+          skinGrad.addColorStop(0.7, '#f472b6');
+          skinGrad.addColorStop(1, '#9d174d');
+          ctx.fillStyle = skinGrad;
+          ctx.fillRect(0, 0, w, h);
+
+          // Červený flek / zarudnutí podkladu
+          const redGrad = ctx.createRadialGradient(w * 0.68, h * 0.42, 2, w * 0.68, h * 0.42, 22);
+          redGrad.addColorStop(0, 'rgba(225, 29, 72, 0.55)');
+          redGrad.addColorStop(1, 'rgba(225, 29, 72, 0)');
+          ctx.fillStyle = redGrad;
+          ctx.fillRect(w * 0.55, h * 0.28, 60, 60);
+
+          // Aplikace jemné celoplošné textury pórů po celé ploše
+          drawSkinTexture(ctx, w, h, false);
+
+          ctx.fillStyle = '#0f172a';
+          ctx.font = '10px JetBrains Mono, monospace';
+          ctx.fillText('Složený obraz (Low Freq + High Freq)', 12, h - 12);
+          if (freqStateLabel) freqStateLabel.textContent = 'Složený výsledek: Přirozená pleť s póry po celém obličeji';
+
+        } else if (view === 'low') {
+          // 2. Pouze Nízké frekvence (Low Freq): Gaussovské rozostření – PÓRY ZCELA CHYBÍ!
+          const skinGrad = ctx.createRadialGradient(w * 0.48, h * 0.48, 15, w * 0.48, h * 0.48, Math.min(w, h) * 0.75);
+          skinGrad.addColorStop(0, '#fce7f3');
+          skinGrad.addColorStop(0.35, '#fbcfe8');
+          skinGrad.addColorStop(0.7, '#f472b6');
+          skinGrad.addColorStop(1, '#9d174d');
+          ctx.fillStyle = skinGrad;
+          ctx.fillRect(0, 0, w, h);
+
+          // Rozostřené zarudnutí (zde se fleky retušují rozostřením/směšovacím štětcem)
+          const redGrad = ctx.createRadialGradient(w * 0.68, h * 0.42, 2, w * 0.68, h * 0.42, 24);
+          redGrad.addColorStop(0, 'rgba(225, 29, 72, 0.55)');
+          redGrad.addColorStop(1, 'rgba(225, 29, 72, 0)');
+          ctx.fillStyle = redGrad;
+          ctx.fillRect(w * 0.55, h * 0.28, 60, 60);
+
+          ctx.fillStyle = '#831843';
+          ctx.font = '10px JetBrains Mono, monospace';
+          ctx.fillText('Nízké frekvence: Pouze barva a stíny (žádné póry!)', 12, h - 12);
+          if (freqStateLabel) freqStateLabel.textContent = 'Low Freq (Barva & Tón): Textura chybí, vyhlazují se pouze fleky';
+
+        } else if (view === 'high') {
+          // 3. Pouze Vysoké frekvence (High Freq): 50% neutrální šedá s ostrými póry po celé ploše
+          ctx.fillStyle = '#808080'; // 128 šedá (Linear Light je neutrální)
+          ctx.fillRect(0, 0, w, h);
+
+          // Celoplošná textura pórů v High Pass reliéfu po celé ploše
+          drawSkinTexture(ctx, w, h, true);
+
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '10px JetBrains Mono, monospace';
+          ctx.fillText('Vysoké frekvence: 50% šedá s reliéfem pórů a detailů', 12, h - 12);
+          if (freqStateLabel) freqStateLabel.textContent = 'High Freq (Textura & Ostrost): Pouze kožní póry po celém plátně';
+        }
+      }
+
+      function switchFreqView(view) {
+        [btnFreqComp, btnFreqLow, btnFreqHigh].forEach(b => {
+          if (b) b.classList.remove('active');
+        });
+        [fcardOrig, fcardLow, fcardHigh].forEach(c => {
+          if (c) c.classList.remove('active');
+        });
+
+        if (view === 'comp') {
+          if (btnFreqComp) btnFreqComp.classList.add('active');
+          if (fcardOrig) fcardOrig.classList.add('active');
+        } else if (view === 'low') {
+          if (btnFreqLow) btnFreqLow.classList.add('active');
+          if (fcardLow) fcardLow.classList.add('active');
+        } else if (view === 'high') {
+          if (btnFreqHigh) btnFreqHigh.classList.add('active');
+          if (fcardHigh) fcardHigh.classList.add('active');
+        }
+
+        drawFreqDemo(view);
+      }
+
+      if (btnFreqComp) btnFreqComp.addEventListener('click', () => switchFreqView('comp'));
+      if (btnFreqLow) btnFreqLow.addEventListener('click', () => switchFreqView('low'));
+      if (btnFreqHigh) btnFreqHigh.addEventListener('click', () => switchFreqView('high'));
+
+      if (fcardOrig) fcardOrig.addEventListener('click', () => switchFreqView('comp'));
+      if (fcardLow) fcardLow.addEventListener('click', () => switchFreqView('low'));
+      if (fcardHigh) fcardHigh.addEventListener('click', () => switchFreqView('high'));
+
+      drawFreqDemo('comp');
+
+      /* ======================================================================
+         6. ZKOUŠKOVÝ MINITEST (SLIDE 8)
+         ====================================================================== */
+      const quizQuestions = [
+        {
+          q: "Otázka 1/3: Jaký je zásadní rozdíl mezi použitím nástroje Guma a Masky vrstvy (Layer Mask)?",
+          opts: [
+            { text: "A) Maska je 100% nedestruktivní – černá barva pixely pouze skrývá, bílá je kdykoliv vrátí zpět.", correct: true },
+            { text: "B) Guma maže pouze vektorové vrstvy, zatímco maska funguje výhradně na rastrových fotografiích.", correct: false },
+            { text: "C) Maska vrstvy zvyšuje rozlišení obrázku z 8 na 32 bitů, guma snižuje rozlišení.", correct: false }
+          ],
+          explain: "Přesně tak! Maska je černobílý 8bitový kanál. Guma pixely fyzicky ničí a zahazuje z paměti, maska zachovává plná surová data nedotčená."
+        },
+        {
+          q: "Otázka 2/3: Proč se v metodě frekvenční separace rozděluje obraz na nízké a vysoké frekvence?",
+          opts: [
+            { text: "A) Aby se snížila velikost exportovaného souboru JPEG pro mobilní web.", correct: false },
+            { text: "B) Aby grafik mohl retušovat tónové fleky a barevné stíny, aniž by rozmazal přirozenou strukturu pórů a chloupků.", correct: true },
+            { text: "C) Pro převod barevného prostoru RGB na tiskový standard CMYK bez použití ICC profilu.", correct: false }
+          ],
+          explain: "Výborně! V nízké frekvenci leží rozostřená barva a stíny, ve vysoké frekvenci leží ostrost a póry. Díky tomu pleť nevypadá jako umělá vosková figurína."
+        },
+        {
+          q: "Otázka 3/3: Který režim prolnutí (Blending Mode) způsobí, že bílé pozadí naskenovaného podpisu zcela zmizí?",
+          opts: [
+            { text: "A) Screen (Závoj) – protože černá barva se stává neutrální.", correct: false },
+            { text: "B) Multiply (Násobit) – protože bílá barva (hodnota 255) je pro násobení neutrálním prvkem.", correct: true },
+            { text: "C) Luminosity (Světlost) – protože odstraní veškeré barevné spektrum.", correct: false }
+          ],
+          explain: "Správně! Matematický vzorec násobení A × B / 255 způsobí, že hodnota 255 (bílá) nemá na spodní vrstvu žádný vliv a okamžitě zprůhlední."
+        }
+      ];
+
+      let currentQIdx = 0;
+      const qText = document.getElementById('quizQuestionText');
+      const qCounter = document.getElementById('quizCounter');
+      const qContainer = document.getElementById('quizOptionsContainer');
+      const qFeedback = document.getElementById('quizFeedbackBox');
+      const qNextBtn = document.getElementById('quizNextBtn');
+
+      function loadQuizQuestion(idx) {
+        if (!qText || !qContainer || !qFeedback || !qNextBtn) return;
+        const qData = quizQuestions[idx];
+        qText.textContent = qData.q;
+        if (qCounter) qCounter.textContent = `Otázka ${idx + 1} ze ${quizQuestions.length}`;
+        qContainer.innerHTML = '';
+        qFeedback.style.display = 'none';
+        qNextBtn.style.display = 'none';
+
+        qData.opts.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'styled-btn';
+          btn.style.width = '100%';
+          btn.style.textAlign = 'left';
+          btn.style.padding = '0.55rem 0.85rem';
+          btn.textContent = opt.text;
+
+          btn.addEventListener('click', () => {
+            const allBtns = qContainer.querySelectorAll('button');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (opt.correct) {
+              btn.style.background = 'rgba(16, 185, 129, 0.25)';
+              btn.style.borderColor = '#10b981';
+              btn.style.color = '#a7f3d0';
+              qFeedback.style.display = 'block';
+              qFeedback.style.background = 'rgba(16, 185, 129, 0.15)';
+              qFeedback.style.color = '#a7f3d0';
+              qFeedback.style.border = '1px solid #10b981';
+              qFeedback.textContent = `Výborně! ${qData.explain}`;
+            } else {
+              btn.style.background = 'rgba(239, 68, 68, 0.25)';
+              btn.style.borderColor = '#ef4444';
+              btn.style.color = '#fca5a5';
+              qFeedback.style.display = 'block';
+              qFeedback.style.background = 'rgba(239, 68, 68, 0.15)';
+              qFeedback.style.color = '#fca5a5';
+              qFeedback.style.border = '1px solid #ef4444';
+              qFeedback.textContent = `Bohužel nesprávně. ${qData.explain}`;
+            }
+
+            if (currentQIdx < quizQuestions.length - 1) {
+              qNextBtn.style.display = 'flex';
+            }
+          });
+          qContainer.appendChild(btn);
+        });
+      }
+
+      if (qNextBtn) {
+        qNextBtn.addEventListener('click', () => {
+          currentQIdx++;
+          if (currentQIdx < quizQuestions.length) {
+            loadQuizQuestion(currentQIdx);
+          }
+        });
+      }
+
+      loadQuizQuestion(0);
+
+      /* ======================================================================
+         7. VYHLEDÁVÁNÍ VE SLOVNÍKU POJMŮ
+         ====================================================================== */
+      const glossarySearchInput = document.getElementById('glossarySearchInput');
+      const glossaryContainer = document.getElementById('glossaryContainer');
+      if (glossarySearchInput && glossaryContainer) {
+        glossarySearchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          const cards = glossaryContainer.querySelectorAll('.content-card');
+          cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            const term = card.getAttribute('data-term') || '';
+            if (text.includes(query) || term.includes(query)) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      }
+
+    })();
+  </script>
 </body>
 </html>
