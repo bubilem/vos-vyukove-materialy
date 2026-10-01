@@ -417,6 +417,366 @@
     .compare-table tr:hover td {
       background: rgba(255, 255, 255, 0.02);
     }
+
+    /* ==========================================================================
+       Interaktivní simulátor souběhu přerušení (Klávesnice & Myš step-by-step)
+       ========================================================================== */
+    .sim-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      width: 100%;
+    }
+
+    .sim-controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.75rem;
+    }
+
+    .sim-stepper {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .sim-step-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.55rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      font-family: var(--font-main);
+    }
+
+    .sim-step-btn:hover {
+      background: rgba(6, 182, 212, 0.12);
+      border-color: var(--accent);
+      color: var(--text-primary);
+    }
+
+    .sim-step-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0f172a;
+      box-shadow: 0 0 10px var(--accent-glow);
+      font-weight: 700;
+    }
+
+    .sim-step-btn.completed {
+      border-color: rgba(16, 185, 129, 0.45);
+      color: #6ee7b7;
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .sim-action-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .sim-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      font-family: var(--font-main);
+    }
+
+    .sim-btn:hover {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .sim-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0f172a;
+    }
+    .sim-btn.primary:hover {
+      background: #22d3ee;
+      box-shadow: 0 0 10px var(--accent-glow);
+      color: #0f172a;
+    }
+    .sim-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      border-color: var(--border-subtle);
+    }
+
+    .sim-board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.65rem;
+    }
+
+    @media (max-width: 1100px) {
+      .sim-board {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 680px) {
+      .sim-board {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sim-col {
+      background: rgba(15, 23, 42, 0.45);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+
+    .sim-col.highlighted {
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(6, 182, 212, 0.22);
+      background: rgba(6, 182, 212, 0.04);
+    }
+
+    .sim-col-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.35rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .sim-col-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-primary);
+    }
+
+    .sim-col-badge {
+      font-size: 0.68rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      padding: 0.12rem 0.45rem;
+      border-radius: 4px;
+    }
+
+    .sim-item {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 0.4rem 0.55rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      font-size: 0.78rem;
+      transition: all 0.2s ease;
+    }
+
+    .sim-item.active {
+      border-color: var(--accent);
+      background: rgba(6, 182, 212, 0.1);
+    }
+    .sim-item.pending {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.1);
+    }
+    .sim-item.danger {
+      border-color: #f43f5e;
+      background: rgba(244, 63, 94, 0.1);
+    }
+    .sim-item.success {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .sim-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .sim-item-val {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      word-break: break-word;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+      flex-shrink: 0;
+    }
+    .status-dot.idle { background: #64748b; }
+    .status-dot.active { background: #06b6d4; box-shadow: 0 0 8px #06b6d4; animation: simPulse 1.2s infinite; }
+    .status-dot.pending { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; animation: simPulse 0.8s infinite; }
+    .status-dot.danger { background: #f43f5e; box-shadow: 0 0 8px #f43f5e; }
+    .status-dot.success { background: #10b981; box-shadow: 0 0 8px #10b981; }
+
+    @keyframes simPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.85); }
+    }
+
+    .sim-gui-window {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 5px;
+      overflow: hidden;
+      background: #090d16;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      font-size: 0.74rem;
+    }
+    .sim-gui-titlebar {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 0.25rem 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .sim-gui-body {
+      padding: 0.55rem;
+      min-height: 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .sim-gui-textarea {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .sim-gui-cursor {
+      display: inline-block;
+      width: 6px;
+      height: 13px;
+      background: var(--accent);
+      animation: simBlink 1s infinite;
+    }
+    @keyframes simBlink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .sim-gui-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.35rem;
+      padding-top: 0.35rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .sim-gui-btn {
+      padding: 0.18rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+      cursor: default;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+    }
+    .sim-gui-btn.clicked {
+      background: #10b981;
+      border-color: #10b981;
+      color: #0f172a;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+    }
+
+    .sim-explanation-card {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 0.75rem;
+      background: rgba(6, 182, 212, 0.04);
+      border: 1px solid rgba(6, 182, 212, 0.28);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.95rem;
+    }
+    @media (max-width: 860px) {
+      .sim-explanation-card {
+        grid-template-columns: 1fr;
+      }
+    }
+    .sim-exp-main-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.3rem;
+    }
+    .sim-exp-text {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .sim-exp-side {
+      background: rgba(0, 0, 0, 0.25);
+      border-left: 3px solid #f59e0b;
+      padding: 0.55rem 0.75rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--text-secondary);
+    }
+    .sim-exp-side-title {
+      color: #f59e0b;
+      font-weight: 700;
+      font-size: 0.8rem;
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .sim-exp-side-title .icon {
+      flex-shrink: 0;
+      width: 1rem;
+      height: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -504,7 +864,7 @@
               <p>Procesor v nekonečné smyčce dokola kontroluje zařízení a ptá se: <em>„Máš data? Už máš data? A teď?“</em></p>
               <div class="analogy-card" style="margin: 0.4rem 0;">
                 <div class="analogy-icon-wrap danger">
-                  <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                 </div>
                 <div>
                   <strong style="color: #f43f5e; font-size: 0.88rem;">Představte si ze života:</strong>
@@ -873,7 +1233,7 @@
         <div class="slide-body">
           <div class="story-box danger" style="margin-top: 0;">
             <div class="story-title">
-              <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
               Zásadní problém: Během přerušení má procesor "ucpané uši"
             </div>
             Když procesor obsluhuje přerušení (běží v rutině ISR), má z bezpečnostních důvodů <strong>vypnutá další přerušení</strong>. Kdyby ovladač síťové karty zpracovával celý gigabajtový film přímo v této první fázi, trvalo by to milisekundy. Během té doby by procesor přeslechl kliknutí myši, zvuková karta by ztratila data a <strong>celý počítač by viditelně zamrzl</strong>!
@@ -916,8 +1276,234 @@
         </div>
       </section>
 
-      <!-- SLIDE 7: WINDOWS IRQL & DPC LATENCY PROBLÉM -->
+      <!-- SLIDE 7: INTERAKTIVNÍ SIMULÁTOR SOUBĚHU PŘERUŠENÍ -->
       <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Interaktivní simulace krok za krokem</div>
+            <h2 class="slide-title">Jak to funguje v praxi: Souběh klávesnice a myši</h2>
+            <p class="slide-subtitle">Sledujte krok za krokem, co udělá procesor, APIC a jádro systému při příchodu více přerušení</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Simulátor &bull; Klávesnice + Myš</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="sim-wrapper">
+            <!-- Ovládací panel krokování -->
+            <div class="sim-controls-bar">
+              <div class="sim-stepper" id="simStepper"></div>
+              <div class="sim-action-buttons">
+                <button class="sim-btn" id="simResetBtn" title="Vrátit na začátek (Krok 1)">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M1 4v6h6"></path><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                  <span>Restart</span>
+                </button>
+                <button class="sim-btn" id="simPrevBtn" title="Předchozí krok">
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  <span>Zpět</span>
+                </button>
+                <button class="sim-btn primary" id="simNextBtn" title="Další krok">
+                  <span id="simNextBtnText">Další krok</span>
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+                <button class="sim-btn" id="simPlayBtn" title="Automatické přehrávání">
+                  <svg class="icon" id="simPlayIcon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  <span id="simPlayText">Přehrát</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 4 interaktivní bloky architektury -->
+            <div class="sim-board">
+              <!-- Sloupec 1: Hardware & Periferie -->
+              <div class="sim-col" id="colHw">
+                <div class="sim-col-header">
+                  <div class="sim-col-title">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                    <span>Hardware &amp; APIC</span>
+                  </div>
+                  <span class="sim-col-badge highlight-pill" id="badgeHw">Periferie</span>
+                </div>
+
+                <!-- Klávesnice -->
+                <div class="sim-item" id="simKbdItem">
+                  <div class="sim-item-header">
+                    <span style="display:flex; align-items:center;">
+                      <span class="status-dot idle" id="dotKbd"></span>
+                      <span>Klávesnice (IRQ 1)</span>
+                    </span>
+                    <span class="highlight-pill" id="kbdBadge" style="font-size:0.68rem; padding:0.1rem 0.4rem;">Klid</span>
+                  </div>
+                  <div class="sim-item-val" id="kbdVal">Žádný stisk klávesy</div>
+                </div>
+
+                <!-- Myš -->
+                <div class="sim-item" id="simMouseItem">
+                  <div class="sim-item-header">
+                    <span style="display:flex; align-items:center;">
+                      <span class="status-dot idle" id="dotMouse"></span>
+                      <span>Myš (IRQ 12)</span>
+                    </span>
+                    <span class="highlight-pill" id="mouseBadge" style="font-size:0.68rem; padding:0.1rem 0.4rem;">Klid</span>
+                  </div>
+                  <div class="sim-item-val" id="mouseVal">Žádný pohyb ani klik</div>
+                </div>
+
+                <!-- Řadič APIC -->
+                <div class="sim-item" id="simApicItem">
+                  <div class="sim-item-header">
+                    <span style="display:flex; align-items:center;">
+                      <span class="status-dot idle" id="dotApic"></span>
+                      <span>Řadič APIC na desce</span>
+                    </span>
+                    <span class="highlight-pill" id="apicBadge" style="font-size:0.68rem; padding:0.1rem 0.4rem;">Klid</span>
+                  </div>
+                  <div class="sim-item-val" id="apicVal">IRR (fronta): 0 &bull; ISR (aktivní): 0</div>
+                </div>
+              </div>
+
+              <!-- Sloupec 2: Procesor (CPU Core) -->
+              <div class="sim-col" id="colCpu">
+                <div class="sim-col-header">
+                  <div class="sim-col-title">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                    <span>Jádro CPU</span>
+                  </div>
+                  <span class="sim-col-badge highlight-pill success" id="badgeCpuRing">Ring 3</span>
+                </div>
+
+                <!-- Režim a IF Flag -->
+                <div class="sim-item" id="simCpuFlags">
+                  <div class="sim-item-header">
+                    <span>Stav přerušení (Flags)</span>
+                    <span id="cpuIfBadge" class="highlight-pill success" style="font-size:0.68rem; padding:0.1rem 0.4rem;">IF = 1</span>
+                  </div>
+                  <div class="sim-item-val" id="cpuIfVal">Přerušení povolena (CPU naslouchá)</div>
+                </div>
+
+                <!-- IRQL / Úroveň -->
+                <div class="sim-item" id="simCpuIrql">
+                  <div class="sim-item-header">
+                    <span>Priorita (IRQL / Stav)</span>
+                    <span id="cpuIrqlBadge" class="highlight-pill" style="font-size:0.68rem; padding:0.1rem 0.4rem;">PASSIVE (0)</span>
+                  </div>
+                  <div class="sim-item-val" id="cpuIrqlVal">Běžný uživatelský kód</div>
+                </div>
+
+                <!-- Aktuální činnost -->
+                <div class="sim-item" id="simCpuAction">
+                  <div class="sim-item-header">
+                    <span>Aktuálně vykonává</span>
+                    <span id="cpuActionBadge" class="highlight-pill success" style="font-size:0.68rem; padding:0.1rem 0.4rem;">Aplikace</span>
+                  </div>
+                  <div class="sim-item-val" id="cpuActionVal">wordpad.exe: instrukce rozhraní</div>
+                </div>
+              </div>
+
+              <!-- Sloupec 3: Paměť & Fronty jádra OS -->
+              <div class="sim-col" id="colOs">
+                <div class="sim-col-header">
+                  <div class="sim-col-title">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    <span>Jádro OS &amp; Fronty</span>
+                  </div>
+                  <span class="sim-col-badge highlight-pill" id="badgeOs">Kernel RAM</span>
+                </div>
+
+                <!-- Kernel Stack Záložka -->
+                <div class="sim-item" id="simStackItem">
+                  <div class="sim-item-header">
+                    <span>Kernel Stack (Záložka)</span>
+                    <span id="stackBadge" class="highlight-pill" style="font-size:0.68rem; padding:0.1rem 0.4rem;">Prázdný</span>
+                  </div>
+                  <div class="sim-item-val" id="stackVal">Žádný uložený stav přerušení</div>
+                </div>
+
+                <!-- Fronta DPC / SoftIRQ (Bottom Half) -->
+                <div class="sim-item" id="simDpcItem">
+                  <div class="sim-item-header">
+                    <span>DPC / SoftIRQ Fronta</span>
+                    <span id="dpcBadge" class="highlight-pill" style="font-size:0.68rem; padding:0.1rem 0.4rem;">0 úloh</span>
+                  </div>
+                  <div class="sim-item-val" id="dpcVal">Žádné odložené procedury</div>
+                </div>
+
+                <!-- Fronta zpráv aplikace -->
+                <div class="sim-item" id="simMsgItem">
+                  <div class="sim-item-header">
+                    <span>OS Message Queue</span>
+                    <span id="msgBadge" class="highlight-pill" style="font-size:0.68rem; padding:0.1rem 0.4rem;">Čeká</span>
+                  </div>
+                  <div class="sim-item-val" id="msgVal">Žádné nevyřízené zprávy</div>
+                </div>
+              </div>
+
+              <!-- Sloupec 4: Aplikace na obrazovce (GUI) -->
+              <div class="sim-col" id="colApp">
+                <div class="sim-col-header">
+                  <div class="sim-col-title">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    <span>Okno aplikace (GUI)</span>
+                  </div>
+                  <span class="sim-col-badge highlight-pill success" id="badgeAppStatus">Aktivní</span>
+                </div>
+
+                <div class="sim-gui-window">
+                  <div class="sim-gui-titlebar">
+                    <span>Editor textu &bull; dokument.txt</span>
+                    <span>&minus; &square; &times;</span>
+                  </div>
+                  <div class="sim-gui-body">
+                    <div class="sim-gui-textarea">
+                      <span id="guiText">Ahoj studenti </span><span class="sim-gui-cursor"></span>
+                    </div>
+                    <div class="sim-gui-footer">
+                      <span style="font-size:0.68rem; color:var(--text-muted);" id="guiStatus">Čeká na vstup...</span>
+                      <button class="sim-gui-btn" id="guiSaveBtn">
+                        <svg class="icon" style="width:11px; height:11px; margin-right:3px;" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                        <span id="guiSaveBtnText">Uložit</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="sim-item" id="simAppNote" style="margin-top:auto;">
+                  <div class="sim-item-header">
+                    <span>Stav aplikace</span>
+                    <span id="appStateBadge" class="highlight-pill success" style="font-size:0.68rem; padding:0.1rem 0.4rem;">Plynulý běh</span>
+                  </div>
+                  <div class="sim-item-val" id="appStateVal">Reaguje na uživatelské události</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Podrobný didaktický popis kroku -->
+            <div class="sim-explanation-card">
+              <div>
+                <div class="sim-exp-main-title" id="simStepTitle">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                  <span id="simStepTitleText">1. Běžný stav: Aplikace běží v uživatelském režimu (Ring 3)</span>
+                </div>
+                <p class="sim-exp-text" id="simStepDescText">
+                  Aplikace (např. textový editor) běží v neprivilegovaném uživatelském režimu (Ring 3). Procesor má v registru RFLAGS nastaven příznak IF=1 (Interrupt Flag), takže bedlivě naslouchá všem zařízením. Uživatel právě sahá na klávesnici...
+                </p>
+              </div>
+              <div class="sim-exp-side">
+                <div class="sim-exp-side-title">
+                  <svg class="icon" viewBox="0 0 24 24"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path></svg>
+                  <span>Didaktická pointa:</span>
+                </div>
+                <div id="simStepSideText">
+                  Procesor se v tomto stavu vůbec nestará o to, jaké periferie jsou v počítači. Dělá svou běžnou práci a nechává hardware na pokoji (žádné zbytečné ptaní pollingem).
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: WINDOWS IRQL & DPC LATENCY PROBLÉM -->
+      <section class="slide" data-slide="8">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Proč to zajímá hráče a muzikanty</div>
@@ -998,8 +1584,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 8: PRAKTICKÁ DIAGNOSTIKA V LINUXU A WINDOWS -->
-      <section class="slide" data-slide="8">
+      <!-- SLIDE 9: PRAKTICKÁ DIAGNOSTIKA V LINUXU A WINDOWS -->
+      <section class="slide" data-slide="9">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Jak to vyzkoušet v praxi</div>
@@ -1067,8 +1653,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 9: MÝTY VS FAKTA & INTERAKTIVNÍ KVÍZ -->
-      <section class="slide" data-slide="9">
+      <!-- SLIDE 10: MÝTY VS FAKTA & INTERAKTIVNÍ KVÍZ -->
+      <section class="slide" data-slide="10">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Rychlé prověření</div>
@@ -1154,8 +1740,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 10: ZKUŠEBNÍ SHRNUTÍ & CHECKLIST K ABSOLUTORIU -->
-      <section class="slide" data-slide="10">
+      <!-- SLIDE 11: ZKUŠEBNÍ SHRNUTÍ & CHECKLIST K ABSOLUTORIU -->
+      <section class="slide" data-slide="11">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Co musíte vědět ke zkoušce</div>
@@ -1216,7 +1802,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 10</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 11</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -1436,7 +2022,7 @@
 
   <script src="../../assets/js/presentation-core.js"></script>
   <script>
-    // Interaktivní odkrývání odpovědí v kvízu na snímku 9
+    // Interaktivní odkrývání odpovědí v kvízu na snímku 10
     document.addEventListener('DOMContentLoaded', () => {
       const quizButtons = document.querySelectorAll('.btn-quiz-reveal');
       quizButtons.forEach(btn => {
@@ -1454,7 +2040,474 @@
           }
         });
       });
+
+      // ==========================================================================
+      // Interaktivní simulátor: Souběh klávesnice a myši (Snímek 7)
+      // ==========================================================================
+      initInterruptSimulator();
     });
+
+    function initInterruptSimulator() {
+      const simSteps = [
+        {
+          num: 1,
+          label: "1. Běh aplikace",
+          title: "1. Běžný stav: Aplikace běží v uživatelském režimu (Ring 3)",
+          desc: "Aplikace (textový editor) běží v neprivilegovaném uživatelském režimu (Ring 3). Procesor má v registru RFLAGS nastaven příznak IF=1 (Interrupt Flag), takže bedlivě naslouchá signálům zvenčí. Žádná periferie v tuto chvíli nevysílá signál a sběrnice jsou v klidu.",
+          side: "Procesor se v tomto klidovém stavu vůbec nestará o to, jaká zařízení jsou k PC připojena. Nemusí se ptát dokola (žádný polling), plně se věnuje aplikaci nebo spí (instrukce HLT).",
+          kbd: { state: "idle", badge: "Klid", val: "Žádný stisk klávesy" },
+          mouse: { state: "idle", badge: "Klid", val: "Žádný pohyb ani klik" },
+          apic: { state: "idle", badge: "Klid", val: "IRR: 0 (žádná fronta) \u2022 ISR: 0" },
+          cpu: {
+            ringBadge: "Ring 3 (Uživatel)", ringClass: "success",
+            ifBadge: "IF = 1", ifClass: "success", ifVal: "Přerušení povolena (CPU naslouchá)",
+            irqlBadge: "PASSIVE (0)", irqlVal: "Běžný uživatelský kód",
+            actionBadge: "Aplikace", actionClass: "success", actionVal: "wordpad.exe: vykreslování rozhraní"
+          },
+          os: {
+            stackBadge: "Prázdný", stackVal: "Žádný uložený stav přerušení",
+            dpcBadge: "0 úloh", dpcVal: "Žádné odložené procedury",
+            msgBadge: "Čeká", msgVal: "Žádné nevyřízené zprávy"
+          },
+          app: {
+            statusBadge: "Aktivní", statusClass: "success",
+            text: "Ahoj studenti ",
+            guiStatus: "Čeká na vstup uživatele...",
+            btnClicked: false,
+            btnText: "Uložit",
+            noteBadge: "Plynulý běh", noteClass: "success",
+            noteVal: "Aplikace normálně zpracovává instrukce"
+          },
+          highlightCol: "colCpu"
+        },
+        {
+          num: 2,
+          label: "2. IRQ Klávesnice",
+          title: "2. Úder do klávesy: Hardware IRQ 1 a bleskový skok do jádra (Ring 0)",
+          desc: "Uživatel stiskl klávesu 'A'. Klávesový řadič vyšle elektrický signál IRQ 1 do čipu APIC. APIC doručí vektor 0x21 na sběrnici procesoru. CPU dokončí stávající instrukci, okamžitě přepne do Ring 0, zablokuje další přerušení (IF=0) a uloží na Kernel Stack záchrannou záložku (RIP, RSP, RFLAGS).",
+          side: "Všimněte si geniality hardwaru: Instrukce nebyla přetržena v polovině! CPU dokončil mikrooperaci a sám od sebe si uložil přesnou záložku RIP, aby se mohl bezpečně vrátit.",
+          kbd: { state: "active", badge: "IRQ 1 Odesláno", val: "Stisknuta klávesa 'A' (Scancode 0x1E)" },
+          mouse: { state: "idle", badge: "Klid", val: "Žádný pohyb ani klik" },
+          apic: { state: "active", badge: "IRQ 1 -> CPU", val: "IRR: 0 \u2022 ISR: IRQ 1 (předáno procesoru)" },
+          cpu: {
+            ringBadge: "Ring 0 (Jádro)", ringClass: "kernel",
+            ifBadge: "IF = 0", ifClass: "danger", ifVal: "ZABLOKOVÁNA další přerušení!",
+            irqlBadge: "DIRQL (Klávesnice)", irqlVal: "Hardwarová obsluha přerušení",
+            actionBadge: "CPU Hardware", actionClass: "kernel", actionVal: "Ukládá RIP, RSP, RFLAGS na Kernel Stack"
+          },
+          os: {
+            stackBadge: "Záložka uložena", stackVal: "RIP: 0x7FF62A, CS, RFLAGS, RSP: 0x00FF8",
+            dpcBadge: "0 úloh", dpcVal: "Připravuje se volání obsluhy",
+            msgBadge: "Čeká", msgVal: "Aplikace na chvíli pozastavena"
+          },
+          app: {
+            statusBadge: "Pozastaveno", statusClass: "warning",
+            text: "Ahoj studenti ",
+            guiStatus: "Vlákno dočasně přerušeno jádrem...",
+            btnClicked: false,
+            btnText: "Uložit",
+            noteBadge: "Pozastaveno", noteClass: "warning",
+            noteVal: "Aplikace ani neví, že byla pozastavena"
+          },
+          highlightCol: "colHw"
+        },
+        {
+          num: 3,
+          label: "3. Souběh! Klik myši",
+          title: "3. Souběh událostí! Uživatel kliká myší během běžícího Top Halfu",
+          desc: "Zatímco obslužná rutina klávesnice čte scancode z portu 0x60, uživatel bleskově kliká myší na tlačítko Uložit! Myš vyšle signál IRQ 12. Jenže procesor má přerušení zablokována (IF=0). Řadič APIC signál nezahodí: zapíše požadavek do registru IRR (Pending) a podrží ho ve své paměti!",
+          side: "Kdyby neexistoval APIC s registrem IRR pro odložená přerušení, klik myši by se navždy ztratil a uživatel by se divil, proč tlačítko nezareagovalo!",
+          kbd: { state: "active", badge: "Top Half ISR", val: "i8042_interrupt: čtení z portu 0x60" },
+          mouse: { state: "pending", badge: "IRQ 12 Signal!", val: "Kliknuto levým tlačítkem (LMB)" },
+          apic: { state: "pending", badge: "IRR: IRQ 12 ČEKÁ", val: "IRR: IRQ 12 (Pending ve frontě) \u2022 ISR: IRQ 1" },
+          cpu: {
+            ringBadge: "Ring 0 (Jádro)", ringClass: "kernel",
+            ifBadge: "IF = 0", ifClass: "danger", ifVal: "ZABLOKOVÁNA (CPU neslyší myš!)",
+            irqlBadge: "DIRQL (Klávesnice)", irqlVal: "Běží bleskový Top Half ovladače",
+            actionBadge: "Kbd ISR", actionClass: "warning", actionVal: "i8042_interrupt: převzetí bajtu 0x1E"
+          },
+          os: {
+            stackBadge: "Záložka uložena", stackVal: "RIP: 0x7FF62A, CS, RFLAGS, RSP",
+            dpcBadge: "0 úloh", dpcVal: "Příprava na naplánování DPC",
+            msgBadge: "Čeká", msgVal: "Aplikace pozastavena v Ring 3"
+          },
+          app: {
+            statusBadge: "Pozastaveno", statusClass: "warning",
+            text: "Ahoj studenti ",
+            guiStatus: "Klik myši zachycen hardwarem...",
+            btnClicked: false,
+            btnText: "Uložit",
+            noteBadge: "Pozastaveno", noteClass: "warning",
+            noteVal: "Hardware drží klik ve frontě"
+          },
+          highlightCol: "colHw"
+        },
+        {
+          num: 4,
+          label: "4. Top Half Hotov",
+          title: "4. Konec Top Half klávesnice, zápis do DPC fronty a instrukce IRETQ",
+          desc: "Top Half klávesnice trval pouhou 1 mikrosekundu: přečetl scancode 0x1E, odeslal potvrzení EOI ('mám to!') a do fronty Bottom Half (DPC) vložil lístek: 'Zpracuj klávesu A'. Následně ISR končí instrukcí IRETQ, která ze zásobníku vytáhne původní stav registrů a obnoví IF=1 (otevře uši).",
+          side: "Top Half nesměl luštit, zda je klávesnice česká nebo anglická, ani překreslovat písmeno na obrazovku. To by trvalo milisekundy a zablokovalo celý počítač!",
+          kbd: { state: "idle", badge: "Hotovo (EOI)", val: "Data předána do RAM, EOI potvrzeno" },
+          mouse: { state: "pending", badge: "Stále čeká", val: "IRQ 12 čeká v registru APIC IRR" },
+          apic: { state: "pending", badge: "IRR: IRQ 12 ČEKÁ", val: "IRR: IRQ 12 (Čeká na odbavení) \u2022 ISR: 0" },
+          cpu: {
+            ringBadge: "Ring 0 (Jádro)", ringClass: "kernel",
+            ifBadge: "IF = 1", ifClass: "success", ifVal: "IRETQ obnovilo IF=1 (Uši otevřeny!)",
+            irqlBadge: "Klesá z DIRQL", irqlVal: "IRETQ vrací procesor zpět",
+            actionBadge: "IRETQ instrukce", actionClass: "success", actionVal: "Obnova registrů ze zásobníku"
+          },
+          os: {
+            stackBadge: "Vyzvednuto", stackVal: "Zásobník uvolněn pro další návrat",
+            dpcBadge: "1 úloha", dpcVal: "\ud83d\udccb DPC 1: Přeložit scancode 0x1E na písmeno",
+            msgBadge: "Čeká", msgVal: "DPC čeká na zpracování"
+          },
+          app: {
+            statusBadge: "Pozastaveno", statusClass: "warning",
+            text: "Ahoj studenti ",
+            guiStatus: "Top half klávesnice hotov...",
+            btnClicked: false,
+            btnText: "Uložit",
+            noteBadge: "Čeká na DPC", noteClass: "warning",
+            noteVal: "Scancode bezpečně uložen v RAM"
+          },
+          highlightCol: "colOs"
+        },
+        {
+          num: 5,
+          label: "5. Obsluha myši",
+          title: "5. APIC okamžitě předkládá čekající klik myši (IRQ 12)",
+          desc: "Jakmile se v procesoru obnovil příznak IF=1, APIC ihned vystavil čekající signál myši (vektor 0x2C). Procesor ani nestihl pokračovat v aplikaci \u2013 okamžitě skáče do Top Half rutiny myši! Ta bleskově přečte 3 bajty paketu (souřadnice a stav tlačítek), pošle EOI, naplánuje druhý DPC lístek a končí IRETQ.",
+          side: "Obě hardwarová přerušení byla převzata celkem za necelé 3 mikrosekundy. Žádné zařízení se nezpozdilo a žádný bajt se neztratil.",
+          kbd: { state: "idle", badge: "Klid", val: "Klávesnice v klidu" },
+          mouse: { state: "active", badge: "Top Half ISR", val: "mouse_isr: čtení 3 bajtů paketu (LMB)" },
+          apic: { state: "active", badge: "IRQ 12 -> CPU", val: "IRR: 0 \u2022 ISR: IRQ 12 (myš odbavena)" },
+          cpu: {
+            ringBadge: "Ring 0 (Jádro)", ringClass: "kernel",
+            ifBadge: "IF = 0 -> 1", ifClass: "kernel", ifVal: "Rychlý záchyt a návrat přes IRETQ",
+            irqlBadge: "DIRQL (Myš)", irqlVal: "Blesková obsluha paketu myši",
+            actionBadge: "Mouse ISR", actionClass: "warning", actionVal: "ps2_mouse_isr: čtení tlačítek a souřadnic"
+          },
+          os: {
+            stackBadge: "Odbaveno", stackVal: "Zásobník zpracoval obě IRQ",
+            dpcBadge: "2 úlohy", dpcVal: "\ud83d\udccb DPC 1: Klávesnice \u2022 \ud83d\udccb DPC 2: Klik myši",
+            msgBadge: "Čeká", msgVal: "Obě úlohy se sešly v DPC frontě!"
+          },
+          app: {
+            statusBadge: "Pozastaveno", statusClass: "warning",
+            text: "Ahoj studenti ",
+            guiStatus: "Oba hardwarové signály přijaty...",
+            btnClicked: false,
+            btnText: "Uložit",
+            noteBadge: "Hardware hotov", noteClass: "warning",
+            noteVal: "Nyní přichází na řadu Bottom Half"
+          },
+          highlightCol: "colHw"
+        },
+        {
+          num: 6,
+          label: "6. Bottom Half (DPC)",
+          title: "6. Bottom Half (DPC / SoftIRQ): Zpracování těžké logiky na pozadí",
+          desc: "Hardware je volný a žádné IRQ neběží. Procesor klesá na úroveň DISPATCH_LEVEL / SoftIRQ. Zde jsou přerušení plně povolena! Jádro v klidu projde DPC frontu: 1. Přeloží scancode 0x1E na znak 'A' a vytvoří zprávu WM_KEYDOWN. 2. Zjistí, že kurzor myši leží na tlačítku Uložit, a vytvoří WM_LBUTTONDOWN. Zprávy putují do fronty okna.",
+          side: "Proč je toto rozdělení záchranou? Kdyby v této chvíli přišel obrovský gigabitový balík dat ze síťové karty, procesor ho okamžitě obslouží! Bottom Half nikoho neblokuje.",
+          kbd: { state: "idle", badge: "Klid", val: "Klávesnice v klidu" },
+          mouse: { state: "idle", badge: "Klid", val: "Myš v klidu" },
+          apic: { state: "idle", badge: "Volno", val: "IRR: 0 \u2022 ISR: 0 (všechny linky volné)" },
+          cpu: {
+            ringBadge: "Ring 0 (Jádro)", ringClass: "kernel",
+            ifBadge: "IF = 1", ifClass: "success", ifVal: "Přerušení povolena (neblokuje hardware)",
+            irqlBadge: "DISPATCH_LEVEL (2)", irqlVal: "Zpracování odložených procedur (DPC)",
+            actionBadge: "DPC Worker", actionClass: "primary", actionVal: "Překlad scancode -> UTF-8 znak & Hit test myši"
+          },
+          os: {
+            stackBadge: "Čistý", stackVal: "Zásobník připraven na návrat do Ring 3",
+            dpcBadge: "Zpracovává se", dpcVal: "1) Scancode -> 'A', 2) Pozice (640,320) -> btnSave",
+            msgBadge: "2 zprávy doručeny!", msgVal: "\ud83d\udce8 WM_KEYDOWN('A') \u2022 \ud83d\udce8 WM_LBUTTONDOWN(btn)"
+          },
+          app: {
+            statusBadge: "Příjem zpráv", statusClass: "primary",
+            text: "Ahoj studenti ",
+            guiStatus: "Zprávy dorazily do systémové fronty okna!",
+            btnClicked: false,
+            btnText: "Uložit",
+            noteBadge: "Zprávy ve frontě", noteClass: "primary",
+            noteVal: "Aplikace je za okamžik vyzvedne"
+          },
+          highlightCol: "colOs"
+        },
+        {
+          num: 7,
+          label: "7. Aplikace reaguje",
+          title: "7. Návrat do aplikace (Ring 3): Zprávy zpracovány a UI bleskově reaguje!",
+          desc: "Procesor se instrukcí IRETQ definitivně vrátil do Ring 3 k aplikaci. Smyčka zpráv aplikace (GetMessage) vyzvedne zprávy: 1. Na WM_KEYDOWN reaguje vepsáním písmene 'A' do textu. 2. Na WM_LBUTTONDOWN reaguje stisknutím tlačítka 'Uložit' a uložením souboru. Pro uživatele se vše stalo bleskově a současně!",
+          side: "Celý tento úžasný orchestr (2x hardware IRQ, 2x Top Half, záchrana v registru APIC, 2x Bottom Half DPC a doručení zpráv do UI) proběhl za méně než 0,5 milisekundy!",
+          kbd: { state: "idle", badge: "Klid", val: "Klávesnice v klidu" },
+          mouse: { state: "idle", badge: "Klid", val: "Myš v klidu" },
+          apic: { state: "idle", badge: "Klid", val: "Všechny linky v klidu" },
+          cpu: {
+            ringBadge: "Ring 3 (Uživatel)", ringClass: "success",
+            ifBadge: "IF = 1", ifClass: "success", ifVal: "Přerušení povolena (běžný stav)",
+            irqlBadge: "PASSIVE (0)", irqlVal: "Běžný uživatelský kód",
+            actionBadge: "Aplikace", actionClass: "success", actionVal: "wordpad.exe: vykreslení znaku 'A' a uložení"
+          },
+          os: {
+            stackBadge: "Prázdný", stackVal: "Žádný uložený stav, aplikace plně běží",
+            dpcBadge: "0 úloh", dpcVal: "Všechny odložené procedury dokončeny",
+            msgBadge: "Zpracováno", msgVal: "Obě zprávy aplikací úspěšně odbaveny"
+          },
+          app: {
+            statusBadge: "Hotovo", statusClass: "success",
+            text: "Ahoj studenti A",
+            guiStatus: "Písmeno 'A' zapsáno, dokument úspěšně uložen!",
+            btnClicked: true,
+            btnText: "Uloženo!",
+            noteBadge: "Úspěšně odbaveno", noteClass: "success",
+            noteVal: "Uživatel má pocit okamžité reakce!"
+          },
+          highlightCol: "colApp"
+        }
+      ];
+
+      let currentStep = 0;
+      let playTimer = null;
+
+      // Elementy
+      const stepperEl = document.getElementById('simStepper');
+      const resetBtn = document.getElementById('simResetBtn');
+      const prevBtn = document.getElementById('simPrevBtn');
+      const nextBtn = document.getElementById('simNextBtn');
+      const nextBtnText = document.getElementById('simNextBtnText');
+      const playBtn = document.getElementById('simPlayBtn');
+      const playIcon = document.getElementById('simPlayIcon');
+      const playText = document.getElementById('simPlayText');
+
+      if (!stepperEl || !nextBtn) return;
+
+      // Vygenerování tlačítek v liště
+      stepperEl.innerHTML = '';
+      simSteps.forEach((s, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'sim-step-btn' + (idx === 0 ? ' active' : '');
+        btn.textContent = s.label;
+        btn.title = s.title;
+        btn.addEventListener('click', () => {
+          stopAutoplay();
+          renderStep(idx);
+        });
+        stepperEl.appendChild(btn);
+      });
+
+      function renderStep(index) {
+        currentStep = index;
+        const data = simSteps[index];
+
+        // 1. Aktualizace stepperu
+        const stepBtns = stepperEl.querySelectorAll('.sim-step-btn');
+        stepBtns.forEach((btn, idx) => {
+          btn.classList.remove('active', 'completed');
+          if (idx === index) btn.classList.add('active');
+          else if (idx < index) btn.classList.add('completed');
+        });
+
+        // 2. Tlačítka Další / Zpět
+        if (prevBtn) prevBtn.disabled = (index === 0);
+        if (nextBtnText) {
+          if (index === simSteps.length - 1) {
+            nextBtnText.textContent = "Restart";
+          } else {
+            nextBtnText.textContent = "Další krok";
+          }
+        }
+
+        // 3. Texty vysvětlení
+        const titleEl = document.getElementById('simStepTitleText');
+        const descEl = document.getElementById('simStepDescText');
+        const sideEl = document.getElementById('simStepSideText');
+        if (titleEl) titleEl.textContent = data.title;
+        if (descEl) descEl.textContent = data.desc;
+        if (sideEl) sideEl.textContent = data.side;
+
+        // 4. Zvýraznění aktivního sloupce
+        document.querySelectorAll('.sim-col').forEach(col => col.classList.remove('highlighted'));
+        const activeCol = document.getElementById(data.highlightCol);
+        if (activeCol) activeCol.classList.add('highlighted');
+
+        // 5. Hardware panel
+        const dotKbd = document.getElementById('dotKbd');
+        const kbdBadge = document.getElementById('kbdBadge');
+        const kbdVal = document.getElementById('kbdVal');
+        const simKbdItem = document.getElementById('simKbdItem');
+        if (dotKbd) dotKbd.className = 'status-dot ' + data.kbd.state;
+        if (kbdBadge) {
+          kbdBadge.textContent = data.kbd.badge;
+          kbdBadge.className = 'highlight-pill ' + (data.kbd.state === 'active' ? 'kernel' : (data.kbd.state === 'pending' ? 'warning' : ''));
+        }
+        if (kbdVal) kbdVal.textContent = data.kbd.val;
+        if (simKbdItem) simKbdItem.className = 'sim-item ' + (data.kbd.state !== 'idle' ? data.kbd.state : '');
+
+        const dotMouse = document.getElementById('dotMouse');
+        const mouseBadge = document.getElementById('mouseBadge');
+        const mouseVal = document.getElementById('mouseVal');
+        const simMouseItem = document.getElementById('simMouseItem');
+        if (dotMouse) dotMouse.className = 'status-dot ' + data.mouse.state;
+        if (mouseBadge) {
+          mouseBadge.textContent = data.mouse.badge;
+          mouseBadge.className = 'highlight-pill ' + (data.mouse.state === 'active' ? 'kernel' : (data.mouse.state === 'pending' ? 'warning' : ''));
+        }
+        if (mouseVal) mouseVal.textContent = data.mouse.val;
+        if (simMouseItem) simMouseItem.className = 'sim-item ' + (data.mouse.state !== 'idle' ? data.mouse.state : '');
+
+        const dotApic = document.getElementById('dotApic');
+        const apicBadge = document.getElementById('apicBadge');
+        const apicVal = document.getElementById('apicVal');
+        const simApicItem = document.getElementById('simApicItem');
+        if (dotApic) dotApic.className = 'status-dot ' + data.apic.state;
+        if (apicBadge) {
+          apicBadge.textContent = data.apic.badge;
+          apicBadge.className = 'highlight-pill ' + (data.apic.state === 'active' ? 'kernel' : (data.apic.state === 'pending' ? 'warning' : ''));
+        }
+        if (apicVal) apicVal.textContent = data.apic.val;
+        if (simApicItem) simApicItem.className = 'sim-item ' + (data.apic.state !== 'idle' ? data.apic.state : '');
+
+        // 6. CPU panel
+        const badgeCpuRing = document.getElementById('badgeCpuRing');
+        const cpuIfBadge = document.getElementById('cpuIfBadge');
+        const cpuIfVal = document.getElementById('cpuIfVal');
+        const cpuIrqlBadge = document.getElementById('cpuIrqlBadge');
+        const cpuIrqlVal = document.getElementById('cpuIrqlVal');
+        const cpuActionBadge = document.getElementById('cpuActionBadge');
+        const cpuActionVal = document.getElementById('cpuActionVal');
+        const simCpuFlags = document.getElementById('simCpuFlags');
+
+        if (badgeCpuRing) {
+          badgeCpuRing.textContent = data.cpu.ringBadge;
+          badgeCpuRing.className = 'sim-col-badge highlight-pill ' + data.cpu.ringClass;
+        }
+        if (cpuIfBadge) {
+          cpuIfBadge.textContent = data.cpu.ifBadge;
+          cpuIfBadge.className = 'highlight-pill ' + data.cpu.ifClass;
+        }
+        if (cpuIfVal) cpuIfVal.textContent = data.cpu.ifVal;
+        if (cpuIrqlBadge) cpuIrqlBadge.textContent = data.cpu.irqlBadge;
+        if (cpuIrqlVal) cpuIrqlVal.textContent = data.cpu.irqlVal;
+        if (cpuActionBadge) {
+          cpuActionBadge.textContent = data.cpu.actionBadge;
+          cpuActionBadge.className = 'highlight-pill ' + data.cpu.actionClass;
+        }
+        if (cpuActionVal) cpuActionVal.textContent = data.cpu.actionVal;
+        if (simCpuFlags) simCpuFlags.className = 'sim-item ' + (data.cpu.ifClass === 'danger' ? 'danger' : '');
+
+        // 7. OS Kernel panel
+        const stackBadge = document.getElementById('stackBadge');
+        const stackVal = document.getElementById('stackVal');
+        const dpcBadge = document.getElementById('dpcBadge');
+        const dpcVal = document.getElementById('dpcVal');
+        const msgBadge = document.getElementById('msgBadge');
+        const msgVal = document.getElementById('msgVal');
+        const simDpcItem = document.getElementById('simDpcItem');
+        const simMsgItem = document.getElementById('simMsgItem');
+
+        if (stackBadge) stackBadge.textContent = data.os.stackBadge;
+        if (stackVal) stackVal.textContent = data.os.stackVal;
+        if (dpcBadge) dpcBadge.textContent = data.os.dpcBadge;
+        if (dpcVal) dpcVal.textContent = data.os.dpcVal;
+        if (msgBadge) msgBadge.textContent = data.os.msgBadge;
+        if (msgVal) msgVal.textContent = data.os.msgVal;
+
+        if (simDpcItem) simDpcItem.className = 'sim-item ' + (data.os.dpcBadge.includes('1') || data.os.dpcBadge.includes('2') || data.os.dpcBadge.includes('Zpracovává') ? 'pending' : '');
+        if (simMsgItem) simMsgItem.className = 'sim-item ' + (data.os.msgBadge.includes('doručeny') || data.os.msgBadge.includes('Zpracováno') ? 'success' : '');
+
+        // 8. GUI panel
+        const badgeAppStatus = document.getElementById('badgeAppStatus');
+        const guiText = document.getElementById('guiText');
+        const guiStatus = document.getElementById('guiStatus');
+        const guiSaveBtn = document.getElementById('guiSaveBtn');
+        const guiSaveBtnText = document.getElementById('guiSaveBtnText');
+        const appStateBadge = document.getElementById('appStateBadge');
+        const appStateVal = document.getElementById('appStateVal');
+
+        if (badgeAppStatus) {
+          badgeAppStatus.textContent = data.app.statusBadge;
+          badgeAppStatus.className = 'sim-col-badge highlight-pill ' + data.app.statusClass;
+        }
+        if (guiText) guiText.textContent = data.app.text;
+        if (guiStatus) guiStatus.textContent = data.app.guiStatus;
+        if (guiSaveBtn) {
+          if (data.app.btnClicked) {
+            guiSaveBtn.className = 'sim-gui-btn clicked';
+          } else {
+            guiSaveBtn.className = 'sim-gui-btn';
+          }
+        }
+        if (guiSaveBtnText) guiSaveBtnText.textContent = data.app.btnText || "Uložit";
+        if (appStateBadge) {
+          appStateBadge.textContent = data.app.noteBadge;
+          appStateBadge.className = 'highlight-pill ' + data.app.noteClass;
+        }
+        if (appStateVal) appStateVal.textContent = data.app.noteVal;
+      }
+
+      function stopAutoplay() {
+        if (playTimer) {
+          clearInterval(playTimer);
+          playTimer = null;
+          if (playText) playText.textContent = "Přehrát";
+          if (playIcon) playIcon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+        }
+      }
+
+      function startAutoplay() {
+        if (playTimer) return;
+        if (playText) playText.textContent = "Pozastavit";
+        if (playIcon) playIcon.innerHTML = '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>';
+        playTimer = setInterval(() => {
+          let next = currentStep + 1;
+          if (next >= simSteps.length) {
+            next = 0;
+          }
+          renderStep(next);
+        }, 3200);
+      }
+
+      // Posluchače akčních tlačítek
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          stopAutoplay();
+          renderStep(0);
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          stopAutoplay();
+          if (currentStep > 0) renderStep(currentStep - 1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          stopAutoplay();
+          if (currentStep < simSteps.length - 1) {
+            renderStep(currentStep + 1);
+          } else {
+            renderStep(0);
+          }
+        });
+      }
+
+      if (playBtn) {
+        playBtn.addEventListener('click', () => {
+          if (playTimer) {
+            stopAutoplay();
+          } else {
+            startAutoplay();
+          }
+        });
+      }
+
+      // Inicializace na krok 0
+      renderStep(0);
+    }
   </script>
 </body>
 </html>
