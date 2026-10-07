@@ -1,15 +1,200 @@
 {
   "version": "3.0.0",
-  "darkMode": false,
+  "darkMode": true,
   "gridEnabling": false,
   "currentViewName": null,
   "defaultView": {
     "detailLevel": "All",
     "relationshipMode": "All",
-    "tablePositions": [],
+    "tablePositions": [
+      {
+        "name": "customer_profile",
+        "schemaName": "public",
+        "x": 1278.9037327098524,
+        "y": 210.1688071962625
+      },
+      {
+        "name": "category",
+        "schemaName": "public",
+        "x": 342.55281740201923,
+        "y": -148.61816301623816
+      },
+      {
+        "name": "product",
+        "schemaName": "public",
+        "x": 830.4494107111962,
+        "y": -309.27368370567376
+      },
+      {
+        "name": "product_category",
+        "schemaName": "public",
+        "x": 357.7245021565607,
+        "y": -322.72320907950785
+      },
+      {
+        "name": "rating",
+        "schemaName": "public",
+        "x": 1319.138573105998,
+        "y": -78.41763079436402
+      },
+      {
+        "name": "orders",
+        "schemaName": "public",
+        "x": 351.2889552815607,
+        "y": 166.7306905629381
+      },
+      {
+        "name": "order_item",
+        "schemaName": "public",
+        "x": 746.4083049224494,
+        "y": 129.35118474370177
+      },
+      {
+        "name": "customer",
+        "schemaName": "public",
+        "x": 797.1696048359163,
+        "y": 358.26250529973566
+      }
+    ],
     "tableGroupCollapseStates": [],
     "stickyNoteLayouts": [],
-    "referencePaths": []
+    "referencePaths": [
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "category",
+        "firstSchemaName": "public",
+        "firstRelation": "0..1",
+        "secondFieldNames": [
+          "parent_id"
+        ],
+        "secondTableName": "category",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "product",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "product_category",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "category",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "category_id"
+        ],
+        "secondTableName": "product_category",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "product",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "rating",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "orders",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "order_id"
+        ],
+        "secondTableName": "order_item",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "product",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "product_id"
+        ],
+        "secondTableName": "order_item",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customer",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "customer_profile",
+        "secondSchemaName": "public",
+        "secondRelation": "1",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customer",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "rating",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      },
+      {
+        "firstFieldNames": [
+          "id"
+        ],
+        "firstTableName": "customer",
+        "firstSchemaName": "public",
+        "firstRelation": "1",
+        "secondFieldNames": [
+          "customer_id"
+        ],
+        "secondTableName": "orders",
+        "secondSchemaName": "public",
+        "secondRelation": "*",
+        "checkPoints": []
+      }
+    ]
   },
   "views": {}
 }

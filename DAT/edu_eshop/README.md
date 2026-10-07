@@ -12,10 +12,13 @@ Databáze slouží jako názorný příklad moderní e-commerce databáze pokrý
 
 | Soubor | Popis |
 |---|---|
-| `edu_eshop.sql` | Kompletní DDL skript (definice tabulek, primárních/cizích klíčů, CHECK omezení, triggerů, pohledů a testovacích dat). |
+| `edu_eshop_structure.sql` | Samostatný čistý DDL skript (definice tabulek, primárních/cizích klíčů, CHECK omezení, triggerů a pohledů bez demo dat). |
+| `edu_eshop_data.sql` | Samostatný DML skript s testovacími a demo daty (vhodné pro čisté naplnění nebo reset dat). |
+| `edu_eshop.sql` | Kompletní instalační balíček (DDL struktura + testovací data v jednom souboru). |
 | `edu_eshop.dbml` | Definice schématu ve formátu **DBML (Database Markup Language)** pro nástroje jako [dbdocs.io](https://dbdocs.io) a [dbdiagram.io](https://dbdiagram.io). |
 | `edu_eshop.dbdiagram` | Konfigurační soubor diagramu pro vizualizaci na [dbdiagram.io](https://dbdiagram.io). |
-| `README.md` | Tato detailní dokumentace databáze a výukový průvodce. |
+| `index.html` | Interaktivní webová výuková prezentace a kompletní dokumentace modelu. |
+| `README.md` | Tato detailní technická dokumentace databáze a výukový průvodce. |
 
 ---
 

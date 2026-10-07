@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referenční databáze edu_eshop | DAT – VOŠ &amp; SŠ</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Dynamic Ambient Background -->
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <!-- Top Progress Bar -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Header / Meta Bar -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="../index.html" class="course-badge" title="Zpět na přehled předmětu DAT">
+          <span>← DAT</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Referenční model</span>
+          <span class="divider">•</span>
+          <span>Databáze edu_eshop</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Základ pro DAT10–DAT30</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Viewport for Slides -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: HERO / TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Referenční model • Databázové systémy VOŠ</div>
+        <h1 class="hero-title">Databáze edu_eshop</h1>
+        <p class="hero-desc">
+          Komplexní technická a výuková dokumentace referenční databáze elektronického obchodu. Pokrývá kardinality 1:1, 1:N, M:N, sebereferenci, integritní omezení, triggery, pohledy i moderní NoSQL JSON atributy.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Rozsah schématu</span>
+            <span class="hero-meta-val">8 tabulek • 2 pohledy</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Programovatelnost</span>
+            <span class="hero-meta-val">6 triggerů • Denormalizace</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Cílové platformy</span>
+            <span class="hero-meta-val">MySQL 8.0+ / MariaDB 10.5+</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Výukový přesah</span>
+            <span class="hero-meta-val">DAT10, DAT20, DAT30</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: ERD & ARCHITEKTURA -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Konceptuální návrh</div>
+            <h2 class="slide-title">Architektura a E-R Model</h2>
+            <p class="slide-subtitle">Vztahy mezi entitami a logické vazby v systému e-shopu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Kardinality &amp; 3NF</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="erd-summary-grid">
+            <div class="erd-entity-box">
+              <div class="erd-entity-name">customer</div>
+              <div class="erd-entity-count">Zákaznické účty (1:1 &amp; 1:N)</div>
+            </div>
+            <div class="erd-entity-box">
+              <div class="erd-entity-name">customer_profile</div>
+              <div class="erd-entity-count">Osobní profily (1:1)</div>
+            </div>
+            <div class="erd-entity-box">
+              <div class="erd-entity-name">category</div>
+              <div class="erd-entity-count">Strom kategorií (Sebereference)</div>
+            </div>
+            <div class="erd-entity-box">
+              <div class="erd-entity-name">product</div>
+              <div class="erd-entity-count">Katalog zboží + JSON</div>
+            </div>
+            <div class="erd-entity-box">
+              <div class="erd-entity-name">product_category</div>
+              <div class="erd-entity-count">Vazební tabulka (M:N)</div>
+            </div>
+            <div class="erd-entity-box">
+              <div class="erd-entity-name">rating</div>
+              <div class="erd-entity-count">Recenze a body (1:N)</div>
+            </div>
+            <div class="erd-entity-box">
+              <div class="erd-entity-name">orders</div>
+              <div class="erd-entity-count">Hlavičky objednávek (1:N)</div>
+            </div>
+            <div class="erd-entity-box">
+              <div class="erd-entity-name">order_item</div>
+              <div class="erd-entity-count">Položky nákupu (Dekompozice M:N)</div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Zastoupené typy relačních vazeb
+              </h4>
+              <ul class="styled-list">
+                <li><strong>Vazba 1:1:</strong> <code>customer</code> ↔ <code>customer_profile</code> se sdíleným primárním klíčem (vertikální fragmentace).</li>
+                <li><strong>Hierarchická sebereference 1:N:</strong> <code>category.parent_id</code> → <code>category.id</code> pro modelování neomezeného stromu podkategorií.</li>
+                <li><strong>Vazba M:N:</strong> <code>product</code> ↔ <code>category</code> realizovaná vazební tabulkou <code>product_category</code>.</li>
+                <li><strong>Asociační entita s historií:</strong> <code>order_item</code> dekomponuje vztah mezi objednávkou a produktem a fixuje historickou prodejní cenu.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                Normalizace vs. Řízená Denormalizace
+              </h4>
+              <ul class="styled-list">
+                <li><strong>Důsledná 3. normální forma (3NF):</strong> Žádný neklíčový atribut není tranzitivně závislý na primárním klíči.</li>
+                <li><strong>Denormalizace 1 (Historická cena):</strong> <code>order_item.unit_price</code> záměrně kopíruje cenu v momentě nákupu pro ochranu účetnictví.</li>
+                <li><strong>Denormalizace 2 (Rychlé počítadlo):</strong> <code>category.product_count</code> je agregát synchronizovaný databázovými triggery.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: DOMÉNA ZÁKAZNÍKA (customer & customer_profile) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Entitní rozbor • Zákaznická doména</div>
+            <h2 class="slide-title">customer &amp; customer_profile</h2>
+            <p class="slide-subtitle">Vztah 1:1, autentizace, bezpečnost a vertikální fragmentace</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Vztah 1:1 • PK = FK</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Tabulka <code>customer</code> (Účet)
+              </h4>
+              <table class="db-table">
+                <thead>
+                  <tr><th>Sloupec</th><th>Typ</th><th>Vlastnosti</th><th>Význam</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-pk">PK</span> AI</td><td>Unikátní ID zákazníka</td></tr>
+                  <tr><td><code>email</code></td><td><span class="badge-type">VARCHAR(100)</span></td><td><span class="badge-rule">UNIQUE</span> NOT NULL</td><td>Přihlašovací e-mail</td></tr>
+                  <tr><td><code>password_hash</code></td><td><span class="badge-type">VARCHAR(255)</span></td><td>NOT NULL</td><td>Bezpečný hash hesla</td></tr>
+                  <tr><td><code>created_at</code></td><td><span class="badge-type">DATETIME</span></td><td>DEFAULT NOW()</td><td>Datum registrace</td></tr>
+                  <tr><td><code>active</code></td><td><span class="badge-type">BOOLEAN</span></td><td>DEFAULT true</td><td>Příznak aktivity (soft delete)</td></tr>
+                </tbody>
+              </table>
+
+              <h4 style="margin-top: 1rem;">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                Tabulka <code>customer_profile</code> (Profil 1:1)
+              </h4>
+              <table class="db-table">
+                <thead>
+                  <tr><th>Sloupec</th><th>Typ</th><th>Vlastnosti</th><th>Význam</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>customer_id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-pk">PK</span> <span class="badge-fk">FK</span></td><td>Odkaz na customer(id)</td></tr>
+                  <tr><td><code>first_name</code></td><td><span class="badge-type">VARCHAR(50)</span></td><td>NOT NULL</td><td>Křestní jméno</td></tr>
+                  <tr><td><code>last_name</code></td><td><span class="badge-type">VARCHAR(50)</span></td><td>NOT NULL</td><td>Příjmení</td></tr>
+                  <tr><td><code>phone</code></td><td><span class="badge-type">VARCHAR(20)</span></td><td>NULL</td><td>Telefonní kontakt</td></tr>
+                  <tr><td><code>birth_date</code></td><td><span class="badge-type">DATE</span></td><td>NULL</td><td>Datum narození</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <div class="content-card">
+                <h4>Proč rozdělit účet a profil na dvě tabulky?</h4>
+                <ul class="styled-list">
+                  <li><strong>Kardinalita 1:1 s volitelností (0..1):</strong> Zákazník může mít vytvořený účet, ale profil vyplní až při prvním nákupu.</li>
+                  <li><strong>Vertikální fragmentace:</strong> Úzká tabulka <code>customer</code> umožňuje rychlejší vyhledávání a indexaci při přihlašování.</li>
+                  <li><strong>Referenční integrita:</strong> Cizí klíč s <code>ON DELETE CASCADE</code> garantuje, že při smazání účtu automaticky zanikne i osobní profil.</li>
+                </ul>
+              </div>
+
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    SQL • Dotaz na zákazníky s profilem i bez
+                  </span>
+                  <button class="btn-copy">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="sql-comment">-- Výběr aktivních zákazníků s volitelným profilem (LEFT JOIN)</span>
+<span class="sql-keyword">SELECT</span> 
+  <span class="sql-alias">c</span>.<span class="sql-col">id</span>, <span class="sql-alias">c</span>.<span class="sql-col">email</span>, <span class="sql-alias">c</span>.<span class="sql-col">active</span>,
+  <span class="sql-alias">cp</span>.<span class="sql-col">first_name</span>, <span class="sql-alias">cp</span>.<span class="sql-col">last_name</span>, <span class="sql-alias">cp</span>.<span class="sql-col">phone</span>
+<span class="sql-keyword">FROM</span> <span class="sql-table">`customer`</span> <span class="sql-alias">c</span>
+<span class="sql-keyword">LEFT JOIN</span> <span class="sql-table">`customer_profile`</span> <span class="sql-alias">cp</span> <span class="sql-keyword">ON</span> <span class="sql-alias">c</span>.<span class="sql-col">id</span> <span class="sql-op">=</span> <span class="sql-alias">cp</span>.<span class="sql-col">customer_id</span>
+<span class="sql-keyword">WHERE</span> <span class="sql-alias">c</span>.<span class="sql-col">active</span> <span class="sql-op">=</span> <span class="sql-num">1</span>;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: KATALOG A KATEGORIE (category, product, product_category) -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Entitní rozbor • Produktová doména</div>
+            <h2 class="slide-title">Katalog: category &amp; product</h2>
+            <p class="slide-subtitle">Hierarchické kategorie, NoSQL JSON atributy a vazba M:N</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Sebereference &amp; M:N &amp; JSON</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                Tabulka <code>category</code> (Stromová sebereference)
+              </h4>
+              <table class="db-table">
+                <thead>
+                  <tr><th>Sloupec</th><th>Typ</th><th>Vlastnosti</th><th>Význam</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>id</code></td><td><span class="badge-type">SMALLINT</span></td><td><span class="badge-pk">PK</span> AI</td><td>ID kategorie (úspora RAM)</td></tr>
+                  <tr><td><code>parent_id</code></td><td><span class="badge-type">SMALLINT</span></td><td><span class="badge-fk">FK</span> SET NULL</td><td>Rodičovská kategorie (strom)</td></tr>
+                  <tr><td><code>name</code></td><td><span class="badge-type">VARCHAR(100)</span></td><td>NOT NULL</td><td>Název kategorie</td></tr>
+                  <tr><td><code>description</code></td><td><span class="badge-type">VARCHAR(255)</span></td><td>NULL</td><td>Popis kategorie</td></tr>
+                  <tr><td><code>product_count</code></td><td><span class="badge-type">MEDIUMINT</span></td><td>DEFAULT 0</td><td>Počet produktů (řízen triggerem)</td></tr>
+                </tbody>
+              </table>
+
+              <h4 style="margin-top: 1rem;">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Tabulka <code>product</code> (Katalog + JSON)
+              </h4>
+              <table class="db-table">
+                <thead>
+                  <tr><th>Sloupec</th><th>Typ</th><th>Vlastnosti</th><th>Význam</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-pk">PK</span> AI</td><td>Primární klíč zboží</td></tr>
+                  <tr><td><code>name</code></td><td><span class="badge-type">VARCHAR(150)</span></td><td>NOT NULL</td><td>Název produktu</td></tr>
+                  <tr><td><code>price</code></td><td><span class="badge-type">DECIMAL(10,2)</span></td><td><span class="badge-rule">CHECK</span> &gt;= 0</td><td>Cena (přesná měna)</td></tr>
+                  <tr><td><code>stock_quantity</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-rule">CHECK</span> &gt;= 0</td><td>Počet kusů skladem</td></tr>
+                  <tr><td><code>attributes</code></td><td><span class="badge-type">JSON</span></td><td>NULL</td><td>NoSQL flexibilní vlastnosti</td></tr>
+                  <tr><td><code>active</code></td><td><span class="badge-type">BOOLEAN</span></td><td>DEFAULT true</td><td>Stav nabídky (soft delete)</td></tr>
+                </tbody>
+              </table>
+
+              <h4 style="margin-top: 1rem;">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                Tabulka <code>product_category</code> (Vazba M:N)
+              </h4>
+              <table class="db-table">
+                <thead>
+                  <tr><th>Sloupec</th><th>Typ</th><th>Vlastnosti</th><th>Význam</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>product_id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-pk">PK</span> <span class="badge-fk">FK</span> CASCADE</td><td>Odkaz na product(id)</td></tr>
+                  <tr><td><code>category_id</code></td><td><span class="badge-type">SMALLINT</span></td><td><span class="badge-pk">PK</span> <span class="badge-fk">FK</span> CASCADE</td><td>Odkaz na category(id)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <div class="callout-eshop" style="margin-top: 0; margin-bottom: 0.75rem;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
+                <div>
+                  <strong>Proč DECIMAL místo FLOAT/DOUBLE?</strong><br>
+                  Plovoucí řádová čárka způsobuje zaokrouhlovací chyby (např. 0.1 + 0.2 ≠ 0.3). Pro peněžní částky se striktně používá přesný typ <code>DECIMAL(10,2)</code>.
+                </div>
+              </div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    SQL • Sebereferenční Self-JOIN (Strom kategorií)
+                  </span>
+                  <button class="btn-copy">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="sql-comment">-- Spojení tabulky category na samu sebe (Self-JOIN)</span>
+<span class="sql-keyword">SELECT</span> 
+  <span class="sql-alias">sub</span>.<span class="sql-col">id</span>,
+  <span class="sql-alias">sub</span>.<span class="sql-col">name</span> <span class="sql-keyword">AS</span> <span class="sql-alias">podkategorie</span>,
+  <span class="sql-func">COALESCE</span>(<span class="sql-alias">parent</span>.<span class="sql-col">name</span>, <span class="sql-string">'[Hlavní kategorie]'</span>) <span class="sql-keyword">AS</span> <span class="sql-alias">nadkategorie</span>
+<span class="sql-keyword">FROM</span> <span class="sql-table">`category`</span> <span class="sql-alias">sub</span>
+<span class="sql-keyword">LEFT JOIN</span> <span class="sql-table">`category`</span> <span class="sql-alias">parent</span> <span class="sql-keyword">ON</span> <span class="sql-alias">sub</span>.<span class="sql-col">parent_id</span> <span class="sql-op">=</span> <span class="sql-alias">parent</span>.<span class="sql-col">id</span>
+<span class="sql-keyword">ORDER BY</span> <span class="sql-alias">parent</span>.<span class="sql-col">name</span>, <span class="sql-alias">sub</span>.<span class="sql-col">name</span>;</code></pre>
+              </div>
+
+              <div class="code-wrapper" style="margin-top: 0.75rem;">
+                <div class="code-header">
+                  <span class="code-title">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    SQL • Filtrování přes NoSQL JSON atributy
+                  </span>
+                  <button class="btn-copy">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="sql-comment">-- Operátor ->> extrahuje hodnotu z JSON jako text</span>
+<span class="sql-keyword">SELECT</span> 
+  <span class="sql-col">name</span>, <span class="sql-col">price</span>,
+  <span class="sql-col">attributes</span><span class="sql-op">->></span><span class="sql-string">'$.color'</span> <span class="sql-keyword">AS</span> <span class="sql-alias">barva</span>,
+  <span class="sql-func">CAST</span>(<span class="sql-col">attributes</span><span class="sql-op">->></span><span class="sql-string">'$.ram_gb'</span> <span class="sql-keyword">AS</span> <span class="sql-type">UNSIGNED</span>) <span class="sql-keyword">AS</span> <span class="sql-alias">ram</span>
+<span class="sql-keyword">FROM</span> <span class="sql-table">`product`</span>
+<span class="sql-keyword">WHERE</span> <span class="sql-col">attributes</span><span class="sql-op">->></span><span class="sql-string">'$.color'</span> <span class="sql-op">=</span> <span class="sql-string">'Black'</span>;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: OBJEDNÁVKY A POLOŽKY (orders & order_item) -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Entitní rozbor • Transakční doména</div>
+            <h2 class="slide-title">Objednávkový systém: orders &amp; order_item</h2>
+            <p class="slide-subtitle">Obchodní transakce, ENUM stavy a fixace historické nákupní ceny</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Historická cena • ENUM</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                Tabulka <code>orders</code> (Hlavička objednávky)
+              </h4>
+              <table class="db-table">
+                <thead>
+                  <tr><th>Sloupec</th><th>Typ</th><th>Vlastnosti</th><th>Význam</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-pk">PK</span> AI</td><td>Číslo objednávky</td></tr>
+                  <tr><td><code>customer_id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-fk">FK</span> RESTRICT</td><td>Kupující (účetní ochrana)</td></tr>
+                  <tr><td><code>status</code></td><td><span class="badge-type">ENUM</span></td><td>DEFAULT 'new'</td><td>new, paid, shipped, cancelled</td></tr>
+                  <tr><td><code>total_price</code></td><td><span class="badge-type">DECIMAL(10,2)</span></td><td><span class="badge-rule">CHECK</span> &gt;= 0</td><td>Celková částka (trigger)</td></tr>
+                  <tr><td><code>created_at</code></td><td><span class="badge-type">DATETIME</span></td><td>DEFAULT NOW()</td><td>Čas vystavení</td></tr>
+                </tbody>
+              </table>
+
+              <h4 style="margin-top: 1rem;">
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                Tabulka <code>order_item</code> (Položky s historií)
+              </h4>
+              <table class="db-table">
+                <thead>
+                  <tr><th>Sloupec</th><th>Typ</th><th>Vlastnosti</th><th>Význam</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>order_id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-pk">PK</span> <span class="badge-fk">FK</span> CASCADE</td><td>Odkaz na orders(id)</td></tr>
+                  <tr><td><code>product_id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-pk">PK</span> <span class="badge-fk">FK</span> RESTRICT</td><td>Odkaz na product(id)</td></tr>
+                  <tr><td><code>quantity</code></td><td><span class="badge-type">SMALLINT</span></td><td><span class="badge-rule">CHECK</span> &gt; 0</td><td>Objednané množství</td></tr>
+                  <tr><td><code>unit_price</code></td><td><span class="badge-type">DECIMAL(10,2)</span></td><td><span class="badge-rule">CHECK</span> &gt;= 0</td><td>Historická prodejní cena</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <div class="callout callout-exam" style="margin-top: 0; margin-bottom: 0.75rem;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">Klíčová didaktická zásada: Historická cena</div>
+                  Proč nesmíme v objednávkách číst cenu z tabulky <code>product</code>? Pokud prodejce za rok zdraží produkt z 500 na 700 Kč, staré účetnictví by se zpětně přepočítalo. Proto je v <code>order_item.unit_price</code> uložena historická hodnota vteřiny nákupu!
+                </div>
+              </div>
+              <div class="content-card">
+                <h4>Referenční pravidla ON DELETE</h4>
+                <ul class="styled-list">
+                  <li><strong>Objednávka → Položky (CASCADE):</strong> Smazáním celé stornované objednávky zaniknou všechny její dílčí řádky.</li>
+                  <li><strong>Zákazník → Objednávka (RESTRICT):</strong> Zákazníka nelze z databáze smazat, pokud má existující účetní doklady (ochrana auditní stopy).</li>
+                  <li><strong>Produkt → Položka (RESTRICT):</strong> Zboží, které si v minulosti někdo zakoupil, nelze z databáze fyzicky odstranit (řeší se soft-delete: <code>active = false</code>).</li>
+                </ul>
+              </div>
+
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    SQL • Souhrn objednávky s mezisoučtem
+                  </span>
+                  <button class="btn-copy">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="sql-comment">-- Výpočet ceny položek s použitím historické nákupní ceny unit_price</span>
+<span class="sql-keyword">SELECT</span> 
+  <span class="sql-alias">oi</span>.<span class="sql-col">order_id</span>,
+  <span class="sql-alias">p</span>.<span class="sql-col">name</span> <span class="sql-keyword">AS</span> <span class="sql-alias">produkt</span>,
+  <span class="sql-alias">oi</span>.<span class="sql-col">quantity</span> <span class="sql-keyword">AS</span> <span class="sql-alias">mnozstvi</span>,
+  <span class="sql-alias">oi</span>.<span class="sql-col">unit_price</span> <span class="sql-keyword">AS</span> <span class="sql-alias">cena_za_kus</span>,
+  (<span class="sql-alias">oi</span>.<span class="sql-col">quantity</span> <span class="sql-op">*</span> <span class="sql-alias">oi</span>.<span class="sql-col">unit_price</span>) <span class="sql-keyword">AS</span> <span class="sql-alias">celkem_polozka</span>
+<span class="sql-keyword">FROM</span> <span class="sql-table">`order_item`</span> <span class="sql-alias">oi</span>
+<span class="sql-keyword">JOIN</span> <span class="sql-table">`product`</span> <span class="sql-alias">p</span> <span class="sql-keyword">ON</span> <span class="sql-alias">oi</span>.<span class="sql-col">product_id</span> <span class="sql-op">=</span> <span class="sql-alias">p</span>.<span class="sql-col">id</span>
+<span class="sql-keyword">WHERE</span> <span class="sql-alias">oi</span>.<span class="sql-col">order_id</span> <span class="sql-op">=</span> <span class="sql-num">1</span>;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: RECENZE A HODNOCENÍ (rating) -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Entitní rozbor • Zpětná vazba</div>
+            <h2 class="slide-title">Uživatelská hodnocení: rating</h2>
+            <p class="slide-subtitle">Doménová integrita hodnot, složené unikátní indexy a agregace</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">CHECK • UNIQUE • AVG</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                Tabulka <code>rating</code> a její omezení
+              </h4>
+              <table class="db-table">
+                <thead>
+                  <tr><th>Sloupec</th><th>Datový typ</th><th>Omezení / Poznámka</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><code>id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-pk">PK</span> AUTO_INCREMENT</td></tr>
+                  <tr><td><code>product_id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-fk">FK</span> CASCADE na produkt</td></tr>
+                  <tr><td><code>customer_id</code></td><td><span class="badge-type">INT</span></td><td><span class="badge-fk">FK</span> CASCADE na zákazníka</td></tr>
+                  <tr><td><code>score</code></td><td><span class="badge-type">TINYINT</span></td><td><span class="badge-rule">CHECK</span> (score BETWEEN 1 AND 5)</td></tr>
+                  <tr><td><code>comment</code></td><td><span class="badge-type">VARCHAR(255)</span></td><td>Slovní recenze (volitelná)</td></tr>
+                  <tr><td><code>created_at</code></td><td><span class="badge-type">DATETIME</span></td><td>DEFAULT CURRENT_TIMESTAMP</td></tr>
+                </tbody>
+              </table>
+
+              <div class="callout callout-info" style="margin-top: 1rem;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">Složený unikátní klíč: UNIQUE(customer_id, product_id)</div>
+                  Zabraňuje tomu, aby tentýž zákazník napsal více recenzí k jednomu produktu a manipuloval s hodnocením.
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="content-card">
+                <h4>Agregace hodnocení v praxi</h4>
+                <p>
+                  Pro výpočet průměru využíváme funkci <code>AVG()</code> s funkcí <code>ROUND()</code>. Pokud produkt nemá žádné recenze, <code>AVG()</code> vrátí <code>NULL</code>, což ošetřujeme pomocí <code>COALESCE()</code>.
+                </p>
+              </div>
+
+              <div class="code-wrapper" style="margin-top: 0.75rem;">
+                <div class="code-header">
+                  <span class="code-title">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    SQL • Výpočet průměrného hodnocení produktů
+                  </span>
+                  <button class="btn-copy">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="sql-comment">-- Agregace hodnocení přes AVG() a ošetření produktů bez recenzí</span>
+<span class="sql-keyword">SELECT</span> 
+  <span class="sql-alias">p</span>.<span class="sql-col">id</span>, <span class="sql-alias">p</span>.<span class="sql-col">name</span>,
+  <span class="sql-func">COALESCE</span>(<span class="sql-func">ROUND</span>(<span class="sql-func">AVG</span>(<span class="sql-alias">r</span>.<span class="sql-col">score</span>), <span class="sql-num">2</span>), <span class="sql-num">0.00</span>) <span class="sql-keyword">AS</span> <span class="sql-alias">prumer_znamka</span>,
+  <span class="sql-func">COUNT</span>(<span class="sql-alias">r</span>.<span class="sql-col">id</span>) <span class="sql-keyword">AS</span> <span class="sql-alias">pocet_recenzi</span>
+<span class="sql-keyword">FROM</span> <span class="sql-table">`product`</span> <span class="sql-alias">p</span>
+<span class="sql-keyword">LEFT JOIN</span> <span class="sql-table">`rating`</span> <span class="sql-alias">r</span> <span class="sql-keyword">ON</span> <span class="sql-alias">p</span>.<span class="sql-col">id</span> <span class="sql-op">=</span> <span class="sql-alias">r</span>.<span class="sql-col">product_id</span>
+<span class="sql-keyword">GROUP BY</span> <span class="sql-alias">p</span>.<span class="sql-col">id</span>, <span class="sql-alias">p</span>.<span class="sql-col">name</span>
+<span class="sql-keyword">ORDER BY</span> <span class="sql-alias">prumer_znamka</span> <span class="sql-keyword">DESC</span>;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: TRIGGERY A POHLEDY (VIEW) -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Pokročilé SQL objekty</div>
+            <h2 class="slide-title">Programovatelnost: Triggery &amp; Pohledy</h2>
+            <p class="slide-subtitle">Automatická synchronizace agregátů a abstraktní vrstva pro dotazování</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">TRIGGER • VIEW</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                6 Databázových triggerů v modelu
+              </h4>
+              <ul class="styled-list">
+                <li><code>trg_category_product_count_insert</code>: Zvýší <code>product_count</code> po přidání vazby v <code>product_category</code>.</li>
+                <li><code>trg_category_product_count_delete</code>: Sníží <code>product_count</code> po smazání vazby.</li>
+                <li><code>trg_category_product_count_update</code>: Převede počítadlo při změně kategorie produktu.</li>
+                <li><code>trg_order_item_after_insert/update/delete</code>: Automaticky sečte <code>SUM(quantity * unit_price)</code> a zapíše do <code>orders.total_price</code>.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                2 Připravené pohledy (VIEW)
+              </h4>
+              <ul class="styled-list">
+                <li><code>v_product_catalog</code>: Spojuje produkt, jeho kategorie přes <code>GROUP_CONCAT</code> a průměrné hodnocení s počtem recenzí.</li>
+                <li><code>v_order_summary</code>: Kompletní manažerský report objednávek se jménem zákazníka, telefonem, počtem položek a celkovou částkou.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-wrapper" style="margin-top: 1rem;">
+            <div class="code-header">
+              <span class="code-title">
+                <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                SQL • Trigger pro automatický přepočet ceny objednávky
+              </span>
+              <button class="btn-copy">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Kopírovat</span>
+              </button>
+            </div>
+            <pre class="code-block"><code><span class="sql-keyword">CREATE TRIGGER</span> <span class="sql-func">`trg_order_item_after_insert`</span>
+<span class="sql-keyword">AFTER INSERT ON</span> <span class="sql-table">`order_item`</span>
+<span class="sql-keyword">FOR EACH ROW</span>
+<span class="sql-keyword">BEGIN</span>
+  <span class="sql-keyword">UPDATE</span> <span class="sql-table">`orders`</span>
+  <span class="sql-keyword">SET</span> <span class="sql-col">`total_price`</span> <span class="sql-op">=</span> (
+    <span class="sql-keyword">SELECT</span> <span class="sql-func">COALESCE</span>(<span class="sql-func">SUM</span>(<span class="sql-col">`quantity`</span> <span class="sql-op">*</span> <span class="sql-col">`unit_price`</span>), <span class="sql-num">0</span>)
+    <span class="sql-keyword">FROM</span> <span class="sql-table">`order_item`</span> <span class="sql-keyword">WHERE</span> <span class="sql-col">`order_id`</span> <span class="sql-op">=</span> <span class="sql-keyword">NEW</span>.<span class="sql-col">`order_id`</span>
+  )
+  <span class="sql-keyword">WHERE</span> <span class="sql-col">`id`</span> <span class="sql-op">=</span> <span class="sql-keyword">NEW</span>.<span class="sql-col">`order_id`</span>;
+<span class="sql-keyword">END</span>;</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: DBML DEFINICE A VIZUALIZACE -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Datové modelování &amp; Nástroje</div>
+            <h2 class="slide-title">DBML Model &amp; dbdiagram.io</h2>
+            <p class="slide-subtitle">Deklarativní zápis schématu pro moderní dokumentační nástroje</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-tech">DBML • dbdiagram.io</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div>
+              <div class="content-card">
+                <h4>Co je formát DBML?</h4>
+                <p>
+                  <strong>Database Markup Language (DBML)</strong> je čitelný formát pro definici relačních struktur. Podporuje přímé generování diagramů na <a href="https://dbdiagram.io" target="_blank" rel="noopener" style="color: var(--accent);">dbdiagram.io</a> a tvorbu dokumentačních webů na <a href="https://dbdocs.io" target="_blank" rel="noopener" style="color: var(--accent);">dbdocs.io</a>.
+                </p>
+                <div class="callout callout-info" style="margin-top: 1rem;">
+                  <div class="callout-icon">
+                    <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  </div>
+                  <div class="callout-content">
+                    <div class="callout-title">Online Interaktivní Diagram</div>
+                    Diagram je dostupný online na:<br>
+                    <a href="https://dbdiagram.io/d/edu_eshop-6aaa9e57af7c3b0bd1f594b2" target="_blank" rel="noopener" style="color: var(--accent); font-family: var(--font-mono); font-size: 0.82rem; word-break: break-all;">
+                      dbdiagram.io/d/edu_eshop-6aaa9e57af7c3b0bd1f594b2
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="code-wrapper">
+                <div class="code-header">
+                  <span class="code-title">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    DBML • Ukázka schématu edu_eshop.dbml
+                  </span>
+                  <button class="btn-copy">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block"><code><span class="dbml-keyword">Table</span> <span class="dbml-table">customer</span> {
+  <span class="dbml-field">id</span> <span class="dbml-type">int</span> [<span class="dbml-prop">pk</span>, <span class="dbml-prop">increment</span>]
+  <span class="dbml-field">email</span> <span class="dbml-type">varchar(100)</span> [<span class="dbml-prop">unique</span>, <span class="dbml-prop">not null</span>]
+  <span class="dbml-field">password_hash</span> <span class="dbml-type">varchar(255)</span> [<span class="dbml-prop">not null</span>]
+  <span class="dbml-field">created_at</span> <span class="dbml-type">datetime</span> [<span class="dbml-prop">default</span>: `<span class="dbml-string">now()</span>`]
+  <span class="dbml-field">active</span> <span class="dbml-type">boolean</span> [<span class="dbml-prop">default</span>: <span class="dbml-prop">true</span>]
+}
+
+<span class="dbml-keyword">Table</span> <span class="dbml-table">customer_profile</span> {
+  <span class="dbml-field">customer_id</span> <span class="dbml-type">int</span> [<span class="dbml-prop">pk</span>, <span class="dbml-prop">ref</span>: - <span class="dbml-table">customer</span>.<span class="dbml-field">id</span>] <span class="dbml-comment">// Vztah 1:1</span>
+  <span class="dbml-field">first_name</span> <span class="dbml-type">varchar(50)</span> [<span class="dbml-prop">not null</span>]
+  <span class="dbml-field">last_name</span> <span class="dbml-type">varchar(50)</span> [<span class="dbml-prop">not null</span>]
+  <span class="dbml-field">phone</span> <span class="dbml-type">varchar(20)</span>
+  <span class="dbml-field">birth_date</span> <span class="dbml-type">date</span>
+}
+
+<span class="dbml-keyword">Table</span> <span class="dbml-table">category</span> {
+  <span class="dbml-field">id</span> <span class="dbml-type">smallint</span> [<span class="dbml-prop">pk</span>, <span class="dbml-prop">increment</span>]
+  <span class="dbml-field">parent_id</span> <span class="dbml-type">smallint</span> [<span class="dbml-prop">ref</span>: >? <span class="dbml-table">category</span>.<span class="dbml-field">id</span>] <span class="dbml-comment">// Sebereference</span>
+  <span class="dbml-field">name</span> <span class="dbml-type">varchar(100)</span> [<span class="dbml-prop">not null</span>]
+  <span class="dbml-field">product_count</span> <span class="dbml-type">mediumint</span> [<span class="dbml-prop">default</span>: <span class="sql-num">0</span>]
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: DOWNLOAD SEKCE A POSTUP SPUŠTĚNÍ -->
+      <section class="slide" data-slide="9">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Praktické nasazení • Ke stažení</div>
+            <h2 class="slide-title">Spusťte si edu_eshop lokálně</h2>
+            <p class="slide-subtitle">Stáhněte si DDL strukturu, testovací data nebo kompletní instalační balíček</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Instalace do MySQL</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="download-grid">
+            <!-- Balíček 1: DDL Struktura -->
+            <div class="download-card">
+              <div>
+                <div class="download-card-title">
+                  <svg class="icon" style="color: var(--accent);" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                  edu_eshop_structure.sql
+                </div>
+                <p class="download-card-desc">
+                  Čistá definice schématu: 8 tabulek, cizí klíče, 6 triggerů a 2 pohledy. Bez testovacích dat.
+                </p>
+              </div>
+              <div>
+                <div class="download-card-meta">
+                  <span>DDL Schéma</span>
+                  <span>~8 KB</span>
+                </div>
+                <a href="edu_eshop_structure.sql" download="edu_eshop_structure.sql" class="btn-download">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  Stáhnout strukturu (DDL)
+                </a>
+              </div>
+            </div>
+
+            <!-- Balíček 2: Testovací data -->
+            <div class="download-card">
+              <div>
+                <div class="download-card-title">
+                  <svg class="icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  edu_eshop_data.sql
+                </div>
+                <p class="download-card-desc">
+                  Vzorová seed data: zákazníci, kategorie, produkty s JSON, objednávky ve všech 4 stavech i recenze.
+                </p>
+              </div>
+              <div>
+                <div class="download-card-meta">
+                  <span>DML Demo data</span>
+                  <span>~6 KB</span>
+                </div>
+                <a href="edu_eshop_data.sql" download="edu_eshop_data.sql" class="btn-download">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  Stáhnout demo data (DML)
+                </a>
+              </div>
+            </div>
+
+            <!-- Balíček 3: Kompletní balíček -->
+            <div class="download-card">
+              <div>
+                <div class="download-card-title">
+                  <svg class="icon" style="color: var(--accent-indigo);" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                  edu_eshop.sql (Komplet)
+                </div>
+                <p class="download-card-desc">
+                  Vše v jednom: vytvoření databáze, struktura tabulek, cizí klíče, triggery, pohledy a seed data.
+                </p>
+              </div>
+              <div>
+                <div class="download-card-meta">
+                  <span>DDL + DML balíček</span>
+                  <span>~15 KB</span>
+                </div>
+                <a href="edu_eshop.sql" download="edu_eshop.sql" class="btn-download">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  Stáhnout komplet (All-in-One)
+                </a>
+              </div>
+            </div>
+
+            <!-- Balíček 4: DBML Model -->
+            <div class="download-card">
+              <div>
+                <div class="download-card-title">
+                  <svg class="icon" style="color: var(--accent-amber);" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                  edu_eshop.dbml
+                </div>
+                <p class="download-card-desc">
+                  Definice pro import do dbdiagram.io a dbdocs.io pro vizualizaci vztahů a export do SVG/PDF.
+                </p>
+              </div>
+              <div>
+                <div class="download-card-meta">
+                  <span>DBML Model</span>
+                  <span>~3 KB</span>
+                </div>
+                <a href="edu_eshop.dbml" download="edu_eshop.dbml" class="btn-download btn-secondary-dl">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  Stáhnout DBML schéma
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="code-wrapper" style="margin-top: 1rem;">
+            <div class="code-header">
+              <span class="code-title">
+                <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                BASH / CLI • Rychlý import databáze do MySQL
+              </span>
+              <button class="btn-copy">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Kopírovat</span>
+              </button>
+            </div>
+            <pre class="code-block"><code><span class="bash-comment"># Varianta A: Import rozdělených souborů (nejprve DDL struktura, poté data)</span>
+<span class="bash-cmd">mysql</span> <span class="bash-flag">-u</span> <span class="bash-arg">root</span> <span class="bash-flag">-p</span> &lt; <span class="bash-file">edu_eshop_structure.sql</span>
+<span class="bash-cmd">mysql</span> <span class="bash-flag">-u</span> <span class="bash-arg">root</span> <span class="bash-flag">-p</span> &lt; <span class="bash-file">edu_eshop_data.sql</span>
+
+<span class="bash-comment"># Varianta B: Jednorázový kompletní import v jednom kroku</span>
+<span class="bash-cmd">mysql</span> <span class="bash-flag">-u</span> <span class="bash-arg">root</span> <span class="bash-flag">-p</span> &lt; <span class="bash-file">edu_eshop.sql</span></code></pre>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Controls Bar -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <!-- PŘECHOD MEZI LEKCEMI A MODUL -->
+      <a href="#" class="control-btn disabled" id="prevLessonBtn" aria-disabled="true" tabindex="-1" title="Předchozí lekce (žádná předchozí není)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+      </a>
+      <a href="../index.html" class="control-btn" id="moduleBtn" title="Přehled předmětu DAT">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </a>
+      <a href="../DAT20/01_normalizace_a_normalni_formy.html" class="control-btn" id="nextLessonBtn" title="Přejít na Modul DAT20 (Normalizace a SQL)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <!-- POSUN PO SNÍMCÍCH -->
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 09</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <!-- NÁSTROJE -->
+      <button class="control-btn" id="tocToggleBtn" title="Obsah dokumentace (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay" aria-hidden="true">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah prezentace</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn" title="Zavřít obsah">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Slovník pojmů</span>
+            <span class="key-badge">G</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý / světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Nápověda (tento dialog)</span>
+            <span class="key-badge">?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glossary Modal -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Slovník pojmů – Referenční databáze
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="glossary-item">
+            <div class="glossary-term">Kardinalita 1:1 (One-to-One)</div>
+            <div class="glossary-def">Vazba, kde jednomu záznamu odpovídá maximálně jeden záznam v druhé tabulce. V edu_eshop realizována mezi <code>customer</code> a <code>customer_profile</code> přes sdílený primární klíč.</div>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">Sebereference (Self-referencing relation)</div>
+            <div class="glossary-def">Vazba tabulky na sebe samu. V tabulce <code>category</code> sloupec <code>parent_id</code> odkazuje na <code>id</code> nadřazené kategorie, což umožňuje tvořit stromovou hierarchii libovolné hloubky.</div>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">Vazba M:N (Many-to-Many)</div>
+            <div class="glossary-def">Vztah, kdy jedna entita odpovídá mnoha druhým a naopak. V relační databázi se dekomponuje pomocí asociační tabulky (<code>product_category</code>).</div>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">Řízená denormalizace</div>
+            <div class="glossary-def">Záměrné porušení normální formy pro vyšší výkon nebo integritu historie. V <code>order_item.unit_price</code> chrání historickou cenu; v <code>category.product_count</code> udržuje rychlý čítač přes triggery.</div>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">Trigger (Databázová spoušť)</div>
+            <div class="glossary-def">Uložená procedura automaticky vyvolaná operací INSERT, UPDATE nebo DELETE na tabulce. Zajišťuje integritu agregátů bez závislosti na aplikačním kódu.</div>
+          </div>
+          <div class="glossary-item">
+            <div class="glossary-term">Pohled (VIEW)</div>
+            <div class="glossary-def">Virtuální tabulka definovaná uloženým SQL dotazem. Zjednodušuje složité JOIN dotazy a sjednocuje logiku pro klientské aplikace.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

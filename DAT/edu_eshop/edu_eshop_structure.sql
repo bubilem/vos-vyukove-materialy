@@ -1,9 +1,10 @@
 -- ============================================================================
--- Výuková databáze: edu_eshop (KOMPLETNÍ INSTALAČNÍ BALÍČEK - DDL + SEED DATA)
+-- Výuková databáze: edu_eshop (STRUKTURA A DDL DEFINICE)
 -- Předmět: Databázové systémy (DAT10, DAT20, DAT30) - VOŠ a SPŠ
--- Účel: Komplexní demonstrace DDL, DML, DQL, integritních omezení,
---       vazeb 1:1, 1:N, M:N, sebereference, triggerů, pohledů a JSON typu.
+-- Účel: Definice databázového schématu, tabulek, integritních omezení,
+--       vazeb 1:1, 1:N, M:N, sebereference, triggerů a pohledů (VIEW).
 -- Kompatibilita: MySQL 8.0+ / MariaDB 10.5+
+-- Kódování: UTF-8 (utf8mb4_czech_ci)
 -- ============================================================================
 
 DROP DATABASE IF EXISTS `edu_eshop`;
@@ -266,86 +267,3 @@ JOIN `customer` c ON o.customer_id = c.id
 LEFT JOIN `customer_profile` cp ON c.id = cp.customer_id
 LEFT JOIN `order_item` oi ON o.id = oi.order_id
 GROUP BY o.id, o.created_at, o.status, c.id, c.email, cp.first_name, cp.last_name, cp.phone, o.total_price;
-
--- ============================================================================
--- 5. TESTOVACÍ DATA (SEED DATA)
--- ============================================================================
-
--- Zákazníci (hesla jsou ukázkové hashe)
-INSERT INTO `customer` (`id`, `email`, `password_hash`, `created_at`, `active`) VALUES
-(1, 'jan.novak@email.cz', '$2y$10$abcdefghijklmnopqrstuv1234567890abcdefghijklmnopq', '2025-01-10 10:15:00', true),
-(2, 'petra.svobodova@seznam.cz', '$2y$10$abcdefghijklmnopqrstuv1234567890abcdefghijklmnopr', '2025-01-12 14:22:00', true),
-(3, 'tomas.dvorak@gmail.com', '$2y$10$abcdefghijklmnopqrstuv1234567890abcdefghijklmnops', '2025-02-01 09:00:00', true),
-(4, 'lucie.cerna@post.cz', '$2y$10$abcdefghijklmnopqrstuv1234567890abcdefghijklmnopt', '2025-02-15 18:45:00', false),
-(5, 'martin.kriz@centrum.cz', '$2y$10$abcdefghijklmnopqrstuv1234567890abcdefghijklmnopu', '2025-02-20 11:10:00', true);
-
--- Profily zákazníků (1:1 k účtům - zákazník 4 profil nemá)
-INSERT INTO `customer_profile` (`customer_id`, `first_name`, `last_name`, `phone`, `birth_date`) VALUES
-(1, 'Jan', 'Novák', '+420 777 123 456', '1988-04-12'),
-(2, 'Petra', 'Svobodová', '+420 608 987 654', '1995-11-28'),
-(3, 'Tomáš', 'Dvořák', '+420 721 333 444', '2001-07-03'),
-(5, 'Martin', 'Kříž', '+420 732 111 222', '1992-09-15');
-
--- Hierarchie kategorií (sebereference - kategorie 5 je bez produktů)
-INSERT INTO `category` (`id`, `parent_id`, `name`, `description`, `product_count`) VALUES
-(1, NULL, 'Elektronika', 'Veškerá spotřební a výpočetní elektronika', 0),
-(2, 1, 'Mobilní telefony', 'Chytré i tlačítkové telefony', 0),
-(3, 1, 'Počítače a notebooky', 'Stolní PC, notebooky a příslušenství', 0),
-(4, 3, 'Příslušenství', 'Klávesnice, myši, kabely a adaptéry', 0),
-(5, NULL, 'Domácnost a zahrada', 'Vybavení pro dům i zahradu', 0);
-
--- Produkty (včetně JSON atributů - produkt 6 je vyřazený)
-INSERT INTO `product` (`id`, `name`, `price`, `stock_quantity`, `attributes`, `description`, `created_at`, `active`) VALUES
-(1, 'Smartphone Galaxy X', 14999.00, 25, '{"color": "Black", "ram_gb": 8, "storage_gb": 256, "5g": true}', 'Výkonný smartphone s OLED displejem.', '2025-01-01 12:00:00', true),
-(2, 'Laptop Pro 15', 28990.00, 10, '{"color": "Silver", "cpu": "Intel i7", "ram_gb": 16, "ssd_gb": 512}', 'Profesionální notebook pro práci i multimédia.', '2025-01-05 08:30:00', true),
-(3, 'Bezdrátová optická myš', 499.00, 150, '{"color": "Black", "connection": "Wireless 2.4GHz", "dpi": 1600}', 'Ergonomická bezdrátová myš s tichým klikáním.', '2025-01-10 16:00:00', true),
-(4, 'Mechanická herní klávesnice', 1890.00, 40, '{"color": "RGB", "switches": "Cherry MX Red", "layout": "CZ"}', 'Mechanická herní klávesnice s podsvícením.', '2025-01-15 11:20:00', true),
-(5, 'Ochranné pouzdro na telefon', 299.00, 80, '{"color": "Transparent", "material": "Silicone"}', 'Silikonové nárazuvzdorné pouzdro.', '2025-01-20 14:00:00', true),
-(6, 'Starý model tiskárny', 1200.00, 0, '{"type": "Inkjet"}', 'Již neprodávaný model tiskárny.', '2024-05-10 10:00:00', false),
-(7, 'USB-C nabíjecí kabel 2m', 199.00, 200, '{"color": "White", "length_m": 2, "fast_charge": true}', 'Odolný opletený kabel s podporou rychlonabíjení.', '2025-01-22 09:15:00', true);
-
--- Zařazení produktů do kategorií (M:N)
--- Vložení automaticky aktivuje trigger trg_category_product_count_insert!
-INSERT INTO `product_category` (`product_id`, `category_id`) VALUES
-(1, 1), -- Mobil je v Elektronice
-(1, 2), -- Mobil je v Mobilních telefonech
-(2, 1), -- Laptop je v Elektronice
-(2, 3), -- Laptop je v Počítačích a noteboocích
-(3, 1), -- Myš je v Elektronice
-(3, 4), -- Myš je v Příslušenství
-(4, 1), -- Klávesnice je v Elektronice
-(4, 4), -- Klávesnice je v Příslušenství
-(5, 2), -- Pouzdro je v Mobilních telefonech
-(7, 1), -- Kabel je v Elektronice
-(7, 4); -- Kabel je v Příslušenství
-
--- Hodnocení produktů
-INSERT INTO `rating` (`product_id`, `customer_id`, `score`, `comment`, `created_at`) VALUES
-(1, 1, 5, 'Skvělý telefon, rychlé reakce i fotoaparát.', '2025-01-15 14:00:00'),
-(1, 2, 4, 'Baterie by mohla vydržet o něco déle, jinak super.', '2025-01-20 19:30:00'),
-(3, 1, 4, 'Příjemná do ruky, dobrý dosah.', '2025-01-25 10:10:00'),
-(4, 3, 5, 'Nejlepší klávesnice, co jsem kdy měl!', '2025-02-10 11:00:00'),
-(7, 2, 5, 'Rychlé nabíjení funguje bez problémů, kvalitní oplet.', '2025-02-18 15:40:00');
-
--- Objednávky (všechny 4 stavy ENUM)
-INSERT INTO `orders` (`id`, `customer_id`, `status`, `total_price`, `created_at`) VALUES
-(1, 1, 'shipped', 0.00, '2025-01-15 13:30:00'),
-(2, 2, 'paid', 0.00, '2025-01-22 17:15:00'),
-(3, 3, 'new', 0.00, '2025-02-12 08:45:00'),
-(4, 1, 'cancelled', 0.00, '2025-02-14 16:00:00');
-
--- Položky objednávky
--- Vložení automaticky aktivuje trigger trg_order_item_after_insert a přepočítá total_price v orders!
-INSERT INTO `order_item` (`order_id`, `product_id`, `quantity`, `unit_price`) VALUES
-(1, 1, 1, 14999.00),
-(1, 3, 1, 499.00),
-(2, 2, 1, 28990.00),
-(2, 5, 2, 299.00),
-(2, 7, 1, 199.00),
-(3, 4, 1, 1890.00),
-(3, 7, 2, 199.00),
-(4, 2, 1, 28990.00);
-
--- ============================================================================
--- KONEC SKRIPTU
--- ============================================================================
