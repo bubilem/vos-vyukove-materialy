@@ -8,17 +8,26 @@
 
 USE `edu_eshop`;
 
--- Dočasné vypnutí kontroly cizích klíčů pro bezpečné čištění a seedování
+-- Bezpečné promazání existujících dat před seedováním
+-- Poznámka k InnoDB: TRUNCATE TABLE nelze použít na tabulky referencované cizím klíčem
+-- (způsobuje chybu MySQL #1701 i při FOREIGN_KEY_CHECKS = 0). Proto se používá DELETE FROM.
 SET FOREIGN_KEY_CHECKS = 0;
 
-TRUNCATE TABLE `order_item`;
-TRUNCATE TABLE `orders`;
-TRUNCATE TABLE `rating`;
-TRUNCATE TABLE `product_category`;
-TRUNCATE TABLE `product`;
-TRUNCATE TABLE `category`;
-TRUNCATE TABLE `customer_profile`;
-TRUNCATE TABLE `customer`;
+DELETE FROM `order_item`;
+DELETE FROM `orders`;
+DELETE FROM `rating`;
+DELETE FROM `product_category`;
+DELETE FROM `product`;
+DELETE FROM `category`;
+DELETE FROM `customer_profile`;
+DELETE FROM `customer`;
+
+-- Reset čítačů AUTO_INCREMENT pro čistý start identifikačních čísel
+ALTER TABLE `customer` AUTO_INCREMENT = 1;
+ALTER TABLE `category` AUTO_INCREMENT = 1;
+ALTER TABLE `product` AUTO_INCREMENT = 1;
+ALTER TABLE `orders` AUTO_INCREMENT = 1;
+ALTER TABLE `rating` AUTO_INCREMENT = 1;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
