@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="header-right">
-        <span class="tag tag-exam">Zkouškový okruh 12: Vektorová tvorba</span>
+        <span class="tag tag-exam">Zkouškový okruh 6 &bull; 12: Vektorová grafika &amp; 2D editory</span>
         <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
           <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
@@ -50,198 +50,895 @@
         <div class="hero-badge">Modul MUL20 &bull; 6. přednáška (45 min)</div>
         <h1 class="hero-title">Vektorové nástroje a grafická tvorba</h1>
         <p class="hero-desc">
-          Konstrukce vizuální identity a vektorových ilustrací: nástroje Adobe Illustrator a Inkscape, technika kreslení perem (Pen Tool), booleovské operace (Pathfinder), vektorizace předloh a příprava tiskových podkladů.
+          Od editorů Adobe Illustrator a Inkscape přes matematiku Bézierových křivek a geometrických primitiv až po booleovské operace (Pathfinder), úpravy a posuny cest, layoutování, ořezové masky, typografii a export do SVG a tiskového PDF/X.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
             <span class="hero-meta-label">Software</span>
-            <span class="hero-meta-val">Illustrator &bull; Inkscape</span>
+            <span class="hero-meta-val">Illustrator &bull; Inkscape &bull; Figma</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Konstrukce</span>
-            <span class="hero-meta-val">Pen Tool &bull; Pathfinder</span>
+            <span class="hero-meta-val">Bézier &bull; Live Shapes &bull; Pathfinder</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Standard &amp; Formát</span>
+            <span class="hero-meta-val">W3C SVG &bull; AI (PDF) &bull; PDF/X</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Absolutorium</span>
-            <span class="hero-meta-val">Profilový okruh č. 12</span>
+            <span class="hero-meta-val">Profilové okruhy č. 6 a 12</span>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 2: SOFTWARE A PRACOVNÍ PLOCHA -->
+      <!-- SLIDE 2: ADOBE ILLUSTRATOR -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Vektorová studia</div>
-            <h2 class="slide-title">Prostředí vektorových editorů</h2>
-            <p class="slide-subtitle">Adobe Illustrator vs. Inkscape a princip vícenásobných pláten (Artboards)</p>
+            <div class="slide-category">Vektorová studia &bull; Průmyslový standard</div>
+            <h2 class="slide-title">Adobe Illustrator: Prostředí, formát AI a DTP ekosystém</h2>
+            <p class="slide-subtitle">Vícenásobná plátna (Artboards), tiskové standardy PANTONE, přechodové sítě a klíčové zkratky</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Editor prostředí</span>
+            <span class="tag tag-exam">Okruh absolutoria č. 12</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Adobe Illustrator (Oborový standard)</h4>
-              <ul class="styled-list">
-                <li>Nativní formát AI založený na specifikaci PDF.</li>
-                <li>Podpora více pláten (Artboards) v jednom dokumentu &ndash; ideální pro návrh celé firemní identity (vizitka, hlavičkový papír, obálka).</li>
-                <li>Pokročilé přechodové sítě (Gradient Mesh) pro fotorealistické vektorové stínování.</li>
-                <li>Plná integrace s tiskovými standardy PANTONE a PostScript ripovacími stroji.</li>
-              </ul>
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                Zvolit pracovní režim Illustratoru:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setIllustratorScenario('artboards', this)">
+                1. Branding &amp; Plátna (Artboards)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setIllustratorScenario('print', this)">
+                2. DTP &bull; CMYK, PANTONE a Spadávka
+              </button>
+              <button type="button" class="btn-scenario" onclick="setIllustratorScenario('mesh', this)">
+                3. Přechodová síť (Gradient Mesh)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setIllustratorScenario('export', this)">
+                4. Asset Export pro obrazovky (@1x, @2x, SVG)
+              </button>
             </div>
-            <div class="content-card">
-              <h4>Inkscape (Open-Source alternativa)</h4>
-              <ul class="styled-list">
-                <li>Využívá přímo standard <strong>W3C SVG jako svůj nativní formát</strong> souboru.</li>
-                <li>Bezplatný, multiplatformní nástroj se silným komunitním vývojem.</li>
-                <li>Kompletní sada nástrojů pro editaci uzlů, kaligrafii a booleovské operace.</li>
-                <li>Vynikající pro webové vývojáře a generování čistého SVG kódu bez zbytečného balastu.</li>
-              </ul>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem / parametry -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="aiCodeTitle">illustrator &bull; vícenásobná plátna artboards</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('aiCode', 'workflow', this)">Workflow &amp; Formát</button>
+                      <button type="button" class="code-tab" onclick="switchTab('aiCode', 'engine', this)">Tiskový Engine (PDF/X)</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="aiCodeBlock"><span class="html-comment">/* Adobe Illustrator (.ai) - Nativní formát a Artboards */</span>
+<span class="css-prop">Nativní formát</span>:    <span class="css-val">.AI (založen na PDF s privátním blokem dat Illustratoru)</span>;
+<span class="css-prop">Architektura</span>:      <span class="css-val">Podpora až 1 000 nezávislých pláten (Artboards) v 1 souboru</span>;
+<span class="css-prop">Barevné modely</span>:    <span class="css-val">CMYK (tisk), RGB (digitál), Přímé barvy (PANTONE Matching System)</span>;
+<span class="css-prop">DTP integrace</span>:     <span class="css-val">Nativní provázání s Adobe InDesign a Photoshop přes Creative Cloud</span>;</code></pre>
+              </div>
+
+              <!-- Živé plátno Illustratoru -->
+              <div class="showcase-preview-box" id="aiPreviewStage" style="min-height: 180px;">
+                <!-- Vložený dynamický obsah -->
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="aiFeedback">
+              <span>Technické shrnutí:</span>
+              <strong id="aiFeedbackText">Vícenásobná plátna (Artboards) umožňují navrhovat celou firemní identitu (vizitka, dopisní papír, billboard) v jediném projektu se sdílenými barvami.</strong>
+            </div>
+          </div>
+
+          <!-- Panely specifikace a klávesových zkratek pod demem -->
+          <div class="software-meta-grid">
+            <!-- Panel 1: Základní fakta a specifikace -->
+            <div class="software-info-panel">
+              <div class="software-panel-header">
+                <div class="header-left-title">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  <span>Základní profil: Adobe Illustrator</span>
+                </div>
+                <span class="tag" style="font-size: 0.65rem; padding: 0.1rem 0.4rem;">DTP Standard</span>
+              </div>
+              <div class="software-specs-table">
+                <span class="spec-lbl">Výrobce:</span>
+                <span class="spec-val">Adobe Inc. (původně John Warnock &amp; Chuck Geschke)</span>
+                <span class="spec-lbl">První verze:</span>
+                <span class="spec-val">Leden 1987 (původně výhradně pro Apple Macintosh)</span>
+                <span class="spec-lbl">Aktuální verze:</span>
+                <span class="spec-val">Illustrator 2024 (v28.x / v29 &bull; součást Creative Cloud)</span>
+                <span class="spec-lbl">Licence &amp; Cena:</span>
+                <span class="spec-val">Komerční předplatné (~26 € / měsíc samostatně)</span>
+                <span class="spec-lbl">Nativní formát:</span>
+                <span class="spec-val"><code>.AI</code> (Adobe Illustrator Artwork &bull; PDF kontejner)</span>
+                <span class="spec-lbl">Platformy:</span>
+                <span class="spec-val">MS Windows 10/11 (64-bit), macOS (vč. Apple Silicon ARM), iPadOS</span>
+              </div>
+            </div>
+
+            <!-- Panel 2: Klávesové zkratky Illustratoru -->
+            <div class="software-shortcuts-panel">
+              <div class="software-panel-header">
+                <div class="header-left-title">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+                  <span>Klíčové zkratky v Illustratoru</span>
+                </div>
+                <span class="tag" style="font-size: 0.65rem; padding: 0.1rem 0.4rem;">AI Cheat Sheet</span>
+              </div>
+              <div class="software-shortcuts-chips">
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Výběr objektu</span>
+                  <span class="key-badge">V</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Přímý výběr uzlů</span>
+                  <span class="key-badge">A</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Kreslení perem</span>
+                  <span class="key-badge">P</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Tvorba tvarů (Builder)</span>
+                  <span class="key-badge">Shift + M</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Ořezová maska</span>
+                  <span class="key-badge">Ctrl + 7</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Složená cesta</span>
+                  <span class="key-badge">Ctrl + 8</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Převod na křivky</span>
+                  <span class="key-badge">Shift + Ctrl + O</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Úprava pláten</span>
+                  <span class="key-badge">Shift + O</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: PEN TOOL A MANIPULACE S KŘIVKAMI -->
+      <!-- SLIDE 3: INKSCAPE -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Základní technika</div>
-            <h2 class="slide-title">Kreslení perem (Pen Tool) v praxi</h2>
-            <p class="slide-subtitle">Jak vytvořit dokonale čisté křivky s minimem kotevních bodů</p>
+            <div class="slide-category">Open-Source &bull; W3C Standardy</div>
+            <h2 class="slide-title">Inkscape: Nativní formát SVG, XML editor a otevřený ekosystém</h2>
+            <p class="slide-subtitle">Proč je Inkscape volbou webových vývojářů, Linuxové komunity a digitálních dílen (FabLab/Makerspace)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 12</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Zvolit klíčovou funkci Inkscape:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setInkscapeScenario('svg-native', this)">
+                1. Nativní W3C SVG model
+              </button>
+              <button type="button" class="btn-scenario" onclick="setInkscapeScenario('xml-editor', this)">
+                2. Vestavěný XML Editor (Ctrl+Shift+X)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setInkscapeScenario('lpe', this)">
+                3. Živé efekty cest (Live Path Effects &bull; LPE)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setInkscapeScenario('trace', this)">
+                4. Trasování rastrů (Trace Bitmap &bull; Potrace)
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem / parametry -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="inkCodeTitle">inkscape &bull; nativní w3c svg model</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('inkCode', 'xml', this)">XML / DOM Model</button>
+                      <button type="button" class="code-tab" onclick="switchTab('inkCode', 'cli', this)">CLI &amp; Dávkový Export</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="inkCodeBlock"><span class="html-comment">&lt;!-- Inkscape SVG: 100% kompatibilní W3C SVG s privátním namespace --&gt;</span>
+<span class="html-tag">&lt;svg</span> <span class="html-attr">xmlns</span>=<span class="html-val">"http://www.w3.org/2000/svg"</span>
+     <span class="html-attr">xmlns:inkscape</span>=<span class="html-val">"http://www.inkscape.org/namespaces/inkscape"</span>
+     <span class="html-attr">viewBox</span>=<span class="html-val">"0 0 200 140"</span><span class="html-tag">&gt;</span>
+  <span class="html-comment">&lt;!-- Vrstvy jsou reprezentovány skupinami &lt;g&gt; s inkscape atributem --&gt;</span>
+  <span class="html-tag">&lt;g</span> <span class="html-attr">inkscape:groupmode</span>=<span class="html-val">"layer"</span> <span class="html-attr">inkscape:label</span>=<span class="html-val">"Podklad"</span><span class="html-tag">&gt;</span>
+    <span class="html-tag">&lt;rect</span> <span class="html-attr">id</span>=<span class="html-val">"bg-box"</span> <span class="html-attr">width</span>=<span class="html-val">"200"</span> <span class="html-attr">height</span>=<span class="html-val">"140"</span> <span class="html-attr">fill</span>=<span class="html-val">"#0f172a"</span> <span class="html-tag">/&gt;</span>
+  <span class="html-tag">&lt;/g&gt;</span>
+<span class="html-tag">&lt;/svg&gt;</span></code></pre>
+              </div>
+
+              <!-- Živé plátno Inkscape -->
+              <div class="showcase-preview-box" id="inkPreviewStage" style="min-height: 180px;">
+                <!-- Vložený dynamický obsah -->
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="inkFeedback">
+              <span>Technické shrnutí:</span>
+              <strong id="inkFeedbackText">Inkscape nepoužívá žádný skrytý proprietární formát: přímo ukládá čistý W3C SVG kód, který můžete otevřít v prohlížeči, editoru VS Code i na řezacím laseru.</strong>
+            </div>
+          </div>
+
+          <!-- Panely specifikace a klávesových zkratek pod demem -->
+          <div class="software-meta-grid">
+            <!-- Panel 1: Základní fakta a specifikace -->
+            <div class="software-info-panel">
+              <div class="software-panel-header">
+                <div class="header-left-title">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  <span>Základní profil: Inkscape</span>
+                </div>
+                <span class="tag tag-exam" style="font-size: 0.65rem; padding: 0.1rem 0.4rem;">Open-Source</span>
+              </div>
+              <div class="software-specs-table">
+                <span class="spec-lbl">Vývojář:</span>
+                <span class="spec-val">Komunita Inkscape &bull; Software Freedom Conservancy (SFC)</span>
+                <span class="spec-lbl">První verze:</span>
+                <span class="spec-val">Listopad 2003 (vznikl jako fork projektu Sodipodi / Gill)</span>
+                <span class="spec-lbl">Aktuální verze:</span>
+                <span class="spec-val">Inkscape 1.3.x / 1.4 (GTK3 / C++ jádro)</span>
+                <span class="spec-lbl">Licence &amp; Cena:</span>
+                <span class="spec-val">100% Free &amp; Open-Source (GNU GPL v2+) &bull; 0 Kč (ZDARMA)</span>
+                <span class="spec-lbl">Nativní formát:</span>
+                <span class="spec-val"><code>.SVG</code> (čistý W3C Scalable Vector Graphics bez binárních obálek)</span>
+                <span class="spec-lbl">Platformy:</span>
+                <span class="spec-val">GNU/Linux (nativně), MS Windows (64-bit), macOS</span>
+              </div>
+            </div>
+
+            <!-- Panel 2: Klávesové zkratky Inkscape -->
+            <div class="software-shortcuts-panel">
+              <div class="software-panel-header">
+                <div class="header-left-title">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+                  <span>Klíčové zkratky v Inkscape</span>
+                </div>
+                <span class="tag" style="font-size: 0.65rem; padding: 0.1rem 0.4rem;">Ink Cheat Sheet</span>
+              </div>
+              <div class="software-shortcuts-chips">
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Výběr a transformace</span>
+                  <span class="key-badge">S / F1</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Úprava uzlů (Node)</span>
+                  <span class="key-badge">N / F2</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Bézierovo pero</span>
+                  <span class="key-badge">B</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Vestavěný XML Editor</span>
+                  <span class="key-badge">Ctrl + Shift + X</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Sjednocení (Union)</span>
+                  <span class="key-badge">Ctrl + +</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Rozdíl (Difference)</span>
+                  <span class="key-badge">Ctrl + -</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Převod na křivky</span>
+                  <span class="key-badge">Shift + Ctrl + C</span>
+                </div>
+                <div class="software-shortcut-chip">
+                  <span class="shortcut-name">Trasování rastru</span>
+                  <span class="key-badge">Shift + Alt + B</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: RASTR VS. VEKTOR & ANATOMIE VEKTOROVÉHO SOUBORU (SVG) -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní princip &bull; Škálovatelnost</div>
+            <h2 class="slide-title">Rastr vs. Vektor &amp; Anatomie souboru SVG</h2>
+            <p class="slide-subtitle">Proč se bitmapa při zvětšení rozpadá a jak funguje matematický popis v XML značkách</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 6</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                Zvolit úroveň přiblížení (Zoom):
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setZoomScenario('1x', this)">
+                1. Měřítko 100 % (Běžný náhled 1:1)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setZoomScenario('3x', this)">
+                2. Měřítko 300 % (Zvětšení detailu)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setZoomScenario('8x', this)">
+                3. Měřítko 800 % (Nástup pixelizace)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setZoomScenario('16x', this)">
+                4. Měřítko 1600 % (Extrémní rozpad vs. dokonalá křivka)
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem s taby SVG KÓD / SROVNÁNÍ -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="zoomCodeTitle">svg &bull; zdrojový kód vektoru</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('zoomCode', 'svg', this)">SVG Kód</button>
+                      <button type="button" class="code-tab" onclick="switchTab('zoomCode', 'info', this)">Srovnání</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="zoomCodeBlock"><span class="html-comment">&lt;!-- Nativní W3C SVG soubor: čistý čitelný textový XML formát --&gt;</span>
+<span class="html-tag">&lt;svg</span> <span class="html-attr">xmlns</span>=<span class="html-val">"http://www.w3.org/2000/svg"</span> <span class="html-attr">viewBox</span>=<span class="html-val">"0 0 100 100"</span><span class="html-tag">&gt;</span>
+  <span class="html-comment">&lt;!-- Kruhová podkladová plocha --&gt;</span>
+  <span class="html-tag">&lt;circle</span> <span class="html-attr">cx</span>=<span class="html-val">"50"</span> <span class="html-attr">cy</span>=<span class="html-val">"50"</span> <span class="html-attr">r</span>=<span class="html-val">"44"</span> <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>
+  <span class="html-comment">&lt;!-- Hvězda definovaná souřadnicemi vrcholů --&gt;</span>
+  <span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M50,15 L60,38 L85,38 L65,54 L72,78 L50,62 L28,78 L35,54 L15,38 L40,38 Z"</span>
+        <span class="html-attr">fill</span>=<span class="html-val">"#ffffff"</span> <span class="html-attr">stroke</span>=<span class="html-val">"#fbcfe8"</span> <span class="html-attr">stroke-width</span>=<span class="html-val">"2"</span> <span class="html-tag">/&gt;</span>
+<span class="html-tag">&lt;/svg&gt;</span></code></pre>
+              </div>
+
+              <!-- Živé srovnávací plátno -->
+              <div class="showcase-preview-box" id="zoomPreviewStage" style="min-height: 190px;">
+                <div class="zoom-compare-grid">
+                  <div class="zoom-compare-card">
+                    <div class="zoom-card-header">
+                      <span>Rastr (Bitmapa 32&times;32 px)</span>
+                      <strong id="rasterZoomLabel" style="color: var(--accent-amber);">100 % (1&times;)</strong>
+                    </div>
+                    <div class="zoom-viewport">
+                      <canvas id="rasterCanvas" width="96" height="96" style="width: 96px; height: 96px; image-rendering: pixelated;"></canvas>
+                    </div>
+                  </div>
+                  <div class="zoom-compare-card">
+                    <div class="zoom-card-header">
+                      <span>Vektor (SVG matematický popis)</span>
+                      <strong id="vectorZoomLabel" style="color: var(--accent);">100 % (1&times;)</strong>
+                    </div>
+                    <div class="zoom-viewport">
+                      <div id="vectorWrap" style="width: 96px; height: 96px; transition: transform 0.2s ease;">
+                        <svg viewBox="0 0 100 100" width="100%" height="100%">
+                          <circle cx="50" cy="50" r="44" fill="#ec4899"></circle>
+                          <path d="M50,15 L60,38 L85,38 L65,54 L72,78 L50,62 L28,78 L35,54 L15,38 L40,38 Z" fill="#ffffff" stroke="#fbcfe8" stroke-width="2"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="zoomFeedback">
+              <span>Technické shrnutí:</span>
+              <strong id="zoomFeedbackText">Měřítko 100 %: Oba formáty působí na displeji čistě. Skutečný rozdíl se projeví až při zvětšení nebo tisku.</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: GEOMETRICKÁ PRIMITIVA A ŽIVÉ TVARY (LIVE SHAPES) -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Konstrukce geometrie &bull; Parametry</div>
+            <h2 class="slide-title">Geometrická primitiva a vlastnosti tahu (Stroke)</h2>
+            <p class="slide-subtitle">Základní stavební kameny, dynamické zaoblení rohů (Live Corners) a zakončení křivek</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag">Primitiva &amp; Stroke</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Zvolit primitivum &amp; styl:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setPrimitiveScenario('rect-round', this)">
+                1. Obdélník &bull; Live Corners (rx/ry)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPrimitiveScenario('circle-grad', this)">
+                2. Elipsa &bull; Radiální přechod (Gradient)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPrimitiveScenario('star-poly', this)">
+                3. Polygon &bull; 6-úhelník a hvězda
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPrimitiveScenario('stroke-caps', this)">
+                4. Tah &bull; Linecap, Join &amp; Dasharray
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="primCodeTitle">svg &bull; geometrické primitivum</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('primCode', 'svg', this)">SVG Kód</button>
+                      <button type="button" class="code-tab" onclick="switchTab('primCode', 'css', this)">CSS Atributy</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="primCodeBlock"><span class="html-comment">&lt;!-- Obdélník s dynamicky zaoblenými rohy (Live Corners) --&gt;</span>
+<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"30"</span> <span class="html-attr">y</span>=<span class="html-val">"25"</span> <span class="html-attr">width</span>=<span class="html-val">"140"</span> <span class="html-attr">height</span>=<span class="html-val">"90"</span>
+      <span class="html-attr">rx</span>=<span class="html-val">"20"</span> <span class="html-attr">ry</span>=<span class="html-val">"20"</span>
+      <span class="html-attr">fill</span>=<span class="html-val">"rgba(236, 72, 153, 0.2)"</span>
+      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>
+      <span class="html-attr">stroke-width</span>=<span class="html-val">"3"</span> <span class="html-tag">/&gt;</span></code></pre>
+              </div>
+
+              <!-- Živé plátno tvarů -->
+              <div class="showcase-preview-box" id="primPreviewStage" style="min-height: 180px;">
+                <!-- Vložený SVG obsah -->
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="primFeedback">
+              <span>Geometrické pravidlo:</span>
+              <strong id="primFeedbackText">Atributy <code>rx</code> a <code>ry</code> umožňují neinvazivní zaoblení rohů obdélníku bez nutnosti rozbíjet tvar na Bézierovy křivky.</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: PEN TOOL A ANATOMIE BÉZIEROVÝCH KŘIVEK -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní technika &bull; Bézier</div>
+            <h2 class="slide-title">Kreslení perem (Pen Tool) a manipulace s křivkami</h2>
+            <p class="slide-subtitle">Kotevní body, řídicí táhla tečen a pravidla umisťování uzlů do extrémů křivky</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Zkoušková dovednost</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Pravidla profesionální práce s perem</h4>
-              <ul class="styled-list">
-                <li><strong>Zlaté pravidlo minima bodů:</strong> Čím méně kotevních bodů křivka má, tím je hladší, estetičtější a snadněji modifikovatelná.</li>
-                <li><strong>Pozice bodů:</strong> Kotevní body umisťujte výhradně do <strong>extrémů křivky</strong> (nejvyšší, nejnižší, nejvíce levý a pravý bod tvaru).</li>
-                <li><strong>Táhla:</strong> Táhla by měla směřovat rovnoběžně s osami $X$ nebo $Y$ (pomocí klávesy Shift).</li>
-              </ul>
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+                Zvolit typ uzlu &amp; křivky:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setBezierScenario('corner', this)">
+                1. Ostrý roh &bull; Corner Point (C&sup0; bez táhel)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setBezierScenario('smooth', this)">
+                2. Hladký uzel &bull; Smooth Point (C&sup1; společná tečna)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setBezierScenario('scurve', this)">
+                3. Kubická S-křivka &bull; Inflexní bod
+              </button>
+              <button type="button" class="btn-scenario" onclick="setBezierScenario('cusp', this)">
+                4. Zlomený uzel &bull; Klávesa Alt (Různé směry tečen)
+              </button>
             </div>
-            <div class="content-card">
-              <h4>Klávesové modifikátory</h4>
-              <ul class="styled-list">
-                <li><strong>Shift:</strong> Zamyká sklon táhel a přímek pod úhly $0^\circ, 45^\circ, 90^\circ$.</li>
-                <li><strong>Alt / Option:</strong> Zlomí symetrii hladkého uzlu a umožní vytvořit ostrý roh ($C^0$ přechod) bez přerušení kreslení cesty.</li>
-                <li><strong>Ctrl / Cmd:</strong> Dočasně přepne pero na nástroj Přímý výběr (Bílá šipka) pro okamžitou korekci předchozího bodu.</li>
-              </ul>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="bezierCodeTitle">svg &bull; příkaz cesty path</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('bezierCode', 'svg', this)">SVG Kód</button>
+                      <button type="button" class="code-tab" onclick="switchTab('bezierCode', 'math', this)">Uložení &amp; Matematika</button>
+                      <button type="button" class="code-tab" onclick="switchTab('bezierCode', 'guide', this)">Pravidla pera</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="bezierCodeBlock"><span class="html-comment">&lt;!-- Ostrý roh C0: úsečky spojené příkazem L (Line To) bez táhel --&gt;</span>
+<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,120 L 100,30 L 170,120"</span>
+      <span class="html-attr">fill</span>=<span class="html-val">"none"</span>
+      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>
+      <span class="html-attr">stroke-width</span>=<span class="html-val">"3"</span> <span class="html-tag">/&gt;</span></code></pre>
+              </div>
+
+              <!-- Živé interaktivní plátno křivky -->
+              <div class="showcase-preview-box" id="bezierPreviewStage" style="min-height: 180px;">
+                <!-- Vložený SVG obsah se zvýrazněnými kotevními body a táhly -->
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="bezierFeedback">
+              <span>Zlaté pravidlo pera:</span>
+              <strong id="bezierFeedbackText">Ostrý roh ($C^0$) vzniká kliknutím bez tažení myši. Táhla mají nulovou délku a křivka prudce láme směr.</strong>
+            </div>
+          </div>
+
+          <!-- Technické panely: Vektorové uložení a matematika Bézierovy křivky -->
+          <div class="software-meta-grid">
+            <!-- Panel 1: Datový model a uložení v souborech -->
+            <div class="software-info-panel">
+              <div class="software-panel-header">
+                <div class="header-left-title">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                  <span>Vektorové uložení: 4 řídicí body segmentu</span>
+                </div>
+                <span class="tag" style="font-size: 0.65rem; padding: 0.1rem 0.4rem;">8 souřadnic [X, Y]</span>
+              </div>
+              <div class="software-specs-table">
+                <span class="spec-lbl">Kotevní body:</span>
+                <span class="spec-val">Počátek <code>P₀ [x₀, y₀]</code> a cíl <code>P₃ [x₃, y₃]</code> (leží na křivce, on-curve)</span>
+                <span class="spec-lbl">Řídicí táhla:</span>
+                <span class="spec-val">Táhlo 1 <code>P₁ [x₁, y₁]</code> a táhlo 2 <code>P₂ [x₂, y₂]</code> (mimo křivku, off-curve tečny)</span>
+                <span class="spec-lbl">SVG formát:</span>
+                <span class="spec-val">Příkaz <code>C x₁,y₁ x₂,y₂ x₃,y₃</code> (kubická) nebo <code>Q x₁,y₁ x₂,y₂</code> (kvadratická)</span>
+                <span class="spec-lbl">PDF &amp; PostScript:</span>
+                <span class="spec-val">Operátor <code>x₁ y₁ x₂ y₂ x₃ y₃ curveto</code> (písmeno <code>c</code> v proudu PDF)</span>
+                <span class="spec-lbl">Digitální fonty:</span>
+                <span class="spec-val">TrueType: Kvadratické (1 táhlo) &bull; OpenType CFF: Kubické (2 táhla)</span>
+              </div>
+            </div>
+
+            <!-- Panel 2: Matematická rovnice & GPU Rasterizace -->
+            <div class="software-info-panel">
+              <div class="software-panel-header">
+                <div class="header-left-title">
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                  <span>Matematický předpis &amp; Rasterizace</span>
+                </div>
+                <span class="tag tag-exam" style="font-size: 0.65rem; padding: 0.1rem 0.4rem;">Parametr t &in; [0, 1]</span>
+              </div>
+              <div class="software-specs-table">
+                <span class="spec-lbl">Kubická rovnice:</span>
+                <span class="spec-val"><code>B(t) = (1-t)³P₀ + 3(1-t)²t P₁ + 3(1-t)t² P₂ + t³P₃</code></span>
+                <span class="spec-lbl">Kvadratická:</span>
+                <span class="spec-val"><code>B(t) = (1-t)²P₀ + 2(1-t)t P₁ + t²P₂</code> (pouze 3 body)</span>
+                <span class="spec-lbl">Vykreslení (GPU):</span>
+                <span class="spec-val">Renderer (Direct2D, Skia) dělí křivku <em>de Casteljauovým algoritmem</em></span>
+                <span class="spec-lbl">Paměťová náročnost:</span>
+                <span class="spec-val">Pouze <strong>32 bajtů</strong> na segment (4&times; double float [x, y]) bez ohledu na rozlišení</span>
+                <span class="spec-lbl">Spojitost uzlů:</span>
+                <span class="spec-val"><strong>C⁰</strong>: stejný bod &bull; <strong>G¹/C¹</strong>: stejný směr táhel &bull; <strong>C²</strong>: stejná křivost</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4: BOOLEOVSKÉ OPERACE A PATHFINDER -->
-      <section class="slide" data-slide="4">
+      <!-- SLIDE 7: ÚPRAVY CEST: OFFSET, STROKE TO OUTLINE A SPOJOVÁNÍ -->
+      <section class="slide" data-slide="7">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Konstruktivní geometrie</div>
-            <h2 class="slide-title">Booleovské operace a Pathfinder</h2>
-            <p class="slide-subtitle">Skládání složitých logotypů ze základních geometrických primitiv</p>
+            <div class="slide-category">Operace s cestami &bull; Transformace</div>
+            <h2 class="slide-title">Úpravy cest: Posun cesty, převod tahu na obrys a spojování</h2>
+            <p class="slide-subtitle">Offset Path pro nálepky, Outline Stroke pro řezací plotry a nástroje Nůžky &amp; Spojení (Ctrl+J)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Technologie výroby</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                Zvolit pokročilou operaci:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setPathOpScenario('original', this)">
+                1. Původní otevřená cesta s tahem (Stroke)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPathOpScenario('join', this)">
+                2. Spojení cesty (Join / Ctrl+J)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPathOpScenario('offset', this)">
+                3. Posun cesty (Offset Path &bull; Souběžná linka)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPathOpScenario('outline', this)">
+                4. Převod tahu na obrys (Outline Stroke &bull; Plocha)
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="pathOpCodeTitle">operace &bull; původní otevřená cesta</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('pathOpCode', 'svg', this)">SVG Kód</button>
+                      <button type="button" class="code-tab" onclick="switchTab('pathOpCode', 'workflow', this)">Postup v editoru</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="pathOpCodeBlock"><span class="html-comment">&lt;!-- Otevřená křivka: kotevní body na koncích nejsou propojeny --&gt;</span>
+<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,110 C 60,30 140,30 170,110"</span>
+      <span class="html-attr">fill</span>=<span class="html-val">"none"</span>
+      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>
+      <span class="html-attr">stroke-width</span>=<span class="html-val">"6"</span>
+      <span class="html-attr">stroke-linecap</span>=<span class="html-val">"round"</span> <span class="html-tag">/&gt;</span></code></pre>
+              </div>
+
+              <!-- Živé plátno operací -->
+              <div class="showcase-preview-box" id="pathOpPreviewStage" style="min-height: 180px;">
+                <!-- Vložený SVG obsah -->
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="pathOpFeedback">
+              <span>Technologické pravidlo:</span>
+              <strong id="pathOpFeedbackText">Otevřená cesta má tloušťku tahu danou pouze atributem <code>stroke-width</code>. Nelze ji plnohodnotně vyřezat na řezacím plotru bez převodu na obrys.</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: BOOLEOVSKÉ OPERACE (PATHFINDER) & SHAPE BUILDER -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Konstruktivní geometrie &bull; Tvorba log</div>
+            <h2 class="slide-title">Booleovské operace (Pathfinder) &amp; Shape Builder</h2>
+            <p class="slide-subtitle">Skládání přesných symbolů a logotypů ze základních geometrických primitiv</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Zkouškový nástroj</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="media-compare-grid">
-            <div class="content-card">
-              <span class="format-pill lossless">Sjednocení (Unite / Union)</span>
-              <h4 style="margin: 0.5rem 0;">Sloučení tvarů</h4>
-              <p style="font-size: 0.85rem;">Spojí dva a více překrývajících se objektů do jediné spojité vnější obrysové cesty. Vnitřní překryvy zaniknou.</p>
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><circle cx="9" cy="9" r="6"></circle><circle cx="15" cy="15" r="6"></circle></svg>
+                Zvolit operaci Pathfinderu:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setPathfinderScenario('source', this)">
+                1. Zdrojové tvary (Čtverec + Kruh)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPathfinderScenario('unite', this)">
+                2. Sjednocení (Unite / Union)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPathfinderScenario('minus', this)">
+                3. Rozdíl (Minus Front / Odečíst)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPathfinderScenario('intersect', this)">
+                4. Průnik (Intersect)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPathfinderScenario('exclude', this)">
+                5. Vyloučení (Exclude / XOR)
+              </button>
             </div>
-            <div class="content-card">
-              <span class="format-pill lossy">Rozdíl (Minus Front / Difference)</span>
-              <h4 style="margin: 0.5rem 0;">Odečtení tvaru</h4>
-              <p style="font-size: 0.85rem;">Objekt ležící nahoře "vyrazí" svůj tvar z objektu ležícího pod ním (např. vytvoření půlměsíce překrytím dvou kruhů).</p>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="boolCodeTitle">pathfinder &bull; výchozí tvary</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('boolCode', 'svg', this)">SVG Kód</button>
+                      <button type="button" class="code-tab" onclick="switchTab('boolCode', 'logic', this)">Matematická logika</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="boolCodeBlock"><span class="html-comment">&lt;!-- Dva samostatné překrývající se objekty před operací --&gt;</span>
+<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"35"</span> <span class="html-attr">y</span>=<span class="html-val">"35"</span> <span class="html-attr">width</span>=<span class="html-val">"75"</span> <span class="html-attr">height</span>=<span class="html-val">"75"</span> <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>
+<span class="html-tag">&lt;circle</span> <span class="html-attr">cx</span>=<span class="html-val">"115"</span> <span class="html-attr">cy</span>=<span class="html-val">"100"</span> <span class="html-attr">r</span>=<span class="html-val">"42"</span> <span class="html-attr">fill</span>=<span class="html-val">"#a855f7"</span> <span class="html-attr">opacity</span>=<span class="html-val">"0.85"</span> <span class="html-tag">/&gt;</span></code></pre>
+              </div>
+
+              <!-- Živé plátno Pathfinderu -->
+              <div class="showcase-preview-box" id="boolPreviewStage" style="min-height: 180px;">
+                <!-- Vložený SVG obsah -->
+              </div>
             </div>
-            <div class="content-card">
-              <span class="format-pill uncompressed">Průnik (Intersect)</span>
-              <h4 style="margin: 0.5rem 0;">Společná plocha</h4>
-              <p style="font-size: 0.85rem;">Zachová pouze plochu, kde se všechny vybrané tvary vzájemně překrývají. Zbytek geometrie je odstraněn.</p>
-            </div>
-          </div>
-          <div class="callout callout-tip" style="margin-top: 0.6rem;">
-            <div class="callout-icon">
-              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            </div>
-            <div class="callout-content">
-              <div class="callout-title">Nástroj Shape Builder (Vytváření tvarů)</div>
-              <p>Moderní alternativa k panelu Pathfinder. Tažením myši přes segmenty přímo spojujete nebo s klávesou Alt odmazáváte plochy vzniklé překryvem čar, což dramaticky urychluje tvorbu ikon.</p>
+
+            <div class="stage-feedback" id="boolFeedback">
+              <span>Princip konstrukce:</span>
+              <strong id="boolFeedbackText">Původní stav: Dva samostatné objekty s překryvem. Vhodné pro kombinaci nástrojem Shape Builder (Shift+M).</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: VEKTORIZACE A LOGOMANUÁL -->
-      <section class="slide" data-slide="5">
+      <!-- SLIDE 9: LAYOUT, KOMPOZICE, MASKY A TYPOGRAFIE -->
+      <section class="slide" data-slide="9">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Aplikovaná praxe</div>
-            <h2 class="slide-title">Vektorizace předloh a příprava logomanuálu</h2>
-            <p class="slide-subtitle">Převod skici z papíru na průmyslovou vektorovou identitu</p>
+            <div class="slide-category">Kompozice &bull; Layoutování &bull; Písmo</div>
+            <h2 class="slide-title">Layoutování, ořezové masky a převod písma na křivky</h2>
+            <p class="slide-subtitle">Zarovnání na plátno, ořezové masky (Ctrl+7), složené cesty a Create Outlines (Shift+Ctrl+O)</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Corporate Identity</span>
+            <span class="tag tag-exam">Tisková příprava</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div class="content-card">
-              <h4>Metody vektorizace (Tracing)</h4>
-              <ul class="styled-list">
-                <li><strong>Automatické trasování (Image Trace):</strong> Algoritmus detekuje hrany kontrastu v rastru a generuje cesty. Rychlé pro skici, ale vytváří stovky nadbytečných uzlů.</li>
-                <li><strong>Ruční geometrická konstrukce:</strong> Přesné obkreslení pomocí kružnic, polygonů a booleovských operací. Jediná akceptovatelná metoda pro profesionální tvorbu loga.</li>
-              </ul>
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                Zvolit kompoziční techniku:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setLayoutScenario('align', this)">
+                1. Zarovnání &amp; Distribuce (Align &amp; Space)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setLayoutScenario('mask', this)">
+                2. Ořezová maska (Clipping Mask / Ctrl+7)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setLayoutScenario('compound', this)">
+                3. Složená cesta &bull; Donut (Compound Path / Ctrl+8)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setLayoutScenario('outlines', this)">
+                4. Převod textu na křivky (Create Outlines)
+              </button>
             </div>
-            <div class="content-card">
-              <h4>Obsah a export logomanuálu</h4>
-              <ul class="styled-list">
-                <li><strong>Ochranná zóna:</strong> Minimální prostor kolem loga, do kterého nesmí zasahovat text ani jiné prvky.</li>
-                <li><strong>Barevné varianty:</strong> Plnobarevná (CMYK pro tisk, RGB/HEX pro web), jednobarevná černá a bílá inverzní verze.</li>
-                <li><strong>Přímé barvy PANTONE:</strong> Garantují přesný odstín na potištěných předmětech, dresech či automobilech bez soutisku CMYK.</li>
-              </ul>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="layoutCodeTitle">layout &bull; panel zarovnání</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('layoutCode', 'svg', this)">SVG Kód</button>
+                      <button type="button" class="code-tab" onclick="switchTab('layoutCode', 'tip', this)">Pravidla &amp; Zkratky</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="layoutCodeBlock"><span class="html-comment">&lt;!-- Přesně rozložené objekty s rovnoměrnou mezerou 20px --&gt;</span>
+<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"25"</span> <span class="html-attr">y</span>=<span class="html-val">"45"</span> <span class="html-attr">width</span>=<span class="html-val">"40"</span> <span class="html-attr">height</span>=<span class="html-val">"50"</span> <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>
+<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"80"</span> <span class="html-attr">y</span>=<span class="html-val">"30"</span> <span class="html-attr">width</span>=<span class="html-val">"40"</span> <span class="html-attr">height</span>=<span class="html-val">"80"</span> <span class="html-attr">fill</span>=<span class="html-val">"#a855f7"</span> <span class="html-tag">/&gt;</span>
+<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"135"</span> <span class="html-attr">y</span>=<span class="html-val">"50"</span> <span class="html-attr">width</span>=<span class="html-val">"40"</span> <span class="html-attr">height</span>=<span class="html-val">"40"</span> <span class="html-attr">fill</span>=<span class="html-val">"#10b981"</span> <span class="html-tag">/&gt;</span></code></pre>
+              </div>
+
+              <!-- Živé plátno kompozice -->
+              <div class="showcase-preview-box" id="layoutPreviewStage" style="min-height: 180px;">
+                <!-- Vložený SVG obsah -->
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="layoutFeedback">
+              <span>Pravidlo sazby:</span>
+              <strong id="layoutFeedbackText">Zarovnání objektů: Panel Align umožňuje vycentrovat objekty podél osy a nastavit exaktní rozestup mezi nimi.</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SUMMARY -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 10: SUMMARY & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="10">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Závěrečná syntéza</div>
-            <h2 class="slide-title">Shrnutí lekce &bull; Zkušební checklist</h2>
-            <p class="slide-subtitle">Otázky k profilovému okruhu k absolutoriu z vektorových nástrojů</p>
+            <div class="slide-category">Zkouškový checklist &bull; Syntéza</div>
+            <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
+            <p class="slide-subtitle">Srovnávací matice Illustrator vs. Inkscape, vektorové principy a otázky k profilovým okruhům č. 6 a 12</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Okruh absolutoria 12</span>
+            <span class="tag tag-exam">Okruh absolutoria č. 6 &bull; 12</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="summary-grid">
-            <div class="summary-card">
-              <h4>Pen Tool</h4>
-              <p>Základní nástroj pro Bézierovy křivky. Klíčem k hladkosti je minimální počet bodů umístěných v extrémech křivky.</p>
+          <!-- Srovnávací tabulka Illustrator vs. Inkscape -->
+          <div class="table-container" style="margin-bottom: 0.85rem;">
+            <table class="alignment-matrix-table">
+              <thead>
+                <tr>
+                  <th>Vlastnost / Kritérium</th>
+                  <th class="col-highlight">Adobe Illustrator (Komerční DTP standard)</th>
+                  <th>Inkscape (Open-Source W3C standard)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Licence &amp; Cena</strong></td>
+                  <td class="col-highlight">Komerční předplatné Adobe Creative Cloud (proprietární)</td>
+                  <td>100% bezplatný Open-Source (GNU GPL), multiplatformní</td>
+                </tr>
+                <tr>
+                  <td><strong>Nativní formát souboru</strong></td>
+                  <td class="col-highlight"><strong>.AI</strong> (založen na PDF specifikaci s privátním blokem)</td>
+                  <td><strong>.SVG</strong> (přímo standardní W3C XML soubor + inkscape ns)</td>
+                </tr>
+                <tr>
+                  <td><strong>Tisk &amp; Barvy</strong></td>
+                  <td class="col-highlight">Nativní CMYK, přímé barvy <strong>PANTONE</strong>, Separace, RIP profily</td>
+                  <td>Výchozí RGB (omezenější CMYK přes Color Profiles ICC)</td>
+                </tr>
+                <tr>
+                  <td><strong>Speciální silné nástroje</strong></td>
+                  <td class="col-highlight">Gradient Mesh, Shape Builder, Astute pluginy, Artboards</td>
+                  <td>Vestavěný <strong>XML Editor</strong> (Ctrl+Shift+X), Live Path Effects (LPE)</td>
+                </tr>
+                <tr>
+                  <td><strong>Typické nasazení</strong></td>
+                  <td class="col-highlight">DTP studia, reklamní agentury, firemní identity, ofsetový tisk</td>
+                  <td>Webová grafika, Linux, FabLaby (laser, plotry), programátoři</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Čtyři zkušební otázky -->
+          <div class="grid-4" style="gap: 0.65rem;">
+            <div class="content-card" style="padding: 0.75rem;">
+              <h5 style="color: var(--accent); margin-bottom: 0.3rem;">1. Uložení Bézierovy křivky</h5>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 0;">
+                Popište, jak je kubická Bézierova křivka uložena v datech (4 body / 8 souřadnic). Jaký je rozdíl mezi kotevními body (on-curve) a táhly (off-curve) a jak se liší spojitost $C^0$ od $C^1$?
+              </p>
             </div>
-            <div class="summary-card">
-              <h4>Pathfinder</h4>
-              <p>Booleovské operace (sjednocení, rozdíl, průnik) umožňují sestavit jakýkoli složitý symbol z jednoduchých geometrických tvarů.</p>
+            <div class="content-card" style="padding: 0.75rem;">
+              <h5 style="color: var(--accent); margin-bottom: 0.3rem;">2. Pathfinder operace</h5>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 0;">
+                Vysvětlete booleovské operace: sjednocení (Unite), rozdíl (Minus Front), průnik (Intersect) a vyloučení (Exclude).
+              </p>
             </div>
-            <div class="summary-card">
-              <h4>Logomanuál</h4>
-              <p>Definuje konstrukční mřížku loga, ochrannou zónu, barevné definice (CMYK, RGB, Pantone) a exporty do SVG, PDF a EPS.</p>
+            <div class="content-card" style="padding: 0.75rem;">
+              <h5 style="color: var(--accent); margin-bottom: 0.3rem;">3. Převod textu na křivky</h5>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 0;">
+                Proč je nutné před odesláním do tiskárny nebo řezacího plotru převést písmo příkazem <em>Create Outlines</em>?
+              </p>
             </div>
-            <div class="summary-card">
-              <h4>Zkušební otázka</h4>
-              <p>Popište techniku práce s perem (Pen Tool) a zásady umisťování uzlů. Vysvětlete booleovské operace s tvary a náležitosti logomanuálu.</p>
+            <div class="content-card" style="padding: 0.75rem;">
+              <h5 style="color: var(--accent); margin-bottom: 0.3rem;">4. AI vs. Inkscape &amp; SVG</h5>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 0;">
+                Jaký je rozdíl mezi nativním formátem .AI a formátem SVG? Jaké jsou přednosti Inkscape při tvorbě webové grafiky?
+              </p>
             </div>
           </div>
         </div>
@@ -249,11 +946,9 @@
 
     </main>
 
-    <!-- Controls -->
-
-    <!-- Floating Bottom Navigation & Controls Bar -->
+    <!-- Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="05_programy_pro_2d_grafiku_a_rastrove_upravy.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 05: Programy pro 2D grafiku a rastrové úpravy (Ctrl+Šipka vlevo)">
+      <a href="05_programy_pro_2d_grafiku_a_rastrove_upravy.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 05: Programy pro 2D grafiku a rastrové úpravy (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu MUL20">
@@ -266,7 +961,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 10</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -274,7 +969,7 @@
       <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
         <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
       </button>
-      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)">
         <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
       </button>
       <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
@@ -299,6 +994,65 @@
         </div>
         <div class="toc-list" id="tocList"></div>
       </aside>
+    </div>
+
+    <!-- Glossary Modal -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 680px;">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Slovník pojmů: Vektorové nástroje a grafická tvorba
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="styled-list" style="display: flex; flex-direction: column; gap: 0.85rem;">
+            <div>
+              <strong>Bézierova křivka – datové uložení (Data Model)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Kubická Bézierova křivka se neukládá jako pixely, ale jako přesně 4 body (8 čísel float: P₀, P₁, P₂, P₃). Kotevní body P₀ a P₃ leží na křivce (on-curve), zatímco řídicí táhla P₁ a P₂ leží mimo ni (off-curve) a určují tečny.</p>
+            </div>
+            <div>
+              <strong>de Casteljauův algoritmus &amp; Rasterizace</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Numerický rekurzivní algoritmus, kterým renderovací jádra grafických karet (Skia, Direct2D, Cairo) adaptivně dělí matematickou křivku na diskrétní úsečky a pixely přizpůsobené aktuálnímu rozlišení displeje.</p>
+            </div>
+            <div>
+              <strong>Kubická vs. kvadratická křivka</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Kubická křivka (3. řád, 2 táhla) je standardem v SVG (příkaz <code>C</code>), Adobe Illustratoru, PDF a PostScript CFF fontech. Kvadratická křivka (2. řád, 1 táhlo, SVG <code>Q</code>) je jednodušší a využívají ji např. TrueType fonty.</p>
+            </div>
+            <div>
+              <strong>Adobe Illustrator (.AI)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Průmyslový standard pro vektorovou tvorbu a DTP. Nativní formát .ai je založen na PDF specifikaci s privátním blokem dat uchovávajícím vrstvy, přechodové sítě a Artboards.</p>
+            </div>
+            <div>
+              <strong>Inkscape (.SVG)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Multiplatformní open-source vektorový editor (GPL). Jeho nativním formátem je přímo standardní W3C SVG. Nabízí vestavěný XML editor pro přímou manipulaci se zdrojovým kódem.</p>
+            </div>
+            <div>
+              <strong>Artboards (Více pláten)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Nezávislé pracovní plochy různých rozměrů v rámci jednoho dokumentu. Umožňují navrhovat kompletní firemní identitu (vizitka, hlavičkový papír, billboard) na jednom místě.</p>
+            </div>
+            <div>
+              <strong>Pathfinder &amp; Booleovské operace</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Sada operací konstruktivní geometrie pro slučování (Unite), odečítání (Minus Front), průnik (Intersect) a vyloučení (Exclude) překrývajících se vektorových tvarů.</p>
+            </div>
+            <div>
+              <strong>Posun cesty (Offset Path)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Funkce, která vytvoří novou uzavřenou křivku přesně rovnoběžnou s původním tvarem v zadané vzdálenosti (základ pro nálepky, obrysy a tiskové ořezy).</p>
+            </div>
+            <div>
+              <strong>Převod tahu na obrys (Outline Stroke)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Převod otevřené matematické linie s definovanou tloušťkou na samostatný uzavřený polygon s plochou (nutné pro řezací plotry a laser).</p>
+            </div>
+            <div>
+              <strong>Převod textu na křivky (Create Outlines / Shift+Ctrl+O)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Nevratná transformace textových znaků na geometrické křivky. Zabraňuje nechtěné záměně písma na cizím počítači nebo v tiskárně bez nainstalovaného fontu.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Keyboard Shortcuts Help Modal -->
@@ -354,6 +1108,727 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INTERAKTIVNÍ SKRIPTY PRO VEKTOROVÉ UKÁZKY A SIMULÁTORY -->
+  <script>
+    // Úložiště pro taby kódu jednotlivých bloků
+    var codeData = {
+      aiCode: {
+        currentLang: 'workflow',
+        workflow: '<span class="html-comment">/* Adobe Illustrator (.ai) - Nativní formát a Artboards */</span>\n<span class="css-prop">Nativní formát</span>:    <span class="css-val">.AI (založen na PDF s privátním blokem dat Illustratoru)</span>;\n<span class="css-prop">Architektura</span>:      <span class="css-val">Podpora až 1 000 nezávislých pláten (Artboards) v 1 souboru</span>;\n<span class="css-prop">Barevné modely</span>:    <span class="css-val">CMYK (tisk), RGB (digitál), Přímé barvy (PANTONE Matching System)</span>;\n<span class="css-prop">DTP integrace</span>:     <span class="css-val">Nativní provázání s Adobe InDesign a Photoshop přes Creative Cloud</span>;',
+        engine: '<span class="html-comment">/* Adobe Graphics Engine &amp; Tiskové PDF */</span>\n<span class="css-prop">PDF/X standard</span>:    <span class="css-val">PDF/X-1a (CMYK bez průhlednosti), PDF/X-4 (s průhledností)</span>;\n<span class="css-prop">Přetisk (Overprint)</span>:<span class="css-val">Automatický přetisk 100% černé (K) proti vzniku bílých pasovacích linek</span>;\n<span class="css-prop">Rastrové efekty</span>:   <span class="css-val">Document Raster Effects Settings (DRES) nastaveno na 300 ppi</span>;\n<span class="css-prop">Barevné profily</span>:   <span class="css-val">ISO Coated v2 / Fogra 39 / Fogra 51 (ofsetový křídový tisk)</span>;'
+      },
+      inkCode: {
+        currentLang: 'xml',
+        xml: '<span class="html-comment">&lt;!-- Inkscape SVG: 100% kompatibilní W3C SVG s privátním namespace --&gt;</span>\n<span class="html-tag">&lt;svg</span> <span class="html-attr">xmlns</span>=<span class="html-val">"http://www.w3.org/2000/svg"</span>\n     <span class="html-attr">xmlns:inkscape</span>=<span class="html-val">"http://www.inkscape.org/namespaces/inkscape"</span>\n     <span class="html-attr">viewBox</span>=<span class="html-val">"0 0 200 140"</span><span class="html-tag">&gt;</span>\n  <span class="html-comment">&lt;!-- Vrstvy jsou reprezentovány skupinami &lt;g&gt; s inkscape atributem --&gt;</span>\n  <span class="html-tag">&lt;g</span> <span class="html-attr">inkscape:groupmode</span>=<span class="html-val">"layer"</span> <span class="html-attr">inkscape:label</span>=<span class="html-val">"Vektorová grafika"</span><span class="html-tag">&gt;</span>\n    <span class="html-tag">&lt;path</span> <span class="html-attr">id</span>=<span class="html-val">"curve1"</span> <span class="html-attr">d</span>=<span class="html-val">"M 20,70 Q 100,20 180,70"</span> <span class="html-attr">fill</span>=<span class="html-val">"none"</span> <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>\n  <span class="html-tag">&lt;/g&gt;</span>\n<span class="html-tag">&lt;/svg&gt;</span>',
+        cli: '<span class="html-comment">/* Inkscape CLI &bull; Skriptování a dávková konverze v terminálu */</span>\n<span class="css-prop">Konverze do PDF</span>:   <span class="css-val">inkscape vstup.svg --export-filename=vystup.pdf</span>;\n<span class="css-prop">Export do EPS</span>:     <span class="css-val">inkscape vstup.svg --export-type=eps --export-ps-level=3</span>;\n<span class="css-prop">Rastrování na DPI</span>: <span class="css-val">inkscape ikona.svg -o ikona@2x.png -d 192</span>;\n<span class="css-prop">Čištění kódu</span>:      <span class="css-val">inkscape vstup.svg --export-plain-svg=ciste.svg</span>;'
+      },
+      zoomCode: {
+        currentLang: 'svg',
+        svg: '<span class="html-comment">&lt;!-- Nativní W3C SVG soubor: čistý čitelný textový XML formát --&gt;</span>\n<span class="html-tag">&lt;svg</span> <span class="html-attr">xmlns</span>=<span class="html-val">"http://www.w3.org/2000/svg"</span> <span class="html-attr">viewBox</span>=<span class="html-val">"0 0 100 100"</span><span class="html-tag">&gt;</span>\n  <span class="html-comment">&lt;!-- Kruhová podkladová plocha --&gt;</span>\n  <span class="html-tag">&lt;circle</span> <span class="html-attr">cx</span>=<span class="html-val">"50"</span> <span class="html-attr">cy</span>=<span class="html-val">"50"</span> <span class="html-attr">r</span>=<span class="html-val">"44"</span> <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>\n  <span class="html-comment">&lt;!-- Hvězda definovaná souřadnicemi vrcholů --&gt;</span>\n  <span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M50,15 L60,38 L85,38 L65,54 L72,78 L50,62 L28,78 L35,54 L15,38 L40,38 Z"</span>\n        <span class="html-attr">fill</span>=<span class="html-val">"#ffffff"</span> <span class="html-attr">stroke</span>=<span class="html-val">"#fbcfe8"</span> <span class="html-attr">stroke-width</span>=<span class="html-val">"2"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;/svg&gt;</span>',
+        info: '<span class="html-comment">/* Srovnání Rastr vs. Vektor */</span>\n<span class="css-prop">Datový model rastru</span>: <span class="css-val">Mřížka pixelů (např. 32&times;32 = 1024 pixelů RGBA)</span>;\n<span class="css-prop">Datový model vektoru</span>: <span class="css-val">Matematický polygon (10 vrcholů [x, y] + kruh [cx, cy, r])</span>;\n<span class="css-prop">Zvětšení 1600 %</span>:     <span class="css-val">Rastr interpoluje obří schodovité bloky, vektor zůstává 100% ostrý</span>;\n<span class="css-prop">Závislost paměti</span>:    <span class="css-val">Rastr závisí na rozlišení (W&times;H), vektor na složitosti tvaru</span>;'
+      },
+      primCode: {
+        currentLang: 'svg',
+        svg: '<span class="html-comment">&lt;!-- Obdélník s dynamicky zaoblenými rohy (Live Corners) --&gt;</span>\n<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"30"</span> <span class="html-attr">y</span>=<span class="html-val">"25"</span> <span class="html-attr">width</span>=<span class="html-val">"140"</span> <span class="html-attr">height</span>=<span class="html-val">"90"</span>\n      <span class="html-attr">rx</span>=<span class="html-val">"20"</span> <span class="html-attr">ry</span>=<span class="html-val">"20"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"rgba(236, 72, 153, 0.2)"</span>\n      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>\n      <span class="html-attr">stroke-width</span>=<span class="html-val">"3"</span> <span class="html-tag">/&gt;</span>',
+        css: '<span class="html-comment">/* Vlastnosti živého tvaru v CSS */</span>\n<span class="css-sel">.shape-rect</span> {\n  <span class="css-prop">fill</span>: <span class="css-func">rgba</span>(<span class="css-num">236</span>, <span class="css-num">72</span>, <span class="css-num">153</span>, <span class="css-num">0.2</span>);\n  <span class="css-prop">stroke</span>: <span class="css-val">#ec4899</span>;\n  <span class="css-prop">stroke-width</span>: <span class="css-num">3</span><span class="css-unit">px</span>;\n  <span class="css-prop">rx</span>: <span class="css-num">20</span><span class="css-unit">px</span>; <span class="html-comment">/* Poloměr zaoblení Live Corners */</span>\n}'
+      },
+      bezierCode: {
+        currentLang: 'svg',
+        svg: '<span class="html-comment">&lt;!-- Ostrý roh C0: úsečky spojené příkazem L (Line To) bez táhel --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,120 L 100,30 L 170,120"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"none"</span>\n      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>\n      <span class="html-attr">stroke-width</span>=<span class="html-val">"3"</span> <span class="html-tag">/&gt;</span>',
+        math: '<span class="html-comment">/* Vektorová reprezentace segmentu křivky (4 body) */</span>\n<span class="css-prop">P0 [x0, y0]</span>:  <span class="css-val">Počáteční uzel [30, 120] (on-curve)</span>;\n<span class="css-prop">P1, P2</span>:       <span class="css-val">Nulová délka táhel (ostré zalomení směru)</span>;\n<span class="css-prop">P3 [x3, y3]</span>:  <span class="css-val">Koncový uzel [170, 120] (on-curve)</span>;\n<span class="css-prop">Paměť dat</span>:    <span class="css-val">Pouze souřadnice bodů (žádné mezilehlé pixely)</span>;',
+        guide: '<span class="html-comment">/* Pravidla profesionálního kreslení perem */</span>\n<span class="css-prop">1. Minimum bodů</span>:   <span class="css-val">Méně kotevních bodů = hladší a čistější křivka</span>;\n<span class="css-prop">2. Extrémy tvaru</span>:  <span class="css-val">Uzly umísťujte do nejvyšších, nejnižších a krajních bodů</span>;\n<span class="css-prop">3. Klávesa Shift</span>:  <span class="css-val">Zamyká směr táhel pod 0&deg;, 45&deg; a 90&deg;</span>;\n<span class="css-prop">4. Klávesa Alt</span>:    <span class="css-val">Zlomí symetrii hladkého uzlu pro vytvoření ostrého rohu</span>;'
+      },
+      pathOpCode: {
+        currentLang: 'svg',
+        svg: '<span class="html-comment">&lt;!-- Otevřená křivka: kotevní body na koncích nejsou propojeny --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,110 C 60,30 140,30 170,110"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"none"</span>\n      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>\n      <span class="html-attr">stroke-width</span>=<span class="html-val">"6"</span>\n      <span class="html-attr">stroke-linecap</span>=<span class="html-val">"round"</span> <span class="html-tag">/&gt;</span>',
+        workflow: '<span class="html-comment">/* Postup v Adobe Illustrator / Inkscape */</span>\n<span class="css-prop">Otevřená cesta</span>:      <span class="css-val">Kreslena perem (P), má pouze počátek a konec</span>;\n<span class="css-prop">Spojení uzlů</span>:        <span class="css-val">Výběr koncových bodů &rarr; Zkratka Ctrl + J (Join)</span>;\n<span class="css-prop">Posun cesty</span>:         <span class="css-val">Objekt &rarr; Cesta &rarr; Posun cesty (Offset Path &plusmn;px)</span>;\n<span class="css-prop">Převod tahu na obrys</span>:<span class="css-val">Objekt &rarr; Cesta &rarr; Převést tah na obrys (Outline Stroke)</span>;'
+      },
+      boolCode: {
+        currentLang: 'svg',
+        svg: '<span class="html-comment">&lt;!-- Dva samostatné překrývající se objekty před operací --&gt;</span>\n<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"30"</span> <span class="html-attr">y</span>=<span class="html-val">"30"</span> <span class="html-attr">width</span>=<span class="html-val">"75"</span> <span class="html-attr">height</span>=<span class="html-val">"75"</span> <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;circle</span> <span class="html-attr">cx</span>=<span class="html-val">"105"</span> <span class="html-attr">cy</span>=<span class="html-val">"105"</span> <span class="html-attr">r</span>=<span class="html-val">"45"</span> <span class="html-attr">fill</span>=<span class="html-val">"#a855f7"</span> <span class="html-attr">opacity</span>=<span class="html-val">"0.85"</span> <span class="html-tag">/&gt;</span>',
+        logic: '<span class="html-comment">/* Logika booleovských operací (Pathfinder) */</span>\n<span class="css-prop">Sjednocení (A &cup; B)</span>:  <span class="css-val">Sloučí vnější obrys obou tvarů do jediné cesty</span>;\n<span class="css-prop">Rozdíl (A &setminus; B)</span>:      <span class="css-val">Horní objekt vyrazí svůj tvar z objektu pod ním</span>;\n<span class="css-prop">Průnik (A &cap; B)</span>:      <span class="css-val">Ponechá výhradně společně sdílenou plochu</span>;\n<span class="css-prop">Vyloučení (A &oplus; B)</span>:   <span class="css-val">XOR: odstraní překryv a ponechá zbylé oddělené části</span>;'
+      },
+      layoutCode: {
+        currentLang: 'svg',
+        svg: '<span class="html-comment">&lt;!-- Přesně rozložené objekty s rovnoměrnou mezerou 20px --&gt;</span>\n<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"25"</span> <span class="html-attr">y</span>=<span class="html-val">"45"</span> <span class="html-attr">width</span>=<span class="html-val">"40"</span> <span class="html-attr">height</span>=<span class="html-val">"50"</span> <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"80"</span> <span class="html-attr">y</span>=<span class="html-val">"30"</span> <span class="html-attr">width</span>=<span class="html-val">"40"</span> <span class="html-attr">height</span>=<span class="html-val">"80"</span> <span class="html-attr">fill</span>=<span class="html-val">"#a855f7"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"135"</span> <span class="html-attr">y</span>=<span class="html-val">"50"</span> <span class="html-attr">width</span>=<span class="html-val">"40"</span> <span class="html-attr">height</span>=<span class="html-val">"40"</span> <span class="html-attr">fill</span>=<span class="html-val">"#10b981"</span> <span class="html-tag">/&gt;</span>',
+        tip: '<span class="html-comment">/* Zkratky a pravidla sazby v layoutu */</span>\n<span class="css-prop">Seskupení objektů</span>:     <span class="css-val">Ctrl + G (Group) &bull; Oddělení: Shift + Ctrl + G</span>;\n<span class="css-prop">Ořezová maska</span>:         <span class="css-val">Horní objekt ořízne spodní &rarr; Ctrl + 7</span>;\n<span class="css-prop">Složená cesta</span>:         <span class="css-val">Vytvoření otvorů (např. písmeno O) &rarr; Ctrl + 8</span>;\n<span class="css-prop">Převod na křivky</span>:      <span class="css-val">Shift + Ctrl + O (Create Outlines)</span>;'
+      }
+    };
+
+    // Univerzální přepínač tabů v okně s kódem
+    window.switchTab = function(blockKey, lang, btnEl) {
+      if (!codeData[blockKey]) return;
+      codeData[blockKey].currentLang = lang;
+
+      var parentTabs = btnEl.parentElement;
+      if (parentTabs) {
+        parentTabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var codeBlock = document.getElementById(blockKey + 'Block');
+      if (codeBlock) {
+        codeBlock.innerHTML = codeData[blockKey][lang];
+      }
+    };
+
+    // Pomocná funkce pro aktualizaci kódu při scénáři
+    function updateCodeDisplay(blockKey, lang1Content, lang2Content, lang3Content) {
+      if (!codeData[blockKey]) return;
+      var keys = Object.keys(codeData[blockKey]).filter(function(k) { return k !== 'currentLang'; });
+      if (lang1Content && keys[0]) codeData[blockKey][keys[0]] = lang1Content;
+      if (lang2Content && keys[1]) codeData[blockKey][keys[1]] = lang2Content;
+      if (lang3Content && keys[2]) codeData[blockKey][keys[2]] = lang3Content;
+      var codeBlock = document.getElementById(blockKey + 'Block');
+      if (codeBlock) {
+        codeBlock.innerHTML = codeData[blockKey][codeData[blockKey].currentLang];
+      }
+    }
+
+    // --- SLIDE 2: ADOBE ILLUSTRATOR SCENARIOS ---
+    window.setIllustratorScenario = function(sc, btnEl) {
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var stage = document.getElementById('aiPreviewStage');
+      var feedback = document.getElementById('aiFeedbackText');
+      if (!stage || !feedback) return;
+
+      if (sc === 'artboards') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<rect x="15" y="25" width="55" height="90" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" rx="3" />' +
+          '<text x="42" y="20" fill="#38bdf8" font-family="monospace" font-size="8" text-anchor="middle">A4 Dopisy</text>' +
+          '<rect x="80" y="45" width="50" height="30" fill="#1e293b" stroke="#ec4899" stroke-width="1.5" rx="3" />' +
+          '<text x="105" y="40" fill="#ec4899" font-family="monospace" font-size="8" text-anchor="middle">Vizitka</text>' +
+          '<rect x="80" y="85" width="105" height="40" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" rx="3" />' +
+          '<text x="132" y="80" fill="#f59e0b" font-family="monospace" font-size="8" text-anchor="middle">DL Obálka</text>' +
+          '<circle cx="105" cy="60" r="8" fill="#ec4899" />' +
+          '<circle cx="42" cy="50" r="10" fill="#ec4899" />' +
+          '<circle cx="115" cy="105" r="9" fill="#ec4899" />' +
+          '</svg>';
+        var wfStr = '<span class="html-comment">/* 1. Vícenásobná plátna (Artboards) */</span>\n<span class="css-prop">Princip</span>:          <span class="css-val">Jeden soubor .ai obsahuje desítky pláten různých rozměrů</span>;\n<span class="css-prop">Sdílená identita</span>: <span class="css-val">Změna globální barvy v paletě vzorníku přebarví všechny tiskoviny</span>;\n<span class="css-prop">Nástroj</span>:          <span class="css-val">Artboard Tool (Shift + O) pro úpravu rozměrů pláten</span>;';
+        updateCodeDisplay('aiCode', wfStr);
+        feedback.innerHTML = 'Artboards (Shift+O): Umožňují spravovat vizitky, hlavičkové papíry i bannery v jediném dokumentu se společnými barvami a symboly.';
+      } else if (sc === 'print') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<rect x="25" y="20" width="150" height="100" fill="#1e293b" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 3" />' +
+          '<rect x="35" y="30" width="130" height="80" fill="#0f172a" stroke="#fff" stroke-width="1" />' +
+          '<line x1="20" y1="30" x2="30" y2="30" stroke="#fff" stroke-width="1.5" />' +
+          '<line x1="35" y1="15" x2="35" y2="25" stroke="#fff" stroke-width="1.5" />' +
+          '<rect x="45" y="45" width="45" height="50" fill="#e11d48" rx="3" />' +
+          '<rect x="100" y="45" width="55" height="50" fill="#f59e0b" rx="3" />' +
+          '<text x="67" y="74" fill="#fff" font-family="monospace" font-size="8" text-anchor="middle">PANTONE</text>' +
+          '<text x="127" y="74" fill="#fff" font-family="monospace" font-size="8" text-anchor="middle">CMYK 100%</text>' +
+          '</svg>';
+        var wfStr = '<span class="html-comment">/* 2. DTP &amp; Tisková příprava v Illustratoru */</span>\n<span class="css-prop">Barevný prostor</span>: <span class="css-val">CMYK (Cyan, Magenta, Yellow, blacK)</span>;\n<span class="css-prop">Spadávka (Bleed)</span>: <span class="css-val">Standardně 3 mm za ořezovou linii dokumentu</span>;\n<span class="css-prop">Přímé barvy</span>:      <span class="css-val">Knihovny PANTONE Formula Guide Solid Coated</span>;\n<span class="css-prop">Kontrola separace</span>: <span class="css-val">Separations Preview pro ověření přetisku (Overprint Black)</span>;';
+        updateCodeDisplay('aiCode', wfStr);
+        feedback.innerHTML = 'DTP a tiskové standardy: Illustrator je lídrem díky přesné správě CMYK, přímým barvám PANTONE a spadávkám (Bleed) s ořezovými značkami.';
+      } else if (sc === 'mesh') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<defs>' +
+          '<radialGradient id="meshGrad" cx="35%" cy="35%" r="65%">' +
+          '<stop offset="0%" stop-color="#fbcfe8" />' +
+          '<stop offset="40%" stop-color="#ec4899" />' +
+          '<stop offset="85%" stop-color="#831843" />' +
+          '<stop offset="100%" stop-color="#4c0519" />' +
+          '</radialGradient>' +
+          '</defs>' +
+          '<circle cx="100" cy="70" r="50" fill="url(#meshGrad)" />' +
+          '<ellipse cx="100" cy="70" rx="50" ry="25" fill="none" stroke="rgba(255,255,255,0.4)" stroke-dasharray="2 3" />' +
+          '<ellipse cx="100" cy="70" rx="25" ry="50" fill="none" stroke="rgba(255,255,255,0.4)" stroke-dasharray="2 3" />' +
+          '<circle cx="85" cy="55" r="3.5" fill="#fff" stroke="#ec4899" />' +
+          '<circle cx="115" cy="85" r="3" fill="#fff" stroke="#831843" />' +
+          '</svg>';
+        var wfStr = '<span class="html-comment">/* 3. Přechodová síť (Gradient Mesh Tool - U) */</span>\n<span class="css-prop">Princip</span>:    <span class="css-val">Vytvoří vnitřní mřížku Bézierových křivek uvnitř plochy</span>;\n<span class="css-prop">Barevnost</span>:  <span class="css-val">Každému průsečíku sítě lze přiřadit vlastní nezávislou barvu</span>;\n<span class="css-prop">Výsledek</span>:   <span class="css-val">Fotorealistické vektorové stínování ovoce, automobilů i postav</span>;';
+        updateCodeDisplay('aiCode', wfStr);
+        feedback.innerHTML = 'Gradient Mesh (U): Rozdělí tvar na elastickou síť bodů, kde každý bod nese vlastní barvu pro fotorealistické přechody.';
+      } else if (sc === 'export') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<rect x="25" y="30" width="60" height="60" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" />' +
+          '<circle cx="55" cy="60" r="16" fill="#ec4899" />' +
+          '<path d="M 95,50 L 115,50 L 115,45 L 125,53 L 115,61 L 115,56 L 95,56 Z" fill="#38bdf8" />' +
+          '<rect x="135" y="25" width="45" height="24" rx="3" fill="#0f172a" stroke="#10b981" stroke-width="1" />' +
+          '<text x="157" y="41" fill="#10b981" font-family="monospace" font-size="9" text-anchor="middle">@1x PNG</text>' +
+          '<rect x="135" y="55" width="45" height="24" rx="3" fill="#0f172a" stroke="#10b981" stroke-width="1" />' +
+          '<text x="157" y="71" fill="#10b981" font-family="monospace" font-size="9" text-anchor="middle">@2x PNG</text>' +
+          '<rect x="135" y="85" width="45" height="24" rx="3" fill="#0f172a" stroke="#ec4899" stroke-width="1" />' +
+          '<text x="157" y="101" fill="#ec4899" font-family="monospace" font-size="9" text-anchor="middle">SVG Kód</text>' +
+          '</svg>';
+        var wfStr = '<span class="html-comment">/* 4. Export pro obrazovky (Asset Export) */</span>\n<span class="css-prop">Panel</span>:       <span class="css-val">Asset Export (Export podkladů)</span>;\n<span class="css-prop">Multi-scale</span>: <span class="css-val">Jedním klikem vygeneruje verze @1x, @2x, @3x pro Retina displeje</span>;\n<span class="css-prop">Optimalizace</span>:<span class="css-val">Export do SVG s minifikací CSS tříd a odstraněním metadat</span>;';
+        updateCodeDisplay('aiCode', wfStr);
+        feedback.innerHTML = 'Asset Export: Umožňuje označit libovolné ikony či ilustrace a hromadně je exportovat do @1x, @2x i webového SVG.';
+      }
+    };
+
+    // --- SLIDE 3: INKSCAPE SCENARIOS ---
+    window.setInkscapeScenario = function(sc, btnEl) {
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var stage = document.getElementById('inkPreviewStage');
+      var feedback = document.getElementById('inkFeedbackText');
+      if (!stage || !feedback) return;
+
+      if (sc === 'svg-native') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<rect x="25" y="20" width="150" height="100" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2" />' +
+          '<rect x="35" y="32" width="130" height="22" rx="4" fill="#0f172a" />' +
+          '<text x="45" y="47" fill="#10b981" font-family="monospace" font-size="9">&lt;svg xmlns="w3.org"&gt;</text>' +
+          '<rect x="35" y="60" width="130" height="48" rx="4" fill="#0f172a" />' +
+          '<text x="45" y="75" fill="#fbcfe8" font-family="monospace" font-size="8">&lt;path d="M20,70..." /&gt;</text>' +
+          '<text x="45" y="90" fill="#a7f3d0" font-family="monospace" font-size="8">&lt;circle cx="50" ... /&gt;</text>' +
+          '<circle cx="160" cy="100" r="12" fill="#ec4899" />' +
+          '</svg>';
+        var xmlStr = '<span class="html-comment">&lt;!-- Nativní formát Inkscape: standardní W3C SVG --&gt;</span>\n<span class="html-tag">&lt;svg</span> <span class="html-attr">xmlns</span>=<span class="html-val">"http://www.w3.org/2000/svg"</span>\n     <span class="html-attr">xmlns:inkscape</span>=<span class="html-val">"http://www.inkscape.org/namespaces/inkscape"</span><span class="html-tag">&gt;</span>\n  <span class="html-comment">&lt;!-- Žádná komprese ani binární obálka: čisté XML --&gt;</span>\n  <span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 20,70 Q 100,20 180,70"</span> <span class="html-attr">fill</span>=<span class="html-val">"none"</span> <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;/svg&gt;</span>';
+        updateCodeDisplay('inkCode', xmlStr);
+        feedback.innerHTML = 'Nativní SVG model: Inkscape ukládá přímo do W3C SVG. Soubor můžete okamžitě vložit do webové stránky nebo otevřít v textovém editoru.';
+      } else if (sc === 'xml-editor') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<rect x="20" y="15" width="160" height="110" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />' +
+          '<rect x="20" y="15" width="160" height="20" fill="#1e293b" />' +
+          '<text x="30" y="29" fill="#38bdf8" font-family="monospace" font-size="9" font-weight="bold">XML Editor (Ctrl+Shift+X)</text>' +
+          '<text x="28" y="50" fill="#a7f3d0" font-family="monospace" font-size="8">&gt; svg:svg</text>' +
+          '<text x="38" y="65" fill="#fbcfe8" font-family="monospace" font-size="8">&gt; svg:g id="layer1"</text>' +
+          '<text x="48" y="80" fill="#e9d5ff" font-family="monospace" font-size="8">&bull; svg:path id="p1" d="..."</text>' +
+          '<text x="48" y="95" fill="#e9d5ff" font-family="monospace" font-size="8">&bull; svg:rect id="r1" x="10"</text>' +
+          '<rect x="115" y="98" width="60" height="22" rx="3" fill="#10b981" />' +
+          '<text x="145" y="112" fill="#fff" font-family="monospace" font-size="8" text-anchor="middle" font-weight="bold">Set Attr</text>' +
+          '</svg>';
+        var xmlStr = '<span class="html-comment">/* XML Editor v Inkscape (Ctrl + Shift + X) */</span>\n<span class="css-prop">Funkce</span>:    <span class="css-val">Zobrazí kompletní DOM strom dokumentu přímo v panelu editoru</span>;\n<span class="css-prop">Editace</span>:   <span class="css-val">Můžete ručně přepisovat atributy d, fill, style i libovolná data-*</span>;\n<span class="css-prop">Přednost</span>:  <span class="css-val">Umožňuje vyčistit nechtěné atributy a ladit SVG pro vývojáře webu</span>;';
+        updateCodeDisplay('inkCode', xmlStr);
+        feedback.innerHTML = 'XML Editor (Ctrl+Shift+X): Umožňuje vidět a ručně editovat DOM strom uzlů, atributů a CSS vlastností přímo v prostředí Inkscape.';
+      } else if (sc === 'lpe') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<path d="M 25,100 L 70,30 L 130,110 L 175,40" fill="none" stroke="rgba(255,255,255,0.25)" stroke-dasharray="3 3" />' +
+          '<path d="M 25,100 Q 70,30 100,70 T 175,40" fill="none" stroke="#ec4899" stroke-width="3" />' +
+          '<circle cx="25" cy="100" r="4" fill="#fff" stroke="#ec4899" />' +
+          '<circle cx="70" cy="30" r="4" fill="#fff" stroke="#ec4899" />' +
+          '<circle cx="130" cy="110" r="4" fill="#fff" stroke="#ec4899" />' +
+          '<circle cx="175" cy="40" r="4" fill="#fff" stroke="#ec4899" />' +
+          '</svg>';
+        var xmlStr = '<span class="html-comment">/* Živé efekty cest (Live Path Effects &bull; LPE) */</span>\n<span class="css-prop">Princip</span>:    <span class="css-val">Nedestruktivní modifikátory aplikované na základní kostru cesty</span>;\n<span class="css-prop">Efekty</span>:     <span class="css-val">Spiro splines, B-Spline, Rohy (zaoblení), Ohnutí mřížkou, Zkosení</span>;\n<span class="css-prop">Editace</span>:    <span class="css-val">Původní polygonální body zůstávají plně editovatelné</span>;';
+        updateCodeDisplay('inkCode', xmlStr);
+        feedback.innerHTML = 'Live Path Effects (LPE): Nedestruktivní modifikátory (např. Spiro Splines). Upravujete hrubé body, ale křivka zůstává organicky hladká.';
+      } else if (sc === 'trace') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<rect x="25" y="30" width="60" height="70" fill="#1e293b" stroke="rgba(255,255,255,0.2)" />' +
+          '<circle cx="55" cy="65" r="18" fill="#64748b" />' +
+          '<path d="M 95,65 L 115,65 L 115,60 L 125,68 L 115,76 L 115,71 L 95,71 Z" fill="#10b981" />' +
+          '<rect x="135" y="30" width="55" height="70" fill="#0f172a" stroke="#10b981" stroke-width="1.5" />' +
+          '<path d="M 148,65 C 148,55 172,55 172,65 C 172,75 148,75 148,65 Z" fill="#ec4899" stroke="#fff" stroke-width="1" />' +
+          '<circle cx="148" cy="65" r="2.5" fill="#fff" stroke="#ec4899" />' +
+          '<circle cx="172" cy="65" r="2.5" fill="#fff" stroke="#ec4899" />' +
+          '</svg>';
+        var xmlStr = '<span class="html-comment">/* Trasování rastrů v Inkscape (Trace Bitmap &bull; Shift + Alt + B) */</span>\n<span class="css-prop">Algoritmus</span>: <span class="css-val">Potrace (Open-Source algoritmus pro vektorizaci hran)</span>;\n<span class="css-prop">Režimy</span>:     <span class="css-val">Jednoprůchodové (Threshold jasu) nebo Víceprůchodové (Barevné skeny)</span>;\n<span class="css-prop">Výsledek</span>:   <span class="css-val">Převede naskenovaný podpis či skicu na čisté Bézierovy křivky</span>;';
+        updateCodeDisplay('inkCode', xmlStr);
+        feedback.innerHTML = 'Trace Bitmap (Shift+Alt+B): Využívá algoritmus Potrace pro bleskovou vektorizaci černobílých skic, perokreseb a naskenovaných podpisů.';
+      }
+    };
+
+    // --- SLIDE 4: ZOOM SCENARIOS (RASTER VS. VECTOR) ---
+    function drawRasterSample(scaleFactor) {
+      var canvas = document.getElementById('rasterCanvas');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      var offCanvas = document.createElement('canvas');
+      offCanvas.width = 32;
+      offCanvas.height = 32;
+      var octx = offCanvas.getContext('2d');
+
+      octx.fillStyle = '#ec4899';
+      octx.beginPath();
+      octx.arc(16, 16, 14, 0, Math.PI * 2);
+      octx.fill();
+
+      octx.fillStyle = '#ffffff';
+      octx.beginPath();
+      octx.moveTo(16, 5);
+      octx.lineTo(19, 12);
+      octx.lineTo(27, 12);
+      octx.lineTo(21, 17);
+      octx.lineTo(23, 25);
+      octx.lineTo(16, 20);
+      octx.lineTo(9, 25);
+      octx.lineTo(11, 17);
+      octx.lineTo(5, 12);
+      octx.lineTo(13, 12);
+      octx.closePath();
+      octx.fill();
+
+      ctx.imageSmoothingEnabled = false;
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.scale(scaleFactor, scaleFactor);
+      ctx.drawImage(offCanvas, -16, -16);
+      ctx.restore();
+    }
+
+    window.setZoomScenario = function(mode, btnEl) {
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var rLabel = document.getElementById('rasterZoomLabel');
+      var vLabel = document.getElementById('vectorZoomLabel');
+      var vWrap = document.getElementById('vectorWrap');
+      var feedback = document.getElementById('zoomFeedbackText');
+
+      var scale = 1;
+      var labelTxt = '100 % (1×)';
+      var desc = '';
+
+      if (mode === '1x') {
+        scale = 1;
+        labelTxt = '100 % (1×)';
+        desc = 'Měřítko 100 %: V základním rozměru působí rastr i vektor ostře, protože 1 bod odpovídá zhruba 1 fyzickému pixelu.';
+      } else if (mode === '3x') {
+        scale = 2.5;
+        labelTxt = '250 % (2.5×)';
+        desc = 'Měřítko 250 %: U rastru se začíná projevovat vyhlazování hran a mírná neostrost, vektor je stále matematicky dokonalý.';
+      } else if (mode === '8x') {
+        scale = 5;
+        labelTxt = '600 % (6×)';
+        desc = 'Měřítko 600 %: Zřetelná pixelizace rastru! Objevují se schodovité zuby původní mřížky pixelů. Vektor zůstává břitce ostrý.';
+      } else if (mode === '16x') {
+        scale = 10;
+        labelTxt = '1400 % (14×)';
+        desc = 'Měřítko 1400 %: Extrémní rozpad! Rastr je pouhou mozaikou obřích barevných čtverců. Vektor je vykreslován podle rovnic a má nekonečné rozlišení.';
+      }
+
+      if (rLabel) rLabel.textContent = labelTxt;
+      if (vLabel) vLabel.textContent = labelTxt;
+      if (vWrap) vWrap.style.transform = 'scale(' + scale + ')';
+      if (feedback) feedback.textContent = desc;
+
+      drawRasterSample(scale);
+    };
+
+    // --- SLIDE 5: LIVE SHAPES SCENARIOS ---
+    window.setPrimitiveScenario = function(sc, btnEl) {
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var stage = document.getElementById('primPreviewStage');
+      var feedback = document.getElementById('primFeedbackText');
+      if (!stage || !feedback) return;
+
+      if (sc === 'rect-round') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<rect x="25" y="20" width="150" height="100" rx="22" ry="22" fill="rgba(236,72,153,0.18)" stroke="#ec4899" stroke-width="3" />' +
+          '<circle cx="47" cy="42" r="4" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '<circle cx="153" cy="42" r="4" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '<circle cx="47" cy="98" r="4" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '<circle cx="153" cy="98" r="4" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Obdélník s dynamicky zaoblenými rohy (Live Corners) --&gt;</span>\n<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"25"</span> <span class="html-attr">y</span>=<span class="html-val">"20"</span> <span class="html-attr">width</span>=<span class="html-val">"150"</span> <span class="html-attr">height</span>=<span class="html-val">"100"</span>\n      <span class="html-attr">rx</span>=<span class="html-val">"22"</span> <span class="html-attr">ry</span>=<span class="html-val">"22"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"rgba(236,72,153,0.18)"</span>\n      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>\n      <span class="html-attr">stroke-width</span>=<span class="html-val">"3"</span> <span class="html-tag">/&gt;</span>';
+        var cssStr = '<span class="css-sel">rect</span> {\n  <span class="css-prop">rx</span>: <span class="css-num">22</span><span class="css-unit">px</span>;\n  <span class="css-prop">ry</span>: <span class="css-num">22</span><span class="css-unit">px</span>;\n  <span class="css-prop">fill</span>: <span class="css-func">rgba</span>(<span class="css-num">236</span>, <span class="css-num">72</span>, <span class="css-num">153</span>, <span class="css-num">0.18</span>);\n  <span class="css-prop">stroke</span>: <span class="css-val">#ec4899</span>;\n  <span class="css-prop">stroke-width</span>: <span class="css-num">3</span><span class="css-unit">px</span>;\n}';
+        updateCodeDisplay('primCode', svgStr, cssStr);
+        feedback.innerHTML = 'Živý obdélník: Atributy <code>rx</code> a <code>ry</code> umožňují neinvazivní zaoblení rohů, které lze kdykoli vrátit na ostré hrany.';
+      } else if (sc === 'circle-grad') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<defs>' +
+          '<linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">' +
+          '<stop offset="0%" stop-color="#ec4899" />' +
+          '<stop offset="100%" stop-color="#a855f7" />' +
+          '</linearGradient>' +
+          '</defs>' +
+          '<ellipse cx="100" cy="70" rx="75" ry="48" fill="url(#grad1)" stroke="#ffffff" stroke-width="2" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Elipsa vyplněná lineárním gradientem --&gt;</span>\n<span class="html-tag">&lt;defs&gt;</span>\n  <span class="html-tag">&lt;linearGradient</span> <span class="html-attr">id</span>=<span class="html-val">"grad1"</span> <span class="html-attr">x1</span>=<span class="html-val">"0%"</span> <span class="html-attr">y1</span>=<span class="html-val">"0%"</span> <span class="html-attr">x2</span>=<span class="html-val">"100%"</span> <span class="html-attr">y2</span>=<span class="html-val">"100%"</span><span class="html-tag">&gt;</span>\n    <span class="html-tag">&lt;stop</span> <span class="html-attr">offset</span>=<span class="html-val">"0%"</span> <span class="html-attr">stop-color</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>\n    <span class="html-tag">&lt;stop</span> <span class="html-attr">offset</span>=<span class="html-val">"100%"</span> <span class="html-attr">stop-color</span>=<span class="html-val">"#a855f7"</span> <span class="html-tag">/&gt;</span>\n  <span class="html-tag">&lt;/linearGradient&gt;</span>\n<span class="html-tag">&lt;/defs&gt;</span>\n<span class="html-tag">&lt;ellipse</span> <span class="html-attr">cx</span>=<span class="html-val">"100"</span> <span class="html-attr">cy</span>=<span class="html-val">"70"</span> <span class="html-attr">rx</span>=<span class="html-val">"75"</span> <span class="html-attr">ry</span>=<span class="html-val">"48"</span>\n         <span class="html-attr">fill</span>=<span class="html-val">"url(#grad1)"</span> <span class="html-attr">stroke</span>=<span class="html-val">"#fff"</span> <span class="html-attr">stroke-width</span>=<span class="html-val">"2"</span> <span class="html-tag">/&gt;</span>';
+        var cssStr = '<span class="css-sel">ellipse</span> {\n  <span class="css-prop">fill</span>: <span class="css-func">url</span>(<span class="css-val">#grad1</span>);\n  <span class="css-prop">stroke</span>: <span class="css-val">#ffffff</span>;\n  <span class="css-prop">stroke-width</span>: <span class="css-num">2</span><span class="css-unit">px</span>;\n}';
+        updateCodeDisplay('primCode', svgStr, cssStr);
+        feedback.innerHTML = 'Elipsa a přechody: Vektorové přechody (Gradient) jsou definovány v sekci <code>&lt;defs&gt;</code> a přepočítávají se plynule při jakémkoli zvětšení.';
+      } else if (sc === 'star-poly') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<polygon points="100,18 145,45 145,95 100,122 55,95 55,45" fill="rgba(16,185,129,0.18)" stroke="#10b981" stroke-width="3" />' +
+          '<circle cx="100" cy="18" r="4" fill="#fff" stroke="#10b981" stroke-width="1.5" />' +
+          '<circle cx="145" cy="45" r="4" fill="#fff" stroke="#10b981" stroke-width="1.5" />' +
+          '<circle cx="145" cy="95" r="4" fill="#fff" stroke="#10b981" stroke-width="1.5" />' +
+          '<circle cx="100" cy="122" r="4" fill="#fff" stroke="#10b981" stroke-width="1.5" />' +
+          '<circle cx="55" cy="95" r="4" fill="#fff" stroke="#10b981" stroke-width="1.5" />' +
+          '<circle cx="55" cy="45" r="4" fill="#fff" stroke="#10b981" stroke-width="1.5" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Pravidelný šestiúhelník (Polygon definovaný body) --&gt;</span>\n<span class="html-tag">&lt;polygon</span> <span class="html-attr">points</span>=<span class="html-val">"100,18 145,45 145,95 100,122 55,95 55,45"</span>\n         <span class="html-attr">fill</span>=<span class="html-val">"rgba(16,185,129,0.18)"</span>\n         <span class="html-attr">stroke</span>=<span class="html-val">"#10b981"</span>\n         <span class="html-attr">stroke-width</span>=<span class="html-val">"3"</span> <span class="html-tag">/&gt;</span>';
+        var cssStr = '<span class="css-sel">polygon</span> {\n  <span class="css-prop">fill</span>: <span class="css-func">rgba</span>(<span class="css-num">16</span>, <span class="css-num">185</span>, <span class="css-num">129</span>, <span class="css-num">0.18</span>);\n  <span class="css-prop">stroke</span>: <span class="css-val">#10b981</span>;\n  <span class="css-prop">stroke-width</span>: <span class="css-num">3</span><span class="css-unit">px</span>;\n}';
+        updateCodeDisplay('primCode', svgStr, cssStr);
+        feedback.innerHTML = 'Mnohoúhelníky (Polygon): Prvek <code>&lt;polygon&gt;</code> automaticky propojí všechny definované souřadnice a tvar uzavře.';
+      } else if (sc === 'stroke-caps') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<line x1="25" y1="35" x2="175" y2="35" stroke="#ec4899" stroke-width="8" stroke-linecap="butt" />' +
+          '<line x1="25" y1="70" x2="175" y2="70" stroke="#a855f7" stroke-width="8" stroke-linecap="round" />' +
+          '<line x1="25" y1="105" x2="175" y2="105" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-dasharray="14 10" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Atributy tahu: zakončení a přerušení čáry --&gt;</span>\n<span class="html-tag">&lt;line</span> <span class="html-attr">x1</span>=<span class="html-val">"25"</span> <span class="html-attr">y1</span>=<span class="html-val">"35"</span> <span class="html-attr">x2</span>=<span class="html-val">"175"</span> <span class="html-attr">y2</span>=<span class="html-val">"35"</span> <span class="html-attr">stroke-linecap</span>=<span class="html-val">"butt"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;line</span> <span class="html-attr">x1</span>=<span class="html-val">"25"</span> <span class="html-attr">y1</span>=<span class="html-val">"70"</span> <span class="html-attr">x2</span>=<span class="html-val">"175"</span> <span class="html-attr">y2</span>=<span class="html-val">"70"</span> <span class="html-attr">stroke-linecap</span>=<span class="html-val">"round"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;line</span> <span class="html-attr">x1</span>=<span class="html-val">"25"</span> <span class="html-attr">y1</span>=<span class="html-val">"105"</span> <span class="html-attr">x2</span>=<span class="html-val">"175"</span> <span class="html-attr">y2</span>=<span class="html-val">"105"</span>\n      <span class="html-attr">stroke-linecap</span>=<span class="html-val">"round"</span> <span class="html-attr">stroke-dasharray</span>=<span class="html-val">"14 10"</span> <span class="html-tag">/&gt;</span>';
+        var cssStr = '<span class="css-sel">.dashed-line</span> {\n  <span class="css-prop">stroke</span>: <span class="css-val">#f59e0b</span>;\n  <span class="css-prop">stroke-width</span>: <span class="css-num">8</span><span class="css-unit">px</span>;\n  <span class="css-prop">stroke-linecap</span>: <span class="css-val">round</span>;\n  <span class="css-prop">stroke-dasharray</span>: <span class="css-num">14</span><span class="css-unit">px</span> <span class="css-num">10</span><span class="css-unit">px</span>;\n}';
+        updateCodeDisplay('primCode', svgStr, cssStr);
+        feedback.innerHTML = 'Stylizace tahu (Stroke): <code>stroke-linecap: round</code> zaoblí konce čar, <code>stroke-dasharray</code> definuje poměr délky čárky a mezery.';
+      }
+    };
+
+    // --- SLIDE 6: BEZIER PEN TOOL SCENARIOS ---
+    window.setBezierScenario = function(sc, btnEl) {
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var stage = document.getElementById('bezierPreviewStage');
+      var feedback = document.getElementById('bezierFeedbackText');
+      if (!stage || !feedback) return;
+
+      if (sc === 'corner') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<path d="M 30,115 L 100,25 L 170,115" fill="none" stroke="#ec4899" stroke-width="3" />' +
+          '<circle cx="30" cy="115" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '<circle cx="100" cy="25" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '<circle cx="170" cy="115" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Ostrý roh C0: úsečky spojené příkazem L (Line To) bez táhel --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,115 L 100,25 L 170,115"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"none"</span>\n      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>\n      <span class="html-attr">stroke-width</span>=<span class="html-val">"3"</span> <span class="html-tag">/&gt;</span>';
+        var mathStr = '<span class="html-comment">/* 1. Ostrý roh (C⁰ spojitost bez táhel) */</span>\n<span class="css-prop">P0 [x0, y0]</span>:  <span class="css-val">Počáteční kotevní bod [30, 115] (on-curve)</span>;\n<span class="css-prop">P1, P2</span>:       <span class="css-val">Nulová délka (táhla splývají s kotevními body)</span>;\n<span class="css-prop">P3 [x3, y3]</span>:  <span class="css-val">Koncový kotevní bod [170, 115] (on-curve)</span>;\n<span class="css-prop">Vektorový zápis</span>:<span class="css-val">SVG: L 100,25 | PDF: lineto | Paměť: 2 body (16 B)</span>;';
+        var guideStr = '<span class="html-comment">/* Ostrý roh (Corner Point) */</span>\n<span class="css-prop">Způsob kreslení</span>: <span class="css-val">Pouhé kliknutí myší bez tažení</span>;\n<span class="css-prop">Táhla</span>:           <span class="css-val">Nulová délka (žádná tečna)</span>;\n<span class="css-prop">Matematika</span>:      <span class="css-val">Spojitost C&sup0; (křivka je spojitá v pozici, ale láme derivaci)</span>;';
+        updateCodeDisplay('bezierCode', svgStr, mathStr, guideStr);
+        feedback.innerHTML = 'Ostrý uzel ($C^0$): Vzniká kliknutím bez tažení. Směr linie se okamžitě a skokově láme v kotevním bodě.';
+      } else if (sc === 'smooth') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<line x1="60" y1="40" x2="140" y2="40" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="3 3" />' +
+          '<circle cx="60" cy="40" r="3.5" fill="#a855f7" stroke="#fff" />' +
+          '<circle cx="140" cy="40" r="3.5" fill="#a855f7" stroke="#fff" />' +
+          '<path d="M 30,115 C 60,40 140,40 170,115" fill="none" stroke="#ec4899" stroke-width="3" />' +
+          '<circle cx="30" cy="115" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '<circle cx="170" cy="115" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Hladký oblouk C1: kubická křivka řízená 2 táhly C (Cubic Bezier) --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,115 C 60,40 140,40 170,115"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"none"</span>\n      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>\n      <span class="html-attr">stroke-width</span>=<span class="html-val">"3"</span> <span class="html-tag">/&gt;</span>';
+        var mathStr = '<span class="html-comment">/* 2. Hladký oblouk (C¹ kubický Bézier - 4 body) */</span>\n<span class="css-prop">P0 [30, 115]</span>:  <span class="css-val">Počáteční kotevní bod (on-curve)</span>;\n<span class="css-prop">P1 [60, 40]</span>:   <span class="css-val">1. řídicí bod tečny počátku (off-curve táhlo)</span>;\n<span class="css-prop">P2 [140, 40]</span>:  <span class="css-val">2. řídicí bod tečny konce (off-curve táhlo)</span>;\n<span class="css-prop">P3 [170, 115]</span>: <span class="css-val">Koncový kotevní bod (on-curve)</span>;\n<span class="css-prop">Vektorový zápis</span>:<span class="css-val">C 60,40 140,40 170,115 (8 čísel [x,y] = 32 B)</span>;';
+        var guideStr = '<span class="html-comment">/* Hladký uzel (Smooth Point) */</span>\n<span class="css-prop">Způsob kreslení</span>: <span class="css-val">Kliknutí myší a tažení ve směru tečny</span>;\n<span class="css-prop">Táhla</span>:           <span class="css-val">Leží v jedné přímce (úhel 180&deg;)</span>;\n<span class="css-prop">Matematika</span>:      <span class="css-val">Spojitost C&sup1; (první derivace je hladká, tečna navazuje)</span>;';
+        updateCodeDisplay('bezierCode', svgStr, mathStr, guideStr);
+        feedback.innerHTML = 'Hladký uzel ($C^1$): Táhla leží v jedné přímce. Pohnutí jedním táhlem plynule ovlivňuje protější stranu, aby křivka zůstala hladká.';
+      } else if (sc === 'scurve') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<line x1="50" y1="25" x2="80" y2="45" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="3 3" />' +
+          '<line x1="120" y1="95" x2="150" y2="115" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="3 3" />' +
+          '<path d="M 30,40 C 70,10 130,130 170,100" fill="none" stroke="#ec4899" stroke-width="3" />' +
+          '<circle cx="30" cy="40" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '<circle cx="170" cy="100" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '<circle cx="100" cy="70" r="4" fill="#10b981" stroke="#fff" stroke-width="1.5" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- S-křivka s inflexním bodem obratu zakřivení --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,40 C 70,10 130,130 170,100"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"none"</span>\n      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>\n      <span class="html-attr">stroke-width</span>=<span class="html-val">"3"</span> <span class="html-tag">/&gt;</span>';
+        var mathStr = '<span class="html-comment">/* 3. Kubická S-křivka (Inflexní bod obratu) */</span>\n<span class="css-prop">P0 [30, 40]</span>:   <span class="css-val">Počáteční kotevní uzel</span>;\n<span class="css-prop">P1 [70, 10]</span>:   <span class="css-val">Horní táhlo (vychyluje křivku nahoru)</span>;\n<span class="css-prop">P2 [130, 130]</span>: <span class="css-val">Spodní táhlo (vychyluje křivku opačně dolů)</span>;\n<span class="css-prop">P3 [170, 100]</span>: <span class="css-val">Koncový kotevní uzel</span>;\n<span class="css-prop">Inflexní bod</span>:  <span class="css-val">Kořen 2. derivace B"(t) = 0 při t &approx; 0.5 (zelený bod)</span>;';
+        var guideStr = '<span class="html-comment">/* S-křivka (Inflexní bod) */</span>\n<span class="css-prop">Inflexe</span>:         <span class="css-val">Místo, kde křivka přechází z konvexního tvaru do konkávního</span>;\n<span class="css-prop">Konstrukce</span>:      <span class="css-val">Táhla směřují na opačné strany od základní spojnice bodů</span>;';
+        updateCodeDisplay('bezierCode', svgStr, mathStr, guideStr);
+        feedback.innerHTML = 'Kubická S-křivka: Obsahuje inflexní bod (zeleně), kde křivka mění směr zakřivení. Ideální pro ladné tvary automobilů či vln.';
+      } else if (sc === 'cusp') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<line x1="100" y1="45" x2="60" y2="25" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="3 3" />' +
+          '<line x1="100" y1="45" x2="140" y2="25" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="3 3" />' +
+          '<circle cx="60" cy="25" r="3.5" fill="#a855f7" stroke="#fff" />' +
+          '<circle cx="140" cy="25" r="3.5" fill="#a855f7" stroke="#fff" />' +
+          '<path d="M 30,115 C 50,75 75,55 100,45 C 125,55 150,75 170,115" fill="none" stroke="#ec4899" stroke-width="3" />' +
+          '<circle cx="100" cy="45" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Zlomený uzel: dvě nezávislá táhla v jednom bodě --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,115 C 50,75 75,55 100,45 C 125,55 150,75 170,115"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"none"</span>\n      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>\n      <span class="html-attr">stroke-width</span>=<span class="html-val">"3"</span> <span class="html-tag">/&gt;</span>';
+        var mathStr = '<span class="html-comment">/* 4. Zlomený uzel (Cusp Point) - Klávesa Alt */</span>\n<span class="css-prop">Vrchol [100, 45]</span>:<span class="css-val">Společný kotevní bod dvou segmentů</span>;\n<span class="css-prop">Levé táhlo</span>:    <span class="css-val">Vektor k [60, 25] (tečna levého kubického oblouku)</span>;\n<span class="css-prop">Pravé táhlo</span>:   <span class="css-val">Vektor k [140, 25] (tečna pravého kubického oblouku)</span>;\n<span class="css-prop">Spojitost</span>:     <span class="css-val">C⁰ polohová spojitost, derivace v bodě nespojitá</span>;';
+        var guideStr = '<span class="html-comment">/* Zlomení táhla klávesou Alt */</span>\n<span class="css-prop">Funkce klávesy Alt</span>:<span class="css-val">Při tažení perem rozdělí spojená táhla do nezávislých ramen</span>;\n<span class="css-prop">Výsledek</span>:          <span class="css-val">Ostrý hrot se zakřivenými segmenty na obou stranách (např. vrchol srdce)</span>;';
+        updateCodeDisplay('bezierCode', svgStr, mathStr, guideStr);
+        feedback.innerHTML = 'Zalomení táhla (Alt): Umožňuje vytvořit ostrý hrot se zakřivenými segmenty (např. špička listu nebo horní zářez srdce).';
+      }
+    };
+
+    // --- SLIDE 7: PATH OPERATIONS SCENARIOS ---
+    window.setPathOpScenario = function(sc, btnEl) {
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var stage = document.getElementById('pathOpPreviewStage');
+      var feedback = document.getElementById('pathOpFeedbackText');
+      if (!stage || !feedback) return;
+
+      if (sc === 'original') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<path d="M 30,110 C 60,30 140,30 170,110" fill="none" stroke="#ec4899" stroke-width="6" stroke-linecap="round" />' +
+          '<circle cx="30" cy="110" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '<circle cx="170" cy="110" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Otevřená křivka: kotevní body na koncích nejsou propojeny --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,110 C 60,30 140,30 170,110"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"none"</span>\n      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>\n      <span class="html-attr">stroke-width</span>=<span class="html-val">"6"</span>\n      <span class="html-attr">stroke-linecap</span>=<span class="html-val">"round"</span> <span class="html-tag">/&gt;</span>';
+        var flowStr = '<span class="html-comment">/* Otevřená cesta */</span>\n<span class="css-prop">Stav</span>:         <span class="css-val">2 koncové kotevní body, žádná uzavřená plocha</span>;\n<span class="css-prop">Výplň</span>:        <span class="css-val">fill: none (pokud se zadá výplň, spojí se virtuální přímkou)</span>;';
+        updateCodeDisplay('pathOpCode', svgStr, flowStr);
+        feedback.innerHTML = 'Otevřená cesta má tloušťku tahu danou pouze parametrem <code>stroke-width</code>. Vektorová osa vede středem čáry.';
+      } else if (sc === 'join') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<path d="M 30,110 C 60,30 140,30 170,110 Z" fill="rgba(236,72,153,0.2)" stroke="#ec4899" stroke-width="4" />' +
+          '<circle cx="30" cy="110" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '<circle cx="170" cy="110" r="5" fill="#fff" stroke="#ec4899" stroke-width="2" />' +
+          '<line x1="30" y1="110" x2="170" y2="110" stroke="#10b981" stroke-width="3" stroke-dasharray="4 4" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Uzavřená cesta příkazem Z (Close Path / Ctrl+J) --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,110 C 60,30 140,30 170,110 Z"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"rgba(236,72,153,0.2)"</span>\n      <span class="html-attr">stroke</span>=<span class="html-val">"#ec4899"</span>\n      <span class="html-attr">stroke-width</span>=<span class="html-val">"4"</span> <span class="html-tag">/&gt;</span>';
+        var flowStr = '<span class="html-comment">/* Spojení cesty (Join) */</span>\n<span class="css-prop">Zkratka</span>:      <span class="css-val">Ctrl + J (Command + J na macOS)</span>;\n<span class="css-prop">SVG syntax</span>:   <span class="css-val">Písmeno Z na konci cesty automaticky spojí konec s počátkem</span>;\n<span class="css-prop">Výsledek</span>:     <span class="css-val">Vytvoření uzavřeného tvaru schopného nést plnohodnotnou výplň</span>;';
+        updateCodeDisplay('pathOpCode', svgStr, flowStr);
+        feedback.innerHTML = 'Spojení cesty (Ctrl+J / příkaz <code>Z</code>): Propojí konce otevřené křivky novým segmentem a vytvoří regulérní uzavřený tvar.';
+      } else if (sc === 'offset') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<path d="M 30,110 C 60,30 140,30 170,110" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" />' +
+          '<path d="M 15,120 C 50,15 150,15 185,120" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4 4" />' +
+          '<path d="M 45,100 C 70,45 130,45 155,100" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="4 4" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Posun cesty: přesně vypočtené rovnoběžné souběžné křivky --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">class</span>=<span class="html-val">"base-path"</span> <span class="html-attr">d</span>=<span class="html-val">"M 30,110 C 60,30 140,30 170,110"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">class</span>=<span class="html-val">"offset-outer"</span> <span class="html-attr">d</span>=<span class="html-val">"M 15,120 C 50,15 150,15 185,120"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">class</span>=<span class="html-val">"offset-inner"</span> <span class="html-attr">d</span>=<span class="html-val">"M 45,100 C 70,45 130,45 155,100"</span> <span class="html-tag">/&gt;</span>';
+        var flowStr = '<span class="html-comment">/* Posun cesty (Offset Path) */</span>\n<span class="css-prop">Menu</span>:         <span class="css-val">Objekt &rarr; Cesta &rarr; Posun cesty...</span>;\n<span class="css-prop">Využití</span>:      <span class="css-val">Bílý lem kolem samolepek, řezací ořezová linka plotru, stínování</span>;\n<span class="css-prop">Hodnota</span>:      <span class="css-val">Kladná hodnota expanduje vně, záporná smršťuje dovnitř</span>;';
+        updateCodeDisplay('pathOpCode', svgStr, flowStr);
+        feedback.innerHTML = 'Posun cesty (Offset Path): Generuje novou křivku v přesně konstantní vzdálenosti. Zásadní pro samolepky, řezací kontury a logotypy.';
+      } else if (sc === 'outline') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<path d="M 27,105 C 57,25 143,25 173,105 L 167,115 C 137,35 63,35 33,115 Z" fill="rgba(168,85,247,0.25)" stroke="#a855f7" stroke-width="2" />' +
+          '<circle cx="27" cy="105" r="3.5" fill="#fff" stroke="#a855f7" stroke-width="1.5" />' +
+          '<circle cx="173" cy="105" r="3.5" fill="#fff" stroke="#a855f7" stroke-width="1.5" />' +
+          '<circle cx="167" cy="115" r="3.5" fill="#fff" stroke="#a855f7" stroke-width="1.5" />' +
+          '<circle cx="33" cy="115" r="3.5" fill="#fff" stroke="#a855f7" stroke-width="1.5" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Převod tahu na obrys: z čáry se stal uzavřený polygon s plochou --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 27,105 C 57,25 143,25 173,105 L 167,115 C 137,35 63,35 33,115 Z"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"#a855f7"</span> <span class="html-tag">/&gt;</span>';
+        var flowStr = '<span class="html-comment">/* Převést tah na obrys (Outline Stroke) */</span>\n<span class="css-prop">Menu</span>:         <span class="css-val">Objekt &rarr; Cesta &rarr; Převést tah na obrys</span>;\n<span class="css-prop">Změna modelu</span>: <span class="css-val">Z otevřené čáry o tloušťce X px se stane uzavřený tvar s výplní</span>;\n<span class="css-prop">Nutnost</span>:      <span class="css-val">Povinné před řezacím plotrem, laserem i tiskem log</span>;';
+        updateCodeDisplay('pathOpCode', svgStr, flowStr);
+        feedback.innerHTML = 'Převod tahu na obrys (Outline Stroke): Transformuje čáru o tloušťce na polygon. Nůž plotru pak vyřeže skutečný obrys, ne jen vnitřní kostru.';
+      }
+    };
+
+    // --- SLIDE 8: PATHFINDER BOOLEAN SCENARIOS ---
+    window.setPathfinderScenario = function(sc, btnEl) {
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var stage = document.getElementById('boolPreviewStage');
+      var feedback = document.getElementById('boolFeedbackText');
+      if (!stage || !feedback) return;
+
+      if (sc === 'source') {
+        stage.innerHTML = '<svg viewBox="0 0 200 150" width="220" height="150">' +
+          '<rect x="35" y="35" width="75" height="75" fill="#ec4899" fill-opacity="0.8" stroke="#ec4899" stroke-width="2" />' +
+          '<circle cx="115" cy="100" r="42" fill="#a855f7" fill-opacity="0.8" stroke="#a855f7" stroke-width="2" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Dva samostatné překrývající se objekty před operací --&gt;</span>\n<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"35"</span> <span class="html-attr">y</span>=<span class="html-val">"35"</span> <span class="html-attr">width</span>=<span class="html-val">"75"</span> <span class="html-attr">height</span>=<span class="html-val">"75"</span> <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;circle</span> <span class="html-attr">cx</span>=<span class="html-val">"115"</span> <span class="html-attr">cy</span>=<span class="html-val">"100"</span> <span class="html-attr">r</span>=<span class="html-val">"42"</span> <span class="html-attr">fill</span>=<span class="html-val">"#a855f7"</span> <span class="html-tag">/&gt;</span>';
+        var logicStr = '<span class="html-comment">/* Výchozí geometrie */</span>\n<span class="css-prop">Objekt A</span>: <span class="css-val">Čtverec (35, 35, 75&times;75)</span>;\n<span class="css-prop">Objekt B</span>: <span class="css-val">Kruh (střed [115, 100], r = 42)</span>;\n<span class="css-prop">Stav</span>:     <span class="css-val">Dva samostatné prvky v DOM stromu</span>;';
+        updateCodeDisplay('boolCode', svgStr, logicStr);
+        feedback.innerHTML = 'Výchozí stav: Dva samostatné objekty. Připraveno pro booleovskou operaci v panelu Pathfinder nebo nástrojem Shape Builder.';
+      } else if (sc === 'unite') {
+        stage.innerHTML = '<svg viewBox="0 0 200 150" width="220" height="150">' +
+          '<path d="M 35,35 L 110,35 L 110,58 A 42,42 0 1,1 73,110 L 35,110 Z" fill="#ec4899" stroke="#fff" stroke-width="2" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Sjednocení (Unite): vznikla jediná spojitá obrysová cesta --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 35,35 L 110,35 L 110,58 A 42,42 0 1,1 73,110 L 35,110 Z"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>';
+        var logicStr = '<span class="html-comment">/* Sjednocení (Unite / Union) */</span>\n<span class="css-prop">Množina</span>:  <span class="css-val">A &cup; B (Sjednocení ploch)</span>;\n<span class="css-prop">Výsledek</span>: <span class="css-val">Sloučení do 1 uzavřené cesty, vnitřní linky zanikají</span>;';
+        updateCodeDisplay('boolCode', svgStr, logicStr);
+        feedback.innerHTML = 'Sjednocení (Unite): Oba tvary se slií do jediné spojité cesty. Vnitřní překrývající se kontury beze zbytku zaniknou.';
+      } else if (sc === 'minus') {
+        stage.innerHTML = '<svg viewBox="0 0 200 150" width="220" height="150">' +
+          '<path d="M 35,35 L 110,35 L 110,58 A 42,42 0 0,0 73,110 L 35,110 Z" fill="#ec4899" stroke="#fff" stroke-width="2" />' +
+          '<circle cx="115" cy="100" r="42" fill="none" stroke="rgba(255,255,255,0.2)" stroke-dasharray="3 3" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Rozdíl: horní kruh vykousne svůj profil ze spodního čtverce --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 35,35 L 110,35 L 110,58 A 42,42 0 0,0 73,110 L 35,110 Z"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>';
+        var logicStr = '<span class="html-comment">/* Rozdíl (Minus Front / Difference) */</span>\n<span class="css-prop">Množina</span>:  <span class="css-val">A &setminus; B (Rozdíl ploch)</span>;\n<span class="css-prop">Výsledek</span>: <span class="css-val">Objekt B vyřízne svůj tvar z objektu A a sám zanikne</span>;';
+        updateCodeDisplay('boolCode', svgStr, logicStr);
+        feedback.innerHTML = 'Rozdíl (Minus Front): Horní objekt se chová jako raznice &ndash; vyrazí svůj tvar z podkladového objektu.';
+      } else if (sc === 'intersect') {
+        stage.innerHTML = '<svg viewBox="0 0 200 150" width="220" height="150">' +
+          '<rect x="35" y="35" width="75" height="75" fill="none" stroke="rgba(255,255,255,0.2)" stroke-dasharray="3 3" />' +
+          '<circle cx="115" cy="100" r="42" fill="none" stroke="rgba(255,255,255,0.2)" stroke-dasharray="3 3" />' +
+          '<path d="M 73,110 A 42,42 0 0,1 110,58 L 110,110 Z" fill="#10b981" stroke="#fff" stroke-width="2" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Průnik: zachována pouze oblast vzájemného překryvu obou tvarů --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 73,110 A 42,42 0 0,1 110,58 L 110,110 Z"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"#10b981"</span> <span class="html-tag">/&gt;</span>';
+        var logicStr = '<span class="html-comment">/* Průnik (Intersect) */</span>\n<span class="css-prop">Množina</span>:  <span class="css-val">A &cap; B (Společný průnik)</span>;\n<span class="css-prop">Výsledek</span>: <span class="css-val">Ponechá pouze plochu překryvu, vše ostatní smaže</span>;';
+        updateCodeDisplay('boolCode', svgStr, logicStr);
+        feedback.innerHTML = 'Průnik (Intersect): Zachová výhradně společnou plochu, kde se oba tvary kryly. Vše vnější je odstraněno.';
+      } else if (sc === 'exclude') {
+        stage.innerHTML = '<svg viewBox="0 0 200 150" width="220" height="150">' +
+          '<path d="M 35,35 L 110,35 L 110,58 A 42,42 0 1,1 73,110 L 35,110 Z M 73,110 A 42,42 0 0,1 110,58 L 110,110 Z" fill-rule="evenodd" fill="#f59e0b" stroke="#fff" stroke-width="1.5" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Vyloučení: překryvná plocha je vyříznuta (XOR logika) --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">fill-rule</span>=<span class="html-val">"evenodd"</span> <span class="html-attr">fill</span>=<span class="html-val">"#f59e0b"</span>\n      <span class="html-attr">d</span>=<span class="html-val">"M 35,35 L 110,35 ... Z"</span> <span class="html-tag">/&gt;</span>';
+        var logicStr = '<span class="html-comment">/* Vyloučení (Exclude / XOR) */</span>\n<span class="css-prop">Množina</span>:  <span class="css-val">(A &cup; B) &setminus; (A &cap; B)</span>;\n<span class="css-prop">Výsledek</span>: <span class="css-val">Společný průnik se stane průhledným otvorem</span>;';
+        updateCodeDisplay('boolCode', svgStr, logicStr);
+        feedback.innerHTML = 'Vyloučení (Exclude / XOR): Místo vzájemného překryvu se stane průhlednou dírou, zatímco okrajové části zůstanou zachovány.';
+      }
+    };
+
+    // --- SLIDE 9: LAYOUT, MASK & TYPOGRAPHY SCENARIOS ---
+    window.setLayoutScenario = function(sc, btnEl) {
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var stage = document.getElementById('layoutPreviewStage');
+      var feedback = document.getElementById('layoutFeedbackText');
+      if (!stage || !feedback) return;
+
+      if (sc === 'align') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<line x1="15" y1="70" x2="185" y2="70" stroke="rgba(255,255,255,0.2)" stroke-dasharray="3 3" />' +
+          '<rect x="25" y="45" width="40" height="50" rx="4" fill="#ec4899" />' +
+          '<rect x="80" y="30" width="40" height="80" rx="4" fill="#a855f7" />' +
+          '<rect x="135" y="50" width="40" height="40" rx="4" fill="#10b981" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Objekty se společnou osou a rovnoměrnou mezerou 15px --&gt;</span>\n<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"25"</span> <span class="html-attr">y</span>=<span class="html-val">"45"</span> <span class="html-attr">width</span>=<span class="html-val">"40"</span> <span class="html-attr">height</span>=<span class="html-val">"50"</span> <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"80"</span> <span class="html-attr">y</span>=<span class="html-val">"30"</span> <span class="html-attr">width</span>=<span class="html-val">"40"</span> <span class="html-attr">height</span>=<span class="html-val">"80"</span> <span class="html-attr">fill</span>=<span class="html-val">"#a855f7"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;rect</span> <span class="html-attr">x</span>=<span class="html-val">"135"</span> <span class="html-attr">y</span>=<span class="html-val">"50"</span> <span class="html-attr">width</span>=<span class="html-val">"40"</span> <span class="html-attr">height</span>=<span class="html-val">"40"</span> <span class="html-attr">fill</span>=<span class="html-val">"#10b981"</span> <span class="html-tag">/&gt;</span>';
+        var tipStr = '<span class="html-comment">/* Zarovnání a distribuce (Align Panel) */</span>\n<span class="css-prop">Align to Selection</span>: <span class="css-val">Zarovná objekty vůči jejich společnému ohraničení</span>;\n<span class="css-prop">Align to Key Object</span>:<span class="css-val">Kliknutím na objekt zvolíte kotvu, ostatní se pohnou k němu</span>;\n<span class="css-prop">Distribute Spacing</span>: <span class="css-val">Nastaví exaktní mezeru v mm nebo px mezi tvary</span>;';
+        updateCodeDisplay('layoutCode', svgStr, tipStr);
+        feedback.innerHTML = 'Zarovnání objektů: Panel Align umožňuje vycentrovat objekty podél osy a nastavit exaktní rozestup mezi nimi.';
+      } else if (sc === 'mask') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<defs>' +
+          '<clipPath id="starMask">' +
+          '<polygon points="100,15 120,60 170,60 130,90 145,135 100,105 55,135 70,90 30,60 80,60" />' +
+          '</clipPath>' +
+          '</defs>' +
+          '<g clip-path="url(#starMask)">' +
+          '<rect x="20" y="10" width="160" height="125" fill="#ec4899" />' +
+          '<circle cx="60" cy="45" r="35" fill="#a855f7" />' +
+          '<circle cx="140" cy="85" r="40" fill="#f59e0b" />' +
+          '</g>' +
+          '<polygon points="100,15 120,60 170,60 130,90 145,135 100,105 55,135 70,90 30,60 80,60" fill="none" stroke="#fff" stroke-width="1.5" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Ořezová maska: tvar hvězdy ořezává barevnou grafiku pod sebou --&gt;</span>\n<span class="html-tag">&lt;clipPath</span> <span class="html-attr">id</span>=<span class="html-val">"starMask"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;polygon</span> <span class="html-attr">points</span>=<span class="html-val">"100,15 120,60 170,60 130,90 ... "</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;/clipPath&gt;</span>\n<span class="html-tag">&lt;g</span> <span class="html-attr">clip-path</span>=<span class="html-val">"url(#starMask)"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;rect</span> <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>\n  <span class="html-tag">&lt;circle</span> <span class="html-attr">fill</span>=<span class="html-val">"#f59e0b"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;/g&gt;</span>';
+        var tipStr = '<span class="html-comment">/* Ořezová maska (Clipping Mask) */</span>\n<span class="css-prop">Zkratka</span>:   <span class="css-val">Ctrl + 7 (Command + 7 na macOS)</span>;\n<span class="css-prop">Pravidlo</span>:  <span class="css-val">Ořezový tvar MUSÍ ležet ve vrstvách zcela nahoře nad ořezávanými objekty</span>;\n<span class="css-prop">Zrušení</span>:   <span class="css-val">Alt + Ctrl + 7</span>;';
+        updateCodeDisplay('layoutCode', svgStr, tipStr);
+        feedback.innerHTML = 'Ořezová maska (Ctrl+7): Vrchní tvar funguje jako okénko, které neinvazivně ořeže cokoli, co leží pod ním.';
+      } else if (sc === 'compound') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<path d="M 100,20 A 50,50 0 1,1 99.9,20 Z M 100,48 A 22,22 0 1,0 100.1,48 Z" fill="#ec4899" fill-rule="evenodd" stroke="#fff" stroke-width="1.5" />' +
+          '<line x1="15" y1="70" x2="185" y2="70" stroke="rgba(255,255,255,0.2)" stroke-dasharray="3 3" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Složená cesta: vnější a vnitřní kružnice tvoří 1 objekt s dírou --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 100,20 A 50,50 0 1,1 99.9,20 Z M 100,48 A 22,22 0 1,0 100.1,48 Z"</span>\n      <span class="html-attr">fill-rule</span>=<span class="html-val">"evenodd"</span>\n      <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>';
+        var tipStr = '<span class="html-comment">/* Složená cesta (Compound Path) */</span>\n<span class="css-prop">Zkratka</span>:   <span class="css-val">Ctrl + 8 (Command + 8 na macOS)</span>;\n<span class="css-prop">Princip</span>:   <span class="css-val">Umožňuje vyříznout díru do plochy (např. vnitřek písmen O, B, P nebo kobliha)</span>;\n<span class="css-prop">Pravidlo</span>:  <span class="css-val">Řídí se pravidlem fill-rule (evenodd / nonzero)</span>;';
+        updateCodeDisplay('layoutCode', svgStr, tipStr);
+        feedback.innerHTML = 'Složená cesta (Ctrl+8): Umožňuje definovat vnitřní "díry" v objektu (základ písmen O, A, P, D nebo mezikruží).';
+      } else if (sc === 'outlines') {
+        stage.innerHTML = '<svg viewBox="0 0 200 140" width="220" height="150">' +
+          '<path d="M 40,35 L 58,35 L 75,85 L 92,35 L 110,35 L 85,105 L 65,105 Z" fill="rgba(236,72,153,0.3)" stroke="#ec4899" stroke-width="2" />' +
+          '<path d="M 115,35 L 165,35 L 165,50 L 135,50 L 135,63 L 160,63 L 160,77 L 135,77 L 135,90 L 165,90 L 165,105 L 115,105 Z" fill="rgba(168,85,247,0.3)" stroke="#a855f7" stroke-width="2" />' +
+          '<circle cx="40" cy="35" r="3.5" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '<circle cx="58" cy="35" r="3.5" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '<circle cx="75" cy="85" r="3.5" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '<circle cx="92" cy="35" r="3.5" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '<circle cx="110" cy="35" r="3.5" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '<circle cx="85" cy="105" r="3.5" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '<circle cx="65" cy="105" r="3.5" fill="#fff" stroke="#ec4899" stroke-width="1.5" />' +
+          '<circle cx="115" cy="35" r="3.5" fill="#fff" stroke="#a855f7" stroke-width="1.5" />' +
+          '<circle cx="165" cy="35" r="3.5" fill="#fff" stroke="#a855f7" stroke-width="1.5" />' +
+          '<circle cx="165" cy="105" r="3.5" fill="#fff" stroke="#a855f7" stroke-width="1.5" />' +
+          '<circle cx="115" cy="105" r="3.5" fill="#fff" stroke="#a855f7" stroke-width="1.5" />' +
+          '</svg>';
+        var svgStr = '<span class="html-comment">&lt;!-- Text převedený na křivky (Create Outlines / Shift+Ctrl+O) --&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 40,35 L 58,35 L 75,85 L 92,35 ... Z"</span> <span class="html-attr">fill</span>=<span class="html-val">"#ec4899"</span> <span class="html-tag">/&gt;</span>\n<span class="html-tag">&lt;path</span> <span class="html-attr">d</span>=<span class="html-val">"M 115,35 L 165,35 L 165,50 ... Z"</span> <span class="html-attr">fill</span>=<span class="html-val">"#a855f7"</span> <span class="html-tag">/&gt;</span>';
+        var tipStr = '<span class="html-comment">/* Převod textu na křivky (Create Outlines) */</span>\n<span class="css-prop">Zkratka</span>:   <span class="css-val">Shift + Ctrl + O (Shift + Command + O na macOS)</span>;\n<span class="css-prop">Důvod</span>:     <span class="css-val">Odstranění závislosti na instalovaném fontu při odeslání do tisku či plotru</span>;\n<span class="css-prop">Důsledek</span>:  <span class="css-val">Text již nelze editovat psaním, chová se jako polygon</span>;';
+        updateCodeDisplay('layoutCode', svgStr, tipStr);
+        feedback.innerHTML = 'Create Outlines (Shift+Ctrl+O): Nevratně převede písmena na Bézierovy křivky s viditelnými kotevními body. Zabraňuje rozsypání sazby v tiskárně bez vašeho fontu.';
+      }
+    };
+
+    // Inicializace výchozího stavu po načtení DOM
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. Illustrator demo
+      var aiStage = document.getElementById('aiPreviewStage');
+      if (aiStage) {
+        var s = aiStage.closest('.interactive-showcase');
+        var b = s ? s.querySelector('.btn-scenario') : null;
+        setIllustratorScenario('artboards', b);
+      }
+      // 2. Inkscape demo
+      var inkStage = document.getElementById('inkPreviewStage');
+      if (inkStage) {
+        var s = inkStage.closest('.interactive-showcase');
+        var b = s ? s.querySelector('.btn-scenario') : null;
+        setInkscapeScenario('svg-native', b);
+      }
+      // 3. Zoom demo
+      setZoomScenario('1x', document.querySelector('#slide-4 .btn-scenario') || document.querySelector('.showcase-toolbar .btn-scenario'));
+      // 4. Primitiva demo
+      var pStage = document.getElementById('primPreviewStage');
+      if (pStage) {
+        var s = pStage.closest('.interactive-showcase');
+        var b = s ? s.querySelector('.btn-scenario') : null;
+        setPrimitiveScenario('rect-round', b);
+      }
+      // 5. Bezier demo
+      var bStage = document.getElementById('bezierPreviewStage');
+      if (bStage) {
+        var s = bStage.closest('.interactive-showcase');
+        var b = s ? s.querySelector('.btn-scenario') : null;
+        setBezierScenario('corner', b);
+      }
+      // 6. PathOp demo
+      var poStage = document.getElementById('pathOpPreviewStage');
+      if (poStage) {
+        var s = poStage.closest('.interactive-showcase');
+        var b = s ? s.querySelector('.btn-scenario') : null;
+        setPathOpScenario('original', b);
+      }
+      // 7. Pathfinder demo
+      var boolStage = document.getElementById('boolPreviewStage');
+      if (boolStage) {
+        var s = boolStage.closest('.interactive-showcase');
+        var b = s ? s.querySelector('.btn-scenario') : null;
+        setPathfinderScenario('source', b);
+      }
+      // 8. Layout demo
+      var lStage = document.getElementById('layoutPreviewStage');
+      if (lStage) {
+        var s = lStage.closest('.interactive-showcase');
+        var b = s ? s.querySelector('.btn-scenario') : null;
+        setLayoutScenario('align', b);
+      }
+
+      // Propojení modálního okna slovníku (G)
+      var glossaryBtn = document.getElementById('glossaryBtn');
+      var glossaryModal = document.getElementById('glossaryModal');
+      var glossaryCloseBtn = document.getElementById('glossaryCloseBtn');
+
+      function openGlossary() {
+        if (glossaryModal) {
+          glossaryModal.classList.add('is-open');
+          glossaryModal.setAttribute('aria-hidden', 'false');
+        }
+      }
+      function closeGlossary() {
+        if (glossaryModal) {
+          glossaryModal.classList.remove('is-open');
+          glossaryModal.setAttribute('aria-hidden', 'true');
+        }
+      }
+
+      if (glossaryBtn) glossaryBtn.addEventListener('click', openGlossary);
+      if (glossaryCloseBtn) glossaryCloseBtn.addEventListener('click', closeGlossary);
+      if (glossaryModal) {
+        glossaryModal.addEventListener('click', function(e) {
+          if (e.target === glossaryModal) closeGlossary();
+        });
+      }
+
+      // Klávesa G pro slovník
+      document.addEventListener('keydown', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.key === 'g' || e.key === 'G') {
+          e.preventDefault();
+          if (glossaryModal && glossaryModal.classList.contains('is-open')) {
+            closeGlossary();
+          } else {
+            openGlossary();
+          }
+        }
+      });
+    });
+  </script>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>

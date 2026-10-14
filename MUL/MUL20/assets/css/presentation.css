@@ -2736,3 +2736,376 @@
   flex-direction: column;
   gap: 0.65rem;
 }
+
+/* ==========================================================================
+   VEKTOROVÉ NÁSTROJE & GRAFICKÁ TVORBA (MUL20-06)
+   Interaktivní panely, taby kódu (SVG/XML/CSS) a vizuální simulátory
+   ========================================================================== */
+
+.code-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.code-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.15rem;
+  border-radius: 5px;
+  border: 1px solid var(--border-subtle);
+}
+
+.code-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.code-tab:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.code-tab.is-active {
+  color: var(--accent);
+  background: rgba(236, 72, 153, 0.16);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  font-weight: 700;
+}
+
+.interactive-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.9rem;
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .interactive-showcase {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: var(--shadow-sm);
+}
+
+.showcase-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.showcase-toolbar-label {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-scenario {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-scenario:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-scenario.is-active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+  font-weight: 700;
+}
+
+.showcase-preview-box {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1.5px dashed rgba(236, 72, 153, 0.35);
+  border-radius: 6px;
+  padding: 0.85rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 180px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+[data-theme="light"] .showcase-preview-box {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(236, 72, 153, 0.4);
+}
+
+.stage-feedback {
+  background: rgba(0, 0, 0, 0.28);
+  border-radius: 5px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.stage-feedback strong {
+  color: #fff;
+}
+
+[data-theme="light"] .stage-feedback strong {
+  color: #0f172a;
+}
+
+/* Srovnávač zvětšení Rastr vs. Vektor */
+.zoom-compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.zoom-compare-card {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.zoom-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.zoom-viewport {
+  width: 100%;
+  height: 130px;
+  background: #020617;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.raster-sample-pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  transition: transform 0.2s ease;
+}
+
+.vector-sample-clean {
+  transition: transform 0.2s ease;
+}
+
+/* Kotevní body a Bézier táhla v SVG simulátoru */
+.node-point {
+  fill: #fff;
+  stroke: var(--accent);
+  stroke-width: 2px;
+  cursor: pointer;
+  transition: r 0.15s ease;
+}
+
+.node-point:hover {
+  r: 6;
+  fill: var(--accent);
+}
+
+.handle-line {
+  stroke: rgba(168, 85, 247, 0.8);
+  stroke-width: 1.5px;
+  stroke-dasharray: 3 3;
+}
+
+.handle-point {
+  fill: #a855f7;
+  stroke: #fff;
+  stroke-width: 1.5px;
+  cursor: pointer;
+}
+
+.alignment-matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.alignment-matrix-table th,
+.alignment-matrix-table td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-subtle);
+  text-align: left;
+}
+
+.alignment-matrix-table th {
+  background: rgba(255, 255, 255, 0.04);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.alignment-matrix-table td code {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.alignment-matrix-table .col-highlight {
+  background: rgba(236, 72, 153, 0.06);
+}
+
+/* ==========================================================================
+   PANELY PRO SPECIFIKACI PROGRAMŮ A KLÁVESOVÉ ZKRATKY (SLIDE 2 & 3)
+   ========================================================================== */
+.software-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.65rem;
+}
+
+.software-info-panel,
+.software-shortcuts-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .software-info-panel,
+[data-theme="light"] .software-shortcuts-panel {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.software-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.software-panel-header .header-left-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.software-panel-header .icon {
+  width: 14px;
+  height: 14px;
+}
+
+.software-specs-table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: 0.22rem;
+  column-gap: 0.8rem;
+  font-size: 0.76rem;
+  align-items: baseline;
+}
+
+.software-specs-table .spec-lbl {
+  color: var(--text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.software-specs-table .spec-val {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.software-specs-table .spec-val code {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.software-shortcuts-chips {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.3rem 0.5rem;
+}
+
+.software-shortcut-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  padding: 0.18rem 0.4rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+}
+
+[data-theme="light"] .software-shortcut-chip {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.software-shortcut-chip .shortcut-name {
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.73rem;
+}
+
+.software-shortcut-chip .key-badge {
+  font-size: 0.7rem;
+  padding: 0.12rem 0.38rem;
+  flex-shrink: 0;
+}
+
