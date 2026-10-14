@@ -720,3 +720,567 @@
   padding: 0.75rem 1rem;
   margin-top: 0.65rem;
 }
+
+/* ==========================================================================
+   LEKCE 07: FLEXBOX & CSS GRID VIZUALIZÉRY A INTERAKTIVNÍ SANDBOXY
+   ========================================================================== */
+
+/* Společný kontejner pro interaktivní hřiště */
+.layout-playground {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+
+[data-theme="light"] .layout-playground {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: var(--shadow-sm);
+}
+
+.playground-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.playground-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.playground-title .icon {
+  color: var(--accent);
+}
+
+.playground-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+.control-group-label {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  min-width: 110px;
+}
+
+.btn-ctrl-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  font-weight: 600;
+  padding: 0.22rem 0.55rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-ctrl-chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-ctrl-chip.is-active {
+  background: var(--accent);
+  color: #030712;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  font-weight: 700;
+}
+
+/* Plátno scény (Flexbox / Grid stage) */
+.stage-canvas {
+  background: rgba(0, 0, 0, 0.35);
+  background-image: 
+    linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.03) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.03) 75%);
+  background-size: 20px 20px;
+  border: 1.5px dashed rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  min-height: 140px;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] .stage-canvas {
+  background-color: rgba(0, 0, 0, 0.03);
+  border-color: rgba(2, 132, 199, 0.35);
+}
+
+/* Flex stage položky */
+.stage-canvas.is-flex {
+  display: flex;
+  gap: 0.75rem;
+  transition: justify-content 0.25s ease, align-items 0.25s ease, flex-direction 0.25s ease;
+}
+
+.flex-demo-item {
+  background: rgba(56, 189, 248, 0.15);
+  border: 1.5px solid var(--accent);
+  border-radius: 6px;
+  padding: 0.6rem 0.85rem;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 65px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flex-demo-item.item-tall {
+  min-height: 85px;
+  border-color: #a855f7;
+  background: rgba(168, 85, 247, 0.18);
+}
+
+.flex-demo-item.item-highlight {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.flex-demo-item .item-num {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+
+.flex-demo-item .item-sub {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+}
+
+/* Grid stage */
+.stage-canvas.is-grid {
+  display: grid;
+  gap: 0.75rem;
+  min-height: 160px;
+  transition: all 0.25s ease;
+}
+
+.grid-demo-item {
+  background: rgba(99, 102, 241, 0.18);
+  border: 1.5px solid #818cf8;
+  border-radius: 6px;
+  padding: 0.6rem;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 55px;
+  transition: all 0.25s ease;
+}
+
+.grid-demo-item.featured {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: #f59e0b;
+}
+
+/* Stavové zprávy pod plátnem */
+.stage-feedback {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.stage-feedback code {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Visual Axes Badges & Diagrams */
+.axis-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.axis-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 4px;
+}
+
+.axis-badge.main {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.axis-badge.cross {
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+}
+
+/* Subgrid vizuální srovnání */
+.subgrid-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+
+.subgrid-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.subgrid-card.has-subgrid {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
+  background: rgba(16, 185, 129, 0.04);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.subgrid-row-header {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+
+.subgrid-row-text {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 0.6rem;
+}
+
+.subgrid-row-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  background: rgba(56, 189, 248, 0.1);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  align-self: flex-start;
+  margin-bottom: 0.6rem;
+}
+
+.subgrid-row-btn {
+  background: var(--accent);
+  color: #030712;
+  border: none;
+  font-weight: 700;
+  font-size: 0.74rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Srovnávací matice zarovnání */
+.alignment-matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+}
+
+.alignment-matrix-table th,
+.alignment-matrix-table td {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border-subtle);
+  text-align: left;
+}
+
+.alignment-matrix-table th {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.alignment-matrix-table td code {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.alignment-matrix-table .col-highlight {
+  background: rgba(56, 189, 248, 0.04);
+}
+
+/* ==========================================================================
+   INTERAKTIVNÍ KÓDOVÉ PANELY S PŘEPÍNAČEM CSS / HTML & ŽIVÝM NÁHLEDEM
+   ========================================================================== */
+
+/* Hlavička s taby pro kód */
+.code-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.code-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.15rem;
+  border-radius: 5px;
+  border: 1px solid var(--border-subtle);
+}
+
+.code-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.18rem 0.55rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.code-tab:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.code-tab.is-active {
+  color: var(--accent);
+  background: rgba(56, 189, 248, 0.16);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Interaktivní scénářový panel */
+.interactive-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  box-shadow: var(--shadow-md);
+}
+
+[data-theme="light"] .interactive-showcase {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: var(--shadow-sm);
+}
+
+.showcase-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.showcase-toolbar-label {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-scenario {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-scenario:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-scenario.is-active {
+  background: var(--accent);
+  color: #030712;
+  border-color: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+  font-weight: 700;
+}
+
+/* Živý náhled v pískovišti */
+.showcase-preview-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1.5px dashed rgba(56, 189, 248, 0.3);
+  border-radius: 6px;
+  padding: 0.85rem;
+  position: relative;
+  min-height: 90px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] .showcase-preview-box {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(2, 132, 199, 0.35);
+}
+
+/* Flex growth demo prvky */
+.growth-stage {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.growth-item {
+  background: rgba(56, 189, 248, 0.14);
+  border: 1.5px solid var(--accent);
+  border-radius: 6px;
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 60px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.growth-item.accent-purple {
+  background: rgba(168, 85, 247, 0.16);
+  border-color: #a855f7;
+}
+
+.growth-item.accent-emerald {
+  background: rgba(16, 185, 129, 0.16);
+  border-color: #10b981;
+}
+
+.growth-item.accent-amber {
+  background: rgba(245, 158, 11, 0.16);
+  border-color: #f59e0b;
+}
+
+.growth-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: 0.25rem;
+}
+
+/* Mini Navbar demo pro margin-left: auto */
+.demo-navbar-box {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.55rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.demo-nav-logo {
+  font-weight: 800;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.demo-nav-link {
+  color: var(--text-secondary);
+}
+
+.demo-nav-profile {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid #10b981;
+  color: #10b981;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Auto-fill vs Auto-fit ghost stopy */
+.ghost-slot {
+  border: 1.5px dashed rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent-amber);
+  min-height: 55px;
+  text-align: center;
+  padding: 0.35rem;
+}
+

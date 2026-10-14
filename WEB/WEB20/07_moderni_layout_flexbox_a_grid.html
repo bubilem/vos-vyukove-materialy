@@ -35,7 +35,7 @@
         <div class="lesson-indicator">
           <span>Lekce 07</span>
           <span class="divider">&bull;</span>
-          <span>Moderní tvorba layoutu &bull; Flexbox a Grid</span>
+          <span>Moderní tvorba layoutu &bull; Flexbox a CSS Grid</span>
         </div>
       </div>
       <div class="header-right">
@@ -54,7 +54,7 @@
         <div class="hero-badge">Modul WEB20 &bull; 7. přednáška (45 min)</div>
         <h1 class="hero-title">Moderní tvorba layoutu: Flexbox &amp; CSS Grid</h1>
         <p class="hero-desc">
-          Od nepoddajného plovoucího layoutu (float) k nativním standardům CSS3: jednorozměrná pružná rozvržení (Flexbox) a dvourozměrný mřížkový systém (CSS Grid) pro portál <code>edu_portal</code>.
+          Od křehkých plovoucích layoutů (float) a clearfix hacků k nativním standardům W3C. Komplexní průvodce jednorozměrným tokovým systémem (Flexbox), dvourozměrnou mřížkou (CSS Grid), pokročilým zarovnáním (Box Alignment Module) a automatickými responzivními layouty pro portál <code>edu_portal</code>.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
@@ -62,8 +62,12 @@
             <span class="hero-meta-val">Flexbox (1D) &amp; Grid (2D)</span>
           </div>
           <div class="hero-meta-item">
+            <span class="hero-meta-label">Pokročilé techniky</span>
+            <span class="hero-meta-val">Auto-fit, dense &amp; Subgrid</span>
+          </div>
+          <div class="hero-meta-item">
             <span class="hero-meta-label">Referenční model</span>
-            <span class="hero-meta-val">Navigace a magazín edu_portal</span>
+            <span class="hero-meta-val">Navigace, magazín a karty edu_portal</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Zkouška / Absolutorium</span>
@@ -72,230 +76,614 @@
         </div>
       </section>
 
-      <!-- SLIDE 2: VÝVOJ OD FLOATU K MODERNÍM STANDARDŮM -->
+      <!-- SLIDE 2: EVOLUCE LAYOUTU & MENTÁLNÍ MODEL (1D VS 2D) -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Historie a motivace</div>
-            <h2 class="slide-title">Proč opustit Float a tabulky?</h2>
-            <p class="slide-subtitle">Vlastnost float byla navržena pro obtékání obrázků textem, nikoli pro celostránkový layout</p>
+            <div class="slide-category">Historie, evoluce a architektonická volba</div>
+            <h2 class="slide-title">Evoluce layoutu: Proč opustit Float a jak volit systém?</h2>
+            <p class="slide-subtitle">Vlastnost float byla navržena pro obtékání obrázků textem v novinách, nikoli pro celostránkovou mřížku</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Otázka u zkoušky</span>
+            <span class="tag tag-exam">Otázka u zkoušky č. 11</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-3">
             <div class="content-card">
-              <h4>1. Éra tabulek (90. léta)</h4>
-              <p>Zneužití <code>&lt;table&gt;</code> pro rozvržení. Nulová sémantika, obrovský kód, nemožnost responzivity pro mobilní telefony.</p>
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="12" y1="3" x2="12" y2="21"></line></svg>
+                1. Éra tabulek (90. léta)
+              </h4>
+              <p>Zneužití <code>&lt;table&gt;</code> pro vizuální rozvržení webu. Fatální dopad na sémantiku, nepřístupné pro čtečky obrazovky a absolutní nemožnost responzivity pro displeje telefonů.</p>
             </div>
             <div class="content-card">
-              <h4>2. Éra floatu (2000–2012)</h4>
-              <p>Použití <code>float: left</code> s nutností neustálého čištění obtékání (tzv. <em>clearfix hack</em>). Sloupce neměly stejnou výšku a vertikální centrování bylo noční můrou.</p>
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                2. Éra floatu &amp; hacků (2000–2012)
+              </h4>
+              <p>Rozmísťování pomocí <code>float: left</code> a <code>inline-block</code>. Nutnost tzv. <em>clearfix hacků</em> kvůli kolapsu výšky rodiče, sloupce neměly stejnou výšku a vertikální vycentrování vyžadovalo krkolomné triky.</p>
             </div>
             <div class="content-card">
-              <h4>3. Moderní standardy (Dnes)</h4>
-              <p>Nativní systémy navržené přímo pro layout: <strong>Flexbox</strong> (pro jednorozměrné toky) a <strong>CSS Grid</strong> (pro plnohodnotné 2D mřížky).</p>
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                3. Moderní standardy (Dnes)
+              </h4>
+              <p>Nativní W3C systémy navržené přímo pro layout: <strong>Flexbox</strong> (pro jednorozměrné toky komponent) a <strong>CSS Grid</strong> (pro robustní dvourozměrnou mřížku celé stránky i složitých komponent).</p>
             </div>
           </div>
-          <div class="callout callout-tip" style="margin-top: 1rem;">
-            <div class="callout-icon">
-              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+
+          <!-- Rozhodovací matice: Content-out vs Container-in s interaktivním přepínačem -->
+          <div class="interactive-showcase" style="margin-top: 0.85rem;">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Porovnat přístup v praxi:
+              </span>
+              <button type="button" class="btn-scenario is-active" id="btnModelFlex" onclick="setModelDemo('flex', this)">
+                Flexbox &bull; Content-Out (Pružný tok)
+              </button>
+              <button type="button" class="btn-scenario" id="btnModelGrid" onclick="setModelDemo('grid', this)">
+                CSS Grid &bull; Container-In (2D matice)
+              </button>
             </div>
-            <div class="callout-content">
-              <div class="callout-title">Základní pravidlo pro volbu systému</div>
-              <p><strong>Flexbox</strong> řeší rozložení prvků v <em>jednom směru</em> (buď v řádku, NEBO ve sloupci). <strong>CSS Grid</strong> řídí rozvržení v <em>obou směrech současně</em> (sloupce A řádky naráz).</p>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem a taby CSS / HTML -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="modelCodeTitle">css &bull; flexbox (content-out)</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('modelCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('modelCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="modelCodeBlock"><span class="html-comment">/* Flexbox: Položky si řídí šířku podle délky svého obsahu */</span>
+<span class="css-sel">.container</span> {
+  <span class="css-prop">display</span>: <span class="css-val">flex</span>;
+  <span class="css-prop">gap</span>: <span class="css-num">1</span><span class="css-unit">rem</span>;
+}</code></pre>
+              </div>
+
+              <!-- Živý náhled v praxi -->
+              <div class="showcase-preview-box" id="modelPreviewBox" style="display: flex; gap: 0.75rem;">
+                <div class="growth-item" style="flex: 0 0 auto;">Krátký</div>
+                <div class="growth-item accent-purple" style="flex: 0 0 auto;">Podstatně delší obsah textu</div>
+                <div class="growth-item accent-emerald" style="flex: 0 0 auto;">Střední prvek</div>
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="modelFeedback">
+              <span>Princip:</span>
+              <strong id="modelFeedbackText">Content-Out (Flexbox): Každý box si vzal šířku přesně podle svého textu. Prvky jsou volně seřazené v jednom směru.</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: FLEXBOX V DETAILU -->
+      <!-- SLIDE 3: FLEXBOX V HLOUBCE: OSY, PRUŽNOST & AUTO-MARGINY -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Jednorozměrné rozvržení (1D)</div>
-            <h2 class="slide-title">Flexbox: Hlavní osa, příčná osa a pružnost</h2>
-            <p class="slide-subtitle">Vlastnosti kontejneru vs. vlastnosti položek (items)</p>
+            <div class="slide-category">Jednorozměrné rozvržení (1D) &bull; Pružnost a osy</div>
+            <h2 class="slide-title">Flexbox: flex-grow, flex-shrink, basis a kouzlo margin: auto</h2>
+            <p class="slide-subtitle">Vysvětlení výpočtu volného místa, chování zkratek flex a přišpendlení prvků v navigaci</p>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div>
-              <div class="content-card">
-                <h4>Vlastnosti flex kontejneru (display: flex)</h4>
-                <ul class="styled-list">
-                  <li><code>flex-direction: row | column</code>: Určuje směr hlavní osy (Main Axis).</li>
-                  <li><code>justify-content</code>: Zarovnání na <strong>hlavní ose</strong> (<code>flex-start</code>, <code>center</code>, <code>space-between</code>, <code>space-around</code>).</li>
-                  <li><code>align-items</code>: Zarovnání na <strong>příčné ose</strong> (<code>stretch</code>, <code>center</code>, <code>flex-start</code>).</li>
-                  <li><code>gap: 1rem</code>: Moderní elegantní definice mezer mezi položkami bez nutnosti marginů!</li>
-                  <li><code>flex-wrap: wrap</code>: Povolí zalomení položek na další řádek.</li>
-                </ul>
+          <div class="axis-legend-row">
+            <span class="axis-badge main">
+              <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              Hlavní osa (Main Axis) &rarr; flex-direction: row | column
+            </span>
+            <span class="axis-badge cross">
+              <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="5 12 12 19 19 12"></polyline></svg>
+              Příčná osa (Cross Axis) &rarr; vždy kolmá na hlavní osu
+            </span>
+          </div>
+
+          <!-- Kompletní interaktivní scénářový panel -->
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Zvolit scénář pružnosti:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setFlexGrowthScenario('equal', this)">
+                1. flex: 1 (Rovnoměrné dělení)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setFlexGrowthScenario('ratio', this)">
+                2. flex: 2 vs 1 (Dvojnásobný podíl)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setFlexGrowthScenario('auto', this)">
+                3. flex: auto (Obsahové dělení)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setFlexGrowthScenario('margin', this)">
+                4. margin-left: auto (Navigace)
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Kód s přepínačem CSS / HTML -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="growthCodeTitle">css &bull; rovnoměrné dělení flex: 1</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('growthCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('growthCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="growthCodeBlock"><span class="html-comment">/* Všechny položky ignorují původní šířku a dělí se přesně rovným dílem */</span>
+<span class="css-sel">.container</span> {
+  <span class="css-prop">display</span>: <span class="css-val">flex</span>;
+  <span class="css-prop">gap</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span>;
+}
+
+<span class="css-sel">.item</span> {
+  <span class="css-prop">flex</span>: <span class="css-num">1</span>; <span class="html-comment">/* Zkratka za flex: 1 1 0% */</span>
+}</code></pre>
+              </div>
+
+              <!-- Živý náhled v praxi -->
+              <div class="showcase-preview-box" id="growthPreviewStage">
+                <div class="growth-stage" id="growthContainer">
+                  <div class="growth-item" id="gBox1" style="flex: 1 1 0%;">
+                    <span>Box 01</span>
+                    <span class="growth-badge" id="gBadge1">33.3 % šířky</span>
+                  </div>
+                  <div class="growth-item accent-purple" id="gBox2" style="flex: 1 1 0%;">
+                    <span>Box 02</span>
+                    <span class="growth-badge" id="gBadge2">33.3 % šířky</span>
+                  </div>
+                  <div class="growth-item accent-emerald" id="gBox3" style="flex: 1 1 0%;">
+                    <span>Box 03</span>
+                    <span class="growth-badge" id="gBadge3">33.3 % šířky</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div>
-              <div class="content-card">
-                <h4>Vlastnosti položek (Flex Items)</h4>
-                <ul class="styled-list">
-                  <li><code>flex-grow: 1</code>: Schopnost prvku roztáhnout se a pohltit volné místo v kontejneru.</li>
-                  <li><code>flex-shrink: 1</code>: Míra smrštění, pokud kontejner nestačí.</li>
-                  <li><code>flex-basis: 200px</code>: Výchozí velikost před rozdělením volného místa.</li>
-                  <li><code>flex: grow shrink basis</code>, např. <code>flex: 1 1 auto</code>: Zkratka pro grow, shrink a basis. Pozor: <code>flex: 1</code> je zkratka za <code>flex: 1 1 0%</code> (ne za <code>1 1 auto</code>) – prvky se pak dělí o volné místo bez ohledu na obsah. Zkratkou za <code>1 1 auto</code> je <code>flex: auto</code>.</li>
-                  <li><code>align-self: center</code>: Individuální přebití <code>align-items</code> pro jednu položku.</li>
-                </ul>
-              </div>
+
+            <!-- Popis a didaktická poznámka -->
+            <div class="stage-feedback" id="growthFeedback">
+              <span>Vysvětlení:</span>
+              <strong id="growthFeedbackText"><code>flex: 1</code> nastavuje <code>flex-basis: 0%</code> &rarr; veškerá šířka kontejneru je považována za volné místo a je rozdělena naprosto rovnoměrně bez ohledu na obsah!</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4: CSS GRID V DETAILU -->
+      <!-- SLIDE 4: ZAROVNÁNÍ VE FLEXBOXU + KÓDOVÝ INSPECTOR & ŽIVÉ PLÁTNO -->
       <section class="slide" data-slide="4">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Dvourozměrná mřížka (2D)</div>
-            <h2 class="slide-title">CSS Grid: Mřížkový systém nové generace</h2>
-            <p class="slide-subtitle">Frakční jednotka fr, funkce repeat(), minmax() a automatické zalamování</p>
+            <div class="slide-category">Zarovnání a distribuce prostoru (Flexbox)</div>
+            <h2 class="slide-title">Zarovnání ve Flexboxu: justify-content, align-items a align-self</h2>
+            <p class="slide-subtitle">Interaktivní ladění hlavní osy, příčné osy a individuálního přebití položky</p>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div>
-              <div class="code-wrapper">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Ovladače kontejneru &amp; položek:
+              </span>
+              <div class="control-group">
+                <span class="control-group-label" style="min-width: 95px;">justify-content:</span>
+                <button type="button" class="btn-ctrl-chip is-active" onclick="setFlexAlignDemo('justify', 'flex-start', this)">flex-start</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setFlexAlignDemo('justify', 'center', this)">center</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setFlexAlignDemo('justify', 'space-between', this)">space-between</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setFlexAlignDemo('justify', 'space-evenly', this)">space-evenly</button>
+              </div>
+              <div class="control-group">
+                <span class="control-group-label" style="min-width: 80px;">align-items:</span>
+                <button type="button" class="btn-ctrl-chip is-active" onclick="setFlexAlignDemo('align', 'stretch', this)">stretch</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setFlexAlignDemo('align', 'center', this)">center</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setFlexAlignDemo('align', 'flex-start', this)">flex-start</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setFlexAlignDemo('align', 'baseline', this)">baseline</button>
+              </div>
+              <div class="control-group">
+                <span class="control-group-label" style="min-width: 105px;">Položka 3 (self):</span>
+                <button type="button" class="btn-ctrl-chip is-active" onclick="setFlexAlignDemo('self', 'auto', this)">auto</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setFlexAlignDemo('self', 'flex-end', this)">flex-end</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setFlexAlignDemo('self', 'center', this)">center</button>
+              </div>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem přepínatelné CSS / HTML -->
+              <div class="code-wrapper" style="margin: 0;">
                 <div class="code-header">
-                  <span class="code-title">css &bull; responzivní mřížka karet</span>
+                  <div class="code-header-left">
+                    <span class="code-title" id="flexAlignCodeTitle">css &bull; živé zarovnání</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('flexAlignCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('flexAlignCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre class="code-block"><code><span class="css-sel">.course-grid</span> {
-  <span class="css-prop">display</span>: <span class="css-val">grid</span>;
-  <span class="html-comment">/* Automaticky vytvoří tolik sloupců, kolik se vejde,
-     každý minimálně 280px, jinak se pružně roztáhnou (1fr) */</span>
-  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(
-    <span class="css-val">auto-fit</span>, 
-    <span class="css-func">minmax</span>(<span class="css-num">280</span><span class="css-unit">px</span>, <span class="css-num">1</span><span class="css-unit">fr</span>)
-  );
-  <span class="css-prop">gap</span>: <span class="css-num">1.5</span><span class="css-unit">rem</span>;
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="flexAlignCodeBlock"><span class="css-sel">.flex-container</span> {
+  <span class="css-prop">display</span>: <span class="css-val">flex</span>;
+  <span class="css-prop">justify-content</span>: <span class="css-val">flex-start</span>;
+  <span class="css-prop">align-items</span>: <span class="css-val">stretch</span>;
+  <span class="css-prop">gap</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span>;
+}
+
+<span class="css-sel">.item-3</span> {
+  <span class="css-prop">align-self</span>: <span class="css-val">auto</span>;
 }</code></pre>
               </div>
-            </div>
-            <div>
-              <div class="content-card">
-                <h4>Klíčové prvky CSS Gridu</h4>
-                <ul class="styled-list">
-                  <li><strong>Frakční jednotka (fr):</strong> Reprezentuje poměrný podíl na volném prostoru mřížky (např. <code>1fr 2fr 1fr</code> rozdělí šířku na 4 díly).</li>
-                  <li><strong>minmax(min, max):</strong> Nastavuje spodní a horní hranici velikosti buňky.</li>
-                  <li><strong>auto-fit vs. auto-fill:</strong> Umožňuje vytvořit plně responzivní layout <em>zcela bez media queries</em>!</li>
-                  <li><strong>Umísťování:</strong> <code>grid-column: 1 / 3</code> roztáhne položku přes první dva sloupce.</li>
-                </ul>
+
+              <!-- Živé plátno -->
+              <div class="stage-canvas is-flex" id="flexStage" style="justify-content: flex-start; align-items: stretch;">
+                <div class="flex-demo-item" id="fItem1">
+                  <span class="item-num">01</span>
+                  <span class="item-sub">Základní box</span>
+                </div>
+                <div class="flex-demo-item item-tall" id="fItem2">
+                  <span class="item-num" style="font-size: 1.25rem;">02</span>
+                  <span class="item-sub">Vyšší box (85px)</span>
+                </div>
+                <div class="flex-demo-item item-highlight" id="fItem3" style="align-self: auto;">
+                  <span class="item-num">03</span>
+                  <span class="item-sub" id="fItem3Sub">align-self: auto</span>
+                </div>
               </div>
+            </div>
+
+            <div class="stage-feedback" id="flexAlignFeedback">
+              <span>Zpětná vazba:</span>
+              <strong id="flexAlignFeedbackText"><code>justify-content: flex-start</code> drží položky na začátku hlavní osy. <code>align-items: stretch</code> natahuje položky na celou výšku řádku.</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: POJMENOVANÉ OBLASTI A UKÁZKA EDU_PORTAL -->
+      <!-- SLIDE 5: CSS GRID: 2D MŘÍŽKA, JEDNOTKA FR & AUTOMATICKÝ LAYOUT -->
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Komplexní layout</div>
-            <h2 class="slide-title">Pojmenované oblasti: grid-template-areas</h2>
-            <p class="slide-subtitle">Vizuální ASCII-art mapa celého portálu v CSS kódu</p>
+            <div class="slide-category">Dvourozměrná mřížka (2D) &bull; CSS Grid</div>
+            <h2 class="slide-title">CSS Grid: Mřížkový systém, jednotka fr a automatický layout</h2>
+            <p class="slide-subtitle">Rozdíl auto-fit vs. auto-fill, algoritmus grid-auto-flow: dense a implicitní mřížka</p>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div>
-              <div class="code-wrapper">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Zvolit automatický scénář:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setGridAutoScenario('autofit', this)">
+                1. auto-fit (Pružné roztažení sloupců)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setGridAutoScenario('autofill', this)">
+                2. auto-fill (Zachování prázdných stop)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setGridAutoScenario('nodense', this)">
+                3. row bez dense (Vznik díry)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setGridAutoScenario('dense', this)">
+                4. row dense (Automatické zaplnění)
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem CSS / HTML -->
+              <div class="code-wrapper" style="margin: 0;">
                 <div class="code-header">
-                  <span class="code-title">css &bull; layout portálu edu_portal</span>
+                  <div class="code-header-left">
+                    <span class="code-title" id="gridAutoCodeTitle">css &bull; auto-fit responzivita</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('gridAutoCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('gridAutoCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre class="code-block"><code><span class="css-sel">.portal-layout</span> {
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="gridAutoCodeBlock"><span class="html-comment">/* auto-fit: Vytvoří tolik sloupců, kolik se vejde,
+   a existující sloupce roztáhne (1fr) na 100 % šířky */</span>
+<span class="css-sel">.grid-container</span> {
   <span class="css-prop">display</span>: <span class="css-val">grid</span>;
-  <span class="css-prop">grid-template-columns</span>: <span class="css-num">260</span><span class="css-unit">px</span> <span class="css-num">1</span><span class="css-unit">fr</span>;
-  <span class="css-prop">grid-template-rows</span>: <span class="css-val">auto</span> <span class="css-num">1</span><span class="css-unit">fr</span> <span class="css-val">auto</span>;
+  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(
+    <span class="css-val">auto-fit</span>, 
+    <span class="css-func">minmax</span>(<span class="css-num">120</span><span class="css-unit">px</span>, <span class="css-num">1</span><span class="css-unit">fr</span>)
+  );
+  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;
+}</code></pre>
+              </div>
+
+              <!-- Živé plátno Gridu -->
+              <div class="showcase-preview-box" id="gridAutoPreviewStage">
+                <div class="stage-canvas is-grid" id="gridAutoCanvas" style="grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.65rem;">
+                  <div class="grid-demo-item">Karta 1</div>
+                  <div class="grid-demo-item">Karta 2</div>
+                  <div class="grid-demo-item">Karta 3</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="gridAutoFeedback">
+              <span>Vysvětlení chování:</span>
+              <strong id="gridAutoFeedbackText"><code>auto-fit</code>: I když máme jen 3 karty na širokém kontejneru, sloupce se díky <code>1fr</code> roztáhnou přes celou dostupnou šířku bez zbytečného prázdného místa.</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: ZAROVNÁNÍ V CSS GRIDU + ŽIVÝ VIZUALIZÉR -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zarovnání v mřížce (2D) &bull; Box Alignment Module</div>
+            <h2 class="slide-title">Zarovnání v Gridu: Položky v buňkách vs. Mřížka v kontejneru</h2>
+            <p class="slide-subtitle">Rozdíl mezi zarovnáním obsahu v buňce (place-items) a zarovnáním celé sady stop (place-content)</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Ovladače mřížky:
+              </span>
+              <div class="control-group">
+                <span class="control-group-label" style="min-width: 85px;">place-items:</span>
+                <button type="button" class="btn-ctrl-chip is-active" onclick="setGridAlignDemo('items', 'stretch', this)">stretch</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setGridAlignDemo('items', 'center', this)">center</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setGridAlignDemo('items', 'start', this)">start</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setGridAlignDemo('items', 'end', this)">end</button>
+              </div>
+              <div class="control-group">
+                <span class="control-group-label" style="min-width: 110px;">justify-content:</span>
+                <button type="button" class="btn-ctrl-chip is-active" onclick="setGridAlignDemo('content', 'start', this)">start</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setGridAlignDemo('content', 'center', this)">center</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setGridAlignDemo('content', 'space-between', this)">space-between</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setGridAlignDemo('content', 'space-evenly', this)">space-evenly</button>
+              </div>
+              <div class="control-group">
+                <span class="control-group-label" style="min-width: 95px;">Buňka B2 (self):</span>
+                <button type="button" class="btn-ctrl-chip is-active" onclick="setGridAlignDemo('self', 'auto', this)">auto</button>
+                <button type="button" class="btn-ctrl-chip" onclick="setGridAlignDemo('self', 'center', this)">place-self: center</button>
+              </div>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem s taby CSS / HTML -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="gridAlignCodeTitle">css &bull; box alignment v gridu</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('gridAlignCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('gridAlignCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="gridAlignCodeBlock"><span class="html-comment">/* Sloupce mají pevnou šířku 130px &lt; šířka kontejneru.
+   Díky tomu justify-content viditelně posouvá celou sadu sloupců! */</span>
+<span class="css-sel">.grid-container</span> {
+  <span class="css-prop">display</span>: <span class="css-val">grid</span>;
+  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-num">2</span>, <span class="css-num">130</span><span class="css-unit">px</span>);
+  <span class="css-prop">place-items</span>: <span class="css-val">stretch</span>;
+  <span class="css-prop">justify-content</span>: <span class="css-val">start</span>;
+  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;
+}
+
+<span class="css-sel">.cell-b2</span> {
+  <span class="css-prop">place-self</span>: <span class="css-val">auto</span>;
+}</code></pre>
+              </div>
+
+              <!-- Živé plátno Gridu -->
+              <div class="stage-canvas is-grid" id="gridStage" style="grid-template-columns: repeat(2, 130px); place-items: stretch; justify-content: start;">
+                <div class="grid-demo-item">
+                  <span>Buňka A1</span>
+                  <small style="opacity: 0.7;">řádek 1 / sloupec 1</small>
+                </div>
+                <div class="grid-demo-item">
+                  <span>Buňka B1</span>
+                  <small style="opacity: 0.7;">řádek 1 / sloupec 2</small>
+                </div>
+                <div class="grid-demo-item">
+                  <span>Buňka A2</span>
+                  <small style="opacity: 0.7;">řádek 2 / sloupec 1</small>
+                </div>
+                <div class="grid-demo-item" id="gItem4" style="border-color: #10b981; background: rgba(16, 185, 129, 0.18);">
+                  <span>Buňka B2</span>
+                  <small style="opacity: 0.7;" id="gItem4Label">place-self test</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="gridAlignFeedback">
+              <span>Rozbor zarovnání:</span>
+              <strong id="gridAlignFeedbackText"><code>place-items: stretch</code> vyplňuje buňky na celou jejich šířku a výšku. <code>justify-content: stretch</code> roztahuje stopy přes kontejner.</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: POKROČILÉ VZORY: GRID-TEMPLATE-AREAS & CSS SUBGRID -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Pokročilé vzory &bull; Reálné rozvržení</div>
+            <h2 class="slide-title">Pokročilý Grid: Pojmenované oblasti a revoluce CSS Subgrid</h2>
+            <p class="slide-subtitle">Vizuální ASCII mapa portálu edu_portal a řešení rozházených tlačítek ve vnořených kartách</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Zvolit pokročilou techniku:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setAdvancedScenario('areas-desk', this)">
+                1. grid-template-areas (Desktop 2-sloupcový)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setAdvancedScenario('areas-mob', this)">
+                2. grid-template-areas (Mobilní 1-sloupcový)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setAdvancedScenario('nosubgrid', this)">
+                3. Karty bez Subgridu (Rozházené linie)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setAdvancedScenario('subgrid', this)">
+                4. Karty se Subgridem (Dokonalá linie)
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem s taby CSS / HTML -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="advCodeTitle">css &bull; desktop rozvržení edu_portal</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('advCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('advCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="advCodeBlock"><span class="css-sel">.portal-layout</span> {
+  <span class="css-prop">display</span>: <span class="css-val">grid</span>;
+  <span class="css-prop">grid-template-columns</span>: <span class="css-num">160</span><span class="css-unit">px</span> <span class="css-num">1</span><span class="css-unit">fr</span>;
   <span class="css-prop">grid-template-areas</span>:
     <span class="code-str">"header  header"</span>
     <span class="code-str">"sidebar main"</span>
     <span class="code-str">"footer  footer"</span>;
-  <span class="css-prop">min-height</span>: <span class="css-num">100</span><span class="css-unit">vh</span>;
-  <span class="css-prop">gap</span>: <span class="css-num">1</span><span class="css-unit">rem</span>;
+  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;
 }
 
-<span class="css-sel">.site-header</span>  { <span class="css-prop">grid-area</span>: <span class="css-val">header</span>; }
-<span class="css-sel">.site-sidebar</span> { <span class="css-prop">grid-area</span>: <span class="css-val">sidebar</span>; }
-<span class="css-sel">.site-main</span>    { <span class="css-prop">grid-area</span>: <span class="css-val">main</span>; }
-<span class="css-sel">.site-footer</span>  { <span class="css-prop">grid-area</span>: <span class="css-val">footer</span>; }</code></pre>
+<span class="css-sel">.header</span>  { <span class="css-prop">grid-area</span>: <span class="css-val">header</span>; }
+<span class="css-sel">.sidebar</span> { <span class="css-prop">grid-area</span>: <span class="css-val">sidebar</span>; }
+<span class="css-sel">.main</span>    { <span class="css-prop">grid-area</span>: <span class="css-val">main</span>; }
+<span class="css-sel">.footer</span>  { <span class="css-prop">grid-area</span>: <span class="css-val">footer</span>; }</code></pre>
+              </div>
+
+              <!-- Živé plátno -->
+              <div class="showcase-preview-box" id="advPreviewStage" style="min-height: 180px;">
+                <!-- Dynamický obsah vložený skriptem -->
               </div>
             </div>
-            <div>
-              <div class="content-card">
-                <h4>Výhody grid-template-areas</h4>
-                <ul class="styled-list">
-                  <li><strong>Čitelnost kódu:</strong> Na první pohled vidíte celkové uspořádání stránky přímo v CSS.</li>
-                  <li><strong>Okamžitá responzivita:</strong> V media query pro mobilní telefon stačí pouze přepsat matici do jednoho sloupce:
-                    <div style="background: rgba(0,0,0,0.3); padding: 0.5rem; border-radius: 6px; margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.8rem;">
-                      grid-template-areas:<br>
-                      &nbsp;&nbsp;"header"<br>
-                      &nbsp;&nbsp;"main"<br>
-                      &nbsp;&nbsp;"sidebar"<br>
-                      &nbsp;&nbsp;"footer";
-                    </div>
-                  </li>
-                  <li><strong>Nezávislost na pořadí v HTML:</strong> Pozici bloku změníte bez jediného zásahu do HTML značkování.</li>
-                </ul>
-              </div>
+
+            <div class="stage-feedback" id="advFeedback">
+              <span>Technické shrnutí:</span>
+              <strong id="advFeedbackText"><code>grid-template-areas</code> vytváří přehlednou ASCII-art mapu celé stránky přímo v CSS.</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 8: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="8">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
             <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
-            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 11 (Layouty v CSS)</p>
+            <p class="slide-subtitle">Srovnávací matice Flexbox vs. CSS Grid a co musíte bezpečně ovládat u zkoušky</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Okruh absolutoria č. 11</span>
           </div>
         </div>
         <div class="slide-body">
+          <!-- Srovnávací tabulka systémů -->
+          <div class="table-container" style="margin-bottom: 0.85rem;">
+            <table class="alignment-matrix-table">
+              <thead>
+                <tr>
+                  <th>Vlastnost / Kritérium</th>
+                  <th class="col-highlight">Flexbox (CSS Flexible Box)</th>
+                  <th>CSS Grid (Two-Dimensional Grid)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Dimenze rozvržení</strong></td>
+                  <td class="col-highlight"><strong>Jednorozměrná (1D):</strong> pouze řádek, NEBO sloupec</td>
+                  <td><strong>Dvourozměrná (2D):</strong> řádky I sloupce současně</td>
+                </tr>
+                <tr>
+                  <td><strong>Architektonická filozofie</strong></td>
+                  <td class="col-highlight"><strong>Content-Out:</strong> položky si řídí šířku podle obsahu</td>
+                  <td><strong>Container-In:</strong> kontejner pevně diktuje geometrii mřížky</td>
+                </tr>
+                <tr>
+                  <td><strong>Centrování položek</strong></td>
+                  <td class="col-highlight"><code>justify-content: center; align-items: center;</code></td>
+                  <td><code>place-items: center;</code> (vše na 1 řádek)</td>
+                </tr>
+                <tr>
+                  <td><strong>Automatický layout</strong></td>
+                  <td class="col-highlight"><code>flex-wrap: wrap; flex: 1 1 200px;</code></td>
+                  <td><code>repeat(auto-fit, minmax(250px, 1fr));</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Typické nasazení</strong></td>
+                  <td class="col-highlight">Navigační lišty, tlačítka, formulářová pole, vnitřek karet</td>
+                  <td>Kostra stránky (Holy Grail), katalogy karet, dashboardy, fotogalerie</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Čtyři zkušební otázky -->
           <div class="summary-grid">
             <div class="summary-card">
-              <h4>1. Kdy Flexbox</h4>
-              <p>Pro jednorozměrná rozvržení (1D), navigační lišty, tlačítkové skupiny, vertikální vycentrování.</p>
+              <h4>1. justify-* vs. align-*</h4>
+              <p><code>justify-*</code> působí podél <strong>hlavní / inline osy</strong>. <code>align-*</code> působí podél <strong>příčné / blokové osy</strong>.</p>
             </div>
             <div class="summary-card">
-              <h4>2. Kdy CSS Grid</h4>
-              <p>Pro dvourozměrná rozvržení (2D), komplexní kostru stránky, fotogalerie, katalogy karet.</p>
+              <h4>2. auto-fit vs. auto-fill</h4>
+              <p><code>auto-fit</code> roztáhne existující sloupce na celou šířku. <code>auto-fill</code> zachová volné prázdné stopy.</p>
             </div>
             <div class="summary-card">
-              <h4>3. Frakční jednotka fr</h4>
-              <p>Zlomkový podíl na volném místě. Zabraňuje zaokrouhlovacím chybám v procentech.</p>
+              <h4>3. flex: 1 vs. flex: auto</h4>
+              <p><code>flex: 1</code> má <code>basis: 0%</code> (rovnoměrný podíl). <code>flex: auto</code> má <code>basis: auto</code> (počítá velikost obsahu).</p>
             </div>
             <div class="summary-card">
-              <h4>4. Responzivní auto-fit</h4>
-              <p>Kombinace <code>repeat(auto-fit, minmax(250px, 1fr))</code> zajistí responzivní sloupce bez media queries.</p>
+              <h4>4. Kdy co nasadit</h4>
+              <p>Grid na kostru webu a 2D mřížky karet. Flexbox na jednorozměrné toky a zarovnání prvků uvnitř komponent.</p>
             </div>
           </div>
-          <div class="callout callout-exam">
+
+          <div class="callout callout-exam" style="margin-top: 0.85rem;">
             <div class="callout-icon">
               <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
             </div>
             <div class="callout-content">
-              <div class="callout-title">Typická otázka zkoušejícího</div>
-              <p><em>„Jaký je přesný rozdíl mezi justify-content a align-items ve Flexboxu?“</em><br>
-              <strong>Správná odpověď:</strong> <code>justify-content</code> zarovnává položky podél <strong>hlavní osy (Main Axis)</strong>, která je definována vlastností <code>flex-direction</code> (ve výchozím stavu vodorovně). <code>align-items</code> zarovnává položky podél <strong>příčné osy (Cross Axis)</strong>, která je na hlavní osu kolmá (ve výchozím stavu svisle).</p>
+              <div class="callout-title">Doporučení pro zkouškovou obhajobu</div>
+              <p>Při obhajobě maturitního či absolventského projektu vždy ukažte, že nepoužíváte zastaralé floaty ani desítky media queries. Vyzdvihněte <strong>resilientní layouty s <code>auto-fit</code></strong>, čistou navigaci s <strong><code>margin-left: auto</code></strong> a sémantickou mapu stránek pomocí <strong><code>grid-template-areas</code></strong>. Stisknutím klávesy <span class="key-badge">G</span> otevřete odborný slovník pojmů.</p>
             </div>
           </div>
         </div>
@@ -305,7 +693,7 @@
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="06_box_model_rozmery_a_pozicovani.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 06: Box model, rozměry a CSS pozicování (Ctrl+Šipka vlevo)">
+      <a href="06_box_model_rozmery_a_pozicovani.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 06: Box model, rozměry a CSS pozicování (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu WEB20">
@@ -318,7 +706,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 08</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -351,6 +739,57 @@
         </div>
         <div class="toc-list" id="tocList"></div>
       </aside>
+    </div>
+
+    <!-- Glossary Modal -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 680px;">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Slovník pojmů: Flexbox &amp; CSS Grid
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="styled-list" style="display: flex; flex-direction: column; gap: 0.85rem;">
+            <div>
+              <strong>Main Axis (Hlavní osa)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Osa, podél které se primárně řadí pružné položky ve Flexboxu. Její směr určuje <code>flex-direction</code> (ve výchozím stavu <code>row</code>, tedy zleva doprava).</p>
+            </div>
+            <div>
+              <strong>Cross Axis (Příčná osa)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Osa kolmá na hlavní osu. Pro <code>flex-direction: row</code> vede svisle shora dolů. Zarovnání podél ní řídí <code>align-items</code> a <code>align-self</code>.</p>
+            </div>
+            <div>
+              <strong>Flex Basis</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Počáteční velikost prvku předtím, než flexbox algoritmus začne rozdělovat zbývající volné místo nebo položky smršťovat.</p>
+            </div>
+            <div>
+              <strong>Grid Track (Mřížková stopa)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Prostor mezi dvěma sousedními mřížkovými linkami &ndash; tedy buď jeden sloupec, nebo jeden řádek.</p>
+            </div>
+            <div>
+              <strong>Frakční jednotka (fr)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Flexibilní jednotka v CSS Gridu reprezentující zlomkový podíl na volném prostoru mřížky po odečtení pevných hodnot a mezer (gap).</p>
+            </div>
+            <div>
+              <strong>Implicitní mřížka (Implicit Grid)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Stopy, které vytvoří prohlížeč automaticky, pokud obsah přeteče definovanou šablonu (explicitní grid). Jejich rozměr řídí <code>grid-auto-rows</code> a <code>grid-auto-columns</code>.</p>
+            </div>
+            <div>
+              <strong>Auto-placement (dense)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Algoritmus automatického umísťování v gridu s hodnotou <code>dense</code>, který zpětně zaplňuje prázdná místa zanechaná velkými položkami.</p>
+            </div>
+            <div>
+              <strong>CSS Subgrid</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Vlastnost umožňující vnořenému prvku zdědit a sdílet řádkové či sloupcové stopy svého rodičovského gridu, čímž zajišťuje dokonalou návaznost linií.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Keyboard Shortcuts Help Modal -->
@@ -406,6 +845,389 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- End of .presentation-container -->
+
+  <!-- ==========================================================================
+       INTERAKTIVNÍ LOGIKY A DYNAMICKÉ PŘEPÍNAČE KÓDU & NÁHLEDU PRO SNÍMKY
+       ========================================================================== -->
+  <script>
+    // Úložiště kódu pro jednotlivé komponenty (CSS a HTML)
+    var codeData = {
+      modelCode: {
+        currentLang: 'css',
+        css: '<span class="html-comment">/* Flexbox: Položky si řídí šířku podle délky svého obsahu */</span>\n<span class="css-sel">.container</span> {\n  <span class="css-prop">display</span>: <span class="css-val">flex</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">1</span><span class="css-unit">rem</span>;\n}',
+        html: '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"container"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Krátký<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Podstatně delší obsah textu<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Střední prvek<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>'
+      },
+      growthCode: {
+        currentLang: 'css',
+        css: '<span class="html-comment">/* Všechny položky ignorují původní šířku a dělí se přesně rovným dílem */</span>\n<span class="css-sel">.container</span> {\n  <span class="css-prop">display</span>: <span class="css-val">flex</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span>;\n}\n\n<span class="css-sel">.item</span> {\n  <span class="css-prop">flex</span>: <span class="css-num">1</span>; <span class="html-comment">/* flex: 1 1 0% */</span>\n}',
+        html: '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"container"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Box 01 (33.3 %)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Box 02 (33.3 %)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Box 03 (33.3 %)<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>'
+      },
+      flexAlignCode: {
+        currentLang: 'css',
+        css: '<span class="css-sel">.flex-container</span> {\n  <span class="css-prop">display</span>: <span class="css-val">flex</span>;\n  <span class="css-prop">justify-content</span>: <span class="css-val">flex-start</span>;\n  <span class="css-prop">align-items</span>: <span class="css-val">stretch</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span>;\n}\n\n<span class="css-sel">.item-3</span> {\n  <span class="css-prop">align-self</span>: <span class="css-val">auto</span>;\n}',
+        html: '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"flex-container"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>01 Základní box<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item item-tall"</span><span class="html-tag">&gt;</span>02 Vyšší box (85px)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item item-3"</span><span class="html-tag">&gt;</span>03 align-self test<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>'
+      },
+      gridAutoCode: {
+        currentLang: 'css',
+        css: '<span class="html-comment">/* auto-fit: Vytvoří tolik sloupců, kolik se vejde,\n   a existující sloupce roztáhne (1fr) na 100 % šířky */</span>\n<span class="css-sel">.grid-container</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(\n    <span class="css-val">auto-fit</span>, \n    <span class="css-func">minmax</span>(<span class="css-num">120</span><span class="css-unit">px</span>, <span class="css-num">1</span><span class="css-unit">fr</span>)\n  );\n  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;\n}',
+        html: '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"grid-container"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 1<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 2<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 3<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>'
+      },
+      gridAlignCode: {
+        currentLang: 'css',
+        css: '<span class="html-comment">/* Sloupce mají pevnou šířku 130px &lt; šířka kontejneru.\n   Díky tomu justify-content viditelně posouvá celou sadu sloupců! */</span>\n<span class="css-sel">.grid-container</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-num">2</span>, <span class="css-num">130</span><span class="css-unit">px</span>);\n  <span class="css-prop">place-items</span>: <span class="css-val">stretch</span>;\n  <span class="css-prop">justify-content</span>: <span class="css-val">start</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;\n}\n\n<span class="css-sel">.cell-b2</span> {\n  <span class="css-prop">place-self</span>: <span class="css-val">auto</span>;\n}',
+        html: '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"grid-container"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"cell"</span><span class="html-tag">&gt;</span>Buňka A1<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"cell"</span><span class="html-tag">&gt;</span>Buňka B1<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"cell"</span><span class="html-tag">&gt;</span>Buňka A2<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"cell cell-b2"</span><span class="html-tag">&gt;</span>Buňka B2<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>'
+      },
+      advCode: {
+        currentLang: 'css',
+        css: '<span class="css-sel">.portal-layout</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-num">160</span><span class="css-unit">px</span> <span class="css-num">1</span><span class="css-unit">fr</span>;\n  <span class="css-prop">grid-template-areas</span>:\n    <span class="code-str">"header  header"</span>\n    <span class="code-str">"sidebar main"</span>\n    <span class="code-str">"footer  footer"</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;\n}\n\n<span class="css-sel">.header</span>  { <span class="css-prop">grid-area</span>: <span class="css-val">header</span>; }\n<span class="css-sel">.sidebar</span> { <span class="css-prop">grid-area</span>: <span class="css-val">sidebar</span>; }\n<span class="css-sel">.main</span>    { <span class="css-prop">grid-area</span>: <span class="css-val">main</span>; }\n<span class="css-sel">.footer</span>  { <span class="css-prop">grid-area</span>: <span class="css-val">footer</span>; }',
+        html: '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"portal-layout"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;header</span> <span class="html-attr">class</span>=<span class="html-val">"header"</span><span class="html-tag">&gt;</span>Hlavička edu_portal<span class="html-tag">&lt;/header&gt;</span>\n  <span class="html-tag">&lt;aside</span> <span class="html-attr">class</span>=<span class="html-val">"sidebar"</span><span class="html-tag">&gt;</span>Boční menu (160px)<span class="html-tag">&lt;/aside&gt;</span>\n  <span class="html-tag">&lt;main</span> <span class="html-attr">class</span>=<span class="html-val">"main"</span><span class="html-tag">&gt;</span>Hlavní obsah článků (1fr)<span class="html-tag">&lt;/main&gt;</span>\n  <span class="html-tag">&lt;footer</span> <span class="html-attr">class</span>=<span class="html-val">"footer"</span><span class="html-tag">&gt;</span>Patička webu<span class="html-tag">&lt;/footer&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>'
+      }
+    };
+
+    // Univerzální přepínač CSS / HTML tabů v okně s kódem
+    window.switchTab = function(blockKey, lang, btnEl) {
+      if (!codeData[blockKey]) return;
+      codeData[blockKey].currentLang = lang;
+
+      var parentTabs = btnEl.parentElement;
+      if (parentTabs) {
+        parentTabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var codeBlock = document.getElementById(blockKey + 'Block');
+      if (codeBlock) {
+        codeBlock.innerHTML = codeData[blockKey][lang];
+      }
+    };
+
+    // Pomocná funkce pro aktualizaci kódu při kliku na scénář
+    function updateCodeDisplay(blockKey, cssStr, htmlStr) {
+      if (!codeData[blockKey]) return;
+      codeData[blockKey].css = cssStr;
+      if (htmlStr) codeData[blockKey].html = htmlStr;
+
+      var codeBlock = document.getElementById(blockKey + 'Block');
+      if (codeBlock) {
+        codeBlock.innerHTML = codeData[blockKey][codeData[blockKey].currentLang];
+      }
+    }
+
+    // --- SLIDE 2: Model Demo (Content-Out vs Container-In) ---
+    window.setModelDemo = function(mode, btnEl) {
+      var box = document.getElementById('modelPreviewBox');
+      var feedback = document.getElementById('modelFeedbackText');
+      if (!box || !feedback) return;
+
+      btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+      btnEl.classList.add('is-active');
+
+      if (mode === 'flex') {
+        box.style.display = 'flex';
+        box.style.gridTemplateColumns = '';
+        box.innerHTML = '<div class="growth-item" style="flex: 0 0 auto;">Krátký</div>' +
+                        '<div class="growth-item accent-purple" style="flex: 0 0 auto;">Podstatně delší obsah textu</div>' +
+                        '<div class="growth-item accent-emerald" style="flex: 0 0 auto;">Střední prvek</div>';
+        
+        var cssCode = '<span class="html-comment">/* Flexbox: Položky si řídí šířku podle délky svého obsahu */</span>\n<span class="css-sel">.container</span> {\n  <span class="css-prop">display</span>: <span class="css-val">flex</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span>;\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"container"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Krátký<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Podstatně delší obsah textu<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Střední prvek<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('modelCode', cssCode, htmlCode);
+        feedback.textContent = 'Content-Out (Flexbox): Každý box si vzal šířku přesně podle svého textu. Prvky jsou volně seřazené v jednom směru.';
+      } else {
+        box.style.display = 'grid';
+        box.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        box.innerHTML = '<div class="growth-item">Krátký</div>' +
+                        '<div class="growth-item accent-purple">Podstatně delší obsah textu</div>' +
+                        '<div class="growth-item accent-emerald">Střední prvek</div>';
+        
+        var cssCode = '<span class="html-comment">/* CSS Grid: Kontejner pevně nadefinoval 3 stejně široké sloupce */</span>\n<span class="css-sel">.container</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-num">3</span>, <span class="css-num">1</span><span class="css-unit">fr</span>);\n  <span class="css-prop">gap</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span>;\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"container"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Krátký<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Podstatně delší obsah textu<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Střední prvek<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('modelCode', cssCode, htmlCode);
+        feedback.textContent = 'Container-In (Grid): Kontejner striktně vynucuje 3 sloupce (1fr). Obsah se musí přizpůsobit zadané geometrii mřížky!';
+      }
+    };
+
+    // --- SLIDE 3: Flex Growth Scenarios ---
+    window.setFlexGrowthScenario = function(sc, btnEl) {
+      var stage = document.getElementById('growthPreviewStage');
+      var feedback = document.getElementById('growthFeedbackText');
+      if (!stage || !feedback) return;
+
+      btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+      btnEl.classList.add('is-active');
+
+      if (sc === 'equal') {
+        stage.innerHTML = '<div class="growth-stage">' +
+          '<div class="growth-item" style="flex: 1 1 0%;"><span>Box 01</span><span class="growth-badge">33.3 % šířky</span></div>' +
+          '<div class="growth-item accent-purple" style="flex: 1 1 0%;"><span>Box 02</span><span class="growth-badge">33.3 % šířky</span></div>' +
+          '<div class="growth-item accent-emerald" style="flex: 1 1 0%;"><span>Box 03</span><span class="growth-badge">33.3 % šířky</span></div>' +
+          '</div>';
+        var cssCode = '<span class="html-comment">/* flex: 1 &rarr; všechny položky ignorují obsah a dělí se přesně rovně */</span>\n<span class="css-sel">.container</span> {\n  <span class="css-prop">display</span>: <span class="css-val">flex</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span>;\n}\n\n<span class="css-sel">.item</span> {\n  <span class="css-prop">flex</span>: <span class="css-num">1</span>; <span class="html-comment">/* zkratka za flex: 1 1 0% */</span>\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"container"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Box 01 (33.3 %)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Box 02 (33.3 %)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Box 03 (33.3 %)<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('growthCode', cssCode, htmlCode);
+        feedback.innerHTML = '<code>flex: 1</code> nastavuje <code>flex-basis: 0%</code> &rarr; veškerá šířka kontejneru je považována za volné místo a je rozdělena naprosto rovnoměrně.';
+      } else if (sc === 'ratio') {
+        stage.innerHTML = '<div class="growth-stage">' +
+          '<div class="growth-item" style="flex: 2 1 0%;"><span>Box 01</span><span class="growth-badge">50 % šířky (flex: 2)</span></div>' +
+          '<div class="growth-item accent-purple" style="flex: 1 1 0%;"><span>Box 02</span><span class="growth-badge">25 % (flex: 1)</span></div>' +
+          '<div class="growth-item accent-emerald" style="flex: 1 1 0%;"><span>Box 03</span><span class="growth-badge">25 % (flex: 1)</span></div>' +
+          '</div>';
+        var cssCode = '<span class="html-comment">/* Poměr 2 : 1 : 1 &rarr; celkem 4 díly. Box 1 získá 2/4 (50 %) */</span>\n<span class="css-sel">.item-1</span> {\n  <span class="css-prop">flex</span>: <span class="css-num">2</span>; <span class="html-comment">/* 2 díly volného místa */</span>\n}\n\n<span class="css-sel">.item-2, .item-3</span> {\n  <span class="css-prop">flex</span>: <span class="css-num">1</span>; <span class="html-comment">/* po 1 dílu volného místa */</span>\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"container"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item item-1"</span><span class="html-tag">&gt;</span>Box 01 (50 %)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item item-2"</span><span class="html-tag">&gt;</span>Box 02 (25 %)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item item-3"</span><span class="html-tag">&gt;</span>Box 03 (25 %)<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('growthCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Poměrný růst: Box 1 má <code>flex: 2</code>, zbylé dva <code>flex: 1</code>. Celkem 2 + 1 + 1 = 4 díly &rarr; Box 1 dostane přesně 2/4 = 50 % celého prostoru!';
+      } else if (sc === 'auto') {
+        stage.innerHTML = '<div class="growth-stage">' +
+          '<div class="growth-item" style="flex: 1 1 auto;"><span>Krátký</span><span class="growth-badge">flex: auto</span></div>' +
+          '<div class="growth-item accent-purple" style="flex: 1 1 auto;"><span>Vývoj webových aplikací v CSS3</span><span class="growth-badge">flex: auto (delší obsah)</span></div>' +
+          '<div class="growth-item accent-emerald" style="flex: 1 1 auto;"><span>Běžný text</span><span class="growth-badge">flex: auto</span></div>' +
+          '</div>';
+        var cssCode = '<span class="html-comment">/* flex: auto &rarr; položky si nejprve vezmou prostor na svůj text,\n   a až zbývající volné místo se rozdělí */</span>\n<span class="css-sel">.item</span> {\n  <span class="css-prop">flex</span>: <span class="css-val">auto</span>; <span class="html-comment">/* zkratka za flex: 1 1 auto */</span>\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"container"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Krátký<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Vývoj webových aplikací v CSS3<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"item"</span><span class="html-tag">&gt;</span>Běžný text<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('growthCode', cssCode, htmlCode);
+        feedback.innerHTML = '<code>flex: auto</code> (zkratka za <code>flex: 1 1 auto</code>): položka má výchozí <code>flex-basis: auto</code>, takže respektuje délku textu a až přebytek místa se rozdělí.';
+      } else if (sc === 'margin') {
+        stage.innerHTML = '<div class="demo-navbar-box">' +
+          '<div class="demo-nav-logo">edu_portal</div>' +
+          '<div class="demo-nav-link">Katalog kurzů</div>' +
+          '<div class="demo-nav-profile" style="margin-left: auto;">Jan Novák (Profil &rarr;)</div>' +
+          '</div>';
+        var cssCode = '<span class="html-comment">/* Zázračný trik: margin-left: auto pohltí veškeré volné místo vpravo\n   a odtlačí profil bez floatu i bez zbytečných obalů! */</span>\n<span class="css-sel">.navbar</span> {\n  <span class="css-prop">display</span>: <span class="css-val">flex</span>;\n  <span class="css-prop">align-items</span>: <span class="css-val">center</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">1</span><span class="css-unit">rem</span>;\n}\n\n<span class="css-sel">.navbar-user-profile</span> {\n  <span class="css-prop">margin-left</span>: <span class="css-val">auto</span>; <span class="html-comment">/* odtlačí prvek zcela doprava */</span>\n}';
+        var htmlCode = '<span class="html-tag">&lt;nav</span> <span class="html-attr">class</span>=<span class="html-val">"navbar"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"logo"</span><span class="html-tag">&gt;</span>edu_portal<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;a</span> <span class="html-attr">href</span>=<span class="html-val">"#"</span><span class="html-tag">&gt;</span>Katalog kurzů<span class="html-tag">&lt;/a&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"navbar-user-profile"</span><span class="html-tag">&gt;</span>Jan Novák<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/nav&gt;</span>';
+        updateCodeDisplay('growthCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Síla <code>margin: auto</code> ve Flexboxu: automatický okraj pohltí veškerý volný prostor na dané ose a odtlačí profil na konec navigace bez použití floatu!';
+      }
+    };
+
+    // --- SLIDE 4: Flex Alignment ---
+    var flexAlignState = { justify: 'flex-start', align: 'stretch', self: 'auto' };
+
+    window.setFlexAlignDemo = function(prop, val, btnEl) {
+      flexAlignState[prop] = val;
+      btnEl.parentElement.querySelectorAll('.btn-ctrl-chip').forEach(function(b) { b.classList.remove('is-active'); });
+      btnEl.classList.add('is-active');
+
+      var stage = document.getElementById('flexStage');
+      var item3 = document.getElementById('fItem3');
+      var item3Sub = document.getElementById('fItem3Sub');
+      var feedback = document.getElementById('flexAlignFeedbackText');
+      if (!stage || !item3 || !feedback) return;
+
+      stage.style.justifyContent = flexAlignState.justify;
+      stage.style.alignItems = flexAlignState.align;
+      item3.style.alignSelf = flexAlignState.self;
+      if (item3Sub) item3Sub.textContent = 'align-self: ' + flexAlignState.self;
+
+      var cssCode = '<span class="css-sel">.flex-container</span> {\n' +
+                    '  <span class="css-prop">display</span>: <span class="css-val">flex</span>;\n' +
+                    '  <span class="css-prop">justify-content</span>: <span class="css-val">' + flexAlignState.justify + '</span>;\n' +
+                    '  <span class="css-prop">align-items</span>: <span class="css-val">' + flexAlignState.align + '</span>;\n' +
+                    '  <span class="css-prop">gap</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span>;\n' +
+                    '}\n\n' +
+                    '<span class="css-sel">.item-3</span> {\n' +
+                    '  <span class="css-prop">align-self</span>: <span class="css-val">' + flexAlignState.self + '</span>;\n' +
+                    '}';
+      updateCodeDisplay('flexAlignCode', cssCode);
+
+      feedback.innerHTML = 'Hlavní osa: <code>justify-content: ' + flexAlignState.justify + '</code>. Příčná osa: <code>align-items: ' + flexAlignState.align + '</code>. Položka 3 má <code>align-self: ' + flexAlignState.self + '</code>.';
+    };
+
+    // --- SLIDE 5: Grid Auto-flow & fr ---
+    window.setGridAutoScenario = function(sc, btnEl) {
+      var canvas = document.getElementById('gridAutoCanvas');
+      var feedback = document.getElementById('gridAutoFeedbackText');
+      if (!canvas || !feedback) return;
+
+      btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+      btnEl.classList.add('is-active');
+
+      if (sc === 'autofit') {
+        canvas.style.gridTemplateColumns = 'repeat(auto-fit, minmax(110px, 1fr))';
+        canvas.style.gridAutoFlow = 'row';
+        canvas.innerHTML = '<div class="grid-demo-item">Karta 1</div>' +
+                           '<div class="grid-demo-item">Karta 2</div>' +
+                           '<div class="grid-demo-item">Karta 3</div>';
+        var cssCode = '<span class="html-comment">/* auto-fit: roztáhne existující karty na celých 100 % šířky */</span>\n<span class="css-sel">.grid</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-val">auto-fit</span>, <span class="css-func">minmax</span>(<span class="css-num">120</span><span class="css-unit">px</span>, <span class="css-num">1</span><span class="css-unit">fr</span>));\n  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"grid"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 1<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 2<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 3<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('gridAutoCode', cssCode, htmlCode);
+        feedback.innerHTML = '<code>auto-fit</code>: Žádné volné mezery na konci. Existující sloupce se pružně roztáhnou díky <code>1fr</code>.';
+      } else if (sc === 'autofill') {
+        canvas.style.gridTemplateColumns = 'repeat(auto-fill, minmax(110px, 1fr))';
+        canvas.style.gridAutoFlow = 'row';
+        canvas.innerHTML = '<div class="grid-demo-item">Karta 1</div>' +
+                           '<div class="grid-demo-item">Karta 2</div>' +
+                           '<div class="grid-demo-item">Karta 3</div>';
+        var cssCode = '<span class="html-comment">/* auto-fill: vytvoří tolik sloupců, kolik se vejde,\n   a zachová prázdné neobsazené stopy vpravo! */</span>\n<span class="css-sel">.grid</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-val">auto-fill</span>, <span class="css-func">minmax</span>(<span class="css-num">120</span><span class="css-unit">px</span>, <span class="css-num">1</span><span class="css-unit">fr</span>));\n  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"grid"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 1<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 2<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 3<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('gridAutoCode', cssCode, htmlCode);
+        feedback.innerHTML = '<code>auto-fill</code>: Všimněte si, že se 3 karty <strong>neroztáhly na 100 % šířky</strong> jako u auto-fit! Prohlížeč vpravo zachoval neobsazené sloupce pro budoucí prvky.';
+      } else if (sc === 'nodense') {
+        canvas.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        canvas.style.gridAutoFlow = 'row';
+        canvas.innerHTML = '<div class="grid-demo-item featured" style="grid-column: span 2;">Karta 01 (span 2)</div>' +
+                           '<div class="grid-demo-item featured" style="grid-column: span 2; border-color: #f59e0b;">Karta 02 (span 2 &rarr; přeskočila do řádku 2!)</div>' +
+                           '<div class="grid-demo-item">Karta 03 (řádek 2)</div>' +
+                           '<div class="grid-demo-item">Karta 04 (řádek 3)</div>';
+        var cssCode = '<span class="html-comment">/* Bez dense (výchozí stav: grid-auto-flow: row):\n   Karta 01 zabrala 2 sloupce. V 1. řádku zbývá už jen 1 volný sloupec,\n   proto Karta 02 (span 2) přeskočila na 2. řádek a v 1. řádku vznikla díra! */</span>\n<span class="css-sel">.grid</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-num">3</span>, <span class="css-num">1</span><span class="css-unit">fr</span>);\n  <span class="css-prop">grid-auto-flow</span>: <span class="css-val">row</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;\n}\n\n<span class="css-sel">.card-1, .card-2</span> {\n  <span class="css-prop">grid-column</span>: <span class="css-val">span 2</span>;\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"grid"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card card-featured"</span><span class="html-tag">&gt;</span>Karta 01 (span 2)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card card-featured"</span><span class="html-tag">&gt;</span>Karta 02 (span 2)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 03<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 04<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('gridAutoCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Skutečná díra v mřížce: Karta 01 obsadila sloupce 1 a 2. Karta 02 potřebuje také 2 sloupce, takže se do 1. řádku nevešla a přeskočila na 2. řádek. Sloupec 3 v 1. řádku nechal prohlížeč přirozeně prázdný!';
+      } else if (sc === 'dense') {
+        canvas.style.gridTemplateColumns = 'repeat(3, 1fr)';
+        canvas.style.gridAutoFlow = 'dense';
+        canvas.innerHTML = '<div class="grid-demo-item featured" style="grid-column: span 2;">Karta 01 (span 2)</div>' +
+                           '<div class="grid-demo-item featured" style="grid-column: span 2;">Karta 02 (span 2)</div>' +
+                           '<div class="grid-demo-item" style="border-color: #10b981; background: rgba(16, 185, 129, 0.25);">Karta 03 (skočila do díry v 1. řádku!)</div>' +
+                           '<div class="grid-demo-item">Karta 04</div>';
+        var cssCode = '<span class="html-comment">/* S dense (grid-auto-flow: dense):\n   Algoritmus zjistí, že v 1. řádku zůstala volná buňka (sloupec 3),\n   a automaticky do ní zpětně dosadí Kartu 03, která má šířku 1 sloupec! */</span>\n<span class="css-sel">.grid</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-num">3</span>, <span class="css-num">1</span><span class="css-unit">fr</span>);\n  <span class="css-prop">grid-auto-flow</span>: <span class="css-val">dense</span>; <span class="html-comment">/* zpětné zaplnění děr */</span>\n  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;\n}\n\n<span class="css-sel">.card-1, .card-2</span> {\n  <span class="css-prop">grid-column</span>: <span class="css-val">span 2</span>;\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"grid"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card card-featured"</span><span class="html-tag">&gt;</span>Karta 01 (span 2)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card card-featured"</span><span class="html-tag">&gt;</span>Karta 02 (span 2)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 03 (zaplní díru)<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Karta 04<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('gridAutoCode', cssCode, htmlCode);
+        feedback.innerHTML = '<code>grid-auto-flow: dense</code> zachránilo situaci! Karta 03 automaticky vyplnila volné místo v 1. řádku a mřížka je dokonale kompaktní bez děr!';
+      }
+    };
+
+    // --- SLIDE 6: Grid Alignment ---
+    var gridAlignState = { items: 'stretch', content: 'start', self: 'auto' };
+
+    window.setGridAlignDemo = function(prop, val, btnEl) {
+      gridAlignState[prop] = val;
+      btnEl.parentElement.querySelectorAll('.btn-ctrl-chip').forEach(function(b) { b.classList.remove('is-active'); });
+      btnEl.classList.add('is-active');
+
+      var stage = document.getElementById('gridStage');
+      var item4 = document.getElementById('gItem4');
+      var item4Label = document.getElementById('gItem4Label');
+      var feedback = document.getElementById('gridAlignFeedbackText');
+      if (!stage || !item4 || !feedback) return;
+
+      stage.style.placeItems = gridAlignState.items;
+      stage.style.justifyContent = gridAlignState.content;
+
+      if (gridAlignState.self === 'center') {
+        item4.style.placeSelf = 'center';
+        if (item4Label) item4Label.textContent = 'place-self: center (aktivní!)';
+      } else {
+        item4.style.placeSelf = 'auto';
+        if (item4Label) item4Label.textContent = 'place-self: auto';
+      }
+
+      var cssCode = '<span class="html-comment">/* Sloupce mají pevnou šířku 130px &lt; šířka kontejneru.\n   Díky tomu justify-content viditelně posouvá celou sadu sloupců! */</span>\n' +
+                    '<span class="css-sel">.grid-container</span> {\n' +
+                    '  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n' +
+                    '  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-num">2</span>, <span class="css-num">130</span><span class="css-unit">px</span>);\n' +
+                    '  <span class="css-prop">place-items</span>: <span class="css-val">' + gridAlignState.items + '</span>;\n' +
+                    '  <span class="css-prop">justify-content</span>: <span class="css-val">' + gridAlignState.content + '</span>;\n' +
+                    '  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;\n' +
+                    '}\n\n' +
+                    '<span class="css-sel">.cell-b2</span> {\n' +
+                    '  <span class="css-prop">place-self</span>: <span class="css-val">' + gridAlignState.self + '</span>;\n' +
+                    '}';
+      updateCodeDisplay('gridAlignCode', cssCode);
+
+      feedback.innerHTML = '<code>place-items: ' + gridAlignState.items + '</code> zarovnává obsah uvnitř 130px buněk. <code>justify-content: ' + gridAlignState.content + '</code> posouvá celou sadu sloupců v kontejneru!';
+    };
+
+    // --- SLIDE 7: Advanced Grid Scenarios (Areas & Subgrid) ---
+    window.setAdvancedScenario = function(sc, btnEl) {
+      var stage = document.getElementById('advPreviewStage');
+      var feedback = document.getElementById('advFeedbackText');
+      if (!stage || !feedback) return;
+
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      if (sc === 'areas-desk') {
+        stage.innerHTML = '<div style="display: grid; grid-template-columns: 140px 1fr; grid-template-areas: \'header header\' \'sidebar main\' \'footer footer\'; gap: 0.5rem; width: 100%; height: 100%; font-family: var(--font-mono); font-size: 0.75rem;">' +
+          '<div style="grid-area: header; background: rgba(56, 189, 248, 0.2); border: 1px solid var(--accent); padding: 0.45rem; border-radius: 4px; text-align: center; font-weight: 700;">header</div>' +
+          '<div style="grid-area: sidebar; background: rgba(168, 85, 247, 0.2); border: 1px solid #a855f7; padding: 0.45rem; border-radius: 4px; display: flex; align-items: center; justify-content: center; min-height: 80px;">sidebar (140px)</div>' +
+          '<div style="grid-area: main; background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; padding: 0.45rem; border-radius: 4px; display: flex; align-items: center; justify-content: center;">main (1fr)</div>' +
+          '<div style="grid-area: footer; background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; padding: 0.45rem; border-radius: 4px; text-align: center;">footer</div>' +
+          '</div>';
+        var cssCode = '<span class="css-sel">.portal-layout</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-num">160</span><span class="css-unit">px</span> <span class="css-num">1</span><span class="css-unit">fr</span>;\n  <span class="css-prop">grid-template-areas</span>:\n    <span class="code-str">"header  header"</span>\n    <span class="code-str">"sidebar main"</span>\n    <span class="code-str">"footer  footer"</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">0.65</span><span class="css-unit">rem</span>;\n}\n\n<span class="css-sel">.header</span>  { <span class="css-prop">grid-area</span>: <span class="css-val">header</span>; }\n<span class="css-sel">.sidebar</span> { <span class="css-prop">grid-area</span>: <span class="css-val">sidebar</span>; }\n<span class="css-sel">.main</span>    { <span class="css-prop">grid-area</span>: <span class="css-val">main</span>; }\n<span class="css-sel">.footer</span>  { <span class="css-prop">grid-area</span>: <span class="css-val">footer</span>; }';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"portal-layout"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;header</span> <span class="html-attr">class</span>=<span class="html-val">"header"</span><span class="html-tag">&gt;</span>Hlavička edu_portal<span class="html-tag">&lt;/header&gt;</span>\n  <span class="html-tag">&lt;aside</span> <span class="html-attr">class</span>=<span class="html-val">"sidebar"</span><span class="html-tag">&gt;</span>Boční menu<span class="html-tag">&lt;/aside&gt;</span>\n  <span class="html-tag">&lt;main</span> <span class="html-attr">class</span>=<span class="html-val">"main"</span><span class="html-tag">&gt;</span>Hlavní obsah článků<span class="html-tag">&lt;/main&gt;</span>\n  <span class="html-tag">&lt;footer</span> <span class="html-attr">class</span>=<span class="html-val">"footer"</span><span class="html-tag">&gt;</span>Patička webu<span class="html-tag">&lt;/footer&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('advCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Desktopová šablona: <code>sidebar</code> a <code>main</code> stojí vedle sebe ve 2 sloupcích.';
+      } else if (sc === 'areas-mob') {
+        stage.innerHTML = '<div style="display: grid; grid-template-columns: 1fr; grid-template-areas: \'header\' \'main\' \'sidebar\' \'footer\'; gap: 0.4rem; width: 100%; font-family: var(--font-mono); font-size: 0.75rem;">' +
+          '<div style="grid-area: header; background: rgba(56, 189, 248, 0.2); border: 1px solid var(--accent); padding: 0.35rem; border-radius: 4px; text-align: center;">header</div>' +
+          '<div style="grid-area: main; background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; padding: 0.35rem; border-radius: 4px; text-align: center;">main (obsah je na mobilu nahoře!)</div>' +
+          '<div style="grid-area: sidebar; background: rgba(168, 85, 247, 0.2); border: 1px solid #a855f7; padding: 0.35rem; border-radius: 4px; text-align: center;">sidebar (menu až pod obsahem)</div>' +
+          '<div style="grid-area: footer; background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; padding: 0.35rem; border-radius: 4px; text-align: center;">footer</div>' +
+          '</div>';
+        var cssCode = '<span class="html-comment">/* Mobilní responzivita: jediná změna v CSS bez dotyku HTML! */</span>\n<span class="css-sel">@media</span> (<span class="css-prop">max-width</span>: <span class="css-num">768</span><span class="css-unit">px</span>) {\n  <span class="css-sel">.portal-layout</span> {\n    <span class="css-prop">grid-template-columns</span>: <span class="css-num">1</span><span class="css-unit">fr</span>;\n    <span class="css-prop">grid-template-areas</span>:\n      <span class="code-str">"header"</span>\n      <span class="code-str">"main"</span>\n      <span class="code-str">"sidebar"</span>\n      <span class="code-str">"footer"</span>;\n  }\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"portal-layout"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;header</span> <span class="html-attr">class</span>=<span class="html-val">"header"</span><span class="html-tag">&gt;</span>Hlavička edu_portal<span class="html-tag">&lt;/header&gt;</span>\n  <span class="html-tag">&lt;aside</span> <span class="html-attr">class</span>=<span class="html-val">"sidebar"</span><span class="html-tag">&gt;</span>Boční menu<span class="html-tag">&lt;/aside&gt;</span>\n  <span class="html-tag">&lt;main</span> <span class="html-attr">class</span>=<span class="html-val">"main"</span><span class="html-tag">&gt;</span>Hlavní obsah článků<span class="html-tag">&lt;/main&gt;</span>\n  <span class="html-tag">&lt;footer</span> <span class="html-attr">class</span>=<span class="html-val">"footer"</span><span class="html-tag">&gt;</span>Patička webu<span class="html-tag">&lt;/footer&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('advCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Mobilní zobrazení: Pouhou změnou matice v CSS jsme přesunuli <code>main</code> nad <code>sidebar</code> bez zásahu do HTML!';
+      } else if (sc === 'nosubgrid') {
+        stage.innerHTML = '<div class="subgrid-demo-grid">' +
+          '<div class="subgrid-card" style="border-color: rgba(244, 63, 94, 0.4);">' +
+          '<div class="subgrid-row-header">Dlouhý název kurzu na dva řádky v kartě</div>' +
+          '<div class="subgrid-row-text">Stručný popis.</div>' +
+          '<div class="subgrid-row-tag">WEB20</div>' +
+          '<button class="subgrid-row-btn" style="background: var(--accent-rose); color: #fff;">Zapsat se</button>' +
+          '</div>' +
+          '<div class="subgrid-card" style="border-color: rgba(244, 63, 94, 0.4);">' +
+          '<div class="subgrid-row-header">Krátký titul</div>' +
+          '<div class="subgrid-row-text">Mnohem delší text s podrobným vysvětlením látky pro studenty školy.</div>' +
+          '<div class="subgrid-row-tag">DAT20</div>' +
+          '<button class="subgrid-row-btn" style="background: var(--accent-rose); color: #fff;">Zapsat se</button>' +
+          '</div>' +
+          '<div class="subgrid-card" style="border-color: rgba(244, 63, 94, 0.4);">' +
+          '<div class="subgrid-row-header">Standard</div>' +
+          '<div class="subgrid-row-text">Běžná délka textu.</div>' +
+          '<div class="subgrid-row-tag">OSY20</div>' +
+          '<button class="subgrid-row-btn" style="background: var(--accent-rose); color: #fff;">Zapsat se</button>' +
+          '</div>' +
+          '</div>';
+        var cssCode = '<span class="html-comment">/* Bez Subgridu: každá karta má vlastní nezávislou výšku řádků,\n   tlačítka vespod nelícují a "plavou" na různých úrovních! */</span>\n<span class="css-sel">.cards-grid</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-num">3</span>, <span class="css-num">1</span><span class="css-unit">fr</span>);\n}\n\n<span class="css-sel">.card</span> {\n  <span class="css-prop">display</span>: <span class="css-val">flex</span>;\n  <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>;\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"cards-grid"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;article</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>\n    <span class="html-tag">&lt;h3&gt;</span>Dlouhý název kurzu...<span class="html-tag">&lt;/h3&gt;</span>\n    <span class="html-tag">&lt;p&gt;</span>Stručný popis.<span class="html-tag">&lt;/p&gt;</span>\n    <span class="html-tag">&lt;span</span> <span class="html-attr">class</span>=<span class="html-val">"tag"</span><span class="html-tag">&gt;</span>WEB20<span class="html-tag">&lt;/span&gt;</span>\n    <span class="html-tag">&lt;button&gt;</span>Zapsat se<span class="html-tag">&lt;/button&gt;</span>\n  <span class="html-tag">&lt;/article&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('advCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Problém: Kvůli nestejné délce nadpisů a odstavců jsou spodní štítky a tlačítka rozházená a nelícují vodorovně.';
+      } else if (sc === 'subgrid') {
+        stage.innerHTML = '<div class="subgrid-demo-grid">' +
+          '<div class="subgrid-card has-subgrid">' +
+          '<div class="subgrid-row-header">Dlouhý název kurzu na dva řádky v kartě</div>' +
+          '<div class="subgrid-row-text">Stručný popis.</div>' +
+          '<div class="subgrid-row-tag">WEB20</div>' +
+          '<button class="subgrid-row-btn">Zapsat se</button>' +
+          '</div>' +
+          '<div class="subgrid-card has-subgrid">' +
+          '<div class="subgrid-row-header">Krátký titul</div>' +
+          '<div class="subgrid-row-text">Mnohem delší text s podrobným vysvětlením látky pro studenty školy.</div>' +
+          '<div class="subgrid-row-tag">DAT20</div>' +
+          '<button class="subgrid-row-btn">Zapsat se</button>' +
+          '</div>' +
+          '<div class="subgrid-card has-subgrid">' +
+          '<div class="subgrid-row-header">Standard</div>' +
+          '<div class="subgrid-row-text">Běžná délka textu.</div>' +
+          '<div class="subgrid-row-tag">OSY20</div>' +
+          '<button class="subgrid-row-btn">Zapsat se</button>' +
+          '</div>' +
+          '</div>';
+        var cssCode = '<span class="html-comment">/* Se Subgridem: dceřiná karta překlene 4 řádky rodiče (span 4),\n   takže nadpisy, texty, štítky i tlačítka lícují v dokonalé rovině! */</span>\n<span class="css-sel">.cards-grid</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-num">3</span>, <span class="css-num">1</span><span class="css-unit">fr</span>);\n}\n\n<span class="css-sel">.card</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-row</span>: <span class="css-val">span 4</span>;\n  <span class="css-prop">grid-template-rows</span>: <span class="css-val">subgrid</span>; <span class="html-comment">/* sdílí řádky rodiče */</span>\n}';
+        var htmlCode = '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"cards-grid"</span><span class="html-tag">&gt;</span>\n  <span class="html-comment">&lt;!-- Karta zabírá 4 řádky mřížky: h3, p, štítek span, button --&gt;</span>\n  <span class="html-tag">&lt;article</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>\n    <span class="html-tag">&lt;h3&gt;</span>Dlouhý název kurzu...<span class="html-tag">&lt;/h3&gt;</span>\n    <span class="html-tag">&lt;p&gt;</span>Stručný popis.<span class="html-tag">&lt;/p&gt;</span>\n    <span class="html-tag">&lt;span</span> <span class="html-attr">class</span>=<span class="html-val">"tag"</span><span class="html-tag">&gt;</span>WEB20<span class="html-tag">&lt;/span&gt;</span>\n    <span class="html-tag">&lt;button&gt;</span>Zapsat se<span class="html-tag">&lt;/button&gt;</span>\n  <span class="html-tag">&lt;/article&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('advCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Dokonalost CSS Subgrid: <code>grid-template-rows: subgrid</code> zajistí, že nadpisy, popisky, štítky i tlačítka všech karet drží jednotnou vodorovnou linku!';
+      }
+    };
+
+    // Inicializace výchozího stavu po načtení stránky
+    document.addEventListener('DOMContentLoaded', function() {
+      var advStage = document.getElementById('advPreviewStage');
+      if (advStage) {
+        var showcase = advStage.closest('.interactive-showcase');
+        var firstBtn = showcase ? showcase.querySelector('.btn-scenario') : null;
+        setAdvancedScenario('areas-desk', firstBtn);
+      }
+    });
+  </script>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>
