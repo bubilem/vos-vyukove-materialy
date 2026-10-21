@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bonusová lekce 11: PowerShell a dávkový skripting (.bat) ve Windows | OSY20</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/terminal.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Sapphire & Indigo barevná paleta pro PowerShell bonusové lekce */
+    :root {
+      --accent: #0078d4;
+      --accent-glow: rgba(0, 120, 212, 0.3);
+      --accent-secondary: #6366f1;
+      --accent-indigo: #4f46e5;
+      --accent-sapphire: #0078d4;
+      --accent-azure: #38bdf8;
+    }
+
+    /* Bonusový odznak */
+    .badge-bonus {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.25) 0%, rgba(0, 120, 212, 0.25) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.5);
+      color: #a5b4fc;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      background: rgba(0, 120, 212, 0.12);
+      border: 1px solid rgba(0, 120, 212, 0.35);
+      color: #7dd3fc;
+    }
+    .highlight-pill.indigo {
+      background: rgba(99, 102, 241, 0.12);
+      border-color: rgba(99, 102, 241, 0.35);
+      color: #c7d2fe;
+    }
+    .highlight-pill.batch {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #fde68a;
+    }
+    .highlight-pill.success {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+    }
+    .highlight-pill.danger {
+      background: rgba(244, 63, 94, 0.12);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: #fda4af;
+    }
+
+    .story-box {
+      background: linear-gradient(135deg, rgba(0, 120, 212, 0.08) 0%, rgba(79, 70, 229, 0.06) 100%);
+      border-left: 3px solid var(--accent);
+      padding: 0.95rem 1.15rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .story-box.indigo {
+      border-left-color: var(--accent-indigo);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+    }
+    .story-box.batch {
+      border-left-color: #f59e0b;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(15, 23, 42, 0.4) 100%);
+    }
+    .story-title {
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.35rem;
+      font-size: 0.92rem;
+    }
+    .story-box.indigo .story-title { color: #a5b4fc; }
+    .story-box.batch .story-title { color: #fde68a; }
+
+    /* Porovnávací tabulka CMD vs PowerShell */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.81rem;
+      margin-top: 0.5rem;
+    }
+    .compare-table th {
+      text-align: left;
+      padding: 0.55rem 0.75rem;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--border-color);
+      font-weight: 700;
+    }
+    .compare-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      vertical-align: middle;
+    }
+    .compare-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Interaktivní trenažér */
+    .sandbox-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      height: 100%;
+    }
+    .sandbox-tabs {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .sandbox-tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+    }
+    .sandbox-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+    .sandbox-tab-btn.active {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.25) 0%, rgba(0, 120, 212, 0.25) 100%);
+      border-color: #6366f1;
+      color: #e0e7ff;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+    }
+
+    .sandbox-view {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      flex: 1;
+    }
+    .sandbox-terminal {
+      background: #0c1017;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+    .sandbox-terminal-header {
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.4rem 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .sandbox-terminal-dots {
+      display: flex;
+      gap: 0.35rem;
+    }
+    .sandbox-terminal-dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .sandbox-terminal-dot.red { background: #f43f5e; }
+    .sandbox-terminal-dot.yellow { background: #f59e0b; }
+    .sandbox-terminal-dot.green { background: #10b981; }
+
+    .sandbox-terminal-body {
+      padding: 0.75rem;
+      overflow-y: auto;
+      flex: 1;
+      line-height: 1.5;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+    }
+    .terminal-prompt {
+      color: #38bdf8;
+      font-weight: 700;
+    }
+    .terminal-cmd {
+      color: #fde047;
+      font-weight: 600;
+    }
+    .terminal-comment {
+      color: #94a3b8;
+      font-style: italic;
+    }
+    .terminal-out {
+      color: #cbd5e1;
+    }
+    .terminal-success {
+      color: #6ee7b7;
+    }
+    .terminal-warn {
+      color: #fde68a;
+    }
+
+    /* Laboratorní cvičení */
+    .exercise-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.05rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .exercise-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .exercise-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .exercise-badge.bat {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fde68a;
+    }
+    .exercise-badge.ps {
+      background: rgba(0, 120, 212, 0.15);
+      border: 1px solid rgba(0, 120, 212, 0.4);
+      color: #7dd3fc;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-background">
+    <div class="bg-glow-1" style="background: radial-gradient(circle, rgba(0, 120, 212, 0.18) 0%, transparent 70%);"></div>
+    <div class="bg-glow-2" style="background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <!-- Horní navigační lišta -->
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu OSY20">
+          <span>&larr; OSY20</span>
+        </a>
+        <div class="lesson-indicator">
+          <span style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.4); color: #c7d2fe; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 700; font-size: 0.78rem;">Bonus 11</span>
+          <span class="divider">&bull;</span>
+          <span>PowerShell &amp; Dávkový skripting (.bat)</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="badge-bonus">Praktický workshop</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv (T)">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hlavní viewport se snímky -->
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE HERO -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge" style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.4); color: #c7d2fe;">
+          <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Bonusový praktický workshop &bull; Mimo zkouškový okruh
+        </div>
+        <h1 class="hero-title" style="background: linear-gradient(135deg, #ffffff 30%, #7dd3fc 70%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+          PowerShell &amp; Dávkový skripting (.bat) ve Windows
+        </h1>
+        <p class="hero-desc">
+          Od jednoduchých dávkových souborů CMD po moderní objektový shell: Pipeline, Cmdlety, proměnné, podmínky, cykly a praktická automatizace správy systému.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Délka workshopu</span>
+            <span class="hero-meta-val">45 minut</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Technologie</span>
+            <span class="hero-meta-val">.NET CLR &bull; CMD.EXE</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Cílové platformy</span>
+            <span class="hero-meta-val">Windows 10 / 11 / Server</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: EVOLUCE PŘÍKAZOVÝCH INTERPRETŮ VE WINDOWS -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Kontext a architektura</div>
+            <h2 class="slide-title">Evoluce příkazových interpretů: DOS &rarr; CMD &rarr; PowerShell</h2>
+            <p class="slide-subtitle">Proč pouhý text nestačil a proč Microsoft vytvořil objektově orientovaný shell</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-primary">Architektura Shellů</span>
+            <span class="tag">Text vs. Objekty</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                  <span class="card-title-text">Klasický CMD (Příkazový řádek / .bat)</span>
+                </div>
+                <span class="highlight-pill batch">Od roku 1981 (MS-DOS)</span>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-secondary); margin: 0;">
+                Založen na interpretu <code>cmd.exe</code> (nástupce <code>COMMAND.COM</code>). Slouží k jednoduchému spouštění binárek a sekvenčních příkazů:
+              </p>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li><strong>Pouze surový text:</strong> Výstup každého programu je obyčejný nestrukturovaný řetězec znaků (ASCII / ANSI).</li>
+                <li><strong>Složité zpracování dat:</strong> Chcete-li získat 3. sloupec výstupu, musíte použít krkolomný cyklus <code>for /f "tokens=3"</code>.</li>
+                <li><strong>Výhoda:</strong> 100% kompatibilita na každém PC s Windows od roku 1993, bleskový start (0 ms režie).</li>
+              </ul>
+              <div class="story-box batch" style="margin-top: auto; padding: 0.55rem 0.75rem;">
+                <div class="story-title" style="font-size: 0.8rem;">Typické užití dnes:</div>
+                <div style="font-size: 0.76rem; color: var(--text-secondary);">
+                  Rychlé instalační wrappery, spouštěče projektů (<code>start.bat</code>), bleskové síťové testy (<code>ping</code>, <code>tracert</code>).
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span class="card-title-text">PowerShell (Objektový shell na .NET)</span>
+                </div>
+                <span class="highlight-pill indigo">Od roku 2006 (Jeffrey Snover)</span>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-secondary); margin: 0;">
+                Revoluční architektura postavená přímo na běhovém prostředí <strong>.NET Common Language Runtime (CLR)</strong>:
+              </p>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li><strong>Rourou tečou objekty, ne text:</strong> Výstupem příkazu není řádkový text, ale <em>živý .NET objekt</em> s vlastnostmi (Properties) a metodami (Methods).</li>
+                <li><strong>Typová bezpečnost:</strong> Žádné parsování mezer a oddělovačů. Na objektu procesu jednoduše zavoláte <code>$p.Kill()</code> nebo <code>$p.WorkingSet64</code>.</li>
+                <li><strong>Cross-platform (PowerShell 7 Core):</strong> Běží nativně na Windows, Linuxu i macOS!</li>
+              </ul>
+              <div class="story-box indigo" style="margin-top: auto; padding: 0.55rem 0.75rem;">
+                <div class="story-title" style="font-size: 0.8rem;">Typické užití dnes:</div>
+                <div style="font-size: 0.76rem; color: var(--text-secondary);">
+                  Kompletní administrace Windows a Active Directory, Azure/AWS cloud, automatizace serverů, bezpečnostní audity.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Vlastnost</th>
+                <th>Klasický dávkový soubor (.bat / CMD)</th>
+                <th>PowerShell (.ps1)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Datový typ roury (|)</strong></td>
+                <td>Surový textový proud (Stream of Text)</td>
+                <td><strong style="color: #7dd3fc;">Typované objekty .NET (Objects)</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Formát příkazů</strong></td>
+                <td>Různorodý, historický (<code>dir</code>, <code>chkdsk</code>, <code>net</code>)</td>
+                <td>Jednotný <code>Sloveso-PodstatnéJméno</code> (<code>Get-Service</code>)</td>
+              </tr>
+              <tr>
+                <td><strong>Chybové kódy</strong></td>
+                <td>Číselný <code>%ERRORLEVEL%</code> (0 = OK)</td>
+                <td>Objektové výjimky <code>try { ... } catch { ... }</code> + <code>$?</code></td>
+              </tr>
+              <tr>
+                <td><strong>Podpora API</strong></td>
+                <td>Pouze staré Win32 utility</td>
+                <td>Kompletní .NET, Win32 API, WMI, CIM, COM objekty, REST API</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: PRÁCE V POWERSHELLU & ANATOMIE CMDLETŮ -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základy PowerShellu</div>
+            <h2 class="slide-title">Anatomie Cmdletů a „Svatá trojice“ objevování</h2>
+            <p class="slide-subtitle">Všechny příkazy mají předvídatelný tvar Sloveso-PodstatnéJméno (Verb-Noun)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-primary">Cmdlety</span>
+            <span class="tag">Get-Help &bull; Get-Member</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                  <span class="card-title-text">Struktura příkazu: Sloveso-Jméno</span>
+                </div>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-secondary); margin: 0;">
+                Microsoft stanovil striktní seznam povolených sloves (lze vypsat pomocí <code>Get-Verb</code>):
+              </p>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li><code>Get-*</code> &ndash; Čtení informací (<code>Get-Process</code>, <code>Get-Service</code>, <code>Get-Disk</code>)</li>
+                <li><code>Set-*</code> &ndash; Změna existujícího nastavení (<code>Set-Date</code>, <code>Set-Service</code>)</li>
+                <li><code>New-*</code> &ndash; Vytvoření nového prostředku (<code>New-Item</code>, <code>New-LocalUser</code>)</li>
+                <li><code>Start-* / Stop-*</code> &ndash; Ovládání životního cyklu služeb a úloh</li>
+                <li><code>Test-*</code> &ndash; Diagnostika vracející True/False (<code>Test-Connection</code>, <code>Test-Path</code>)</li>
+              </ul>
+
+              <div class="story-box" style="margin-top: auto; padding: 0.55rem 0.75rem;">
+                <div class="story-title" style="font-size: 0.82rem;">Vestavěné aliasy (Linux &amp; CMD přívětivost):</div>
+                <div style="font-size: 0.77rem; color: var(--text-secondary);">
+                  Můžete psát <code>ls</code> nebo <code>dir</code> &rarr; spustí se <code>Get-ChildItem</code>.<br>
+                  Můžete psát <code>ps</code> &rarr; spustí se <code>Get-Process</code>.<br>
+                  Můžete psát <code>cat</code> nebo <code>type</code> &rarr; spustí se <code>Get-Content</code>.
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                  <span class="card-title-text">Svatá trojice pro administrátora</span>
+                </div>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-secondary); margin: 0;">
+                Nemusíte si pamatovat parametry zpaměti. Tyto 3 příkazy vám řeknou vše:
+              </p>
+
+              <div class="code-box" style="margin-top: 0.4rem;">
+                <div class="code-box-header">
+                  <span>powershell &bull; 3 klíčové diagnostické příkazy</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># 1. Hledání příkazu podle klíčového slova:</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Command</span> <span class="term-param">*firewall*</span>
+
+<span class="term-comment"># 2. Manuál a příklady použití (včetně přepínače -Examples):</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Help</span> <span class="term-arg">Get-Process</span> <span class="term-param">-Online</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Help</span> <span class="term-arg">Stop-Service</span> <span class="term-param">-Examples</span>
+
+<span class="term-comment"># 3. Zjištění, jaké vlastnosti a metody objekt má (NEJDŮLEŽITĚJŠÍ!):</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Process</span> <span class="term-pipe">|</span> <span class="term-cmd">Get-Member</span></code></pre>
+              </div>
+              <div class="highlight-pill indigo" style="margin-top: 0.35rem;">Příkaz Get-Member vám ukáže všechna skrytá data objektu</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SÍLA POWERSHELL PIPELINE (ROURA V PRAXI) -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Srdce PowerShellu</div>
+            <h2 class="slide-title">Objektová roura (Pipeline): Filtrování, řazení a export</h2>
+            <p class="slide-subtitle">Proč je objektová roura stonásobně spolehlivější než textový parser v CMD či Bashi</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-primary">Pipeline |</span>
+            <span class="tag">Where-Object &bull; Select-Object</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><filter x="2" y="2" width="20" height="20" rx="2"></filter><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                  <span class="card-title-text">Základní stavební kameny roury</span>
+                </div>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-secondary); margin: 0;">
+                Zatímco v CMD se musíte modlit, aby výstup měl stejný počet mezer, v PowerShellu filtrujete přímo vlastnosti objektu:
+              </p>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li><strong>Where-Object (alias <code>?</code>):</strong> Filtruje objekty podle podmínky.<br>
+                  <code>Get-Service | Where-Object Status -eq 'Running'</code></li>
+                <li><strong>Select-Object (alias <code>select</code>):</strong> Vybere jen požadované sloupce/vlastnosti nebo omezí počet řádků (<code>-First 5</code>).</li>
+                <li><strong>Sort-Object (alias <code>sort</code>):</strong> Seřadí objekty podle zvoleného atributu (např. sestupně podle spotřeby RAM).</li>
+                <li><strong>Out-GridView (alias <code>ogv</code>):</strong> Okamžitě otevře interaktivní grafické okno s filtrováním a vyhledáváním!</li>
+              </ul>
+              <div class="story-box" style="margin-top: auto; padding: 0.55rem 0.75rem;">
+                <div class="story-title" style="font-size: 0.82rem;">Filozofie PowerShellu:</div>
+                <div style="font-size: 0.77rem; color: var(--text-secondary);">
+                  Filtrujte vlevo, formátujte vpravo (<em>Filter Left, Format Right</em>). Data zužujte co nejdříve v rouně, tabulku či CSV exportujte až na samém konci.
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><terminal x="4" y="4" width="16" height="16" rx="2"></terminal><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                  <span class="card-title-text">Praktické One-Linery k vyzkoušení</span>
+                </div>
+              </div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>powershell &bull; Ukázky praktického řetězení v rouně</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># 1. Najít 5 procesů, které žerou nejvíce operační paměti (RAM):</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Process</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Sort-Object</span> <span class="term-param">-Property</span> WS <span class="term-param">-Descending</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Select-Object</span> <span class="term-param">-First</span> 5 <span class="term-param">-Property</span> Name, Id, @{Name=<span class="term-string">"RAM_MB"</span>; Expression={[math]::round($_.WS/1MB, 1)}}
+
+<span class="term-comment"># 2. Všechny zastavené automatické služby a export do CSV souboru:</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-Service</span> <span class="term-pipe">|</span>
+    <span class="term-cmd">Where-Object</span> { $_.StartType <span class="term-op">-eq</span> <span class="term-string">'Automatic'</span> <span class="term-op">-and</span> $_.Status <span class="term-op">-eq</span> <span class="term-string">'Stopped'</span> } <span class="term-pipe">|</span>
+    <span class="term-cmd">Export-Csv</span> <span class="term-param">-Path</span> <span class="term-string">".\ChybneSluzby.csv"</span> <span class="term-param">-NoTypeInformation</span> <span class="term-param">-Encoding</span> utf8
+
+<span class="term-comment"># 3. Zobrazení všech síťových spojení v interaktivním GUI okně:</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Get-NetTCPConnection</span> <span class="term-pipe">|</span> <span class="term-cmd">Out-GridView</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: DÁVKOVÝ SKRIPTING (.BAT) - ZÁKLADY A PROMĚNNÉ -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Tradiční Windows skriptování</div>
+            <h2 class="slide-title">Dávkový soubor (.bat / .cmd): Proměnné a výpisy</h2>
+            <p class="slide-subtitle">Základní syntaxe příkazového skriptu, vstupy od uživatele a systémové proměnné</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-primary">Soubory .BAT</span>
+            <span class="tag">SET &bull; %VAR% &bull; %1</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><file-text x="14" y="2" width="16" height="16" rx="2"></file-text><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                  <span class="card-title-text">Pravidla syntaxe dávkového skriptu</span>
+                </div>
+                <span class="highlight-pill batch">Základní kostra</span>
+              </div>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li><code>@echo off</code> &ndash; Povinný první řádek. Zabrání tomu, aby interpret tiskl na obrazovku každý vykonávaný řádek kódu.</li>
+                <li><code>echo Text</code> &ndash; Výpis zprávy do konzole. Prázdný řádek vypíšete jako <code>echo.</code></li>
+                <li><code>rem</code> nebo <code>::</code> &ndash; Komentář (interpret jej ignoruje).</li>
+                <li><code>pause</code> &ndash; Pozastaví běh a čeká na stisk libovolné klávesy (*„Stiskněte libovolnou klávesu...“*). Zabrání okamžitému zavření okna po dokončení!</li>
+                <li><code>exit /b 0</code> &ndash; Ukončí skript a vrátí kód chyby (Exit Code).</li>
+              </ul>
+
+              <div class="story-box batch" style="margin-top: auto; padding: 0.55rem 0.75rem;">
+                <div class="story-title" style="font-size: 0.82rem;">Důležité speciální proměnné:</div>
+                <div style="font-size: 0.77rem; color: var(--text-secondary);">
+                  <code>%~dp0</code> &ndash; Absolutní cesta ke složce, kde skript fyzicky leží (včetně zpětného lomítka).<br>
+                  <code>%1</code> až <code>%9</code> &ndash; Parametry předané z příkazové řádky (např. <code>skript.bat soubor.txt</code>).<br>
+                  <code>%ERRORLEVEL%</code> &ndash; Návratový kód posledního spuštěného příkazu (0 = úspěch).
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><code x="4" y="4" width="16" height="16" rx="2"></code><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span class="card-title-text">Příklad: skript_pozdrav.bat</span>
+                </div>
+              </div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>batch &bull; Práce s proměnnými a vstupem uživatele</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-cmd">@echo off</span>
+<span class="term-comment">:: Nastavení kódování UTF-8 pro správnou českou diakritiku v CMD:</span>
+<span class="term-cmd">chcp</span> 65001 &gt;nul
+
+<span class="term-comment">:: Definice proměnné:</span>
+<span class="term-cmd">set</span> AUTOR=Jan Novak
+<span class="term-cmd">set</span> VERZE=1.0
+
+<span class="term-cmd">echo</span> ==========================================
+<span class="term-cmd">echo</span> Spoustim skript verze %VERZE% od %AUTOR%
+<span class="term-cmd">echo</span> Aktualni datum a cas: %DATE% %TIME%
+<span class="term-cmd">echo</span> Slozka skriptu: %~dp0
+<span class="term-cmd">echo</span> ==========================================
+<span class="term-cmd">echo.</span>
+
+<span class="term-comment">:: Vstup od uživatele přes přepínač /p :</span>
+<span class="term-cmd">set</span> /p JMENO=Zadejte sve jmeno: 
+<span class="term-cmd">echo</span> Vitej v terminalu Windows, %JMENO%!
+
+<span class="term-comment">:: Matematické výpočty přes přepínač /a :</span>
+<span class="term-cmd">set</span> /a VYSLEDEK=10 * 5 + 2
+<span class="term-cmd">echo</span> Matematicky vypocet (10 * 5 + 2) = %VYSLEDEK%
+
+<span class="term-cmd">pause</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: ŘÍZENÍ TOKU V .BAT - PODMÍNKY (IF) A CYKLY (FOR) -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Řízení toku v dávkách</div>
+            <h2 class="slide-title">Podmínky (IF) a Cykly (FOR) v dávkovém souboru</h2>
+            <p class="slide-subtitle">Větvení podle hodnot, testování existence souborů a procházení seznamů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-primary">Řízení toku</span>
+            <span class="tag">IF / ELSE &bull; FOR %%i</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><git-branch x="6" y="3" width="12" height="18" rx="2"></git-branch><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                  <span class="card-title-text">Podmínky: IF / ELSE v dávce</span>
+                </div>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-secondary); margin: 0;">
+                Závorka <code>(</code> musí být vždy na stejném řádku jako příkaz <code>if</code> a <code>else</code>:
+              </p>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>batch &bull; Ukázky větvení IF</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment">:: 1. Porovnání textových řetězců (doporučeno dát do uvozovek):</span>
+<span class="term-cmd">if</span> <span class="term-string">"%ODPOVED%"</span>==<span class="term-string">"ano"</span> (
+    <span class="term-cmd">echo</span> Zvolil jste pokracovat.
+) <span class="term-cmd">else</span> (
+    <span class="term-cmd">echo</span> Operace byla zrusena.
+)
+
+<span class="term-comment">:: 2. Test existence souboru či složky na disku:</span>
+<span class="term-cmd">if</span> <span class="term-cmd">exist</span> <span class="term-string">"C:\zaloha\data.txt"</span> (
+    <span class="term-cmd">echo</span> Soubor jiz existuje!
+) <span class="term-cmd">else</span> (
+    <span class="term-cmd">echo</span> Soubor nenalezen, vytvarim...
+)
+
+<span class="term-comment">:: 3. Test návratového kódu předchozího příkazu:</span>
+<span class="term-cmd">ping</span> -n 1 8.8.8.8 &gt;nul
+<span class="term-cmd">if</span> %ERRORLEVEL% <span class="term-op">equ</span> 0 (
+    <span class="term-cmd">echo</span> [OK] Internetove pripojeni funguje.
+) <span class="term-cmd">else</span> (
+    <span class="term-cmd">echo</span> [CHYBA] Internet neni dostupny!
+)</code></pre>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><refresh-cw x="2" y="2" width="20" height="20" rx="2"></refresh-cw><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                  <span class="card-title-text">Cykly: FOR ve skriptu .bat</span>
+                </div>
+              </div>
+              <p style="font-size: 0.81rem; color: var(--text-secondary); margin: 0;">
+                Pozor: V souboru <code>.bat</code> se proměnná píše se <strong>dvěma procenty</strong> (<code>%%i</code>), v příkazovém řádku přímo jen s jedním (<code>%i</code>):
+              </p>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>batch &bull; 3 podoby cyklu FOR</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment">:: A. Číselný cyklus (od, krok, do):</span>
+<span class="term-cmd">for</span> <span class="term-param">/L</span> %%i <span class="term-param">in</span> (1, 1, 5) <span class="term-cmd">do</span> (
+    <span class="term-cmd">echo</span> Krok cislo %%i
+)
+
+<span class="term-comment">:: B. Procházení souborů s příponou .txt v adresáři:</span>
+<span class="term-cmd">for</span> %%f <span class="term-param">in</span> (*.txt) <span class="term-cmd">do</span> (
+    <span class="term-cmd">echo</span> Zpracovavam textak: %%f
+)
+
+<span class="term-comment">:: C. Parsování obsahu souboru po řádcích (přepínač /F):</span>
+<span class="term-cmd">for</span> <span class="term-param">/F</span> <span class="term-string">"tokens=1,2 delims=,"</span> %%a <span class="term-param">in</span> (uzivatele.csv) <span class="term-cmd">do</span> (
+    <span class="term-cmd">echo</span> Uzivatel: %%a, Oddeleni: %%b
+)</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: SKRIPTOVÁNÍ V POWERSHELLU (.PS1) -->
+      <section class="slide" data-slide="7">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Moderní skriptování</div>
+            <h2 class="slide-title">Skripty v PowerShellu (.ps1): Proměnné, Podmínky &amp; Cykly</h2>
+            <p class="slide-subtitle">Čistá syntaxe inspirovaná C#, bezpečnostní politika ExecutionPolicy a datové struktury</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-primary">PowerShell .ps1</span>
+            <span class="tag">foreach &bull; hashtables</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><shield x="12" y="2" width="16" height="20" rx="2"></shield><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  <span class="card-title-text">Execution Policy: První překážka</span>
+                </div>
+                <span class="highlight-pill danger">Bezpečnostní štít</span>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0;">
+                Windows ve výchozím stavu <strong>zakazují spouštění stažených .ps1 skriptů</strong> dvojklikem myši, aby chránily uživatele před malwarem.
+              </p>
+              <div class="code-box" style="margin-top: 0.35rem;">
+                <div class="code-box-header">
+                  <span>powershell &bull; Povolení spouštění skriptů v konzoli</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># Povolení spouštění pro aktuálního uživatele (bezpečné):</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">Set-ExecutionPolicy</span> <span class="term-param">-Scope</span> CurrentUser <span class="term-param">-ExecutionPolicy</span> RemoteSigned
+
+<span class="term-comment"># Jednorázové spuštění skriptu bez trvalé změny systému:</span>
+<span class="term-prompt">PS&gt; </span><span class="term-cmd">powershell.exe</span> <span class="term-param">-ExecutionPolicy</span> Bypass <span class="term-param">-File</span> .\skript.ps1</code></pre>
+              </div>
+
+              <div class="story-box indigo" style="margin-top: auto; padding: 0.55rem 0.75rem;">
+                <div class="story-title" style="font-size: 0.82rem;">Podmínkové operátory v PowerShellu:</div>
+                <div style="font-size: 0.77rem; color: var(--text-secondary);">
+                  PowerShell nepoužívá znaky <code>&gt;</code> ani <code>&lt;</code> (protože ty slouží pro přesměrování textu do souboru!). Používá zkratky:<br>
+                  <code>-eq</code> (rovno), <code>-ne</code> (nerovno), <code>-gt</code> (větší než), <code>-lt</code> (menší než), <code>-like</code> (maska s *), <code>-match</code> (RegEx).
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><code x="4" y="4" width="16" height="16" rx="2"></code><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span class="card-title-text">Příklad: komplexni_skript.ps1</span>
+                </div>
+              </div>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>powershell &bull; Pole, asociativní pole, cyklus a podmínka</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-comment"># 1. Definice proměnných a typovaného pole:</span>
+<span class="term-var">$Servery</span> = @(<span class="term-string">"web01"</span>, <span class="term-string">"db01"</span>, <span class="term-string">"backup01"</span>)
+
+<span class="term-comment"># 2. Asociativní pole (Hashtable / Klíč = Hodnota):</span>
+<span class="term-var">$Konfigurace</span> = @{
+    Port    = 8080
+    Timeout = 5
+    Povoleno= $true
+}
+
+<span class="term-comment"># 3. Cyklus foreach s podmínkou:</span>
+<span class="term-cmd">foreach</span> (<span class="term-var">$srv</span> <span class="term-op">in</span> <span class="term-var">$Servery</span>) {
+    <span class="term-var">$stav</span> = <span class="term-cmd">Test-Connection</span> <span class="term-param">-ComputerName</span> <span class="term-var">$srv</span> <span class="term-param">-Count</span> 1 <span class="term-param">-Quiet</span>
+    
+    <span class="term-cmd">if</span> (<span class="term-var">$stav</span> <span class="term-op">-eq</span> <span class="term-var">$true</span>) {
+        <span class="term-cmd">Write-Host</span> <span class="term-string">"[ONLINE] Server $srv odpovida."</span> <span class="term-param">-ForegroundColor</span> Green
+    } <span class="term-cmd">else</span> {
+        <span class="term-cmd">Write-Warning</span> <span class="term-string">"[OFFLINE] Server $srv je nedostupny!"</span>
+    }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: INTERAKTIVNÍ TRENAŽÉR: POWERSHELL VS BATCH -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Interaktivní laboratoř</div>
+            <h2 class="slide-title">Interaktivní trenažér: Porovnání .BAT a PowerShellu</h2>
+            <p class="slide-subtitle">Vyberte praktickou administrativní úlohu a sledujte rozdíl v kódu i reálném výstupu</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-primary">Interaktivní trenažér</span>
+            <span class="tag">Simulace terminálu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="sandbox-container">
+            <div class="sandbox-tabs">
+              <button class="sandbox-tab-btn active" id="tabTask1" type="button" data-task="task1">
+                <svg class="icon" viewBox="0 0 24 24"><cpu x="4" y="4" width="16" height="16" rx="2"></cpu><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect></svg>
+                <span>Úloha 1: Top procesy podle RAM</span>
+              </button>
+              <button class="sandbox-tab-btn" id="tabTask2" type="button" data-task="task2">
+                <svg class="icon" viewBox="0 0 24 24"><copy x="9" y="9" width="13" height="13" rx="2"></copy><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Úloha 2: Záloha a kopírování logů</span>
+              </button>
+              <button class="sandbox-tab-btn" id="tabTask3" type="button" data-task="task3">
+                <svg class="icon" viewBox="0 0 24 24"><globe x="2" y="2" width="20" height="20" rx="2"></globe><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <span>Úloha 3: Kontrola běžících síťových služeb</span>
+              </button>
+              <button class="sandbox-tab-btn" id="tabTask4" type="button" data-task="task4">
+                <svg class="icon" viewBox="0 0 24 24"><hard-drive x="2" y="2" width="20" height="20" rx="2"></hard-drive><line x1="22" y1="12" x2="2" y2="12"></line><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><line x1="6" y1="16" x2="6.01" y2="16"></line><line x1="10" y1="16" x2="10.01" y2="16"></line></svg>
+                <span>Úloha 4: Audit volného místa na disku</span>
+              </button>
+            </div>
+
+            <div class="sandbox-view">
+              <!-- Sloupec A: Klasická dávka CMD (.BAT) -->
+              <div class="sandbox-terminal">
+                <div class="sandbox-terminal-header">
+                  <div class="sandbox-terminal-dots">
+                    <span class="sandbox-terminal-dot red"></span>
+                    <span class="sandbox-terminal-dot yellow"></span>
+                    <span class="sandbox-terminal-dot green"></span>
+                  </div>
+                  <strong style="color: #fde68a;">Klasický dávkový skript (CMD.EXE &bull; .BAT)</strong>
+                  <span>cmd.exe</span>
+                </div>
+                <div class="sandbox-terminal-body" id="sandboxBatBody">
+                  <!-- Generováno JS -->
+                </div>
+              </div>
+
+              <!-- Sloupec B: Moderní PowerShell (.PS1) -->
+              <div class="sandbox-terminal" style="border-color: rgba(99, 102, 241, 0.4);">
+                <div class="sandbox-terminal-header" style="background: rgba(99, 102, 241, 0.1);">
+                  <div class="sandbox-terminal-dots">
+                    <span class="sandbox-terminal-dot" style="background: #38bdf8;"></span>
+                    <span class="sandbox-terminal-dot" style="background: #818cf8;"></span>
+                    <span class="sandbox-terminal-dot" style="background: #c084fc;"></span>
+                  </div>
+                  <strong style="color: #7dd3fc;">Objektový PowerShell 7 (PWSH.EXE &bull; .PS1)</strong>
+                  <span>pwsh</span>
+                </div>
+                <div class="sandbox-terminal-body" id="sandboxPsBody">
+                  <!-- Generováno JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: ADMINISTRÁTORSKÁ PRAXE: PROPOJENÍ .BAT A .PS1 -->
+      <section class="slide" data-slide="9">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Reálná systémová praxe</div>
+            <h2 class="slide-title">Jak propojit .bat s PowerShellem a automatizovat úlohy</h2>
+            <p class="slide-subtitle">Využití .bat jako spouštěče, který obejde ExecutionPolicy a předá parametry</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-primary">Integrace</span>
+            <span class="tag">Wrapper .bat &bull; Task Scheduler</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><play x="5" y="3" width="14" height="18" rx="2"></play><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  <span class="card-title-text">Univerzální spouštěč: spustit.bat</span>
+                </div>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-secondary); margin: 0;">
+                Zákazník nebo koncový uživatel neumí spustit <code>.ps1</code> přes konzoli. Vytvořte mu jednoduchý klikací <code>.bat</code> wrapper:
+              </p>
+              <div class="code-box">
+                <div class="code-box-header">
+                  <span>batch &bull; Spouštěč PowerShell skriptu bez omezení politiky</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre><code><span class="term-cmd">@echo off</span>
+<span class="term-cmd">title</span> Spoustec zalohovaciho systemu
+
+<span class="term-comment">:: Spuštění .ps1 skriptu ze stejné složky se všemi předanými parametry:</span>
+<span class="term-cmd">powershell.exe</span> -NoProfile -ExecutionPolicy Bypass -File <span class="term-string">"%~dp0zaloha.ps1"</span> %*
+
+<span class="term-comment">:: Kontrola, zda PowerShell skončil úspěšně:</span>
+<span class="term-cmd">if</span> %ERRORLEVEL% <span class="term-op">neq</span> 0 (
+    <span class="term-cmd">echo</span> [CHYBA] PowerShell skript selhal s kodem %ERRORLEVEL%!
+    <span class="term-cmd">pause</span>
+    <span class="term-cmd">exit</span> /b %ERRORLEVEL%
+)
+
+<span class="term-cmd">echo</span> [HOTOVO] Vse uspesne probehlo.
+<span class="term-cmd">timeout</span> /t 3 &gt;nul</code></pre>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><calendar x="3" y="4" width="18" height="18" rx="2"></calendar><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <span class="card-title-text">Plánovač úloh (Task Scheduler)</span>
+                </div>
+              </div>
+              <p style="font-size: 0.83rem; color: var(--text-secondary); margin: 0;">
+                Jak nastavit automatický noční běh skriptu v Plánovači úloh Windows:
+              </p>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li><strong>Program/skript:</strong> <code>powershell.exe</code> (nebo celá cesta <code>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</code>)</li>
+                <li><strong>Přidat argumenty:</strong><br>
+                  <code>-NonInteractive -NoProfile -ExecutionPolicy Bypass -File "C:\Skripty\AutoZaloha.ps1"</code></li>
+                <li><strong>Spustit v:</strong> <code>C:\Skripty</code></li>
+                <li><strong>Oprávnění:</strong> Zaškrtněte <em>„Spouštět nezávisle na přihlášení uživatele“</em> a <em>„Spustit s nejvyššími oprávněními“</em> (pro přístup k systémovým souborům).</li>
+              </ul>
+
+              <div class="story-box" style="margin-top: auto; padding: 0.55rem 0.75rem;">
+                <div class="story-title" style="font-size: 0.82rem;">Inženýrský tip: Výpis do Windows Event Logu</div>
+                <div style="font-size: 0.77rem; color: var(--text-secondary);">
+                  V PowerShellu můžete zapsat výsledek zálohy přímo do Prohlížeče událostí Windows:<br>
+                  <code>Write-EventLog -LogName Application -Source "MojeZaloha" -EventId 100 -EntryType Information -Message "Zaloha dokoncena."</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: SADA PRAKTICKÝCH CVIČENÍ & SROVNÁVACÍ TAHÁK -->
+      <section class="slide" data-slide="10">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Lab &amp; Cheat Sheet</div>
+            <h2 class="slide-title">Praktická cvičení k vyzkoušení &amp; Srovnávací tahák</h2>
+            <p class="slide-subtitle">Vyzkoušejte si hotové miniprojekty a mějte po ruce převodník příkazů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-primary">Hands-on Lab</span>
+            <span class="tag">Cheat Sheet</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div style="display: flex; flex-direction: column; gap: 0.55rem;">
+              <div class="exercise-card">
+                <div class="exercise-header">
+                  <strong style="color: var(--text-primary); font-size: 0.82rem;">Cvičení 1: Automatická rotace záloh s zipem</strong>
+                  <span class="exercise-badge ps">PowerShell</span>
+                </div>
+                <p style="font-size: 0.76rem; color: var(--text-secondary); margin: 0;">
+                  Zazipujte složku s daty a přidejte do názvu aktuální datum:
+                </p>
+                <div class="code-box" style="margin: 0;">
+                  <div class="code-box-header" style="padding: 0.25rem 0.5rem;">
+                    <span style="font-size: 0.7rem;">powershell</span>
+                    <button class="btn-copy" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">Kopírovat</button>
+                  </div>
+                  <pre style="margin: 0; padding: 0.4rem 0.6rem; font-size: 0.72rem;"><code>$dnes = Get-Date -Format "yyyy-MM-dd_HH-mm"
+Compress-Archive -Path "C:\Data" -DestinationPath "D:\Zalohy\Data_$dnes.zip" -Force</code></pre>
+                </div>
+              </div>
+
+              <div class="exercise-card">
+                <div class="exercise-header">
+                  <strong style="color: var(--text-primary); font-size: 0.82rem;">Cvičení 2: Interaktivní textové menu v dávce</strong>
+                  <span class="exercise-badge bat">Batch (.bat)</span>
+                </div>
+                <p style="font-size: 0.76rem; color: var(--text-secondary); margin: 0;">
+                  Využití vestavěného příkazu <code>choice</code> pro volbu z menu:
+                </p>
+                <div class="code-box" style="margin: 0;">
+                  <div class="code-box-header" style="padding: 0.25rem 0.5rem;">
+                    <span style="font-size: 0.7rem;">batch</span>
+                    <button class="btn-copy" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">Kopírovat</button>
+                  </div>
+                  <pre style="margin: 0; padding: 0.4rem 0.6rem; font-size: 0.72rem;"><code>choice /c 123 /m "Zvolte: 1=Ping brany, 2=Vypis IP, 3=Konec"
+if errorlevel 3 exit /b
+if errorlevel 2 ipconfig &amp; pause &amp; exit /b
+if errorlevel 1 ping 192.168.1.1 &amp; pause</code></pre>
+                </div>
+              </div>
+
+              <div class="exercise-card">
+                <div class="exercise-header">
+                  <strong style="color: var(--text-primary); font-size: 0.82rem;">Cvičení 3: Hromadné čištění logů starších 30 dní</strong>
+                  <span class="exercise-badge ps">PowerShell</span>
+                </div>
+                <p style="font-size: 0.76rem; color: var(--text-secondary); margin: 0;">
+                  Bezpečné smazání starých log souborů pomocí pipeline:
+                </p>
+                <div class="code-box" style="margin: 0;">
+                  <div class="code-box-header" style="padding: 0.25rem 0.5rem;">
+                    <span style="font-size: 0.7rem;">powershell</span>
+                    <button class="btn-copy" style="font-size: 0.7rem; padding: 0.15rem 0.4rem;">Kopírovat</button>
+                  </div>
+                  <pre style="margin: 0; padding: 0.4rem 0.6rem; font-size: 0.72rem;"><code>Get-ChildItem -Path "C:\Logs" -Filter "*.log" |
+Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-30) } |
+Remove-Item -WhatIf  # Odeberte -WhatIf pro skutecne smazani!</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <div class="card-header-styled">
+                <div class="card-title-wrap">
+                  <svg class="icon" viewBox="0 0 24 24"><grid x="3" y="3" width="7" height="7"></grid><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                  <span class="card-title-text">Srovnávací tahák (Cheat Sheet)</span>
+                </div>
+              </div>
+              <table class="compare-table" style="font-size: 0.78rem;">
+                <thead>
+                  <tr>
+                    <th>Úkon</th>
+                    <th>CMD / .BAT</th>
+                    <th>PowerShell</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Výpis souborů</td>
+                    <td><code>dir /b</code></td>
+                    <td><code>Get-ChildItem</code> (nebo <code>ls</code>)</td>
+                  </tr>
+                  <tr>
+                    <td>Čtení souboru</td>
+                    <td><code>type soubor.txt</code></td>
+                    <td><code>Get-Content</code> (nebo <code>cat</code>)</td>
+                  </tr>
+                  <tr>
+                    <td>Zápis / přepsání</td>
+                    <td><code>echo text &gt; soubor</code></td>
+                    <td><code>Set-Content</code> (nebo <code>&gt;</code>)</td>
+                  </tr>
+                  <tr>
+                    <td>Přidání na konec</td>
+                    <td><code>echo text &gt;&gt; soubor</code></td>
+                    <td><code>Add-Content</code> (nebo <code>&gt;&gt;</code>)</td>
+                  </tr>
+                  <tr>
+                    <td>Vyhledání řádku</td>
+                    <td><code>findstr "chyba" log.txt</code></td>
+                    <td><code>Select-String -Pattern "chyba"</code></td>
+                  </tr>
+                  <tr>
+                    <td>Nastavení proměnné</td>
+                    <td><code>set JMENO=Jan</code></td>
+                    <td><code>$Jmeno = "Jan"</code></td>
+                  </tr>
+                  <tr>
+                    <td>Podmínka rovnosti</td>
+                    <td><code>if "%a%"=="%b%"</code></td>
+                    <td><code>if ($a -eq $b)</code></td>
+                  </tr>
+                  <tr>
+                    <td>Zabití procesu</td>
+                    <td><code>taskkill /im notepad.exe /f</code></td>
+                    <td><code>Stop-Process -Name notepad -Force</code></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="story-box" style="margin-top: auto; padding: 0.55rem 0.75rem;">
+                <div class="story-title" style="font-size: 0.8rem;">Závěrečné doporučení pro praxi:</div>
+                <div style="font-size: 0.76rem; color: var(--text-secondary);">
+                  Na nové projekty, monitoring a automatizaci pište <strong>výhradně skripty v PowerShellu (.ps1)</strong>. Dávkové soubory <code>.bat</code> používejte pouze jako kratičké jednořádkové zástupce pro spouštění!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating Bottom Navigation & Controls Bar -->
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <a href="10_bezpecnost_souborovych_systemu_a_shell.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 10: Bezpečnost souborových systémů a Shell (Ctrl+Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+      </a>
+      <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu OSY20">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </a>
+      <a href="#" class="control-btn disabled" id="nextLessonBtn" title="Další lekce (žádná další není)" aria-disabled="true" tabindex="-1">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 10</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <!-- Table of Contents Drawer -->
+    <div class="toc-overlay" id="tocOverlay" aria-hidden="true">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn" title="Zavřít obsah">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <!-- Keyboard Shortcuts Help Modal -->
+    <div class="modal-overlay" id="helpModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Další lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>První / Poslední snímek</span>
+            <div><span class="key-badge">Home</span> / <span class="key-badge">End</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Slovník pojmů</span>
+            <span class="key-badge">G</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout tmavý / světlý motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Nápověda (tento dialog)</span>
+            <span class="key-badge">?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glossary Modal (Slovník pojmů) -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 820px; width: 95vw; max-height: 85vh; display: flex; flex-direction: column;">
+        <div class="modal-header" style="flex-shrink: 0;">
+          <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Slovník pojmů &bull; PowerShell a dávkový skripting
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body" style="overflow-y: auto; flex: 1; padding: 1rem 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;">
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Cmdlet</span>
+              <span class="glossary-badge glossary-badge-architecture">PowerShell</span>
+            </div>
+            <div class="glossary-full-name">Odlehčený interní příkaz (.NET třída)</div>
+            <div class="glossary-desc">Základní příkaz v PowerShellu s pevnou syntaxí Sloveso-PodstatnéJméno (např. Get-Process). Vrací přímo strukturované objekty.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Pipeline (Roura)</span>
+              <span class="glossary-badge glossary-badge-architecture">Mechanismus</span>
+            </div>
+            <div class="glossary-full-name">Zřetězení příkazů znakem |</div>
+            <div class="glossary-desc">V PowerShellu předává živé .NET objekty se zachováním jejich typů a atributů, na rozdíl od Unix/CMD roury, kde teče pouze surový text.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">ExecutionPolicy</span>
+              <span class="glossary-badge glossary-badge-security">Bezpečnost</span>
+            </div>
+            <div class="glossary-full-name">Zásada spouštění skriptů</div>
+            <div class="glossary-desc">Bezpečnostní nastavení Windows, které určuje, zda je povoleno spouštět .ps1 skripty (Restricted, RemoteSigned, Unrestricted, Bypass).</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">.BAT / .CMD</span>
+              <span class="glossary-badge glossary-badge-admin">Dávkový soubor</span>
+            </div>
+            <div class="glossary-full-name">Příkazový skript interpretu CMD.EXE</div>
+            <div class="glossary-desc">Tradiční skriptovací soubor Windows s kořeny v MS-DOSu. Zpracovává příkazy řádek po řádku jako textové příkazy.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">Hashtable</span>
+              <span class="glossary-badge glossary-badge-architecture">Struktura</span>
+            </div>
+            <div class="glossary-full-name">Asociativní pole (Klíč &rarr; Hodnota)</div>
+            <div class="glossary-desc">Klíčová datová struktura v PowerShellu zapisovaná jako @{ Klic = "Hodnota" }. Umožňuje bleskové vyhledávání a předávání parametrů (Splatting).</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">%ERRORLEVEL%</span>
+              <span class="glossary-badge glossary-badge-admin">Kód chyby</span>
+            </div>
+            <div class="glossary-full-name">Návratový stav posledního procesu</div>
+            <div class="glossary-desc">Globální systémová proměnná v CMD. Hodnota 0 značí úspěch, jakékoliv jiné číslo (často 1 nebo záporná čísla) značí chybu.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">WMI / CIM</span>
+              <span class="glossary-badge glossary-badge-architecture">Windows API</span>
+            </div>
+            <div class="glossary-full-name">Windows Management Instrumentation</div>
+            <div class="glossary-desc">Standardizované rozhraní pro dotazování na stav hardwaru (disky, teploty, BIOS), operačního systému i běžících aplikací přes Get-CimInstance.</div>
+          </div>
+
+          <div class="glossary-entry">
+            <div class="glossary-entry-head">
+              <span class="glossary-term">%~dp0</span>
+              <span class="glossary-badge glossary-badge-admin">CMD Modifikátor</span>
+            </div>
+            <div class="glossary-full-name">Drive &amp; Path nultého argumentu</div>
+            <div class="glossary-desc">Speciální operátor v souborech .bat, který vrátí absolutní cestu ke složce, kde se skript právě nachází, nezávisle na aktuální pracovní složce.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Obsluha tlačítek pro kopírování kódu
+      const copyButtons = document.querySelectorAll('.btn-copy');
+      copyButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const codeEl = btn.closest('.code-box')?.querySelector('code');
+          if (!codeEl) return;
+          navigator.clipboard.writeText(codeEl.innerText).then(() => {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span>Zkopírováno!</span>
+            `;
+            setTimeout(() => {
+              btn.innerHTML = originalText;
+            }, 2000);
+          }).catch(err => {
+            console.error('Kopírování selhalo:', err);
+          });
+        });
+      });
+
+      // 2. Interaktivní terminálový trenažér (Snímek 8)
+      initSandboxTrainer();
+    });
+
+    function initSandboxTrainer() {
+      const tasksData = {
+        task1: {
+          title: "Úloha 1: Top 5 procesů žeroucích nejvíce RAM",
+          bat: `<span class="terminal-comment">:: V CMD neexistuje jednoduché řazení objektů.</span>
+<span class="terminal-comment">:: Musíme použít tasklist a filtrovat text:</span>
+<span class="terminal-prompt">C:\\&gt;</span> <span class="terminal-cmd">tasklist /fi "MEMUSAGE gt 50000" /fo table /nh</span>
+
+<span class="terminal-out">chrome.exe                    1042 Console                    1    184 290 K
+chrome.exe                    3124 Console                    1    125 410 K
+Code.exe                      8420 Console                    1    240 180 K
+spotify.exe                   5120 Console                    1     98 320 K
+explorer.exe                  1420 Console                    1     82 110 K</span>
+
+<span class="terminal-comment"># Omezení: Text je neuspořádaný, nelze snadno seřadit sestupně,</span>
+<span class="terminal-comment"># velikost je v KB jako text s mezerou - nelze matematicky počítat!</span>`,
+          ps: `<span class="terminal-comment"># V PowerShellu pracujeme přímo s objekty a vlastností WS (WorkingSet):</span>
+<span class="terminal-prompt">PS C:\\&gt;</span> <span class="terminal-cmd">Get-Process | Sort-Object WS -Descending | Select-Object -First 5 Name, Id, @{N='RAM_MB';E={[math]::Round($_.WS/1MB,1)}}</span>
+
+<span class="terminal-out">Name           Id RAM_MB
+----           -- ------
+Code         8420  240.2
+chrome       1042  184.3
+chrome       3124  125.4
+spotify      5120   98.3
+explorer     1420   82.1</span>
+
+<span class="terminal-success"># Výsledek: Perfektní typovaná tabulka s přepočtem na MB a seřazením!</span>`
+        },
+        task2: {
+          title: "Úloha 2: Záloha a kopírování logů",
+          bat: `<span class="terminal-comment">:: Vytvoření složky a kopírování přes xcopy:</span>
+<span class="terminal-prompt">C:\\&gt;</span> <span class="terminal-cmd">if not exist "D:\\Zalohy" mkdir "D:\\Zalohy"</span>
+<span class="terminal-prompt">C:\\&gt;</span> <span class="terminal-cmd">xcopy /s /y /d "C:\\AppLogs\\*.log" "D:\\Zalohy\\"</span>
+
+<span class="terminal-out">C:\\AppLogs\\system.log
+C:\\AppLogs\\error.log
+2 Soubor(y) zkopirovany</span>
+
+<span class="terminal-prompt">C:\\&gt;</span> <span class="terminal-cmd">if %ERRORLEVEL% equ 0 echo [OK] Hotovo</span>
+<span class="terminal-success">[OK] Hotovo</span>`,
+          ps: `<span class="terminal-comment"># Výběr logů modifikovaných v posledních 24 hodinách a zazipování:</span>
+<span class="terminal-prompt">PS C:\\&gt;</span> <span class="terminal-cmd">$vcera = (Get-Date).AddDays(-1)</span>
+<span class="terminal-prompt">PS C:\\&gt;</span> <span class="terminal-cmd">Get-ChildItem -Path "C:\\AppLogs\\*.log" | Where-Object LastWriteTime -gt $vcera | Compress-Archive -DestinationPath "D:\\Zalohy\\Logy_$(Get-Date -Format 'yyyyMMdd').zip" -Update</span>
+
+<span class="terminal-success"># Vytvořen komprimovaný archiv D:\\Zalohy\\Logy_20261021.zip</span>
+<span class="terminal-success"># Žádné externí utility jako WinRAR nebo 7-Zip, vše nativně v .NET!</span>`
+        },
+        task3: {
+          title: "Úloha 3: Kontrola běžících síťových služeb",
+          bat: `<span class="terminal-comment">:: Zjištění stavu služby přes starý nástroj SC nebo NET:</span>
+<span class="terminal-prompt">C:\\&gt;</span> <span class="terminal-cmd">sc query wuauserv | findstr "STATE"</span>
+
+<span class="terminal-out">        STATE              : 4  RUNNING</span>
+
+<span class="terminal-comment"># Pokud chceme otestovat stav podmínkou, musíme složitě parsovat text:</span>
+<span class="terminal-prompt">C:\\&gt;</span> <span class="terminal-cmd">sc query wuauserv | findstr /i "RUNNING" &gt;nul</span>
+<span class="terminal-prompt">C:\\&gt;</span> <span class="terminal-cmd">if %errorlevel% equ 0 (echo Sluzba bezi) else (echo Sluzba stoji)</span>
+<span class="terminal-out">Sluzba bezi</span>`,
+          ps: `<span class="terminal-comment"># V PowerShellu je stav vlastností objektu (Status):</span>
+<span class="terminal-prompt">PS C:\\&gt;</span> <span class="terminal-cmd">Get-Service -Name wuauserv, spooler, w32time | Select-Object Name, Status, StartType</span>
+
+<span class="terminal-out">Name      Status StartType
+----      ------ ---------
+spooler  Running Automatic
+w32time  Running    Manual
+wuauserv Running    Manual</span>
+
+<span class="terminal-comment"># Restart všech zastavených automatických služeb jedním příkazem:</span>
+<span class="terminal-prompt">PS C:\\&gt;</span> <span class="terminal-cmd">Get-Service | Where-Object { $_.StartType -eq 'Automatic' -and $_.Status -ne 'Running' } | Start-Service</span>`
+        },
+        task4: {
+          title: "Úloha 4: Audit volného místa na disku",
+          bat: `<span class="terminal-comment">:: CMD utility diskpart nebo wmic (který je dnes ve Windows již deprecated):</span>
+<span class="terminal-prompt">C:\\&gt;</span> <span class="terminal-cmd">wmic logicaldisk get caption, freespace, size</span>
+
+<span class="terminal-out">Caption  FreeSpace     Size
+C:       45281988608   511397261312
+D:       128491823104  1000202272768</span>
+
+<span class="terminal-comment"># Čísla jsou v surových bajtech, nečitelná pro člověka a bez procent!</span>`,
+          ps: `<span class="terminal-comment"># Moderní rozhraní CIM s okamžitým přepočtem na GB a procenta:</span>
+<span class="terminal-prompt">PS C:\\&gt;</span> <span class="terminal-cmd">Get-CimInstance Win32_LogicalDisk -Filter "DriveType=3" | Select-Object DeviceId,</span>
+<span class="terminal-prompt">    </span><span class="terminal-cmd">@{N="Celkem_GB"; E={[math]::Round($_.Size/1GB, 1)}},</span>
+<span class="terminal-prompt">    </span><span class="terminal-cmd">@{N="Volno_GB"; E={[math]::Round($_.FreeSpace/1GB, 1)}},</span>
+<span class="terminal-prompt">    </span><span class="terminal-cmd">@{N="Volno_%"; E={[math]::Round(($_.FreeSpace/$_.Size)*100, 1)}}</span>
+
+<span class="terminal-out">DeviceId Celkem_GB Volno_GB Volno_%
+-------- --------- -------- -------
+C:           476.3     42.2     8.9
+D:           931.5    119.7    12.8</span>
+
+<span class="terminal-warn"># Upozornění: Na disku C: zbývá méně než 10 % volného místa!</span>`
+        }
+      };
+
+      const batEl = document.getElementById('sandboxBatBody');
+      const psEl = document.getElementById('sandboxPsBody');
+      const tabBtns = document.querySelectorAll('.sandbox-tab-btn');
+
+      function renderTask(taskKey) {
+        const data = tasksData[taskKey];
+        if (!data || !batEl || !psEl) return;
+
+        tabBtns.forEach(btn => {
+          if (btn.getAttribute('data-task') === taskKey) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        batEl.innerHTML = data.bat;
+        psEl.innerHTML = data.ps;
+      }
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const taskKey = btn.getAttribute('data-task');
+          renderTask(taskKey);
+        });
+      });
+
+      // Inicializace výchozí úlohy
+      renderTask('task1');
+    }
+  </script>
+</body>
+</html>
