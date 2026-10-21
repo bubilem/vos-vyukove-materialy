@@ -223,17 +223,52 @@
             </div>
           </div>
 
-          <div class="code-wrapper" style="margin-top: 0.8rem;">
-            <div class="code-header"><span class="code-title">Příklad korelovaného dotazu: Poslední objednávka každého zákazníka</span></div>
-            <pre class="code-block"><code><span class="sql-keyword">SELECT</span> c.`email`, o1.`id`, o1.`created_at`, o1.`total_price`
+          <div class="grid-2" style="margin-top: 0.8rem;">
+            <div class="code-wrapper" style="margin: 0;">
+              <div class="code-header">
+                <span class="code-title" style="display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent-rose);">
+                  <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                  <span>Korelovaný poddotaz (Pomalé: běh N×)</span>
+                </span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-keyword">SELECT</span> c.`email`, o1.`id`, o1.`created_at`, o1.`total_price`
 <span class="sql-keyword">FROM</span> `customer` c
 <span class="sql-keyword">JOIN</span> `orders` o1 <span class="sql-keyword">ON</span> c.`id` = o1.`customer_id`
 <span class="sql-keyword">WHERE</span> o1.`created_at` = (
-  <span class="sql-comment">-- Vnitřní dotaz závisí na c.id z vnějšího dotazu!</span>
+  <span class="sql-comment">-- Spustí se znovu pro KAŽDÝ řádek vnějšího dotazu (N-krát)!</span>
   <span class="sql-keyword">SELECT</span> <span class="sql-func">MAX</span>(o2.`created_at`)
   <span class="sql-keyword">FROM</span> `orders` o2
   <span class="sql-keyword">WHERE</span> o2.`customer_id` = c.`id`
 );</code></pre>
+            </div>
+
+            <div class="code-wrapper" style="margin: 0;">
+              <div class="code-header">
+                <span class="code-title" style="display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent-emerald);">
+                  <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  <span>Optimalizace přes JOIN (Rychlé: běh 1×)</span>
+                </span>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <pre class="code-block"><code><span class="sql-keyword">SELECT</span> c.`email`, o.`id`, o.`created_at`, o.`total_price`
+<span class="sql-keyword">FROM</span> `customer` c
+<span class="sql-comment">-- 1. Odvozená tabulka: agregace se spočte pouze 1×</span>
+<span class="sql-keyword">JOIN</span> (
+  <span class="sql-keyword">SELECT</span> `customer_id`, <span class="sql-func">MAX</span>(`created_at`) <span class="sql-keyword">AS</span> `max_date`
+  <span class="sql-keyword">FROM</span> `orders`
+  <span class="sql-keyword">GROUP BY</span> `customer_id`
+) latest <span class="sql-keyword">ON</span> latest.`customer_id` = c.`id`
+<span class="sql-comment">-- 2. Efektivní indexové spojení na nalezenou objednávku</span>
+<span class="sql-keyword">JOIN</span> `orders` o <span class="sql-keyword">ON</span> o.`customer_id` = latest.`customer_id`
+               <span class="sql-keyword">AND</span> o.`created_at` = latest.`max_date`;</code></pre>
+            </div>
           </div>
         </div>
       </section>
@@ -242,43 +277,119 @@
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Existenční testy</div>
+            <div class="slide-category">Existenční testy &amp; Anti-Join</div>
             <h2 class="slide-title">Predikáty <code>EXISTS</code> a <code>NOT EXISTS</code></h2>
-            <p class="slide-subtitle">Bleskové ověření existence záznamu s optimalizací Short-Circuit</p>
+            <p class="slide-subtitle">Bleskové ověření existence (Short-Circuit) vs. Anti-Join techniky (LEFT JOIN / HAVING)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka k absolutoriu</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
-            <div class="code-wrapper">
-              <div class="code-header">
-                <span class="code-title">Zákazníci, kteří nikdy nenakoupili (NOT EXISTS)</span>
-                <button class="btn-copy">
-                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  <span>Kopírovat</span>
-                </button>
-              </div>
-              <pre class="code-block"><code><span class="sql-keyword">SELECT</span> c.`id`, c.`email`
+            <div class="col" style="gap: 0.65rem;">
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <span class="code-title" style="display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent-emerald);">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <span>1. NOT EXISTS (Doporučeno: Short-Circuit)</span>
+                  </span>
+                  <button class="btn-copy">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.55rem 0.85rem; font-size: 0.82rem;"><code><span class="sql-keyword">SELECT</span> c.`id`, c.`email`
 <span class="sql-keyword">FROM</span> `customer` c
-<span class="sql-keyword">WHERE</span> <span class="sql-keyword">NOT EXISTS</span> (
-  <span class="sql-keyword">SELECT</span> 1 
-  <span class="sql-keyword">FROM</span> `orders` o
+<span class="sql-keyword">WHERE NOT EXISTS</span> (
+  <span class="sql-keyword">SELECT</span> 1 <span class="sql-keyword">FROM</span> `orders` o 
   <span class="sql-keyword">WHERE</span> o.`customer_id` = c.`id`
 );</code></pre>
+              </div>
+
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <span class="code-title" style="display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent-cyan);">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <span>2. Klasický Anti-Join: LEFT JOIN + WHERE IS NULL</span>
+                  </span>
+                  <button class="btn-copy">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.55rem 0.85rem; font-size: 0.82rem;"><code><span class="sql-keyword">SELECT</span> c.`id`, c.`email`
+<span class="sql-keyword">FROM</span> `customer` c
+<span class="sql-keyword">LEFT JOIN</span> `orders` o <span class="sql-keyword">ON</span> c.`id` = o.`customer_id`
+<span class="sql-keyword">WHERE</span> o.`customer_id` <span class="sql-keyword">IS NULL</span>;</code></pre>
+              </div>
+
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <span class="code-title" style="display: inline-flex; align-items: center; gap: 0.4rem; color: var(--accent-rose);">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                    <span>3. Agregační varianta: GROUP BY + HAVING</span>
+                  </span>
+                  <button class="btn-copy">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.55rem 0.85rem; font-size: 0.82rem;"><code><span class="sql-keyword">SELECT</span> c.`id`, c.`email`
+<span class="sql-keyword">FROM</span> `customer` c
+<span class="sql-keyword">LEFT JOIN</span> `orders` o <span class="sql-keyword">ON</span> c.`id` = o.`customer_id`
+<span class="sql-keyword">GROUP BY</span> c.`id`, c.`email`
+<span class="sql-keyword">HAVING COUNT</span>(o.`id`) = 0; <span class="sql-comment">-- resp. HAVING o.`customer_id` IS NULL</span></code></pre>
+              </div>
             </div>
 
-            <div class="content-card">
-              <h4>Proč je EXISTS tak rychlý?</h4>
-              <ul class="styled-list">
-                <li>
-                  <strong>Zastaví se při prvním nálezu:</strong> Na rozdíl od <code>COUNT()</code> neprochází celou tabulku. Jakmile narazí na první vyhovující záznam, vrátí TRUE a dál nehledá.
-                </li>
-                <li>
-                  <strong>Nezáleží na sloupcích v SELECTu:</strong> Konstrukce <code>SELECT 1</code> nebo <code>SELECT *</code> uvnitř EXISTS je rovnocenná – databázi zajímá pouze existence řádku, nikoliv přenos dat.
-                </li>
-                <li>
-                  <strong>Bezpečné s NULL:</strong> Na rozdíl od <code>NOT IN</code> (kde přítomnost jediné hodnoty NULL v sadě zneplatní celý dotaz) funguje <code>NOT EXISTS</code> naprosto spolehlivě!
-                </li>
-              </ul>
+            <div class="col" style="gap: 0.65rem;">
+              <div class="table-container" style="margin: 0;">
+                <table style="font-size: 0.83rem;">
+                  <thead>
+                    <tr>
+                      <th>Metoda</th>
+                      <th>Mechanika vyhodnocení</th>
+                      <th>Režie a výkon</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>1. NOT EXISTS</strong></td>
+                      <td>Short-circuit (končí u 1. nalezené objednávky)</td>
+                      <td><span style="color: var(--accent-emerald); font-weight: 700;">Minimální (O(1) na řádek)</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>2. LEFT JOIN + WHERE</strong></td>
+                      <td>Anti-join filtr optimalizovaný jádrem DB</td>
+                      <td><span style="color: var(--accent-cyan); font-weight: 700;">Minimální (žádné řazení)</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>3. GROUP BY + HAVING</strong></td>
+                      <td>Full Join + Temporary Table + Sort v paměti</td>
+                      <td><span style="color: var(--accent-rose); font-weight: 700;">Vysoká (zbytečná agregace)</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="content-card" style="padding: 0.9rem 1.15rem;">
+                <h4 style="margin-bottom: 0.4rem; color: var(--accent);">Proč je varianta s GROUP BY + HAVING neefektivní?</h4>
+                <ul class="styled-list" style="font-size: 0.85rem; gap: 0.3rem;">
+                  <li>
+                    <strong>Plný průchod všech řádků:</strong> Má-li zákazník 1 000 objednávek, <code>NOT EXISTS</code> skončí okamžitě po nalezení první. <code>GROUP BY</code> musí načíst a agregovat všech 1 000 záznamů!
+                  </li>
+                  <li>
+                    <strong>Dočasná tabulka a řazení:</strong> Seskupování vyžaduje režii <code>Using temporary; Using filesort</code>, což u velkých tabulek prudce zvyšuje zátěž RAM a disku.
+                  </li>
+                  <li>
+                    <strong>Sémantika WHERE vs. HAVING:</strong> <code>WHERE</code> eliminuje záznamy <em>před</em> jakýmkoliv seskupením, kdežto <code>HAVING</code> až <em>po</em> kompletní agregaci – zbytečně agregujete miliony řádků, které vzápětí zahodíte.
+                  </li>
+                  <li>
+                    <strong>Režim ONLY_FULL_GROUP_BY:</strong> V moderním SQL standardu vyžaduje <code>HAVING</code> agregační funkci (např. <code>COUNT(o.id) = 0</code>), nekumulovaný sloupec v HAVING způsobí chybu.
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -288,27 +399,74 @@
       <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Rekapitulace</div>
-            <h2 class="slide-title">Shrnutí: Kdy použít poddotaz a kdy JOIN?</h2>
-            <p class="slide-subtitle">Rozhodování pro zkoušku i optimalizaci v praxi</p>
+            <div class="slide-category">Rekapitulace &amp; Zkouška</div>
+            <h2 class="slide-title">Shrnutí: Vnořené dotazy a optimalizace</h2>
+            <p class="slide-subtitle">Rozhodovací matice technik, výkonnostní pravidla a příprava na absolutorium</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Okruh absolutoria č. 14</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="summary-grid">
-            <div class="summary-card">
-              <div class="summary-card-num">1</div>
-              <h4>Na porovnání s agregátem: Skalární poddotaz</h4>
-              <p>Hledání entit větších než průměr nebo rovných maximu se bez skalárního poddotazu prakticky neobejde.</p>
+          <div class="summary-grid" style="grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 0.5rem;">
+            <div class="summary-card" style="padding: 1.05rem 1.2rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(56, 189, 248, 0.15); color: var(--accent); font-weight: 700; font-size: 0.78rem;">1</span>
+                <h4 style="margin: 0; font-size: 0.98rem; color: var(--text-primary);">Skalární poddotazy ve WHERE</h4>
+              </div>
+              <p style="font-size: 0.86rem; line-height: 1.45; margin: 0; color: var(--text-secondary);">
+                <strong>Kdy použít:</strong> Porovnání atributu s agregovanou hodnotou celku (např. <code>price &gt; (SELECT AVG(price)...)</code>).<br>
+                <strong>Zlaté pravidlo:</strong> Musí vracet striktně <strong>1 řádek a 1 sloupec</strong>, jinak dotaz havaruje s chybou <em>Subquery returns more than 1 row</em>.
+              </p>
             </div>
-            <div class="summary-card">
-              <div class="summary-card-num">2</div>
-              <h4>Na existenci: Preferujte EXISTS</h4>
-              <p>Testování existence vazeb je s <code>EXISTS</code> bezpečnější vůči NULL a často rychlejší než <code>IN</code>.</p>
+
+            <div class="summary-card" style="padding: 1.05rem 1.2rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(56, 189, 248, 0.15); color: var(--accent); font-weight: 700; font-size: 0.78rem;">2</span>
+                <h4 style="margin: 0; font-size: 0.98rem; color: var(--text-primary);">Množinové predikáty (IN, ANY, ALL)</h4>
+              </div>
+              <p style="font-size: 0.86rem; line-height: 1.45; margin: 0; color: var(--text-secondary);">
+                <strong>Kdy použít:</strong> Ověřování hodnoty vůči dynamickému seznamu z vnitřního dotazu (např. ID kategorií).<br>
+                <strong>Kritické úskalí:</strong> Pozor na <code>NOT IN</code> a <code>NULL</code>! Obsahuje-li poddotaz jediné NULL, vrátí prázdnou sadu. Pro bezpečný test volte <code>NOT EXISTS</code>.
+              </p>
             </div>
-            <div class="summary-card">
-              <div class="summary-card-num">3</div>
-              <h4>Když potřebujete sloupce z obou: Použijte JOIN</h4>
-              <p>Pokud potřebujete ve výstupu zobrazit atributy z obou tabulek současně, poddotaz ve WHERE vám nepomůže – musíte použít <code>JOIN</code>.</p>
+
+            <div class="summary-card" style="padding: 1.05rem 1.2rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); font-weight: 700; font-size: 0.78rem;">3</span>
+                <h4 style="margin: 0; font-size: 0.98rem; color: var(--text-primary);">Korelované dotazy vs. JOIN optimalizace</h4>
+              </div>
+              <p style="font-size: 0.86rem; line-height: 1.45; margin: 0; color: var(--text-secondary);">
+                <strong>Mechanika:</strong> Nekorelovaný dotaz běží pouze 1×. Korelovaný se spouští pro každý řádek znovu (<span style="color: var(--accent-rose);">N-krát, O(N × M)</span>).<br>
+                <strong>Optimalizace:</strong> Místo pomalého poddotazu ve WHERE použijte <strong>JOIN s odvozenou tabulkou</strong> (GROUP BY), kde agregace proběhne pouze 1×.
+              </p>
+            </div>
+
+            <div class="summary-card" style="padding: 1.05rem 1.2rem;">
+              <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+                <span style="display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); font-weight: 700; font-size: 0.78rem;">4</span>
+                <h4 style="margin: 0; font-size: 0.98rem; color: var(--text-primary);">Existenční testy &amp; Anti-Join (EXISTS vs. LEFT JOIN)</h4>
+              </div>
+              <p style="font-size: 0.86rem; line-height: 1.45; margin: 0; color: var(--text-secondary);">
+                <strong>Short-circuit:</strong> <code>EXISTS</code> končí okamžitě po nalezení prvního záznamu v indexu – neprochází celou tabulku.<br>
+                <strong>Anti-Join pravidlo:</strong> Pro záznamy bez vazby volte <code>NOT EXISTS</code> nebo <code>LEFT JOIN ... WHERE IS NULL</code>. Vyhněte se zbytečnému <code>GROUP BY + HAVING</code>!
+              </p>
+            </div>
+          </div>
+
+          <div class="exam-question-box" style="margin-top: 1rem; padding: 1rem 1.25rem;">
+            <div class="exam-question-header" style="margin-bottom: 0.4rem;">
+              <svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px; color: var(--accent-emerald);"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+              <strong>Zkušební otázka k absolutoriu (Okruh č. 14 – Vnořené dotazy a optimalizace):</strong>
+            </div>
+            <p class="exam-question-text" style="font-size: 0.94rem; margin-bottom: 0.5rem;">
+              „Vysvětlete rozdíl mezi korelovaným a nekorelovaným poddotazem z hlediska vykonávání databázovým strojem. Proč je pro hledání entit bez vazby predikát NOT EXISTS dramaticky rychlejší než konstrukce s GROUP BY a HAVING?“
+            </p>
+            <div class="exam-answer-hint" style="font-size: 0.84rem; padding-top: 0.5rem;">
+              <strong>Klíč k odpovědi:</strong> 
+              1) <strong>Nekorelovaný dotaz</strong> je nezávislý na vnějších datech, vyhodnotí se pouze 1× a výsledek se nacachuje. 
+              2) <strong>Korelovaný dotaz</strong> odkazuje na sloupce vnějšího dotazu (např. <code>c.id</code>), proto se musí spouštět znovu pro každý řádek zvlášť (N-krát) – optimalizuje se přepisem na <code>JOIN</code> s odvozenou tabulkou. 
+              3) <code>NOT EXISTS</code> využívá <strong>short-circuit</strong> (zastaví se u 1. nalezeného záznamu v indexu). Naproti tomu <code>GROUP BY + HAVING</code> musí pospojovat a seskupit všechny záznamy v paměti (s režijní dočasnou tabulkou a filesortem) a teprve poté zahodí většinu výsledků.
             </div>
           </div>
         </div>
