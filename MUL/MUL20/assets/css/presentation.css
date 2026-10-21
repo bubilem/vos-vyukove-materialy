@@ -3109,3 +3109,404 @@
   flex-shrink: 0;
 }
 
+/* ==========================================================================
+   INTERAKTIVNÍ PRVKY PRO SNÍMÁNÍ VIDEA A KAMEROVOU TECHNIKU (MUL20-07)
+   ========================================================================== */
+
+/* Shutter Angle & Motion Blur Simulator */
+.video-sim-container {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .video-sim-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.video-preview-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.video-canvas-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #020617;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-canvas-wrap canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.video-hud-overlay {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #f8fafc;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+.video-hud-badge {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(4px);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.video-hud-badge.rec {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+.video-hud-badge.rec::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: pulseRec 1.2s infinite;
+}
+
+@keyframes pulseRec {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.85); }
+}
+
+.video-controls-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.sim-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.sim-control-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sim-control-val {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.sim-pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.sim-pill-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sim-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.sim-pill-btn.active {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.shutter-disc-visual {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto;
+}
+
+/* Split-screen comparison for Log vs Rec.709 vs LUT */
+.split-compare-container {
+  position: relative;
+  width: 100%;
+  max-height: 225px;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  user-select: none;
+  background: #090d16;
+}
+
+.split-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.split-slider-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #f8fafc;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  cursor: ew-resize;
+}
+
+.split-slider-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.split-label-badge {
+  position: absolute;
+  bottom: 12px;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.split-label-left { left: 12px; }
+.split-label-right { right: 12px; }
+
+/* Camera Field Monitor HUD */
+.field-monitor-bezel {
+  background: #0f172a;
+  border: 2px solid #334155;
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.monitor-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.1rem 0.25rem;
+  color: #94a3b8;
+}
+
+.monitor-screen-area {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000000;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #1e293b;
+}
+
+.monitor-screen-area canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.monitor-tools-bar {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.tool-toggle-btn {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+  border-radius: 4px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tool-toggle-btn:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+.tool-toggle-btn.active {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+/* Three-Point Lighting Studio 2D/3D Planner */
+.studio-planner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .studio-planner-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.studio-stage-wrap {
+  position: relative;
+  background: radial-gradient(circle at center, #1e293b 0%, #020617 85%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  max-height: 225px;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.studio-stage-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+.light-toggle-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.light-toggle-badge.active.key {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #f59e0b;
+  color: #fef3c7;
+}
+
+.light-toggle-badge.active.fill {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #e0f2fe;
+}
+
+.light-toggle-badge.active.rim {
+  background: rgba(236, 72, 153, 0.2);
+  border-color: #ec4899;
+  color: #fce7f3;
+}
+
+/* Audio VU Meter Bar */
+.audio-vu-meter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.vu-track {
+  flex: 1;
+  height: 10px;
+  background: #0f172a;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  border: 1px solid var(--border-subtle);
+}
+
+.vu-fill {
+  height: 100%;
+  width: 65%;
+  background: linear-gradient(90deg, #10b981 0%, #10b981 65%, #f59e0b 80%, #ef4444 95%);
+  transition: width 0.1s ease-out;
+}
+
+.vu-marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #f8fafc;
+}
+
+
