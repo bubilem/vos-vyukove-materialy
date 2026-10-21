@@ -289,6 +289,562 @@
       color: #0f172a;
       border-color: var(--accent);
     }
+
+    /* ==========================================================================
+       STŘÍDÁNÍ APLIKACÍ NA PROCESORU – INTERAKTIVNÍ SIMULÁTOR
+       ========================================================================== */
+    .sim-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      width: 100%;
+    }
+
+    .sim-controls-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.45rem 0.75rem;
+    }
+
+    .sim-stepper {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+
+    .sim-step-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.55rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      font-family: var(--font-main);
+    }
+    .sim-step-btn:hover {
+      background: rgba(6, 182, 212, 0.12);
+      border-color: var(--accent);
+      color: var(--text-primary);
+    }
+    .sim-step-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0f172a;
+      box-shadow: 0 0 10px var(--accent-glow);
+      font-weight: 700;
+    }
+    .sim-step-btn.completed {
+      border-color: rgba(16, 185, 129, 0.45);
+      color: #6ee7b7;
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .sim-action-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .sim-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.6rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+      font-family: var(--font-main);
+    }
+    .sim-btn:hover {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .sim-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0f172a;
+    }
+    .sim-btn.primary:hover {
+      background: #22d3ee;
+      box-shadow: 0 0 10px var(--accent-glow);
+      color: #0f172a;
+    }
+    .sim-btn.running {
+      background: #f43f5e;
+      border-color: #f43f5e;
+      color: #ffffff;
+      animation: simPulseBtn 1.5s infinite;
+    }
+    @keyframes simPulseBtn {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(244, 63, 94, 0); }
+    }
+
+    /* Banner aktuálního kroku */
+    .sim-step-banner {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.95rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      position: relative;
+    }
+    .sim-banner-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .sim-banner-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .sim-banner-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .sim-timer-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.76rem;
+    }
+    .sim-timer-label {
+      color: var(--text-muted);
+    }
+    .sim-timer-val {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .sim-banner-desc {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      margin: 0;
+    }
+    .sim-banner-callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.4rem;
+      font-size: 0.77rem;
+      color: #67e8f9;
+      background: rgba(6, 182, 212, 0.08);
+      border-left: 2px solid var(--accent);
+      padding: 0.35rem 0.6rem;
+      border-radius: 0 4px 4px 0;
+      margin-top: 0.15rem;
+    }
+
+    /* Mřížka 3 sloupců */
+    .sim-grid-3 {
+      display: grid;
+      grid-template-columns: 1.15fr 1.15fr 1.2fr;
+      gap: 0.65rem;
+    }
+    @media (max-width: 1050px) {
+      .sim-grid-3 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 680px) {
+      .sim-grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sim-panel {
+      background: rgba(15, 23, 42, 0.45);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .sim-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.35rem;
+    }
+    .sim-panel-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-primary);
+    }
+
+    /* CPU Panel prvky */
+    .cpu-running-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      padding: 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .cpu-entity-header {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .cpu-entity-action {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.35;
+    }
+    .quantum-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin-top: 0.2rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 0.35rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+    }
+    .quantum-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+    .quantum-bar-track {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .quantum-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981 0%, #06b6d4 100%);
+      border-radius: 9999px;
+      transition: width 0.35s ease, background 0.35s ease;
+    }
+    .quantum-bar-fill.zero {
+      background: #f43f5e;
+      width: 100% !important;
+      animation: quantumTickFlash 0.5s infinite alternate;
+    }
+    @keyframes quantumTickFlash {
+      from { opacity: 0.4; }
+      to { opacity: 1; }
+    }
+
+    /* Registry CPU */
+    .cpu-registers-box {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 0.45rem 0.55rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .reg-title {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .reg-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.3rem;
+    }
+    .reg-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.73rem;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 0.15rem 0.35rem;
+      border-radius: 3px;
+    }
+    .reg-name {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.69rem;
+    }
+    .reg-val {
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    /* OS Panel prvky (Fronty & PCB) */
+    .queue-card {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 0.45rem 0.55rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .queue-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      color: var(--text-primary);
+    }
+    .queue-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      min-height: 26px;
+      align-items: center;
+    }
+    .process-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.04);
+      transition: all 0.2s ease;
+    }
+    .process-chip.chrome { border-color: rgba(6, 182, 212, 0.4); color: #67e8f9; background: rgba(6, 182, 212, 0.1); }
+    .process-chip.spotify { border-color: rgba(16, 185, 129, 0.4); color: #6ee7b7; background: rgba(16, 185, 129, 0.1); }
+    .process-chip.game { border-color: rgba(168, 85, 247, 0.4); color: #d8b4fe; background: rgba(168, 85, 247, 0.1); }
+    .empty-queue-msg {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* PCB tabulka */
+    .pcb-list-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-top: 0.1rem;
+    }
+    .pcb-header-title {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .pcb-cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .pcb-mini-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.71rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 3px;
+      padding: 0.25rem 0.45rem;
+      font-family: var(--font-mono);
+    }
+    .pcb-mini-card.active-pcb {
+      border-color: var(--accent);
+      background: rgba(6, 182, 212, 0.08);
+    }
+
+    /* Ganttův diagram & Časová osa */
+    .gantt-chart-wrapper {
+      position: relative;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.5rem 0.6rem;
+      margin-top: 0.15rem;
+    }
+    .gantt-timeline-track {
+      display: flex;
+      height: 38px;
+      border-radius: 4px;
+      overflow: hidden;
+      gap: 2px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .gantt-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #ffffff;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      position: relative;
+      opacity: 0.7;
+    }
+    .gantt-segment:hover {
+      opacity: 1;
+      filter: brightness(1.2);
+    }
+    .gantt-segment.active-segment {
+      opacity: 1;
+      box-shadow: inset 0 0 0 2px #ffffff;
+      transform: scaleY(1.04);
+      z-index: 2;
+    }
+    .gantt-segment.app-chrome { flex: 10; background: #0891b2; }
+    .gantt-segment.kernel-cs { flex: 1.5; background: #e11d48; }
+    .gantt-segment.app-spotify { flex: 3; background: #059669; }
+    .gantt-segment.app-game { flex: 10; background: #9333ea; }
+    .gantt-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 2px;
+    }
+
+    .gantt-playhead {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      width: 3px;
+      background: #ffffff;
+      box-shadow: 0 0 8px #ffffff;
+      border-radius: 2px;
+      transition: left 0.35s ease;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .gantt-playhead::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid #ffffff;
+    }
+
+    .gantt-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 0.35rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .legend-chip {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .efficiency-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 0.45rem 0.6rem;
+      margin-top: auto;
+    }
+
+    /* Slide 2: Coop vs. Preempt Mini-Demo */
+    .coop-demo-container {
+      background: rgba(15, 23, 42, 0.45);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.85rem;
+    }
+    .coop-screen {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 0.55rem 0.75rem;
+      transition: all 0.3s ease;
+    }
+    .coop-screen.frozen {
+      border-color: #f43f5e;
+      background: rgba(244, 63, 94, 0.08);
+    }
+    .coop-screen.recovered {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.06);
+    }
+
+    /* Slide 4: Process vs Thread Switch Compare */
+    .cs-toggle-container {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+      margin-bottom: 0.4rem;
+    }
+    .cs-toggle-btn {
+      flex: 1;
+      padding: 0.4rem 0.6rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+    .cs-toggle-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+    }
+    .cs-toggle-btn.active {
+      background: rgba(6, 182, 212, 0.12);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
   </style>
 </head>
 <body>
@@ -338,15 +894,15 @@
             <span class="hero-meta-val">Preemptivní multitasking (Časová kvanta)</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Dům vs. Obyvatelé</span>
-            <span class="hero-meta-val">Proces vs. Odlehčené vlákno (Thread)</span>
+            <span class="hero-meta-label">Proces vs. Vlákno</span>
+            <span class="hero-meta-val">Kontejner zdrojů vs. Běžící kód na CPU</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Mozek plánování</span>
             <span class="hero-meta-val">Linux CFS &bull; vruntime &bull; Strom RB-Tree</span>
           </div>
           <div class="hero-meta-item">
-            <span class="hero-meta-label">Zaseknutí na křižovatce</span>
+            <span class="hero-meta-label">Synchronizace</span>
             <span class="hero-meta-val">Mutex, Závod o data &bull; Deadlock</span>
           </div>
         </div>
@@ -416,19 +972,69 @@
               </ul>
             </div>
           </div>
+
+          <!-- Interaktivní sandbox na Snímku 2 -->
+          <div class="coop-demo-container" style="margin-top: 0.75rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.45rem;">
+              <span style="font-size: 0.84rem; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 0.4rem;">
+                <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Interaktivní simulace: Co se stane při pádu programu do nekonečné smyčky <code>while(true) {}</code>?
+              </span>
+              <div style="display: flex; gap: 0.35rem; flex-wrap: wrap;">
+                <button class="sim-btn" id="btnRunCoopDemo" type="button">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  <span>1. Simulovat v Kooperativním OS</span>
+                </button>
+                <button class="sim-btn primary" id="btnRunPreemptDemo" type="button">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  <span>2. Simulovat v Preemptivním OS</span>
+                </button>
+                <button class="sim-btn" id="btnResetCoopDemo" type="button" style="display:none;">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                  <span>Resetovat</span>
+                </button>
+              </div>
+            </div>
+            <div class="coop-screen" id="coopScreen">
+              <div class="coop-screen-inner" id="coopScreenContent">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem; color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.3rem;">
+                  <span>Stav systému: <strong id="coopStatusBadge" style="color: #10b981;">BĚŽNÝ PROVOZ</strong></span>
+                  <span>Časovač hodin: <span id="coopClock" style="font-family: var(--font-mono); color: var(--accent); font-weight:700;">14:32:05</span></span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; margin-top: 0.4rem; font-size: 0.8rem;" id="coopAppsGrid">
+                  <div class="coop-app-card" id="app1Card" style="background: rgba(255,255,255,0.03); padding: 0.45rem 0.6rem; border-radius: 4px; border: 1px solid var(--border-subtle);">
+                    <div style="display: flex; justify-content: space-between; align-items:center;">
+                      <strong style="color:var(--text-primary); font-size:0.8rem;">Textový editor</strong>
+                      <span class="highlight-pill success" id="app1Tag" style="font-size:0.65rem;">Aktivní</span>
+                    </div>
+                    <div style="font-size: 0.74rem; color: var(--text-secondary); margin-top: 0.2rem;" id="app1Msg">Plynule reaguje na stisk kláves a myš.</div>
+                  </div>
+                  <div class="coop-app-card" id="app2Card" style="background: rgba(255,255,255,0.03); padding: 0.45rem 0.6rem; border-radius: 4px; border: 1px solid var(--border-subtle);">
+                    <div style="display: flex; justify-content: space-between; align-items:center;">
+                      <strong style="color:var(--text-primary); font-size:0.8rem;">Chybný program (while(1))</strong>
+                      <span class="highlight-pill" id="app2Tag" style="font-size:0.65rem;">Připraven</span>
+                    </div>
+                    <div style="font-size: 0.74rem; color: var(--text-secondary); margin-top: 0.2rem;" id="app2Msg">Čeká na spuštění nekonečné smyčky...</div>
+                  </div>
+                </div>
+                <div id="coopExplanation" style="margin-top: 0.4rem; font-size: 0.78rem; display: none;"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: PROCES VS VLÁKNO (DŮM A OBYVATELÉ) -->
+      <!-- SLIDE 3: PROCES VS VLÁKNO (ARCHITEKTURA V PRAXI) -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Konstrukční stavební kameny</div>
-            <h2 class="slide-title">Proces vs. Vlákno: Rodinný dům a jeho obyvatelé</h2>
-            <p class="slide-subtitle">Proč jsou vlákna nazývána odlehčenými procesy a co spolu sdílejí</p>
+            <div class="slide-category">Konstrukční stavební kameny operačních systémů</div>
+            <h2 class="slide-title">Proces vs. Vlákno: Architektura v reálných aplikacích</h2>
+            <p class="slide-subtitle">Zásadní fakt: Proces na CPU sám o sobě nikdy neběží – plánovač na jádra posílá výhradně vlákna</p>
           </div>
           <div class="slide-tags">
-            <span class="tag">Process vs. Thread</span>
+            <span class="tag tag-primary">Process vs. Thread</span>
+            <span class="tag">CR3 &bull; Stack &bull; Registr RIP</span>
           </div>
         </div>
         <div class="slide-body">
@@ -436,35 +1042,65 @@
             <div class="content-card">
               <div class="card-header-styled">
                 <div class="card-title-wrap">
-                  <svg class="icon" viewBox="0 0 24 24"><home x="3" y="9" width="18" height="12" rx="2"></home><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-                  <span class="card-title-text">Proces = Samostatný rodinný dům</span>
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                  <span class="card-title-text">Proces = Izolovaný kontejner na zdroje</span>
                 </div>
               </div>
-              <p>Těžká váha v systému – jednotka izolace a zdrojů:</p>
-              <ul class="styled-list">
-                <li><strong>Vlastní adresa a pozemek:</strong> Každý proces má svůj vlastní virtuální adresní prostor chráněný hardwarem.</li>
-                <li><strong>Zabezpečení:</strong> Jeden dům se nemůže bez povolení podívat do skříně jiného domu (ochrana paměti).</li>
-                <li><strong>Bezpečný pád:</strong> Když v jednom domě praskne voda nebo začne hořet (pád programu), sousední domy v ulici dál normálně fungují.</li>
-                <li><strong>Vysoká cena:</strong> Postavit nový dům (vytvořit proces) trvá déle a stojí víc paměti.</li>
+              <p style="font-size: 0.83rem; color: var(--text-secondary); margin: 0;">
+                Ochranná schránka aplikace. Sám o sobě na CPU nepočítá, ale vlastní a izoluje systémové prostředky:
+              </p>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li><strong>Virtuální paměť (Registr CR3):</strong> Vlastní privátní adresní prostor chráněný hardwarem (MMU). Žádný cizí proces do něj nesmí přímo číst ani zapisovat.</li>
+                <li><strong>Systémové deskriptory:</strong> Tabulka otevřených souborů na disku, síťových spojení (Socketů) a grafických bufferů.</li>
+                <li><strong>Bezpečnostní kontext:</strong> Uživatelský účet a oprávnění (UID v Linuxu / SID token ve Windows).</li>
+                <li><strong>Halda a kód:</strong> Spustitelný binární kód (sekce <code>.text</code>), globální proměnné a dynamická paměť (<code>Heap</code>).</li>
               </ul>
-              <div class="highlight-pill kernel" style="margin-top: auto;">Proces vlastní paměť, soubory a oprávnění</div>
+              <div class="analogy-card" style="margin-top: auto; padding: 0.55rem 0.75rem; border-color: rgba(6, 182, 212, 0.3); background: rgba(6, 182, 212, 0.05);">
+                <div class="analogy-icon-wrap" style="background: rgba(6, 182, 212, 0.15); color: var(--accent);">
+                  <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <div>
+                  <strong style="color: var(--accent); font-size: 0.82rem;">Příklad z praxe: Webový prohlížeč Chrome</strong>
+                  <p style="font-size: 0.76rem; color: var(--text-secondary); margin: 0.15rem 0 0 0; line-height: 1.4;">
+                    Každý otevřený panel běží v <strong>samostatném procesu</strong> (<code>chrome.exe</code>). Když JavaScript nebo vykreslování na jednom panelu <strong>zhavaruje</strong> (spadne / crashne, např. kvůli chybě alokace paměti či Out-of-Memory), operační systém ukončí pouze tento jeden proces – ostatní panely i celý prohlížeč fungují bez přerušení dál!
+                  </p>
+                </div>
+              </div>
+              <div class="highlight-pill kernel" style="margin-top: 0.35rem;">Proces je obálka – k běhu kódu potřebuje alespoň 1 vlákno</div>
             </div>
 
             <div class="content-card">
               <div class="card-header-styled">
                 <div class="card-title-wrap">
-                  <svg class="icon" viewBox="0 0 24 24"><users x="2" y="2" width="20" height="20" rx="2"></users><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                  <span class="card-title-text">Vlákno (Thread) = Lidé žijící v domě</span>
+                  <svg class="icon" viewBox="0 0 24 24"><cpu x="4" y="4" width="16" height="16" rx="2"></cpu><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                  <span class="card-title-text">Vlákno (Thread) = Jednotka, která reálně běží na jádře</span>
                 </div>
               </div>
-              <p>Lehká váha – skutečná jednotka, kterou plánovač posílá na jádro CPU:</p>
-              <ul class="styled-list">
-                <li><strong>Všechno sdílejí:</strong> Všichni lidé v domě mají společnou kuchyň, obývák i ledničku (kód programu, haldu Heap i globální data).</li>
-                <li><strong>Co má každý své?</strong> Každý má v kapse vlastní poznámkový bloček (<strong>zásobník Stack</strong> pro lokální proměnné) a vlastní myšlenky (<strong>registry procesoru</strong>).</li>
-                <li><strong>Bleskový vznik:</strong> Vytvořit nové vlákno uvnitř domu je 10&times; rychlejší než stavět nový dům.</li>
-                <li><strong>Riziko:</strong> Když jeden člověk otráví vodu v ledničce (přepíše paměť), <strong>otráví celý dům a proces spadne</strong>!</li>
+              <p style="font-size: 0.83rem; color: var(--text-secondary); margin: 0;">
+                Skutečný vykonavatel instrukcí. Jediná entita, kterou plánovač posílá na jádro procesoru:
+              </p>
+              <ul class="styled-list" style="font-size: 0.81rem;">
+                <li><strong>Co má každé vlákno privátní:</strong>
+                  <ul>
+                    <li>Ukazatel instrukce <code>RIP / PC</code> (přesné místo v kódu, kde se vlákno nachází).</li>
+                    <li>Vlastní <strong>zásobník (Stack) a registr RSP</strong> pro lokální proměnné a volání funkcí.</li>
+                    <li>Vlastní sadu <strong>hardwarových registrů</strong> (RAX, RBX, RFLAGS...).</li>
+                  </ul>
+                </li>
+                <li><strong>Co všechna vlákna uvnitř procesu sdílejí:</strong> Stejnou virtuální paměť (registr <code>CR3</code>), stejnou haldu (Heap) i otevřené soubory.</li>
               </ul>
-              <div class="highlight-pill success" style="margin-top: auto;">Vlákna sdílejí paměť procesu, ale mají vlastní Stack</div>
+              <div class="analogy-card" style="margin-top: auto; padding: 0.55rem 0.75rem; border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05);">
+                <div class="analogy-icon-wrap success">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </div>
+                <div>
+                  <strong style="color: #10b981; font-size: 0.82rem;">Příklad z praxe: 3D Hra (Cyberpunk / Unreal Engine)</strong>
+                  <p style="font-size: 0.76rem; color: var(--text-secondary); margin: 0.15rem 0 0 0; line-height: 1.4;">
+                    Jeden proces hry využívá <strong>4 jádra CPU současně</strong>: <em>Vlákno 1</em> krmí DirectX/Vulkan grafikou, <em>Vlákno 2</em> počítá fyziku, <em>Vlákno 3</em> prostorový zvuk a <em>Vlákno 4</em> síť. Všechna běží v přesně stejnou nanosekundu paralelně!
+                  </p>
+                </div>
+              </div>
+              <div class="highlight-pill success" style="margin-top: 0.35rem;">Vlákna sdílejí paměť procesu, ale mají vlastní registry a Stack</div>
             </div>
           </div>
         </div>
@@ -492,34 +1128,34 @@
                 </div>
               </div>
               <p style="font-size: 0.84rem; color: var(--text-secondary);">
-                Představte si šachového velmistra, který hraje simultánku proti 30 hráčům. Pokaždé, když přejde k jinému stolu:
+                Při přepnutí procesoru z prohlížeče <strong>Chrome</strong> na hudební přehrávač <strong>Spotify</strong> musí jádro provést tři striktní operace:
               </p>
               <div class="flow-steps-grid" style="grid-template-columns: 1fr; gap: 0.45rem;">
                 <div class="flow-step-card">
                   <div style="display: flex; align-items: center; gap: 0.5rem;">
                     <span class="flow-step-num kernel">1</span>
-                    <strong style="font-size: 0.85rem;">Uložit stav programu A</strong>
+                    <strong style="font-size: 0.85rem;">Uložit stav procesu A (Chrome)</strong>
                   </div>
                   <p style="font-size: 0.79rem; color: var(--text-secondary); margin: 0;">
-                    Všechny registry procesoru (kde v kódu stál a co měl spočítáno) se uloží do paměti.
+                    Všechny registry CPU (včetně ukazatele instrukce <code>RIP</code> v JavaScript enginu a <code>RSP</code>) se uloží do struktury PCB v operační paměti RAM.
                   </p>
                 </div>
                 <div class="flow-step-card">
                   <div style="display: flex; align-items: center; gap: 0.5rem;">
                     <span class="flow-step-num warning">2</span>
-                    <strong style="font-size: 0.85rem;">Přepnout adresu paměti (Registr CR3)</strong>
+                    <strong style="font-size: 0.85rem;">Přepnout virtuální paměť (Registr CR3)</strong>
                   </div>
                   <p style="font-size: 0.79rem; color: var(--text-secondary); margin: 0;">
-                    Pokud přepínáme na jiný proces, musí se přepnout celá virtuální paměť a <strong>vymaže se rychlá cache TLB</strong> (tzv. studený start).
+                    Do registru <code>CR3</code> se zapíše bázová adresa stránkovací tabulky Spotify. Procesor <strong>zneplatní rychlou cache TLB</strong> (studený start překladu adres).
                   </p>
                 </div>
                 <div class="flow-step-card">
                   <div style="display: flex; align-items: center; gap: 0.5rem;">
                     <span class="flow-step-num success">3</span>
-                    <strong style="font-size: 0.85rem;">Nahrát registry programu B a pokračovat</strong>
+                    <strong style="font-size: 0.85rem;">Nahrát registry procesu B (Spotify) a pokračovat</strong>
                   </div>
                   <p style="font-size: 0.79rem; color: var(--text-secondary); margin: 0;">
-                    Procesor nahraje registry nového programu a skočí na jeho další instrukci.
+                    Procesor obnoví registry vlákna Spotify z jeho PCB a skočí na instrukci dekódování zvukového streamu.
                   </p>
                 </div>
               </div>
@@ -528,22 +1164,273 @@
             <div class="content-card">
               <div class="card-header-styled">
                 <div class="card-title-wrap">
-                  <svg class="icon" viewBox="0 0 24 24"><zap x="13" y="2" width="10" height="20" rx="2"></zap><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                  <span class="card-title-text">Proč je přepnutí mezi vlákny 10&times; rychlejší?</span>
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <span class="card-title-text">Proč je přepnutí mezi vlákny 10&times; až 30&times; rychlejší?</span>
                 </div>
               </div>
               <p style="font-size: 0.85rem; color: var(--text-secondary);">
-                Když přepínáte mezi dvěma vlákny <strong>uvnitř stejného procesu</strong>:
+                Když přepínáte mezi dvěma vlákny <strong>uvnitř stejné 3D hry či aplikace</strong> (např. mezi renderováním grafiky a simulací fyziky):
               </p>
               <ul class="styled-list" style="font-size: 0.82rem;">
-                <li><strong style="color: #10b981;">Paměť zůstává stejná:</strong> Nemění se registr <code>CR3</code> ani virtuální prostor (jsme ve stejném domě!).</li>
-                <li><strong style="color: #10b981;">TLB cache zůstává horká:</strong> Procesor nemusí znovu překládat adresy paměti z RAM.</li>
-                <li>Přepnou se jen registry a ukazatel zásobníku. Celá akce trvá jen desítky nanosekund.</li>
+                <li><strong style="color: #10b981;">Paměť zůstává identická:</strong> Nemění se registr <code>CR3</code> ani virtuální prostor &ndash; obě vlákna přímo vidí stejné herní objekty a textury v RAM.</li>
+                <li><strong style="color: #10b981;">TLB cache zůstává žhavá:</strong> Procesor nemusí znovu překládat virtuální adresy z RAM.</li>
+                <li>Přepnou se pouze registry CPU a ukazatel zásobníku <code>RSP</code>. Celá akce trvá jen desítky nanosekund.</li>
               </ul>
               <div class="story-box danger" style="margin-top: auto; padding: 0.55rem 0.85rem;">
                 <div class="story-title" style="font-size: 0.82rem;">Zlaté inženýrské pravidlo:</div>
                 <div style="font-size: 0.77rem; color: var(--text-secondary);">
-                  Mít v systému 10 000 vláken neznamená 10 000&times; vyšší výkon. Pokud procesor stráví víc času přepínáním kontextu než samotným počítáním, systém se udusí (tzv. Thrashing).
+                  Mít v aplikaci 10 000 vláken neznamená 10 000&times; vyšší výkon. Pokud procesor stráví víc času přepínáním kontextu než samotným výpočtem, systém se udusí (tzv. Thrashing).
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interaktivní porovnání na Snímku 4 -->
+          <div class="cs-compare-box" style="margin-top: 0.65rem; background: rgba(15, 23, 42, 0.45); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.65rem 0.85rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.4rem;">
+              <span style="font-size:0.82rem; font-weight:700; color:var(--accent); display:flex; align-items:center; gap:0.35rem;">
+                <svg class="icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                Interaktivní rozbor: Co se přesně mění v procesoru při přepnutí?
+              </span>
+              <div class="cs-toggle-container" style="margin:0;">
+                <button class="cs-toggle-btn active" id="btnToggleProcessCS" type="button">
+                  <span>1. Přepnutí PROCESU (Těžká váha)</span>
+                </button>
+                <button class="cs-toggle-btn" id="btnToggleThreadCS" type="button">
+                  <span>2. Přepnutí VLÁKNA (Lehká váha)</span>
+                </button>
+              </div>
+            </div>
+            <div id="csCompareDetails" style="font-size:0.79rem; line-height:1.45; color:var(--text-secondary); background:rgba(0,0,0,0.3); border:1px solid var(--border-subtle); padding:0.5rem 0.75rem; border-radius:4px;">
+              <!-- Inicializováno z JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: INTERAKTIVNÍ SIMULÁTOR: STŘÍDÁNÍ APLIKACÍ NA PROCESORU -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Interaktivní simulace jádra CPU</div>
+            <h2 class="slide-title">Jak se aplikace střídají na procesoru (Krok za krokem)</h2>
+            <p class="slide-subtitle">Sledujte v reálném čase: Časové kvantum, hardwarový Timer IRQ, přepnutí registrů PCB a stavy front</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-primary">Simulátor CPU &bull; Timer Tick &bull; Context Switch</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="sim-wrapper">
+            <!-- Ovládací lišta simulátoru -->
+            <div class="sim-controls-bar">
+              <div class="sim-stepper" id="multitaskStepper">
+                <!-- Generováno JS pro 7 fází -->
+              </div>
+              <div class="sim-action-buttons">
+                <button class="sim-btn" id="simPrevStepBtn" type="button" title="Předchozí krok simulace">
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  <span>Zpět</span>
+                </button>
+                <button class="sim-btn primary" id="simPlayBtn" type="button" title="Automatické přehrávání animace">
+                  <svg class="icon" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  <span id="simPlayBtnText">Přehrát animaci</span>
+                </button>
+                <button class="sim-btn" id="simNextStepBtn" type="button" title="Další krok simulace">
+                  <span>Další</span>
+                  <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+                <button class="sim-btn" id="simResetBtn" type="button" title="Resetovat simulaci na 1. krok">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                  <span>Reset</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Informační pruh aktuálního kroku -->
+            <div class="sim-step-banner" id="simStepBanner">
+              <div class="sim-banner-top">
+                <div class="sim-banner-title-group">
+                  <span class="highlight-pill success" id="simPhaseBadge">Krok 1/7 &bull; Ring 3</span>
+                  <h3 class="sim-banner-title" id="simStepTitle">1. Krok: Aplikace A (Google Chrome) běží na procesoru</h3>
+                </div>
+                <div class="sim-timer-indicator">
+                  <span class="sim-timer-label">Hardware Timer:</span>
+                  <span class="sim-timer-val" id="simTimerVal">10 ms</span>
+                </div>
+              </div>
+              <p class="sim-banner-desc" id="simStepDesc">
+                Prohlížeč Chrome (PID 1042) provádí náročný JavaScriptový kód v uživatelském režimu (Ring 3). Všechny registry procesoru patří jemu. Hardwarový časovač procesoru (Timer) má nastaveno kvantum 10 ms a neúprosně odpočítává dolů.
+              </p>
+              <div class="sim-banner-callout" id="simStepCallout">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span id="simStepCalloutText">Inženýrský detail: Vlákno běží plnou rychlostí hardwaru. Dokud nevyprší časové kvantum nebo nepřijde přerušení, jádro operačního systému vůbec nezasahuje.</span>
+              </div>
+            </div>
+
+            <!-- Hlavní deska 3 sloupců: CPU Jádro + Fronty Jádra OS + Ganttův diagram -->
+            <div class="sim-grid-3">
+              <!-- Sloupec 1: CPU Jádro a Registry -->
+              <div class="sim-panel cpu-panel" id="panelCpu">
+                <div class="sim-panel-header">
+                  <div class="sim-panel-title">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="15" x2="23" y2="15"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="15" x2="4" y2="15"></line></svg>
+                    <span>Fyzické jádro CPU (Core 0)</span>
+                  </div>
+                  <span class="highlight-pill success" id="cpuRingBadge">Ring 3 (User)</span>
+                </div>
+
+                <!-- Karta aktuálně běžící entity -->
+                <div class="cpu-running-box" id="cpuRunningBox">
+                  <div class="cpu-entity-header">
+                    <span class="status-dot active" id="cpuPulseDot"></span>
+                    <strong id="cpuCurrentApp" style="font-size: 0.92rem; color: #67e8f9;">Google Chrome</strong>
+                    <span class="highlight-pill" id="cpuPidBadge" style="margin-left: auto; font-size: 0.68rem;">PID 1042</span>
+                  </div>
+                  <div class="cpu-entity-action" id="cpuCurrentActivity">Provádí výpočet JavaScriptu (V8 Engine)</div>
+
+                  <!-- Quantum Bargraph -->
+                  <div class="quantum-box">
+                    <div class="quantum-label-row">
+                      <span>Časové kvantum (Zbývá)</span>
+                      <strong id="quantumNumLabel" style="font-family: var(--font-mono); color: #67e8f9;">10 ms / 10 ms</strong>
+                    </div>
+                    <div class="quantum-bar-track">
+                      <div class="quantum-bar-fill" id="quantumBarFill" style="width: 100%;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Registry CPU -->
+                <div class="cpu-registers-box">
+                  <div class="reg-title">Aktuální registry procesoru:</div>
+                  <div class="reg-grid">
+                    <div class="reg-item">
+                      <span class="reg-name">RIP:</span>
+                      <span class="reg-val" id="regRip">0x7FF6_4A10</span>
+                    </div>
+                    <div class="reg-item">
+                      <span class="reg-name">CR3 (VM):</span>
+                      <span class="reg-val" id="regCr3">0x1A000</span>
+                    </div>
+                    <div class="reg-item">
+                      <span class="reg-name">RSP (Stack):</span>
+                      <span class="reg-val" id="regRsp">0x00FF_E4A0</span>
+                    </div>
+                    <div class="reg-item">
+                      <span class="reg-name">TLB Cache:</span>
+                      <span class="reg-val highlight-pill success" id="regTlb" style="font-size:0.65rem; padding:0.05rem 0.35rem;">Horká (Validní)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sloupec 2: Paměť jádra OS (Fronty & PCB v RAM) -->
+              <div class="sim-panel os-panel" id="panelOs">
+                <div class="sim-panel-header">
+                  <div class="sim-panel-title">
+                    <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    <span>Jádro OS &amp; Fronty v RAM</span>
+                  </div>
+                  <span class="highlight-pill" style="font-size: 0.68rem;">Kernel RAM</span>
+                </div>
+
+                <!-- Fronta READY -->
+                <div class="queue-card">
+                  <div class="queue-header">
+                    <span style="display:flex; align-items:center; gap:0.35rem;">
+                      <span class="status-dot success"></span>
+                      <strong>Fronta READY (Připravené k běhu)</strong>
+                    </span>
+                    <span class="tag tag-primary" id="readyCountBadge" style="font-size:0.65rem;">2 úlohy</span>
+                  </div>
+                  <div class="queue-chips-row" id="readyQueueChips">
+                    <!-- Chips úloh -->
+                  </div>
+                </div>
+
+                <!-- Fronta BLOCKED -->
+                <div class="queue-card">
+                  <div class="queue-header">
+                    <span style="display:flex; align-items:center; gap:0.35rem;">
+                      <span class="status-dot pending"></span>
+                      <strong>Fronta BLOCKED (Čekající na I/O hardware)</strong>
+                    </span>
+                    <span class="tag" id="blockedCountBadge" style="font-size:0.65rem;">0 úloh</span>
+                  </div>
+                  <div class="queue-chips-row" id="blockedQueueChips">
+                    <span class="empty-queue-msg">Žádný proces nečeká na I/O</span>
+                  </div>
+                </div>
+
+                <!-- PCB Bloky -->
+                <div class="pcb-list-box">
+                  <div class="pcb-header-title">Process Control Blocks (Uložený stav úloh v RAM):</div>
+                  <div class="pcb-cards-container" id="pcbContainer">
+                    <!-- PCB mini-karty -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sloupec 3: Ganttův diagram & Časová osa střídání -->
+              <div class="sim-panel timeline-panel" id="panelTimeline">
+                <div class="sim-panel-header">
+                  <div class="sim-panel-title">
+                    <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>Ganttův diagram: Časová osa CPU</span>
+                  </div>
+                  <span class="highlight-pill success" id="timeElapsedBadge">T = 0 ms</span>
+                </div>
+
+                <div class="gantt-chart-wrapper">
+                  <div class="gantt-timeline-track" id="ganttTrack">
+                    <!-- Segmenty časové osy -->
+                    <div class="gantt-segment app-chrome active-segment" data-slot="1" title="Chrome (10 ms kvantum)">
+                      <span class="gantt-label">Chrome (10 ms)</span>
+                    </div>
+                    <div class="gantt-segment kernel-cs" data-slot="2" title="Přepnutí kontextu jádra (0.05 ms)">
+                      <span class="gantt-label">CS</span>
+                    </div>
+                    <div class="gantt-segment app-spotify" data-slot="3" title="Spotify (3 ms, pak I/O yield)">
+                      <span class="gantt-label">Spotify (3 ms)</span>
+                    </div>
+                    <div class="gantt-segment kernel-cs" data-slot="4" title="Přepnutí kontextu jádra (0.05 ms)">
+                      <span class="gantt-label">CS</span>
+                    </div>
+                    <div class="gantt-segment app-game" data-slot="5" title="3D Blender (10 ms kvantum)">
+                      <span class="gantt-label">Blender (10 ms)</span>
+                    </div>
+                    <div class="gantt-segment kernel-cs" data-slot="6" title="Audio IRQ obsluha & CS">
+                      <span class="gantt-label">IRQ</span>
+                    </div>
+                    <div class="gantt-segment app-chrome" data-slot="7" title="Chrome pokračuje">
+                      <span class="gantt-label">Chrome...</span>
+                    </div>
+                  </div>
+                  <div class="gantt-playhead" id="ganttPlayhead" style="left: 7%;"></div>
+                </div>
+
+                <!-- Legenda časové osy -->
+                <div class="gantt-legend">
+                  <div class="legend-item"><span class="legend-chip" style="background:#0891b2;"></span> Chrome (JS)</div>
+                  <div class="legend-item"><span class="legend-chip" style="background:#059669;"></span> Spotify (Audio)</div>
+                  <div class="legend-item"><span class="legend-chip" style="background:#9333ea;"></span> Blender (3D)</div>
+                  <div class="legend-item"><span class="legend-chip" style="background:#e11d48;"></span> Režie jádra (CS)</div>
+                </div>
+
+                <!-- Shrnutí efektivity -->
+                <div class="efficiency-card">
+                  <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:0.25rem;">
+                    <span>Efektivní výpočetní čas:</span>
+                    <strong style="color:#10b981;">98.5 %</strong>
+                  </div>
+                  <div style="display:flex; justify-content:space-between; font-size:0.75rem;">
+                    <span>Režie střídání (Overhead):</span>
+                    <strong style="color:#f43f5e;">1.5 %</strong>
+                  </div>
+                  <p style="font-size:0.72rem; color:var(--text-muted); margin-top:0.35rem; line-height:1.4; margin-bottom:0;">
+                    Střídání je tak bleskové (40&times; za sekundu), že lidský mozek vnímá naprosto plynulý souběh všech tří aplikací.
+                  </p>
                 </div>
               </div>
             </div>
@@ -551,8 +1438,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 5: LINUX CFS PLÁNOVAČ A VRUNTIME -->
-      <section class="slide" data-slide="5">
+      <!-- SLIDE 6: LINUX CFS PLÁNOVAČ A VRUNTIME -->
+      <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Mozek Linuxového jádra</div>
@@ -600,8 +1487,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 6: WINDOWS PLÁNOVÁNÍ A P/E JÁDRA -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 7: WINDOWS PLÁNOVÁNÍ A P/E JÁDRA -->
+      <section class="slide" data-slide="7">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Architektura Windows &amp; Moderní CPU</div>
@@ -649,8 +1536,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 7: SYNCHRONIZACE: RACE CONDITION A MUTEX -->
-      <section class="slide" data-slide="7">
+      <!-- SLIDE 8: SYNCHRONIZACE: RACE CONDITION A MUTEX -->
+      <section class="slide" data-slide="8">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Nástrahy více vláken</div>
@@ -686,20 +1573,20 @@
                   <span class="card-title-text">Řešení: Mutex (Zámek na klíč)</span>
                 </div>
               </div>
-              <p>Představte si to jako <strong>záchod v kavárně</strong>:</p>
+              <p>Jak funguje <strong>Mutex (Mutual Exclusion v aplikaci / databázi)</strong>:</p>
               <ul class="styled-list">
-                <li>Kdo chce pracovat s účtem, musí si nejdřív vzít klíč a <strong>zamknout se zevnitř (Mutex Lock)</strong>.</li>
-                <li>Druhý člověk vidí zamčeno, nesmí dovnitř &ndash; <strong>musí počkat na chodbě</strong> (plánovač ho uspí do stavu Blocked).</li>
-                <li>Až první člověk skončí, odemkne dveře (<strong>Mutex Unlock</strong>) a druhý může bezpečně vstoupit.</li>
-                <li><strong>Spinlock (Aktivní cloumání klikou):</strong> Vlákno nejde spát, ale v rychlé smyčce cloumá klikou. Používá se jen v jádře na bleskové nanosekundové operace.</li>
+                <li>Vlákno 1 před čtením či zápisem zavolá <code>mutex.lock()</code> a získá výhradní přístup ke kritické sekci paměti.</li>
+                <li>Vlákno 2 narazí na zamčený zámek &ndash; operační systém ho <strong>okamžitě odstaví do fronty Blocked</strong> a uvolní jádro CPU pro jinou práci.</li>
+                <li>Až Vlákno 1 dokončí transakci a zavolá <code>mutex.unlock()</code>, plánovač OS probudí Vlákno 2, které nyní bezpečně přečte již aktualizovaný zůstatek účtu.</li>
+                <li><strong>Spinlock (Aktivní čekání v cyklu):</strong> Vlákno neusíná přes systémové volání, ale v těsné instrukční smyčce neustále testuje zámek. Používá se výhradně v jádře OS a ovladačích pro mikrosekundové synchronizace, kde by režie uspání do fronty byla pomalejší než kratičké počkání.</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 8: DEADLOCK (UVÁZNUTÍ) -->
-      <section class="slide" data-slide="8">
+      <!-- SLIDE 9: DEADLOCK (UVÁZNUTÍ) -->
+      <section class="slide" data-slide="9">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Horor pro vývojáře</div>
@@ -713,39 +1600,41 @@
         <div class="slide-body">
           <div class="story-box danger" style="margin-top: 0;">
             <div class="story-title">
-              <svg class="icon" viewBox="0 0 24 24"><x-octagon x="7.86" y="2" width="16" height="16" rx="2"></x-octagon><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-              Metafora: Dva kuchaři s nožem a prkénkem
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+              Příklad z praxe: Bankovní backend a vzájemný převod peněz
             </div>
-            Kuchař A drží nůž a čeká na prkénko. Kuchař B drží prkénko a čeká na nůž. Ani jeden nechce svůj nástroj pustit a oba budou stát a čekat navěky! Program zamrzne a přestane odpovídat.
+            <strong>Vlákno 1</strong> provádí převod z Účtu A na Účet B: zamkne <code>Mutex(Účet_A)</code> a čeká na uvolnění <code>Mutex(Účet_B)</code>.<br>
+            Ve stejný okamžik <strong>Vlákno 2</strong> provádí převod z Účtu B na Účet A: zamklo <code>Mutex(Účet_B)</code> a čeká na <code>Mutex(Účet_A)</code>.<br>
+            Obě vlákna čekají na prostředek držený tím druhým, ani jedno zámek nepustí &ndash; obě navždy zamrznou ve frontě Blocked a bankovní server přestane reagovat!
           </div>
 
           <div class="grid-2" style="margin-top: 0.6rem;">
             <div class="content-card">
-              <h4 style="color: #f43f5e; margin: 0; font-size: 0.95rem;">4 podmínky, kdy Deadlock nastane (Coffman):</h4>
+              <h4 style="color: #f43f5e; margin: 0; font-size: 0.95rem;">4 Coffmanovy podmínky vzniku Deadlocku:</h4>
               <ol class="styled-list" style="font-size: 0.81rem; margin-top: 0.35rem;">
-                <li><strong>1. Vzájemné vyloučení:</strong> Nástroj smí mít v ruce jen jeden člověk.</li>
-                <li><strong>2. Drž a čekej:</strong> Držím svůj nástroj a odmítám ho pustit, dokud nedostanu ten druhý.</li>
-                <li><strong>3. Nelze vytrhnout:</strong> Nikdo mi nesmí nástroj násilím vzít z ruky.</li>
-                <li><strong>4. Kruhové čekání:</strong> Vznikne uzavřený kruh: A čeká na B a B čeká na A.</li>
+                <li><strong>1. Vzájemné vyloučení:</strong> Zámek na daný účet / databázový záznam smí v jeden okamžik držet pouze jediné vlákno.</li>
+                <li><strong>2. Drž a čekej (Hold &amp; Wait):</strong> Vlákno drží zámek Účtu A a odmítá jej pustit, dokud neobdrží zámek Účtu B.</li>
+                <li><strong>3. Neodstranitelnost (No Preemption):</strong> Již přidělený zámek nelze vláknu systémem násilně odebrat.</li>
+                <li><strong>4. Kruhové čekání (Circular Wait):</strong> Vznikne uzavřený kruh závislostí: Vlákno 1 čeká na Vlákno 2 a Vlákno 2 čeká na Vlákno 1.</li>
               </ol>
             </div>
 
             <div class="content-card">
-              <h4 style="color: #10b981; margin: 0; font-size: 0.95rem;">Jak Deadlocku spolehlivě zabránit?</h4>
+              <h4 style="color: #10b981; margin: 0; font-size: 0.95rem;">Jak Deadlocku v softwaru spolehlivě zabránit?</h4>
               <p style="font-size: 0.82rem; color: var(--text-secondary);">
-                Stačí rozbít jedinou ze čtyř podmínek!
+                Stačí narušit jedinou ze 4 Coffmanových podmínek:
               </p>
               <ul class="styled-list" style="font-size: 0.81rem;">
-                <li><strong style="color: #10b981;">Zlaté pravidlo pořadí:</strong> Stanovte přísné pořadí zamykání. Všichni kuchaři si MUSÍ VŽDY vzít nejdřív prkénko a až pak nůž. Kruhové čekání nikdy nemůže vzniknout!</li>
-                <li><strong>Timeouty (Časové limity):</strong> Pokud nezískám druhý zámek do 5 sekund, pustím i ten první a zkusím to za chvíli znovu.</li>
+                <li><strong style="color: #10b981;">Hierarchické řazení zámků (Lock Ordering):</strong> Všechna vlákna MUSÍ zamykat mutexy ve striktně určeném pořadí (např. vždy podle vzestupného ID účtu: <code>min(ID_A, ID_B)</code> a až pak <code>max(ID_A, ID_B)</code>). Kruhové čekání je tím vyloučeno!</li>
+                <li><strong>Časové limity (Lock Timeout / try_lock):</strong> Pokud vlákno nezíská druhý zámek do 200 ms, uvolní i svůj první zámek, počká náhodný čas a zkusí transakci znovu.</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 9: PRAKTICKÁ DIAGNOSTIKA & KVÍZ -->
-      <section class="slide" data-slide="9">
+      <!-- SLIDE 10: PRAKTICKÁ DIAGNOSTIKA & KVÍZ -->
+      <section class="slide" data-slide="10">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Praxe a ověření</div>
@@ -844,8 +1733,8 @@
         </div>
       </section>
 
-      <!-- SLIDE 10: ZKUŠEBNÍ CHECKLIST K ABSOLUTORIU -->
-      <section class="slide" data-slide="10">
+      <!-- SLIDE 11: ZKUŠEBNÍ CHECKLIST K ABSOLUTORIU -->
+      <section class="slide" data-slide="11">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Zkouškové okruhy</div>
@@ -865,7 +1754,7 @@
 
             <div class="summary-card">
               <h4>2. Proces vs. Vlákno</h4>
-              <p>Proces je dům s izolovanou virtuální pamětí. Vlákna jsou lidé v domě – sdílejí paměť a haldu, ale mají vlastní zásobník (Stack) a registry.</p>
+              <p>Proces je izolovaný kontejner na systémové prostředky (CR3 virtuální paměť, otevřené deskriptory, halda). Vlákno je samotná jednotka provádění kódu na CPU (vlastní RIP instrukční ukazatel, registr RSP a zásobník).</p>
             </div>
 
             <div class="summary-card">
@@ -875,7 +1764,7 @@
 
             <div class="summary-card">
               <h4>4. Deadlock a 4 podmínky</h4>
-              <p>Vzájemné zablokování více vláken čekajících na vzájemně držené zámky. Prevence: striktní globální pořadí zamykání mutexů.</p>
+              <p>Vzájemné uváznutí vláken čekajících na vzájemně držené synchronizační zámky (Coffmanovy podmínky). Prevence v softwaru: striktní hierarchické řazení zámků (Lock Ordering) a timeouty.</p>
             </div>
           </div>
 
@@ -906,7 +1795,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 10</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 11</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -1126,8 +2015,8 @@
 
   <script src="../../assets/js/presentation-core.js"></script>
   <script>
-    // Interaktivní odkrývání odpovědí v kvízu na snímku 9
     document.addEventListener('DOMContentLoaded', () => {
+      // 1. Kvízové odkrývání odpovědí (Snímek 10)
       const quizButtons = document.querySelectorAll('.btn-quiz-reveal');
       quizButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1144,7 +2033,703 @@
           }
         });
       });
+
+      // 2. Interaktivní simulátor střídání aplikací na procesoru (Snímek 5)
+      initMultitaskSimulator();
+
+      // 3. Mini-sandbox: Kooperativní vs. Preemptivní zásek (Snímek 2)
+      initCoopVsPreemptDemo();
+
+      // 4. Porovnání přepnutí procesu vs. vlákna (Snímek 4)
+      initContextSwitchCompare();
     });
+
+    // ==========================================================================
+    // 2. INTERAKTIVNÍ SIMULÁTOR STŘÍDÁNÍ APLIKACÍ NA PROCESORU (SNÍMEK 5)
+    // ==========================================================================
+    function initMultitaskSimulator() {
+      const stepsData = [
+        {
+          step: 1,
+          btnLabel: "1. Chrome na CPU",
+          title: "1. Krok: Aplikace A (Google Chrome) běží na procesoru",
+          phaseBadge: "Krok 1/7 \u2022 Ring 3 (User)",
+          badgeClass: "success",
+          timerVal: "10 ms",
+          elapsed: "T = 0 ms",
+          playheadPos: "7%",
+          slotActive: 1,
+          desc: "Prohlížeč Chrome (PID 1042) provádí náročný JavaScriptový kód v uživatelském režimu (Ring 3). Všechny registry procesoru patří jemu. Hardwarový časovač procesoru (Timer) má nastaveno kvantum 10 ms a neúprosně odpočítává dolů.",
+          callout: "Inženýrský detail: Vlákno běží plnou rychlostí procesoru bez režie jádra. Dokud nevyprší časové kvantum nebo nepřijde přerušení, jádro operačního systému vůbec nezasahuje.",
+          cpu: {
+            app: "Google Chrome",
+            appColor: "#67e8f9",
+            pid: "PID 1042",
+            ring: "Ring 3 (User)",
+            ringClass: "success",
+            activity: "Provádí výpočet JavaScriptu (V8 Engine)",
+            rip: "0x7FF6_4A10",
+            cr3: "0x1A000 (Chrome VM)",
+            rsp: "0x00FF_E4A0",
+            tlb: "Horká (Validní)",
+            tlbClass: "success",
+            quantumLabel: "Zbývá 10 ms / 10 ms",
+            quantumPct: 100,
+            isZero: false
+          },
+          readyQueue: [
+            { name: "Spotify", pid: 2180, type: "spotify" },
+            { name: "3D Blender", pid: 3450, type: "game" }
+          ],
+          blockedQueue: [],
+          pcbs: [
+            { pid: "PID 1042 (Chrome)", state: "RUNNING", stateColor: "#10b981", active: true },
+            { pid: "PID 2180 (Spotify)", state: "READY (Fronta)", stateColor: "#38bdf8", active: false },
+            { pid: "PID 3450 (Blender)", state: "READY (Fronta)", stateColor: "#38bdf8", active: false }
+          ]
+        },
+        {
+          step: 2,
+          btnLabel: "2. Timer IRQ Tick",
+          title: "2. Krok: Hardwarový časovač zapípal! (Timer IRQ Tick – Kvantum 0 ms)",
+          phaseBadge: "Krok 2/7 \u2022 Ring 0 (Preempce)",
+          badgeClass: "kernel",
+          timerVal: "0 ms (TICK!)",
+          elapsed: "T = 10 ms",
+          playheadPos: "25%",
+          slotActive: 2,
+          desc: "Hardwarový časovač dosáhl 0 ms! Řadič APIC vygeneroval elektrické přerušení Timer IRQ (vektor 0x20). Hardware procesoru bez ptaní odebral řízení aplikaci Chrome a skočil do obsluhy jádra v Ring 0.",
+          callout: "Klíčový moment preempce: Aplikace Chrome se vůbec nechtěla vzdát procesoru! Byla násilně přerušena hardwarem. Tímto je garantováno, že žádný zaseknutý program neovládne celý počítač.",
+          cpu: {
+            app: "Jádro OS (Timer ISR)",
+            appColor: "#fda4af",
+            pid: "PID 0 (Kernel)",
+            ring: "Ring 0 (Jádro OS)",
+            ringClass: "kernel",
+            activity: "Obsluha přerušení časovače & Záchrana registrů Chrome do PCB 1042",
+            rip: "0xFFFFF800_OS_TICK",
+            cr3: "0x1A000 (Zatím Chrome)",
+            rsp: "0xFFFF_KERNEL_STK",
+            tlb: "Validní",
+            tlbClass: "warning",
+            quantumLabel: "\u26A1 0 ms (VYPRŠELO!)",
+            quantumPct: 0,
+            isZero: true
+          },
+          readyQueue: [
+            { name: "Spotify", pid: 2180, type: "spotify" },
+            { name: "3D Blender", pid: 3450, type: "game" },
+            { name: "Google Chrome", pid: 1042, type: "chrome" }
+          ],
+          blockedQueue: [],
+          pcbs: [
+            { pid: "PID 1042 (Chrome)", state: "READY (Uloženo)", stateColor: "#f59e0b", active: true },
+            { pid: "PID 2180 (Spotify)", state: "READY (Na řadě)", stateColor: "#10b981", active: false },
+            { pid: "PID 3450 (Blender)", state: "READY (Fronta)", stateColor: "#38bdf8", active: false }
+          ]
+        },
+        {
+          step: 3,
+          btnLabel: "3. Context Switch",
+          title: "3. Krok: Plánovač vybírá Spotify & Přepnutí paměti (Context Switch)",
+          phaseBadge: "Krok 3/7 \u2022 Ring 0 (Přepínání)",
+          badgeClass: "warning",
+          timerVal: "10 ms (Reset)",
+          elapsed: "T = 10.05 ms",
+          playheadPos: "30%",
+          slotActive: 2,
+          desc: "Plánovač vybral z čela fronty Ready aplikaci Spotify (PID 2180). Protože jde o jiný proces, jádro zapíše novou hodnotu do registru CR3 = 0x2B000 (přepnutí virtuální paměti). Tím se zneplatní cache TLB. Z PCB Spotify se nahrají jeho registry do CPU.",
+          callout: "Proč je přepnutí procesu drahé? Zneplatnění TLB cache způsobí tzv. studený start procesoru – první instrukce Spotify musí překládat adresy z pomalejší RAM.",
+          cpu: {
+            app: "Jádro OS (Dispatcher)",
+            appColor: "#fda4af",
+            pid: "PID 0 (Kernel)",
+            ring: "Ring 0 (Přepínání)",
+            ringClass: "kernel",
+            activity: "Přepis registru CR3 = 0x2B000 & Nahrání registrů z PCB 2180",
+            rip: "0xFFFFF800_DISPATCH",
+            cr3: "0x2B000 (Nová paměť)",
+            rsp: "0xFFFF_KERNEL_STK",
+            tlb: "\u26A1 ZNEPLATNĚNA (TLB Flush)",
+            tlbClass: "danger",
+            quantumLabel: "Časovač resetován na 10 ms",
+            quantumPct: 100,
+            isZero: false
+          },
+          readyQueue: [
+            { name: "3D Blender", pid: 3450, type: "game" },
+            { name: "Google Chrome", pid: 1042, type: "chrome" }
+          ],
+          blockedQueue: [],
+          pcbs: [
+            { pid: "PID 1042 (Chrome)", state: "READY (Čeká)", stateColor: "#38bdf8", active: false },
+            { pid: "PID 2180 (Spotify)", state: "RUNNING (Start)", stateColor: "#10b981", active: true },
+            { pid: "PID 3450 (Blender)", state: "READY (Čeká)", stateColor: "#38bdf8", active: false }
+          ]
+        },
+        {
+          step: 4,
+          btnLabel: "4. Spotify & I/O",
+          title: "4. Krok: Běh Spotify & Dobrovolné uvolnění CPU (I/O Syscall)",
+          phaseBadge: "Krok 4/7 \u2022 Ring 3 \u2192 Syscall",
+          badgeClass: "warning",
+          timerVal: "7 ms zbývalo",
+          elapsed: "T = 13.05 ms",
+          playheadPos: "45%",
+          slotActive: 3,
+          desc: "Spotify běží v Ring 3 a dekóduje MP3 stream. Po 3 milisekundách naplnilo zvukový buffer a volá jádro: 'systémové volání write() pro zvukovou kartu'. Protože zvuková karta je pomalá periferie, Spotify na dokončení nemůže čekat na CPU. Dobrovolně se vzdává zbytku svého kvanta!",
+          callout: "Důležitý postřeh: Spotify nevyčerpalo 10 ms kvantum! Uvolnilo CPU dobrovolně po 3 ms a přechází do stavu BLOCKED (spí), takže neplýtvá procesorový čas.",
+          cpu: {
+            app: "Spotify (Audio dekodér)",
+            appColor: "#6ee7b7",
+            pid: "PID 2180",
+            ring: "Ring 3 \u2192 Syscall",
+            ringClass: "warning",
+            activity: "Volání syscall write() do audio zařízení \u2192 Dobrovolný Yield!",
+            rip: "0x7FF7_2060",
+            cr3: "0x2B000 (Spotify VM)",
+            rsp: "0x00FE_B800",
+            tlb: "Horká (Validní)",
+            tlbClass: "success",
+            quantumLabel: "Uvolněno po 3 ms (zbylo 7 ms)",
+            quantumPct: 70,
+            isZero: false
+          },
+          readyQueue: [
+            { name: "3D Blender", pid: 3450, type: "game" },
+            { name: "Google Chrome", pid: 1042, type: "chrome" }
+          ],
+          blockedQueue: [
+            { name: "Spotify (Čeká na Audio DAC)", pid: 2180, type: "spotify" }
+          ],
+          pcbs: [
+            { pid: "PID 1042 (Chrome)", state: "READY (Čeká)", stateColor: "#38bdf8", active: false },
+            { pid: "PID 2180 (Spotify)", state: "BLOCKED (Čeká na I/O)", stateColor: "#f59e0b", active: true },
+            { pid: "PID 3450 (Blender)", state: "READY (Na řadě)", stateColor: "#10b981", active: false }
+          ]
+        },
+        {
+          step: 5,
+          btnLabel: "5. Nástup 3D Hry",
+          title: "5. Krok: Jádro nasazuje 3D Blender (Výpočet fyziky a renderu)",
+          phaseBadge: "Krok 5/7 \u2022 Ring 3 (User)",
+          badgeClass: "purple",
+          timerVal: "10 ms",
+          elapsed: "T = 13.10 ms",
+          playheadPos: "68%",
+          slotActive: 5,
+          desc: "Spotify šlo spát do Blocked fronty. Plánovač bleskově přepne kontext na další připravený proces z Ready fronty: 3D Blender (PID 3450). Registr CR3 se nastaví na 0x3C000, načtou se registry a Blender začne na plný výkon počítat polygonovou síť.",
+          callout: "Asynchronní hardware v akci: Zatímco Blender počítá na procesoru, zvukový čip na desce nezávisle a asynchronně pomocí DMA přehrává zvuk do reproduktorů. CPU s tím nemá žádnou práci!",
+          cpu: {
+            app: "3D Blender / Herní Engine",
+            appColor: "#d8b4fe",
+            pid: "PID 3450",
+            ring: "Ring 3 (User)",
+            ringClass: "success",
+            activity: "Matematika shaderů & Výpočet polygonové sítě",
+            rip: "0x7FF8_9000",
+            cr3: "0x3C000 (Blender VM)",
+            rsp: "0x00AA_1100",
+            tlb: "Horká (Validní)",
+            tlbClass: "success",
+            quantumLabel: "Zbývá 10 ms / 10 ms",
+            quantumPct: 100,
+            isZero: false
+          },
+          readyQueue: [
+            { name: "Google Chrome", pid: 1042, type: "chrome" }
+          ],
+          blockedQueue: [
+            { name: "Spotify (DMA Audio přehrává)", pid: 2180, type: "spotify" }
+          ],
+          pcbs: [
+            { pid: "PID 1042 (Chrome)", state: "READY (Čeká)", stateColor: "#38bdf8", active: false },
+            { pid: "PID 2180 (Spotify)", state: "BLOCKED (I/O běží)", stateColor: "#f59e0b", active: false },
+            { pid: "PID 3450 (Blender)", state: "RUNNING", stateColor: "#10b981", active: true }
+          ]
+        },
+        {
+          step: 6,
+          btnLabel: "6. Zvukovka IRQ",
+          title: "6. Krok: Zvuková karta hlásí hotovo (Hardware IRQ) \u2794 Probuzení Spotify!",
+          phaseBadge: "Krok 6/7 \u2022 Hardware IRQ & Wakeup",
+          badgeClass: "success",
+          timerVal: "0 ms (Kvantum Blenderu)",
+          elapsed: "T = 23.10 ms",
+          playheadPos: "86%",
+          slotActive: 6,
+          desc: "Zvuková karta dohrála buffer a vyšle přerušení IRQ: 'Mám prázdný buffer, pošli další data!'. Ovladač v jádře signál zachytí a probudí Spotify: přesune ho z fronty BLOCKED zpět do fronty READY! Mezitím Blenderu vypršelo jeho 10 ms kvantum.",
+          callout: "Probuzení ze spánku: Spotify nezačne okamžitě běžet na CPU – procesor právě dočerpal Blender. Ale Spotify je už ve stavu READY, takže v dalším kole dostane přednost, aby zvuk nezakolísal!",
+          cpu: {
+            app: "Jádro OS (Audio IRQ)",
+            appColor: "#fda4af",
+            pid: "PID 0 (Kernel)",
+            ring: "Ring 0 (Jádro OS)",
+            ringClass: "kernel",
+            activity: "Obsluha Audio IRQ & Přesun Spotify: BLOCKED \u2192 READY",
+            rip: "0xFFFFF800_IRQ_AUDIO",
+            cr3: "0x3C000 (Zatím Blender)",
+            rsp: "0xFFFF_KERNEL_STK",
+            tlb: "Validní",
+            tlbClass: "warning",
+            quantumLabel: "\u26A1 0 ms (Kvantum Blenderu vypršelo)",
+            quantumPct: 0,
+            isZero: true
+          },
+          readyQueue: [
+            { name: "Spotify (Probuzeno!)", pid: 2180, type: "spotify" },
+            { name: "Google Chrome", pid: 1042, type: "chrome" },
+            { name: "3D Blender", pid: 3450, type: "game" }
+          ],
+          blockedQueue: [],
+          pcbs: [
+            { pid: "PID 1042 (Chrome)", state: "READY (Čeká)", stateColor: "#38bdf8", active: false },
+            { pid: "PID 2180 (Spotify)", state: "READY (Probuzeno)", stateColor: "#10b981", active: true },
+            { pid: "PID 3450 (Blender)", state: "READY (Konec kvanta)", stateColor: "#f59e0b", active: false }
+          ]
+        },
+        {
+          step: 7,
+          btnLabel: "7. Zpět na Chrome",
+          title: "7. Krok: Návrat na Google Chrome – Dokonalá iluze plynulého souběhu",
+          phaseBadge: "Krok 7/7 \u2022 Iluze současnosti",
+          badgeClass: "success",
+          timerVal: "10 ms",
+          elapsed: "T = 23.15 ms",
+          playheadPos: "96%",
+          slotActive: 7,
+          desc: "Plánovač předává CPU zpět aplikaci Google Chrome. Z PCB 1042 se obnoví přesný stav registrů RIP = 0x7FF6_4A58. Chrome vůbec nepozná, že byl na chvíli pozastaven a že mezitím hrála hudba i renderovala grafika!",
+          callout: "Zázrak multitaskingu: Celý tento koloběh proběhl za pouhých 23 milisekund (více než 40\u00d7 za sekundu!). Pro lidské smysly vše běží zcela současně a plynule.",
+          cpu: {
+            app: "Google Chrome (Pokračuje)",
+            appColor: "#67e8f9",
+            pid: "PID 1042",
+            ring: "Ring 3 (User)",
+            ringClass: "success",
+            activity: "Vykreslení webu (přesně tam, kde předtím stál)",
+            rip: "0x7FF6_4A58",
+            cr3: "0x1A000 (Chrome VM)",
+            rsp: "0x00FF_E4A0",
+            tlb: "Znovu se plní",
+            tlbClass: "success",
+            quantumLabel: "Zbývá 10 ms / 10 ms",
+            quantumPct: 100,
+            isZero: false
+          },
+          readyQueue: [
+            { name: "Spotify", pid: 2180, type: "spotify" },
+            { name: "3D Blender", pid: 3450, type: "game" }
+          ],
+          blockedQueue: [],
+          pcbs: [
+            { pid: "PID 1042 (Chrome)", state: "RUNNING", stateColor: "#10b981", active: true },
+            { pid: "PID 2180 (Spotify)", state: "READY (Čeká)", stateColor: "#38bdf8", active: false },
+            { pid: "PID 3450 (Blender)", state: "READY (Čeká)", stateColor: "#38bdf8", active: false }
+          ]
+        }
+      ];
+
+      let currentStepIndex = 0;
+      let playTimer = null;
+
+      // DOM prvky
+      const stepperEl = document.getElementById('multitaskStepper');
+      const prevBtn = document.getElementById('simPrevStepBtn');
+      const nextBtn = document.getElementById('simNextStepBtn');
+      const playBtn = document.getElementById('simPlayBtn');
+      const playBtnText = document.getElementById('simPlayBtnText');
+      const resetBtn = document.getElementById('simResetBtn');
+
+      if (!stepperEl || !playBtn) return;
+
+      // Vygenerování tlačítek pro 7 fází
+      stepperEl.innerHTML = '';
+      stepsData.forEach((s, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `sim-step-btn ${idx === 0 ? 'active' : ''}`;
+        btn.type = 'button';
+        btn.textContent = s.btnLabel;
+        btn.addEventListener('click', () => {
+          stopPlay();
+          renderStep(idx);
+        });
+        stepperEl.appendChild(btn);
+      });
+
+      function renderStep(idx) {
+        currentStepIndex = idx;
+        const d = stepsData[idx];
+
+        // 1. Tlačítka kroků
+        const allBtns = stepperEl.querySelectorAll('.sim-step-btn');
+        allBtns.forEach((b, i) => {
+          b.classList.remove('active', 'completed');
+          if (i === idx) b.classList.add('active');
+          else if (i < idx) b.classList.add('completed');
+        });
+
+        // 2. Banner
+        const phaseBadge = document.getElementById('simPhaseBadge');
+        if (phaseBadge) {
+          phaseBadge.textContent = d.phaseBadge;
+          phaseBadge.className = `highlight-pill ${d.badgeClass}`;
+        }
+        const titleEl = document.getElementById('simStepTitle');
+        if (titleEl) titleEl.textContent = d.title;
+        const timerValEl = document.getElementById('simTimerVal');
+        if (timerValEl) timerValEl.textContent = d.timerVal;
+        const descEl = document.getElementById('simStepDesc');
+        if (descEl) descEl.textContent = d.desc;
+        const calloutEl = document.getElementById('simStepCalloutText');
+        if (calloutEl) calloutEl.textContent = d.callout;
+
+        // 3. CPU Panel
+        const appEl = document.getElementById('cpuCurrentApp');
+        if (appEl) {
+          appEl.textContent = d.cpu.app;
+          appEl.style.color = d.cpu.appColor;
+        }
+        const pidBadge = document.getElementById('cpuPidBadge');
+        if (pidBadge) pidBadge.textContent = d.cpu.pid;
+        const ringBadge = document.getElementById('cpuRingBadge');
+        if (ringBadge) {
+          ringBadge.textContent = d.cpu.ring;
+          ringBadge.className = `highlight-pill ${d.cpu.ringClass}`;
+        }
+        const actEl = document.getElementById('cpuCurrentActivity');
+        if (actEl) actEl.textContent = d.cpu.activity;
+
+        // Quantum bar
+        const qNum = document.getElementById('quantumNumLabel');
+        if (qNum) qNum.textContent = d.cpu.quantumLabel;
+        const qFill = document.getElementById('quantumBarFill');
+        if (qFill) {
+          qFill.style.width = `${d.cpu.quantumPct}%`;
+          if (d.cpu.isZero) {
+            qFill.classList.add('zero');
+          } else {
+            qFill.classList.remove('zero');
+          }
+        }
+
+        // Registry
+        const ripEl = document.getElementById('regRip');
+        if (ripEl) ripEl.textContent = d.cpu.rip;
+        const cr3El = document.getElementById('regCr3');
+        if (cr3El) cr3El.textContent = d.cpu.cr3;
+        const rspEl = document.getElementById('regRsp');
+        if (rspEl) rspEl.textContent = d.cpu.rsp;
+        const tlbEl = document.getElementById('regTlb');
+        if (tlbEl) {
+          tlbEl.textContent = d.cpu.tlb;
+          tlbEl.className = `reg-val highlight-pill ${d.cpu.tlbClass}`;
+        }
+
+        // 4. OS Fronty
+        const readyChips = document.getElementById('readyQueueChips');
+        const readyCount = document.getElementById('readyCountBadge');
+        if (readyChips) {
+          readyChips.innerHTML = '';
+          if (readyCount) readyCount.textContent = `${d.readyQueue.length} ${d.readyQueue.length === 1 ? 'úloha' : 'úlohy'}`;
+          if (d.readyQueue.length === 0) {
+            readyChips.innerHTML = '<span class="empty-queue-msg">Fronta Ready je prázdná</span>';
+          } else {
+            d.readyQueue.forEach(q => {
+              const chip = document.createElement('span');
+              chip.className = `process-chip ${q.type}`;
+              chip.innerHTML = `<span>${q.name}</span> <span style="opacity:0.75; font-size:0.65rem;">(PID ${q.pid})</span>`;
+              readyChips.appendChild(chip);
+            });
+          }
+        }
+
+        const blockedChips = document.getElementById('blockedQueueChips');
+        const blockedCount = document.getElementById('blockedCountBadge');
+        if (blockedChips) {
+          blockedChips.innerHTML = '';
+          if (blockedCount) blockedCount.textContent = `${d.blockedQueue.length} ${d.blockedQueue.length === 1 ? 'úloha' : 'úloh'}`;
+          if (d.blockedQueue.length === 0) {
+            blockedChips.innerHTML = '<span class="empty-queue-msg">Žádný proces nečeká na I/O hardware</span>';
+          } else {
+            d.blockedQueue.forEach(q => {
+              const chip = document.createElement('span');
+              chip.className = `process-chip ${q.type}`;
+              chip.innerHTML = `<span>${q.name}</span> <span style="opacity:0.75; font-size:0.65rem;">(PID ${q.pid})</span>`;
+              blockedChips.appendChild(chip);
+            });
+          }
+        }
+
+        // PCB Tabulka
+        const pcbCont = document.getElementById('pcbContainer');
+        if (pcbCont) {
+          pcbCont.innerHTML = '';
+          d.pcbs.forEach(p => {
+            const row = document.createElement('div');
+            row.className = `pcb-mini-card ${p.active ? 'active-pcb' : ''}`;
+            row.innerHTML = `
+              <span style="font-weight:700; color:var(--text-primary);">${p.pid}</span>
+              <span style="color:${p.stateColor}; font-weight:700;">${p.state}</span>
+            `;
+            pcbCont.appendChild(row);
+          });
+        }
+
+        // 5. Gantt & Časová osa
+        const timeBadge = document.getElementById('timeElapsedBadge');
+        if (timeBadge) timeBadge.textContent = d.elapsed;
+
+        const playhead = document.getElementById('ganttPlayhead');
+        if (playhead) playhead.style.left = d.playheadPos;
+
+        const segments = document.querySelectorAll('.gantt-segment');
+        segments.forEach(seg => {
+          const slotNum = parseInt(seg.getAttribute('data-slot'), 10);
+          if (slotNum === d.slotActive) {
+            seg.classList.add('active-segment');
+          } else {
+            seg.classList.remove('active-segment');
+          }
+        });
+
+        // Tlačítka stav
+        if (prevBtn) prevBtn.disabled = idx === 0;
+        if (nextBtn) nextBtn.disabled = idx === stepsData.length - 1;
+      }
+
+      function stopPlay() {
+        if (playTimer) {
+          clearInterval(playTimer);
+          playTimer = null;
+        }
+        if (playBtn) playBtn.classList.remove('running');
+        if (playBtnText) playBtnText.textContent = 'Přehrát animaci';
+      }
+
+      function startPlay() {
+        if (playTimer) return;
+        if (currentStepIndex >= stepsData.length - 1) {
+          renderStep(0);
+        }
+        if (playBtn) playBtn.classList.add('running');
+        if (playBtnText) playBtnText.textContent = 'Pozastavit';
+
+        playTimer = setInterval(() => {
+          if (currentStepIndex < stepsData.length - 1) {
+            renderStep(currentStepIndex + 1);
+          } else {
+            stopPlay();
+          }
+        }, 2600);
+      }
+
+      if (playBtn) {
+        playBtn.addEventListener('click', () => {
+          if (playTimer) {
+            stopPlay();
+          } else {
+            startPlay();
+          }
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          stopPlay();
+          if (currentStepIndex > 0) renderStep(currentStepIndex - 1);
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          stopPlay();
+          if (currentStepIndex < stepsData.length - 1) renderStep(currentStepIndex + 1);
+        });
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          stopPlay();
+          renderStep(0);
+        });
+      }
+
+      // Klik na segmenty Ganttu
+      const segments = document.querySelectorAll('.gantt-segment');
+      segments.forEach(seg => {
+        seg.addEventListener('click', () => {
+          stopPlay();
+          const slotNum = parseInt(seg.getAttribute('data-slot'), 10);
+          const foundIdx = stepsData.findIndex(s => s.slotActive === slotNum);
+          if (foundIdx !== -1) renderStep(foundIdx);
+        });
+      });
+
+      // Inicializace na 1. krok
+      renderStep(0);
+    }
+
+    // ==========================================================================
+    // 3. MINI-SANDBOX: KOOPERATIVNÍ VS PREEMPTIVNÍ ZÁSEK (SNÍMEK 2)
+    // ==========================================================================
+    function initCoopVsPreemptDemo() {
+      const btnCoop = document.getElementById('btnRunCoopDemo');
+      const btnPreempt = document.getElementById('btnRunPreemptDemo');
+      const btnReset = document.getElementById('btnResetCoopDemo');
+      const screen = document.getElementById('coopScreen');
+      const statusBadge = document.getElementById('coopStatusBadge');
+      const clockEl = document.getElementById('coopClock');
+      const app1Tag = document.getElementById('app1Tag');
+      const app1Msg = document.getElementById('app1Msg');
+      const app2Tag = document.getElementById('app2Tag');
+      const app2Msg = document.getElementById('app2Msg');
+      const explanation = document.getElementById('coopExplanation');
+
+      if (!btnCoop || !btnPreempt || !screen) return;
+
+      let clockSeconds = 5;
+      let clockTimer = setInterval(() => {
+        clockSeconds++;
+        const s = clockSeconds < 10 ? '0' + clockSeconds : clockSeconds;
+        if (clockEl) clockEl.textContent = `14:32:${s}`;
+      }, 1000);
+
+      btnCoop.addEventListener('click', () => {
+        clearInterval(clockTimer);
+        screen.className = 'coop-screen frozen';
+        statusBadge.textContent = 'SYSTÉM ZAMRZNUL!';
+        statusBadge.style.color = '#f43f5e';
+        clockEl.textContent = '14:32:08 (ZAMRZLO)';
+        clockEl.style.color = '#f43f5e';
+
+        app1Tag.textContent = 'Neodpovídá';
+        app1Tag.className = 'highlight-pill kernel';
+        app1Msg.textContent = '\u26A0 Okno nereaguje, kurzor myši ztuhl!';
+
+        app2Tag.textContent = 'Nekonečná smyčka while(1)';
+        app2Tag.className = 'highlight-pill kernel';
+        app2Msg.textContent = 'Spustil smyčku while(true) a odmítl předat řízení.';
+
+        explanation.style.display = 'block';
+        explanation.innerHTML = `
+          <div style="background: rgba(244,63,94,0.12); border-left: 3px solid #f43f5e; padding: 0.5rem 0.75rem; border-radius: 0 4px 4px 0; color: #fda4af;">
+            <strong>Výsledek v Kooperativním OS:</strong> Chybná aplikace nikdy nepředala zprávu <code>GetMessage()</code>. Protože systém nemá právo jí procesor sebrat, <strong>zamrznul celý počítač</strong>. Jediné řešení pro uživatele: fyzické tlačítko Reset na skříni PC!
+          </div>
+        `;
+        btnReset.style.display = 'inline-flex';
+      });
+
+      btnPreempt.addEventListener('click', () => {
+        screen.className = 'coop-screen recovered';
+        statusBadge.textContent = 'PLNĚ CHRÁNĚNO (Jádro zasáhlo po 10 ms)';
+        statusBadge.style.color = '#10b981';
+
+        app1Tag.textContent = 'Aktivní (Plynulý běh)';
+        app1Tag.className = 'highlight-pill success';
+        app1Msg.textContent = 'Hudba dál hraje, myš reaguje, okno je plynulé.';
+
+        app2Tag.textContent = 'Zaseknutý proces (Odstaven)';
+        app2Tag.className = 'highlight-pill warning';
+        app2Msg.textContent = 'Hardwarový Timer IRQ mu po 10 ms sebral CPU.';
+
+        explanation.style.display = 'block';
+        explanation.innerHTML = `
+          <div style="background: rgba(16,185,129,0.12); border-left: 3px solid #10b981; padding: 0.5rem 0.75rem; border-radius: 0 4px 4px 0; color: #6ee7b7;">
+            <strong>Výsledek v Preemptivním OS:</strong> Aplikace se sice zacyklila, ale <strong>Timer IRQ procesoru ji po 10 ms nekompromisně odstřihnul</strong>. Operační systém otevřel Správce úloh a vy můžete zamrzlý proces bezpečně ukončit (<code>kill -9</code>). PC normálně funguje dál!
+          </div>
+        `;
+        btnReset.style.display = 'inline-flex';
+      });
+
+      btnReset.addEventListener('click', () => {
+        screen.className = 'coop-screen';
+        statusBadge.textContent = 'BĚŽNÝ PROVOZ';
+        statusBadge.style.color = '#10b981';
+        clockEl.style.color = 'var(--accent)';
+
+        app1Tag.textContent = 'Aktivní';
+        app1Tag.className = 'highlight-pill success';
+        app1Msg.textContent = 'Plynule reaguje na stisk kláves a myš.';
+
+        app2Tag.textContent = 'Připraven';
+        app2Tag.className = 'highlight-pill';
+        app2Msg.textContent = 'Čeká na spuštění nekonečné smyčky...';
+
+        explanation.style.display = 'none';
+        btnReset.style.display = 'none';
+
+        clearInterval(clockTimer);
+        clockSeconds = 5;
+        clockTimer = setInterval(() => {
+          clockSeconds++;
+          const s = clockSeconds < 10 ? '0' + clockSeconds : clockSeconds;
+          if (clockEl) clockEl.textContent = `14:32:${s}`;
+        }, 1000);
+      });
+    }
+
+    // ==========================================================================
+    // 4. POROVNÁNÍ PŘEPNUTÍ PROCESU VS VLÁKNA (SNÍMEK 4)
+    // ==========================================================================
+    function initContextSwitchCompare() {
+      const btnProc = document.getElementById('btnToggleProcessCS');
+      const btnThrd = document.getElementById('btnToggleThreadCS');
+      const details = document.getElementById('csCompareDetails');
+
+      if (!btnProc || !btnThrd || !details) return;
+
+      function showProcessCS() {
+        btnProc.classList.add('active');
+        btnThrd.classList.remove('active');
+        details.innerHTML = `
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; align-items:center;">
+            <div>
+              <strong style="color:#f43f5e; font-size:0.83rem;">Přepnutí mezi dvěma PROCESY (Heavyweight):</strong>
+              <ul class="styled-list" style="font-size:0.77rem; margin:0.3rem 0;">
+                <li>1. Uložit registry CPU do PCB starého procesu v RAM.</li>
+                <li>2. <strong style="color:#f43f5e;">Zapsat novou adresu do registru CR3:</strong> Změna celé virtuální paměti!</li>
+                <li>3. <strong style="color:#f43f5e;">Kompletní zneplatnění TLB Cache (Flush):</strong> Rychlá tabulka překladů adres se smaže.</li>
+                <li>4. Nahrát registry nového procesu z jeho PCB.</li>
+              </ul>
+            </div>
+            <div style="background:rgba(244,63,94,0.08); border:1px solid rgba(244,63,94,0.3); border-radius:4px; padding:0.5rem; font-size:0.75rem;">
+              <div style="font-weight:700; color:#f43f5e; margin-bottom:0.2rem;">Časová daň &amp; Následky:</div>
+              <div>\u23F1 Doba samotného přepnutí: <strong>1 500 až 3 000 ns</strong></div>
+              <div style="margin-top:0.2rem; color:var(--text-muted);">Po přepnutí následuje série pomalých výpadků cache (TLB miss), protože procesor musí překládat virtuální adresy z fyzické RAM!</div>
+            </div>
+          </div>
+        `;
+      }
+
+      function showThreadCS() {
+        btnProc.classList.remove('active');
+        btnThrd.classList.add('active');
+        details.innerHTML = `
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; align-items:center;">
+            <div>
+              <strong style="color:#10b981; font-size:0.83rem;">Přepnutí mezi dvěma VLÁKNY stejného procesu (Lightweight):</strong>
+              <ul class="styled-list" style="font-size:0.77rem; margin:0.3rem 0;">
+                <li>1. Uložit registry CPU na zásobník odcházejícího vlákna.</li>
+                <li>2. <strong style="color:#10b981;">Registr CR3 ZŮSTÁVÁ STEJNÝ:</strong> Obě vlákna sdílejí stejný adresní prostor procesu (např. grafické i fyzikální vlákno ve hře)!</li>
+                <li>3. <strong style="color:#10b981;">TLB Cache ZŮSTÁVÁ ŽHAVÁ (Hot):</strong> Není důvod cokoliv mazat.</li>
+                <li>4. Přepnout ukazatel zásobníku RSP a nahrát registry nového vlákna.</li>
+              </ul>
+            </div>
+            <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.3); border-radius:4px; padding:0.5rem; font-size:0.75rem;">
+              <div style="font-weight:700; color:#10b981; margin-bottom:0.2rem;">Časová daň &amp; Následky:</div>
+              <div>\u23F1 Doba samotného přepnutí: <strong>pouhých 50 až 100 ns</strong></div>
+              <div style="margin-top:0.2rem; color:var(--text-muted);"><strong>Až 30\u00d7 rychlejší!</strong> Nové vlákno okamžitě těží z již načtených dat v L1/L2 cache i TLB bez jakéhokoliv zdržení paměťového řadiče.</div>
+            </div>
+          </div>
+        `;
+      }
+
+      btnProc.addEventListener('click', showProcessCS);
+      btnThrd.addEventListener('click', showThreadCS);
+
+      // Výchozí zobrazení
+      showProcessCS();
+    }
   </script>
 </body>
 </html>
