@@ -395,37 +395,46 @@
             </div>
           </div>
 
-          <table class="compare-table">
-            <thead>
-              <tr>
-                <th>Vlastnost</th>
-                <th>Klasický dávkový soubor (.bat / CMD)</th>
-                <th>PowerShell (.ps1)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Datový typ roury (|)</strong></td>
-                <td>Surový textový proud (Stream of Text)</td>
-                <td><strong style="color: #7dd3fc;">Typované objekty .NET (Objects)</strong></td>
-              </tr>
-              <tr>
-                <td><strong>Formát příkazů</strong></td>
-                <td>Různorodý, historický (<code>dir</code>, <code>chkdsk</code>, <code>net</code>)</td>
-                <td>Jednotný <code>Sloveso-PodstatnéJméno</code> (<code>Get-Service</code>)</td>
-              </tr>
-              <tr>
-                <td><strong>Chybové kódy</strong></td>
-                <td>Číselný <code>%ERRORLEVEL%</code> (0 = OK)</td>
-                <td>Objektové výjimky <code>try { ... } catch { ... }</code> + <code>$?</code></td>
-              </tr>
-              <tr>
-                <td><strong>Podpora API</strong></td>
-                <td>Pouze staré Win32 utility</td>
-                <td>Kompletní .NET, Win32 API, WMI, CIM, COM objekty, REST API</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="content-card" style="margin-top: 0.75rem;">
+            <div class="card-header-styled">
+              <div class="card-title-wrap">
+                <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                <span class="card-title-text">Přehledové srovnání klíčových rozdílů: CMD (.bat) vs. PowerShell (.ps1)</span>
+              </div>
+              <span class="highlight-pill indigo">Architektura v kostce</span>
+            </div>
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>Vlastnost</th>
+                  <th>Klasický dávkový soubor (.bat / CMD)</th>
+                  <th>PowerShell (.ps1)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Datový typ roury (|)</strong></td>
+                  <td>Surový textový proud (Stream of Text)</td>
+                  <td><strong style="color: #7dd3fc;">Typované objekty .NET (Objects)</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Formát příkazů</strong></td>
+                  <td>Různorodý, historický (<code>dir</code>, <code>chkdsk</code>, <code>net</code>)</td>
+                  <td>Jednotný <code>Sloveso-PodstatnéJméno</code> (<code>Get-Service</code>)</td>
+                </tr>
+                <tr>
+                  <td><strong>Chybové kódy</strong></td>
+                  <td>Číselný <code>%ERRORLEVEL%</code> (0 = OK)</td>
+                  <td>Objektové výjimky <code>try { ... } catch { ... }</code> + <code>$?</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Podpora API</strong></td>
+                  <td>Pouze staré Win32 utility</td>
+                  <td>Kompletní .NET, Win32 API, WMI, CIM, COM objekty, REST API</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
