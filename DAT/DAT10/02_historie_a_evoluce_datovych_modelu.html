@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 02: Historie a evoluce datových modelů | DAT10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu DAT10">
+          <span>← DAT10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 02</span>
+          <span class="divider">•</span>
+          <span>Historie a evoluce datových modelů</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 1</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT10 • 2. přednáška (45 min)</div>
+        <h1 class="hero-title">Historie &amp; Evoluce datových modelů</h1>
+        <p class="hero-desc">
+          Od hierarchických stromů a síťových modelů 60. let přes revoluci relačních databází E. F. Codda až po NoSQL, NewSQL a multi-modelní databáze současnosti.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Milník 1970</span>
+            <span class="hero-meta-val">E. F. Codd (Relační model)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Moderní éra</span>
+            <span class="hero-meta-val">NoSQL • CAP • NewSQL</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 1</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: VÝVOJOVÁ OSA DATABÁZÍ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Evoluce paradigmat</div>
+            <h2 class="slide-title">Časová osa datových modelů (1960–dnes)</h2>
+            <p class="slide-subtitle">Jak požadavky na objem dat a flexibilitu měnily architekturu uložení</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka k absolutoriu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-4">
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem;">1. generace • 1960s</span>
+              <h4>Hierarchický &amp; Síťový model</h4>
+              <p>Založen na fyzických ukazatelích (pointerech). Navigace stromem (IBM IMS) nebo orientovaným grafem (CODASYL DBTG). Dotazování bylo striktně procedurální.</p>
+            </div>
+
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem; background: rgba(2, 132, 199, 0.15); color: #38bdf8;">2. generace • 1970–1990</span>
+              <h4>Relační model &amp; SQL</h4>
+              <p>Matematická teorie relací E. F. Codda. Deklarativní dotazování (SQL). Úplné oddělení logiky od fyzické diskové adresace. Dominantní standard dodnes.</p>
+            </div>
+
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem; background: rgba(16, 185, 129, 0.15); color: #34d399;">3. generace • 2000s</span>
+              <h4>NoSQL revoluce</h4>
+              <p>Odpověď na Web 2.0 a Big Data. Opuštění přísného schématu a ACID ve prospěch horizontálního škálování a vysoké dostupnosti (BASE, CAP teorém).</p>
+            </div>
+
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem; background: rgba(245, 158, 11, 0.15); color: #fbbf24;">4. generace • Dnes</span>
+              <h4>NewSQL &amp; Multi-model</h4>
+              <p>Kombinace ACID transakcí relačního světa s nekonečnou horizontální škálovatelností (Google Spanner, CockroachDB). RDBMS podporující JSON i grafy.</p>
+            </div>
+          </div>
+
+          <div class="callout callout-exam" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Klíčový rozdíl pro absolutorium: Procedurální vs. Deklarativní přístup</div>
+              V předrelačních modelech (hierarchický a síťový) musel programátor napsat <strong>přesný procedurální algoritmus</strong> (jak projít ukazatele uzel po uzlu). <br>
+              V relačním modelu programátor pouze deklaruje v SQL <strong>CO chce získat</strong> (např. <code>SELECT * FROM product WHERE price &lt; 500</code>) a SŘBD samo optimalizuje <strong>JAK data vyhledat</strong>.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: HIERARCHICKÝ A SÍŤOVÝ MODEL -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Předrelační systémy</div>
+            <h2 class="slide-title">Hierarchický model (IMS) a Síťový model (CODASYL)</h2>
+            <p class="slide-subtitle">Struktura ukazatelů a daň za navigační přístup k datům</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                Hierarchický model (Strom / 1:N)
+              </h4>
+              
+              <!-- Stromový diagram SVG -->
+              <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.6rem; margin: 0.5rem 0;">
+                <svg viewBox="0 0 320 85" style="width: 100%; height: auto; display: block; font-family: var(--font-sans);">
+                  <defs>
+                    <marker id="arrow-dat10" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+                    </marker>
+                  </defs>
+                  <!-- Root -->
+                  <rect x="95" y="6" width="130" height="24" rx="4" fill="rgba(2, 132, 199, 0.15)" stroke="#38bdf8" stroke-width="1.2"/>
+                  <text x="160" y="22" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="700">Root: Elektronika</text>
+                  <!-- Lines -->
+                  <path d="M 125 30 L 70 54" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow-dat10)"/>
+                  <path d="M 195 30 L 250 54" stroke="#38bdf8" stroke-width="1.5" marker-end="url(#arrow-dat10)"/>
+                  <!-- Leaves -->
+                  <rect x="15" y="54" width="110" height="24" rx="4" fill="rgba(255,255,255,0.04)" stroke="var(--border-color)"/>
+                  <text x="70" y="70" text-anchor="middle" fill="var(--text-primary)" font-size="10.5">Notebooky</text>
+                  <rect x="195" y="54" width="110" height="24" rx="4" fill="rgba(255,255,255,0.04)" stroke="var(--border-color)"/>
+                  <text x="250" y="70" text-anchor="middle" fill="var(--text-primary)" font-size="10.5">Mobily</text>
+                </svg>
+              </div>
+
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.83rem;">
+                <li>Každý záznam potomka má <strong>právě jednoho rodiče</strong> (root nemá žádného).</li>
+                <li><strong>Výhoda:</strong> Bleskurychlé čtení stromu shora dolů (např. Projekt Apollo v IBM IMS).</li>
+                <li><strong>Slabina:</strong> Nedokáže přirozeně reprezentovat vztah M:N. Produkt ve 2 kategoriích se musel fyzicky duplikovat &rarr; redundance a anomálie.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-purple);" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                Síťový model (CODASYL DBTG / M:N)
+              </h4>
+              
+              <!-- Síťový diagram SVG -->
+              <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.6rem; margin: 0.5rem 0;">
+                <svg viewBox="0 0 320 85" style="width: 100%; height: auto; display: block; font-family: var(--font-sans);">
+                  <!-- Owners -->
+                  <rect x="15" y="6" width="120" height="24" rx="4" fill="rgba(168, 85, 247, 0.15)" stroke="#c084fc" stroke-width="1.2"/>
+                  <text x="75" y="22" text-anchor="middle" fill="#c084fc" font-size="10.5" font-weight="700">Kat: Elektronika</text>
+                  <rect x="185" y="6" width="120" height="24" rx="4" fill="rgba(168, 85, 247, 0.15)" stroke="#c084fc" stroke-width="1.2"/>
+                  <text x="245" y="22" text-anchor="middle" fill="#c084fc" font-size="10.5" font-weight="700">Kat: Výprodej</text>
+                  <!-- Pointer Lines to single product -->
+                  <path d="M 75 30 L 135 54" stroke="#c084fc" stroke-width="1.5"/>
+                  <path d="M 245 30 L 185 54" stroke="#c084fc" stroke-width="1.5"/>
+                  <!-- Member -->
+                  <rect x="95" y="54" width="130" height="24" rx="4" fill="rgba(16, 185, 129, 0.15)" stroke="#34d399" stroke-width="1.2"/>
+                  <text x="160" y="70" text-anchor="middle" fill="#34d399" font-size="10.5" font-weight="700">Produkt: Notebook</text>
+                </svg>
+              </div>
+
+              <ul class="styled-list" style="margin-top: 0.5rem; font-size: 0.83rem;">
+                <li>Záznam může mít <strong>více rodičů</strong> (orientovaný graf a owner-member pointer rings).</li>
+                <li><strong>Výhoda:</strong> Schopnost modelovat vazby M:N bez nutnosti duplikovat záznamy.</li>
+                <li><strong>Slabina: „Pointer Hell“</strong> – extrémní křehkost ukazatelů na disku. Při chybě se zhroutila celá databáze; dotazy vyžadovaly manuální navigaci pointery v kódu.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: RELAČNÍ MODEL A CODDŮV PŘELOM -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Matematický základ</div>
+            <h2 class="slide-title">Relační model E. F. Codda (1970)</h2>
+            <p class="slide-subtitle">Vítězství matematické teorie množin nad hardwarovými ukazateli</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-cyan);" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Principy Coddova modelu
+              </h4>
+              <p>V roce 1970 publikoval Edgar F. Codd článek <em>„A Relational Model of Data for Large Shared Data Banks“</em>:</p>
+              <ul class="styled-list" style="margin-top: 0.75rem;">
+                <li><strong>Data uložena výhradně v tabulkách (relacích):</strong> Žádné navigační pointery viditelné pro uživatele.</li>
+                <li><strong>Propojení hodnotami (Value-based):</strong> Vztahy mezi tabulkami se vyjadřují shodou hodnot primárního klíče (PK) a cizího klíče (FK).</li>
+                <li><strong>Matematická exaktnost:</strong> Operace nad tabulkami jsou definovány relační algebrou a relačním kalkulem.</li>
+                <li><strong>Nezávislost na fyzickém uložení:</strong> Tabulku lze uložit na disk jakkoliv, dotazy fungují stále stejně.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Ukázka propojení hodnotami v <code>edu_eshop</code></h4>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.6rem;">
+                Objednávka se odkazuje na zákazníka hodnotou <code>customer_id</code>:
+              </div>
+              <table class="db-table" style="font-size: 0.8rem; margin-bottom: 0.8rem;">
+                <thead>
+                  <tr><th>orders.id (PK)</th><th>customer_id (FK)</th><th>total_price</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>101</td><td style="color: #38bdf8; font-weight:700;">1</td><td>1 299 Kč</td></tr>
+                  <tr><td>102</td><td style="color: #38bdf8; font-weight:700;">1</td><td>450 Kč</td></tr>
+                </tbody>
+              </table>
+              <div style="font-size: 0.82rem; color: var(--text-muted);">
+                Zákazník s <code>id = 1</code> v tabulce <code>customer</code> je rodičem obou objednávek bez jediného fyzického paměťového pointeru!
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: NOSQL RODINY A CAP TEORÉM -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Moderní databázová architektura</div>
+            <h2 class="slide-title">NoSQL databáze, CAP teorém a BASE</h2>
+            <p class="slide-subtitle">Čtyři rodiny NoSQL databází a jejich specializace</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka k absolutoriu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-4">
+            <div class="content-card">
+              <h4>Klíč–Hodnota (Key-Value)</h4>
+              <div style="font-size: 0.75rem; color: var(--accent); font-weight: 700; margin-bottom: 0.4rem;">Redis, DynamoDB</div>
+              <p>Extrémně rychlé čtení/zápis dle klíče. Ideální pro uživatelské sessions a nákupní košík e-shopu v cache paměti.</p>
+            </div>
+
+            <div class="content-card">
+              <h4>Dokumentové (Document)</h4>
+              <div style="font-size: 0.75rem; color: var(--accent-emerald); font-weight: 700; margin-bottom: 0.4rem;">MongoDB, CouchDB</div>
+              <p>Data v JSON/BSON formátu bez pevného schématu. Skvělé pro katalogy produktů s proměnlivými atributy.</p>
+            </div>
+
+            <div class="content-card">
+              <h4>Sloupcové (Wide-Column)</h4>
+              <div style="font-size: 0.75rem; color: var(--accent-amber); font-weight: 700; margin-bottom: 0.4rem;">Apache Cassandra, HBase</div>
+              <p>Optimalizováno pro masivní zápisy a analytické dotazy nad miliardami řádků (IoT telemetrie, logy).</p>
+            </div>
+
+            <div class="content-card">
+              <h4>Grafové (Graph)</h4>
+              <div style="font-size: 0.75rem; color: var(--accent-purple); font-weight: 700; margin-bottom: 0.4rem;">Neo4j, Amazon Neptune</div>
+              <p>Uzly a hrany (vztahy). Ideální pro sociální sítě a doporučovací systémy e-shopu (recommender engine).</p>
+            </div>
+          </div>
+
+          <div class="callout callout-exam" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">CAP teorém (Eric Brewer) &amp; BASE filosofie</div>
+              V distribuovaném systému lze současně garantovat pouze <strong>dvě ze tří vlastností</strong>: <br>
+              <strong>C (Consistency):</strong> Všichni klienti vidí ve stejný okamžik stejná data. <br>
+              <strong>A (Availability):</strong> Každý požadavek obdrží odpověď (úspěch/neúspěch). <br>
+              <strong>P (Partition Tolerance):</strong> Systém funguje i při výpadku síťového spojení mezi servery. <br>
+              Relační DB volí <strong>CA / CP</strong> (ACID), zatímco NoSQL často volí <strong>AP</strong> s modelem <strong>BASE</strong> (Basically Available, Soft state, Eventual consistency).
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & EXAM CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový přehled</div>
+            <h2 class="slide-title">Zkušební checklist: Okruh absolutoria č. 1 (Historie)</h2>
+            <p class="slide-subtitle">Shrnutí evoluce datových modelů pro zkoušku z DAT10</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Checklist</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                Co musíte umět u absolutoria z historie DB
+              </h4>
+              <ul class="styled-list">
+                <li>Porovnat <strong>hierarchický</strong> a <strong>síťový model</strong> (omezení na strom 1:N vs. graf ukazatelů M:N, pointer hell).</li>
+                <li>Vysvětlit podstatu revoluce <strong>E. F. Codda (1970)</strong>: Deklarativní dotazování, data v relacích, spojení hodnotami bez pointerů.</li>
+                <li>Pojmenovat a charakterizovat 4 rodiny <strong>NoSQL</strong> (Klíč–hodnota, Dokumentové, Sloupcové, Grafové) a uvést zástupce.</li>
+                <li>Definovat <strong>CAP teorém</strong> (Konzistence, Dostupnost, Odolnost proti rozpadu sítě) a vysvětlit, proč nelze mít 100% všechna tři.</li>
+                <li>Porovnat filosofii <strong>ACID</strong> (přísná okamžitá konzistence) a <strong>BASE</strong> (příslib eventuální konzistence).</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                Pojmy do slovníku k zapamatování
+              </h4>
+              <ul class="styled-list" style="font-size: 0.86rem;">
+                <li><strong>CODASYL DBTG:</strong> Standard síťového databázového modelu z konce 60. let.</li>
+                <li><strong>IBM IMS:</strong> Nejslavnější hierarchický databázový systém vyvinutý pro program Apollo.</li>
+                <li><strong>Eventual Consistency:</strong> Zaručuje, že pokud nepřijdou nové zápisy, všechny repliky nakonec dospějí ke shodnému stavu.</li>
+                <li><strong>Polyglot Persistence:</strong> Architektonický přístup, kde e-shop používá RDBMS na finance, Redis na cache a MongoDB na katalog.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-info" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Následující lekce: Architektury SŘBD a databázových aplikací</div>
+              V Lekci 03 prozkoumáme slavnou tříúrovňovou architekturu ANSI/SPARC, koncept logické a fyzické datové nezávislosti a moderní vícevrstvé webové architektury e-shopu.
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <a href="01_uvod_do_databazovych_systemu.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Úvod do databázových systémů (Ctrl+Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+      </a>
+      <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT10">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </a>
+      <a href="03_architektury_srbd_a_databazovych_aplikaci.html" class="control-btn" id="nextLessonBtn" title="Další lekce: Architektury SŘBD a databázových aplikací (Ctrl+Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay" aria-hidden="true">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn" title="Zavřít obsah">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Další lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Nápověda</span>
+            <span class="key-badge">?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

@@ -90,13 +90,13 @@
                 </h4>
                 <ul class="styled-list" style="font-size: 0.84rem; gap: 0.35rem;">
                   <li>
-                    <strong>Vazba 1:1 (Sdílený PK):</strong> <code>customer</code> (id) $\leftrightarrow$ <code>customer_profile</code> (customer_id je PK i FK současně). Volitelná rozšířená metadata nezatěžují hlavní tabulku NULL hodnotami.
+                    <strong>Vazba 1:1 (Sdílený PK):</strong> <code>customer</code> (id) &harr; <code>customer_profile</code> (customer_id je PK i FK současně). Volitelná rozšířená metadata nezatěžují hlavní tabulku NULL hodnotami.
                   </li>
                   <li>
-                    <strong>Vazba 1:N (Hierarchie entit):</strong> <code>customer</code> (1) $\rightarrow$ <code>orders</code> (N). Cizí klíč <code>orders.customer_id</code> ukazuje na rodičovského zákazníka.
+                    <strong>Vazba 1:N (Hierarchie entit):</strong> <code>customer</code> (1) &rarr; <code>orders</code> (N). Cizí klíč <code>orders.customer_id</code> ukazuje na rodičovského zákazníka.
                   </li>
                   <li>
-                    <strong>Vazba M:N (Asociační tabulka):</strong> <code>product</code> (M) $\leftrightarrow$ <code>category</code> (N). Dekomponována pomocí vazební tabulky <code>product_category</code> se složeným PK <code>(product_id, category_id)</code>.
+                    <strong>Vazba M:N (Asociační tabulka):</strong> <code>product</code> (M) &harr; <code>category</code> (N). Dekomponována pomocí vazební tabulky <code>product_category</code> se složeným PK <code>(product_id, category_id)</code>.
                   </li>
                   <li>
                     <strong>Sebereference 1:N:</strong> <code>category.parent_id</code> odkazuje na <code>category.id</code> v téže tabulce – reprezentace libovolně hlubokého stromu podkategorií.
@@ -181,7 +181,7 @@
                 <h4 style="color: var(--accent-amber); margin-bottom: 0.4rem;">Referenční akce (ON DELETE / ON UPDATE)</h4>
                 <ul class="styled-list" style="font-size: 0.84rem; gap: 0.3rem;">
                   <li>
-                    <strong>RESTRICT / NO ACTION:</strong> Smazání rodiče je zamítnuto, pokud má existující potomky (např. <code>orders $\rightarrow$ customer</code> zabrání smazání nakupujícího zákazníka).
+                    <strong>RESTRICT / NO ACTION:</strong> Smazání rodiče je zamítnuto, pokud má existující potomky (např. <code>orders &rarr; customer</code> zabrání smazání nakupujícího zákazníka).
                   </li>
                   <li>
                     <strong>CASCADE:</strong> Smazání rodiče automaticky smaže i závislé záznamy (např. smazání objednávky smaže její položky <code>order_item</code>).
@@ -313,7 +313,7 @@
                   <strong>Jediný korektní test:</strong> Vždy je nutné používat operátory <code>IS NULL</code> a <code>IS NOT NULL</code>.
                 </li>
                 <li>
-                  <strong>Past operátoru NOT IN s NULL:</strong> Výraz <code>x NOT IN (1, 2, NULL)</code> je ekvivalentní <code>x != 1 AND x != 2 AND x != NULL</code>. Poslední část vrátí UNKNOWN $\rightarrow$ celý výraz vrátí UNKNOWN a dotaz nevrátí <strong>vůbec nic</strong>!
+                  <strong>Past operátoru NOT IN s NULL:</strong> Výraz <code>x NOT IN (1, 2, NULL)</code> je ekvivalentní <code>x != 1 AND x != 2 AND x != NULL</code>. Poslední část vrátí UNKNOWN &rarr; celý výraz vrátí UNKNOWN a dotaz nevrátí <strong>vůbec nic</strong>!
                 </li>
               </ul>
             </div>
@@ -435,7 +435,7 @@
                     <strong>Nekorelovaný dotaz:</strong> Nezávislý na vnějším dotazu. Provede se pouze 1× a výsledek se uloží do paměti.
                   </li>
                   <li>
-                    <strong>Korelovaný dotaz:</strong> Odkazuje na sloupec vnějšího dotazu (např. <code>WHERE o.customer_id = c.id</code>). Spouští se pro každý řádek vnější tabulky znovu ($N$-krát, $O(N \times M)$).
+                    <strong>Korelovaný dotaz:</strong> Odkazuje na sloupec vnějšího dotazu (např. <code>WHERE o.customer_id = c.id</code>). Spouští se pro každý řádek vnější tabulky znovu (<em>N</em>-krát, <em>O</em>(<em>N</em> &times; <em>M</em>)).
                   </li>
                 </ul>
               </div>

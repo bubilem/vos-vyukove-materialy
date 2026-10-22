@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 06: Kardinalita, parcialita a diagram výskytů | DAT10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu DAT10">
+          <span>← DAT10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 06</span>
+          <span class="divider">•</span>
+          <span>Kardinalita, parcialita a diagram výskytů</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 3</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT10 • 6. přednáška (45 min)</div>
+        <h1 class="hero-title">Kardinalita, parcialita &amp; Diagram výskytů</h1>
+        <p class="hero-desc">
+          Přesné vyjádření strukturálních omezení vztahů. Maximální kardinalita (1:1, 1:N, M:N), minimální kardinalita (parcialita vs. totálnost) a vizualizace mapování instancí na příkladu <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Kardinalita (Max)</span>
+            <span class="hero-meta-val">1:1 • 1:N • M:N</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Parcialita (Min)</span>
+            <span class="hero-meta-val">0 (Volitelná) • 1 (Povinná)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 3</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: DIAGRAM VÝSKYTU -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Názorná vizualizace</div>
+            <h2 class="slide-title">Diagram výskytů (Occurrence Diagram)</h2>
+            <p class="slide-subtitle">Jak pochopit kardinalitu zobrazením konkrétních instancí entit</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka k absolutoriu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Co je diagram výskytů?</h4>
+              <p>
+                Pomocný analytický diagram, kde jsou entity zobrazeny jako množiny konkrétních instancí (tečky v oválech) a vztahy jako spojnice (čáry) mezi nimi.
+              </p>
+              <ul class="styled-list" style="margin-top: 0.75rem;">
+                <li>Pomáhá odhalit skutečná byznys pravidla před návrhem schématu.</li>
+                <li>Zkoumá: <em>„Kolik čar může z jednoho bodu vycházet?“</em> (Kardinalita).</li>
+                <li>Zkoumá: <em>„Může existovat bod, ze kterého nevychází žádná čára?“</em> (Parcialita).</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Grafický diagram výskytů: <code>ZÁKAZNÍK</code> &rarr; <code>OBJEDNÁVKA</code></h4>
+              
+              <div style="background: rgba(0,0,0,0.3); padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin: 0.5rem 0;">
+                <svg viewBox="0 0 520 200" style="width: 100%; height: auto; display: block; font-family: var(--font-sans);">
+                  <defs>
+                    <marker id="arrow-dat10" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8"/>
+                    </marker>
+                    <marker id="arrow-dat10-emerald" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#34d399"/>
+                    </marker>
+                  </defs>
+
+                  <!-- Levá množina: ZÁKAZNÍK -->
+                  <rect x="15" y="10" width="185" height="180" rx="10" fill="rgba(2, 132, 199, 0.06)" stroke="rgba(2, 132, 199, 0.35)" stroke-width="1.5" />
+                  <text x="107" y="32" text-anchor="middle" fill="#38bdf8" font-weight="700" font-size="12">ZÁKAZNÍK (Instance)</text>
+
+                  <!-- Pravá množina: OBJEDNÁVKA -->
+                  <rect x="320" y="10" width="185" height="180" rx="10" fill="rgba(16, 185, 129, 0.06)" stroke="rgba(16, 185, 129, 0.35)" stroke-width="1.5" />
+                  <text x="412" y="32" text-anchor="middle" fill="#34d399" font-weight="700" font-size="12">OBJEDNÁVKA (Instance)</text>
+
+                  <!-- Spojnice Jan Novák -> #101 a #102 -->
+                  <path d="M 185 65 L 330 65" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-dat10)" />
+                  <path d="M 185 65 C 240 65, 260 115, 330 115" fill="none" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow-dat10)" />
+
+                  <!-- Spojnice Petr Svoboda -> #103 -->
+                  <path d="M 185 165 L 330 165" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-dat10-emerald)" />
+
+                  <!-- Uzly ZÁKAZNÍK -->
+                  <!-- Jan Novák -->
+                  <circle cx="185" cy="65" r="5" fill="#38bdf8" />
+                  <text x="172" y="69" text-anchor="end" fill="var(--text-primary)" font-size="11.5" font-weight="600">Jan Novák [id:1]</text>
+
+                  <!-- Eva Černá (parciální) -->
+                  <circle cx="185" cy="115" r="5" fill="var(--text-muted)" />
+                  <text x="172" y="119" text-anchor="end" fill="var(--text-muted)" font-size="11.5">Eva Černá [id:2]</text>
+                  <text x="210" y="118" fill="var(--accent-rose)" font-size="10" font-weight="700">&Oslash; (0 vazeb)</text>
+
+                  <!-- Petr Svoboda -->
+                  <circle cx="185" cy="165" r="5" fill="#38bdf8" />
+                  <text x="172" y="169" text-anchor="end" fill="var(--text-primary)" font-size="11.5" font-weight="600">Petr Svoboda [id:3]</text>
+
+                  <!-- Uzly OBJEDNÁVKA -->
+                  <circle cx="335" cy="65" r="5" fill="#34d399" />
+                  <text x="348" y="69" text-anchor="start" fill="var(--text-primary)" font-size="11.5" font-weight="600">Objednávka #101</text>
+
+                  <circle cx="335" cy="115" r="5" fill="#34d399" />
+                  <text x="348" y="119" text-anchor="start" fill="var(--text-primary)" font-size="11.5" font-weight="600">Objednávka #102</text>
+
+                  <circle cx="335" cy="165" r="5" fill="#34d399" />
+                  <text x="348" y="169" text-anchor="start" fill="var(--text-primary)" font-size="11.5" font-weight="600">Objednávka #103</text>
+                </svg>
+              </div>
+
+              <div class="grid-2" style="gap: 0.5rem; margin-top: 0.5rem; font-size: 0.78rem;">
+                <div style="background: rgba(2, 132, 199, 0.08); padding: 0.45rem 0.65rem; border-radius: 6px; border-left: 3px solid var(--accent);">
+                  <strong>Zákazník (Parciální účast):</strong><br>
+                  Může mít <strong>0 až N</strong> objednávek (Eva Černá nemá žádnou &rarr; min = 0).
+                </div>
+                <div style="background: rgba(16, 185, 129, 0.08); padding: 0.45rem 0.65rem; border-radius: 6px; border-left: 3px solid var(--accent-emerald);">
+                  <strong>Objednávka (Totální účast):</strong><br>
+                  Musí mít <strong>právě 1</strong> zákazníka (do každé vede právě 1 šipka &rarr; min=1, max=1).
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: TYPY KARDINALITY (1:1, 1:N, M:N) -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Strukturální omezení</div>
+            <h2 class="slide-title">Kardinalita vztahů: 1:1, 1:N a M:N</h2>
+            <p class="slide-subtitle">Maximální počet instancí druhé entity, které se mohou vztahu účastnit</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem;">Kardinalita 1:1</span>
+              <h4>Jeden k jednomu (1:1)</h4>
+              <p>Jedna instance entity <em>A</em> se může vázat k nejvýše jedné instanci entity <em>B</em> a naopak.</p>
+              
+              <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem 0.9rem; margin: 0.75rem 0;">
+                <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: #c084fc; margin-bottom: 0.4rem;">Příklad z edu_eshop</div>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 0.45rem; font-family: var(--font-mono); font-size: 0.82rem; margin-bottom: 0.45rem; flex-wrap: wrap;">
+                  <span style="background: rgba(2, 132, 199, 0.15); border: 1px solid rgba(2, 132, 199, 0.3); color: #38bdf8; padding: 0.2rem 0.5rem; border-radius: 4px;">customer</span>
+                  <span style="color: #c084fc; font-weight: 700;">(1) &harr; (1)</span>
+                  <span style="background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); color: #c084fc; padding: 0.2rem 0.5rem; border-radius: 4px;">customer_profile</span>
+                </div>
+                <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45;">
+                  Zákaznický účet má právě jeden osobní profil a profil patří právě jednomu účtu.
+                </div>
+              </div>
+
+              <div style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 0.5rem;">
+                <strong style="color: var(--text-primary);">V SQL:</strong> Cizí klíč (FK) je v tabulce s totální účastí a má unikátní omezení <code>UNIQUE</code>.
+              </div>
+            </div>
+
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem; background: rgba(2, 132, 199, 0.15); color: #38bdf8;">Kardinalita 1:N</span>
+              <h4>Jeden k mnoha (1:N)</h4>
+              <p>Jedna instance entity <em>A</em> se váže k libovolnému počtu instancí <em>B</em>, ale instance <em>B</em> se váže k nejvýše jedné instanci <em>A</em>.</p>
+              
+              <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem 0.9rem; margin: 0.75rem 0;">
+                <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: #38bdf8; margin-bottom: 0.4rem;">Příklad z edu_eshop</div>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 0.45rem; font-family: var(--font-mono); font-size: 0.82rem; margin-bottom: 0.45rem; flex-wrap: wrap;">
+                  <span style="background: rgba(2, 132, 199, 0.15); border: 1px solid rgba(2, 132, 199, 0.3); color: #38bdf8; padding: 0.2rem 0.5rem; border-radius: 4px;">customer</span>
+                  <span style="color: #38bdf8; font-weight: 700;">(1) &rarr; (N)</span>
+                  <span style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.2rem 0.5rem; border-radius: 4px;">orders</span>
+                </div>
+                <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45;">
+                  Zákazník má <em>N</em> objednávek, ale každá objednávka byla vytvořena právě jedním zákazníkem.
+                </div>
+              </div>
+
+              <div style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 0.5rem;">
+                <strong style="color: var(--text-primary);">V SQL:</strong> Cizí klíč <code>customer_id (FK)</code> se vkládá do tabulky na straně <strong>N</strong> (<code>orders</code>).
+              </div>
+            </div>
+
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem; background: rgba(16, 185, 129, 0.15); color: #34d399;">Kardinalita M:N</span>
+              <h4>Mnoho k mnoha (M:N)</h4>
+              <p>Instance <em>A</em> se váže k mnoha instancím <em>B</em>, a současně instance <em>B</em> se váže k mnoha instancím <em>A</em>.</p>
+              
+              <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem 0.9rem; margin: 0.75rem 0;">
+                <div style="font-size: 0.72rem; text-transform: uppercase; font-weight: 700; color: #34d399; margin-bottom: 0.4rem;">Příklad z edu_eshop</div>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 0.45rem; font-family: var(--font-mono); font-size: 0.82rem; margin-bottom: 0.45rem; flex-wrap: wrap;">
+                  <span style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399; padding: 0.2rem 0.5rem; border-radius: 4px;">product</span>
+                  <span style="color: #34d399; font-weight: 700;">(M) &harr; (N)</span>
+                  <span style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24; padding: 0.2rem 0.5rem; border-radius: 4px;">category</span>
+                </div>
+                <div style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45;">
+                  Produkt může patřit do více kategorií, a kategorie obsahuje mnoho produktů.
+                </div>
+              </div>
+
+              <div style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 0.5rem;">
+                <strong style="color: var(--text-primary);">V SQL:</strong> Dekompozice na dvě vazby 1:N přes asociační tabulku <code>product_category</code>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PARCIALITA A TOTÁLNOST -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Minimální kardinalita / Modalita</div>
+            <h2 class="slide-title">Parcialita vs. Totálnost (Volitelná vs. Povinná účast)</h2>
+            <p class="slide-subtitle">Musí každá instance v databázi do daného vztahu vstoupit?</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Kritické pro zkoušku</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Totální účast (Povinná / Mandatorní / Min = 1)
+              </h4>
+              <p>
+                Každá existující instance entity se <strong>musí</strong> účastnit alespoň jednoho výskytu vztahu.
+              </p>
+              <ul class="styled-list" style="margin-top: 0.75rem;">
+                <li>Minimální kardinalita: <code>min = 1</code>.</li>
+                <li>V Chenově notaci: <strong>dvojitá spojnice</strong> (double line).</li>
+                <li>V relačním modelu: Sloupec cizího klíče (FK) má integritní omezení <code>NOT NULL</code>.</li>
+                <li><strong>Příklad v edu_eshop:</strong> Objednávka <code>orders</code> MUSÍ mít zákazníka (nelze vytvořit anonymní objednávku bez vazby na <code>customer_id</code>).</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-amber);" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                Parciální účast (Volitelná / Opční / Min = 0)
+              </h4>
+              <p>
+                Instance entity může existovat v systému, aniž by se účastnila daného vztahu.
+              </p>
+              <ul class="styled-list" style="margin-top: 0.75rem;">
+                <li>Minimální kardinalita: <code>min = 0</code>.</li>
+                <li>V Chenově notaci: <strong>jednoduchá spojnice</strong> (single line).</li>
+                <li>V relačním modelu: Cizí klíč může obsahovat hodnotu <code>NULL</code>.</li>
+                <li><strong>Příklad v edu_eshop:</strong> Nově registrovaný zákazník nemusí mít žádnou objednávku ani vyplněný profil (vztah je pro něj volitelný).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: INTERVALOVÁ NOTACE (MIN, MAX) V EDU_ESHOP -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Přesný formální zápis</div>
+            <h2 class="slide-title">Intervalová notace (min, max) v modelu <code>edu_eshop</code></h2>
+            <p class="slide-subtitle">Kombinace minimální a maximální kardinality pro všechny vazby</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="content-card">
+            <h4>Přehled kardinalit a parcialit v referenční databázi</h4>
+            <table class="db-table" style="margin-top: 0.75rem;">
+              <thead>
+                <tr>
+                  <th>Vztah mezi entitami</th>
+                  <th>Strana A (min, max)</th>
+                  <th>Strana B (min, max)</th>
+                  <th>Výsledná kardinalita</th>
+                  <th>Význam v praxi e-shopu</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>CUSTOMER</code> &mdash; <code>CUSTOMER_PROFILE</code></td>
+                  <td><strong>(0, 1)</strong> Volitelná</td>
+                  <td><strong>(1, 1)</strong> Povinná</td>
+                  <td><span class="cardinality-badge">1 : 1</span></td>
+                  <td>Zákazník profil mít může i nemusí; profil bez zákazníka nesmí existovat.</td>
+                </tr>
+                <tr>
+                  <td><code>CUSTOMER</code> &mdash; <code>ORDERS</code></td>
+                  <td><strong>(0, N)</strong> Volitelná</td>
+                  <td><strong>(1, 1)</strong> Povinná</td>
+                  <td><span class="cardinality-badge">1 : N</span></td>
+                  <td>Zákazník má 0 až N objednávek; objednávka musí patřit 1 zákazníkovi.</td>
+                </tr>
+                <tr>
+                  <td><code>PRODUCT</code> &mdash; <code>CATEGORY</code></td>
+                  <td><strong>(0, N)</strong> Volitelná</td>
+                  <td><strong>(0, N)</strong> Volitelná</td>
+                  <td><span class="cardinality-badge">M : N</span></td>
+                  <td>Produkt může být v N kategoriích; kategorie může být prázdná či mít N produktů.</td>
+                </tr>
+                <tr>
+                  <td><code>CATEGORY</code> &mdash; <code>CATEGORY</code> (Sebereference)</td>
+                  <td><strong>(0, 1)</strong> Volitelná</td>
+                  <td><strong>(0, N)</strong> Volitelná</td>
+                  <td><span class="cardinality-badge">1 : N</span></td>
+                  <td>Kategorie má max. 1 rodiče (kořen nemá žádného) a může mít N podkategorií.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & EXAM CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový přehled</div>
+            <h2 class="slide-title">Zkušební checklist: Okruh absolutoria č. 3 (Kardinalita &amp; Parcialita)</h2>
+            <p class="slide-subtitle">Vše, co po vás bude zkoušející chtít nakreslit a vysvětlit</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Checklist</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                Zkouškový checklist k otázce č. 3
+              </h4>
+              <ul class="styled-list">
+                <li>Nakreslit <strong>diagram výskytů</strong> a vysvětlit z něj kardinalitu i parcialitu.</li>
+                <li>Definovat a na reálném příkladu demonstrovat kardinality <strong>1:1</strong>, <strong>1:N</strong> a <strong>M:N</strong>.</li>
+                <li>Rozlišit <strong>totální (povinnou)</strong> a <strong>parciální (volitelnou)</strong> účast entity ve vztahu.</li>
+                <li>Vysvětlit intervalový zápis <strong>(min, max)</strong> a uvést, co znamená <code>(0, 1)</code>, <code>(1, 1)</code>, <code>(0, N)</code> a <code>(1, N)</code>.</li>
+                <li>Vysvětlit, jak se totální účast promítá do relační databáze (omezení <code>NOT NULL</code> na cizím klíči).</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                Pojmy do slovníku
+              </h4>
+              <ul class="styled-list" style="font-size: 0.86rem;">
+                <li><strong>Kardinalita (Maximální účast):</strong> Určuje maximální počet instancí druhé entity připojených k dané instanci.</li>
+                <li><strong>Parcialita (Minimální účast):</strong> Určuje, zda je účast instance ve vztahu povinná (min &ge; 1) či volitelná (min = 0).</li>
+                <li><strong>Occurrence Diagram:</strong> Názorné zobrazení konkrétních instancí pro ověření kardinalit.</li>
+                <li><strong>Totální specializace:</strong> Každá instance nadřízené entity musí patřit do alespoň jedné podtřídy.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-info" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Následující lekce: Notace E-R diagramů a pokročilé koncepty</div>
+              V Lekci 07 porovnáme Chenovu notaci, oblíbenou notaci Crow's Foot (vraní nožka) a UML. Prozkoumáme slabé entity a ISA hierarchie (specializaci a generalizaci).
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <a href="05_konceptualni_modelovani_a_er_model.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Konceptuální modelování a E-R model (Ctrl+Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+      </a>
+      <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT10">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </a>
+      <a href="07_notace_er_diagramu_a_pokrocile_koncepty.html" class="control-btn" id="nextLessonBtn" title="Další lekce: Notace E-R diagramů a pokročilé koncepty (Ctrl+Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay" aria-hidden="true">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn" title="Zavřít obsah">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Další lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Nápověda</span>
+            <span class="key-badge">?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

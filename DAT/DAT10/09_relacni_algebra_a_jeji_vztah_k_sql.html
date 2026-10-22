@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 09: Relační algebra a její vztah k SQL | DAT10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu DAT10">
+          <span>← DAT10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 09</span>
+          <span class="divider">•</span>
+          <span>Relační algebra a její vztah k SQL</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 4</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT10 • 9. přednáška (45 min)</div>
+        <h1 class="hero-title">Relační algebra &amp; Její vztah k SQL</h1>
+        <p class="hero-desc">
+          Formální dotazovací aparát: selekce (&sigma;), projekce (&pi;), přejmenování (&rho;), kartézský součin (&times;), přirozené a podmíněné spojení (&bowtie;) a jejich přímé mapování na příkazy SQL v <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Unární operátory</span>
+            <span class="hero-meta-val">&sigma; (WHERE) • &pi; (SELECT)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Binární operátory</span>
+            <span class="hero-meta-val">&times; (CROSS) • &bowtie; (JOIN) • &cup; &cap; &minus;</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 4</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: CO JE RELAČNÍ ALGEBRA -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Teoretický základ dotazování</div>
+            <h2 class="slide-title">Co je relační algebra a princip uzavřenosti</h2>
+            <p class="slide-subtitle">Procedurální aparát, ze kterého optimalizátor SŘBD skládá exekuční plány</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka k absolutoriu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Definice a vlastnosti</h4>
+              <p>
+                <strong>Relační algebra</strong> je formální procedurální systém pro manipulaci s relacemi (tabulkami).
+              </p>
+              <ul class="styled-list" style="margin-top: 0.75rem;">
+                <li>Operace berou jako vstup jednu nebo dvě relace a <strong>výsledkem je vždy opět nová relace</strong> (tzv. <em>vlastnost uzavřenosti</em>).</li>
+                <li>Díky uzavřenosti lze operace libovolně vnořovat a řetězit do složitých výrazů.</li>
+                <li>Představuje teoretický základ, do kterého optimalizátor SQL překládá deklarativní dotazy a hledá matematicky nejrychlejší pořadí kroků.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Rozdělení operací relační algebry</h4>
+              <div class="arch-layer">
+                <strong style="color: var(--accent);">Základní unární operace (nad 1 relací):</strong><br>
+                Selekce (&sigma;), Projekce (&pi;), Přejmenování (&rho;).
+              </div>
+              <div class="arch-layer">
+                <strong style="color: var(--accent-emerald);">Množinové binární operace (vyžadují unijní kompatibilitu):</strong><br>
+                Sjednocení (&cup;), Průnik (&cap;), Množinový rozdíl (&minus;).
+              </div>
+              <div class="arch-layer">
+                <strong style="color: var(--accent-purple);">Spojovací binární operace (kombinace relací):</strong><br>
+                Kartézský součin (&times;), Theta-spojení (&bowtie;<sub>&theta;</sub>), Přirozené spojení (&bowtie;).
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: UNÁRNÍ OPERACE: SELEKCE, PROJEKCE, PŘEJMENOVÁNÍ -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Unární operátory</div>
+            <h2 class="slide-title">Selekce (&sigma;), Projekce (&pi;) a Přejmenování (&rho;)</h2>
+            <p class="slide-subtitle">Jak unární operátory formují základní klauzule jazyka SQL</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem;">&sigma; (Sigma) • Horizontální řez</span>
+              <h4>Selekce (Restrikce)</h4>
+              <p>Vybírá <strong>řádky (n-tice)</strong>, které splňují zadanou predikátovou podmínku.</p>
+              
+              <!-- Mini tabulka horizontální řez -->
+              <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.5rem; margin: 0.6rem 0; font-family: var(--font-mono); font-size: 0.72rem;">
+                <div style="color: var(--text-muted); border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.2rem; display: flex; justify-content: space-between;">
+                  <span>id</span><span>name</span><span>price</span>
+                </div>
+                <div style="color: var(--text-muted); opacity: 0.5; padding: 0.15rem 0; display: flex; justify-content: space-between;">
+                  <span>1</span><span>Notebook</span><span>24 990</span>
+                </div>
+                <div style="background: rgba(2, 132, 199, 0.2); color: #38bdf8; font-weight: 700; border-radius: 4px; padding: 0.15rem 0.25rem; display: flex; justify-content: space-between;">
+                  <span>2</span><span>Kabel USB-C</span><span>199 &bull;</span>
+                </div>
+                <div style="color: var(--text-muted); opacity: 0.5; padding: 0.15rem 0; display: flex; justify-content: space-between;">
+                  <span>3</span><span>Monitor 27"</span><span>6 490</span>
+                </div>
+              </div>
+
+              <div style="margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent);">
+                &sigma;<sub>price &lt; 500</sub> (product)
+              </div>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">
+                Ekvivalent v SQL: <code>WHERE price &lt; 500</code>
+              </p>
+            </div>
+
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem; background: rgba(2, 132, 199, 0.15); color: #38bdf8;">&pi; (Pí) • Vertikální řez</span>
+              <h4>Projekce</h4>
+              <p>Vybírá pouze <strong>uvedené sloupce (atributy)</strong> a odstraňuje duplicity.</p>
+              
+              <!-- Mini tabulka vertikální řez -->
+              <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.5rem; margin: 0.6rem 0; font-family: var(--font-mono); font-size: 0.72rem;">
+                <div style="border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.2rem; display: flex; justify-content: space-between;">
+                  <span style="opacity: 0.35;">id</span>
+                  <span style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; font-weight: 700; padding: 0 0.3rem; border-radius: 3px;">name</span>
+                  <span style="background: rgba(56, 189, 248, 0.2); color: #38bdf8; font-weight: 700; padding: 0 0.3rem; border-radius: 3px;">price</span>
+                </div>
+                <div style="padding: 0.15rem 0; display: flex; justify-content: space-between;">
+                  <span style="opacity: 0.35;">1</span><span>Notebook</span><span>24 990</span>
+                </div>
+                <div style="padding: 0.15rem 0; display: flex; justify-content: space-between;">
+                  <span style="opacity: 0.35;">2</span><span>Kabel USB-C</span><span>199</span>
+                </div>
+                <div style="padding: 0.15rem 0; display: flex; justify-content: space-between;">
+                  <span style="opacity: 0.35;">3</span><span>Monitor 27"</span><span>6 490</span>
+                </div>
+              </div>
+
+              <div style="margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.82rem; color: #38bdf8;">
+                &pi;<sub>name, price</sub> (product)
+              </div>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">
+                Ekvivalent v SQL: <code>SELECT DISTINCT name, price</code>
+              </p>
+            </div>
+
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem; background: rgba(16, 185, 129, 0.15); color: #34d399;">&rho; (Ró) • Aliasování</span>
+              <h4>Přejmenování</h4>
+              <p>Přejmenuje výslednou relaci nebo její atributy pro sebereference a JOINy.</p>
+              
+              <!-- Mini tabulka aliasování -->
+              <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 6px; padding: 0.5rem; margin: 0.6rem 0; font-family: var(--font-mono); font-size: 0.72rem;">
+                <div style="background: rgba(16, 185, 129, 0.15); color: #34d399; font-weight: 700; border-radius: 4px; padding: 0.2rem 0.4rem; margin-bottom: 0.3rem;">
+                  category &rarr; cat_parent
+                </div>
+                <div style="padding: 0.15rem 0; display: flex; justify-content: space-between; color: var(--text-muted);">
+                  <span>parent_id</span><span>parent_name</span>
+                </div>
+                <div style="padding: 0.15rem 0; display: flex; justify-content: space-between;">
+                  <span>1</span><span>Elektronika</span>
+                </div>
+              </div>
+
+              <div style="margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.82rem; color: #34d399;">
+                &rho;<sub>cat_parent</sub> (category)
+              </div>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">
+                Ekvivalent v SQL: <code>FROM category AS cat_parent</code>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SPOJOVACÍ OPERACE A JEJICH PŘEVOD NA JOIN -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Binární operátory</div>
+            <h2 class="slide-title">Kartézský součin (&times;) a Spojení relací (&bowtie;)</h2>
+            <p class="slide-subtitle">Od teoretického součinu k reálným SQL operacím INNER a LEFT JOIN</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>1. Kartézský součin (<em>R</em> &times; <em>S</em>)</h4>
+              <p>Kombinuje každou n-tici z relace <em>R</em> se všemi n-ticemi z relace <em>S</em>:</p>
+              <ul class="styled-list" style="margin-top: 0.6rem; font-size: 0.85rem;">
+                <li>Pokud má tabulka <em>R</em> 10 řádků a <em>S</em> 100 řádků, výsledek má 10 &times; 100 = 1 000 řádků.</li>
+                <li>V SQL: <code>SELECT * FROM customer CROSS JOIN orders</code>.</li>
+                <li>V praxi sám o sobě téměř nepoužitelný, je však stavebním kamenem pro spojení!</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>2. Podmíněné spojení (<em>R</em> &bowtie;<sub>&theta;</sub> <em>S</em>)</h4>
+              <p>Definováno jako selekce aplikovaná na kartézský součin:</p>
+              <div style="background: rgba(0,0,0,0.3); padding: 0.65rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.88rem; color: var(--accent); margin: 0.5rem 0;">
+                R &bowtie;<sub>&theta;</sub> S = &sigma;<sub>&theta;</sub> (R &times; S)
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary);">
+                Pokud je podmínkou rovnost klíčů (tzv. Equi-Join):
+              </p>
+              <div style="font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent-emerald);">
+                customer &bowtie;<sub>customer.id = orders.customer_id</sub> orders
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.4rem;">
+                Ekvivalent v SQL: <code>FROM customer INNER JOIN orders ON customer.id = orders.customer_id</code>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: PRAKTICKÁ PŘEKLADOVÁ SYNOPSE (ALGEBRA -> SQL) -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Syntéza &amp; Dotazování</div>
+            <h2 class="slide-title">Převodní můstek: Relační algebra &harr; Jazyk SQL</h2>
+            <p class="slide-subtitle">Kompletní srovnání zápisu nad reálným modelem <code>edu_eshop</code></p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="content-card">
+            <h4>Příklad: „Najdi e-mail a celkovou cenu u všech vyřízených objednávek nad 1 000 Kč“</h4>
+            
+            <div style="margin-top: 0.75rem;">
+              <span class="cardinality-badge" style="margin-bottom: 0.4rem;">Zápis v relační algebře</span>
+              <div style="background: rgba(0,0,0,0.35); padding: 0.85rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent);">
+                &pi;<sub>email, total_price</sub> ( &sigma;<sub>status = 'completed' &and; total_price &gt; 1000</sub> ( customer &bowtie;<sub>customer.id = orders.customer_id</sub> orders ) )
+              </div>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <span class="cardinality-badge" style="margin-bottom: 0.4rem; background: rgba(16, 185, 129, 0.15); color: #34d399;">Odpovídající deklarativní dotaz v SQL (DAT20)</span>
+              <pre class="code-block" style="padding: 0.85rem; background: #030712; border: 1px solid var(--border-color); border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem; color: #e2e8f0; overflow-x: auto;"><code><span style="color: #38bdf8;">SELECT</span> customer.email, orders.total_price
+<span style="color: #38bdf8;">FROM</span> customer
+<span style="color: #38bdf8;">JOIN</span> orders <span style="color: #38bdf8;">ON</span> customer.id = orders.customer_id
+<span style="color: #38bdf8;">WHERE</span> orders.status = <span style="color: #a78bfa;">'completed'</span> 
+  <span style="color: #38bdf8;">AND</span> orders.total_price &gt; <span style="color: #fbbf24;">1000</span>;</code></pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & EXAM CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový přehled</div>
+            <h2 class="slide-title">Zkušební checklist: Okruh absolutoria č. 4 (Relační algebra)</h2>
+            <p class="slide-subtitle">Vše pro úspěšné zvládnutí teoretického dotazování u absolutoria</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Checklist</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                Zkouškový checklist k relační algebře
+              </h4>
+              <ul class="styled-list">
+                <li>Definovat <strong>vlastnost uzavřenosti</strong> relační algebry.</li>
+                <li>Popsat a nakreslit unární operátory: <strong>Selekce (&sigma;)</strong> a <strong>Projekce (&pi;)</strong> a jejich SQL ekvivalenty.</li>
+                <li>Vysvětlit pojem <strong>unijní kompatibilita</strong> pro množinové operátory (&cup;, &cap;, &minus;).</li>
+                <li>Definovat <strong>kartézský součin (&times;)</strong> a odvodit z něj <strong>podmíněné spojení (&bowtie;)</strong>.</li>
+                <li>Převést zadanou slovní formulaci dotazu do algebraického výrazu a následně do SQL.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                Pojmy do slovníku
+              </h4>
+              <ul class="styled-list" style="font-size: 0.86rem;">
+                <li><strong>Relational Algebra:</strong> Formální procedurální jazyk operující nad relacemi.</li>
+                <li><strong>Equi-Join:</strong> Theta-spojení, kde operátorem podmínky je výhradně rovnost (=).</li>
+                <li><strong>Natural Join (&bowtie;):</strong> Spojení přes všechny společné atributy bez nutnosti psát ON podmínku.</li>
+                <li><strong>Query Optimizer:</strong> Modul SŘBD přepisující SQL dotazy do optimálního stromu relační algebry.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-info" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Následující lekce: Transformace konceptuálního modelu na relační model</div>
+              V závěrečné Lekci 10 provedeme velkou syntézu: Projdeme kompletní kuchařku převodu E-R diagramu do relačních tabulek (vazby 1:1, 1:N, dekompozice M:N, sebereference a ISA) a zrekapitulujeme všech 5 okruhů k absolutoriu.
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <a href="08_relacni_model_dat_a_integritni_pravidla.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Relační model dat (Ctrl+Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+      </a>
+      <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT10">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </a>
+      <a href="10_transformace_konceptualniho_modelu_a_absolutorium.html" class="control-btn" id="nextLessonBtn" title="Další lekce: Transformace konceptuálního modelu na relační model (Ctrl+Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay" aria-hidden="true">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn" title="Zavřít obsah">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Další lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Nápověda</span>
+            <span class="key-badge">?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

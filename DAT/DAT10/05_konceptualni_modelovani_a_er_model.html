@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 05: Konceptuální modelování a E-R model | DAT10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu DAT10">
+          <span>← DAT10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 05</span>
+          <span class="divider">•</span>
+          <span>Konceptuální modelování a E-R model</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 3</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT10 • 5. přednáška (45 min)</div>
+        <h1 class="hero-title">Konceptuální modelování &amp; E-R model</h1>
+        <p class="hero-desc">
+          Od zákaznické specifikace ke konceptuálnímu schématu. Tři úrovně modelování (konceptuální, logická, fyzická), entity, typologie atributů a vztahy na doméně <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Metodika</span>
+            <span class="hero-meta-val">Entity-Relationship (Peter Chen)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Prvky modelu</span>
+            <span class="hero-meta-val">Entity • Atributy • Relace</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 3</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: ŽIVOTNÍ CYKLUS A ÚROVNĚ MODELOVÁNÍ -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Metodika návrhu</div>
+            <h2 class="slide-title">Tři fáze databázového návrhu</h2>
+            <p class="slide-subtitle">Proč nikdy nezačínáme psaním SQL příkazů CREATE TABLE</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka k absolutoriu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem;">Fáze 1 • Abstrakce</span>
+              <h4>1. Konceptuální model (E-R)</h4>
+              <p>Popisuje <strong>CO</strong> systém eviduje, bez ohledu na technologii a software. Vyjadřuje byznys pravidla srozumitelná zadavateli (Entity, Atributy, Kardinalita).</p>
+              <div style="margin-top: 0.6rem; font-size: 0.82rem; color: var(--text-muted);">
+                Výstup: Chenův E-R diagram nebo Crow's Foot diagram.
+              </div>
+            </div>
+
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem; background: rgba(2, 132, 199, 0.15); color: #38bdf8;">Fáze 2 • Relační struktura</span>
+              <h4>2. Logický model (Relační)</h4>
+              <p>Převod konceptu do struktur relační databáze (tabulky, sloupce, primární klíče PK a cizí klíče FK). Zahrnuje proces normalizace (1NF–3NF).</p>
+              <div style="margin-top: 0.6rem; font-size: 0.82rem; color: var(--text-muted);">
+                Výstup: Relační schéma, DBML kód, normalizovaná struktura.
+              </div>
+            </div>
+
+            <div class="content-card">
+              <span class="cardinality-badge" style="margin-bottom: 0.5rem; background: rgba(16, 185, 129, 0.15); color: #34d399;">Fáze 3 • Implementace</span>
+              <h4>3. Fyzický model (DDL v DBMS)</h4>
+              <p>Konkrétní realizace pro cílový server (MySQL / MariaDB). Volba datových typů, InnoDB engine, indexy, kolace <code>utf8mb4</code>, diskové oddíly a triggery.</p>
+              <div style="margin-top: 0.6rem; font-size: 0.82rem; color: var(--text-muted);">
+                Výstup: SQL DDL skript (např. <code>edu_eshop_structure.sql</code>).
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-exam" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Typická chyba začátečníků: Ignorování konceptuální fáze</div>
+              Programátor, který začne přímo psát SQL tabulky bez konceptuální analýzy, téměř vždy navrhne špatné kardinality, vytvoří zbytečné redundance a narazí na nutnost nákladného refaktoringu celého systému.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: ENTITY A ENTITNÍ MNOŽINY -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní stavební kámen</div>
+            <h2 class="slide-title">Entity a entitní množiny (Entity Sets)</h2>
+            <p class="slide-subtitle">Rozdíl mezi typem entity (šablonou) a konkrétní instancí v reálném světě</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                Definice entity
+              </h4>
+              <p>
+                <strong>Entita</strong> je libovolný reálně existující objekt, osoba, věc, událost nebo koncept, který je v našem systému jednoznačně rozlišitelný od ostatních objektů.
+              </p>
+              <ul class="styled-list" style="margin-top: 0.75rem;">
+                <li><strong>Entitní typ (množina):</strong> Třída entit se stejnými vlastnostmi (např. <code>ZÁKAZNÍK</code>, <code>PRODUKT</code>, <code>OBJEDNÁVKA</code>). V Chenově notaci se značí <em>obdélníkem</em>.</li>
+                <li><strong>Instance entity:</strong> Konkrétní prvek (např. zákazník Jan Novák s e-mailem <code>jan@novak.cz</code>).</li>
+                <li><strong>Silná entita:</strong> Má vlastní primární identifikátor a existuje nezávisle na jiných entitách (např. <code>ZÁKAZNÍK</code>).</li>
+                <li><strong>Slabá entita:</strong> Její existence a identifikace závisí na nadřazené entitě (např. <code>POLOŽKA_OBJEDNÁVKY</code> bez objednávky nemá smysl).</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Entity našeho e-shopu <code>edu_eshop</code></h4>
+              <div class="grid-2" style="gap: 0.75rem; margin-top: 0.5rem;">
+                <div class="er-box">
+                  <div class="er-header">
+                    <span>CUSTOMER</span>
+                    <span style="font-size: 0.7rem; color: var(--accent-emerald);">Silná entita</span>
+                  </div>
+                  <ul class="er-attr-list">
+                    <li class="er-attr-pk">id (Identifikátor)</li>
+                    <li>email</li>
+                    <li>created_at</li>
+                  </ul>
+                </div>
+
+                <div class="er-box">
+                  <div class="er-header">
+                    <span>PRODUCT</span>
+                    <span style="font-size: 0.7rem; color: var(--accent-emerald);">Silná entita</span>
+                  </div>
+                  <ul class="er-attr-list">
+                    <li class="er-attr-pk">id (Identifikátor)</li>
+                    <li>name</li>
+                    <li>price</li>
+                  </ul>
+                </div>
+
+                <div class="er-box">
+                  <div class="er-header">
+                    <span>ORDERS</span>
+                    <span style="font-size: 0.7rem; color: var(--accent-emerald);">Událost</span>
+                  </div>
+                  <ul class="er-attr-list">
+                    <li class="er-attr-pk">id (Identifikátor)</li>
+                    <li>status</li>
+                    <li>total_price</li>
+                  </ul>
+                </div>
+
+                <div class="er-box weak">
+                  <div class="er-header">
+                    <span>ORDER_ITEM</span>
+                    <span style="font-size: 0.7rem; color: var(--accent-amber);">Slabá / Asociační</span>
+                  </div>
+                  <ul class="er-attr-list">
+                    <li class="er-attr-fk">order_id + product_id</li>
+                    <li>quantity</li>
+                    <li>unit_price</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: TYPOLOGIE ATRIBUTŮ -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vlastnosti entit</div>
+            <h2 class="slide-title">Kategorizace atributů v konceptuálním modelu</h2>
+            <p class="slide-subtitle">Detailní rozbor: atomické, složené, jedno/vícehodnotové a odvozené atributy</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka k absolutoriu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-4">
+            <div class="content-card">
+              <h4>Jednoduché vs. Složené</h4>
+              <p><strong>Jednoduchý (Atomický):</strong> Nelze logicky dále dělit (např. <code>price = 1290</code>).</p>
+              <p style="margin-top: 0.5rem;"><strong>Složený (Kompozitní):</strong> Skládá se z pod-atributů (např. <code>Adresa = Ulice + Číslo + Město + PSČ</code>). V relační DB se rozkládá na samostatné sloupce.</p>
+            </div>
+
+            <div class="content-card">
+              <h4>Jedno- vs. Vícehodnotové</h4>
+              <p><strong>Jednohodnotový:</strong> Instance má nejvýše jednu hodnotu (např. <code>birth_date</code> zákazníka).</p>
+              <p style="margin-top: 0.5rem;"><strong>Vícehodnotový:</strong> Může mít sadu hodnot (např. více telefonních čísel). V relační DB porušuje 1NF a vyžaduje samostatnou tabulku!</p>
+            </div>
+
+            <div class="content-card">
+              <h4>Uložené vs. Odvozené</h4>
+              <p><strong>Uložený:</strong> Uložen trvale v databázi (např. <code>created_at</code>, <code>unit_price</code>).</p>
+              <p style="margin-top: 0.5rem;"><strong>Odvozený (Kalkulovaný):</strong> Spočte se až za běhu z jiných atributů (např. <code>věk</code> z data narození, nebo <code>mezisoučet = cena * počet</code>). V Chenově notaci se značí čárkovaným oválem.</p>
+            </div>
+
+            <div class="content-card">
+              <h4>Identifikační klíč</h4>
+              <p>Atribut (nebo skupina atributů), jehož hodnota je pro každou instanci entity <strong>unikátní</strong> v rámci celé entitní množiny.</p>
+              <p style="margin-top: 0.5rem;">V Chenově notaci je název klíčového atributu <strong>podtržen</strong> (např. <u>id</u> nebo <u>email</u>). V relačním modelu se stává primárním klíčem (PK).</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: VZTAHY (RELATIONSHIPS) -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Sémantické vazby</div>
+            <h2 class="slide-title">Vztahy mezi entitami (Relationships)</h2>
+            <p class="slide-subtitle">Jak entity interagují: binární, rekurzivní a vícestranné vazby</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>1. Binární vztahy (Mezi 2 entitami)</h4>
+              <p>Nejčastější typ vztahu. Spojuje dvě odlišné entity.</p>
+              <ul class="styled-list" style="margin-top: 0.6rem; font-size: 0.85rem;">
+                <li><code>ZÁKAZNÍK</code> vytváří <code>OBJEDNÁVKU</code></li>
+                <li><code>ZÁKAZNÍK</code> píše <code>RECENZI</code></li>
+                <li><code>PRODUKT</code> je zařazen do <code>KATEGORIE</code></li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>2. Unární / Rekurzivní vztahy</h4>
+              <p>Entita vstupuje do vztahu sama se sebou v různých rolích.</p>
+              <ul class="styled-list" style="margin-top: 0.6rem; font-size: 0.85rem;">
+                <li>V <code>edu_eshop</code>: <code>KATEGORIE</code> má rodičovskou <code>KATEGORII</code> (sebereference <code>parent_id</code>).</li>
+                <li>Role: Nadřazená (rodič) vs. Podřazená (podkategorie).</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>3. Ternární vztahy (Mezi 3 entitami)</h4>
+              <p>Vztah současně spojuje 3 různé entity.</p>
+              <ul class="styled-list" style="margin-top: 0.6rem; font-size: 0.85rem;">
+                <li>Příklad: <code>DODAVATEL</code> dodává <code>PRODUKT</code> na <code>SKLAD</code>.</li>
+                <li>V relačním modelu se převádí na samostatnou asociační tabulku se 3 cizími klíči.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-eshop" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Atributy vztahů v edu_eshop</div>
+              Všimněte si, že i samotný vztah může mít atributy! Vztah mezi <code>PRODUKTEM</code> a <code>OBJEDNÁVKOU</code> nese atributy <code>quantity</code> (počet kusů) a <code>unit_price</code> (aktuální cena při nákupu). Tyto atributy nepatří ani samotnému produktu, ani hlavičce objednávky, ale jejich vazbě <code>order_item</code>!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & EXAM CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový přehled</div>
+            <h2 class="slide-title">Zkušební checklist: Okruh absolutoria č. 3 (E-R základy)</h2>
+            <p class="slide-subtitle">Požadavky zkoušejícího pro konceptuální modelování</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Checklist</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                Zkouškový checklist ke konceptuálnímu návrhu
+              </h4>
+              <ul class="styled-list">
+                <li>Vysvětlit rozdíl mezi <strong>konceptuálním</strong>, <strong>logickým</strong> a <strong>fyzickým modelem</strong>.</li>
+                <li>Definovat pojem <strong>Entita</strong>, <strong>Entitní typ</strong> a <strong>Instance entity</strong>.</li>
+                <li>Popsat rozdíl mezi <strong>silnou</strong> a <strong>slabou entitou</strong>.</li>
+                <li>Rozdělit atributy na: <strong>jednoduché vs. složené</strong>, <strong>jedno- vs. vícehodnotové</strong>, <strong>uložené vs. odvozené</strong>.</li>
+                <li>Definovat <strong>identifikátor (klíč)</strong> entity.</li>
+                <li>Vysvětlit, kdy má vztah vlastní atributy na příkladu položky objednávky.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                Pojmy do slovníku
+              </h4>
+              <ul class="styled-list" style="font-size: 0.86rem;">
+                <li><strong>E-R Model (Entity-Relationship):</strong> Konceptuální modelovací technika navržená Peterem Chenem (1976).</li>
+                <li><strong>Vícehodnotový atribut:</strong> Atribut, který může nést pole hodnot (v relačním modelu vyžaduje dekompozici).</li>
+                <li><strong>Odvozený atribut:</strong> Hodnota neukládaná přímo, ale dynamicky vypočítávaná výrazem.</li>
+                <li><strong>Rekurzivní vztah (Sebereference):</strong> Vztah, ve kterém entita asociuje sama se sebou (např. strom kategorií).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-info" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Následující lekce: Kardinalita, parcialita a diagram výskytů</div>
+              V Lekci 06 se zaměříme na kardinalitu (1:1, 1:N, M:N), parcialitu/totálnost vazeb (povinná vs. volitelná účast) a vizualizaci mapování pomocí diagramu výskytů.
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <a href="04_systemy_rizeni_bazi_dat_srovnani_dbms.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Systémy řízení bází dat (Ctrl+Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+      </a>
+      <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT10">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </a>
+      <a href="06_kardinalita_parcialita_a_diagram_vyskytu.html" class="control-btn" id="nextLessonBtn" title="Další lekce: Kardinalita, parcialita a diagram výskytů (Ctrl+Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay" aria-hidden="true">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn" title="Zavřít obsah">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Další lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Nápověda</span>
+            <span class="key-badge">?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

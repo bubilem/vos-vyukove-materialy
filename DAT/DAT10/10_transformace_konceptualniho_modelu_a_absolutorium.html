@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 10: Transformace konceptuálního modelu na relační | DAT10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu DAT10">
+          <span>← DAT10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 10</span>
+          <span class="divider">•</span>
+          <span>Transformace konceptuálního modelu &amp; Absolutorium</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 5 (Syntéza 1–5)</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT10 • 10. přednáška • Závěrečná syntéza</div>
+        <h1 class="hero-title">Transformace konceptuálního modelu &amp; Příprava k absolutoriu</h1>
+        <p class="hero-desc">
+          Přesný algoritmus a pravidla transformace E-R diagramů do relačních tabulek (vazby 1:1, 1:N, dekompozice M:N, sebereference a ISA). Kompletní rekonstrukce schématu <code>edu_eshop</code> a zkušební checklist okruhů 1 až 5.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Okruhy absolutoria</span>
+            <span class="hero-meta-val">Otázky č. 1 až 5</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Syntéza modelu</span>
+            <span class="hero-meta-val">edu_eshop (8 tabulek)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Navazující modul</span>
+            <span class="hero-meta-val">DAT20 (Normalizace &amp; SQL)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PRAVIDLA PŘEVODU ENTIT A VZTAHŮ 1:N -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Transformační algoritmus • Krok 1 a 2</div>
+            <h2 class="slide-title">Převod entit a propagace cizího klíče (1:N)</h2>
+            <p class="slide-subtitle">Základní převodní pravidla od konceptu k relačním tabulkám</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka k absolutoriu č. 5</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Pravidlo 1: Převod běžných entit</h4>
+              <ul class="styled-list">
+                <li>Každá silná entita <em>E</em> se stává <strong>samostatnou relační tabulkou</strong>.</li>
+                <li>Jednoduché atributy entity se stávají <strong>sloupci</strong> tabulky.</li>
+                <li>Identifikátor entity se stává <strong>primárním klíčem (PK)</strong> tabulky.</li>
+                <li>Složené atributy se rozpadají na jednotlivé atomické sloupce (např. <code>first_name</code>, <code>last_name</code>).</li>
+                <li>Vícehodnotové atributy se převádějí do samostatné dceřiné tabulky s cizím klíčem.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Pravidlo 2: Převod vztahu 1:N (Propagace FK)</h4>
+              <ul class="styled-list">
+                <li>Vztah 1:N se <strong>nepřevádí na novou tabulku</strong>!</li>
+                <li>Primární klíč z entity na straně <strong>1</strong> (rodič) se vloží jako <strong>cizí klíč (FK)</strong> do tabulky na straně <strong>N</strong> (potomek).</li>
+                <li>Pokud je účast na straně N povinná (totální), sloupec FK má integritní omezení <code>NOT NULL</code>.</li>
+                <li><strong>V edu_eshop:</strong> Do tabulky <code>orders</code> (N) se přidá sloupec <code>customer_id (FK) NOT NULL</code> odkazující na <code>customer.id</code>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: PŘEVOD VZTAHU 1:1 A DEKOMPOZICE M:N -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Transformační algoritmus • Krok 3 a 4</div>
+            <h2 class="slide-title">Řešení vztahů 1:1 a dekompozice vazby M:N</h2>
+            <p class="slide-subtitle">Jak správně umístit klíče a jak rozbít vazbu M:N asociační tabulkou</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová otázka č. 5</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Pravidlo 3: Převod vztahu 1:1</h4>
+              
+              <div class="decomp-visual" style="margin: 0.6rem 0; font-size: 0.8rem; gap: 0.8rem; padding: 0.75rem;">
+                <div class="decomp-node" style="min-width: 110px; padding: 0.5rem 0.75rem;">
+                  <div style="font-weight: 700; color: #38bdf8; font-size: 0.82rem;">customer</div>
+                  <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);"><u style="color: #38bdf8;">id (PK)</u></div>
+                  <div style="font-size: 0.7rem; color: var(--text-muted);">Hlavní entita</div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                  <span style="font-size: 0.72rem; color: var(--accent); font-weight: 700;">1 : 1</span>
+                  <span style="color: var(--accent); font-weight: 700; font-size: 1.1rem;">&harr;</span>
+                </div>
+                <div class="decomp-node active-node" style="min-width: 110px; padding: 0.5rem 0.75rem;">
+                  <div style="font-weight: 700; color: #34d399; font-size: 0.82rem;">customer_profile</div>
+                  <div style="font-family: var(--font-mono); font-size: 0.72rem; color: #c084fc;"><u style="color: #38bdf8;">customer_id</u> (PK, FK)</div>
+                  <div style="font-size: 0.7rem; color: #34d399; font-weight: 700;">Totální účast</div>
+                </div>
+              </div>
+
+              <ul class="styled-list" style="margin-top: 0.6rem; font-size: 0.84rem;">
+                <li><strong>Asymetrická účast:</strong> Cizí klíč VŽDY vkládáme do tabulky s <strong>povinnou účastí (totální)</strong>, aby sloupec nemusel obsahovat NULL hodnoty.</li>
+                <li>Sloupec FK musí mít unikátní omezení <code>UNIQUE</code>, aby se zamezilo vazbě na více řádků.</li>
+                <li><strong>V edu_eshop:</strong> <code>customer_profile.customer_id</code> je PK i FK současně. Zajišťuje 1:1 a 100% zamezuje NULL hodnotám v hlavní tabulce <code>customer</code>.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Pravidlo 4: Dekompozice vazby M:N</h4>
+              
+              <!-- Dekompozice M:N vizualizace -->
+              <div class="decomp-visual" style="margin: 0.6rem 0; font-size: 0.8rem; gap: 0.6rem; padding: 0.75rem;">
+                <div class="decomp-node" style="min-width: 95px; padding: 0.5rem 0.6rem;">
+                  <div style="font-weight: 700; color: #38bdf8; font-size: 0.82rem;">product</div>
+                  <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);"><u style="color: #38bdf8;">id (PK)</u></div>
+                </div>
+
+                <div style="font-size: 0.72rem; color: var(--accent); font-weight: 700;">1 &larr;</div>
+
+                <div class="decomp-node active-node" style="min-width: 120px; padding: 0.5rem 0.6rem; border-color: #fbbf24;">
+                  <div style="font-weight: 700; color: #fbbf24; font-size: 0.82rem;">product_category</div>
+                  <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #c084fc;">
+                    <u style="color: #38bdf8;">product_id (FK1)</u><br>
+                    <u style="color: #38bdf8;">category_id (FK2)</u>
+                  </div>
+                  <div style="font-size: 0.68rem; color: #34d399; font-weight: 700; margin-top: 0.15rem;">Složený PK</div>
+                </div>
+
+                <div style="font-size: 0.72rem; color: var(--accent); font-weight: 700;">&rarr; 1</div>
+
+                <div class="decomp-node" style="min-width: 95px; padding: 0.5rem 0.6rem;">
+                  <div style="font-weight: 700; color: #38bdf8; font-size: 0.82rem;">category</div>
+                  <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);"><u style="color: #38bdf8;">id (PK)</u></div>
+                </div>
+              </div>
+
+              <ul class="styled-list" style="margin-top: 0.6rem; font-size: 0.84rem;">
+                <li>Vazba M:N se rozloží na <strong>dvě vazby 1:N</strong> pomocí <strong>asociační (spojovací) tabulky</strong>.</li>
+                <li>Spojovací tabulka obsahuje minimálně dva cizí klíče (FK₁ a FK₂) odkazující na obě původní tabulky.</li>
+                <li>Její primární klíč je <strong>složený ze spojení obou FK</strong>: <code>PK = (FK₁, FK₂)</code>.</li>
+                <li><strong>V edu_eshop:</strong> <code>product_category (product_id, category_id)</code> a <code>order_item (order_id, product_id)</code>.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: PŘEVOD SEBEREFERENCE A ISA HIERARCHIE -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Transformační algoritmus • Krok 5 a 6</div>
+            <h2 class="slide-title">Převod sebereference a strategií pro ISA hierarchie</h2>
+            <p class="slide-subtitle">Hierarchické stromy a 3 způsoby mapování dědičnosti do SQL</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Pravidlo 5: Převod unárního vztahu (Sebereference)</h4>
+              <p>Rekurzivní vztah entity se sebou samou:</p>
+              <ul class="styled-list" style="margin-top: 0.6rem; font-size: 0.86rem;">
+                <li>Do téže tabulky se přidá sloupec cizího klíče, který <strong>odkazuje na primární klíč téže tabulky</strong>.</li>
+                <li>Tento sloupec musí povolit hodnotu <code>NULL</code> (pro kořenové prvky stromu).</li>
+                <li><strong>V edu_eshop:</strong> Tabulka <code>category</code> má sloupec <code>parent_id SMALLINT NULL REFERENCES category(id)</code>.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Pravidlo 6: Tři strategie mapování ISA hierarchie</h4>
+              <div class="arch-layer" style="margin-bottom: 0.5rem; padding: 0.5rem 0.75rem;">
+                <strong style="color: var(--accent);">1. Jedna společná tabulka (Single Table):</strong> Všechny atributy nadtřídy i podtříd v jedné tabulce + sloupec <code>type</code>. Rychlé, ale tabulka obsahuje spoustu NULL hodnot.
+              </div>
+              <div class="arch-layer" style="margin-bottom: 0.5rem; padding: 0.5rem 0.75rem;">
+                <strong style="color: var(--accent-emerald);">2. Tabulka pro každou třídu (Class Table):</strong> Tabulka nadtřídy (společná data) + samostatné tabulky pro podtřídy se sdíleným PK/FK. Čisté, normalizované, vyžaduje JOIN.
+              </div>
+              <div class="arch-layer" style="margin-bottom: 0.5rem; padding: 0.5rem 0.75rem;">
+                <strong style="color: var(--accent-purple);">3. Tabulky pouze pro konkrétní podtřídy (Concrete Table):</strong> Nadtřída tabulku nemá, každá podtřída duplikuje sloupce nadtřídy.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: KOMPLETNÍ REKONSTRUKCE EDU_ESHOP -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Syntéza celého kurzu</div>
+            <h2 class="slide-title">Rekonstrukce schématu <code>edu_eshop</code> z konceptu</h2>
+            <p class="slide-subtitle">Jak všech 8 tabulek a jejich vazeb vzniklo aplikací transformačních pravidel</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <table class="db-table" style="font-size: 0.84rem;">
+            <thead>
+              <tr>
+                <th>Cílová tabulka</th>
+                <th>Původ v konceptu</th>
+                <th>Typ primárního klíče</th>
+                <th>Cizí klíče a kardinalita</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>customer</code></td>
+                <td>Silná entita Zákazník</td>
+                <td><code>id (INT, AUTO_INCREMENT)</code></td>
+                <td>- (Nemá cizí klíč)</td>
+              </tr>
+              <tr>
+                <td><code>customer_profile</code></td>
+                <td>Vztah 1:1 se Zákazníkem</td>
+                <td><code>customer_id (PK, FK)</code></td>
+                <td>1:1 &rarr; <code>customer(id) ON DELETE CASCADE</code></td>
+              </tr>
+              <tr>
+                <td><code>category</code></td>
+                <td>Stromová entita Kategorie</td>
+                <td><code>id (SMALLINT, AUTO_INCREMENT)</code></td>
+                <td>1:N Sebereference &rarr; <code>category(id) ON DELETE SET NULL</code></td>
+              </tr>
+              <tr>
+                <td><code>product</code></td>
+                <td>Silná entita Produkt</td>
+                <td><code>id (INT, AUTO_INCREMENT)</code></td>
+                <td>- (Atributy JSON pro proměnlivé parametry)</td>
+              </tr>
+              <tr>
+                <td><code>product_category</code></td>
+                <td>Dekompozice M:N (Produkt - Kategorie)</td>
+                <td>Složený PK <code>(product_id, category_id)</code></td>
+                <td>2&times; FK &rarr; <code>product(id)</code> a <code>category(id)</code></td>
+              </tr>
+              <tr>
+                <td><code>orders</code></td>
+                <td>Entita Objednávka (1:N)</td>
+                <td><code>id (INT, AUTO_INCREMENT)</code></td>
+                <td>1:N FK &rarr; <code>customer(id) ON DELETE RESTRICT</code></td>
+              </tr>
+              <tr>
+                <td><code>order_item</code></td>
+                <td>Dekompozice M:N (Objednávka - Produkt)</td>
+                <td>Složený PK <code>(order_id, product_id)</code></td>
+                <td>2&times; FK + atributy vztahu (<code>quantity</code>, <code>unit_price</code>)</td>
+              </tr>
+              <tr>
+                <td><code>rating</code></td>
+                <td>Vztah Hodnocení (1:N k zákazníkovi i produktu)</td>
+                <td><code>id (INT, AUTO_INCREMENT)</code></td>
+                <td>2&times; FK &rarr; <code>product(id)</code> a <code>customer(id)</code> + CHECK (1..5)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: VELKÝ PŘEHLED OKRUHŮ K ABSOLUTORIU (1-5) -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Závěrečný zkouškový přehled</div>
+            <h2 class="slide-title">Velký checklist otázek k absolutoriu (Okruhy 1 až 5)</h2>
+            <p class="slide-subtitle">Kompletní přehled témat zkoušky z modulu DAT10</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázky 1–5</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                Pět okruhů absolutoria pokrytých v DAT10
+              </h4>
+              <ul class="styled-list" style="font-size: 0.84rem;">
+                <li><strong>Okruh 1 (Úvod a historie):</strong> Data vs. informace, DBS/SŘBD/DB, souborové vs. databázové zpracování, hierarchický, síťový, relační model, NoSQL rodiny, CAP teorém.</li>
+                <li><strong>Okruh 2 (Architektury a SŘBD):</strong> Tříúrovňová architektura ANSI/SPARC, logická a fyzická datová nezávislost, 2-tier vs. 3-tier webová architektura, srovnání DBMS (MySQL, MariaDB, PostgreSQL, SQLite, MS SQL, Oracle).</li>
+                <li><strong>Okruh 3 (Konceptuální modelování &amp; E-R):</strong> Entity, atributy a jejich typy, vztahy, diagram výskytů, kardinalita (1:1, 1:N, M:N), parcialita/totálnost, Chenova vs. Crow's Foot notace, slabé entity.</li>
+                <li><strong>Okruh 4 (Relační model &amp; Algebra):</strong> Relace, domény, n-tice, typy klíčů, entitní, doménová a referenční integrita, operace relační algebry (&sigma;, &pi;, &times;, &bowtie;, &cup;, &cap;, &minus;).</li>
+                <li><strong>Okruh 5 (Transformace na relační model):</strong> Pravidla převodu entit, řešení vazeb 1:1, 1:N, dekompozice M:N asociační tabulkou, sebereference a ISA strategie.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Plynulý přechod do modulu DAT20
+              </h4>
+              <p style="font-size: 0.88rem; line-height: 1.6;">
+                Nyní máte hotový, stabilní a správně transformovaný relační model! V navazujícím modulu <strong>DAT20 (Relační databáze a SQL)</strong> se naučíte:
+              </p>
+              <ul class="styled-list" style="margin-top: 0.6rem; font-size: 0.84rem;">
+                <li>Prověřit model proti anomáliím pomocí <strong>normalizace (1NF, 2NF, 3NF a BCNF)</strong>.</li>
+                <li>Zapsat struktury v SQL pomocí <strong>DDL příkazů</strong> (<code>CREATE TABLE</code>, modifikátory, CHECK).</li>
+                <li>Naplnit a upravovat data příkazy <strong>DML</strong> (<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>).</li>
+                <li>Formulovat dotazy <strong>DQL</strong> (<code>SELECT</code>, spojování více tabulek <code>JOIN</code>, agregační funkce <code>GROUP BY</code> a vnořené subqueries).</li>
+              </ul>
+              <div style="margin-top: 1rem; text-align: center;">
+                <a href="../DAT20/index.html" class="course-badge" style="padding: 0.5rem 1.25rem; font-size: 0.9rem;">
+                  Přejít do navazujícího modulu DAT20 &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <a href="09_relacni_algebra_a_jeji_vztah_k_sql.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Relační algebra (Ctrl+Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+      </a>
+      <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT10">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </a>
+      <a href="#" class="control-btn disabled" id="nextLessonBtn" title="Další lekce (žádná další v tomto modulu není)" aria-disabled="true" tabindex="-1">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay" aria-hidden="true">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn" title="Zavřít obsah">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Další lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Nápověda</span>
+            <span class="key-badge">?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

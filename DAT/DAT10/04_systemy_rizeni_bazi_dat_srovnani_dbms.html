@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 04: Systémy řízení bází dat | DAT10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu DAT10">
+          <span>← DAT10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 04</span>
+          <span class="divider">•</span>
+          <span>Systémy řízení bází dat (DBMS) a jejich srovnání</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 2</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT10 • 4. přednáška (45 min)</div>
+        <h1 class="hero-title">Systémy řízení bází dat (DBMS) &amp; Jejich srovnání</h1>
+        <p class="hero-desc">
+          Podrobný přehled moderních SŘBD (MySQL, MariaDB, PostgreSQL, SQLite, MS SQL Server, Oracle a MS Access). Architektura úložišť, licence a kritéria pro volbu technologie pro <code>edu_eshop</code>.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Open-Source</span>
+            <span class="hero-meta-val">MySQL • MariaDB • PostgreSQL • SQLite</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Enterprise</span>
+            <span class="hero-meta-val">Oracle • MS SQL Server</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 2</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: KATEGORIZACE SŘBD -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Typologie systémů</div>
+            <h2 class="slide-title">Kategorie SŘBD: Serverové vs. Vestavěné vs. Desktopové</h2>
+            <p class="slide-subtitle">Zásadní rozdíly v architektuře běhu, nasazení a režimu správy</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka k absolutoriu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                1. Serverové DBMS
+              </h4>
+              <div style="font-size: 0.75rem; color: var(--accent); font-weight: 700; margin-bottom: 0.4rem;">PostgreSQL, MySQL, MariaDB, MS SQL, Oracle</div>
+              <p>Samostatný proces (démon / služba) běžící na serveru, naslouchající na síťovém portu (3306, 5432, 1433, 1521). Plná podpora souběžného přístupu, řízení oprávnění a transakcí.</p>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                2. Vestavěné (Embedded) DBMS
+              </h4>
+              <div style="font-size: 0.75rem; color: var(--accent-emerald); font-weight: 700; margin-bottom: 0.4rem;">SQLite, DuckDB</div>
+              <p>Žádný běžící server ani síťový proces! Kód databázového enginu je přilinkován přímo do aplikace. Celá databáze je uložena v jediném souboru na disku (mobilní appky, IoT, prohlížeče).</p>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-purple);" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                3. Desktopové kancelářské DB
+              </h4>
+              <div style="font-size: 0.75rem; color: var(--accent-purple); font-weight: 700; margin-bottom: 0.4rem;">MS Access, LibreOffice Base</div>
+              <p>Kombinace databáze, grafických formulářů a generátoru tiskových sestav v jednom souboru (<code>.accdb</code>). Vhodné pouze pro jednoduchou jedno-uživatelskou evidenci, nevhodné pro web.</p>
+            </div>
+          </div>
+
+          <div class="callout callout-exam" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Proč nelze provozovat webový e-shop na MS Access?</div>
+              MS Access má limit velikosti souboru maximálně <strong>2 GB</strong>, nemá řádkové zamykání (zamyká celé stránky či soubor), neumí bezpečný souběh stovek webových vláken a nemá ochranu proti poškození souboru při náhlém pádu síťového spojení.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: OPEN SOURCE SYSTÉMY: MYSQL, MARIADB, POSTGRESQL -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Open-Source pilíře internetu</div>
+            <h2 class="slide-title">MySQL vs. MariaDB vs. PostgreSQL vs. SQLite</h2>
+            <p class="slide-subtitle">Srovnání nejrozšířenějších bezplatných databázových platforem</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>MySQL 8 &amp; MariaDB</h4>
+              <ul class="styled-list">
+                <li><strong>Zaměření:</strong> Nejpopulárnější webové relační databáze (LAMP stack, WordPress, e-shopy).</li>
+                <li><strong>Architektura úložiště:</strong> Zásuvné úložné enginy (Storage Engines):
+                  <ul>
+                    <li><code>InnoDB</code>: Plně ACID, řádkové zámky, cizí klíče, crash recovery (výchozí).</li>
+                    <li><code>MyISAM</code>: Starý rychlý engine bez transakcí a cizích klíčů (dnes nedoporučen).</li>
+                  </ul>
+                </li>
+                <li><strong>MariaDB:</strong> Komunitní fork MySQL po akvizici firmy společností Oracle. Plně kompatibilní, často přináší rychlejší optimalizátor a otevřenější vývoj.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>PostgreSQL &amp; SQLite</h4>
+              <ul class="styled-list">
+                <li><strong>PostgreSQL:</strong> Označován za <em>„nejpokročilejší open-source databázi na světě“</em>.
+                  <ul>
+                    <li>Nejstriktnější dodržování standardu ANSI SQL.</li>
+                    <li>Silná podpora JSONB (binární indexovaný JSON) a rozšiřitelnost (PostGIS pro mapy a geolokaci, pgvector pro AI).</li>
+                    <li>Komplexní analytika a pokročilé window funkce.</li>
+                  </ul>
+                </li>
+                <li><strong>SQLite:</strong> Veřejná doména (Public Domain), nejrozšířenější software na světě (v každém Androidu, iPhonu, prohlížeči Chrome/Firefox). Extrémně spolehlivá a bezúdržbová.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: SROVNÁVACÍ MATICE MODERNÍCH DBMS -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Technické parametry &amp; Licence</div>
+            <h2 class="slide-title">Velká srovnávací matice databázových systémů</h2>
+            <p class="slide-subtitle">Strukturované porovnání všech zástupců požadovaných u absolutoria</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Absolutorium</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>DBMS</th>
+                <th>Licence / Cena</th>
+                <th>Typ běhu</th>
+                <th>Transakce (ACID)</th>
+                <th>Silné stránky &amp; Využití</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>MySQL 8</strong></td>
+                <td>GPL / Komerční (Oracle)</td>
+                <td>Server (3306)</td>
+                <td>Ano (InnoDB)</td>
+                <td>Webové aplikace, e-shopy, obrovská komunita a cloud podpora</td>
+              </tr>
+              <tr>
+                <td><strong>MariaDB</strong></td>
+                <td>GPL (Open-Source)</td>
+                <td>Server (3306)</td>
+                <td>Ano (Aria / InnoDB)</td>
+                <td>Nezávislý fork MySQL, moderní optimalizátor dotazů</td>
+              </tr>
+              <tr>
+                <td><strong>PostgreSQL</strong></td>
+                <td>PostgreSQL Licence (MIT/BSD)</td>
+                <td>Server (5432)</td>
+                <td>Ano (MVCC)</td>
+                <td>Komplexní data, analytika, geodata (PostGIS), AI vektory</td>
+              </tr>
+              <tr>
+                <td><strong>SQLite</strong></td>
+                <td>Public Domain (Zdarma)</td>
+                <td>Embedded (Soubor)</td>
+                <td>Ano (Atomic Commit)</td>
+                <td>Mobilní aplikace, offline data, lokální testování, embedded IoT</td>
+              </tr>
+              <tr>
+                <td><strong>MS SQL Server</strong></td>
+                <td>Komerční (Microsoft)</td>
+                <td>Server (1433)</td>
+                <td>Ano</td>
+                <td>Firemní podnikové systémy, těsná integrace s .NET, C# a Azure</td>
+              </tr>
+              <tr>
+                <td><strong>Oracle Database</strong></td>
+                <td>Komerční (Enterprise)</td>
+                <td>Server (1521)</td>
+                <td>Ano (RAC)</td>
+                <td>Banky, telekomunikace, mise-kritické systémy, multi-terabytové báze</td>
+              </tr>
+              <tr>
+                <td><strong>MS Access</strong></td>
+                <td>Komerční (MS Office)</td>
+                <td>Desktop (.accdb)</td>
+                <td>Omezené (soubor)</td>
+                <td>Jednoduchá kancelářská evidence pro 1 uživatele; max 2 GB</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: VOLBA PRO EDU_ESHOP -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Projektová praxe</div>
+            <h2 class="slide-title">Volba technologie pro náš <code>edu_eshop</code></h2>
+            <p class="slide-subtitle">Proč jsme pro výukový model zvolili právě MySQL 8 / MariaDB</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>Klíčové důvody volby MySQL / MariaDB</h4>
+              <ul class="styled-list">
+                <li><strong>InnoDB Storage Engine:</strong> Zajišťuje striktní referenční integritu (<code>ON DELETE CASCADE</code>, <code>RESTRICT</code>) a transakční zpracování objednávek.</li>
+                <li><strong>Rodilá podpora JSON:</strong> Sloupec <code>product.attributes</code> využívá nativní JSON datový typ pro dynamické parametry zboží (barva, paměť, úhlopříčka).</li>
+                <li><strong>Perfektní čeština:</strong> Kódování <code>utf8mb4</code> s kolací <code>utf8mb4_czech_ci</code> zaručuje bezchybné řazení podle české abecedy (Ch po H).</li>
+                <li><strong>Podpora triggerů a pohledů:</strong> Automatická inkrementace <code>category.product_count</code> a souhrnné view <code>v_order_summary</code>.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>Kdy bychom volili jiný DBMS?</h4>
+              <div class="arch-layer">
+                <strong style="color: var(--accent);">PostgreSQL:</strong> Pokud by e-shop potřeboval vyhledávat nejbližší výdejní místa podle GPS souřadnic zákazníka pomocí prostorových indexů (PostGIS).
+              </div>
+              <div class="arch-layer">
+                <strong style="color: var(--accent-emerald);">SQLite:</strong> Pokud bychom pro e-shop vyvíjeli mobilní aplikaci pro iOS/Android, která umožňuje prohlížet košík a historii nákupů v režimu offline.
+              </div>
+              <div class="arch-layer">
+                <strong style="color: var(--accent-purple);">Oracle RAC / MS SQL:</strong> Pokud by e-shop vyrostl na miliardové globální obraty s požadavkem na aktivní multi-datacenter replikaci.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & EXAM CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový přehled</div>
+            <h2 class="slide-title">Zkušební checklist: Okruh absolutoria č. 2 (Srovnání DBMS)</h2>
+            <p class="slide-subtitle">Otázky zkoušejícího pro srovnání databázových systémů</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Checklist</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                Zkouškový checklist k DBMS
+              </h4>
+              <ul class="styled-list">
+                <li>Vyjmenovat alespoň 5 moderních SŘBD a rozdělit je na <strong>Open-Source</strong> a <strong>Komerční</strong>.</li>
+                <li>Vysvětlit zásadní rozdíl mezi <strong>Serverovým DBMS</strong> (klient-server démon) a <strong>Vestavěným DBMS (SQLite)</strong>.</li>
+                <li>Popsat rozdíl mezi úložnými enginy <strong>InnoDB</strong> a <strong>MyISAM</strong> v MySQL.</li>
+                <li>Uvést silné stránky <strong>PostgreSQL</strong> (pokročilý SQL standard, JSONB, geodata PostGIS).</li>
+                <li>Zargumentovat, proč je <strong>MS Access</strong> nevhodný pro internetové aplikace (limit 2 GB, zamykání, absence serveru).</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                Pojmy do slovníku
+              </h4>
+              <ul class="styled-list" style="font-size: 0.86rem;">
+                <li><strong>Storage Engine:</strong> Softwarový modul v DBMS zodpovědný za čtení a zápis dat na disk (např. InnoDB).</li>
+                <li><strong>Embedded Database:</strong> Knihovna přímo volaná aplikací bez síťového soketu (SQLite).</li>
+                <li><strong>MVCC (Multi-Version Concurrency Control):</strong> Technika řízení souběhu čtenářů a písařů bez vzájemného blokování.</li>
+                <li><strong>Porty standardních DBMS:</strong> MySQL (3306), PostgreSQL (5432), MS SQL (1433), Oracle (1521).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-info" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Následující lekce: Konceptuální modelování a E-R model</div>
+              V Lekci 05 přecházíme k jádru modulu DAT10 – začneme modelovat realitu od nuly! Prozkoumáme životní cyklus návrhu, entity, atributy a klíče na našem e-shopu.
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <a href="03_architektury_srbd_a_databazovych_aplikaci.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Architektury SŘBD a aplikací (Ctrl+Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+      </a>
+      <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT10">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </a>
+      <a href="05_konceptualni_modelovani_a_er_model.html" class="control-btn" id="nextLessonBtn" title="Další lekce: Konceptuální modelování a E-R model (Ctrl+Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay" aria-hidden="true">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn" title="Zavřít obsah">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Další lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Nápověda</span>
+            <span class="key-badge">?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

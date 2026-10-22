@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lekce 03: Architektury SŘBD a aplikací | DAT10</title>
+  <link rel="stylesheet" href="../../assets/css/presentation-core.css">
+  <link rel="stylesheet" href="../../assets/css/syntax/sql.css">
+  <link rel="stylesheet" href="assets/css/presentation.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-background">
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-grid-overlay"></div>
+  </div>
+
+  <div class="presentation-container">
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+
+    <header class="presentation-header">
+      <div class="header-left">
+        <a href="index.html" class="course-badge" title="Zpět na rozcestník modulu DAT10">
+          <span>← DAT10</span>
+        </a>
+        <div class="lesson-indicator">
+          <span>Lekce 03</span>
+          <span class="divider">•</span>
+          <span>Architektury SŘBD a databázových aplikací</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <span class="tag tag-exam">Okruh absolutoria č. 2</span>
+        <button class="control-btn" id="themeToggleBtn" title="Přepnout motiv">
+          <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="slides-viewport">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide title-slide active" data-slide="1">
+        <div class="hero-badge">Modul DAT10 • 3. přednáška (45 min)</div>
+        <h1 class="hero-title">Architektury SŘBD &amp; Databázových aplikací</h1>
+        <p class="hero-desc">
+          Tříúrovňový model ANSI/SPARC, logická a fyzická datová nezávislost, evoluce od tlustého klienta (2-tier) k moderním vícevrstvým (3-tier/N-tier) a distribuovaným webovým systémům.
+        </p>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Standard</span>
+            <span class="hero-meta-val">ANSI/SPARC (3 úrovně)</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Praxe e-shopu</span>
+            <span class="hero-meta-val">3-tier architektura + API</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Zkouška / Absolutorium</span>
+            <span class="hero-meta-val">Okruh č. 2</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: ANSI/SPARC 3-TIER -->
+      <section class="slide" data-slide="2">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektonický standard</div>
+            <h2 class="slide-title">Tříúrovňová architektura ANSI/SPARC</h2>
+            <p class="slide-subtitle">Univerzální model abstrakce databázového systému z roku 1975</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Klíčová otázka absolutoria</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <!-- Vizuální schéma ANSI/SPARC architektury -->
+          <div class="ansi-diagram">
+            <!-- 1. EXTERNÍ ÚROVEŇ -->
+            <div class="ansi-tier" style="border-top: 3px solid #38bdf8;">
+              <div class="ansi-tier-header">
+                <div class="ansi-tier-title">
+                  <span class="cardinality-badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">1. Externí úroveň (Uživatelské pohledy / External Views)</span>
+                  <span style="font-size: 0.82rem; color: var(--text-muted);">Definováno přes <code>CREATE VIEW</code></span>
+                </div>
+              </div>
+              <div class="grid-3" style="gap: 0.75rem;">
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 0.6rem 0.8rem; border-radius: 6px; font-size: 0.84rem;">
+                  <strong style="color: #38bdf8;">Pohled: Účetní oddělení</strong><br>
+                  <span style="color: var(--text-muted); font-size: 0.78rem;">Faktury, IČO, celkové částky, DPH (skryty hešovaná hesla).</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 0.6rem 0.8rem; border-radius: 6px; font-size: 0.84rem;">
+                  <strong style="color: #38bdf8;">Pohled: Sklad &amp; Logistika</strong><br>
+                  <span style="color: var(--text-muted); font-size: 0.78rem;">Kusy skladem, hmotnost, dodací adresa (skryty platby a ceny).</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 0.6rem 0.8rem; border-radius: 6px; font-size: 0.84rem;">
+                  <strong style="color: #38bdf8;">Pohled: Webový e-shop</strong><br>
+                  <span style="color: var(--text-muted); font-size: 0.78rem;">Veřejný katalog, název, fotky, aktivní akční ceny a recenze.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- KONEKTOR 1: LOGICKÉ MAPOVÁNÍ -->
+            <div class="ansi-connector">
+              <span class="ansi-connector-badge">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+                Logické mapování &bull; Zajišťuje logickou datovou nezávislost
+              </span>
+            </div>
+
+            <!-- 2. KONCEPTUÁLNÍ ÚROVEŇ -->
+            <div class="ansi-tier" style="border-top: 3px solid #0284c7; background: rgba(2, 132, 199, 0.05);">
+              <div class="ansi-tier-header">
+                <div class="ansi-tier-title">
+                  <span class="cardinality-badge" style="background: rgba(2, 132, 199, 0.2); color: #38bdf8;">2. Konceptuální úroveň (Globální logické schéma)</span>
+                  <span style="font-size: 0.82rem; color: var(--text-muted);">Jádro databáze (DBMS nezávislé)</span>
+                </div>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                Úplný model všech entit, tabulek, sloupců, integritních omezení a vztahů celé organizace:
+              </p>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="module-pill" style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--accent);">customer</span>
+                <span class="module-pill" style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--accent);">customer_profile (1:1)</span>
+                <span class="module-pill" style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--accent);">product</span>
+                <span class="module-pill" style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--accent);">category (Sebereference)</span>
+                <span class="module-pill" style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--accent);">product_category (M:N)</span>
+                <span class="module-pill" style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--accent);">orders</span>
+                <span class="module-pill" style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--accent);">order_item</span>
+                <span class="module-pill" style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--accent);">rating</span>
+              </div>
+            </div>
+
+            <!-- KONEKTOR 2: FYZICKÉ MAPOVÁNÍ -->
+            <div class="ansi-connector">
+              <span class="ansi-connector-badge" style="color: #34d399; background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3);">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><polyline points="7 13 12 18 17 13"></polyline><polyline points="7 6 12 11 17 6"></polyline></svg>
+                Fyzické mapování &bull; Zajišťuje fyzickou datovou nezávislost
+              </span>
+            </div>
+
+            <!-- 3. INTERNÍ ÚROVEŇ -->
+            <div class="ansi-tier" style="border-top: 3px solid #10b981;">
+              <div class="ansi-tier-header">
+                <div class="ansi-tier-title">
+                  <span class="cardinality-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">3. Interní úroveň (Fyzické uložení a struktury na disku)</span>
+                  <span style="font-size: 0.82rem; color: var(--text-muted);">Zodpovědnost DBMS &amp; OS</span>
+                </div>
+              </div>
+              <div class="grid-3" style="gap: 0.75rem; font-size: 0.82rem;">
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 0.6rem 0.8rem; border-radius: 6px;">
+                  <strong style="color: #34d399;">Souborový systém &amp; Tabulkový prostor</strong><br>
+                  <span style="color: var(--text-muted);">Soubory <code>edu_eshop.ibd</code>, datové bloky o velikosti 16 KB na disku.</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 0.6rem 0.8rem; border-radius: 6px;">
+                  <strong style="color: #34d399;">Indexové struktury (B+ Tree)</strong><br>
+                  <span style="color: var(--text-muted);">Clustered index pro PK a sekundární indexy pro vyhledávání podle ceny.</span>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 0.6rem 0.8rem; border-radius: 6px;">
+                  <strong style="color: #34d399;">Komprese, šifrování &amp; WAL</strong><br>
+                  <span style="color: var(--text-muted);">Redo Log žurnál, zotavení po havárii a šifrování dat na disku (TDE).</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-exam" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Proč vznikl ANSI/SPARC? Princip zapouzdření</div>
+              Cílem ANSI/SPARC je zabránit tomu, aby změna na interní fyzické úrovni (např. přesun na SSD nebo vytvoření nového indexu) vynutila jakoukoli změnu v klientských aplikacích a uživatelských dotazech.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: DATOVÁ NEZÁVISLOST -->
+      <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Základní vlastnost SŘBD</div>
+            <h2 class="slide-title">Logická a fyzická datová nezávislost</h2>
+            <p class="slide-subtitle">Dva stupně nezávislosti zajišťované mapováním mezi vrstvami ANSI/SPARC</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                1. Logická datová nezávislost (Logical Data Independence)
+              </h4>
+              <p>
+                Schopnost upravit <strong>konceptuální schéma</strong>, aniž by bylo nutné měnit existující externí schémata nebo aplikační kód.
+              </p>
+              <ul class="styled-list" style="margin-top: 0.75rem;">
+                <li><strong>Praktický příklad:</strong> Do tabulky <code>product</code> přidáme nový sloupec <code>warranty_months INT</code>.</li>
+                <li>Mobilní aplikace a webový košík, které tento sloupec nečtou, fungují bez jediné úpravy dál.</li>
+                <li>Nebo rozdělení tabulky vertikální fragmentací: Starým aplikacím poskytneme <code>VIEW</code> simulující původní strukturu.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                2. Fyzická datová nezávislost (Physical Data Independence)
+              </h4>
+              <p>
+                Schopnost změnit <strong>interní fyzické uložení dat</strong>, aniž by došlo ke změně konceptuálního schématu či SQL dotazů.
+              </p>
+              <ul class="styled-list" style="margin-top: 0.75rem;">
+                <li><strong>Praktický příklad:</strong> DBA vytvoří index <code>CREATE INDEX idx_price ON product(price)</code> nebo přesune data na RAID pole.</li>
+                <li>Konceptuální schéma (tabulky a vztahy) zůstává 100% netknuté.</li>
+                <li>SQL dotaz <code>SELECT * FROM product WHERE price &lt; 500</code> zůstává identický, pouze se zrychlí jeho exekuce.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: 2-TIER VS 3-TIER ARCHITEKTURY -->
+      <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Architektura aplikací</div>
+            <h2 class="slide-title">2-vrstvá (Klient–Server) vs. 3-vrstvá webová architektura</h2>
+            <p class="slide-subtitle">Proč se u moderních e-shopů ustoupilo od přímého připojení k databázi</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka k absolutoriu</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>2-vrstvá architektura (Tlustý klient / Fat Client)</h4>
+              
+              <!-- Diagram 2-tier -->
+              <div class="tier-flow" style="margin: 0.75rem 0 1rem 0;">
+                <div class="tier-box">
+                  <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">1. Klientská stanice</div>
+                  <div style="font-weight: 700; color: var(--text-primary); margin: 0.2rem 0; font-size: 0.9rem;">Desktop Aplikace</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);">UI + Byznys logika + SQL</div>
+                </div>
+                <div class="tier-arrow" style="color: var(--accent-rose);">&rarr;</div>
+                <div class="tier-box accent-box" style="border-color: rgba(244, 63, 94, 0.4); background: rgba(244, 63, 94, 0.06);">
+                  <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--accent-rose); font-weight: 700;">2. Databázový server</div>
+                  <div style="font-weight: 700; color: var(--text-primary); margin: 0.2rem 0; font-size: 0.9rem;">DBMS (Port 3306)</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);">Ukládání dat &amp; Exekuce</div>
+                </div>
+              </div>
+
+              <ul class="styled-list">
+                <li>Aplikace na počítači uživatele se připojuje přímo přes TCP/IP port 3306 k databázovému serveru.</li>
+                <li><strong>Kritické nevýhody:</strong>
+                  <ul>
+                    <li>Bezpečnostní riziko: Přihlašovací heslo k DB je zkompilované v klientské aplikaci.</li>
+                    <li>Každý klient drží otevřené spojení &rarr; server zvládne nanejvýš stovky připojení.</li>
+                    <li>Složitá distribuce aktualizací při každé změně byznys logiky.</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>3-vrstvá / N-vrstvá webová architektura</h4>
+              
+              <!-- Diagram 3-tier -->
+              <div class="tier-flow" style="margin: 0.75rem 0 1rem 0;">
+                <div class="tier-box">
+                  <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">1. Prezentace</div>
+                  <div style="font-weight: 700; color: var(--text-primary); margin: 0.2rem 0; font-size: 0.9rem;">Web / Mobile</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);">Tenký klient (React/Vue)</div>
+                </div>
+                <div class="tier-arrow" style="color: var(--accent);">&rarr;</div>
+                <div class="tier-box accent-box">
+                  <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--accent); font-weight: 700;">2. Aplikační API</div>
+                  <div style="font-weight: 700; color: var(--text-primary); margin: 0.2rem 0; font-size: 0.9rem;">Backend Server</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);">Auth, logika, pool</div>
+                </div>
+                <div class="tier-arrow" style="color: var(--accent-emerald);">&rarr;</div>
+                <div class="tier-box" style="border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.06);">
+                  <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--accent-emerald); font-weight: 700;">3. Databáze</div>
+                  <div style="font-weight: 700; color: var(--text-primary); margin: 0.2rem 0; font-size: 0.9rem;">DBMS Server</div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted);">Privátní síť &amp; ACID</div>
+                </div>
+              </div>
+
+              <ul class="styled-list">
+                <li><strong>Prezentační vrstva:</strong> Tenký klient (React/Vue v prohlížeči, mobilní app).</li>
+                <li><strong>Aplikační vrstva:</strong> Backend (Node.js, C#, PHP, Java) validuje vstupy a řídí byznys logiku.</li>
+                <li><strong>Databázová vrstva:</strong> SŘBD je v privátní podsíti, nepřístupný z internetu.</li>
+                <li><strong>Connection Pooling:</strong> Backend sdílí pool desítek stálých spojení pro miliony uživatelů.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: DISTRIBUOVANÉ DATABÁZE A ŠKÁLOVÁNÍ -->
+      <section class="slide" data-slide="5">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vysoká dostupnost &amp; Výkon</div>
+            <h2 class="slide-title">Škálování databází: Replikace a Sharding</h2>
+            <p class="slide-subtitle">Jak udržet e-shop funkční během nákupní špičky Black Friday</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="content-card">
+              <h4>Vertikální škálování (Scale-Up)</h4>
+              <p>Zvýšení výkonu jednoho fyzického serveru (více CPU jader, více RAM paměti, rychlejší NVMe disky).</p>
+              <div style="margin-top: 0.6rem; font-size: 0.82rem; color: var(--text-muted);">
+                Jednoduché, bez nutnosti měnit kód. Rychle však narazí na fyzické a finanční limity hardwaru.
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h4>Replikace (Primary–Replica)</h4>
+              <p>Jeden hlavní server (Primary/Master) přijímá všechny zápisy (INSERT, UPDATE) a synchronizuje je na repliky.</p>
+              <div style="margin-top: 0.6rem; font-size: 0.82rem; color: var(--text-muted);">
+                Katalogové dotazy (čtení) se rozdělí mezi desítky Read-Replicas. Zápis objednávek jde pouze do Primary uzlu.
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h4>Sharding (Horizontální dělení)</h4>
+              <p>Rozdělení obrovské tabulky na různé nezávislé servery podle klíče (např. podle <code>country_code</code> zákazníka).</p>
+              <div style="margin-top: 0.6rem; font-size: 0.82rem; color: var(--text-muted);">
+                Umožňuje uložit miliardy objednávek, ale komplikuje JOIN dotazy napříč různými servery (cross-shard joins).
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout-eshop" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Architektura nasazení edu_eshop v praxi</div>
+              V praxi nasazujeme <code>edu_eshop</code> v 3-vrstvé architektuře: SPA frontend komunikuje přes zabezpečené HTTPS JSON REST API s backendem. Backend udržuje Connection Pool do MySQL 8 / MariaDB databáze, která běží v odděleném kontejneru chráněném firewallem.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: SUMMARY & EXAM CHECKLIST -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Shrnutí &amp; Zkouškový přehled</div>
+            <h2 class="slide-title">Zkušební checklist: Okruh absolutoria č. 2 (Architektury)</h2>
+            <p class="slide-subtitle">Souhrn architektury SŘBD a aplikací k ústní zkoušce</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Checklist</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent-emerald);" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                Znalosti vyžadované u absolutoria
+              </h4>
+              <ul class="styled-list">
+                <li>Nakreslit a podrobně popsat <strong>3 úrovně ANSI/SPARC</strong> (externí, konceptuální, interní).</li>
+                <li>Vysvětlit a uvést praktický příklad pro <strong>logickou</strong> i <strong>fyzickou datovou nezávislost</strong>.</li>
+                <li>Porovnat <strong>2-vrstvou</strong> (tlustý klient) a <strong>3-vrstvou architekturu</strong> (prohlížeč, aplikační server, DB).</li>
+                <li>Vysvětlit, co je <strong>Connection Pooling</strong> a proč je nezbytný pro vysoké zatížení.</li>
+                <li>Vysvětlit princip <strong>Primary-Replica replikace</strong> (rozdělení čtení a zápisu) a princip <strong>Shardingu</strong>.</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" style="color: var(--accent);" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                Klíčové termíny lekce
+              </h4>
+              <ul class="styled-list" style="font-size: 0.86rem;">
+                <li><strong>ANSI/SPARC:</strong> Standardní trojvrstvá architektura abstrakce databáze (1975).</li>
+                <li><strong>Externí pohled (View):</strong> Virtuální tabulka definovaná SQL dotazem pro konkrétní aplikaci.</li>
+                <li><strong>Thin Client (Tenký klient):</strong> Aplikace provádějící pouze zobrazení UI (např. HTML/JS v prohlížeči).</li>
+                <li><strong>Connection Pool:</strong> Vyrovnávací paměť předpřipravených databázových spojení pro rychlé znovupoužití.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout callout-info" style="margin-top: 1.25rem;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Následující lekce: Přehled a srovnání moderních SŘBD</div>
+              V Lekci 04 detailně porovnáme konkrétní zástupce SŘBD: MySQL, MariaDB, PostgreSQL, SQLite, MS SQL Server, Oracle a MS Access. Podíváme se na jejich výhody, limity a licenční politiku.
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <nav class="controls-bar" aria-label="Ovládání prezentace">
+      <a href="02_historie_a_evoluce_datovych_modelu.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Historie a evoluce datových modelů (Ctrl+Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
+      </a>
+      <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT10">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </a>
+      <a href="04_systemy_rizeni_bazi_dat_srovnani_dbms.html" class="control-btn" id="nextLessonBtn" title="Další lekce: Systémy řízení bází dat (Ctrl+Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg>
+      </a>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 06</span>
+      <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
+        <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+      <div class="controls-divider"></div>
+      <button class="control-btn" id="tocToggleBtn" title="Obsah lekce (M)">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+      </button>
+      <button class="control-btn" id="glossaryBtn" title="Slovník pojmů (G)" style="display:none">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </button>
+      <button class="control-btn" id="fullscreenBtn" title="Celá obrazovka (F)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
+      <button class="control-btn" id="helpToggleBtn" title="Klávesové zkratky (?)">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+      </button>
+    </nav>
+
+    <div class="toc-overlay" id="tocOverlay" aria-hidden="true">
+      <aside class="toc-drawer">
+        <div class="toc-header">
+          <div class="toc-title">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            <span>Obsah lekce</span>
+          </div>
+          <button class="toc-close" id="tocCloseBtn" title="Zavřít obsah">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="toc-list" id="tocList"></div>
+      </aside>
+    </div>
+
+    <div class="modal-overlay" id="helpModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6.01" y2="8"></line><line x1="10" y1="8" x2="10.01" y2="8"></line><line x1="14" y1="8" x2="14.01" y2="8"></line><line x1="18" y1="8" x2="18.01" y2="8"></line><line x1="6" y1="12" x2="6.01" y2="12"></line><line x1="10" y1="12" x2="10.01" y2="12"></line><line x1="14" y1="12" x2="14.01" y2="12"></line><line x1="18" y1="12" x2="18.01" y2="12"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Klávesové zkratky
+          </h3>
+          <button class="toc-close" id="helpCloseBtn" title="Zavřít nápovědu">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-row">
+            <span>Další snímek</span>
+            <div><span class="key-badge">Šipka vpravo</span> <span class="key-badge">Mezerník</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí snímek</span>
+            <div><span class="key-badge">Šipka vlevo</span> <span class="key-badge">Backspace</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Další lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vpravo</span> <span class="key-badge">Shift + N</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Předchozí lekce</span>
+            <div><span class="key-badge">Ctrl + Šipka vlevo</span> <span class="key-badge">Shift + P</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Celá obrazovka</span>
+            <span class="key-badge">F</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Obsah lekce</span>
+            <div><span class="key-badge">M</span> nebo <span class="key-badge">O</span></div>
+          </div>
+          <div class="shortcut-row">
+            <span>Přepnout motiv</span>
+            <span class="key-badge">T</span>
+          </div>
+          <div class="shortcut-row">
+            <span>Nápověda</span>
+            <span class="key-badge">?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../../assets/js/presentation-core.js"></script>
+</body>
+</html>

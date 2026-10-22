@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DAT10: Úvod do modelování databází | Výukový portál a prezentace</title>
+  <link rel="stylesheet" href="../../assets/css/dashboard-core.css">
+  <link rel="stylesheet" href="assets/css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard-container">
+    
+    <!-- Drobečková navigace -->
+    <nav class="breadcrumb-nav" aria-label="Drobečková navigace">
+      <a href="../../index.html" class="breadcrumb-link">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Hlavní rozcestník</span>
+      </a>
+      <span class="breadcrumb-separator">/</span>
+      <a href="../index.html" class="breadcrumb-link">
+        <span>Předmět DAT</span>
+      </a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current">Modul DAT10</span>
+    </nav>
+
+    <!-- Top Header / Brand -->
+    <header class="dashboard-header">
+      <div class="brand-box">
+        <a href="../index.html" class="brand-icon" title="Zpět na přehled předmětu DAT">
+          <svg class="icon" viewBox="0 0 24 24">
+            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+          </svg>
+        </a>
+        <div class="brand-text">
+          <h1>DAT10 • Úvod do modelování databází</h1>
+          <p>Vyšší odborná škola • 3. semestr • Zimní období</p>
+        </div>
+      </div>
+      <button class="theme-toggle-btn" id="themeToggleBtn" title="Přepnout světlý/tmavý motiv">
+        <svg class="icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <div class="hero-tag">Výukové materiály &amp; Webové prezentace</div>
+      <h2 class="hero-title">Základy databází, E-R modelování &amp; Relační algebra</h2>
+      <p class="hero-desc">
+        Kompletní série 10 interaktivních výukových prezentací (45 minut / lekce) pro modul DAT10. Teoretické základy, historie, architektury SŘBD, konceptuální E-R modelování a transformace na relační schéma na referenčním modelu <code>edu_eshop</code>.
+      </p>
+
+      <div class="metrics-row">
+        <div class="metric-item">
+          <span class="metric-num">10</span>
+          <span class="metric-label">Výukových lekcí</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">45 min</span>
+          <span class="metric-label">Na jednu hodinu</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">4 kredity</span>
+          <span class="metric-label">Zakončeno zkouškou</span>
+        </div>
+        <div class="metric-item">
+          <span class="metric-num">Okruhy 1–5</span>
+          <span class="metric-label">Otázky k absolutoriu</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Database Context Banner -->
+    <section class="db-banner">
+      <div class="db-banner-content">
+        <h3>
+          <svg class="icon" style="color: #38bdf8;" viewBox="0 0 24 24">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          Referenční model: <code>edu_eshop</code>
+        </h3>
+        <p>Všechny koncepty – od identifikace entit přes kardinalitu a parcialitu až po transformaci do relačních tabulek – jsou demonstrovány na jednotném e-commerce modelu.</p>
+        <div class="db-pills">
+          <span class="db-pill">customer (1:1)</span>
+          <span class="db-pill">customer_profile</span>
+          <span class="db-pill">category (Sebereference)</span>
+          <span class="db-pill">product (JSON)</span>
+          <span class="db-pill">product_category (M:N)</span>
+          <span class="db-pill">rating (CHECK)</span>
+          <span class="db-pill">orders (1:N)</span>
+          <span class="db-pill">order_item (Asociační)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Bar -->
+    <div class="search-container">
+      <svg class="search-icon-svg" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" id="lessonSearch" class="search-input" placeholder="Hledat v lekcích (např. 'E-R', 'kardinalita', 'ANSI/SPARC', 'algebra', 'Codd', 'okruh 3')...">
+    </div>
+
+    <!-- Lessons Catalog Grid -->
+    <main class="lessons-grid" id="lessonsGrid">
+
+      <!-- LEKCE 01 -->
+      <article class="lesson-card" data-keywords="úvod data informace znalosti dbms sřbd dbs souborové zpracování redundance nekonzistence okruh 1">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 01</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 1</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Úvod do databázových systémů a základní pojmy</h3>
+          <p class="lesson-desc">
+            Data, informace a znalosti. Rozdíl mezi souborovým a databázovým přístupem, architektura DBS (DBS = DB + SŘBD) a klíčové služby moderního DBMS na příkladu e-shopu.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Data vs. Informace</span>
+            <span class="lesson-tag">SŘBD / DBMS</span>
+            <span class="lesson-tag">Redundance</span>
+            <span class="lesson-tag">Okruh 1</span>
+          </div>
+          <a href="01_uvod_do_databazovych_systemu.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 02 -->
+      <article class="lesson-card" data-keywords="historie evoluce hierarchický síťový codasyl codd relační nosql cap base newsql okruh 1">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 02</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 1</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Historie a evoluce datových modelů</h3>
+          <p class="lesson-desc">
+            Časová osa databází: Od hierarchického modelu (IMS) a síťového modelu (CODASYL) přes relační revoluci E. F. Codda (1970) až po 4 rodiny NoSQL, CAP teorém a NewSQL.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Hierarchický &amp; Síťový</span>
+            <span class="lesson-tag">E. F. Codd 1970</span>
+            <span class="lesson-tag">NoSQL rodiny</span>
+            <span class="lesson-tag">CAP teorém</span>
+          </div>
+          <a href="02_historie_a_evoluce_datovych_modelu.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 03 -->
+      <article class="lesson-card" data-keywords="architektury ansi sparc externí konceptuální interní nezávislost klient server 2-tier 3-tier replikace sharding okruh 2">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 03</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 2</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Architektury SŘBD a databázových aplikací</h3>
+          <p class="lesson-desc">
+            Tříúrovňový model ANSI/SPARC, logická a fyzická datová nezávislost. Srovnání 2-vrstvé (tlustý klient) a moderní 3-vrstvé webové architektury, replikace a sharding.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">ANSI/SPARC</span>
+            <span class="lesson-tag">Datová nezávislost</span>
+            <span class="lesson-tag">3-tier architektura</span>
+            <span class="lesson-tag">Replikace</span>
+          </div>
+          <a href="03_architektury_srbd_a_databazovych_aplikaci.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 04 -->
+      <article class="lesson-card" data-keywords="sřbd dbms srovnání mysql mariadb postgresql sqlite ms sql server oracle ms access licence okruh 2">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 04</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 2</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Systémy řízení bází dat (DBMS) a jejich srovnání</h3>
+          <p class="lesson-desc">
+            Velká srovnávací matice moderních SŘBD: MySQL, MariaDB, PostgreSQL, SQLite, MS SQL Server, Oracle a MS Access. Serverové vs. vestavěné databáze a volba pro e-shop.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">MySQL &amp; MariaDB</span>
+            <span class="lesson-tag">PostgreSQL</span>
+            <span class="lesson-tag">SQLite</span>
+            <span class="lesson-tag">Oracle &amp; MS SQL</span>
+          </div>
+          <a href="04_systemy_rizeni_bazi_dat_srovnani_dbms.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 05 -->
+      <article class="lesson-card" data-keywords="konceptuální modelování e-r model entity atributy klíče vztahy peter chen analýza okruh 3">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 05</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 3</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Konceptuální modelování a E-R model</h3>
+          <p class="lesson-desc">
+            Životní cyklus databázového návrhu (konceptuální &rarr; logický &rarr; fyzický). Entity, typologie atributů (atomické, složené, vícehodnotové, odvozené) a vztahy.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Koncept &rarr; Logika &rarr; Fyzika</span>
+            <span class="lesson-tag">Entitní množiny</span>
+            <span class="lesson-tag">Typy atributů</span>
+            <span class="lesson-tag">Peter Chen</span>
+          </div>
+          <a href="05_konceptualni_modelovani_a_er_model.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 06 -->
+      <article class="lesson-card" data-keywords="kardinalita parcialita totálnost diagram výskytů 1:1 1:n m:n min max modalita účast okruh 3">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 06</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 3</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Kardinalita, parcialita a diagram výskytů</h3>
+          <p class="lesson-desc">
+            Diagram výskytů pro vizualizaci instancí. Maximální kardinalita (1:1, 1:N, M:N), minimální kardinalita (parcialita vs. totálnost) a intervalový zápis (min, max) v edu_eshop.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Diagram výskytů</span>
+            <span class="lesson-tag">1:1 / 1:N / M:N</span>
+            <span class="lesson-tag">Parcialita &amp; Totálnost</span>
+            <span class="lesson-tag">Notace (min, max)</span>
+          </div>
+          <a href="06_kardinalita_parcialita_a_diagram_vyskytu.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 07 -->
+      <article class="lesson-card" data-keywords="notace e-r chen crow's foot vraní nožka uml slabé entity diskriminátor isa specializace generalizace okruh 3">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 07</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 3</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Notace E-R diagramů a pokročilé koncepty</h3>
+          <p class="lesson-desc">
+            Srovnání Chenovy notace, notace Crow's Foot (vraní nožka) a UML. Slabé entity, existenční závislost a modelování specializace/generalizace (ISA hierarchie).
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Crow's Foot notace</span>
+            <span class="lesson-tag">Slabé entity</span>
+            <span class="lesson-tag">Diskriminátor</span>
+            <span class="lesson-tag">ISA hierarchie</span>
+          </div>
+          <a href="07_notace_er_diagramu_a_pokrocile_koncepty.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 08 -->
+      <article class="lesson-card" data-keywords="relační model doména relace n-tice klíče primární cizí entitní integrita referenční doménová cascade restrict okruh 4">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 08</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 4</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Relační model dat a integritní pravidla</h3>
+          <p class="lesson-desc">
+            Matematická definice relace (podmnožina kartézského součinu domén), n-tice a domény. Superklíče, kandidátní klíče, primární a cizí klíče. Pilíře integrity dat v edu_eshop.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Matematická relace</span>
+            <span class="lesson-tag">Kandidátní vs. PK</span>
+            <span class="lesson-tag">Referenční integrita</span>
+            <span class="lesson-tag">CASCADE / RESTRICT</span>
+          </div>
+          <a href="08_relacni_model_dat_a_integritni_pravidla.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 09 -->
+      <article class="lesson-card" data-keywords="relační algebra selekce projekce kartézský součin spojení join unie průnik rozdíl sql okruh 4">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 09</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 4</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Relační algebra a její vztah k SQL</h3>
+          <p class="lesson-desc">
+            Procedurální dotazovací aparát: selekce (&sigma; &rarr; WHERE), projekce (&pi; &rarr; SELECT), kartézský součin (&times; &rarr; CROSS JOIN), spojení (&bowtie; &rarr; JOIN) a množinové operátory.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">&sigma; Selekce</span>
+            <span class="lesson-tag">&pi; Projekce</span>
+            <span class="lesson-tag">&bowtie; Spojení (JOIN)</span>
+            <span class="lesson-tag">Můstek do SQL</span>
+          </div>
+          <a href="09_relacni_algebra_a_jeji_vztah_k_sql.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- LEKCE 10 -->
+      <article class="lesson-card" data-keywords="transformace převod e-r na relační model dekompozice m:n asociační tabulka sebereference syntéza absolutorium okruh 5">
+        <div>
+          <div class="lesson-card-top">
+            <span class="lesson-num">Lekce 10</span>
+            <span class="lesson-exam-badge">Okruh absolutoria č. 5</span>
+          </div>
+          <h3 class="lesson-title" style="margin: 0.8rem 0 0.4rem 0;">Transformace konceptuálního modelu &amp; Absolutorium</h3>
+          <p class="lesson-desc">
+            Zlatá pravidla převodu E-R diagramu do relačních tabulek: vazby 1:1, propagace FK u 1:N, dekompozice M:N asociační tabulkou a ISA strategie. Rekonstrukce edu_eshop a souhrn okruhů 1–5.
+          </p>
+        </div>
+        <div>
+          <div class="lesson-tags">
+            <span class="lesson-tag">Transformační pravidla</span>
+            <span class="lesson-tag">Dekompozice M:N</span>
+            <span class="lesson-tag">Rekonstrukce edu_eshop</span>
+            <span class="lesson-tag">Syntéza okruhů 1–5</span>
+          </div>
+          <a href="10_transformace_konceptualniho_modelu_a_absolutorium.html" class="btn-launch-lesson">
+            <span>Spustit prezentaci</span>
+            <svg class="icon" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer" style="margin-top: 3rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+      <p>Vyšší odborná škola &copy; 2026 • Modul DAT10: Úvod do modelování databází • Referenční model: <code>edu_eshop</code></p>
+    </footer>
+
+  </div>
+
+  <script src="../../assets/js/dashboard-core.js"></script>
+</body>
+</html>

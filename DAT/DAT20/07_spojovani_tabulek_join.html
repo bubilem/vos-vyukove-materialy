@@ -85,7 +85,7 @@
                 Kartézský součin (CROSS JOIN)
               </h4>
               <p>
-                Pokud spojíte dvě tabulky <em>bez</em> omezující podmínky, výsledkem je kombinace <strong>každého řádku s každým</strong> ($M \times N$).
+                Pokud spojíte dvě tabulky <em>bez</em> omezující podmínky, výsledkem je kombinace <strong>každého řádku s každým</strong> (<em>M</em> &times; <em>N</em>).
               </p>
               <pre class="code-block" style="margin: 0.5rem 0; font-size: 0.8rem;"><code>-- 100 zákazníků × 1 000 produktů = 100 000 řádků!
 SELECT * FROM customer, product;</code></pre>
@@ -271,7 +271,7 @@ INNER JOIN orders o ON c.id = o.customer_id;</code></pre>
             </div>
             <div class="callout-content">
               <div class="callout-title">Zlaté pravidlo počtu spojení k absolutoriu</div>
-              K propojení $N$ tabulek potřebujete v dotazu vždy minimálně <strong>$N - 1$ klauzulí JOIN s podmínkami ON</strong>. Pokud propojujete produkty s kategoriemi (2 entity + 1 vazební tabulka = 3 tabulky), potřebujete přesně 2x JOIN!
+              K propojení <em>N</em> tabulek potřebujete v dotazu vždy minimálně <strong><em>N</em> &minus; 1 klauzulí JOIN s podmínkami ON</strong>. Pokud propojujete produkty s kategoriemi (2 entity + 1 vazební tabulka = 3 tabulky), potřebujete přesně 2x JOIN!
             </div>
           </div>
         </div>
