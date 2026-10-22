@@ -30,7 +30,13 @@ Při vytváření nebo úpravách výukových materiálů a prezentací v tomto 
 
 4. **Design systém a interaktivita:**
    - Výchozí je moderní tmavý motiv (Dark mode) s možností přepnutí do světlého motivu (`[data-theme="light"]`).
-   - Zachovávej ambientní záři (`.bg-glow-1`, `.bg-glow-2`), technologickou mřížku na pozadí a gradientní nadpisy (`background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;`).
+   - Zachovávej ambientní záři (`.bg-glow-1`, `.bg-glow-2`), technologickou mřížku na pozadí a gradientní nadpisy.
+   - **POVINNÉ: `background-clip: text;`:** Kdykoliv se v CSS definuje text s gradientem nebo se použije `-webkit-background-clip: text;`, **VŽDY bez výjimky musí předcházet standardní `background-clip: text;`**:
+     ```css
+     background-clip: text;
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     ```
    - Každá prezentace má plnou podporu klávesnice: `Šipky` (snímky), `Mezerník` (vpřed), `F` (fullscreen), `M`/`O` (obsah/osnova), `T` (přepnutí motivu), `G` (slovník pojmů, jen pokud přítomen), `?` (nápověda), `Esc` (zavření modálů).
    - Ukázky kódu musí mít hlavičku a tlačítko `.btn-copy` s funkčním kopírováním do schránky.
 
