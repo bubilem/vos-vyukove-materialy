@@ -144,8 +144,88 @@
         </div>
       </section>
 
-      <!-- SLIDE 3: NUMERIC DATA TYPES -->
+      <!-- SLIDE 3: SQL STANDARDS & DIALECTS -->
       <section class="slide" data-slide="3">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Normy & Architektura</div>
+            <h2 class="slide-title">Standardy SQL (ANSI/ISO) vs. Dialekty SŘBD</h2>
+            <p class="slide-subtitle">Proč stejný SQL dotaz nemusí fungovat v MySQL, MS SQL Serveru a PostgreSQL stejně</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u absolutoria</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Jazyk SQL je definován mezinárodní normou <strong>ISO/IEC 9075</strong> (dříve ANSI SQL: SQL-92, SQL:1999, SQL:2008, SQL:2016, SQL:2023). V praxi však žádný SŘBD neimplementuje normu 100% identicky – každý výrobce nabízí svůj <strong>dialekt</strong> a vlastní rozšíření.
+          </p>
+
+          <div class="table-container" style="margin-bottom: 0.85rem;">
+            <table class="db-table">
+              <thead>
+                <tr>
+                  <th>Vlastnost / Konstrukce</th>
+                  <th><span class="dialect-badge dialect-badge-iso">ISO/ANSI Norma</span></th>
+                  <th><span class="dialect-badge dialect-badge-mysql">MySQL / MariaDB</span></th>
+                  <th><span class="dialect-badge dialect-badge-mssql">MS SQL (T-SQL)</span></th>
+                  <th><span class="dialect-badge dialect-badge-pgsql">PostgreSQL</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Kvotování identifikátorů</strong></td>
+                  <td><code>"sloupec"</code> (dvojité uvozovky)</td>
+                  <td><code>`sloupec`</code> (backticks)</td>
+                  <td><code>[sloupec]</code> nebo <code>"sloupec"</code></td>
+                  <td><code>"sloupec"</code> (case-sensitive!)</td>
+                </tr>
+                <tr>
+                  <td><strong>Omezení řádků (Top-N)</strong></td>
+                  <td><code>OFFSET ... FETCH NEXT ...</code></td>
+                  <td><code>LIMIT n OFFSET m</code></td>
+                  <td><code>SELECT TOP (n) ...</code> / <code>OFFSET FETCH</code></td>
+                  <td><code>LIMIT n OFFSET m</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Generování PK klíčů</strong></td>
+                  <td><code>GENERATED ALWAYS AS IDENTITY</code></td>
+                  <td><code>AUTO_INCREMENT</code></td>
+                  <td><code>IDENTITY(1,1)</code></td>
+                  <td><code>GENERATED AS IDENTITY</code> (či <code>SERIAL</code>)</td>
+                </tr>
+                <tr>
+                  <td><strong>Logický typ Boolean</strong></td>
+                  <td><code>BOOLEAN</code> (TRUE/FALSE/UNKNOWN)</td>
+                  <td><code>BOOLEAN</code> (alias pro <code>TINYINT(1)</code>)</td>
+                  <td><code>BIT</code> (hodnoty <code>1</code> nebo <code>0</code>)</td>
+                  <td><code>BOOLEAN</code> (plnohodnotný typ)</td>
+                </tr>
+                <tr>
+                  <td><strong>Spojování textů</strong></td>
+                  <td>Operátor <code>||</code> (dvojitá roura)</td>
+                  <td>Funkce <code>CONCAT(a, b)</code></td>
+                  <td>Operátor <code>+</code> nebo <code>CONCAT(a, b)</code></td>
+                  <td>Operátor <code>||</code> nebo <code>CONCAT(a, b)</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout callout-warning" style="margin: 0.5rem 0 0 0;">
+            <div class="callout-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="callout-content">
+              <div class="callout-title">Zkouškový chyták: Jednoduché vs. dvojité uvozovky</div>
+              V SQL se <strong>textové hodnoty (literály)</strong> píší <strong>VÝHRADNĚ do jednoduchých uvozovek</strong>: <code>'Praha'</code>, <code>'Jan Novák'</code>. Dvojité uvozovky <code>"..."</code> jsou v normě ISO vyhrazeny pro identifikátory (názvy tabulek a sloupců). Pokud v PostgreSQL či Oracle napíšete <code>WHERE city = "Praha"</code>, dotaz skončí chybou <em>"sloupec Praha neexistuje"</em>!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: NUMERIC DATA TYPES -->
+      <section class="slide" data-slide="4">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Datové typy</div>
@@ -230,13 +310,13 @@
         </div>
       </section>
 
-      <!-- SLIDE 4: STRING TYPES & COLLATION -->
-      <section class="slide" data-slide="4">
+      <!-- SLIDE 5: STRING TYPES & COLLATION -->
+      <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Datové typy</div>
             <h2 class="slide-title">Textové typy, Kódování a Kolace</h2>
-            <p class="slide-subtitle">CHAR vs. VARCHAR a tajemství české diakritiky v utf8mb4</p>
+            <p class="slide-subtitle">CHAR vs. VARCHAR, Unicode v MS SQL (NVARCHAR) a tajemství české diakritiky v utf8mb4</p>
           </div>
         </div>
         <div class="slide-body">
@@ -253,9 +333,15 @@
                   <br><em>Vhodné pro:</em> Jména (<code>VARCHAR(50)</code>), emaily (<code>VARCHAR(100)</code>).
                 </li>
                 <li>
-                  <strong>TEXT:</strong> Ukládá se mimo hlavní stránku řádku (overflow buffer). Vhodné pro popisy produktů a recenze.
+                  <strong>TEXT / CLOB:</strong> Ukládá se mimo hlavní stránku řádku (overflow buffer). Vhodné pro rozsáhlé popisy produktů a recenze.
                 </li>
               </ul>
+
+              <div class="callout callout-tip" style="margin-top: 0.75rem; padding: 0.65rem 0.85rem;">
+                <div class="callout-content" style="font-size: 0.84rem;">
+                  <strong>Rozdíl v MS SQL Serveru:</strong> MS SQL striktně rozlišuje <code>VARCHAR</code> (1 byte/znak dle kódové stránky) a <code>NVARCHAR</code> (Unicode UTF-16, 2 byty/znak). U Unicode textů v MS SQL je nutné psát prefix <code>N</code>: <code>WHERE name = N'Čeština'</code>! V MySQL a PostgreSQL stačí standardní <code>VARCHAR</code> s UTF-8.
+                </div>
+              </div>
             </div>
 
             <div class="content-card">
@@ -282,13 +368,13 @@
         </div>
       </section>
 
-      <!-- SLIDE 5: TEMPORAL & SPECIAL TYPES -->
-      <section class="slide" data-slide="5">
+      <!-- SLIDE 6: TEMPORAL & SPECIAL TYPES -->
+      <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Datové typy</div>
             <h2 class="slide-title">Datum, Čas a Moderní typy (JSON, ENUM)</h2>
-            <p class="slide-subtitle">Časová razítka, stavy objednávek a flexibilní atributy</p>
+            <p class="slide-subtitle">Časová razítka, stavy objednávek a flexibilní atributy napříč SŘBD</p>
           </div>
         </div>
         <div class="slide-body">
@@ -300,10 +386,10 @@
               </h4>
               <p><strong>DATE:</strong> Pouze datum ve formátu <code>'YYYY-MM-DD'</code> (např. <code>birth_date</code>).</p>
               <p style="margin-top: 0.35rem;">
-                <strong>DATETIME:</strong> Formát <code>'YYYY-MM-DD HH:MM:SS'</code> (rozsah rok 1000–9999). V SQL se s ním zadává a zachází jako s <strong>textovým řetězcem (stringem)</strong>. Ukládá přesnou hodnotu bez konverze časových zón.
+                <strong>DATETIME:</strong> Formát <code>'YYYY-MM-DD HH:MM:SS'</code> (rok 1000–9999). Ukládá zadanou hodnotu bez přepočtu časových zón.
               </p>
               <p style="margin-top: 0.35rem;">
-                <strong>TIMESTAMP:</strong> Funguje na principu <strong>UNIXTIME</strong> (počítají se sekundy od epochy 1.&nbsp;1.&nbsp;1970 00:00:00 UTC, 4&nbsp;byty). Automaticky převádí čas do/z UTC dle časové zóny serveru a klienta. <em>Pozor na rok 2038 (přetečení 32bitového celého čísla)!</em>
+                <strong>TIMESTAMP:</strong> Počítá sekundy od UNIX epochy (1.&nbsp;1.&nbsp;1970 UTC). V MySQL se automaticky přepočítává dle časové zóny serveru.
               </p>
             </div>
 
@@ -312,23 +398,22 @@
                 <svg class="icon card-icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line></svg>
                 Výčtový typ ENUM
               </h4>
-              <p>Povoluje pouze předdefinované textové hodnoty uložené interně jako číselné indexy (1 byte):</p>
-              <pre class="code-block" style="padding: 0.4rem; font-size: 0.8rem;"><code>-- Tabulka orders v edu_eshop:
-`status` ENUM(
-  'new', 
-  'paid', 
-  'shipped', 
-  'cancelled'
-) NOT NULL DEFAULT 'new'</code></pre>
+              <p>Povoluje pouze vyjmenované hodnoty. MySQL a PostgreSQL jej podporují nativně:</p>
+              <pre class="code-block" style="padding: 0.4rem; font-size: 0.78rem;"><code>-- MySQL syntaxe:
+status ENUM('new', 'paid', 'shipped')
+-- MS SQL nemá ENUM, vyžaduje CHECK:
+status VARCHAR(20) CHECK (
+  status IN ('new', 'paid', 'shipped')
+)</code></pre>
             </div>
 
             <div class="content-card">
               <h4>
                 <svg class="icon card-icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-                Typ JSON v MySQL 8
+                Dokumentový typ JSON
               </h4>
-              <p>Umožňuje ukládat validní JSON dokument s binární optimalizací pro rychlé vyhledávání bez parsování celého textu:</p>
-              <pre class="code-block" style="padding: 0.4rem; font-size: 0.8rem;"><code>-- product.attributes
+              <p>Umožňuje ukládat strukturovaná data s binární indexací klíčů (MySQL, PostgreSQL, MS SQL 2016+):</p>
+              <pre class="code-block" style="padding: 0.4rem; font-size: 0.78rem;"><code>-- product.attributes
 SELECT name,
   attributes->>'$.color' AS barva
 FROM product;</code></pre>
@@ -340,38 +425,38 @@ FROM product;</code></pre>
               <svg class="icon" viewBox="0 0 24 24"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg>
             </div>
             <div class="callout-content">
-              <div class="callout-title">BOOLEAN v MySQL</div>
-              V MySQL a MariaDB je datový typ <code>BOOLEAN</code> (či <code>BOOL</code>) pouze aliasem pro <code>TINYINT(1)</code>, kde hodnota <code>0</code> reprezentuje FALSE a <code>1</code> reprezentuje TRUE.
+              <div class="callout-title">BOOLEAN v různých SŘBD</div>
+              V <strong>ISO normě</strong> a <strong>PostgreSQL</strong> je <code>BOOLEAN</code> plnohodnotný typ (TRUE/FALSE). V <strong>MySQL</strong> jde o alias pro <code>TINYINT(1)</code>. V <strong>MS SQL</strong> typ BOOLEAN neexistuje vůbec – nahrazuje jej typ <code>BIT</code> (nabývá pouze hodnot <code>1</code> a <code>0</code>).
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 6: SUMMARY SLIDE -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 7: SUMMARY SLIDE -->
+      <section class="slide" data-slide="7">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Rekapitulace & Příprava</div>
             <h2 class="slide-title">Shrnutí: Jak správně volit datové typy</h2>
-            <p class="slide-subtitle">Zásady pro profesionální a čistý databázový návrh</p>
+            <p class="slide-subtitle">Zásady pro profesionální a přenositelný databázový návrh</p>
           </div>
         </div>
         <div class="slide-body">
           <div class="summary-grid">
             <div class="summary-card">
               <div class="summary-card-num">1</div>
-              <h4>Volte nejmenší dostačující typ</h4>
-              <p>Pokud stačí <code>TINYINT</code> (např. hodnocení 1–5), nepoužívejte <code>INT</code>. Šetří to RAM buffer pool a zvyšuje počet řádků na diskovou stránku.</p>
+              <h4>Pozor na odlišnosti SŘBD</h4>
+              <p>Znejte standard ISO/IEC 9075: MySQL používá <code>AUTO_INCREMENT</code>, MS SQL <code>IDENTITY</code> a PostgreSQL <code>GENERATED AS IDENTITY</code>.</p>
             </div>
             <div class="summary-card">
               <div class="summary-card-num">2</div>
               <h4>Na měny jedině DECIMAL</h4>
-              <p>Nikdy nepoužívejte plovoucí řádovou čárku pro účetní data. <code>DECIMAL(10,2)</code> je sázka na jistotu bez zaokrouhlovacích anomálií.</p>
+              <p>Nikdy nepoužívejte plovoucí řádovou čárku (FLOAT/DOUBLE) pro finance. <code>DECIMAL(10,2)</code> garantuje přesnost na haléře.</p>
             </div>
             <div class="summary-card">
               <div class="summary-card-num">3</div>
-              <h4>U textů hlídejte délku</h4>
-              <p>Fixní délka = <code>CHAR</code>, proměnná s limitem = <code>VARCHAR</code>, dlouhé volné texty = <code>TEXT</code>. Vždy s kolací <code>utf8mb4_czech_ci</code>.</p>
+              <h4>Uvozovky: text vs identifikátor</h4>
+              <p>Hodnoty vždy do jednoduchých <code>'text'</code>. Identifikátory standardně do dvojitých <code>"sloupec"</code> nebo v MySQL do <code>`sloupec`</code>.</p>
             </div>
           </div>
         </div>
@@ -381,7 +466,7 @@ FROM product;</code></pre>
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="01_normalizace_a_normalni_formy.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 01: Normalizace relačních databází (Ctrl+Šipka vlevo)">
+      <a href="01_normalizace_a_normalni_formy.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 01: Normalizace relačních databází (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT20">
@@ -482,6 +567,10 @@ FROM product;</code></pre>
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>

@@ -606,6 +606,31 @@
                 <strong>Odpověď:</strong> 2. NF porušuje atribut závislý jen na části složeného PK (např. název produktu v položce objednávky). 3. NF porušuje tranzitivní závislost mezi neklíči. Hrozí anomálie vkládání, aktualizace a nechtěného smazání.
               </div>
             </div>
+            <div class="exam-question-box" style="margin: 0; padding: 0.85rem 1.1rem;">
+              <div class="exam-question-header" style="margin-bottom: 0.35rem;">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: var(--accent-emerald);"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <strong style="font-size: 0.86rem;">5. Otázka (ISO norma vs. dialekty MySQL a MS SQL):</strong>
+              </div>
+              <p class="exam-question-text" style="font-size: 0.88rem; margin-bottom: 0.4rem;">
+                „Jaké jsou rozdíly mezi ISO/ANSI normou a dialekty MySQL či T-SQL v oblasti stránkování, generování primárního klíče a uvozovek?“
+              </p>
+              <div class="exam-answer-hint" style="font-size: 0.8rem; padding-top: 0.4rem;">
+                <strong>Odpověď:</strong> ISO norma používá <code>OFFSET...FETCH NEXT</code>, <code>GENERATED AS IDENTITY</code> a <code>"dvojité uvozovky"</code>. MySQL používá <code>LIMIT</code>, <code>AUTO_INCREMENT</code> a <code>`backticks`</code>. MS SQL používá <code>TOP (n)</code>, <code>IDENTITY(1,1)</code>, <code>[hranaté závorky]</code> a <code>BIT</code>.
+              </div>
+            </div>
+
+            <div class="exam-question-box" style="margin: 0; padding: 0.85rem 1.1rem;">
+              <div class="exam-question-header" style="margin-bottom: 0.35rem;">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 16px; height: 16px; color: var(--accent-emerald);"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                <strong style="font-size: 0.86rem;">6. Otázka (Záludnost FULL JOIN a UPSERT):</strong>
+              </div>
+              <p class="exam-question-text" style="font-size: 0.88rem; margin-bottom: 0.4rem;">
+                „Proč dotaz s FULL OUTER JOIN v MySQL selže a jak se napříč SŘBD realizuje operace UPSERT (vložení nebo aktualizace)?“
+              </p>
+              <div class="exam-answer-hint" style="font-size: 0.8rem; padding-top: 0.4rem;">
+                <strong>Odpověď:</strong> MySQL <code>FULL OUTER JOIN</code> nepodporuje – musí se emulovat spojením <code>LEFT JOIN</code> a <code>RIGHT JOIN</code> přes <code>UNION</code>. Pro UPSERT má norma ISO a MS SQL příkaz <code>MERGE</code>, MySQL má <code>ON DUPLICATE KEY UPDATE</code> a PostgreSQL <code>ON CONFLICT</code>.
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -614,7 +639,7 @@
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="09_vnorene_dotazy_subqueries.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 09: Vnořené dotazy (Subqueries) (Ctrl+Šipka vlevo)">
+      <a href="09_vnorene_dotazy_subqueries.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 09: Vnořené dotazy (Subqueries) (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT20">
@@ -715,6 +740,10 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>

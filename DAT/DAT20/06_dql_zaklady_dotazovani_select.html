@@ -221,29 +221,32 @@
                 <div class="code-wrapper" style="margin-top: 0.8rem;">
                   <div class="code-header"><span class="code-title">Správný test na NULL</span></div>
                   <pre class="code-block"><code><span class="sql-comment">-- Zákazníci bez vyplněného telefonu:</span>
-<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> `customer_profile`
-<span class="sql-keyword">WHERE</span> `phone` <span class="sql-keyword">IS NULL</span>;
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> customer_profile
+<span class="sql-keyword">WHERE</span> phone <span class="sql-keyword">IS NULL</span>;
 
 <span class="sql-comment">-- Zákazníci s vyplněným telefonem:</span>
-<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> `customer_profile`
-<span class="sql-keyword">WHERE</span> `phone` <span class="sql-keyword">IS NOT NULL</span>;</code></pre>
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> customer_profile
+<span class="sql-keyword">WHERE</span> phone <span class="sql-keyword">IS NOT NULL</span>;</code></pre>
                 </div>
               </div>
             </div>
 
             <div>
               <div class="content-card">
-                <h4>Užitečné funkce: COALESCE a IFNULL</h4>
+                <h4>Přenositelnost funkcí: COALESCE vs. IFNULL / ISNULL</h4>
                 <p>
-                  <strong><code>COALESCE(val1, val2, ...):</code></strong> Vrátí první hodnotu v seznamu, která není NULL.
+                  <strong><code>COALESCE(val1, val2, ...):</code></strong> Standardní funkce <strong>ISO/ANSI SQL</strong> i všech SŘBD! Vrátí první hodnotu v seznamu, která není NULL.
+                </p>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.4rem;">
+                  <em>Pozor na dialekty:</em> Funkce <code>IFNULL()</code> funguje pouze v MySQL. V MS SQL Serveru se jmenuje <code>ISNULL()</code>. Zásada pro studenty: <strong>vždy preferujte standardní COALESCE()</strong>, který funguje všude!
                 </p>
                 <div class="code-wrapper" style="margin-top: 0.8rem;">
-                  <div class="code-header"><span class="code-title">Ukázka z edu_eshop</span></div>
+                  <div class="code-header"><span class="code-title">Ukázka z edu_eshop (Standardní SQL)</span></div>
                   <pre class="code-block"><code><span class="sql-keyword">SELECT</span> 
-  `first_name`, 
-  `last_name`,
-  <span class="sql-func">COALESCE</span>(`phone`, <span class="sql-string">'Telefon neuveden'</span>) <span class="sql-keyword">AS</span> kontakt
-<span class="sql-keyword">FROM</span> `customer_profile`;</code></pre>
+  first_name, 
+  last_name,
+  <span class="sql-func">COALESCE</span>(phone, <span class="sql-string">'Telefon neuveden'</span>) <span class="sql-keyword">AS</span> kontakt
+<span class="sql-keyword">FROM</span> customer_profile;</code></pre>
                 </div>
                 <div class="table-container" style="margin-top: 0.8rem;">
                   <table class="db-table">
@@ -258,50 +261,84 @@
         </div>
       </section>
 
-      <!-- SLIDE 5: ORDER BY & LIMIT -->
+      <!-- SLIDE 5: ORDER BY & LIMIT / PAGINATION -->
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Řazení a stránkování</div>
-            <h2 class="slide-title">Řazení (ORDER BY) a Stránkování (LIMIT)</h2>
-            <p class="slide-subtitle">Jak realizovat katalog produktů e-shopu se stránkováním</p>
+            <h2 class="slide-title">Řazení (ORDER BY) a Stránkování (Top-N)</h2>
+            <p class="slide-subtitle">Rozdíly ve stránkování katalogu: ISO standard vs. LIMIT vs. TOP</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-2">
-            <div class="code-wrapper">
-              <div class="code-header">
-                <span class="code-title">Katalog: Nejlevnější produkty na stránce č. 1</span>
+            <div class="code-tabs">
+              <div class="code-tabs-header">
+                <div class="code-tabs-nav">
+                  <button class="code-tab-btn active" data-tab="iso"><span class="dialect-badge dialect-badge-iso">ISO Norma (SQL:2008)</span></button>
+                  <button class="code-tab-btn" data-tab="mysql"><span class="dialect-badge dialect-badge-mysql">MySQL / PostgreSQL</span></button>
+                  <button class="code-tab-btn" data-tab="mssql"><span class="dialect-badge dialect-badge-mssql">MS SQL (T-SQL)</span></button>
+                </div>
                 <button class="btn-copy">
                   <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                   <span>Kopírovat</span>
                 </button>
               </div>
-              <pre class="code-block"><code><span class="sql-keyword">SELECT</span> `id`, `name`, `price`, `stock_quantity`
-<span class="sql-keyword">FROM</span> `product`
-<span class="sql-keyword">WHERE</span> `active` = <span class="sql-keyword">TRUE</span>
+              <div class="code-tabs-content">
+                <div class="code-tab-pane active" data-tab="iso">
+                  <pre class="code-block"><code><span class="sql-comment">-- Standard ANSI SQL:2008 (univerzální přenositelnost)</span>
+<span class="sql-keyword">SELECT</span> id, name, price, stock_quantity
+<span class="sql-keyword">FROM</span> product
+<span class="sql-keyword">WHERE</span> active = <span class="sql-keyword">TRUE</span>
 <span class="sql-keyword">ORDER BY</span> 
-  `price` <span class="sql-keyword">ASC</span>,      <span class="sql-comment">-- Primární řazení od nejlevnějšího</span>
-  `name` <span class="sql-keyword">ASC</span>        <span class="sql-comment">-- Sekundární řazení při shodě cen</span>
-<span class="sql-keyword">LIMIT</span> 3 <span class="sql-keyword">OFFSET</span> 0;   <span class="sql-comment">-- První 3 položky (stránka 1)</span>
+  price <span class="sql-keyword">ASC</span>, id <span class="sql-keyword">ASC</span>
+<span class="sql-keyword">OFFSET</span> 0 <span class="sql-keyword">ROWS</span>
+<span class="sql-keyword">FETCH NEXT</span> 3 <span class="sql-keyword">ROWS ONLY</span>;
+
+<span class="sql-comment">-- Stránka 2 (přeskočit 3, vzít další 3):</span>
+<span class="sql-keyword">OFFSET</span> 3 <span class="sql-keyword">ROWS FETCH NEXT</span> 3 <span class="sql-keyword">ROWS ONLY</span>;</code></pre>
+                </div>
+                <div class="code-tab-pane" data-tab="mysql">
+                  <pre class="code-block"><code><span class="sql-comment">-- Webový de facto standard (MySQL, MariaDB, PostgreSQL, SQLite)</span>
+<span class="sql-keyword">SELECT</span> id, name, price, stock_quantity
+<span class="sql-keyword">FROM</span> product
+<span class="sql-keyword">WHERE</span> active = <span class="sql-keyword">TRUE</span>
+<span class="sql-keyword">ORDER BY</span> 
+  price <span class="sql-keyword">ASC</span>, id <span class="sql-keyword">ASC</span>
+<span class="sql-keyword">LIMIT</span> 3 <span class="sql-keyword">OFFSET</span> 0;   <span class="sql-comment">-- Stránka 1</span>
 
 <span class="sql-comment">-- Stránka 2: Přeskočit 3, vzít další 3</span>
-<span class="sql-keyword">LIMIT</span> 3 <span class="sql-keyword">OFFSET</span> 3;   <span class="sql-comment">-- Alternativa: LIMIT 3, 3</span></code></pre>
+<span class="sql-keyword">LIMIT</span> 3 <span class="sql-keyword">OFFSET</span> 3;   <span class="sql-comment">-- Alternativa MySQL: LIMIT 3, 3</span></code></pre>
+                </div>
+                <div class="code-tab-pane" data-tab="mssql">
+                  <pre class="code-block"><code><span class="sql-comment">-- MS SQL Server: TOP (rychlý limit bez offsetu)</span>
+<span class="sql-keyword">SELECT TOP</span> (3) id, name, price, stock_quantity
+<span class="sql-keyword">FROM</span> product
+<span class="sql-keyword">WHERE</span> active = 1
+<span class="sql-keyword">ORDER BY</span> price <span class="sql-keyword">ASC</span>, id <span class="sql-keyword">ASC</span>;
+
+<span class="sql-comment">-- MS SQL 2012+ podporuje i standardní ANSI stránkování:</span>
+<span class="sql-keyword">OFFSET</span> 3 <span class="sql-keyword">ROWS FETCH NEXT</span> 3 <span class="sql-keyword">ROWS ONLY</span>;</code></pre>
+                </div>
+              </div>
             </div>
 
             <div>
               <div class="content-card">
-                <h4>Pravidla pro řazení a stránkování</h4>
+                <h4>Pravidla pro řazení & dialekty</h4>
                 <ul class="styled-list">
                   <li>
-                    <strong>Výchozí směr:</strong> <code>ASC</code> (vzestupně od A do Z, od 0 do 9). <code>DESC</code> (sestupně).
+                    <strong>Je LIMIT v normě SQL?</strong> <em>Není!</em> Klauzule <code>LIMIT</code> je rozšířením enginů MySQL/PostgreSQL. Oficiální normou ISO je od roku 2008 <code>OFFSET ... FETCH NEXT ... ROWS ONLY</code>.
                   </li>
                   <li>
                     <strong>Vzorec pro stránkování:</strong>
                     <br><code>OFFSET = (číslo_stránky - 1) * počet_na_stránku</code>
                   </li>
                   <li>
-                    <strong>Deterministické řazení:</strong> Pokud řadíte podle sloupce s duplicitními hodnotami (např. kategorie nebo cena), vždy přidejte do ORDER BY jako poslední kritérium <code>id ASC</code>. Jinak se pořadí produktů mezi stránkami může náhodně měnit!
+                    <strong>Deterministické řazení:</strong> Pokud řadíte podle sloupce s duplicitními hodnotami (cena, kategorie), vždy doplňte do ORDER BY jako poslední kritérium <code>id ASC</code>. Jinak se pořadí položek mezi stránkami může náhodně měnit!
                   </li>
                 </ul>
               </div>
@@ -316,7 +353,7 @@
           <div class="slide-titles">
             <div class="slide-category">Rekapitulace</div>
             <h2 class="slide-title">Shrnutí: Základní dotazování DQL</h2>
-            <p class="slide-subtitle">Zásady pro psaní čistých a rychlých dotazů SELECT</p>
+            <p class="slide-subtitle">Zásady pro psaní čistých a přenositelných dotazů SELECT</p>
           </div>
         </div>
         <div class="slide-body">
@@ -324,17 +361,17 @@
             <div class="summary-card">
               <div class="summary-card-num">1</div>
               <h4>Nikdy v kódu nepište SELECT *</h4>
-              <p>Vždy jmenujte konkrétní sloupce. Snižuje to síťový přenos, šetří RAM klienta a umožňuje databázi využít pokrývající indexy (Covering Index).</p>
+              <p>Vždy jmenujte konkrétní sloupce. Snižuje to síťový přenos, šetří RAM klienta a umožňuje využití pokrývajících indexů.</p>
             </div>
             <div class="summary-card">
               <div class="summary-card-num">2</div>
-              <h4>Pamatujte na NULL</h4>
-              <p>Pro testování prázdných hodnot vždy používejte operátory <code>IS NULL</code> / <code>IS NOT NULL</code> a funkci <code>COALESCE</code>.</p>
+              <h4>Na NULL jedině COALESCE a IS NULL</h4>
+              <p>Zapomeňte na <code>= NULL</code>. Pro ošetření prázdných hodnot vždy používejte operátor <code>IS NULL</code> a přenositelné <code>COALESCE</code>.</p>
             </div>
             <div class="summary-card">
               <div class="summary-card-num">3</div>
-              <h4>Stránkování potřebuje ORDER BY</h4>
-              <p>Klauzule <code>LIMIT</code> bez explicitního <code>ORDER BY</code> vrací řádky v nedeterministickém fyzickém pořadí z disku.</p>
+              <h4>LIMIT vs. ANSI FETCH</h4>
+              <p>Zatímco ve webovém vývoji dominuje <code>LIMIT</code>, u zkoušky a v enterprise databázích (MS SQL, Oracle) se používá <code>FETCH NEXT</code> a <code>TOP</code>.</p>
             </div>
           </div>
         </div>
@@ -344,7 +381,7 @@
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="05_dml_manipulace_s_daty.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 05: DML – Manipulace s daty (Ctrl+Šipka vlevo)">
+      <a href="05_dml_manipulace_s_daty.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 05: DML – Manipulace s daty (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT20">
@@ -445,6 +482,10 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>

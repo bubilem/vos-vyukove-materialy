@@ -190,8 +190,86 @@
         </div>
       </section>
 
-      <!-- SLIDE 4: DELETE -->
+      <!-- SLIDE 4: UPSERT & DIALECTS -->
       <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Pokročilé DML</div>
+            <h2 class="slide-title">Operace UPSERT: Vlož nebo aktualizuj</h2>
+            <p class="slide-subtitle">Jak řešit kolizi primárního klíče v normě ISO, MySQL, MS SQL a PostgreSQL</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Pokročilá zkoušková otázka</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 0.65rem;">
+            Typický scénář v e-shopu: Zákazník vkládá zboží do košíku. Pokud položka ještě v košíku není, chceme provést <code>INSERT</code>. Pokud už existuje, chceme pouze navýšit počet kusů (<code>UPDATE</code>).
+          </p>
+
+          <div class="grid-2">
+            <div class="code-tabs">
+              <div class="code-tabs-header">
+                <div class="code-tabs-nav">
+                  <button class="code-tab-btn active" data-tab="iso"><span class="dialect-badge dialect-badge-iso">ISO / MS SQL (MERGE)</span></button>
+                  <button class="code-tab-btn" data-tab="mysql"><span class="dialect-badge dialect-badge-mysql">MySQL / MariaDB</span></button>
+                  <button class="code-tab-btn" data-tab="pgsql"><span class="dialect-badge dialect-badge-pgsql">PostgreSQL</span></button>
+                </div>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <div class="code-tabs-content">
+                <div class="code-tab-pane active" data-tab="iso">
+                  <pre class="code-block"><code><span class="sql-comment">-- Standard ANSI SQL:2006 & MS SQL Server (MERGE)</span>
+<span class="sql-keyword">MERGE INTO</span> cart_item <span class="sql-keyword">AS</span> target
+<span class="sql-keyword">USING</span> (<span class="sql-keyword">SELECT</span> 1 <span class="sql-keyword">AS</span> user_id, 42 <span class="sql-keyword">AS</span> prod_id, 1 <span class="sql-keyword">AS</span> qty) <span class="sql-keyword">AS</span> src
+<span class="sql-keyword">ON</span> (target.user_id = src.user_id <span class="sql-keyword">AND</span> target.product_id = src.prod_id)
+<span class="sql-keyword">WHEN MATCHED THEN</span>
+  <span class="sql-keyword">UPDATE SET</span> quantity = target.quantity + src.qty
+<span class="sql-keyword">WHEN NOT MATCHED THEN</span>
+  <span class="sql-keyword">INSERT</span> (user_id, product_id, quantity)
+  <span class="sql-keyword">VALUES</span> (src.user_id, src.prod_id, src.qty);</code></pre>
+                </div>
+                <div class="code-tab-pane" data-tab="mysql">
+                  <pre class="code-block"><code><span class="sql-comment">-- MySQL specifikum: ON DUPLICATE KEY UPDATE</span>
+<span class="sql-keyword">INSERT INTO</span> cart_item (user_id, product_id, quantity)
+<span class="sql-keyword">VALUES</span> (1, 42, 1)
+<span class="sql-keyword">ON DUPLICATE KEY UPDATE</span>
+  quantity = quantity + <span class="sql-keyword">VALUES</span>(quantity);</code></pre>
+                </div>
+                <div class="code-tab-pane" data-tab="pgsql">
+                  <pre class="code-block"><code><span class="sql-comment">-- PostgreSQL: ON CONFLICT DO UPDATE</span>
+<span class="sql-keyword">INSERT INTO</span> cart_item (user_id, product_id, quantity)
+<span class="sql-keyword">VALUES</span> (1, 42, 1)
+<span class="sql-keyword">ON CONFLICT</span> (user_id, product_id)
+<span class="sql-keyword">DO UPDATE SET</span>
+  quantity = cart_item.quantity + EXCLUDED.quantity;</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h4>Rozdíly v DML konstrukcích</h4>
+              <ul class="styled-list">
+                <li>
+                  <strong>Standardní MERGE:</strong> Součást normy ISO/IEC 9075:2006. Podporují jej MS SQL Server, Oracle i DB2. Je atomický a robustní pro složité operace.
+                </li>
+                <li>
+                  <strong>ON DUPLICATE KEY UPDATE:</strong> MySQL nemá nativní MERGE; používá tuto konstrukci reagující na konflikt v <code>PRIMARY KEY</code> nebo <code>UNIQUE</code> indexu.
+                </li>
+                <li>
+                  <strong>Spojování textů při UPDATE:</strong> Pokud chcete spojit texty, v MySQL použijete <code>CONCAT(a, b)</code>, v MS SQL <code>a + b</code> a v normě ISO / PostgreSQL operátor <code>a || b</code>.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: DELETE -->
+      <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Mazání dat</div>
@@ -210,21 +288,21 @@
                 </button>
               </div>
               <pre class="code-block"><code><span class="sql-comment">-- 1. Smazání neaktivních zákazníků bez nákupů</span>
-<span class="sql-keyword">DELETE FROM</span> `customer`
-<span class="sql-keyword">WHERE</span> `active` = <span class="sql-keyword">FALSE</span> 
-  <span class="sql-keyword">AND</span> `id` <span class="sql-keyword">NOT IN</span> (
-    <span class="sql-keyword">SELECT DISTINCT</span> `customer_id` <span class="sql-keyword">FROM</span> `orders`
+<span class="sql-keyword">DELETE FROM</span> customer
+<span class="sql-keyword">WHERE</span> active = <span class="sql-keyword">FALSE</span> 
+  <span class="sql-keyword">AND</span> id <span class="sql-keyword">NOT IN</span> (
+    <span class="sql-keyword">SELECT DISTINCT</span> customer_id <span class="sql-keyword">FROM</span> orders
   );
 
 <span class="sql-comment">-- 2. Smazání položky z nákupního košíku</span>
-<span class="sql-keyword">DELETE FROM</span> `order_item`
-<span class="sql-keyword">WHERE</span> `order_id` = 1 <span class="sql-keyword">AND</span> `product_id` = 3;
+<span class="sql-keyword">DELETE FROM</span> order_item
+<span class="sql-keyword">WHERE</span> order_id = 1 <span class="sql-keyword">AND</span> product_id = 3;
 
-<span class="sql-comment">-- 3. Bezpečné promazání s limitem</span>
-<span class="sql-keyword">DELETE FROM</span> `system_logs`
-<span class="sql-keyword">WHERE</span> `created_at` < <span class="sql-string">'2024-01-01'</span>
-<span class="sql-keyword">ORDER BY</span> `created_at` <span class="sql-keyword">ASC</span>
-<span class="sql-keyword">LIMIT</span> 500;</code></pre>
+<span class="sql-comment">-- 3. Mazání s limitem:</span>
+<span class="sql-comment">-- MySQL:</span>
+<span class="sql-keyword">DELETE FROM</span> system_logs <span class="sql-keyword">WHERE</span> created_at &lt; <span class="sql-string">'2024-01-01'</span> <span class="sql-keyword">LIMIT</span> 500;
+<span class="sql-comment">-- MS SQL:</span>
+<span class="sql-keyword">DELETE TOP</span> (500) <span class="sql-keyword">FROM</span> system_logs <span class="sql-keyword">WHERE</span> created_at &lt; <span class="sql-string">'2024-01-01'</span>;</code></pre>
             </div>
 
             <div class="content-card">
@@ -239,14 +317,17 @@
                     Error 1451: Cannot delete or update a parent row: a foreign key constraint fails (`orders`, CONSTRAINT `fk_orders_customer` FOREIGN KEY ...)
                   </div>
                 </li>
+                <li>
+                  <strong>Limit při mazání:</strong> <code>DELETE ... LIMIT</code> je specialita MySQL. V MS SQL slouží <code>DELETE TOP (n)</code>.
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: SUMMARY -->
-      <section class="slide" data-slide="5">
+      <!-- SLIDE 6: SUMMARY -->
+      <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Rekapitulace</div>
@@ -268,8 +349,8 @@
             </div>
             <div class="summary-card">
               <div class="summary-card-num">3</div>
-              <h4>Nepodceňujte triggery</h4>
-              <p>V <code>edu_eshop</code> operace INSERT a DELETE nad tabulkou <code>order_item</code> automaticky přepočítávají celkovou cenu v <code>orders</code>!</p>
+              <h4>Pozor na UPSERT syntaxi</h4>
+              <p>Zatímco ISO a MS SQL spoléhají na standardní <code>MERGE</code>, v MySQL se učí <code>ON DUPLICATE KEY UPDATE</code> a v PostgreSQL <code>ON CONFLICT</code>.</p>
             </div>
           </div>
         </div>
@@ -279,7 +360,7 @@
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="04_integritni_omezeni_a_referencni_integrita.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 04: Integritní omezení a referenční integrita (Ctrl+Šipka vlevo)">
+      <a href="04_integritni_omezeni_a_referencni_integrita.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 04: Integritní omezení a referenční integrita (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT20">
@@ -380,6 +461,10 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>

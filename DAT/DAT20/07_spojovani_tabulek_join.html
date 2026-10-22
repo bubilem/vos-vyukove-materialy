@@ -188,8 +188,84 @@ INNER JOIN orders o ON c.id = o.customer_id;</code></pre>
         </div>
       </section>
 
-      <!-- SLIDE 4: SELF JOIN -->
+      <!-- SLIDE 4: FULL OUTER JOIN -->
       <section class="slide" data-slide="4">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Vnější spojení & SŘBD</div>
+            <h2 class="slide-title">Oboustranné spojení: FULL OUTER JOIN</h2>
+            <p class="slide-subtitle">Všechny řádky z obou tabulek a velký zkouškový chyták v MySQL</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u absolutoria</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 0.65rem;">
+            <code>FULL [OUTER] JOIN</code> kombinuje výsledky <code>LEFT JOIN</code> a <code>RIGHT JOIN</code>. Vrátí všechny propojené záznamy + nespárované záznamy z levé i pravé tabulky (doplněné hodnotami <code>NULL</code>).
+          </p>
+
+          <div class="grid-2">
+            <div class="code-tabs">
+              <div class="code-tabs-header">
+                <div class="code-tabs-nav">
+                  <button class="code-tab-btn active" data-tab="iso"><span class="dialect-badge dialect-badge-iso">ISO / MS SQL / PostgreSQL</span></button>
+                  <button class="code-tab-btn" data-tab="mysql"><span class="dialect-badge dialect-badge-mysql">MySQL / MariaDB</span></button>
+                </div>
+                <button class="btn-copy">
+                  <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span>Kopírovat</span>
+                </button>
+              </div>
+              <div class="code-tabs-content">
+                <div class="code-tab-pane active" data-tab="iso">
+                  <pre class="code-block"><code><span class="sql-comment">-- Nativní podpora v ISO standardu, MS SQL i PostgreSQL:</span>
+<span class="sql-keyword">SELECT</span> 
+  c.id <span class="sql-keyword">AS</span> zakaznik_id,
+  c.email,
+  o.id <span class="sql-keyword">AS</span> objednavka_id,
+  o.total_price
+<span class="sql-keyword">FROM</span> customer c
+<span class="sql-keyword">FULL OUTER JOIN</span> orders o 
+  <span class="sql-keyword">ON</span> c.id = o.customer_id;</code></pre>
+                </div>
+                <div class="code-tab-pane" data-tab="mysql">
+                  <pre class="code-block"><code><span class="sql-comment">-- MySQL NEPŮJČUJE FULL OUTER JOIN! (Syntax error)</span>
+<span class="sql-comment">-- Řešení: Emulace pomocí sjednocení UNION:</span>
+<span class="sql-keyword">SELECT</span> c.id, c.email, o.id <span class="sql-keyword">AS</span> order_id, o.total_price
+<span class="sql-keyword">FROM</span> customer c
+<span class="sql-keyword">LEFT JOIN</span> orders o <span class="sql-keyword">ON</span> c.id = o.customer_id
+
+<span class="sql-keyword">UNION</span>
+
+<span class="sql-keyword">SELECT</span> c.id, c.email, o.id <span class="sql-keyword">AS</span> order_id, o.total_price
+<span class="sql-keyword">FROM</span> customer c
+<span class="sql-keyword">RIGHT JOIN</span> orders o <span class="sql-keyword">ON</span> c.id = o.customer_id;</code></pre>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h4>Kritická otázka u absolutoria</h4>
+              <div class="callout callout-warning" style="margin-top: 0;">
+                <div class="callout-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <div class="callout-content">
+                  <div class="callout-title">Chyták: Proč FULL JOIN v MySQL selže?</div>
+                  MySQL ani MariaDB klauzuli <code>FULL OUTER JOIN</code> <strong>nepodporují</strong>! Pokud ji student napíše v MySQL, server ohlásí syntaktickou chybu. Jediným řešením v MySQL je provést <code>LEFT JOIN</code> a spojit jej operátorem <code>UNION</code> s <code>RIGHT JOIN</code>.
+                </div>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                V <strong>MS SQL Serveru</strong> a <strong>PostgreSQL</strong> funguje standardní zápis <code>FULL OUTER JOIN</code> naprosto spolehlivě a optimálně.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: SELF JOIN -->
+      <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Speciální spojení</div>
@@ -211,11 +287,11 @@ INNER JOIN orders o ON c.id = o.customer_id;</code></pre>
                 </button>
               </div>
               <pre class="code-block"><code><span class="sql-keyword">SELECT</span> 
-  sub.`name` <span class="sql-keyword">AS</span> podkategorie,
-  <span class="sql-func">COALESCE</span>(parent.`name`, <span class="sql-string">'[Hlavní kategorie]'</span>) <span class="sql-keyword">AS</span> nadrazena_kategorie
-<span class="sql-keyword">FROM</span> `category` sub
-<span class="sql-keyword">LEFT JOIN</span> `category` parent 
-  <span class="sql-keyword">ON</span> sub.`parent_id` = parent.`id`
+  sub.name <span class="sql-keyword">AS</span> podkategorie,
+  <span class="sql-func">COALESCE</span>(parent.name, <span class="sql-string">'[Hlavní kategorie]'</span>) <span class="sql-keyword">AS</span> nadrazena_kategorie
+<span class="sql-keyword">FROM</span> category sub
+<span class="sql-keyword">LEFT JOIN</span> category parent 
+  <span class="sql-keyword">ON</span> sub.parent_id = parent.id
 <span class="sql-keyword">ORDER BY</span> nadrazena_kategorie, podkategorie;</code></pre>
             </div>
 
@@ -237,8 +313,8 @@ INNER JOIN orders o ON c.id = o.customer_id;</code></pre>
         </div>
       </section>
 
-      <!-- SLIDE 5: MULTI-TABLE JOIN (M:N) -->
-      <section class="slide" data-slide="5">
+      <!-- SLIDE 6: MULTI-TABLE JOIN (M:N) -->
+      <section class="slide" data-slide="6">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Komplexní dotaz</div>
@@ -256,13 +332,13 @@ INNER JOIN orders o ON c.id = o.customer_id;</code></pre>
               </button>
             </div>
             <pre class="code-block"><code><span class="sql-keyword">SELECT</span> 
-  p.`name` <span class="sql-keyword">AS</span> produkt,
-  p.`price` <span class="sql-keyword">AS</span> cena,
-  c.`name` <span class="sql-keyword">AS</span> kategorie
-<span class="sql-keyword">FROM</span> `product` p
-<span class="sql-keyword">INNER JOIN</span> `product_category` pc <span class="sql-keyword">ON</span> p.`id` = pc.`product_id`
-<span class="sql-keyword">INNER JOIN</span> `category` c         <span class="sql-keyword">ON</span> pc.`category_id` = c.`id`
-<span class="sql-keyword">ORDER BY</span> p.`name`, c.`name`;</code></pre>
+  p.name <span class="sql-keyword">AS</span> produkt,
+  p.price <span class="sql-keyword">AS</span> cena,
+  c.name <span class="sql-keyword">AS</span> kategorie
+<span class="sql-keyword">FROM</span> product p
+<span class="sql-keyword">INNER JOIN</span> product_category pc <span class="sql-keyword">ON</span> p.id = pc.product_id
+<span class="sql-keyword">INNER JOIN</span> category c         <span class="sql-keyword">ON</span> pc.category_id = c.id
+<span class="sql-keyword">ORDER BY</span> p.name, c.name;</code></pre>
           </div>
 
           <div class="callout callout-exam" style="margin-top: 0.5rem;">
@@ -277,8 +353,8 @@ INNER JOIN orders o ON c.id = o.customer_id;</code></pre>
         </div>
       </section>
 
-      <!-- SLIDE 6: SUMMARY -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 7: SUMMARY -->
+      <section class="slide" data-slide="7">
         <div class="slide-header">
           <div class="slide-titles">
             <div class="slide-category">Rekapitulace</div>
@@ -296,12 +372,12 @@ INNER JOIN orders o ON c.id = o.customer_id;</code></pre>
             <div class="summary-card">
               <div class="summary-card-num">2</div>
               <h4>Použijte LEFT JOIN</h4>
-              <p>Když chcete zachovat všechny záznamy z primární tabulky bez ohledu na to, zda k nim v druhé tabulce existují data (např. zákazníci bez nákupu, kategorie bez rodiče).</p>
+              <p>Když chcete zachovat všechny záznamy z primární tabulky bez ohledu na to, zda k nim v druhé tabulce existují data (např. zákazníci bez profilu).</p>
             </div>
             <div class="summary-card">
               <div class="summary-card-num">3</div>
-              <h4>Vždy používejte aliasy tabulek</h4>
-              <p>Aliasy (<code>p</code>, <code>c</code>, <code>o</code>) zpřehledňují kód, zkracují dotazy a zabraňují chybě <em>„Column in field list is ambiguous“</em>.</p>
+              <h4>Pozor na FULL JOIN v MySQL</h4>
+              <p>MS SQL i PostgreSQL mají nativní <code>FULL OUTER JOIN</code>. V MySQL jej musíte emulovat sjednocením <code>LEFT JOIN UNION RIGHT JOIN</code>.</p>
             </div>
           </div>
         </div>
@@ -311,7 +387,7 @@ INNER JOIN orders o ON c.id = o.customer_id;</code></pre>
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="06_dql_zaklady_dotazovani_select.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 06: DQL – Základy dotazování (Ctrl+Šipka vlevo)">
+      <a href="06_dql_zaklady_dotazovani_select.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 06: DQL – Základy dotazování (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu DAT20">
@@ -412,6 +488,10 @@ INNER JOIN orders o ON c.id = o.customer_id;</code></pre>
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>

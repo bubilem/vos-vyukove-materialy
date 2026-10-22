@@ -165,16 +165,16 @@
                 </button>
               </div>
               <pre class="code-block"><code><span class="sql-keyword">SELECT</span> 
-  p.`id`,
-  p.`name`,
-  p.`price`,
-  <span class="sql-func">ROUND</span>(<span class="sql-func">AVG</span>(r.`score`), 2) <span class="sql-keyword">AS</span> prumerne_hodnoceni,
-  <span class="sql-func">COUNT</span>(r.`id`)            <span class="sql-keyword">AS</span> pocet_recenzi
-<span class="sql-keyword">FROM</span> `product` p
-<span class="sql-keyword">LEFT JOIN</span> `rating` r <span class="sql-keyword">ON</span> p.`id` = r.`product_id`
-<span class="sql-keyword">WHERE</span> p.`active` = <span class="sql-keyword">TRUE</span>
+  p.id,
+  p.name,
+  p.price,
+  <span class="sql-func">ROUND</span>(<span class="sql-func">AVG</span>(r.score), 2) <span class="sql-keyword">AS</span> prumerne_hodnoceni,
+  <span class="sql-func">COUNT</span>(r.id)            <span class="sql-keyword">AS</span> pocet_recenzi
+<span class="sql-keyword">FROM</span> product p
+<span class="sql-keyword">LEFT JOIN</span> rating r <span class="sql-keyword">ON</span> p.id = r.product_id
+<span class="sql-keyword">WHERE</span> p.active = <span class="sql-keyword">TRUE</span>
 <span class="sql-keyword">GROUP BY</span> 
-  p.`id`, p.`name`, p.`price`
+  p.id, p.name, p.price
 <span class="sql-keyword">ORDER BY</span> 
   prumerne_hodnoceni <span class="sql-keyword">DESC</span>;</code></pre>
             </div>
@@ -185,14 +185,14 @@
                   <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
                 </div>
                 <div class="callout-content">
-                  <div class="callout-title">Pravidlo ONLY_FULL_GROUP_BY (MySQL/MariaDB)</div>
-                  Všechny sloupce uvedené v klauzuli <code>SELECT</code>, které <strong>nejsou uzavřeny v agregační funkci</strong>, musí být explicitně uvedeny v klauzuli <code>GROUP BY</code>!
+                  <div class="callout-title">Pravidlo ISO normy & MS SQL: ONLY_FULL_GROUP_BY</div>
+                  Všechny sloupce uvedené v klauzuli <code>SELECT</code>, které <strong>nejsou uzavřeny v agregační funkci</strong>, musí být explicitně uvedeny v klauzuli <code>GROUP BY</code>! V <strong>MS SQL Serveru</strong> a <strong>PostgreSQL</strong> dotaz bez tohoto uvedení okamžitě zhavaruje chybou. V moderním MySQL/MariaDB toto pravidlo vynucuje režim <code>ONLY_FULL_GROUP_BY</code>.
                 </div>
               </div>
               <div class="content-card" style="margin-top: 0.8rem;">
                 <h4>Proč je toto pravidlo logické?</h4>
                 <p>
-                  Pokud byste seskupovali hodnocení podle <code>product_id</code>, ale v SELECTu si vyžádali <code>comment</code>, databáze by nevěděla, který z deseti různých textů komentářů má na jediný výsledný řádek vypsat!
+                  Pokud byste seskupovali hodnocení podle <code>product_id</code>, ale v SELECTu si vyžádali textový <code>comment</code>, databáze by nevěděla, který z deseti různých textů recenzí má na jediný výsledný řádek produktu vypsat! Starší MySQL vracelo náhodnou hodnotu, což vedlo k tichým a nebezpečným chybám.
                 </p>
               </div>
             </div>
@@ -429,6 +429,10 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>

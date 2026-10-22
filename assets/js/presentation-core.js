@@ -84,6 +84,7 @@
     bindTouchEvents();
     bindModalEvents();
     bindCopyCodeButtons();
+    bindCodeTabs();
 
     // 6. Automatické vykreslení matematických vzorců ($...$ a $$...$$)
     renderMathFormulas();
@@ -599,9 +600,20 @@
   function bindCopyCodeButtons() {
     document.querySelectorAll('.btn-copy').forEach((btn) => {
       btn.addEventListener('click', async () => {
-        const box = btn.closest('.code-box, .code-wrapper');
-        if (!box) return;
-        const codeElement = box.querySelector('pre code, pre');
+        let codeElement = null;
+        const tabsContainer = btn.closest('.code-tabs');
+        if (tabsContainer) {
+          const activePane = tabsContainer.querySelector('.code-tab-pane.active') || tabsContainer.querySelector('.code-tab-pane');
+          if (activePane) {
+            codeElement = activePane.querySelector('pre code, pre');
+          }
+        }
+        if (!codeElement) {
+          const box = btn.closest('.code-box, .code-wrapper');
+          if (box) {
+            codeElement = box.querySelector('pre code, pre');
+          }
+        }
         if (!codeElement) return;
 
         const textToCopy = codeElement.textContent;
@@ -626,6 +638,33 @@
         } catch (err) {
           console.error('Chyba při kopírování do schránky:', err);
         }
+      });
+    });
+  }
+
+  /**
+   * Přepínání záložek dialektů a jazyků v kódu (.code-tabs)
+   */
+  function bindCodeTabs() {
+    document.querySelectorAll('.code-tabs').forEach((tabsContainer) => {
+      const navButtons = tabsContainer.querySelectorAll('.code-tab-btn');
+      const panes = tabsContainer.querySelectorAll('.code-tab-pane');
+
+      navButtons.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetTab = btn.getAttribute('data-tab');
+          if (!targetTab) return;
+
+          navButtons.forEach(b => b.classList.remove('active'));
+          panes.forEach(p => p.classList.remove('active'));
+
+          btn.classList.add('active');
+          const matchingPane = tabsContainer.querySelector(`.code-tab-pane[data-tab="${targetTab}"]`);
+          if (matchingPane) {
+            matchingPane.classList.add('active');
+          }
+        });
       });
     });
   }

@@ -133,37 +133,77 @@
         </div>
         <div class="slide-body">
           <div class="grid-2">
-            <div class="code-wrapper">
-              <div class="code-header">
-                <span class="code-title">CREATE TABLE customer</span>
+            <div class="code-tabs">
+              <div class="code-tabs-header">
+                <div class="code-tabs-nav">
+                  <button class="code-tab-btn active" data-tab="iso"><span class="dialect-badge dialect-badge-iso">ISO Norma</span></button>
+                  <button class="code-tab-btn" data-tab="mysql"><span class="dialect-badge dialect-badge-mysql">MySQL / MariaDB</span></button>
+                  <button class="code-tab-btn" data-tab="mssql"><span class="dialect-badge dialect-badge-mssql">MS SQL (T-SQL)</span></button>
+                  <button class="code-tab-btn" data-tab="pgsql"><span class="dialect-badge dialect-badge-pgsql">PostgreSQL</span></button>
+                </div>
                 <button class="btn-copy">
                   <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                   <span>Kopírovat</span>
                 </button>
               </div>
-              <pre class="code-block"><code><span class="sql-keyword">CREATE TABLE</span> `customer` (
-  `id` <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY AUTO_INCREMENT</span>,
+              <div class="code-tabs-content">
+                <div class="code-tab-pane active" data-tab="iso">
+                  <pre class="code-block"><code><span class="sql-comment">-- Standardní ANSI/ISO SQL:2008 syntaxe</span>
+<span class="sql-keyword">CREATE TABLE</span> "customer" (
+  "id" <span class="sql-type">INT</span> <span class="sql-keyword">GENERATED ALWAYS AS IDENTITY PRIMARY KEY</span>,
+  "email" <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL UNIQUE</span>,
+  "password_hash" <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+  "created_at" <span class="sql-type">TIMESTAMP</span> <span class="sql-keyword">NOT NULL DEFAULT CURRENT_TIMESTAMP</span>,
+  "active" <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">NOT NULL DEFAULT TRUE</span>
+);</code></pre>
+                </div>
+                <div class="code-tab-pane" data-tab="mysql">
+                  <pre class="code-block"><code><span class="sql-comment">-- Dialekt MySQL / MariaDB (LAMP stack)</span>
+<span class="sql-keyword">CREATE TABLE</span> `customer` (
+  `id` <span class="sql-type">INT</span> <span class="sql-keyword">AUTO_INCREMENT PRIMARY KEY</span>,
   `email` <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL UNIQUE</span>,
   `password_hash` <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
   `created_at` <span class="sql-type">DATETIME</span> <span class="sql-keyword">NOT NULL DEFAULT CURRENT_TIMESTAMP</span>,
   `active` <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">NOT NULL DEFAULT TRUE</span>
-) <span class="sql-keyword">ENGINE</span>=InnoDB;</code></pre>
+) <span class="sql-keyword">ENGINE</span>=InnoDB <span class="sql-keyword">DEFAULT CHARSET</span>=utf8mb4;</code></pre>
+                </div>
+                <div class="code-tab-pane" data-tab="mssql">
+                  <pre class="code-block"><code><span class="sql-comment">-- Dialekt Microsoft SQL Server (T-SQL)</span>
+<span class="sql-keyword">CREATE TABLE</span> [customer] (
+  [id] <span class="sql-type">INT</span> <span class="sql-keyword">IDENTITY(1,1) PRIMARY KEY</span>,
+  [email] <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL UNIQUE</span>,
+  [password_hash] <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+  [created_at] <span class="sql-type">DATETIME2</span> <span class="sql-keyword">NOT NULL DEFAULT CURRENT_TIMESTAMP</span>,
+  [active] <span class="sql-type">BIT</span> <span class="sql-keyword">NOT NULL DEFAULT 1</span>
+);</code></pre>
+                </div>
+                <div class="code-tab-pane" data-tab="pgsql">
+                  <pre class="code-block"><code><span class="sql-comment">-- Dialekt PostgreSQL (plná ANSI podpora)</span>
+<span class="sql-keyword">CREATE TABLE</span> "customer" (
+  "id" <span class="sql-type">INT</span> <span class="sql-keyword">GENERATED ALWAYS AS IDENTITY PRIMARY KEY</span>,
+  "email" <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL UNIQUE</span>,
+  "password_hash" <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+  "created_at" <span class="sql-type">TIMESTAMPTZ</span> <span class="sql-keyword">NOT NULL DEFAULT CURRENT_TIMESTAMP</span>,
+  "active" <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">NOT NULL DEFAULT TRUE</span>
+);</code></pre>
+                </div>
+              </div>
             </div>
 
             <div class="content-card">
-              <h4>Rozbor klíčových komponent</h4>
+              <h4>Rozbor klíčových komponent & dialektů</h4>
               <ul class="styled-list">
                 <li>
-                  <strong><code>PRIMARY KEY AUTO_INCREMENT</code>:</strong> Automaticky generovaný identifikátor. Každý nový řádek dostane číslo o 1 vyšší.
+                  <strong>Automatický číselník PK:</strong> V normě ISO a PG je to <code>GENERATED ALWAYS AS IDENTITY</code>. V MySQL se používá <code>AUTO_INCREMENT</code>, v MS SQL <code>IDENTITY(1,1)</code>.
                 </li>
                 <li>
-                  <strong><code>UNIQUE</code>:</strong> Zabraňuje registraci dvou uživatelů se shodnou emailovou adresou.
+                  <strong>Datový typ Boolean:</strong> V normě a PG <code>BOOLEAN</code>, v MySQL alias pro <code>TINYINT(1)</code>, v MS SQL celočíselný <code>BIT</code>.
                 </li>
                 <li>
-                  <strong><code>DEFAULT CURRENT_TIMESTAMP</code>:</strong> Databáze sama automaticky doplní aktuální systémové datum a čas při vložení řádku.
+                  <strong><code>UNIQUE</code> & <code>DEFAULT</code>:</strong> Standardní součást všech SŘBD pro unikátnost a výchozí časové razítko.
                 </li>
                 <li>
-                  <strong><code>ENGINE=InnoDB</code>:</strong> Standardní transakční engine MySQL garantující vlastnosti <strong>ACID</strong>, cizí klíče a zamykání na úrovni řádků (row-level locking).
+                  <strong><code>ENGINE=InnoDB</code>:</strong> Čistě specifikum MySQL! V MS SQL ani PostgreSQL se úložný engine u tabulky nezadává (systém má jednotný transakční engine pro celou databázi).
                 </li>
               </ul>
             </div>
@@ -295,11 +335,12 @@
 
             <div>
               <div class="content-card">
-                <h4>Rozdíl: MODIFY vs. CHANGE vs. RENAME</h4>
+                <h4>Rozdíl: MODIFY vs. CHANGE vs. ALTER COLUMN</h4>
                 <ul class="styled-list">
-                  <li><strong><code>MODIFY COLUMN</code>:</strong> Mění datový typ nebo integritní omezení sloupce, ale <em>nemění</em> jeho název.</li>
-                  <li><strong><code>CHANGE COLUMN</code>:</strong> Dokáže změnit <em>název</em> sloupce i jeho definici současně (vyžaduje zadat starý i nový název).</li>
-                  <li><strong><code>RENAME COLUMN</code>:</strong> (Od MySQL 8.0) Čisté přejmenování sloupce bez nutnosti opakovat celý datový typ: <code>RENAME COLUMN phone TO phone_number</code>.</li>
+                  <li><strong><code>MODIFY COLUMN</code>:</strong> Specifikum MySQL/MariaDB – mění datový typ sloupce bez změny názvu.</li>
+                  <li><strong><code>ALTER COLUMN</code>:</strong> Norma ISO, MS SQL i PostgreSQL používají: <code>ALTER COLUMN name VARCHAR(250) NOT NULL;</code></li>
+                  <li><strong><code>CHANGE COLUMN</code>:</strong> (MySQL) Změna <em>názvu</em> sloupce i typu současně: <code>CHANGE old_name new_name INT</code>.</li>
+                  <li><strong><code>RENAME COLUMN</code>:</strong> Moderní ISO standard i MySQL 8.0+: <code>RENAME COLUMN phone TO phone_number;</code></li>
                 </ul>
               </div>
               <div class="callout callout-warning" style="margin-top: 1rem;">
