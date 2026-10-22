@@ -35,7 +35,7 @@
         <div class="lesson-indicator">
           <span>Lekce 08</span>
           <span class="divider">&bull;</span>
-          <span>Responzivní design a Media Queries</span>
+          <span>Responzivní design &bull; Media Queries &amp; Fluidní rozvržení</span>
         </div>
       </div>
       <div class="header-right">
@@ -54,12 +54,16 @@
         <div class="hero-badge">Modul WEB20 &bull; 8. přednáška (45 min)</div>
         <h1 class="hero-title">Responzivní design (RWD) &amp; Media Queries</h1>
         <p class="hero-desc">
-          Filozofie Mobile-First, konfigurace meta viewportu, tvorba fluidních rozvržení, breakpointy pomocí @media pravidel a moderní reaktivní stylování pomocí CSS proměnných.
+          Od konfigurace meta viewportu a filozofie Mobile-First k fluidní typografii <code>clamp()</code>, úsporným responzivním médiím <code>&lt;picture&gt;</code>, reaktivním CSS proměnným a autonomním Container Queries pro portál <code>edu_portal</code>.
         </p>
         <div class="hero-meta">
           <div class="hero-meta-item">
             <span class="hero-meta-label">Metodika návrhu</span>
-            <span class="hero-meta-val">Mobile-First, @media, Custom Properties</span>
+            <span class="hero-meta-val">Mobile-First, @media &amp; @container</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-label">Fluidní kalkulace</span>
+            <span class="hero-meta-val">clamp(), srcset &amp; Custom Properties</span>
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Referenční model</span>
@@ -67,208 +71,482 @@
           </div>
           <div class="hero-meta-item">
             <span class="hero-meta-label">Zkouška / Absolutorium</span>
-            <span class="hero-meta-val">Okruh č. 16 (RWD) &amp; č. 8</span>
+            <span class="hero-meta-val">Okruh č. 16 (RWD) &amp; č. 8 (CSS)</span>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 2: TŘI PILÍŘE RWD -->
+      <!-- SLIDE 2: TŘI PILÍŘE RWD & ZÁHADA META VIEWPORTU -->
       <section class="slide" data-slide="2">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Základní principy</div>
-            <h2 class="slide-title">Tři pilíře responzivního webdesignu (Ethan Marcotte)</h2>
-            <p class="slide-subtitle">Jak vytvořit jeden web, který funguje optimálně na libovolném zařízení</p>
+            <div class="slide-category">Základní principy &bull; Fyzické vykreslování</div>
+            <h2 class="slide-title">Tři pilíře RWD (Ethan Marcotte) a záhada Meta Viewportu</h2>
+            <p class="slide-subtitle">Proč bez jediné řádky v HTML mobilní telefony zobrazují desktopový „bleší tisk“</p>
           </div>
           <div class="slide-tags">
-            <span class="tag tag-exam">Otázka u zkoušky</span>
+            <span class="tag tag-exam">Otázka u zkoušky č. 16</span>
           </div>
         </div>
         <div class="slide-body">
           <div class="grid-3">
             <div class="content-card">
-              <h4>1. Meta Viewport</h4>
-              <p>Instrukce pro mobilní prohlížeč, aby zobrazil web v poměru 1:1 k fyzickým CSS pixelům displeje a neoddaloval stránku na virtuálních 980 pixelů:</p>
-              <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code>
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                1. Meta Viewport (1:1 poměr)
+              </h4>
+              <p>Příkaz pro mobilní prohlížeč: nastav šířku plátna přesně podle displeje mobilu (1:1). Zabraňuje tomu, aby telefon web zmenšil do nečitelného mikroskopického náhledu (virtuální 980px desktop).</p>
             </div>
             <div class="content-card">
-              <h4>2. Fluidní rozvržení (Mřížka)</h4>
-              <p>Místo fixních šířek v pixelech (např. <code>width: 960px</code>) se používají poměrné jednotky (<code>%</code>, <code>fr</code>, <code>vw</code>, <code>max-width</code>), které se přizpůsobí šířce okna.</p>
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                2. Fluidní mřížka (% / fr / rem)
+              </h4>
+              <p>Opuštění pevných pixelů (<code>960px</code>). Proporční jednotky (<code>%</code>, <code>fr</code>, <code>max-width</code>), které se plynule přelévají podle dostupného prostoru.</p>
             </div>
             <div class="content-card">
-              <h4>3. Flexibilní média</h4>
-              <p>Obrázky a videa nesmí nikdy přetéct svůj rodičovský kontejner:</p>
-              <code>img, video { max-width: 100%; height: auto; }</code>
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                3. Flexibilní média
+              </h4>
+              <p>Obrázky, videa a tabulky nesmí nikdy přetéct svůj kontejner: <code>img, video { max-width: 100%; height: auto; }</code>.</p>
             </div>
           </div>
-          <div class="callout callout-warning" style="margin-top: 1rem;">
-            <div class="callout-icon">
-              <svg class="icon" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+
+          <!-- Interaktivní simulátor telefonu s viewportem a bez viewportu -->
+          <div class="interactive-showcase" style="margin-top: 0.85rem;">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Simulovat chování mobilního prohlížeče:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setViewportDemo('with', this)">
+                1. S Viewportem (Moderní RWD standard)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setViewportDemo('without', this)">
+                2. BEZ Viewportu (Chyba: 980px zoom-out)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setViewportDemo('antipattern', this)">
+                3. Antipattern: user-scalable=no
+              </button>
             </div>
-            <div class="callout-content">
-              <div class="callout-title">Nikdy nezakazujte zoom uživateli!</div>
-              <p>Atribut <code>user-scalable=no</code> nebo <code>maximum-scale=1.0</code> je hrubým porušením přístupnosti (WCAG). Zrakově hendikepovaný uživatel musí mít možnost si text na mobilu přiblížit gestem prstů.</p>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="vpCodeTitle">html &bull; povinná konfigurace v &lt;head&gt;</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('vpCode', 'html', this)">HTML</button>
+                      <button type="button" class="code-tab" onclick="switchTab('vpCode', 'css', this)">CSS</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="vpCodeBlock"><span class="html-comment">&lt;!-- Správná deklarace pro mobilní zařízení --&gt;</span>
+<span class="html-tag">&lt;meta</span> <span class="html-attr">name</span>=<span class="html-val">"viewport"</span> <span class="html-attr">content</span>=<span class="html-val">"width=device-width, initial-scale=1.0"</span><span class="html-tag">&gt;</span></code></pre>
+              </div>
+
+              <!-- Živý telefonní mockup -->
+              <div class="phone-mockup-wrap">
+                <div class="phone-mockup">
+                  <div class="phone-notch"></div>
+                  <div class="phone-screen" id="phoneScreen">
+                    <!-- Dynamický obsah vložený JS -->
+                    <div class="phone-web-responsive">
+                      <div class="mock-mob-header">
+                        <span>edu_portal</span>
+                        <svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                      </div>
+                      <div class="mock-mob-hero">
+                        <strong>Webdesign &bull; WEB20</strong>
+                        <p style="margin: 0.2rem 0 0; opacity: 0.85;">Písmo má optimální velikost 16 px. Není třeba nic přibližovat prsty!</p>
+                      </div>
+                      <div class="mock-mob-card">
+                        <strong>Katalog kurzů</strong>
+                        <span style="color: var(--accent);">3 moduly &bull; Zapsat se</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="phone-home-indicator"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="vpFeedback">
+              <span>Rozbor stavu:</span>
+              <strong id="vpFeedbackText">Správný stav: Díky <code>width=device-width</code> prohlížeč chápe, že web je responzivní. Vykresluje v logických pixelech telefonu s ostrým a čitelným textem.</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 3: MOBILE-FIRST A MEDIA QUERIES -->
+      <!-- SLIDE 3: MOBILE-FIRST A BREAKPOINTY -->
       <section class="slide" data-slide="3">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Strategie kódování</div>
+            <div class="slide-category">Architektura kódu &bull; Progresivní rozšiřování</div>
             <h2 class="slide-title">Filozofie Mobile-First a pravidlo @media</h2>
-            <p class="slide-subtitle">Progresivní rozšiřování pomocí min-width vs. Desktop-First degradace</p>
+            <p class="slide-subtitle">Proč začínat od nejmenšího displeje a moderní zápis rozsahu šířek (Range Queries)</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky č. 16</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div>
-              <div class="code-wrapper">
+          <!-- Přímá didaktická odpověď: Proč Mobile-First & Range syntaxe -->
+          <div class="grid-2" style="margin-bottom: 0.75rem;">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                Odpověď: Proč začínat od mobilu (Mobile-First)?
+              </h4>
+              <ul class="styled-list" style="font-size: 0.8rem; margin: 0;">
+                <li><strong>Progresivní rozšiřování:</strong> Výchozí kód pro mobil je čistý a přímočarý (1 sloupec). Větší displeje pouze <em>přidávají</em> sloupce přes <code>min-width</code>, místo aby mobil musel složitě přepisovat a rušit desktopové styly.</li>
+                <li><strong>Výkon a rychlost:</strong> Mobilní zařízení mají méně paměti a pomalejší síť – nemusí tak stahovat a přebíjet těžký desktopový kód.</li>
+                <li><strong>Google Mobile-First Indexing:</strong> Vyhledávače dnes hodnotí a řadí weby prioritně podle jejich mobilní verze.</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                Odpověď: Co jsou moderní Range Queries (Level 4)?
+              </h4>
+              <ul class="styled-list" style="font-size: 0.8rem; margin: 0;">
+                <li><strong>Intuitivní matematický zápis:</strong> Místo krkolomného <code>(min-width: 768px) and (max-width: 1199px)</code> píšeme přirozenou nerovnost: <code>@media (768px &lt;= width &lt; 1200px)</code>.</li>
+                <li><strong>Konec chyb s 1px mezerou:</strong> Odpadá známé dilema hraničních hodnot (např. zda psát 767px nebo 767.98px).</li>
+                <li><strong>Univerzální podpora:</strong> Tento standard W3C plně podporují všechny moderní prohlížeče (Chrome, Firefox, Safari, Edge).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Zvolit šířku okna zařízení:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setDeviceDemo('mobile', this)">
+                Mobilní telefon (375 px) &bull; 1 sloupec
+              </button>
+              <button type="button" class="btn-scenario" onclick="setDeviceDemo('tablet', this)">
+                Tablet (768 px) &bull; 2 sloupce
+              </button>
+              <button type="button" class="btn-scenario" onclick="setDeviceDemo('desktop', this)">
+                Desktop (1200 px) &bull; 3 sloupce + sidebar
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
                 <div class="code-header">
-                  <span class="code-title">css &bull; mobile-first architektura</span>
+                  <div class="code-header-left">
+                    <span class="code-title" id="devCodeTitle">css &bull; mobile-first kaskáda</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('devCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('devCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre class="code-block"><code><span class="html-comment">/* 1. VÝCHOZÍ STYLY: Mobilní telefon (1 sloupec) */</span>
-<span class="css-sel">.container</span> {
-  <span class="css-prop">display</span>: <span class="css-val">flex</span>;
-  <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>;
-  <span class="css-prop">padding</span>: <span class="css-num">1</span><span class="css-unit">rem</span>;
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="devCodeBlock"><span class="html-comment">/* 1. VÝCHOZÍ STAV: Mobil (1 sloupec, postranní panel je skrytý) */</span>
+<span class="css-sel">.sidebar</span> {
+  <span class="css-prop">display</span>: <span class="css-val">none</span>; <span class="html-comment">/* na mobilu a tabletu šetříme místo */</span>
 }
 
-<span class="html-comment">/* 2. TABLET: Od šířky 768px a více */</span>
-<span class="css-at">@media</span> <span class="css-val">screen</span> <span class="code-kw">and</span> (<span class="css-prop">min-width</span>: <span class="css-num">768</span><span class="css-unit">px</span>) {
-  <span class="css-sel">.container</span> {
-    <span class="css-prop">flex-direction</span>: <span class="css-val">row</span>;
+<span class="css-sel">.courses-grid</span> {
+  <span class="css-prop">display</span>: <span class="css-val">grid</span>;
+  <span class="css-prop">grid-template-columns</span>: <span class="css-num">1</span><span class="css-unit">fr</span>;
+  <span class="css-prop">gap</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span>;
+}
+
+<span class="html-comment">/* 2. TABLET: min-width 768px (2 sloupce karet) */</span>
+<span class="css-at">@media</span> (<span class="css-prop">min-width</span>: <span class="css-num">768</span><span class="css-unit">px</span>) {
+  <span class="css-sel">.courses-grid</span> {
+    <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-num">2</span>, <span class="css-num">1</span><span class="css-unit">fr</span>);
   }
 }
 
-<span class="html-comment">/* 3. DESKTOP: Od šířky 1024px a více */</span>
-<span class="css-at">@media</span> <span class="css-val">screen</span> <span class="code-kw">and</span> (<span class="css-prop">min-width</span>: <span class="css-num">1024</span><span class="css-unit">px</span>) {
-  <span class="css-sel">.container</span> {
-    <span class="css-prop">max-width</span>: <span class="css-num">1200</span><span class="css-unit">px</span>;
-    <span class="css-prop">margin</span>: <span class="css-num">0</span> <span class="css-val">auto</span>;
+<span class="html-comment">/* 3. DESKTOP: od 1200px (zobrazíme sidebar a přidáme mu sloupec) */</span>
+<span class="css-at">@media</span> (<span class="css-prop">width</span> &gt;= <span class="css-num">1200</span><span class="css-unit">px</span>) {
+  <span class="css-sel">.sidebar</span> {
+    <span class="css-prop">display</span>: <span class="css-val">block</span>; <span class="html-comment">/* na velkém monitoru panel odkryjeme */</span>
+  }
+
+  <span class="css-sel">.courses-grid</span> {
+    <span class="css-prop">grid-template-columns</span>: <span class="css-num">180</span><span class="css-unit">px</span> <span class="css-num">1</span><span class="css-unit">fr</span> <span class="css-num">1</span><span class="css-unit">fr</span>;
   }
 }</code></pre>
               </div>
-            </div>
-            <div>
-              <div class="content-card">
-                <h4>Proč je Mobile-First průmyslovým standardem?</h4>
-                <ul class="styled-list">
-                  <li><strong>Progresivní rozšiřování:</strong> Začínáme s nejjednodušším čistým kódem bez zbytečných floatů a pozicování. Teprve pro větší obrazovky přidáváme sloupce.</li>
-                  <li><strong>Výkon na mobilních sítích:</strong> Mobilní telefon nemusí stahovat a přepisovat složitá desktopová pravidla s <code>max-width</code>.</li>
-                  <li><strong>SEO &amp; Google Mobile-First Indexing:</strong> Vyhledávače hodnotí a indexují prioritně mobilní verzi stránky.</li>
-                </ul>
+
+              <!-- Živé plátno s měnícím se rozměrem okna -->
+              <div class="device-resizer-shell">
+                <div class="device-resizer-bar">
+                  <span id="resizerWidthLabel">Simulovaná šířka: 375 px (Mobilní telefon)</span>
+                  <span class="tag tag-exam" id="activeBreakpointPill">Výchozí styl (bez @media)</span>
+                </div>
+                <div class="device-resizer-window" id="resizerWindow" style="max-width: 340px;">
+                  <div class="resizer-grid layout-mobile" id="resizerGrid">
+                    <div class="resizer-card sidebar-card" id="resizerSidebar" style="display: none;">
+                      <strong>Boční menu</strong>
+                      <span style="font-size: 0.65rem;">Kategorie kurzů</span>
+                    </div>
+                    <div class="resizer-card">
+                      <strong>Kurz WEB20</strong>
+                      <span>HTML5 &amp; CSS3 Layout</span>
+                    </div>
+                    <div class="resizer-card">
+                      <strong>Kurz DAT20</strong>
+                      <span>Databáze &amp; SQL</span>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            <div class="stage-feedback" id="devFeedback">
+              <span>Metodický princip:</span>
+              <strong id="devFeedbackText">Mobile-First (min-width): Začínáme čistým kódem pro mobil bez přepisování. Větší obrazovky pouze přidávají pravidla navíc!</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 4: CSS PROMĚNNÉ (CUSTOM PROPERTIES) -->
+      <!-- SLIDE 4: RESPONZIVNÍ NAVIGACE (BURGER VS HORIZONTÁLNÍ) -->
       <section class="slide" data-slide="4">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Moderní CSS</div>
-            <h2 class="slide-title">CSS Custom Properties: Nativní proměnné</h2>
-            <p class="slide-subtitle">Dynamická změna barevných témat (Dark/Light mode) za běhu aplikace</p>
+            <div class="slide-category">Reálná komponenta &bull; edu_portal</div>
+            <h2 class="slide-title">Responzivní navigace: Hamburger menu vs. Desktopová lišta</h2>
+            <p class="slide-subtitle">Přístupný přerod horizontální navigace v mobilní drawer s velkými dotykovými terči</p>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div>
-              <div class="code-wrapper">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Otestovat stav navigace:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setNavDemo('mob-closed', this)">
+                1. Mobilní stav: Zavřeno (Kompaktní hamburger)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setNavDemo('mob-open', this)">
+                2. Mobilní stav: Otevřeno (Rozbalený drawer)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setNavDemo('desktop', this)">
+                3. Desktopový stav: Horizontální flex lišta
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
                 <div class="code-header">
-                  <span class="code-title">css &bull; dark / light mode téma</span>
+                  <div class="code-header-left">
+                    <span class="code-title" id="navCodeTitle">css &bull; responzivní navigační logika</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('navCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('navCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre class="code-block"><code><span class="html-comment">/* Globální proměnné v kořeni dokumentu */</span>
-<span class="css-sel">:root</span> {
-  <span class="scss-var">--bg-body</span>: <span class="css-val">#0a0f1d</span>;
-  <span class="scss-var">--text-body</span>: <span class="css-val">#f3f4f6</span>;
-  <span class="scss-var">--accent-color</span>: <span class="css-val">#06b6d4</span>;
-}
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="navCodeBlock"><span class="html-comment">/* Výchozí mobil: Hamburger viditelný, drawer skrytý */</span>
+<span class="css-sel">.nav-burger</span> { <span class="css-prop">display</span>: <span class="css-val">block</span>; }
+<span class="css-sel">.nav-links</span>  { <span class="css-prop">display</span>: <span class="css-val">none</span>; }
+<span class="css-sel">.nav-links.is-open</span> { <span class="css-prop">display</span>: <span class="css-val">flex</span>; <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>; }
 
-<span class="html-comment">/* Přepnutí do světlého režimu */</span>
-<span class="css-sel">[data-theme="light"]</span> {
-  <span class="scss-var">--bg-body</span>: <span class="css-val">#f8fafc</span>;
-  <span class="scss-var">--text-body</span>: <span class="css-val">#0f172a</span>;
-}
-
-<span class="css-sel">body</span> {
-  <span class="css-prop">background-color</span>: <span class="css-func">var</span>(<span class="scss-var">--bg-body</span>);
-  <span class="css-prop">color</span>: <span class="css-func">var</span>(<span class="scss-var">--text-body</span>);
-  <span class="css-prop">transition</span>: <span class="css-val">background 0.3s ease</span>;
+<span class="html-comment">/* Desktop breakpoint (od 768px): Burger skryjeme */</span>
+<span class="css-at">@media</span> (<span class="css-prop">min-width</span>: <span class="css-num">768</span><span class="css-unit">px</span>) {
+  <span class="css-sel">.nav-burger</span> { <span class="css-prop">display</span>: <span class="css-val">none</span>; }
+  <span class="css-sel">.nav-links</span>  { <span class="css-prop">display</span>: <span class="css-val">flex</span>; <span class="css-prop">flex-direction</span>: <span class="css-val">row</span>; }
 }</code></pre>
               </div>
-            </div>
-            <div>
-              <div class="content-card">
-                <h4>Výhody nativních CSS proměnných</h4>
-                <ul class="styled-list">
-                  <li><strong>Žijí v DOM stromu:</strong> Na rozdíl od proměnných v Sassu nebo Lessu (které zanikají při kompilaci) nativní proměnné existují v prohlížeči v reálném čase.</li>
-                  <li><strong>Kaskádují a dědí se:</strong> Můžete předefinovat proměnnou <code>--card-bg</code> lokálně pouze pro určitou sekci <code>.highlight-box</code>.</li>
-                  <li><strong>Manipulace přes JavaScript:</strong> Lze číst a měnit jedním příkazem:<br>
-                    <code>element.style.setProperty('--accent', '#ff0000');</code>
-                  </li>
-                  <li><strong>Reakce na systém:</strong> Snadná vazba na systémový dark mode: <code>@media (prefers-color-scheme: dark)</code>.</li>
-                </ul>
+
+              <!-- Živá ukázka navigace v akci -->
+              <div class="showcase-preview-box" style="display: flex; flex-direction: column; justify-content: center;">
+                <div class="rwd-nav-demo-container" id="rwdNavStage">
+                  <!-- Dynamická navigace -->
+                </div>
               </div>
+            </div>
+
+            <div class="stage-feedback" id="navFeedback">
+              <span>WCAG a ergonomie ovládání:</span>
+              <strong id="navFeedbackText">Touch targets: Tlačítko hamburgeru a mobilní odkazy musí mít minimální klikací plochu 44 &times; 44 px dle WCAG 2.5.5!</strong>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- SLIDE 5: CSS PŘECHODY A ANIMACE -->
+      <!-- SLIDE 5: RESPONZIVNÍ OBRÁZKY (SRCSET, SIZES, PICTURE) -->
       <section class="slide" data-slide="5">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Micro-interactions &amp; Performance</div>
-            <h2 class="slide-title">Plynulé přechody (Transitions) a výkon</h2>
-            <p class="slide-subtitle">Animace akcelerované grafickou kartou (GPU) bez zasekávání stránky</p>
+            <div class="slide-category">Výkonnost &amp; Přenos dat &bull; Core Web Vitals</div>
+            <h2 class="slide-title">Responzivní obrázky: srcset, sizes a element &lt;picture&gt;</h2>
+            <p class="slide-subtitle">Proč pouhé max-width: 100% nestačí a jak ušetřit až 90 % mobilních dat</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky č. 16, 18</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="grid-2">
-            <div>
-              <div class="code-wrapper">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Zvolit techniku obrázků:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setMediaDemo('naive', this)">
+                1. Naivní img (max-width: 100% &bull; 850 KB)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setMediaDemo('srcset', this)">
+                2. srcset &amp; sizes (Úspora dat: 45 KB)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setMediaDemo('art', this)">
+                3. Art Direction (&lt;picture&gt; &bull; Ořez detailu)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setMediaDemo('objectfit', this)">
+                4. object-fit: cover vs contain
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
                 <div class="code-header">
-                  <span class="code-title">css &bull; plynulý hover efekt na kartě</span>
+                  <div class="code-header-left">
+                    <span class="code-title" id="mediaCodeTitle">html &bull; naivní vložení obrázku</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('mediaCode', 'html', this)">HTML</button>
+                      <button type="button" class="code-tab" onclick="switchTab('mediaCode', 'css', this)">CSS</button>
+                    </div>
+                  </div>
                   <button class="btn-copy" title="Kopírovat kód">
                     <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     <span>Kopírovat</span>
                   </button>
                 </div>
-                <pre class="code-block"><code><span class="css-sel">.course-card</span> {
-  <span class="css-prop">background</span>: <span class="css-val">rgba(255, 255, 255, 0.05)</span>;
-  <span class="css-prop">border</span>: <span class="css-num">1</span><span class="css-unit">px</span> <span class="css-val">solid var(--border-color)</span>;
-  <span class="html-comment">/* Zápis: vlastnost | trvání | funkce | zpoždění */</span>
-  <span class="css-prop">transition</span>: <span class="css-val">transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-              box-shadow 0.25s ease</span>;
-}
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="mediaCodeBlock"><span class="html-comment">&lt;!-- Naivní zápis: Na mobil se zbytečně stáhne obří 4K snímek --&gt;</span>
+<span class="html-tag">&lt;img</span> <span class="html-attr">src</span>=<span class="html-val">"hero-huge-2400.jpg"</span> <span class="html-attr">alt</span>=<span class="html-val">"Školní kampus"</span><span class="html-tag">&gt;</span></code></pre>
+              </div>
 
-<span class="css-sel">.course-card:hover</span> {
-  <span class="html-comment">/* Hardwarově akcelerovaný posun nahoru */</span>
-  <span class="css-prop">transform</span>: <span class="css-func">translateY</span>(<span class="css-num">-6</span><span class="css-unit">px</span>);
-  <span class="css-prop">box-shadow</span>: <span class="css-num">0 12</span><span class="css-unit">px</span> <span class="css-num">24</span><span class="css-unit">px</span> <span class="css-val">rgba(0, 0, 0, 0.3)</span>;
-}</code></pre>
+              <!-- Živý náhled v rámu s metadaty přenosu -->
+              <div class="media-demo-box">
+                <div class="media-art-frame" id="mediaArtFrame">
+                  <span class="media-tag-indicator" id="mediaTagIndicator">Naivní obrázek (2400 px)</span>
+                  <div id="mediaVisualContent" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem; color: #94a3b8; font-family: var(--font-mono); font-size: 0.75rem;">
+                    <svg class="icon" viewBox="0 0 24 24" style="width: 36px; height: 36px; stroke: #f43f5e;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <span>Přenáší se zbytečně 2400 &times; 1600 px</span>
+                  </div>
+                  <span class="media-data-pill" id="mediaDataPill" style="background: #f43f5e; color: #fff;">Přeneseno: 850 KB (Plýtvání)</span>
+                </div>
               </div>
             </div>
-            <div>
-              <div class="content-card">
-                <h4>Pravidla plynulých animací (60 FPS)</h4>
+
+            <div class="stage-feedback" id="mediaFeedback">
+              <span>Výkonnostní dopad:</span>
+              <strong id="mediaFeedbackText">Závažná chyba: Prohlížeč stáhne 850 KB dat na 375px displej. To zhoršuje metriku LCP (Largest Contentful Paint) a vyčerpává mobilní FUP.</strong>
+            </div>
+          </div>
+
+          <!-- Podrobné vysvětlení fungování: srcset vs sizes -->
+          <div class="grid-2" style="margin-top: 0.85rem;">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Jak přesně číst a psát syntaxi srcset a sizes?
+              </h4>
+              <ul class="styled-list" style="font-size: 0.8rem; margin: 0;">
+                <li><strong>Deskriptor w v srcset:</strong> <code>campus-400.webp 400w</code> &ndash; udává <em>skutečnou fyzickou šířku</em> souboru na disku (400 px). Prohlížeči tím říkáme nabídku dostupných variant bez nutnosti je stahovat.</li>
+                <li><strong>Podmínka v sizes:</strong> <code>(max-width: 600px) 100vw, 800px</code> &ndash; má strukturu <em>(media condition) slot-width, fallback-width</em>. Na mobilu do 600px zabere <code>100vw</code> (celou šířku), na větším displeji přesně <code>800px</code>.</li>
+                <li><strong>Matematika výběru:</strong> Prohlížeč vynásobí šířku slotu hustotou pixelů displeje (např. 400 px &times; 2&times; DPR Retina = 800 px) a ze <code>srcset</code> sám vybere nejmenší soubor, který stačí!</li>
+              </ul>
+            </div>
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                Proč to prohlížeč potřebuje a kdy volit &lt;picture&gt;?
+              </h4>
+              <ul class="styled-list" style="font-size: 0.8rem; margin: 0;">
+                <li><strong>Pre-parser fáze:</strong> Prohlížeč začíná stahovat obrázky <em>ještě před načtením a zpracováním CSS stylů</em>. Bez <code>sizes</code> by nevěděl, jak velký obrázek v layoutu bude!</li>
+                <li><strong>Resolution Switching (použijte &lt;img srcset sizes&gt;):</strong> Když jde o <em>tentýž motiv</em>, který pouze servírujeme v různé datové velikosti (mobil vs desktop).</li>
+                <li><strong>Art Direction (použijte &lt;picture&gt;):</strong> Když pro mobil měníme <em>výřez a kompozici</em> (detail obličeje místo širokého celku) nebo nabízíme moderní formát (AVIF &rarr; WebP &rarr; JPG).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: FLUIDNÍ TYPOGRAFIE & CSS MATH (CLAMP) -->
+      <section class="slide" data-slide="6">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Moderní CSS Math &bull; Plynulá změna bez zlomů</div>
+            <h2 class="slide-title">Fluidní rozvržení bez Media Queries: Funkce clamp()</h2>
+            <p class="slide-subtitle">Konec skákajících nadpisů a pevných breakpointů – plynulý růst písma podle šířky okna</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="interactive-showcase">
+            <div class="fluid-slider-box">
+              <div class="fluid-controls-row">
+                <span class="showcase-toolbar-label">
+                  <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                  Táhněte posuvníkem šířky viewportu:
+                </span>
+                <input type="range" class="fluid-range-slider" id="fluidSlider" min="320" max="1400" value="600" oninput="updateFluidTypography(this.value)">
+                <span class="fluid-computed-badge" id="fluidWidthBadge">Šířka: 600 px</span>
+                <span class="fluid-computed-badge" id="fluidFontBadge" style="background: rgba(16, 185, 129, 0.15); border-color: #10b981; color: #10b981;">font-size: 24.5 px</span>
+              </div>
+
+              <div class="fluid-preview-stage" id="fluidStage">
+                <h3 class="fluid-heading-text" id="fluidHeading">Responzivní portál edu_portal</h3>
+                <small style="font-family: var(--font-mono); color: var(--text-secondary); margin-top: 0.4rem;" id="fluidFormulaLabel">
+                  Vzorec: clamp(1.25rem, 0.85rem + 1.8vw, 2.5rem)
+                </small>
+              </div>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <span class="code-title">css &bull; fluidní velikost písma a mezer</span>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code><span class="html-comment">/* Zápis: clamp(MINIMÁLNÍ, IDEÁLNÍ (dynamická), MAXIMÁLNÍ) */</span>
+<span class="css-sel">h1</span> {
+  <span class="css-prop">font-size</span>: <span class="css-func">clamp</span>(<span class="css-num">1.25</span><span class="css-unit">rem</span>, <span class="css-num">0.85</span><span class="css-unit">rem</span> + <span class="css-num">1.8</span><span class="css-unit">vw</span>, <span class="css-num">2.5</span><span class="css-unit">rem</span>);
+}
+
+<span class="html-comment">/* Fluidní mezery v layoutu bez jediného @media dotazu! */</span>
+<span class="css-sel">.container</span> {
+  <span class="css-prop">gap</span>: <span class="css-func">clamp</span>(<span class="css-num">0.75</span><span class="css-unit">rem</span>, <span class="css-num">2</span><span class="css-unit">vw</span>, <span class="css-num">2.5</span><span class="css-unit">rem</span>);
+}</code></pre>
+              </div>
+
+              <div class="content-card" style="margin: 0;">
+                <h4>Jak fungují matematické funkce CSS3?</h4>
                 <ul class="styled-list">
-                  <li><strong>Animujte pouze transform a opacity:</strong> Tyto dvě vlastnosti se počítají přímo na GPU v samostatné kompoziční vrstvě (Compositor Thread). Nevyvolávají Reflow ani Repaint!</li>
-                  <li><strong>Nikdy neanimujte width, height, top nebo left:</strong> Animace geometrických rozměrů nutí prohlížeč přepočítávat polohu všech okolních prvků na stránce, což vede k zásekům (jank).</li>
-                  <li><strong>Respektujte preferenci uživatele:</strong> Pomocí <code>@media (prefers-reduced-motion: reduce)</code> vypněte animace uživatelům trpícím kinetózou.</li>
+                  <li><strong>clamp(MIN, VAL, MAX):</strong> Omezí hodnotu mezi spodní a horní mantinel. Na mobilu neklesne pod <code>1.25rem</code> (20px), na velkém 4K monitoru nepřeroste <code>2.5rem</code> (40px).</li>
+                  <li><strong>Plynulost (Interpolace):</strong> Mezi 320 px a 1400 px písmo plynule přibývá po zlomcích pixelů podle jednotky <code>vw</code> bez jediného vizuálního záškubu.</li>
+                  <li><strong>Využití:</strong> Nejen pro typografii, ale i pro <code>padding</code>, <code>margin</code>, <code>gap</code> nebo šířky sloupců.</li>
                 </ul>
               </div>
             </div>
@@ -276,45 +554,448 @@
         </div>
       </section>
 
-      <!-- SLIDE 6: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
-      <section class="slide" data-slide="6">
+      <!-- SLIDE 7: UŽIVATELSKÉ PREFERENCE (DARK MODE, REDUCED MOTION, HOVER) -->
+      <section class="slide" data-slide="7">
         <div class="slide-header">
           <div class="slide-titles">
-            <div class="slide-category">Zkouškový checklist &amp; Syntéza</div>
+            <div class="slide-category">Uživatelská přístupnost &bull; Hardware Features</div>
+            <h2 class="slide-title">Reakce na prostředí: Témata, animace a dotyková gesta</h2>
+            <p class="slide-subtitle">Responzivita neznamená jen šířku okna – reagujte na barevný motiv OS, kinetózu i dotykový displej</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky č. 16, 17</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Simulovat hardware &amp; preference OS:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setPrefDemo('dark', this)">
+                1. prefers-color-scheme: dark
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPrefDemo('light', this)">
+                2. prefers-color-scheme: light
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPrefDemo('reduced-motion', this)">
+                3. prefers-reduced-motion: reduce
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPrefDemo('touch', this)">
+                4. pointer: coarse (Dotykový displej)
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="prefCodeTitle">css &bull; systémový dark mode</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('prefCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('prefCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="prefCodeBlock"><span class="html-comment">/* Automatická reakce na tmavý režim nastavený v systému */</span>
+<span class="css-at">@media</span> (<span class="css-prop">prefers-color-scheme</span>: <span class="css-val">dark</span>) {
+  <span class="css-sel">:root</span> {
+    <span class="scss-var">--bg-card</span>: <span class="css-val">#0f172a</span>;
+    <span class="scss-var">--text-primary</span>: <span class="css-val">#f8fafc</span>;
+    <span class="scss-var">--accent-color</span>: <span class="css-val">#38bdf8</span>;
+  }
+}</code></pre>
+              </div>
+
+              <!-- Živý interaktivní náhled karty edu_portal -->
+              <div class="showcase-preview-box" id="prefPreviewStage" style="display: flex; align-items: center; justify-content: center;">
+                <div id="prefDemoCard" style="background: #0f172a; border: 1.5px solid #38bdf8; border-radius: 8px; padding: 1rem; width: 100%; max-width: 320px; color: #f8fafc; font-family: var(--font-mono); font-size: 0.76rem; transition: transform 0.25s ease, box-shadow 0.25s ease;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="font-weight: 800; color: #38bdf8;" id="prefCardBadge">WEB20</span>
+                    <span style="font-size: 0.65rem; opacity: 0.75;" id="prefCardSub">Dark Mode</span>
+                  </div>
+                  <strong style="display: block; font-size: 0.84rem; margin-bottom: 0.35rem;">Responzivní webdesign</strong>
+                  <p style="font-size: 0.7rem; opacity: 0.85; margin: 0 0 0.75rem;">Moderní layouty a hardware adaptace.</p>
+                  <button id="prefCardBtn" style="width: 100%; background: #38bdf8; color: #030712; border: none; padding: 0.45rem; border-radius: 4px; font-weight: 700; cursor: pointer;">
+                    Zapsat se do kurzu
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="prefFeedback">
+              <span>Přístupnost (Accessibility):</span>
+              <strong id="prefFeedbackText">Při <code>prefers-reduced-motion: reduce</code> musíme potlačit divoké animace a přechody, aby netrpěli uživatelé se záchvaty či kinetózou!</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: CONTAINER QUERIES (@CONTAINER) -->
+      <section class="slide" data-slide="8">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Budoucnost CSS &bull; Komponentově orientovaný design</div>
+            <h2 class="slide-title">Media Queries vs. Container Queries (@container)</h2>
+            <p class="slide-subtitle">Proč se dotazovat na velikost rodičovského bloku namísto celého okna prohlížeče</p>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Umístit komponentu do stránky (při stejném desktopovém okně 1440 px):
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setContainerDemo('wide', this)">
+                1. Karta v širokém hlavním panelu (&gt; 420 px &bull; Horizontální layout)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setContainerDemo('narrow', this)">
+                2. Ta samá karta v úzkém postranním panelu (&lt; 420 px &bull; Vertikální layout)
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="cqCodeTitle">css &bull; autonomní container query</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('cqCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('cqCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="cqCodeBlock"><span class="html-comment">/* 1. Rodičovský kontejner definuje kontext měření */</span>
+<span class="css-sel">.card-slot</span> {
+  <span class="css-prop">container-type</span>: <span class="css-val">inline-size</span>;
+  <span class="css-prop">container-name</span>: <span class="css-val">cardBox</span>;
+}
+
+<span class="html-comment">/* 2. Karta se přizpůsobí šířce svého rodiče, NE oknu! */</span>
+<span class="css-sel">.course-card</span> {
+  <span class="css-prop">display</span>: <span class="css-val">flex</span>;
+  <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>; <span class="html-comment">/* výchozí úzký */</span>
+}
+
+<span class="css-at">@container</span> <span class="css-sel">cardBox</span> (<span class="css-prop">min-width</span>: <span class="css-num">420</span><span class="css-unit">px</span>) {
+  <span class="css-sel">.course-card</span> {
+    <span class="css-prop">flex-direction</span>: <span class="css-val">row</span>; <span class="html-comment">/* široký kontejner */</span>
+  }
+}</code></pre>
+              </div>
+
+              <!-- Živé plátno -->
+              <div class="showcase-preview-box" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <div id="cqParentSlot" style="width: 100%; max-width: 480px; transition: all 0.35s ease; border: 1.5px dashed var(--accent); padding: 0.65rem; border-radius: 8px;">
+                  <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent); margin-bottom: 0.35rem;" id="cqSlotLabel">
+                    Rodičovský slot: šířka 480 px (@container min-width: 420px splněno!)
+                  </div>
+                  <div class="cq-interactive-card" id="cqCardDemo">
+                    <div class="cq-card-thumb">WEB20</div>
+                    <div style="flex: 1;">
+                      <strong style="display: block; font-size: 0.82rem; margin-bottom: 0.25rem;">Moderní Webdesign</strong>
+                      <p style="font-size: 0.72rem; color: var(--text-secondary); margin: 0;">Komponenta se automaticky přeskládala do řádku!</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="cqFeedback">
+              <span>Proč Container Queries mění webdesign:</span>
+              <strong id="cqFeedbackText">Znovupoužitelnost: Komponenta si řídí svůj vzhled sama podle místa, které jí určil layout. Můžete ji umístit do sidebaru, patičky i dialogu bez jediné dodatečné třídy!</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: ANTIRESPONZIVITA & TISKOVÉ STYLY (@MEDIA PRINT, FORMÁT A4) -->
+      <section class="slide" data-slide="9">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Specifická výstupní média &bull; Fixní formáty a tisk</div>
+            <h2 class="slide-title">Antiresponzivita &amp; Tiskové styly (@media print, formát A4)</h2>
+            <p class="slide-subtitle">Proč u faktur, smluv a certifikátů vypínáme pružnost a jak funguje CSS Paged Media</p>
+          </div>
+          <div class="slide-tags">
+            <span class="tag tag-exam">Otázka u zkoušky č. 16, tisk</span>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="interactive-showcase">
+            <div class="showcase-toolbar">
+              <span class="showcase-toolbar-label">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 15px; height: 15px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Zvolit výstupní médium:
+              </span>
+              <button type="button" class="btn-scenario is-active" onclick="setPrintDemo('screen', this)">
+                1. Obrazovka (Screen &bull; Tmavý motiv, tlačítka, animace)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPrintDemo('print', this)">
+                2. Tiskový náhled (@media print &bull; Bílý papír, skrytá navigace, URL odkazů)
+              </button>
+              <button type="button" class="btn-scenario" onclick="setPrintDemo('paged', this)">
+                3. Paged Media (@page &bull; Formát A4, okraje 20mm, ochrana zalomení)
+              </button>
+            </div>
+
+            <div class="grid-2" style="margin: 0; align-items: stretch;">
+              <!-- Okno s kódem -->
+              <div class="code-wrapper" style="margin: 0;">
+                <div class="code-header">
+                  <div class="code-header-left">
+                    <span class="code-title" id="printCodeTitle">css &bull; zobrazení na obrazovce</span>
+                    <div class="code-tabs">
+                      <button type="button" class="code-tab is-active" onclick="switchTab('printCode', 'css', this)">CSS</button>
+                      <button type="button" class="code-tab" onclick="switchTab('printCode', 'html', this)">HTML</button>
+                    </div>
+                  </div>
+                  <button class="btn-copy" title="Kopírovat kód">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span>Kopírovat</span>
+                  </button>
+                </div>
+                <pre class="code-block" style="padding: 0.75rem 1rem;"><code id="printCodeBlock"><span class="html-comment">/* Výchozí zobrazení na displeji: Tmavé tóny, tlačítka a interakce */</span>
+<span class="css-sel">body</span> {
+  <span class="css-prop">background</span>: <span class="css-val">#0f172a</span>;
+  <span class="css-prop">color</span>: <span class="css-val">#f8fafc</span>;
+}
+
+<span class="css-sel">.navbar, .btn-action</span> {
+  <span class="css-prop">display</span>: <span class="css-val">flex</span>; <span class="html-comment">/* tlačítka pro platbu a export jsou viditelná */</span>
+}</code></pre>
+              </div>
+
+              <!-- Živý interaktivní náhled A4 tiskoviny -->
+              <div class="a4-stage-container">
+                <div class="a4-sheet-sim is-screen-mode" id="a4SimSheet">
+                  <div class="a4-page-guide" id="a4PageGuide">@page { size: A4 portrait; margin: 20mm; }</div>
+                  <div class="a4-margins-indicator"></div>
+
+                  <div class="a4-screen-nav" id="a4ScreenNav">
+                    <span class="brand">edu_portal</span>
+                    <div class="nav-btns" id="a4NavBtns">
+                      <button type="button" class="a4-btn-action">Zaplatit kurz</button>
+                      <button type="button" class="a4-btn-action" style="background: rgba(255,255,255,0.15); color: inherit;">Export PDF</button>
+                    </div>
+                    <span class="print-hide-badge" id="a4HideBadge">
+                      <svg class="icon" viewBox="0 0 24 24" style="width: 12px; height: 12px; stroke: #f43f5e;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                      nav, .btn { display: none !important; }
+                    </span>
+                  </div>
+
+                  <div class="a4-doc-header">
+                    <div>
+                      <div class="a4-doc-title">Faktura &ndash; Daňový doklad č. 2026/08</div>
+                      <div class="a4-doc-meta">
+                        Odběratel: VOŠ a SPŠ &bull; Portál: <a href="https://vos.cz/edu" style="color: inherit; text-decoration: underline;">edu_portal</a><span class="a4-url-target"> (https://vos.cz/edu)</span>
+                      </div>
+                    </div>
+                    <div style="text-align: right; font-size: 0.64rem;">
+                      <strong>Datum vystavení:</strong> 22. 10. 2026
+                    </div>
+                  </div>
+
+                  <table class="a4-table-sim">
+                    <thead>
+                      <tr>
+                        <th>Položka vzdělávání</th>
+                        <th style="text-align: right;">Cena vč. DPH</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Školení WEB20: Responzivní design &amp; Media Queries</td>
+                        <td style="text-align: right;">4 800 Kč</td>
+                      </tr>
+                      <tr>
+                        <td>Elektronický certifikát (A4 tiskový arch)</td>
+                        <td style="text-align: right;">0 Kč</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div class="a4-signature-box" id="a4SignatureBox">
+                    <span>Ochrana proti roztržení: <code>break-inside: avoid;</code></span>
+                    <span>Razítko &amp; Podpis: ___________________</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-feedback" id="printFeedback">
+              <span>Režim média:</span>
+              <strong id="printFeedbackText">Displej (Screen): Bohatá grafika, tmavé téma, interaktivní akční tlačítka. Při přímém odeslání do tiskárny by došlo k obrovskému plýtvání černým tonerem a vytištění zbytečných tlačítek.</strong>
+            </div>
+          </div>
+
+          <!-- Didaktické karty k problematice antiresponzivity a tiskovin -->
+          <div class="grid-2" style="margin-top: 0.85rem;">
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                Proč je "antiresponzivita" u tiskovin nutností?
+              </h4>
+              <ul class="styled-list" style="font-size: 0.8rem; margin: 0;">
+                <li><strong>Fixní fyzický formát:</strong> Papír formátu <strong>A4</strong> má pevný rozměr <strong>210 &times; 297 mm</strong>. Jakákoliv fluidní pružnost (např. <code>100vw</code>) nebo mobilní přeskládání do jednoho sloupce by tiskopis zničilo.</li>
+                <li><strong>Tiskové jednotky:</strong> Na rozdíl od obrazovkových pixelů pracujeme s fyzickými rozměry: milimetry (<code>mm</code>), centimetry (<code>cm</code>) a tiskovými body (<code>pt</code> &ndash; 1 pt = 1/72 palce).</li>
+                <li><strong>Serverové generování PDF:</strong> Moderní e-shopy a informační systémy generují faktury a smlouvy v PDF přímo z HTML šablon přes Headless Chrome / Puppeteer. Přesné tiskové styly jsou základem této praxe!</li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h4>
+                <svg class="icon card-icon" viewBox="0 0 24 24"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+                Klíčová pravidla CSS Paged Media &amp; @media print
+              </h4>
+              <ul class="styled-list" style="font-size: 0.8rem; margin: 0;">
+                <li><strong>Skrytí rozhraní:</strong> <code>nav, .btn, .cookie-banner { display: none !important; }</code> &ndash; tiskne se pouze čistý obsah dokumentu.</li>
+                <li><strong>Rozepsání odkazů:</strong> Na papír nelze kliknout. Syntaxe <code>a[href^="http"]::after { content: " (" attr(href) ")"; }</code> automaticky vytiskne cílovou webovou adresu za text odkazů.</li>
+                <li><strong>Pravidlo @page:</strong> <code>@page { size: A4 portrait; margin: 20mm; }</code> nastavuje fyzické okraje stránky bez vlivu nastavení tiskárny uživatele.</li>
+                <li><strong>break-inside: avoid:</strong> Zabraňuje rozdělení tabulky, položky či razítka napůl přes spodní hranu stránky!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: SHRNUTÍ & ZKOUŠKOVÝ CHECKLIST -->
+      <section class="slide" data-slide="10">
+        <div class="slide-header">
+          <div class="slide-titles">
+            <div class="slide-category">Zkouškový checklist &amp; Interaktivní syntéza</div>
             <h2 class="slide-title">Shrnutí &amp; Požadavky k absolutoriu</h2>
-            <p class="slide-subtitle">Co musíte bezpečně ovládat z okruhu č. 16 (RWD)</p>
+            <p class="slide-subtitle">Srovnávací matice, zkušební checklist a interaktivní ověření znalostí z okruhu č. 16 a 8</p>
           </div>
           <div class="slide-tags">
             <span class="tag tag-exam">Okruh absolutoria č. 16, 8</span>
           </div>
         </div>
         <div class="slide-body">
-          <div class="summary-grid">
-            <div class="summary-card">
-              <h4>1. Tři pilíře RWD</h4>
-              <p>Meta tag viewport, fluidní proporční mřížka (% / fr / rem) a flexibilní média (max-width: 100%).</p>
+          <!-- Srovnávací tabulka RWD technik -->
+          <div class="table-container" style="margin-bottom: 0.75rem;">
+            <table class="alignment-matrix-table">
+              <thead>
+                <tr>
+                  <th>Koncept / Technika</th>
+                  <th class="col-highlight">Správný přístup (Best Practice)</th>
+                  <th>Chybný přístup (Antipattern)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Meta Viewport</strong></td>
+                  <td class="col-highlight"><code>width=device-width, initial-scale=1.0</code></td>
+                  <td>Vynechání tagu, nebo <code>user-scalable=no</code></td>
+                </tr>
+                <tr>
+                  <td><strong>Architektura stylů</strong></td>
+                  <td class="col-highlight"><strong>Mobile-First</strong> (výchozí kód + <code>min-width</code>)</td>
+                  <td>Desktop-First (přepisování <code>max-width</code>)</td>
+                </tr>
+                <tr>
+                  <td><strong>Obrázky a média</strong></td>
+                  <td class="col-highlight"><code>srcset</code>, <code>sizes</code>, element <code>&lt;picture&gt;</code></td>
+                  <td>Pouze <code>max-width: 100%</code> s 4K souborem</td>
+                </tr>
+                <tr>
+                  <td><strong>Typografie &amp; mezery</strong></td>
+                  <td class="col-highlight">Fluidní matematika <code>clamp(min, preferred, max)</code></td>
+                  <td>Pevné px s desítkami skákajících breakpointů</td>
+                </tr>
+                <tr>
+                  <td><strong>Komponenty</strong></td>
+                  <td class="col-highlight">Autonomní <code>@container</code> dotazy podle rodiče</td>
+                  <td>Třídy typu <code>.sidebar-card</code> závislé na okně</td>
+                </tr>
+                <tr>
+                  <td><strong>Tisk &amp; dokumenty</strong></td>
+                  <td class="col-highlight">Antiresponzivita: <code>@media print</code>, <code>@page { size: A4 }</code>, <code>break-inside: avoid</code></td>
+                  <td>Spoléhání na responzivní obrazovkový layout</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Interaktivní zkouškový minikvíz se 3 otázkami -->
+          <div class="quiz-container">
+            <div class="quiz-card" id="quizCard1">
+              <div class="quiz-q-title">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: var(--accent);"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span>Otázka 1: Co se stane na smartphonu, pokud v HTML zcela vynecháte značku &lt;meta name="viewport"&gt;?</span>
+              </div>
+              <div class="quiz-options-list">
+                <button type="button" class="quiz-btn-option" onclick="evaluateQuiz(1, 0, false, this)">
+                  A) Stránka se nezobrazí a prohlížeč vyhodí chybu 400 Bad Request.
+                </button>
+                <button type="button" class="quiz-btn-option" onclick="evaluateQuiz(1, 1, true, this)">
+                  B) Prohlížeč nastaví virtuální okno na 980 px, aplikuje desktopové styly a stránku zmenší na miniaturní nečitelný náhled.
+                </button>
+                <button type="button" class="quiz-btn-option" onclick="evaluateQuiz(1, 2, false, this)">
+                  C) Prohlížeč automaticky zapne Mobile-First a převede web do 1 sloupce.
+                </button>
+              </div>
+              <div class="quiz-feedback-box" id="qFeedback1"></div>
             </div>
-            <div class="summary-card">
-              <h4>2. Přístup Mobile-First</h4>
-              <p>Výchozí styl pro malý displej s postupným přidáváním sloupců přes <code>@media (min-width: ...)</code>.</p>
+
+            <div class="quiz-card" id="quizCard2">
+              <div class="quiz-q-title">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: var(--accent);"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span>Otázka 2: Jaký je zásadní rozdíl mezi @media a @container?</span>
+              </div>
+              <div class="quiz-options-list">
+                <button type="button" class="quiz-btn-option" onclick="evaluateQuiz(2, 0, true, this)">
+                  A) @media se dotazuje na šířku okna prohlížeče (viewportu), zatímco @container na šířku svého rodičovského bloku.
+                </button>
+                <button type="button" class="quiz-btn-option" onclick="evaluateQuiz(2, 1, false, this)">
+                  B) @container funguje pouze pro Flexbox, zatímco @media pouze pro CSS Grid.
+                </button>
+                <button type="button" class="quiz-btn-option" onclick="evaluateQuiz(2, 2, false, this)">
+                  C) Mezi nimi není žádný rozdíl, @container je jen starší zastaralý zápis.
+                </button>
+              </div>
+              <div class="quiz-feedback-box" id="qFeedback2"></div>
             </div>
-            <div class="summary-card">
-              <h4>3. CSS Custom Properties</h4>
-              <p>Definice <code>--nazev</code> a volání <code>var()</code>. Žijí v DOMu a umožňují Dark mode bez duplikace stylů.</p>
-            </div>
-            <div class="summary-card">
-              <h4>4. 60 FPS přechody</h4>
-              <p>Animace přes <code>transform</code> a <code>opacity</code> akcelerované GPU vs. zákaz animování šířek a výšek.</p>
+
+            <div class="quiz-card" id="quizCard3">
+              <div class="quiz-q-title">
+                <svg class="icon" viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: var(--accent);"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <span>Otázka 3: Proč se v tiskovém stylu (@media print) používá pravidlo break-inside: avoid?</span>
+              </div>
+              <div class="quiz-options-list">
+                <button type="button" class="quiz-btn-option" onclick="evaluateQuiz(3, 0, false, this)">
+                  A) Zabraňuje spuštění tiskového dialogu v prohlížeči uživatele.
+                </button>
+                <button type="button" class="quiz-btn-option" onclick="evaluateQuiz(3, 1, true, this)">
+                  B) Zabraňuje roztržení důležitého bloku (např. tabulky, položky či podpisového boxu) napůl přes okraj dvou stránek papíru.
+                </button>
+                <button type="button" class="quiz-btn-option" onclick="evaluateQuiz(3, 2, false, this)">
+                  C) Vynucuje, aby se odkazy na papíře zobrazily jako interaktivní modrá tlačítka.
+                </button>
+              </div>
+              <div class="quiz-feedback-box" id="qFeedback3"></div>
             </div>
           </div>
-          <div class="callout callout-exam">
+
+          <div class="callout callout-exam" style="margin-top: 0.85rem;">
             <div class="callout-icon">
               <svg class="icon" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
             </div>
             <div class="callout-content">
-              <div class="callout-title">Typická záludná otázka zkoušejícího</div>
-              <p><em>„Co se stane na iPhonu, pokud na stránku napíšete Media Queries pro mobil, ale zapomenete do HTML vložit značku &lt;meta name="viewport" ...&gt;?“</em><br>
-              <strong>Správná odpověď:</strong> Media Queries pro mobil <strong>vůbec nezaberou</strong>! Mobilní prohlížeč bude předpokládat, že web není responzivní, nastaví šířku virtuálního okna na 980px, aplikuje desktopová pravidla a celou stránku zmenší na miniaturní nečitelný náhled.</p>
+              <div class="callout-title">Doporučení pro zkouškovou obhajobu (Okruh č. 16 &amp; 8)</div>
+              <p>Při obhajobě maturitního či absolventského projektu zdůrazněte, že nepoužíváte zastaralé floaty ani nepraktické <code>max-width</code> degradace. Prokažte znalost <strong>Mobile-First</strong>, fluidní kalkulace <strong><code>clamp()</code></strong>, optimalizace médií (<strong><code>srcset</code></strong> a <strong><code>&lt;picture&gt;</code></strong>) i <strong>antiresponzivního formátování tiskovin (@media print, A4 a CSS Paged Media)</strong>. Stisknutím klávesy <span class="key-badge">G</span> otevřete odborný slovník pojmů.</p>
             </div>
           </div>
         </div>
@@ -324,7 +1005,7 @@
 
     <!-- Floating Bottom Navigation & Controls Bar -->
     <nav class="controls-bar" aria-label="Ovládání prezentace">
-            <a href="07_moderni_layout_flexbox_a_grid.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 07: Moderní tvorba layoutu – Flexbox a CSS Grid (Ctrl+Šipka vlevo)">
+      <a href="07_moderni_layout_flexbox_a_grid.html" class="control-btn" id="prevLessonBtn" title="Předchozí lekce: Lekce 07: Moderní tvorba layoutu – Flexbox a CSS Grid (Ctrl+Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="11 17 6 12 11 7"></polyline><polyline points="18 17 13 12 18 7"></polyline></svg>
       </a>
       <a href="index.html" class="control-btn" id="moduleBtn" title="Přehled modulu WEB20">
@@ -337,7 +1018,7 @@
       <button class="control-btn" id="prevSlideBtn" title="Předchozí snímek (Šipka vlevo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
-      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 01</span>
+      <span class="slide-counter" id="slideCounter" title="Otevřít osnovu snímků">01 / 10</span>
       <button class="control-btn btn-nav-primary" id="nextSlideBtn" title="Další snímek (Mezerník / Šipka vpravo)">
         <svg class="icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
@@ -370,6 +1051,69 @@
         </div>
         <div class="toc-list" id="tocList"></div>
       </aside>
+    </div>
+
+    <!-- Glossary Modal -->
+    <div class="modal-overlay" id="glossaryModal" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 680px;">
+        <div class="modal-header">
+          <h3>
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Slovník pojmů: Responzivní webdesign
+          </h3>
+          <button class="toc-close" id="glossaryCloseBtn" title="Zavřít slovník">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="styled-list" style="display: flex; flex-direction: column; gap: 0.85rem;">
+            <div>
+              <strong>Viewport (Virtuální vs. Vizuální)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Prohlížené okno dokumentu. Bez značky <code>&lt;meta name="viewport"&gt;</code> mobilní prohlížeče simulují desktop o šířce 980 px a web neúměrně zmenší. Nastavení <code>width=device-width</code> synchronizuje logické CSS pixely s displejem.</p>
+            </div>
+            <div>
+              <strong>Mobile-First metodika</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Strategie kódování, kdy výchozí CSS styly píšeme pro mobilní telefon (1 sloupec, nejmenší datová zátěž) a pro větší obrazovky pouze progresivně přidáváme pravidla pomocí <code>@media (min-width: ...)</code>.</p>
+            </div>
+            <div>
+              <strong>Breakpoint (Bod zlomu)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Konkrétní šířka viewportu v pixelech, při které dochází k přeskládání layoutu (např. 768 px pro tablet, 1200 px pro desktop). Moderní RWD doporučuje volit breakpointy podle obsahu, ne podle modelů telefonů.</p>
+            </div>
+            <div>
+              <strong>Device Pixel Ratio (DPR)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Poměr mezi fyzickými hardwarovými pixely displeje a logickými CSS pixely. U displejů Retina/OLED je běžně DPR 2x až 3x, což vyžaduje obrázky ve vyšším rozlišení pro zachování ostrosti.</p>
+            </div>
+            <div>
+              <strong>Fluidní typografie &amp; clamp()</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Matematická funkce <code>clamp(min, val, max)</code>, která plynule mění velikost písma či mezer na základě dynamické jednotky <code>vw</code>, aniž by docházelo ke skokovým trhnutím layoutu.</p>
+            </div>
+            <div>
+              <strong>Resolution Switching (srcset &amp; sizes)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Atributy značky <code>&lt;img&gt;</code> umožňující nabídnout prohlížeči více variant stejného obrázku v různých rozlišeních, ze kterých prohlížeč sám vybere nejvhodnější soubor podle šířky a DPR displeje.</p>
+            </div>
+            <div>
+              <strong>Art Direction (&lt;picture&gt;)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Technika, kdy pro různé obrazovky servírujeme záměrně odlišně oříznutý obrázek (např. detail obličeje na mobil a širokoúhlou scénu na desktop) pomocí značky <code>&lt;picture&gt;</code> a <code>&lt;source media="..."&gt;</code>.</p>
+            </div>
+            <div>
+              <strong>Container Queries (@container)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Pravidlo CSS umožňující stylovat komponentu podle šířky jejího bezprostředního rodičovského kontejneru (<code>inline-size</code>), čímž vytváří skutečně znovupoužitelné komponenty nezávislé na okně prohlížeče.</p>
+            </div>
+            <div>
+              <strong>prefers-reduced-motion</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Media query dotazující se na preferenci operačního systému uživatele. Umožňuje vypnout animace pro hendikepované uživatele trpící vestibulárními poruchami.</p>
+            </div>
+            <div>
+              <strong>Tiskové styly (@media print)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Cílené CSS styly uplatněné při odeslání dokumentu do tiskárny nebo exportu do PDF. Slouží k odstranění rušivých prvků (navigace, bannery, tlačítka), úspoře toneru (černobílý tisk) a rozepsání hypertextových odkazů na fyzický papír.</p>
+            </div>
+            <div>
+              <strong>CSS Paged Media &amp; @page</strong>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0.2rem 0 0;">Specifikace CSS pro stránkovaná média. Umožňuje definovat fyzické rozměry listu (např. <code>@page { size: A4 portrait; margin: 20mm; }</code>), řídit záhlaví a zápatí a zamezit nevhodnému roztržení bloků mezi stránky pomocí <code>break-inside: avoid</code>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Keyboard Shortcuts Help Modal -->
@@ -425,6 +1169,498 @@
             <span>Nápověda (tento dialog)</span>
             <span class="key-badge">?</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- End of .presentation-container -->
+
+  <!-- ==========================================================================
+       INTERAKTIVNÍ LOGIKY A DYNAMICKÉ PŘEPÍNAČE KÓDU & NÁHLEDU PRO SNÍMKY
+       ========================================================================== -->
+  <script>
+    // Úložiště kódu pro jednotlivé komponenty (CSS a HTML)
+    var codeData = {
+      vpCode: {
+        currentLang: 'html',
+        html: '<span class="html-comment">&lt;!-- Správná deklarace pro mobilní zařízení --&gt;</span>\n<span class="html-tag">&lt;meta</span> <span class="html-attr">name</span>=<span class="html-val">"viewport"</span> <span class="html-attr">content</span>=<span class="html-val">"width=device-width, initial-scale=1.0"</span><span class="html-tag">&gt;</span>',
+        css: '<span class="html-comment">/* Prevence přetečení layoutu (border-box) a pružná média */</span>\n<span class="css-sel">*</span>, <span class="css-sel">*::before</span>, <span class="css-sel">*::after</span> {\n  <span class="css-prop">box-sizing</span>: <span class="css-val">border-box</span>;\n}\n\n<span class="css-sel">img, video</span> {\n  <span class="css-prop">max-width</span>: <span class="css-num">100</span><span class="css-unit">%</span>;\n  <span class="css-prop">height</span>: <span class="css-val">auto</span>;\n}'
+      },
+      devCode: {
+        currentLang: 'css',
+        css: '<span class="html-comment">/* 1. VÝCHOZÍ STAV: Mobil (1 sloupec, postranní panel je skrytý) */</span>\n<span class="css-sel">.sidebar</span> {\n  <span class="css-prop">display</span>: <span class="css-val">none</span>; <span class="html-comment">/* na mobilu a tabletu šetříme místo */</span>\n}\n\n<span class="css-sel">.courses-grid</span> {\n  <span class="css-prop">display</span>: <span class="css-val">grid</span>;\n  <span class="css-prop">grid-template-columns</span>: <span class="css-num">1</span><span class="css-unit">fr</span>;\n  <span class="css-prop">gap</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span>;\n}\n\n<span class="html-comment">/* 2. TABLET: min-width 768px (2 sloupce karet) */</span>\n<span class="css-at">@media</span> (<span class="css-prop">min-width</span>: <span class="css-num">768</span><span class="css-unit">px</span>) {\n  <span class="css-sel">.courses-grid</span> {\n    <span class="css-prop">grid-template-columns</span>: <span class="css-func">repeat</span>(<span class="css-num">2</span>, <span class="css-num">1</span><span class="css-unit">fr</span>);\n  }\n}\n\n<span class="html-comment">/* 3. DESKTOP: od 1200px (zobrazíme sidebar a přidáme mu sloupec) */</span>\n<span class="css-at">@media</span> (<span class="css-prop">width</span> &gt;= <span class="css-num">1200</span><span class="css-unit">px</span>) {\n  <span class="css-sel">.sidebar</span> {\n    <span class="css-prop">display</span>: <span class="css-val">block</span>; <span class="html-comment">/* na velkém monitoru panel odkryjeme */</span>\n  }\n\n  <span class="css-sel">.courses-grid</span> {\n    <span class="css-prop">grid-template-columns</span>: <span class="css-num">180</span><span class="css-unit">px</span> <span class="css-num">1</span><span class="css-unit">fr</span> <span class="css-num">1</span><span class="css-unit">fr</span>;\n  }\n}',
+        html: '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"courses-grid"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;aside</span> <span class="html-attr">class</span>=<span class="html-val">"sidebar"</span><span class="html-tag">&gt;</span>Filtry kategorií<span class="html-tag">&lt;/aside&gt;</span>\n  <span class="html-tag">&lt;article</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Kurz WEB20<span class="html-tag">&lt;/article&gt;</span>\n  <span class="html-tag">&lt;article</span> <span class="html-attr">class</span>=<span class="html-val">"card"</span><span class="html-tag">&gt;</span>Kurz DAT20<span class="html-tag">&lt;/article&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>'
+      },
+      navCode: {
+        currentLang: 'css',
+        css: '<span class="html-comment">/* Výchozí mobil: Hamburger viditelný, drawer skrytý */</span>\n<span class="css-sel">.nav-burger</span> { <span class="css-prop">display</span>: <span class="css-val">block</span>; }\n<span class="css-sel">.nav-links</span>  { <span class="css-prop">display</span>: <span class="css-val">none</span>; }\n<span class="css-sel">.nav-links.is-open</span> { <span class="css-prop">display</span>: <span class="css-val">flex</span>; <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>; }\n\n<span class="html-comment">/* Desktop breakpoint (od 768px): Burger skryjeme */</span>\n<span class="css-at">@media</span> (<span class="css-prop">min-width</span>: <span class="css-num">768</span><span class="css-unit">px</span>) {\n  <span class="css-sel">.nav-burger</span> { <span class="css-prop">display</span>: <span class="css-val">none</span>; }\n  <span class="css-sel">.nav-links</span>  { <span class="css-prop">display</span>: <span class="css-val">flex</span>; <span class="css-prop">flex-direction</span>: <span class="css-val">row</span>; }\n}',
+        html: '<span class="html-tag">&lt;nav</span> <span class="html-attr">class</span>=<span class="html-val">"navbar"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"brand"</span><span class="html-tag">&gt;</span>edu_portal<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;button</span> <span class="html-attr">class</span>=<span class="html-val">"nav-burger"</span> <span class="html-attr">aria-expanded</span>=<span class="html-val">"false"</span><span class="html-tag">&gt;</span>Menu<span class="html-tag">&lt;/button&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"nav-links"</span><span class="html-tag">&gt;</span>\n    <span class="html-tag">&lt;a</span> <span class="html-attr">href</span>=<span class="html-val">"#"</span><span class="html-tag">&gt;</span>Katalog<span class="html-tag">&lt;/a&gt;</span>\n    <span class="html-tag">&lt;a</span> <span class="html-attr">href</span>=<span class="html-val">"#"</span><span class="html-tag">&gt;</span>Moje studium<span class="html-tag">&lt;/a&gt;</span>\n  <span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/nav&gt;</span>'
+      },
+      mediaCode: {
+        currentLang: 'html',
+        html: '<span class="html-comment">&lt;!-- Naivní zápis: Na mobil se zbytečně stáhne obří 4K snímek --&gt;</span>\n<span class="html-tag">&lt;img</span> <span class="html-attr">src</span>=<span class="html-val">"hero-huge-2400.jpg"</span> <span class="html-attr">alt</span>=<span class="html-val">"Školní kampus"</span><span class="html-tag">&gt;</span>',
+        css: '<span class="html-comment">/* Pouhé přizpůsobení velikosti v CSS */</span>\n<span class="css-sel">img</span> {\n  <span class="css-prop">max-width</span>: <span class="css-num">100</span><span class="css-unit">%</span>;\n  <span class="css-prop">height</span>: <span class="css-val">auto</span>;\n}'
+      },
+      prefCode: {
+        currentLang: 'css',
+        css: '<span class="html-comment">/* Automatická reakce na tmavý režim nastavený v systému */</span>\n<span class="css-at">@media</span> (<span class="css-prop">prefers-color-scheme</span>: <span class="css-val">dark</span>) {\n  <span class="css-sel">:root</span> {\n    <span class="scss-var">--bg-card</span>: <span class="css-val">#0f172a</span>;\n    <span class="scss-var">--text-primary</span>: <span class="css-val">#f8fafc</span>;\n    <span class="scss-var">--accent-color</span>: <span class="css-val">#38bdf8</span>;\n  }\n}',
+        html: '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"course-card"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;h3&gt;</span>Responzivní webdesign<span class="html-tag">&lt;/h3&gt;</span>\n  <span class="html-tag">&lt;button&gt;</span>Zapsat se do kurzu<span class="html-tag">&lt;/button&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>'
+      },
+      cqCode: {
+        currentLang: 'css',
+        css: '<span class="html-comment">/* 1. Rodičovský kontejner definuje kontext měření */</span>\n<span class="css-sel">.card-slot</span> {\n  <span class="css-prop">container-type</span>: <span class="css-val">inline-size</span>;\n  <span class="css-prop">container-name</span>: <span class="css-val">cardBox</span>;\n}\n\n<span class="html-comment">/* 2. Karta se přizpůsobí šířce svého rodiče, NE oknu! */</span>\n<span class="css-sel">.course-card</span> {\n  <span class="css-prop">display</span>: <span class="css-val">flex</span>;\n  <span class="css-prop">flex-direction</span>: <span class="css-val">column</span>; <span class="html-comment">/* výchozí úzký */</span>\n}\n\n<span class="css-at">@container</span> <span class="css-sel">cardBox</span> (<span class="css-prop">min-width</span>: <span class="css-num">420</span><span class="css-unit">px</span>) {\n  <span class="css-sel">.course-card</span> {\n    <span class="css-prop">flex-direction</span>: <span class="css-val">row</span>; <span class="html-comment">/* široký kontejner */</span>\n  }\n}',
+        html: '<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"card-slot"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"course-card"</span><span class="html-tag">&gt;</span>\n    <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"thumb"</span><span class="html-tag">&gt;</span>WEB20<span class="html-tag">&lt;/div&gt;</span>\n    <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"body"</span><span class="html-tag">&gt;</span>Moderní Webdesign<span class="html-tag">&lt;/div&gt;</span>\n  <span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>'
+      },
+      printCode: {
+        currentLang: 'css',
+        css: '<span class="html-comment">/* Výchozí zobrazení na displeji: Tmavé tóny, tlačítka a interakce */</span>\n<span class="css-sel">body</span> {\n  <span class="css-prop">background</span>: <span class="css-val">#0f172a</span>;\n  <span class="css-prop">color</span>: <span class="css-val">#f8fafc</span>;\n}\n\n<span class="css-sel">.navbar, .btn-action</span> {\n  <span class="css-prop">display</span>: <span class="css-val">flex</span>; <span class="html-comment">/* tlačítka pro platbu a export jsou viditelná */</span>\n}',
+        html: '<span class="html-comment">&lt;!-- Smlouva / Faktura v rozhraní portálu --&gt;</span>\n<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"invoice-page"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;nav</span> <span class="html-attr">class</span>=<span class="html-val">"navbar"</span><span class="html-tag">&gt;</span>edu_portal<span class="html-tag">&lt;/nav&gt;</span>\n  <span class="html-tag">&lt;h2&gt;</span>Daňový doklad č. 2026/08<span class="html-tag">&lt;/h2&gt;</span>\n  <span class="html-tag">&lt;button</span> <span class="html-attr">class</span>=<span class="html-val">"btn-action"</span><span class="html-tag">&gt;</span>Zaplatit kurz<span class="html-tag">&lt;/button&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>'
+      }
+    };
+
+    // Přepínač CSS / HTML tabů v okně s kódem
+    window.switchTab = function(blockKey, lang, btnEl) {
+      if (!codeData[blockKey]) return;
+      codeData[blockKey].currentLang = lang;
+
+      var parentTabs = btnEl.parentElement;
+      if (parentTabs) {
+        parentTabs.querySelectorAll('.code-tab').forEach(function(t) { t.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var codeBlock = document.getElementById(blockKey + 'Block');
+      if (codeBlock) {
+        codeBlock.innerHTML = codeData[blockKey][lang];
+      }
+    };
+
+    function updateCodeDisplay(blockKey, cssStr, htmlStr) {
+      if (!codeData[blockKey]) return;
+      if (cssStr) codeData[blockKey].css = cssStr;
+      if (htmlStr) codeData[blockKey].html = htmlStr;
+
+      var codeBlock = document.getElementById(blockKey + 'Block');
+      if (codeBlock) {
+        codeBlock.innerHTML = codeData[blockKey][codeData[blockKey].currentLang];
+      }
+    }
+
+    // --- SLIDE 2: Viewport Simulator ---
+    window.setViewportDemo = function(mode, btnEl) {
+      var phoneScreen = document.getElementById('phoneScreen');
+      var feedback = document.getElementById('vpFeedbackText');
+      if (!phoneScreen || !feedback) return;
+
+      btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+      btnEl.classList.add('is-active');
+
+      if (mode === 'with') {
+        phoneScreen.innerHTML = '<div class="phone-web-responsive">' +
+          '<div class="mock-mob-header"><span>edu_portal</span><svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>' +
+          '<div class="mock-mob-hero"><strong>Webdesign &bull; WEB20</strong><p style="margin: 0.2rem 0 0; opacity: 0.85;">Písmo má optimální velikost 16 px. Není třeba nic přibližovat prsty!</p></div>' +
+          '<div class="mock-mob-card"><strong>Katalog kurzů</strong><span style="color: var(--accent);">3 moduly &bull; Zapsat se</span></div>' +
+          '</div>';
+        var htmlCode = '<span class="html-comment">&lt;!-- Správná deklarace pro mobilní zařízení --&gt;</span>\n<span class="html-tag">&lt;meta</span> <span class="html-attr">name</span>=<span class="html-val">"viewport"</span> <span class="html-attr">content</span>=<span class="html-val">"width=device-width, initial-scale=1.0"</span><span class="html-tag">&gt;</span>';
+        var cssCode = '<span class="html-comment">/* Mobilní rozhraní reaguje na reálnou šířku 375 px */</span>\n<span class="css-sel">body</span> {\n  <span class="css-prop">font-size</span>: <span class="css-num">1</span><span class="css-unit">rem</span>; <span class="html-comment">/* 16 px je dokonale čitelné */</span>\n  <span class="css-prop">padding</span>: <span class="css-num">1</span><span class="css-unit">rem</span>;\n}';
+        updateCodeDisplay('vpCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Správný stav: Díky <code>width=device-width</code> prohlížeč chápe, že web je responzivní. Vykresluje v logických pixelech telefonu s ostrým a čitelným textem.';
+      } else if (mode === 'without') {
+        phoneScreen.innerHTML = '<div class="phone-web-unresponsive">' +
+          '<div class="mock-nav"><strong>edu_portal &bull; Školní vzdělávací systém</strong><span>Katalog | O škole | Kontakt</span></div>' +
+          '<div class="mock-hero"><h2>Vítejte na vzdělávacím portálu VOŠ</h2><p>Tento text byl napsán pro 980px desktopový monitor. Na displeji mobilu je zmenšen na 38 % velikosti a je naprosto nečitelný!</p></div>' +
+          '<div class="mock-cols"><div class="mock-col">Sloupec 1: WEB20</div><div class="mock-col">Sloupec 2: DAT20</div><div class="mock-col">Sloupec 3: OSY20</div></div>' +
+          '</div>';
+        var htmlCode = '<span class="html-comment">&lt;!-- CHYBA: Značka meta viewport zcela chybí! --&gt;</span>\n<span class="html-tag">&lt;head&gt;</span>\n  <span class="html-tag">&lt;title&gt;</span>Web bez viewportu<span class="html-tag">&lt;/title&gt;</span>\n<span class="html-tag">&lt;/head&gt;</span>';
+        var cssCode = '<span class="html-comment">/* I když napíšete dokonalá @media pravidla, bez viewportu vůbec nezaberou! */</span>\n<span class="css-at">@media</span> (<span class="css-prop">max-width</span>: <span class="css-num">768</span><span class="css-unit">px</span>) {\n  <span class="html-comment">/* Prohlížeč toto pravidlo ignoruje, protože šířka okna je pro něj 980px! */</span>\n}';
+        updateCodeDisplay('vpCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Katastrofální stav bez viewportu: Telefon předstírá virtuální okno 980 px, oddálí celou stránku a vytvoří nečitelný bleší tisk. Uživatel musí neustále zoomovat!';
+      } else if (mode === 'antipattern') {
+        phoneScreen.innerHTML = '<div class="phone-web-responsive" style="border: 2px solid #f43f5e; border-radius: 6px;">' +
+          '<div class="mock-mob-header" style="color: #f43f5e;"><span>Zákaz zoomování!</span><svg class="icon" viewBox="0 0 24 24" style="width: 14px; height: 14px;"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>' +
+          '<div class="mock-mob-hero" style="border-color: #f43f5e; background: rgba(244, 63, 94, 0.1);">' +
+          '<strong>Chyba přístupnosti (WCAG)</strong><p style="margin: 0.2rem 0 0;">Uživatel se slabším zrakem si nemůže text zvětšit gestem dvou prstů (pinch-to-zoom).</p>' +
+          '</div>' +
+          '</div>';
+        var htmlCode = '<span class="html-comment">&lt;!-- ZÁVAŽNÁ CHYBA PŘÍSTUPNOSTI: Nikdy nezakazujte zoom! --&gt;</span>\n<span class="html-tag">&lt;meta</span> <span class="html-attr">name</span>=<span class="html-val">"viewport"</span> <span class="html-attr">content</span>=<span class="html-val">"width=device-width, user-scalable=no, maximum-scale=1.0"</span><span class="html-tag">&gt;</span>';
+        var cssCode = '<span class="html-comment">/* WCAG 1.4.4 vyžaduje možnost zvětšit text alespoň na 200 % bez asistenční technologie! */</span>';
+        updateCodeDisplay('vpCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Antipattern <code>user-scalable=no</code>: Hrubé porušení přístupnosti WCAG 1.4.4. Prohlížeče jako Safari na iOS tento zákaz z bezpečnostních a zdravotních důvodů záměrně ignorují!';
+      }
+    };
+
+    // --- SLIDE 3: Device Resizer & Breakpoints ---
+    window.setDeviceDemo = function(mode, btnEl) {
+      var resizerWindow = document.getElementById('resizerWindow');
+      var resizerGrid = document.getElementById('resizerGrid');
+      var resizerSidebar = document.getElementById('resizerSidebar');
+      var widthLabel = document.getElementById('resizerWidthLabel');
+      var pill = document.getElementById('activeBreakpointPill');
+      var feedback = document.getElementById('devFeedbackText');
+      if (!resizerWindow || !resizerGrid || !widthLabel || !pill || !feedback) return;
+
+      btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+      btnEl.classList.add('is-active');
+
+      if (mode === 'mobile') {
+        resizerWindow.style.maxWidth = '340px';
+        resizerGrid.className = 'resizer-grid layout-mobile';
+        if (resizerSidebar) resizerSidebar.style.display = 'none';
+        widthLabel.textContent = 'Simulovaná šířka: 375 px (Mobilní telefon)';
+        pill.textContent = 'Výchozí styl (1 sloupec, bez @media)';
+        pill.style.background = 'rgba(56, 189, 248, 0.15)';
+        pill.style.color = '#38bdf8';
+        feedback.innerHTML = 'Mobile-First základ: 1 sloupec karet na celou šířku. Postranní panel <code>.sidebar</code> je skrytý (<code>display: none</code>), aby na malém displeji nezabíral místo.';
+      } else if (mode === 'tablet') {
+        resizerWindow.style.maxWidth = '520px';
+        resizerGrid.className = 'resizer-grid layout-tablet';
+        if (resizerSidebar) resizerSidebar.style.display = 'none';
+        widthLabel.textContent = 'Simulovaná šířka: 768 px (Tablet)';
+        pill.textContent = 'Aktivní: @media (min-width: 768px)';
+        pill.style.background = 'rgba(16, 185, 129, 0.2)';
+        pill.style.color = '#10b981';
+        feedback.innerHTML = 'Tablet breakpoint (768 px): Karty se dělí do 2 sloupců <code>repeat(2, 1fr)</code>. Postranní panel zůstává skrytý, protože plocha pro 3 sloupce nestačí.';
+      } else if (mode === 'desktop') {
+        resizerWindow.style.maxWidth = '100%';
+        resizerGrid.className = 'resizer-grid layout-desktop';
+        if (resizerSidebar) resizerSidebar.style.display = 'flex';
+        widthLabel.textContent = 'Simulovaná šířka: 1200 px (Desktopový monitor)';
+        pill.textContent = 'Aktivní: @media (width >= 1200px)';
+        pill.style.background = 'rgba(168, 85, 247, 0.2)';
+        pill.style.color = '#c084fc';
+        feedback.innerHTML = 'Desktop breakpoint (1200 px): Odkrývá se postranní panel (<code>display: block</code>) a mřížka se dělí do 3 stop <code>180px 1fr 1fr</code>.';
+      }
+    };
+
+    // --- SLIDE 4: Responsive Navigation ---
+    var navIsOpen = false;
+    window.setNavDemo = function(mode, btnEl) {
+      var navStage = document.getElementById('rwdNavStage');
+      var feedback = document.getElementById('navFeedbackText');
+      if (!navStage || !feedback) return;
+
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      if (mode === 'mob-closed') {
+        navIsOpen = false;
+        navStage.innerHTML = '<div class="rwd-nav-bar">' +
+          '<div class="rwd-nav-brand">edu_portal</div>' +
+          '<button type="button" class="rwd-burger-btn" onclick="toggleNavBurger()">' +
+          '<svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>' +
+          '</button>' +
+          '</div>';
+        feedback.innerHTML = 'Mobilní zavřený stav: Šetří cenné místo na výšku. Tlačítko má sémantický atribut <code>aria-expanded="false"</code> pro čtečky obrazovky.';
+      } else if (mode === 'mob-open') {
+        navIsOpen = true;
+        navStage.innerHTML = '<div class="rwd-nav-bar">' +
+          '<div class="rwd-nav-brand">edu_portal</div>' +
+          '<button type="button" class="rwd-burger-btn" onclick="toggleNavBurger()" style="background: rgba(244, 63, 94, 0.15); border-color: #f43f5e; color: #f43f5e;">' +
+          '<svg class="icon" viewBox="0 0 24 24" style="width: 18px; height: 18px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+          '</button>' +
+          '</div>' +
+          '<div class="rwd-nav-drawer">' +
+          '<a href="#" style="color: var(--accent); padding: 0.35rem 0; border-bottom: 1px solid var(--border-subtle);">&bull; Katalog kurzů (WEB20, DAT20)</a>' +
+          '<a href="#" style="color: var(--text-primary); padding: 0.35rem 0; border-bottom: 1px solid var(--border-subtle);">&bull; Moje zapsané předměty</a>' +
+          '<a href="#" style="color: var(--text-secondary); padding: 0.35rem 0;">&bull; Můj profil (Jan Novák)</a>' +
+          '</div>';
+        feedback.innerHTML = 'Mobilní otevřený stav: Položky menu se rozbalují svisle. Výška jednotlivých řádků je minimálně 44 px pro pohodlný dotyk prstem!';
+      } else if (mode === 'desktop') {
+        navIsOpen = false;
+        navStage.innerHTML = '<div class="rwd-nav-bar">' +
+          '<div class="rwd-nav-brand">edu_portal</div>' +
+          '<div class="rwd-nav-links-desktop">' +
+          '<a href="#" style="color: var(--accent); font-weight: 700;">Katalog kurzů</a>' +
+          '<a href="#" style="color: var(--text-secondary);">Moje studium</a>' +
+          '<a href="#" style="color: var(--text-secondary);">Materiály</a>' +
+          '<span style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #10b981; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 700;">Jan Novák</span>' +
+          '</div>' +
+          '</div>';
+        feedback.innerHTML = 'Desktopový stav (od 768 px): Tlačítko hamburgeru mizí (<code>display: none</code>). Položky se řadí horizontálně vedle sebe díky Flexboxu.';
+      }
+    };
+
+    window.toggleNavBurger = function() {
+      if (navIsOpen) {
+        setNavDemo('mob-closed', null);
+      } else {
+        setNavDemo('mob-open', null);
+      }
+    };
+
+    // --- SLIDE 5: Responsive Media ---
+    window.setMediaDemo = function(mode, btnEl) {
+      var frame = document.getElementById('mediaArtFrame');
+      var indicator = document.getElementById('mediaTagIndicator');
+      var visualContent = document.getElementById('mediaVisualContent');
+      var dataPill = document.getElementById('mediaDataPill');
+      var feedback = document.getElementById('mediaFeedbackText');
+      var codeTitle = document.getElementById('mediaCodeTitle');
+      if (!frame || !indicator || !visualContent || !dataPill || !feedback) return;
+
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var showcase = btnEl ? btnEl.closest('.interactive-showcase') : null;
+      var tabs = showcase ? showcase.querySelectorAll('.code-tab') : [];
+
+      if (mode === 'naive') {
+        if (codeTitle) codeTitle.textContent = 'html • naivní vložení obrázku';
+        tabs.forEach(function(t) {
+          if (t.textContent.trim() === 'HTML') t.classList.add('is-active');
+          else t.classList.remove('is-active');
+        });
+        codeData.mediaCode.currentLang = 'html';
+
+        indicator.textContent = 'Naivní img (2400 × 1600 px)';
+        visualContent.innerHTML = '<svg class="icon" viewBox="0 0 24 24" style="width: 36px; height: 36px; stroke: #f43f5e;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg><span>Přenáší se zbytečně 2400 &times; 1600 px na 375px mobil!</span>';
+        dataPill.textContent = 'Přeneseno: 850 KB (Plýtvání)';
+        dataPill.style.background = '#f43f5e';
+        dataPill.style.color = '#fff';
+        var htmlCode = '<span class="html-comment">&lt;!-- Naivní zápis: Obří soubor se stahuje na každé zařízení --&gt;</span>\n<span class="html-tag">&lt;img</span> <span class="html-attr">src</span>=<span class="html-val">"campus-2400.jpg"</span> <span class="html-attr">alt</span>=<span class="html-val">"Areál školy"</span><span class="html-tag">&gt;</span>';
+        var cssCode = '<span class="html-comment">/* Pouhé přizpůsobení velikosti v CSS */</span>\n<span class="css-sel">img</span> {\n  <span class="css-prop">max-width</span>: <span class="css-num">100</span><span class="css-unit">%</span>;\n  <span class="css-prop">height</span>: <span class="css-val">auto</span>;\n}';
+        updateCodeDisplay('mediaCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Závažná chyba: Prohlížeč stáhne 850 KB dat na 375px displej. To zhoršuje metriku LCP (Largest Contentful Paint) a vyčerpává mobilní FUP.';
+      } else if (mode === 'srcset') {
+        if (codeTitle) codeTitle.textContent = 'html • rozlišení (srcset & sizes)';
+        tabs.forEach(function(t) {
+          if (t.textContent.trim() === 'HTML') t.classList.add('is-active');
+          else t.classList.remove('is-active');
+        });
+        codeData.mediaCode.currentLang = 'html';
+
+        indicator.textContent = 'Optimalizovaný srcset & sizes (400w)';
+        visualContent.innerHTML = '<svg class="icon" viewBox="0 0 24 24" style="width: 36px; height: 36px; stroke: #10b981;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span>Prohlížeč sám vybral verzi campus-400.webp!</span>';
+        dataPill.textContent = 'Přeneseno: 42 KB (Úspora 95 %!)';
+        dataPill.style.background = '#10b981';
+        dataPill.style.color = '#030712';
+        var htmlCode = '<span class="html-comment">&lt;!-- Prohlížeč předem ví velikosti a vybere nejmenší vhodný --&gt;</span>\n<span class="html-tag">&lt;img</span>\n  <span class="html-attr">src</span>=<span class="html-val">"campus-800.webp"</span>\n  <span class="html-attr">srcset</span>=<span class="html-val">"campus-400.webp 400w,\n          campus-800.webp 800w,\n          campus-1600.webp 1600w"</span>\n  <span class="html-attr">sizes</span>=<span class="html-val">"(max-width: 600px) 100vw, 800px"</span>\n  <span class="html-attr">alt</span>=<span class="html-val">"Areál školy"</span><span class="html-tag">&gt;</span>';
+        var cssCode = '<span class="html-comment">/* Zobrazení pružného obrázku */</span>\n<span class="css-sel">img</span> {\n  <span class="css-prop">width</span>: <span class="css-num">100</span><span class="css-unit">%</span>;\n  <span class="css-prop">height</span>: <span class="css-val">auto</span>;\n}';
+        updateCodeDisplay('mediaCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Skvělé řešení (srcset + sizes): Prohlížeč zná rozměry předem a na mobil stáhne jen 42 KB soubor. Úspora dat přesahuje 95 %!';
+      } else if (mode === 'art') {
+        if (codeTitle) codeTitle.textContent = 'html • umělecký ořez (<picture> & <source>)';
+        tabs.forEach(function(t) {
+          if (t.textContent.trim() === 'HTML') t.classList.add('is-active');
+          else t.classList.remove('is-active');
+        });
+        codeData.mediaCode.currentLang = 'html';
+
+        indicator.textContent = 'Art Direction: Element <picture>';
+        visualContent.innerHTML = '<svg class="icon" viewBox="0 0 24 24" style="width: 36px; height: 36px; stroke: #a855f7;"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"></path></svg><span>Na mobilu oříznutý detail obličeje 1:1, na desktopu panorama!</span>';
+        dataPill.textContent = 'Umělecký ořez pro mobil';
+        dataPill.style.background = '#a855f7';
+        dataPill.style.color = '#fff';
+        var htmlCode = '<span class="html-tag">&lt;picture&gt;</span>\n  <span class="html-comment">&lt;!-- Pro mobil těsný čtvercový detail --&gt;</span>\n  <span class="html-tag">&lt;source</span> <span class="html-attr">media</span>=<span class="html-val">"(max-width: 600px)"</span> <span class="html-attr">srcset</span>=<span class="html-val">"portrait-crop-square.webp"</span><span class="html-tag">&gt;</span>\n  <span class="html-comment">&lt;!-- Pro desktop širokoúhlý banner --&gt;</span>\n  <span class="html-tag">&lt;img</span> <span class="html-attr">src</span>=<span class="html-val">"portrait-landscape-wide.webp"</span> <span class="html-attr">alt</span>=<span class="html-val">"Lektor kurzu"</span><span class="html-tag">&gt;</span>\n<span class="html-tag">&lt;/picture&gt;</span>';
+        var cssCode = '<span class="html-comment">/* Prohlížeč automaticky aplikuje styly na vnitřní tag &lt;img&gt; */</span>\n<span class="css-sel">picture img</span> {\n  <span class="css-prop">width</span>: <span class="css-num">100</span><span class="css-unit">%</span>;\n  <span class="css-prop">border-radius</span>: <span class="css-num">8</span><span class="css-unit">px</span>;\n}';
+        updateCodeDisplay('mediaCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Art Direction (&lt;picture&gt;): Na mobilu svislý detail obličeje lektora, na širokém monitoru celá přednášková aula. Zcela odlišná kompozice podle média!';
+      } else if (mode === 'objectfit') {
+        if (codeTitle) codeTitle.textContent = 'css • přizpůsobení ořezu (object-fit: cover)';
+        tabs.forEach(function(t) {
+          if (t.textContent.trim() === 'CSS') t.classList.add('is-active');
+          else t.classList.remove('is-active');
+        });
+        codeData.mediaCode.currentLang = 'css';
+
+        indicator.textContent = 'object-fit: cover (Ochrana poměru stran)';
+        visualContent.innerHTML = '<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(56, 189, 248, 0.15); border: 1px dashed var(--accent);"><span>object-fit: cover ořeže přebytek bez deformace deformujícího smrštění!</span></div>';
+        dataPill.textContent = 'object-fit: cover';
+        dataPill.style.background = 'var(--accent)';
+        dataPill.style.color = '#030712';
+        var cssCode = '<span class="html-comment">/* Fotografie v responzivních kartách kurzu nesmí být deformovaná */</span>\n<span class="css-sel">.course-card img</span> {\n  <span class="css-prop">width</span>: <span class="css-num">100</span><span class="css-unit">%</span>;\n  <span class="css-prop">height</span>: <span class="css-num">180</span><span class="css-unit">px</span>;\n  <span class="css-prop">object-fit</span>: <span class="css-val">cover</span>; <span class="html-comment">/* vyplní box a ořízne okraje bez zkreslení poměru stran */</span>\n  <span class="css-prop">object-position</span>: <span class="css-val">center</span>;\n}';
+        var htmlCode = '<span class="html-comment">&lt;!-- Karta kurzu s pevně ohraničenou výškou obrázku --&gt;</span>\n<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"course-card"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;img</span> <span class="html-attr">src</span>=<span class="html-val">"course-thumb.webp"</span> <span class="html-attr">alt</span>=<span class="html-val">"Náhled kurzu"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;h3&gt;</span>Kurz WEB20<span class="html-tag">&lt;/h3&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('mediaCode', cssCode, htmlCode);
+        feedback.innerHTML = '<code>object-fit: cover</code>: Zajišťuje, že všechny karty v katalogu mají identickou výšku 180 px a fotografie si zachovává přirozený poměr stran bez splasknutí.';
+      }
+    };
+
+    // --- SLIDE 6: Fluid Typography Math ---
+    window.updateFluidTypography = function(widthVal) {
+      var widthBadge = document.getElementById('fluidWidthBadge');
+      var fontBadge = document.getElementById('fluidFontBadge');
+      var heading = document.getElementById('fluidHeading');
+      var stage = document.getElementById('fluidStage');
+      if (!widthBadge || !fontBadge || !heading || !stage) return;
+
+      var w = parseFloat(widthVal);
+      widthBadge.textContent = 'Šířka: ' + w + ' px';
+
+      // clamp(20px, 13.6px + 0.018 * w, 40px)
+      var idealPx = 13.6 + (0.018 * w);
+      var computedPx = Math.max(20, Math.min(idealPx, 40));
+      var computedRem = (computedPx / 16).toFixed(2);
+
+      fontBadge.textContent = 'font-size: ' + computedPx.toFixed(1) + ' px (' + computedRem + ' rem)';
+      heading.style.fontSize = computedPx + 'px';
+      stage.style.maxWidth = Math.max(300, Math.min(w, 800)) + 'px';
+    };
+
+    // --- SLIDE 7: User Preferences (Theme, Reduced Motion, Hover) ---
+    window.setPrefDemo = function(mode, btnEl) {
+      var card = document.getElementById('prefDemoCard');
+      var badge = document.getElementById('prefCardBadge');
+      var sub = document.getElementById('prefCardSub');
+      var btn = document.getElementById('prefCardBtn');
+      var feedback = document.getElementById('prefFeedbackText');
+      if (!card || !badge || !sub || !btn || !feedback) return;
+
+      btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+      btnEl.classList.add('is-active');
+
+      if (mode === 'dark') {
+        card.style.background = '#0f172a';
+        card.style.borderColor = '#38bdf8';
+        card.style.color = '#f8fafc';
+        badge.style.color = '#38bdf8';
+        btn.style.background = '#38bdf8';
+        btn.style.color = '#030712';
+        btn.style.padding = '0.45rem';
+        sub.textContent = 'Dark Mode aktivní';
+        var cssCode = '<span class="css-at">@media</span> (<span class="css-prop">prefers-color-scheme</span>: <span class="css-val">dark</span>) {\n  <span class="css-sel">:root</span> {\n    <span class="scss-var">--bg-card</span>: <span class="css-val">#0f172a</span>;\n    <span class="scss-var">--text-primary</span>: <span class="css-val">#f8fafc</span>;\n    <span class="scss-var">--accent-color</span>: <span class="css-val">#38bdf8</span>;\n  }\n}';
+        updateCodeDisplay('prefCode', cssCode, null);
+        feedback.innerHTML = 'Tmavý režim (Dark Mode): Šetří baterii OLED displejů a zrak studentů při večerním studiu.';
+      } else if (mode === 'light') {
+        card.style.background = '#ffffff';
+        card.style.borderColor = '#0284c7';
+        card.style.color = '#0f172a';
+        badge.style.color = '#0284c7';
+        btn.style.background = '#0284c7';
+        btn.style.color = '#ffffff';
+        btn.style.padding = '0.45rem';
+        sub.textContent = 'Light Mode aktivní';
+        var cssCode = '<span class="css-at">@media</span> (<span class="css-prop">prefers-color-scheme</span>: <span class="css-val">light</span>) {\n  <span class="css-sel">:root</span> {\n    <span class="scss-var">--bg-card</span>: <span class="css-val">#ffffff</span>;\n    <span class="scss-var">--text-primary</span>: <span class="css-val">#0f172a</span>;\n    <span class="scss-var">--accent-color</span>: <span class="css-val">#0284c7</span>;\n  }\n}';
+        updateCodeDisplay('prefCode', cssCode, null);
+        feedback.innerHTML = 'Světlý režim (Light Mode): Vysoký kontrast pro práci na přímém slunci.';
+      } else if (mode === 'reduced-motion') {
+        card.style.transition = 'none';
+        sub.textContent = 'Animace vypnuty (reduce)';
+        var cssCode = '<span class="css-at">@media</span> (<span class="css-prop">prefers-reduced-motion</span>: <span class="css-val">reduce</span>) {\n  <span class="css-sel">*, *::before, *::after</span> {\n    <span class="css-prop">animation-duration</span>: <span class="css-num">0.01</span><span class="css-unit">ms</span> !important;\n    <span class="css-prop">transition-duration</span>: <span class="css-num">0.01</span><span class="css-unit">ms</span> !important;\n    <span class="css-prop">scroll-behavior</span>: <span class="css-val">auto</span> !important;\n  }\n}';
+        updateCodeDisplay('prefCode', cssCode, null);
+        feedback.innerHTML = '<code>prefers-reduced-motion: reduce</code> potlačuje divoké animace pro uživatele s vestibulárními poruchami.';
+      } else if (mode === 'touch') {
+        btn.style.padding = '0.75rem';
+        sub.textContent = 'pointer: coarse (Velký dotykový terč)';
+        var cssCode = '<span class="css-at">@media</span> (<span class="css-prop">pointer</span>: <span class="css-val">coarse</span>) {\n  <span class="html-comment">/* Dotyková obrazovka: Zvětšit tlačítka pro prst a zrušit závislost na :hover */</span>\n  <span class="css-sel">button, a</span> {\n    <span class="css-prop">min-height</span>: <span class="css-num">44</span><span class="css-unit">px</span>;\n    <span class="css-prop">padding</span>: <span class="css-num">0.75</span><span class="css-unit">rem</span> <span class="css-num">1</span><span class="css-unit">rem</span>;\n  }\n}';
+        updateCodeDisplay('prefCode', cssCode, null);
+        feedback.innerHTML = '<code>@media (pointer: coarse)</code>: Detekuje tlustý prst na dotykovém skle. Tlačítka jsou zvětšena na minimálně 44 px.';
+      }
+    };
+
+    // --- SLIDE 8: Container Queries ---
+    window.setContainerDemo = function(mode, btnEl) {
+      var slot = document.getElementById('cqParentSlot');
+      var label = document.getElementById('cqSlotLabel');
+      var card = document.getElementById('cqCardDemo');
+      var feedback = document.getElementById('cqFeedbackText');
+      if (!slot || !label || !card || !feedback) return;
+
+      btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+      btnEl.classList.add('is-active');
+
+      if (mode === 'wide') {
+        slot.style.maxWidth = '480px';
+        label.textContent = 'Rodičovský slot: šířka 480 px (@container min-width: 420px splněno!)';
+        card.classList.remove('is-stacked');
+        feedback.innerHTML = 'Široký kontejner (hlavní obsah webu): Karta má dostatek místa, thumbnail je vlevo a text vpravo.';
+      } else if (mode === 'narrow') {
+        slot.style.maxWidth = '250px';
+        label.textContent = 'Rodičovský slot: šířka 250px (< 420px -> padá do výchozího stavu)';
+        card.classList.add('is-stacked');
+        feedback.innerHTML = 'Úzký kontejner (sidebar webu): Ta samá karta se automaticky přeskládala svisle, aniž bychom museli měnit šířku okna browseru!';
+      }
+    };
+
+    // --- SLIDE 9: Antiresponsiveness & Print styles ---
+    window.setPrintDemo = function(mode, btnEl) {
+      var sheet = document.getElementById('a4SimSheet');
+      var codeTitle = document.getElementById('printCodeTitle');
+      var feedback = document.getElementById('printFeedbackText');
+      var hideBadge = document.getElementById('a4HideBadge');
+      var navBtns = document.getElementById('a4NavBtns');
+      if (!sheet || !feedback) return;
+
+      if (btnEl && btnEl.parentElement) {
+        btnEl.parentElement.querySelectorAll('.btn-scenario').forEach(function(b) { b.classList.remove('is-active'); });
+        btnEl.classList.add('is-active');
+      }
+
+      var showcase = btnEl ? btnEl.closest('.interactive-showcase') : null;
+      var tabs = showcase ? showcase.querySelectorAll('.code-tab') : [];
+
+      if (mode === 'screen') {
+        sheet.className = 'a4-sheet-sim is-screen-mode';
+        if (codeTitle) codeTitle.textContent = 'css • zobrazení na obrazovce';
+        if (navBtns) navBtns.style.display = 'flex';
+        if (hideBadge) hideBadge.style.display = 'none';
+
+        var cssCode = '<span class="html-comment">/* Výchozí zobrazení na displeji: Tmavé tóny, tlačítka a interakce */</span>\n<span class="css-sel">body</span> {\n  <span class="css-prop">background</span>: <span class="css-val">#0f172a</span>;\n  <span class="css-prop">color</span>: <span class="css-val">#f8fafc</span>;\n}\n\n<span class="css-sel">.navbar, .btn-action</span> {\n  <span class="css-prop">display</span>: <span class="css-val">flex</span>; <span class="html-comment">/* tlačítka pro platbu a export jsou viditelná */</span>\n}';
+        var htmlCode = '<span class="html-comment">&lt;!-- Smlouva / Faktura v rozhraní portálu --&gt;</span>\n<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"invoice-page"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;nav</span> <span class="html-attr">class</span>=<span class="html-val">"navbar"</span><span class="html-tag">&gt;</span>edu_portal<span class="html-tag">&lt;/nav&gt;</span>\n  <span class="html-tag">&lt;h2&gt;</span>Daňový doklad č. 2026/08<span class="html-tag">&lt;/h2&gt;</span>\n  <span class="html-tag">&lt;button</span> <span class="html-attr">class</span>=<span class="html-val">"btn-action"</span><span class="html-tag">&gt;</span>Zaplatit kurz<span class="html-tag">&lt;/button&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('printCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Displej (Screen): Bohatá grafika, tmavé téma, interaktivní akční tlačítka. Při přímém odeslání do tiskárny by došlo k obrovskému plýtvání černým tonerem a vytištění zbytečných tlačítek.';
+      } else if (mode === 'print') {
+        sheet.className = 'a4-sheet-sim is-print-mode';
+        if (codeTitle) codeTitle.textContent = 'css • tiskový styl (@media print)';
+        if (navBtns) navBtns.style.display = 'none';
+        if (hideBadge) hideBadge.style.display = 'inline-flex';
+
+        var cssCode = '<span class="html-comment">/* 1. Tiskový dotaz: Zrušení plýtvání barvou a skrytí UI prvků */</span>\n<span class="css-at">@media</span> <span class="css-val">print</span> {\n  <span class="css-sel">body</span> {\n    <span class="css-prop">background</span>: <span class="css-val">#fff</span> !important;\n    <span class="css-prop">color</span>: <span class="css-val">#000</span> !important;\n    <span class="css-prop">font-size</span>: <span class="css-num">11</span><span class="css-unit">pt</span>;\n  }\n\n  <span class="html-comment">/* Tlačítka a navigace na papír nepatří */</span>\n  <span class="css-sel">nav, .btn-action, .navbar</span> {\n    <span class="css-prop">display</span>: <span class="css-val">none</span> !important;\n  }\n\n  <span class="html-comment">/* Vypsání cílové URL adresy za text odkazu! */</span>\n  <span class="css-sel">a[href^="http"]::after</span> {\n    <span class="css-prop">content</span>: <span class="css-str">" ("</span> <span class="css-func">attr</span>(<span class="css-val">href</span>) <span class="css-str">")"</span>;\n    <span class="css-prop">font-size</span>: <span class="css-num">0.85</span><span class="css-unit">em</span>;\n  }\n}';
+        var htmlCode = '<span class="html-comment">&lt;!-- Na papíře se odkaz promění v čitelnou URL adresu --&gt;</span>\n<span class="html-tag">&lt;p&gt;</span>\n  Více informací naleznete na\n  <span class="html-tag">&lt;a</span> <span class="html-attr">href</span>=<span class="html-val">"https://vos.cz/edu"</span><span class="html-tag">&gt;</span>edu_portal<span class="html-tag">&lt;/a&gt;</span>.\n<span class="html-tag">&lt;/p&gt;</span>';
+        updateCodeDisplay('printCode', cssCode, htmlCode);
+        feedback.innerHTML = 'Tiskový náhled (@media print): Bílý podklad šetří toner, navigační lišta a tlačítka jsou skryta (<code>display: none</code>). Za text odkazu se automaticky vypsala cílová URL adresa <code>(https://vos.cz/edu)</code>!';
+      } else if (mode === 'paged') {
+        sheet.className = 'a4-sheet-sim is-paged-mode';
+        if (codeTitle) codeTitle.textContent = 'css • stránkování a zlom (@page & break-inside)';
+        if (navBtns) navBtns.style.display = 'none';
+        if (hideBadge) hideBadge.style.display = 'inline-flex';
+
+        var cssCode = '<span class="html-comment">/* 1. Nastavení fyzického formátu listu papíru a okrajů */</span>\n<span class="css-at">@page</span> {\n  <span class="css-prop">size</span>: <span class="css-val">A4 portrait</span>; <span class="html-comment">/* 210 x 297 mm */</span>\n  <span class="css-prop">margin</span>: <span class="css-num">20</span><span class="css-unit">mm</span> <span class="css-num">15</span><span class="css-unit">mm</span>;\n}\n\n<span class="html-comment">/* 2. Zákaz roztržení tabulky nebo podpisu mezi 2 listy! */</span>\n<span class="css-sel">table, tr, .signature-box</span> {\n  <span class="css-prop">break-inside</span>: <span class="css-val">avoid</span>; <span class="html-comment">/* moderní náhrada za page-break-inside */</span>\n}\n\n<span class="html-comment">/* 3. Vynucení tisku barevných proužků (jinak prohlížeč barvy potlačí) */</span>\n<span class="css-sel">.invoice-header</span> {\n  <span class="css-prop">print-color-adjust</span>: <span class="css-val">exact</span>;\n  <span class="css-prop">-webkit-print-color-adjust</span>: <span class="css-val">exact</span>;\n}';
+        var htmlCode = '<span class="html-comment">&lt;!-- Podpisový box, který tiskárna nikdy nerozdělí napůl --&gt;</span>\n<span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"signature-box"</span><span class="html-tag">&gt;</span>\n  <span class="html-tag">&lt;p&gt;</span>Vystavil: Ing. Michal Bubílek<span class="html-tag">&lt;/p&gt;</span>\n  <span class="html-tag">&lt;div</span> <span class="html-attr">class</span>=<span class="html-val">"stamp"</span><span class="html-tag">&gt;</span>Razítko školy<span class="html-tag">&lt;/div&gt;</span>\n<span class="html-tag">&lt;/div&gt;</span>';
+        updateCodeDisplay('printCode', cssCode, htmlCode);
+        feedback.innerHTML = 'CSS Paged Media: Pravidlo <code>@page</code> fixuje formát A4 s 20mm okraji. Vlastnost <code>break-inside: avoid</code> garantuje, že razítko a podpis neskončí rozpůlené na přechodu stran!';
+      }
+    };
+
+    // --- SLIDE 10: Interactive Quiz Logic ---
+    window.evaluateQuiz = function(qNum, optIdx, isCorrect, btnEl) {
+      var card = document.getElementById('quizCard' + qNum);
+      var feedback = document.getElementById('qFeedback' + qNum);
+      if (!card || !feedback) return;
+
+      var buttons = card.querySelectorAll('.quiz-btn-option');
+      buttons.forEach(function(b) {
+        b.classList.remove('is-correct', 'is-wrong');
+      });
+
+      if (isCorrect) {
+        btnEl.classList.add('is-correct');
+        feedback.className = 'quiz-feedback-box is-visible correct';
+        if (qNum === 1) {
+          feedback.innerHTML = '<strong>Správně!</strong> Mobilní prohlížeč předpokládá neoptimalizovaný web, otevře virtuální okno 980 px a stránku oddálí. Značka viewportu je povinná!';
+        } else if (qNum === 2) {
+          feedback.innerHTML = '<strong>Správně!</strong> @media se dívá na celé okno viewportu, zatímco @container na rozměry rodiče komponenty (inline-size).';
+        } else if (qNum === 3) {
+          feedback.innerHTML = '<strong>Správně!</strong> <code>break-inside: avoid;</code> (dříve <code>page-break-inside</code>) brání tomu, aby prohlížeč při tisku rozřízl podpisový box, tabulku nebo položku faktury napůl přes spodní okraj papíru.';
+        }
+      } else {
+        btnEl.classList.add('is-wrong');
+        feedback.className = 'quiz-feedback-box is-visible wrong';
+        feedback.innerHTML = '<strong>Chybná odpověď.</strong> Zkuste to znovu a zamyslete se nad principem stránkovaných médií a ochranou layoutu.';
+      }
+    };
+
+    // Inicializace výchozího stavu po načtení DOMu
+    document.addEventListener('DOMContentLoaded', function() {
+      setNavDemo('mob-closed', null);
+      setContainerDemo('wide', null);
+      setPrintDemo('screen', null);
+      updateFluidTypography(600);
+    });
+  </script>
 
   <script src="../../assets/js/presentation-core.js"></script>
 </body>
